@@ -10,10 +10,6 @@ import com.cramsan.petproject.R
 
 class PlantDetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = PlantDetailsFragment()
-    }
-
     private lateinit var viewModel: PlantDetailsViewModel
 
     override fun onCreateView(
