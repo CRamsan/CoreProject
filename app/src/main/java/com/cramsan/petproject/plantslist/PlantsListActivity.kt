@@ -1,8 +1,10 @@
 package com.cramsan.petproject.plantslist
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity;
 import com.cramsan.petproject.R
+import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantslist.dummy.DummyContent
 
 import kotlinx.android.synthetic.main.activity_plants_list.*
@@ -17,6 +19,6 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
     }
 
     override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        startActivity(Intent(this, PlantDetailsActivity::class.java))
     }
 }
