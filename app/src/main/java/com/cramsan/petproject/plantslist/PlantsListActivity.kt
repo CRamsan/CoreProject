@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity;
 import com.cramsan.petproject.R
+import com.cramsan.petproject.model.Plant
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
-import com.cramsan.petproject.plantslist.dummy.DummyContent
 
 import kotlinx.android.synthetic.main.activity_plants_list.*
 
@@ -18,7 +18,7 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
+    override fun onListFragmentInteraction(item: Plant?) {
         startActivity(Intent(this, PlantDetailsActivity::class.java))
     }
 }

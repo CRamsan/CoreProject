@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.cramsan.petproject.R
+import com.cramsan.petproject.model.Plant
 
 
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
-import com.cramsan.petproject.plantslist.dummy.DummyContent.DummyItem
 
 import kotlinx.android.synthetic.main.view_plant.view.*
 
@@ -19,19 +19,24 @@ import kotlinx.android.synthetic.main.view_plant.view.*
  * TODO: Replace the implementation with code for your data type.
  */
 class PlantsRecyclerViewAdapter(
-    private val mValues: List<DummyItem>,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
 
+    private var mValues: List<Plant> = listOf()
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as Plant
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
         }
+    }
+
+    fun updateValues(values: List<Plant>) {
+        mValues = values
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,8 +47,8 @@ class PlantsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.mIdView.text = item.exactName
+        holder.mContentView.text = item.family
 
         with(holder.mView) {
             tag = item

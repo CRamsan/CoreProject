@@ -6,12 +6,4 @@ class Plant(scientificName: String,
             toxicityMapper: Mapper):
     Item(scientificName,
         commonName,
-        toxicityMapper) {
-    fun title(): String {
-        return exactName
-    }
-
-    fun subTitle(): String {
-        return commonName.joinToString { ", " }
-    }
-}
+        toxicityMapper)

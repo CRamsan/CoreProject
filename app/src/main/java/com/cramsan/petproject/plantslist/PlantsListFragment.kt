@@ -10,9 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cramsan.petproject.R
-
-import com.cramsan.petproject.plantslist.dummy.DummyContent
-import com.cramsan.petproject.plantslist.dummy.DummyContent.DummyItem
+import com.cramsan.petproject.model.AnimalType
+import com.cramsan.petproject.model.Mapper
+import com.cramsan.petproject.model.Plant
+import com.cramsan.petproject.model.Toxicity
 
 /**
  * A fragment representing a list of Items.
@@ -39,7 +40,7 @@ class PlantsListFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = PlantsRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                adapter = PlantsRecyclerViewAdapter(listener)
             }
         }
         return view
@@ -72,6 +73,6 @@ class PlantsListFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: Plant?)
     }
 }
