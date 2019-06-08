@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.cramsan.petproject.R
-import com.cramsan.petproject.model.AnimalType
-import com.cramsan.petproject.model.Mapper
 import com.cramsan.petproject.model.Plant
-import com.cramsan.petproject.model.Toxicity
 
 /**
  * A fragment representing a list of Items.
@@ -26,6 +25,16 @@ class PlantsListFragment : Fragment() {
     private var columnCount = 1
 
     private var listener: OnListFragmentInteractionListener? = null
+    private var plantsAdapter: PlantsRecyclerViewAdapter? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnListFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,19 +49,17 @@ class PlantsListFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = PlantsRecyclerViewAdapter(listener)
+                plantsAdapter = PlantsRecyclerViewAdapter(listener)
+                adapter = plantsAdapter
             }
         }
-        return view
-    }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
-        }
+        val model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
+        model.getPlants().observe(this, Observer<List<Plant>>{ plants ->
+            plantsAdapter?.updateValues(plants)
+        })
+
+        return view
     }
 
     override fun onDetach() {

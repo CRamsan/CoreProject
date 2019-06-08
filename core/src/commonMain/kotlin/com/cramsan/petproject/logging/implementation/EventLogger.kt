@@ -4,7 +4,7 @@ import com.cramsan.petproject.logging.EventLoggerInterface
 import com.cramsan.petproject.logging.PlatformLoggerInterface
 import com.cramsan.petproject.logging.Severity
 
-class EventLogger(private val platformLogger: PlatformLoggerInterface): EventLoggerInterface {
+internal class EventLogger(private val platformLogger: PlatformLoggerInterface): EventLoggerInterface {
 
     override fun log(severity: Severity, tag: String, message: String) {
         platformLogger.log(severity, tag, message)
