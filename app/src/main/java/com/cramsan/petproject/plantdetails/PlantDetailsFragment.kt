@@ -28,7 +28,6 @@ class PlantDetailsFragment : Fragment() {
         val plantId = activity?.intent?.getStringExtra(PlantDetailsActivity.PLANT_ID) ?: return
 
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
-        viewModel.loadPlant(plantId)
         viewModel.getPlant().observe(this, Observer<Plant>{ plant ->
             plant_details_title.text = plant.exactName
             plant_details_subtitle.text = plant.commonName.joinToString { "," }
@@ -37,8 +36,7 @@ class PlantDetailsFragment : Fragment() {
                 .load(plant.imageUrl)
                 .into(plant_details_image)
         })
-
-
+        viewModel.reloadPlant(plantId)
     }
 
 }

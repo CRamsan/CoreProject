@@ -8,4 +8,6 @@ interface ThreadUtilInterface {
     fun dispatchToBackground(block: RunBlock)
     fun assertIsUIThread()
     fun assertIsBackgroundThread()
+
+    fun threadSleep(seconds: Int)
 }

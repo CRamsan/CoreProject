@@ -3,32 +3,33 @@ package com.cramsan.petproject.plantslist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cramsan.petproject.framework.CoreFramework
 import com.cramsan.petproject.model.Plant
-import com.cramsan.petproject.storage.ModelStorageListenerInterface
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class PlantListViewModel : ViewModel(), ModelStorageListenerInterface {
+class PlantListViewModel : ViewModel() {
 
-    private val modelStore = CoreFramework.modelStorage.also {
-        it.registerListener(this)
-    }
+    private val modelStore = CoreFramework.modelStorage
+
     private val observablePlants = MutableLiveData<List<Plant>>()
 
-    init {
-        modelStore.getPlants(true)
-    }
-
-    override fun onCleared() {
-        modelStore.deregisterListener(this)
+    fun reloadPlants() {
+        viewModelScope.launch {
+            loadPlants()
+        }
     }
 
     fun getPlants(): LiveData<List<Plant>> {
         return observablePlants
     }
 
-    override fun onUpdate(plants: List<Plant>) {
-        observablePlants.value = plants
+    private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
+        val plants = modelStore.getPlants(true)
+        viewModelScope.launch {
+            observablePlants.value = plants
+        }
     }
-
-    override fun onUpdate(plant: Plant) {}
 }

@@ -58,6 +58,7 @@ class PlantsListFragment : Fragment() {
         model.getPlants().observe(this, Observer<List<Plant>>{ plants ->
             plantsAdapter?.updateValues(plants)
         })
+        model.reloadPlants()
 
         return view
     }

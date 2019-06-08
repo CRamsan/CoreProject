@@ -33,4 +33,8 @@ internal actual class ThreadUtil : ThreadUtilInterface {
     override fun assertIsBackgroundThread() {
         CoreFramework.eventLogger.assert(isUIThread(), "", "Not on background thread!")
     }
+
+    override fun threadSleep(seconds: Int) {
+        Thread.sleep((seconds * 1000).toLong())
+    }
 }
