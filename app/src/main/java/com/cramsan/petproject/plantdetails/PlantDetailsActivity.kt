@@ -14,4 +14,8 @@ class PlantDetailsActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
+    companion object {
+        val PLANT_ID = "plantId"
+    }
 }

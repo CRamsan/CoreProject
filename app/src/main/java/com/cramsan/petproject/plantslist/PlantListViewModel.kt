@@ -29,4 +29,6 @@ class PlantListViewModel : ViewModel(), ModelStorageListenerInterface {
     override fun onUpdate(plants: List<Plant>) {
         observablePlants.value = plants
     }
+
+    override fun onUpdate(plant: Plant) {}
 }

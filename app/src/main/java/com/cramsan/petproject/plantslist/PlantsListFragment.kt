@@ -80,6 +80,6 @@ class PlantsListFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Plant?)
+        fun onListFragmentInteraction(item: Plant)
     }
 }

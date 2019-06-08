@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cramsan.petproject.R
 import com.cramsan.petproject.model.Plant
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
+import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.PLANT_ID
 
 import kotlinx.android.synthetic.main.activity_plants_list.*
 
@@ -18,7 +19,9 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onListFragmentInteraction(item: Plant?) {
-        startActivity(Intent(this, PlantDetailsActivity::class.java))
+    override fun onListFragmentInteraction(item: Plant) {
+        val plantIntent = Intent(this, PlantDetailsActivity::class.java)
+        plantIntent.putExtra(PLANT_ID, item.exactName)
+        startActivity(plantIntent)
     }
 }
