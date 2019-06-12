@@ -10,5 +10,6 @@ pluginManagement {
 
 include ':app'
 include ':core'
+include ':framework'
 
 enableFeaturePreview('GRADLE_METADATA')
