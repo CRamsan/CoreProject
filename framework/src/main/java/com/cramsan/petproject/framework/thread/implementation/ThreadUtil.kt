@@ -6,9 +6,9 @@ import com.cramsan.petproject.framework.logging.EventLoggerInterface
 import com.cramsan.petproject.framework.thread.RunBlock
 import com.cramsan.petproject.framework.thread.ThreadUtilInterface
 
-internal actual class ThreadUtil actual constructor(eventLogger: EventLoggerInterface) : ThreadUtilInterface {
+internal actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) : ThreadUtilInterface {
 
-    private var logger: EventLoggerInterface = eventLogger
+    private var logger: EventLoggerInterface = initializer.eventLoggerInterface
 
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
 

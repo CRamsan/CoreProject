@@ -1,0 +1,3 @@
+package com.cramsan.petproject.storage.implementation
+
+expect class ModelStoragePlatformInitializer

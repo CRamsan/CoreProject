@@ -7,8 +7,7 @@ import com.cramsan.petproject.model.Plant
 import com.cramsan.petproject.model.Toxicity
 import com.cramsan.petproject.storage.ModelStorageInterface
 
-internal class ModelStorage : ModelStorageInterface {
-
+internal class ModelStorage(private val initializer: ModelStorageInitializer) : ModelStorageInterface {
     var plantList = listOf<Plant>()
 
     override fun getPlants(forceUpdate: Boolean): List<Plant> {
@@ -33,5 +32,7 @@ internal class ModelStorage : ModelStorageInterface {
     }
 
     override fun getItems(forceUpdate: Boolean) {
+
     }
 }
+

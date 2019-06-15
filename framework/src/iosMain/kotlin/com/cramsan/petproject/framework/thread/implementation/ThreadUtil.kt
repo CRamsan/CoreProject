@@ -1,9 +1,10 @@
 package com.cramsan.petproject.framework.thread.implementation
 
 import com.cramsan.petproject.framework.thread.RunBlock
+import com.cramsan.petproject.framework.thread.ThreadUtilInitializerInterface
 import com.cramsan.petproject.framework.thread.ThreadUtilInterface
 
-internal actual class ThreadUtil : ThreadUtilInterface {
+internal actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializerInterface) : ThreadUtilInterface {
     override fun isUIThread(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
