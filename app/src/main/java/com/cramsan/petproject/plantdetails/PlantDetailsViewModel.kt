@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cramsan.petproject.framework.CoreFramework
-import com.cramsan.petproject.model.Plant
+import com.cramsan.petproject.appcore.framework.CoreFramework
+import com.cramsan.petproject.appcore.model.Plant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

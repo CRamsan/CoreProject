@@ -1,0 +1,3 @@
+package com.cramsan.petproject.appcore.storage.implementation
+
+class ModelStorageInitializer(val platformInitializer: ModelStoragePlatformInitializer)

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cramsan.petproject.R
-import com.cramsan.petproject.model.Plant
+import com.cramsan.petproject.appcore.model.Plant
 import kotlinx.android.synthetic.main.fragment_plant_details.*
 
 class PlantDetailsFragment : Fragment() {

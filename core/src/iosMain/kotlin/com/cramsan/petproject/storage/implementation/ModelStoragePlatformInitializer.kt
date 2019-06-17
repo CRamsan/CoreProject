@@ -1,3 +1,0 @@
-package com.cramsan.petproject.storage.implementation
-
-actual class ModelStoragePlatformInitializer

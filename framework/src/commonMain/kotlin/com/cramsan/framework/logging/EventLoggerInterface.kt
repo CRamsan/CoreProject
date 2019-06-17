@@ -1,0 +1,6 @@
+package com.cramsan.framework.logging
+
+interface EventLoggerInterface {
+    fun log(severity: Severity, tag: String, message: String)
+    fun assert(condition: Boolean, tag: String, message: String)
+}

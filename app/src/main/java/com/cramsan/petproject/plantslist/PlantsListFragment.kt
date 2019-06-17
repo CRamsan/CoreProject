@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cramsan.petproject.R
-import com.cramsan.petproject.model.Plant
+import com.cramsan.petproject.appcore.model.Plant
 
 /**
  * A fragment representing a list of Items.

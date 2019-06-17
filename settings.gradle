@@ -9,7 +9,7 @@ pluginManagement {
 }
 
 include ':app'
-include ':core'
+include ':appcore'
 include ':framework'
 
 enableFeaturePreview('GRADLE_METADATA')

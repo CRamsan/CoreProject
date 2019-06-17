@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity;
 import com.cramsan.petproject.R
-import com.cramsan.petproject.model.Plant
+import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.PLANT_ID
 

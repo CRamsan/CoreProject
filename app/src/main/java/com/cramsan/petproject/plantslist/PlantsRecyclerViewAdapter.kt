@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.cramsan.petproject.R
-import com.cramsan.petproject.model.Plant
+import com.cramsan.petproject.appcore.model.Plant
 
 
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
