@@ -1,15 +1,7 @@
-pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id == "kotlin-multiplatform") {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
-            }
-        }
-    }
-}
+rootProject.name = 'PetProject'
 
-include ':app'
-include ':appcore'
-include ':framework'
+include 'app'
+include 'appcore'
+include 'framework'
 
 enableFeaturePreview('GRADLE_METADATA')
