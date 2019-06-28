@@ -9,6 +9,7 @@ class PetProjectApplication : Application() {
         super.onCreate()
         CoreFramework.initEventLogger()
         CoreFramework.initThreadUtil()
+        CoreFramework.initHaltUtil()
         CoreFramework.initModelStorage(ModelStoragePlatformInitializer(this))
     }
 }

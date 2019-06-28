@@ -1,0 +1,17 @@
+import java.lang.Boolean;
+
+CREATE TABLE Toxicity (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	plant_id	INTEGER NOT NULL,
+	animal_id	INTEGER NOT NULL,
+	is_toxic	INTEGER as Boolean NOT NULL,
+	source	TEXT NOT NULL,
+	FOREIGN KEY(animal_id) REFERENCES Animal(id),
+	FOREIGN KEY(plant_id) REFERENCES Plant(id)
+);
+
+getToxicity:
+SELECT * FROM Toxicity WHERE plant_id == ? AND animal_id == ?;
+
+insert:
+INSERT INTO Toxicity(plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?);

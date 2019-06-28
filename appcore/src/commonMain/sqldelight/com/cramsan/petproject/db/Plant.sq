@@ -1,0 +1,15 @@
+CREATE TABLE Plant (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	scientific_name	TEXT NOT NULL UNIQUE,
+	family	TEXT NOT NULL,
+	image_url	TEXT NOT NULL
+);
+
+getPlant:
+SELECT * FROM Plant WHERE scientific_name == ?;
+
+getAll:
+SELECT * FROM Plant;
+
+insert:
+INSERT INTO Plant(scientific_name, family, image_url) VALUES (?, ?, ?);

@@ -1,0 +1,12 @@
+CREATE TABLE PlantCommonName (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	common_name	TEXT NOT NULL,
+	plant_id	INTEGER NOT NULL,
+	FOREIGN KEY(id) REFERENCES Plant(id)
+);
+
+getPlantCommonNames:
+SELECT * FROM PlantCommonName WHERE plant_id == ?;
+
+insert:
+INSERT INTO PlantCommonName(common_name, plant_id) VALUES (?, ?);

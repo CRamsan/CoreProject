@@ -21,7 +21,7 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
 
     override fun onListFragmentInteraction(item: Plant) {
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
-        plantIntent.putExtra(PLANT_ID, item.exactName)
+        plantIntent.putExtra(PLANT_ID, item.id)
         startActivity(plantIntent)
     }
 }

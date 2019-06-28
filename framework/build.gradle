@@ -1,13 +1,42 @@
 plugins {
+    id "com.android.library"
     id "org.jetbrains.kotlin.multiplatform"
     id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.android.extensions"
 }
 
-apply plugin: 'com.android.library'
+android {
+    compileSdkVersion globalCompileSdkVersion
+    defaultConfig {
+        minSdkVersion globalMinSdkVersion
+        targetSdkVersion globalTargetSdkVersion
+        versionCode globalVersionCode
+        versionName globalVersionName
+    }
+    compileOptions {
+        sourceCompatibility globalJavaCompatibility
+        targetCompatibility globalJavaCompatibility
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
+}
 
 kotlin {
-    android("android")
+    android("android") {
+    }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
     iosX64("ios") {
@@ -29,7 +58,7 @@ kotlin {
         }
         androidMain {
             dependencies {
-                implementation kotlin('stdlib')
+                implementation kotlin('stdlib-jdk8')
             }
         }
         androidTest {
@@ -49,14 +78,11 @@ kotlin {
     }
 }
 
-android {
-    compileSdkVersion globalCompileSdkVersion
-    defaultConfig {
-        minSdkVersion globalMinSdkVersion
-        targetSdkVersion globalTargetSdkVersion
-        versionCode globalVersionCode
-        versionName globalVersionName
-    }
+tasks.matching {it instanceof Test}.all {
+    testLogging.events = ["failed", "passed", "skipped"]
 }
 
-dependencies { }
+configurations {
+    // Workaround for https://youtrack.jetbrains.com/issue/KT-27170
+    compileClasspath
+}

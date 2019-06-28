@@ -25,12 +25,12 @@ class PlantDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val plantId = activity?.intent?.getStringExtra(PlantDetailsActivity.PLANT_ID) ?: return
+        val plantId = activity?.intent?.getIntExtra(PlantDetailsActivity.PLANT_ID, -1) ?: return
 
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(this, Observer<Plant>{ plant ->
             plant_details_title.text = plant.exactName
-            plant_details_subtitle.text = plant.commonName.joinToString { "," }
+            plant_details_subtitle.text = plant.commonNames
             plant_details_text.text = plant.family
             Glide.with(this)
                 .load(plant.imageUrl)

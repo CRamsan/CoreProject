@@ -1,13 +1,45 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.squareup.sqldelight:gradle-plugin:1.1.3'
+    }
+}
+
 plugins {
+    id "com.android.library"
     id "org.jetbrains.kotlin.multiplatform"
     id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.android.extensions"
 }
 
-apply plugin: 'com.android.library'
+apply plugin: 'com.squareup.sqldelight'
+
+sqldelight {
+    PetProjectDB {
+        packageName = "com.cramsan.petproject.db"
+    }
+}
+
+android {
+    compileSdkVersion globalCompileSdkVersion
+    defaultConfig {
+        minSdkVersion globalMinSdkVersion
+        targetSdkVersion globalTargetSdkVersion
+        versionCode globalVersionCode
+        versionName globalVersionName
+    }
+    compileOptions {
+        sourceCompatibility globalJavaCompatibility
+        targetCompatibility globalJavaCompatibility
+    }
+}
 
 kotlin {
-    android("android")
+    android("android") {
+    }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
     iosX64("ios") {
@@ -30,8 +62,10 @@ kotlin {
         }
         androidMain {
             dependencies {
-                implementation kotlin('stdlib')
+                implementation kotlin('stdlib-jdk8')
                 implementation project(":framework")
+
+                implementation "com.squareup.sqldelight:android-driver:1.1.3"
             }
         }
         androidTest {
@@ -51,14 +85,7 @@ kotlin {
     }
 }
 
-android {
-    compileSdkVersion globalCompileSdkVersion
-    defaultConfig {
-        minSdkVersion globalMinSdkVersion
-        targetSdkVersion globalTargetSdkVersion
-        versionCode globalVersionCode
-        versionName globalVersionName
-    }
+configurations {
+    // Workaround for https://youtrack.jetbrains.com/issue/KT-27170
+    compileClasspath
 }
-
-dependencies { }

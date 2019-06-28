@@ -1,0 +1,27 @@
+getAllPlants:
+SELECT
+    Plant.id, scientific_name, family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names
+FROM
+	Plant
+INNER JOIN
+    PlantCommonName ON PlantCommonName.plant_id = Plant.id
+INNER JOIN
+    Toxicity ON Toxicity.plant_id = Plant.id
+GROUP BY
+    Plant.id
+;
+
+getAllPlantsWithAnimalId:
+SELECT
+    Plant.id, scientific_name, family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names
+FROM
+	Plant
+INNER JOIN
+    PlantCommonName ON PlantCommonName.plant_id = Plant.id
+INNER JOIN
+    Toxicity ON Toxicity.plant_id = Plant.id
+WHERE
+    animal_id = ?
+GROUP BY
+    Plant.id
+;

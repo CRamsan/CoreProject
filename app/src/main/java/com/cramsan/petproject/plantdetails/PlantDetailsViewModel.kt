@@ -16,9 +16,9 @@ class PlantDetailsViewModel : ViewModel() {
 
     private val observablePlant = MutableLiveData<Plant>()
 
-    fun reloadPlant(uniqueName: String) {
+    fun reloadPlant(plantId: Int) {
         viewModelScope.launch {
-            loadPlant(uniqueName)
+            loadPlant(plantId)
         }
     }
 
@@ -26,8 +26,8 @@ class PlantDetailsViewModel : ViewModel() {
         return observablePlant
     }
 
-    private suspend fun loadPlant(uniqueName: String) = withContext(Dispatchers.IO) {
-        val plant = modelStore.getPlant(uniqueName)
+    private suspend fun loadPlant(plantId: Int) = withContext(Dispatchers.IO) {
+        val plant = modelStore.getPlant(plantId)
         viewModelScope.launch {
             observablePlant.value = plant
         }

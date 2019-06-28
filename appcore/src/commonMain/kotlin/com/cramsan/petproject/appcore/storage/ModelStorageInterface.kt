@@ -5,7 +5,7 @@ import com.cramsan.petproject.appcore.model.Plant
 interface ModelStorageInterface {
     fun getPlants(forceUpdate: Boolean): List<Plant>
 
-    fun getPlant(uniqueName: String): Plant?
+    fun getPlant(plantId: Int): Plant?
 
     fun getItems(forceUpdate: Boolean)
 }

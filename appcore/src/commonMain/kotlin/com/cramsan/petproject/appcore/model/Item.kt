@@ -1,7 +1,8 @@
 package com.cramsan.petproject.appcore.model
 
-open class Item(val exactName: String,
-                val commonName: List<String>,
+open class Item(val id: Int,
+                val exactName: String,
+                val commonNames: String,
                 val imageUrl: String,
-                val toxicityMapper: Mapper
+                val toxicityMapper: Mapper?
 )

@@ -28,6 +28,8 @@ allprojects {
         globalVersionCode = 1
         globalVersionName = '1.0'
         globalKotlinVersion = "1.3.31"
+        globalCoroutinesVersion = "1.3.0-M2"
+        globalJavaCompatibility = JavaVersion.VERSION_1_8
     }
 }
 

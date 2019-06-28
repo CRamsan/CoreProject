@@ -1,15 +1,14 @@
 package com.cramsan.petproject.appcore.model
 
-import com.cramsan.petproject.appcore.model.Item
-import com.cramsan.petproject.appcore.model.Mapper
-
-class Plant(scientificName: String,
-            commonName: List<String>,
+class Plant(id: Int,
+            scientificName: String,
+            commonNames: String,
             imageUrl: String,
             val family: String,
-            toxicityMapper: Mapper
+            toxicityMapper: Mapper?
 ):
-    Item(scientificName,
-        commonName,
+    Item(id,
+        scientificName,
+        commonNames,
         imageUrl,
         toxicityMapper)

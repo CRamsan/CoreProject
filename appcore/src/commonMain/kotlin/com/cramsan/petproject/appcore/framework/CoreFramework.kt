@@ -1,8 +1,12 @@
 package com.cramsan.petproject.appcore.framework
 
+import com.cramsan.framework.halt.HaltUtilAPI
+import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerAPI
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.thread.ThreadUtilAPI
+import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.cramsan.petproject.appcore.storage.ModelStorageAPI
@@ -16,6 +20,8 @@ object CoreFramework {
     lateinit var eventLogger: EventLoggerInterface
     private set
     fun initEventLogger() {
+        val initializer = EventLoggerInitializer()
+        EventLoggerAPI.init(initializer)
         eventLogger = EventLoggerAPI.eventLogger
     }
 
@@ -25,6 +31,15 @@ object CoreFramework {
         val initializer = ThreadUtilInitializer(eventLogger)
         ThreadUtilAPI.init(initializer)
         threadUtil = ThreadUtilAPI.threadUtil
+    }
+
+    lateinit var haltUtil: HaltUtilInterface
+    private set
+    fun initHaltUtil() {
+        val initializer = HaltUtilInitializer(eventLogger)
+        HaltUtilAPI.init(initializer)
+        haltUtil = HaltUtilAPI.haltUtil
+        EventLoggerAPI.setHaltUtil(haltUtil)
     }
 
     // Initialize all Core(mid-level) components

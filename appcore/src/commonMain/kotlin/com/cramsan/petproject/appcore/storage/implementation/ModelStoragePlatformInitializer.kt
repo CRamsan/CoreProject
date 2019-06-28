@@ -1,3 +1,7 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
-expect class ModelStoragePlatformInitializer
+import com.squareup.sqldelight.db.SqlDriver
+
+expect class ModelStoragePlatformInitializer {
+    fun getSqlDriver(): SqlDriver
+}
