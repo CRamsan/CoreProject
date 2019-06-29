@@ -37,7 +37,7 @@ class ThreadUtilTest {
             completion()
         }
     }
-    
+
     fun testDispatchToBackground(completion: () -> Unit) {
         assertTrue(threadUtil.isBackgroundThread())
         threadUtil.dispatchToBackground {
