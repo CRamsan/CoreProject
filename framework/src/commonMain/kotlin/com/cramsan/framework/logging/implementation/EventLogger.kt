@@ -6,7 +6,7 @@ import com.cramsan.framework.logging.PlatformLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.ThreadUtilInterface
 
-internal class EventLogger(initializer: EventLoggerInitializer): EventLoggerInterface {
+class EventLogger(initializer: EventLoggerInitializer): EventLoggerInterface {
 
     var haltUtil: HaltUtilInterface? = null
 

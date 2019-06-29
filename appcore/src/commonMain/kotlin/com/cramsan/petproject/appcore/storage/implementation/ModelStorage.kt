@@ -7,7 +7,7 @@ import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.db.Animal
 import com.cramsan.petproject.db.PetProjectDB
 
-internal class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface {
+class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface {
     var plantList = listOf<Plant>()
 
     var database: PetProjectDB

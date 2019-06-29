@@ -2,7 +2,7 @@ package com.cramsan.framework.halt.implementation
 
 import com.cramsan.framework.halt.HaltUtilInterface
 
-internal actual class HaltUtil actual constructor(initializer: HaltUtilInitializer) :
+actual class HaltUtil actual constructor(initializer: HaltUtilInitializer) :
     HaltUtilInterface {
 
     override fun stopThread() {

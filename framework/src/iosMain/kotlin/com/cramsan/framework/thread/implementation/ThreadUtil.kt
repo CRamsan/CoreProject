@@ -4,7 +4,7 @@ import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 
-internal actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) : ThreadUtilInterface {
+actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) : ThreadUtilInterface {
     override fun isBackgroundThread(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

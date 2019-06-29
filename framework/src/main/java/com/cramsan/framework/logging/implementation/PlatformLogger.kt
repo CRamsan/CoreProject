@@ -4,7 +4,7 @@ import android.util.Log
 import com.cramsan.framework.logging.PlatformLoggerInterface
 import com.cramsan.framework.logging.Severity
 
-internal actual class PlatformLogger : PlatformLoggerInterface {
+actual class PlatformLogger : PlatformLoggerInterface {
     override fun log(severity: Severity, tag: String, message: String) {
         when (severity) {
             Severity.VERBOSE -> Log.v(tag, message)

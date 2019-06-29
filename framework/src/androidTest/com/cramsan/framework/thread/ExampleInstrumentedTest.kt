@@ -76,7 +76,6 @@ class ExampleInstrumentedTest {
         }
         assertTrue(threadUtil.isBackgroundThread())
         semaphore.acquire()
-        assertTrue(false)
     }
 
     @UiThreadTest

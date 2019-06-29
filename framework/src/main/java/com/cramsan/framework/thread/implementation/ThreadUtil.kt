@@ -8,7 +8,7 @@ import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Executors
 
-internal actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) : ThreadUtilInterface {
+actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) : ThreadUtilInterface {
 
     private var logger: EventLoggerInterface = initializer.eventLoggerInterface
 
