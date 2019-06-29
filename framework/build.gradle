@@ -70,6 +70,8 @@ kotlin {
         }
         androidTest {
             dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
             }
         }
         iosMain {

@@ -1,14 +1,12 @@
 package com.cramsan.framework.thread.implementation
 
+import android.os.AsyncTask
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.logging.implementation.MockEventLogger
-import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Semaphore
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
 import org.junit.Before
 
 /**
@@ -19,79 +17,66 @@ import org.junit.Before
 @RunWith(AndroidJUnit4::class)
 class ThreadUtilInstrumentedTest {
 
-    private lateinit var threadUtil: ThreadUtilInterface
+    private lateinit var threadUtilTest: ThreadUtilTest
     private lateinit var semaphore: Semaphore
 
     @Before
     fun setUp() {
-        val initializer = ThreadUtilInitializer(MockEventLogger())
-        threadUtil = ThreadUtil(initializer)
+        threadUtilTest = ThreadUtilTest()
+        threadUtilTest.setUp()
         semaphore = Semaphore(0)
     }
 
     @Test
     fun testIsUIThread() {
-        assertTrue(threadUtil.isUIThread())
+        threadUtilTest.testIsUIThread()
     }
 
     @Test
-    fun testIsBackgroundThread() {
-        assertTrue(threadUtil.isBackgroundThread())
+    fun testIsNotBackgroundThread() {
+        threadUtilTest.testIsNotBackgroundThread()
+    }
+
+    @Test
+    fun testIsBackgroundThreadInJavaThread() {
+        Thread { run {
+            threadUtilTest.testIsBackgroundThread()
+            semaphore.release()
+        }}.start()
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testIsNotUIThreadInJavaThread() {
+        Thread { run {
+            threadUtilTest.testIsNotUIThread()
+            semaphore.release()
+        } }.start()
+        semaphore.acquire()
     }
 
     @Test
     fun testIsUIThreadInDispatchToUI() {
-        assertTrue(threadUtil.isUIThread())
-        assertTrue(false)
-        threadUtil.dispatchToUI {
-            assertTrue(threadUtil.isUIThread())
+        threadUtilTest.testIsUIThreadInDispatchToUI {
             semaphore.release()
         }
         semaphore.acquire()
     }
-
-    @Test
-    fun testIsUIThreadInDispatchToUIFromBackgroundThread() {
-        assertTrue(threadUtil.isBackgroundThread())
-        threadUtil.dispatchToUI {
-            assertTrue(threadUtil.isUIThread())
-            semaphore.release()
-        }
-        semaphore.acquire()
-    }
-
+    
     @Test
     fun testDispatchToBackground() {
-        assertTrue(threadUtil.isBackgroundThread())
-        threadUtil.dispatchToBackground {
-            assertTrue(threadUtil.isBackgroundThread())
-            semaphore.release()
-        }
-        assertTrue(threadUtil.isBackgroundThread())
+        Thread { run {
+            threadUtilTest.testDispatchToBackground {
+                semaphore.release()
+            }
+        }}.start()
         semaphore.acquire()
     }
 
     @Test
     fun testDispatchToBackgroundFromUIThread() {
-        assertTrue(threadUtil.isUIThread())
-        threadUtil.dispatchToBackground {
-            assertTrue(threadUtil.isBackgroundThread())
+        threadUtilTest.testDispatchToBackgroundFromUIThread {
             semaphore.release()
-        }
-        assertTrue(threadUtil.isUIThread())
-        semaphore.acquire()
-    }
-
-
-    @Test
-    fun testIsBackgroundThreadNested() {
-        assertTrue(threadUtil.isBackgroundThread())
-        threadUtil.dispatchToUI {
-            assertTrue(threadUtil.isUIThread())
-            threadUtil.dispatchToBackground {
-                assertTrue(threadUtil.isBackgroundThread())
-                semaphore.release()
-            }
         }
         semaphore.acquire()
     }

@@ -4,7 +4,7 @@ import android.util.Log
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 
-class MockEventLogger : EventLoggerInterface {
+actual class MockEventLogger : EventLoggerInterface {
     override fun log(severity: Severity, tag: String, message: String) {
         when (severity) {
             Severity.VERBOSE -> Log.v(tag, message)
