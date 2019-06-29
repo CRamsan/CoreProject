@@ -12,11 +12,22 @@ android {
         targetSdkVersion globalTargetSdkVersion
         versionCode globalVersionCode
         versionName globalVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
 }
 
 kotlin {
@@ -48,8 +59,8 @@ kotlin {
         }
         androidTest {
             dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
+                //implementation kotlin('test')
+                //implementation kotlin('test-junit')
             }
         }
         iosMain {

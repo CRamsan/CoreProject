@@ -1,7 +1,4 @@
-package com.cramsan.petproject
-
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
+package com.cramsan.framework.logging
 
 class MockEventLogger : EventLoggerInterface {
     override fun log(severity: Severity, tag: String, message: String) {

@@ -1,15 +1,11 @@
-package com.cramsan.petproject
+package com.cramsan.framework.thread
 
-import android.content.Context
 import androidx.test.annotation.UiThreadTest
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.thread.ThreadUtilAPI
-import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
-import com.cramsan.petproject.appcore.framework.CoreFramework
-import java.util.concurrent.Semaphore;
+import com.cramsan.framework.logging.MockEventLogger
+import java.util.concurrent.Semaphore
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +19,7 @@ import org.junit.Before
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class ThreadUtilInstrumentedTest {
 
     private lateinit var threadUtil: ThreadUtilInterface
     private lateinit var semaphore: Semaphore
