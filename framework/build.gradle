@@ -18,10 +18,21 @@ android {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+    useLibrary 'android.test.runner'
+
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
+
 }
 
 dependencies {
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:4.3'
 
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
     androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
@@ -59,8 +70,6 @@ kotlin {
         }
         androidTest {
             dependencies {
-                //implementation kotlin('test')
-                //implementation kotlin('test-junit')
             }
         }
         iosMain {

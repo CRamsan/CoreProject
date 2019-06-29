@@ -1,10 +1,8 @@
-package com.cramsan.framework.thread
+package com.cramsan.framework.thread.implementation
 
-import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.thread.implementation.ThreadUtil
-import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
-import com.cramsan.framework.logging.MockEventLogger
+import com.cramsan.framework.logging.implementation.MockEventLogger
+import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Semaphore
 
 import org.junit.Test
@@ -18,7 +16,6 @@ import org.junit.Before
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-/*
 @RunWith(AndroidJUnit4::class)
 class ThreadUtilInstrumentedTest {
 
@@ -32,7 +29,6 @@ class ThreadUtilInstrumentedTest {
         semaphore = Semaphore(0)
     }
 
-    @UiThreadTest
     @Test
     fun testIsUIThread() {
         assertTrue(threadUtil.isUIThread())
@@ -43,7 +39,6 @@ class ThreadUtilInstrumentedTest {
         assertTrue(threadUtil.isBackgroundThread())
     }
 
-    @UiThreadTest
     @Test
     fun testIsUIThreadInDispatchToUI() {
         assertTrue(threadUtil.isUIThread())
@@ -76,7 +71,6 @@ class ThreadUtilInstrumentedTest {
         semaphore.acquire()
     }
 
-    @UiThreadTest
     @Test
     fun testDispatchToBackgroundFromUIThread() {
         assertTrue(threadUtil.isUIThread())
@@ -102,4 +96,3 @@ class ThreadUtilInstrumentedTest {
         semaphore.acquire()
     }
 }
-*/
