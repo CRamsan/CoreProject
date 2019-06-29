@@ -17,21 +17,6 @@ android {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
-    packagingOptions {
-        exclude 'META-INF/LICENSE.md'
-        exclude 'META-INF/LICENSE-notice.md'
-    }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-}
-
-dependencies {
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.19.0'
-    testImplementation 'androidx.test:core:1.2.0'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
 }
 
 kotlin {
@@ -76,10 +61,6 @@ kotlin {
             }
         }
     }
-}
-
-tasks.matching {it instanceof Test}.all {
-    testLogging.events = ["failed", "passed", "skipped"]
 }
 
 configurations {
