@@ -4,12 +4,12 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath "com.android.tools.build:gradle:3.4.1"
     }
 }
 
 plugins {
-    id 'com.github.ben-manes.versions' version "0.21.0"
+    id "com.github.ben-manes.versions" version "0.21.0"
     id "org.jetbrains.kotlin.multiplatform" version "1.3.40" apply false
     id "org.jetbrains.kotlin.android" version "1.3.40" apply false
     id "org.jetbrains.kotlin.android.extensions" version "1.3.40" apply false
@@ -27,11 +27,16 @@ allprojects {
         globalMinSdkVersion = 21
         globalTargetSdkVersion = 28
         globalVersionCode = 1
-        globalVersionName = '1.0'
+        globalVersionName = "1.0"
         globalKotlinVersion = "1.3.40"
         globalCoroutinesVersion = "1.3.0-M2"
         globalJavaCompatibility = JavaVersion.VERSION_1_8
         globalSqlDelightVersion = "1.1.3"
+        globalJUnitVersion = "4.12"
+        globalGlideVersion = "4.9.0"
+        globalRobolectricVersion = "4.3"
+        globalAndroidXJUnitVersion = "1.1.1"
+        globalEspressoVersion = "3.2.0"
     }
 }
 

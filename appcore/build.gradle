@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.squareup.sqldelight:gradle-plugin:1.1.3'
+        classpath "com.squareup.sqldelight:gradle-plugin:$globalSqlDelightVersion"
     }
 }
 
@@ -15,7 +15,7 @@ plugins {
     id "org.jetbrains.kotlin.android.extensions"
 }
 
-apply plugin: 'com.squareup.sqldelight'
+apply plugin: "com.squareup.sqldelight"
 
 sqldelight {
     PetProjectDB {
@@ -50,28 +50,26 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation kotlin('stdlib-common')
+                implementation kotlin("stdlib-common")
                 implementation project(":framework")
             }
         }
         commonTest {
             dependencies {
-                implementation kotlin('test-common')
-                implementation kotlin('test-annotations-common')
+                implementation kotlin("test-common")
+                implementation kotlin("test-annotations-common")
             }
         }
         androidMain {
             dependencies {
-                implementation kotlin('stdlib-jdk8')
-                implementation project(":framework")
-
+                implementation kotlin("stdlib-jdk8")
                 implementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
             }
         }
         androidTest {
             dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
+                implementation kotlin("test")
+                implementation kotlin("test-junit")
             }
         }
         iosMain {

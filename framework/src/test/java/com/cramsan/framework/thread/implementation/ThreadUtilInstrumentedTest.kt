@@ -1,6 +1,5 @@
 package com.cramsan.framework.thread.implementation
 
-import android.os.AsyncTask
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import java.util.concurrent.Semaphore
 
