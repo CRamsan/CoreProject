@@ -35,6 +35,22 @@ android {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed"
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    testImplementation "junit:junit:$globalJUnitVersion"
+    testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
+    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
 }
 
 kotlin {

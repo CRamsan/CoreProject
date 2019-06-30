@@ -14,14 +14,14 @@ import org.junit.Before
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ThreadUtilInstrumentedTest {
+class ThreadUtilTest {
 
-    private lateinit var threadUtilTest: ThreadUtilTest
+    private lateinit var threadUtilTest: ThreadUtilCommonTest
     private lateinit var semaphore: Semaphore
 
     @Before
     fun setUp() {
-        threadUtilTest = ThreadUtilTest()
+        threadUtilTest = ThreadUtilCommonTest()
         threadUtilTest.setUp()
         semaphore = Semaphore(0)
     }

@@ -5,7 +5,7 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class ThreadUtilTest {
+class ThreadUtilCommonTest {
 
     private lateinit var threadUtil: ThreadUtilInterface
 
