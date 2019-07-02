@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cramsan.petproject.appcore.framework.CoreFramework
+import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.Plant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class PlantListViewModel : ViewModel() {
 
-    private val modelStore = CoreFramework.modelStorage
+    private val modelStore = CoreFrameworkAPI.modelStorage
 
     private val observablePlants = MutableLiveData<List<Plant>>()
 

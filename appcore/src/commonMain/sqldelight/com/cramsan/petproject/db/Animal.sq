@@ -13,3 +13,6 @@ SELECT * FROM Animal;
 
 insert:
 INSERT INTO Animal(common_name) VALUES (?);
+
+clear:
+DELETE FROM Animal;

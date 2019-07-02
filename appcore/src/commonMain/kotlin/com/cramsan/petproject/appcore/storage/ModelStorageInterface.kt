@@ -3,9 +3,7 @@ package com.cramsan.petproject.appcore.storage
 import com.cramsan.petproject.appcore.model.Plant
 
 interface ModelStorageInterface {
-    fun getPlants(forceUpdate: Boolean): List<Plant>
+    suspend fun getPlants(forceUpdate: Boolean): List<Plant>
 
-    fun getPlant(plantId: Int): Plant?
-
-    fun getItems(forceUpdate: Boolean)
+    suspend fun getPlant(plantId: Int): Plant?
 }

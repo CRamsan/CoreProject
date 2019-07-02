@@ -30,6 +30,10 @@ android {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
+
+    packagingOptions {
+        exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
+    }
 }
 
 def constraintLayoutVersion = "1.1.3"

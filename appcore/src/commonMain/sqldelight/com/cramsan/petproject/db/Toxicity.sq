@@ -15,3 +15,6 @@ SELECT * FROM Toxicity WHERE plant_id == ? AND animal_id == ?;
 
 insert:
 INSERT INTO Toxicity(plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?);
+
+clear:
+DELETE FROM Toxicity;

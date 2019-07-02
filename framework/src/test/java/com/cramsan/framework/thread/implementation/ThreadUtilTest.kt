@@ -1,6 +1,10 @@
 package com.cramsan.framework.thread.implementation
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Semaphore
 
 import org.junit.Test
@@ -51,6 +55,28 @@ class ThreadUtilTest {
             threadUtilTest.testIsNotUIThread()
             semaphore.release()
         } }.start()
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testIsBackgroundThreadInCoroutine() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                threadUtilTest.testIsBackgroundThread()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testIsNotUIThreadInCoroutine() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                threadUtilTest.testIsNotUIThread()
+                semaphore.release()
+            }
+        }
         semaphore.acquire()
     }
 

@@ -48,9 +48,12 @@ android {
 }
 
 dependencies {
+    implementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
+
+    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
+    testImplementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
     testImplementation "junit:junit:$globalJUnitVersion"
     testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
-    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
 }
 
 kotlin {
@@ -67,6 +70,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin("stdlib-common")
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
                 implementation project(":framework")
             }
         }
@@ -74,18 +78,20 @@ kotlin {
             dependencies {
                 implementation kotlin("test-common")
                 implementation kotlin("test-annotations-common")
+                implementation project(":framework")
             }
         }
         androidMain {
             dependencies {
                 implementation kotlin("stdlib-jdk8")
-                implementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
             }
         }
         androidTest {
             dependencies {
                 implementation kotlin("test")
                 implementation kotlin("test-junit")
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
             }
         }
         iosMain {

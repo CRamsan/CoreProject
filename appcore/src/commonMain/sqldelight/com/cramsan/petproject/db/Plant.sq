@@ -13,3 +13,6 @@ SELECT * FROM Plant;
 
 insert:
 INSERT INTO Plant(scientific_name, family, image_url) VALUES (?, ?, ?);
+
+clear:
+DELETE FROM Plant;

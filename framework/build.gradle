@@ -31,9 +31,9 @@ android {
 }
 
 dependencies {
+    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "junit:junit:$globalJUnitVersion"
     testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
-    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
 }
 
 kotlin {
@@ -67,6 +67,7 @@ kotlin {
             dependencies {
                 implementation kotlin("test")
                 implementation kotlin("test-junit")
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
             }
         }
         iosMain {
