@@ -21,6 +21,12 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         }
 
         val list = sqlDelightDAO.getCustomPlantEntries()
+
+        if (list.isEmpty()) {
+            test()
+            insertMorePlants()
+        }
+
         val mutableList = mutableListOf<Plant>()
         list.forEach {
             mutableList.add(
@@ -82,9 +88,26 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         )
     }
 
+    fun insertMorePlants() {
+        for (i in 1..100) {
+            sqlDelightDAO.insertPlantEntry(
+                "Arum maculatum$i",
+                "Araceae",
+                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
+            )
+            val new = sqlDelightDAO.getPlantEntry("Arum maculatum$i")
+            sqlDelightDAO.insertPlantCommonNameEntry("Arum", new.id)
+            sqlDelightDAO.insertToxicityEntry(true,
+                new.id,
+                1,
+                "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
+            )
+        }
+    }
+
+
     fun deleteAll() {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
         sqlDelightDAO.deleteAll()
     }
 }
-
