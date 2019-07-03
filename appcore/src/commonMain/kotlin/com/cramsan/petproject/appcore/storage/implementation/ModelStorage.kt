@@ -5,52 +5,13 @@ import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.db.Animal
-import com.cramsan.petproject.db.PetProjectDB
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface {
     private var plantList: List<Plant>? = null
 
-    private var database: PetProjectDB
-    private val mutex = Mutex()
+    private var sqlDelightDAO: SQLDelightDAO = SQLDelightDAO(initializer)
 
-    init {
-        val sqlDriver = initializer.platformInitializer.getSqlDriver()
-        database = PetProjectDB(sqlDriver,
-            AnimalAdapter = Animal.Adapter(CommonNameAdapter())
-        )
-        if (database.animalQueries.getAnimal(AnimalType.DOG).executeAsOneOrNull() == null) {
-            database.animalQueries.insert(AnimalType.CAT)
-            database.animalQueries.insert(AnimalType.DOG)
-            val dog = database.animalQueries.getAnimal(AnimalType.DOG).executeAsOne()
-            val cat = database.animalQueries.getAnimal(AnimalType.CAT).executeAsOne()
-            database.plantQueries.insert(
-                "Arum maculatum",
-                "Araceae",
-                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
-            )
-            val newPlant = database.plantQueries.getPlant("Arum maculatum").executeAsOne()
-            database.plantCommonNameQueries.insert("Arum", newPlant.id)
-            database.plantCommonNameQueries.insert("Lord-and-Ladies", newPlant.id)
-            database.plantCommonNameQueries.insert("Wake Robin", newPlant.id)
-            database.toxicityQueries.insert(
-                newPlant.id,
-                dog.id,
-                true,
-                "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-            )
-            database.toxicityQueries.insert(
-                newPlant.id,
-                cat.id,
-                false,
-                "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-            )
-        }
-    }
-
-    override suspend fun getPlants(forceUpdate: Boolean): List<Plant> {
+    override fun getPlants(forceUpdate: Boolean): List<Plant> {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
         val cachedPlantList = plantList
         if (!forceUpdate) {
@@ -59,12 +20,12 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
             }
         }
 
-        //val list = database.plantQueries.getAll().executeAsList()
-        val list = database.customProjectionsQueries.getAllPlants().executeAsList()
+        val list = sqlDelightDAO.getCustomPlantEntries()
         val mutableList = mutableListOf<Plant>()
         list.forEach {
             mutableList.add(
-                Plant(it.id.toInt(),
+                Plant(
+                    it.id.toInt(),
                     it.scientific_name,
                     it.common_names,
                     it.image_url,
@@ -76,7 +37,7 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         return mutableList
     }
 
-    override suspend fun getPlant(plantId: Int): Plant? {
+    override fun getPlant(plantId: Int): Plant? {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
         val cachedPlantList = plantList
         if (cachedPlantList == null) {
@@ -92,6 +53,38 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
             return it
         }
         return null
+    }
+
+    fun test() {
+        sqlDelightDAO.insertAnimalEntry(AnimalType.CAT)
+        sqlDelightDAO.insertAnimalEntry(AnimalType.DOG)
+
+        val dog = sqlDelightDAO.getAnimalEntry(AnimalType.DOG)
+        val cat = sqlDelightDAO.getAnimalEntry(AnimalType.CAT)
+
+        sqlDelightDAO.insertPlantEntry("Arum maculatum",
+            "Araceae",
+            "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
+        )
+        val newPlant = sqlDelightDAO.getPlantEntry("Arum maculatum")
+        sqlDelightDAO.insertPlantCommonNameEntry("Arum", newPlant.id)
+        sqlDelightDAO.insertPlantCommonNameEntry("Lord-and-Ladies", newPlant.id)
+        sqlDelightDAO.insertPlantCommonNameEntry("Wake Robin", newPlant.id)
+        sqlDelightDAO.insertToxicityEntry(true,
+            newPlant.id,
+            dog.id,
+            "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
+        )
+        sqlDelightDAO.insertToxicityEntry(false,
+            newPlant.id,
+            cat.id,
+            "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
+        )
+    }
+
+    fun deleteAll() {
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+        sqlDelightDAO.deleteAll()
     }
 }
 

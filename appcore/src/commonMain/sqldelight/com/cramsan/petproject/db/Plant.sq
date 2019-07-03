@@ -14,5 +14,5 @@ SELECT * FROM Plant;
 insert:
 INSERT INTO Plant(scientific_name, family, image_url) VALUES (?, ?, ?);
 
-clear:
+deleteAll:
 DELETE FROM Plant;

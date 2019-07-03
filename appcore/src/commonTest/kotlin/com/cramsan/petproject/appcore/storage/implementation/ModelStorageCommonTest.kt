@@ -7,22 +7,26 @@ import kotlin.test.assertNotNull
 internal class ModelStorageCommonTest {
 
     private lateinit var modelStorage: ModelStorageInterface
+    private lateinit var modelStorageImpl: ModelStorage
 
     fun setUp(platformInitializer: ModelStoragePlatformInitializer) {
         val initializer = ModelStorageInitializer(platformInitializer)
-        modelStorage = ModelStorage(initializer)
+        modelStorageImpl = ModelStorage(initializer)
+        modelStorage = modelStorageImpl
     }
 
     fun tearDown() {
 
     }
 
-    suspend fun testGetPlants() {
+    fun testGetPlants() {
+        modelStorageImpl.test()
         val plants = modelStorage.getPlants(true)
         assertEquals(plants.size, 1)
     }
 
-    suspend fun testGetPlant() {
+    fun testGetPlant() {
+        modelStorageImpl.test()
         val plant = modelStorage.getPlant(1)
         assertNotNull(plant)
         assertEquals(plant.id, 1)

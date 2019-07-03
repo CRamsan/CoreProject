@@ -11,5 +11,5 @@ SELECT * FROM PlantCommonName WHERE plant_id == ?;
 insert:
 INSERT INTO PlantCommonName(common_name, plant_id) VALUES (?, ?);
 
-clear:
+deleteAll:
 DELETE FROM PlantCommonName;
