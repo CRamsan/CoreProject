@@ -1,48 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/plantdetails"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".plantdetails.PlantDetailsFragment">
+        android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/plantdetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".plantdetails.PlantDetailsFragment">
 
-    <TextView
-            android:id="@+id/plant_details_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PlantDetailsFragment"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/plant_details_subtitle"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/plant_details_title"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:src="@tools:sample/avatars"
-            android:id="@+id/plant_details_image"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/plant_details_subtitle"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/plant_details_text"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/plant_details_image"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+        <TextView
+                android:id="@+id/plant_details_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Purple Flower"
+                android:layout_margin="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" android:textSize="48sp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/plant_details_scientific_name"
+                android:layout_margin="8dp"
+                tools:text="Africanus Violetus"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_title"
+                app:layout_constraintStart_toStartOf="parent" android:textSize="18sp"/>
+        <TextView
+                tools:text="Purple Flower Family"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_title"
+                app:layout_constraintStart_toEndOf="@+id/plant_details_scientific_name" android:textSize="18sp"
+                android:id="@+id/plant_details_family"/>
+        <TextView
+                tools:text="Common names: Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/plant_details_common_names"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_scientific_name"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="8dp" android:textSize="14sp"/>
+        <TextView
+                tools:text="Dangerous!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/plant_details_danger" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_common_names"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:textSize="24sp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:textColor="@android:color/holo_red_dark"/>
+        <Button
+                android:text="@string/todo"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/plant_details_report"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/plant_details_image"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_common_names"
+                app:layout_constraintStart_toEndOf="@+id/plant_details_danger"/>
+        <ImageView
+                android:layout_width="256dp"
+                android:layout_height="256dp"
+                tools:src="@tools:sample/avatars"
+                android:id="@+id/plant_details_image"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_danger"
+                android:layout_margin="8dp" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:contentDescription="@string/todo"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/plant_details_description" android:layout_marginTop="8dp"
+                tools:text="Other stuff Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados Other stuff Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados"
+                app:layout_constraintTop_toBottomOf="@+id/plant_details_image" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

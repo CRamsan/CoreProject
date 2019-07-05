@@ -7,11 +7,13 @@ interface ModelStorageDAO {
 
     fun insertAnimalEntry(animalType: AnimalType)
 
-    fun insertPlantEntry(scientificName: String, family: String, imageUrl: String)
+    fun insertPlantEntry(scientificName: String, mainCommonName: String, family: String, imageUrl: String)
 
     fun insertPlantCommonNameEntry(commonName: String, plantId: Long)
 
     fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalId: Long, source:String)
+
+    fun insertDescriptionEntry(plantId: Long, animalId: Long, description:String)
 
     fun getAnimalEntry(animalType: AnimalType): Animal
 
@@ -23,7 +25,11 @@ interface ModelStorageDAO {
 
     fun getToxicityEntry(plantId: Long, animalId: Long): Toxicity
 
+    fun getDescriptionEntry(plantId: Long, animalId: Long): Description
+
     fun getCustomPlantEntries(): List<GetAllPlants>
+
+    fun getCustomPlantEntries(animalId: Long): List<GetAllPlantsWithAnimalId>
 
     fun deleteAll()
 }

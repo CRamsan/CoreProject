@@ -21,9 +21,6 @@ import com.cramsan.petproject.appcore.model.Plant
  */
 class PlantsListFragment : Fragment() {
 
-    // TODO: Customize parameters
-    private var columnCount = 1
-
     private var listener: OnListFragmentInteractionListener? = null
     private var plantsAdapter: PlantsRecyclerViewAdapter? = null
 
@@ -45,10 +42,7 @@ class PlantsListFragment : Fragment() {
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
+                layoutManager = LinearLayoutManager(context)
                 plantsAdapter = PlantsRecyclerViewAdapter(listener)
                 adapter = plantsAdapter
             }

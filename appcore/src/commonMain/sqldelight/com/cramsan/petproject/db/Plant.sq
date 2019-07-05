@@ -1,5 +1,6 @@
 CREATE TABLE Plant (
 	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	main_common_name	TEXT NOT NULL,
 	scientific_name	TEXT NOT NULL UNIQUE,
 	family	TEXT NOT NULL,
 	image_url	TEXT NOT NULL
@@ -12,7 +13,7 @@ getAll:
 SELECT * FROM Plant;
 
 insert:
-INSERT INTO Plant(scientific_name, family, image_url) VALUES (?, ?, ?);
+INSERT INTO Plant(scientific_name, main_common_name, family, image_url) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Plant;

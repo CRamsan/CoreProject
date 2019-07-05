@@ -1,0 +1,17 @@
+CREATE TABLE Description (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	plant_id	INTEGER NOT NULL,
+	animal_id	INTEGER NOT NULL,
+	description	TEXT NOT NULL,
+	FOREIGN KEY(animal_id) REFERENCES Animal(id),
+	FOREIGN KEY(plant_id) REFERENCES Plant(id)
+);
+
+getDescription:
+SELECT * FROM Description WHERE plant_id == ? AND animal_id == ?;
+
+insert:
+INSERT INTO Description(plant_id, animal_id, description) VALUES (?, ?, ?);
+
+deleteAll:
+DELETE FROM Description;

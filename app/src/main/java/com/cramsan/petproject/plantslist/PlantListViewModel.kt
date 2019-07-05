@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
+import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class PlantListViewModel : ViewModel() {
     }
 
     private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlants(true)
+        val plants = modelStore.getPlants(AnimalType.CAT, true)
         viewModelScope.launch {
             observablePlants.value = plants
         }

@@ -28,13 +28,18 @@ class PlantDetailsFragment : Fragment() {
         val plantId = activity?.intent?.getIntExtra(PlantDetailsActivity.PLANT_ID, -1) ?: return
 
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
-        viewModel.getPlant().observe(this, Observer<Plant>{ plant ->
-            plant_details_title.text = plant.exactName
-            plant_details_subtitle.text = plant.commonNames
-            plant_details_text.text = plant.family
+        viewModel.getPlant().observe(this, Observer {
+            plant_details_title.text = it.mainCommonName
+            plant_details_scientific_name.text = it.exactName
+            plant_details_common_names.text = it.commonNames
+            plant_details_family.text = it.family
             Glide.with(this)
-                .load(plant.imageUrl)
+                .load(it.imageUrl)
                 .into(plant_details_image)
+        })
+        viewModel.getPlantMetadata().observe(this, Observer {
+            plant_details_danger.text = it.isToxic.toString()
+            plant_details_description.text = it.description
         })
         viewModel.reloadPlant(plantId)
     }
