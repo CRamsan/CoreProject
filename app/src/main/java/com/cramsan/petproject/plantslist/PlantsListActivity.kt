@@ -15,8 +15,6 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plants_list)
         setSupportActionBar(toolbar_2)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onListFragmentInteraction(item: Plant) {
