@@ -11,12 +11,9 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
     init {
         val sqlDriver = initializer.platformInitializer.getSqlDriver()
         database = PetProjectDB(sqlDriver,
-            AnimalAdapter = Animal.Adapter(CommonNameAdapter())
+            DescriptionAdapter = Description.Adapter(AnimalTypeAdapter()),
+            ToxicityAdapter = Toxicity.Adapter(AnimalTypeAdapter())
         )
-    }
-
-    override fun insertAnimalEntry(animalType: AnimalType) {
-        database.animalQueries.insert(animalType)
     }
 
     override fun insertPlantEntry(scientificName: String, mainCommonName: String, family: String, imageUrl: String) {
@@ -27,19 +24,15 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         database.plantCommonNameQueries.insert(commonName, plantId)
     }
 
-    override fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalId: Long, source:String) {
-        database.toxicityQueries.insert(plantId, animalId, isToxic, source)
+    override fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalType: AnimalType, source:String) {
+        database.toxicityQueries.insert(plantId, animalType, isToxic, source)
     }
 
-    override fun insertDescriptionEntry(plantId: Long, animalId: Long, description: String) {
-        return database.descriptionQueries.insert(plantId, animalId, description)
+    override fun insertDescriptionEntry(plantId: Long, animalType: AnimalType, description: String) {
+        return database.descriptionQueries.insert(plantId, animalType, description)
     }
 
-    override fun getAnimalEntry(animalType: AnimalType): Animal {
-        return database.animalQueries.getAnimal(animalType).executeAsOne()
-    }
-
-    override fun getPlantEntry(scientificName: String): com.cramsan.petproject.db.Plant {
+    override fun getPlantEntry(scientificName: String): Plant {
         return database.plantQueries.getPlant(scientificName).executeAsOne()
     }
 
@@ -51,26 +44,25 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         return database.plantCommonNameQueries.getPlantCommonNames(plantId).executeAsList()
     }
 
-    override fun getToxicityEntry(plantId: Long, animalId: Long): Toxicity {
-        return database.toxicityQueries.getToxicity(plantId, animalId).executeAsOne()
+    override fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity {
+        return database.toxicityQueries.getToxicity(plantId, animalType).executeAsOne()
     }
 
-    override fun getDescriptionEntry(plantId: Long, animalId: Long): Description {
-        return database.descriptionQueries.getDescription(plantId, animalId).executeAsOne()
+    override fun getDescriptionEntry(plantId: Long, animalType: AnimalType): Description {
+        return database.descriptionQueries.getDescription(plantId, animalType).executeAsOne()
     }
 
-    override fun getCustomPlantEntries(): List<GetAllPlants> {
-        return database.customProjectionsQueries.getAllPlants().executeAsList()
+    override fun getCustomPlantEntries(animalType: AnimalType): List<GetAllPlantsWithAnimalId> {
+        return database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType).executeAsList()
     }
 
-    override fun getCustomPlantEntries(animalId: Long): List<GetAllPlantsWithAnimalId> {
-        return database.customProjectionsQueries.getAllPlantsWithAnimalId(animalId).executeAsList()
+    override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType): GetPlantWithPlantIdAndAnimalId {
+        return database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId).executeAsOne()
     }
 
     override fun deleteAll() {
         database.toxicityQueries.deleteAll()
         database.plantCommonNameQueries.deleteAll()
         database.plantQueries.deleteAll()
-        database.animalQueries.deleteAll()
     }
 }

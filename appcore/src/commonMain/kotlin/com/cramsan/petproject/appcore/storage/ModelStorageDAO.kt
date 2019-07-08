@@ -5,17 +5,13 @@ import com.cramsan.petproject.db.*
 
 interface ModelStorageDAO {
 
-    fun insertAnimalEntry(animalType: AnimalType)
-
     fun insertPlantEntry(scientificName: String, mainCommonName: String, family: String, imageUrl: String)
 
     fun insertPlantCommonNameEntry(commonName: String, plantId: Long)
 
-    fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalId: Long, source:String)
+    fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalType: AnimalType, source:String)
 
-    fun insertDescriptionEntry(plantId: Long, animalId: Long, description:String)
-
-    fun getAnimalEntry(animalType: AnimalType): Animal
+    fun insertDescriptionEntry(plantId: Long, animalType: AnimalType, description:String)
 
     fun getPlantEntry(scientificName: String): Plant
 
@@ -23,13 +19,13 @@ interface ModelStorageDAO {
 
     fun getPlantCommonNameEntries(plantId: Long): List<PlantCommonName>
 
-    fun getToxicityEntry(plantId: Long, animalId: Long): Toxicity
+    fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity
 
-    fun getDescriptionEntry(plantId: Long, animalId: Long): Description
+    fun getDescriptionEntry(plantId: Long, animalType: AnimalType): Description
 
-    fun getCustomPlantEntries(): List<GetAllPlants>
+    fun getCustomPlantEntries(animalType: AnimalType): List<GetAllPlantsWithAnimalId>
 
-    fun getCustomPlantEntries(animalId: Long): List<GetAllPlantsWithAnimalId>
+    fun getCustomPlantEntry(plantId: Long, animalType: AnimalType): GetPlantWithPlantIdAndAnimalId
 
     fun deleteAll()
 }

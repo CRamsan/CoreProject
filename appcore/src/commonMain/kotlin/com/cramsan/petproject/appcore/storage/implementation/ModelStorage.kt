@@ -9,18 +9,12 @@ import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 
 class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface {
 
-    private var sqlDelightDAO: SQLDelightDAO = SQLDelightDAO(initializer)
+    var sqlDelightDAO: SQLDelightDAO = SQLDelightDAO(initializer)
 
-    override fun getPlants(animalType: AnimalType, forceUpdate: Boolean): List<Plant> {
+    override fun getPlants(animalType: AnimalType): List<Plant> {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val tlist = sqlDelightDAO.getCustomPlantEntries()
-        if (tlist.isEmpty()) {
-            test()
-            insertMorePlants()
-        }
-        val animalEntry = sqlDelightDAO.getAnimalEntry(animalType)
-        val list = sqlDelightDAO.getCustomPlantEntries(animalEntry.id)
+        val list = sqlDelightDAO.getCustomPlantEntries(animalType)
         val mutableList = mutableListOf<Plant>()
 
         list.forEach {
@@ -38,51 +32,24 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         return mutableList
     }
 
-    override fun getPlants(forceUpdate: Boolean): List<Plant> {
+    override fun getPlant(animalType: AnimalType, plantId: Int): Plant {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val list = sqlDelightDAO.getCustomPlantEntries()
+        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType)
 
-        val mutableList = mutableListOf<Plant>()
-        list.forEach {
-            mutableList.add(
-                Plant(
-                    it.id.toInt(),
-                    it.scientific_name,
-                    it.main_common_name,
-                    it.common_names,
-                    it.image_url,
-                    it.family,
-                    null
-                ))
-        }
-        return mutableList
-    }
-
-    override fun getPlant(plantId: Int): Plant? {
-        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
-        val plantList = getPlants(true)
-        plantList.forEach {
-            if (it.id != plantId)
-                return@forEach
-
-            return it
-        }
-        return null
-    }
-
-    override fun getToxicity(animalType: AnimalType, plantId: Int) : Toxicity {
-        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
-
-        val animalEntry = sqlDelightDAO.getAnimalEntry(animalType)
-        val toxicityEntry = sqlDelightDAO.getToxicityEntry(plantId.toLong(), animalEntry.id)
-
-        return Toxicity(toxicityEntry.is_toxic, toxicityEntry.source)
+        return Plant(
+            plantEntry.id.toInt(),
+            plantEntry.scientific_name,
+            plantEntry.main_common_name,
+            plantEntry.common_names,
+            plantEntry.image_url,
+            plantEntry.family,
+            plantEntry.is_toxic
+        )
     }
 
     override fun getPlantMetadata(animalType: AnimalType, plantId: Int) : PlantMetadata {
-        val animalEntry = sqlDelightDAO.getAnimalEntry(animalType)
-        return PlantMetadata(0, plantId, AnimalType.CAT, true, "This asd" +
+        return PlantMetadata(0, plantId, animalType, true, "This asd" +
                 "a sdas dasdasdasd wq da s da  eqwew dwad " +
                 "a ddasdasdasd wq da s da  eqwew dwad " +
                 "as asd sa dasdasdasd wq da s da  eqwew dwad " +
@@ -90,52 +57,15 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
                 " dasdasdasd wq da s da  eqwew dwad ", "https://www.google.com")
     }
 
-    fun test() {
-        sqlDelightDAO.insertAnimalEntry(AnimalType.CAT)
-        sqlDelightDAO.insertAnimalEntry(AnimalType.DOG)
-
-        val dog = sqlDelightDAO.getAnimalEntry(AnimalType.DOG)
-        val cat = sqlDelightDAO.getAnimalEntry(AnimalType.CAT)
-
-        sqlDelightDAO.insertPlantEntry("Arum maculatum",
-            "Adam and Eve",
-            "Araceae",
-            "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
-        )
-        val newPlant = sqlDelightDAO.getPlantEntry("Arum maculatum")
-        sqlDelightDAO.insertPlantCommonNameEntry("Arum", newPlant.id)
-        sqlDelightDAO.insertPlantCommonNameEntry("Lord-and-Ladies", newPlant.id)
-        sqlDelightDAO.insertPlantCommonNameEntry("Wake Robin", newPlant.id)
-        sqlDelightDAO.insertToxicityEntry(true,
-            newPlant.id,
-            dog.id,
-            "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-        )
-        sqlDelightDAO.insertToxicityEntry(false,
-            newPlant.id,
-            cat.id,
-            "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-        )
-    }
-
-    fun insertMorePlants() {
-        for (i in 1..100) {
-            sqlDelightDAO.insertPlantEntry(
-                "Arum maculatum $i",
-                "Adam and Eve $i",
-                "Araceae",
-                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
-            )
-            val new = sqlDelightDAO.getPlantEntry("Arum maculatum $i")
-            sqlDelightDAO.insertPlantCommonNameEntry("Arum", new.id)
-            sqlDelightDAO.insertToxicityEntry(true,
-                new.id,
-                1,
-                "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-            )
+    fun insertPlant(plant: Plant, plantMetadata: PlantMetadata) {
+        sqlDelightDAO.insertPlantEntry(plant.exactName, plant.mainCommonName, plant.family, plant.imageUrl)
+        val plantEntry = sqlDelightDAO.getPlantEntry(plant.exactName)
+        plant.commonNames.split(", ").forEach {
+            sqlDelightDAO.insertPlantCommonNameEntry(it, plantEntry.id)
         }
+        sqlDelightDAO.insertDescriptionEntry(plantEntry.id, plantMetadata.animalType, plantMetadata.description)
+        sqlDelightDAO.insertToxicityEntry(plantMetadata.isToxic, plantEntry.id, plantMetadata.animalType, plantMetadata.source)
     }
-
 
     fun deleteAll() {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()

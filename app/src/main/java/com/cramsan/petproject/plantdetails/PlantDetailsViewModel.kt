@@ -19,9 +19,9 @@ class PlantDetailsViewModel : ViewModel() {
     private val observablePlant = MutableLiveData<Plant>()
     private val observablePlantMetadata = MutableLiveData<PlantMetadata>()
 
-    fun reloadPlant(plantId: Int) {
+    fun reloadPlant(animalType: AnimalType, plantId: Int) {
         viewModelScope.launch {
-            loadPlant(plantId)
+            loadPlant(animalType, plantId)
         }
     }
 
@@ -33,8 +33,8 @@ class PlantDetailsViewModel : ViewModel() {
         return observablePlantMetadata
     }
 
-    private suspend fun loadPlant(plantId: Int) = withContext(Dispatchers.IO) {
-        val plant = modelStore.getPlant(plantId)
+    private suspend fun loadPlant(animalType: AnimalType, plantId: Int) = withContext(Dispatchers.IO) {
+        val plant = modelStore.getPlant(animalType, plantId)
         val plantMetadata = modelStore.getPlantMetadata(AnimalType.CAT, plantId)
         viewModelScope.launch {
             observablePlant.value = plant

@@ -28,7 +28,7 @@ class PlantListViewModel : ViewModel() {
     }
 
     private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlants(AnimalType.CAT, true)
+        val plants = modelStore.getPlants(AnimalType.CAT)
         viewModelScope.launch {
             observablePlants.value = plants
         }

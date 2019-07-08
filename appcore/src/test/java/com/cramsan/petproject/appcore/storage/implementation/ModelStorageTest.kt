@@ -55,7 +55,7 @@ class ModelStorageTest {
     fun testGetPlants() {
         runBlocking {
             launch(Dispatchers.IO) {
-                modelStorageTest.testGetPlants()
+                modelStorageTest.getPlants()
                 semaphore.release()
             }
         }
@@ -63,10 +63,21 @@ class ModelStorageTest {
     }
 
     @Test
-    fun testGetPlant() {
+    fun testGetPlantMetadata() {
         runBlocking {
             launch(Dispatchers.IO) {
-                modelStorageTest.testGetPlant()
+                modelStorageTest.getPlantMetadata()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testDeleteAll() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.deleteAll()
                 semaphore.release()
             }
         }

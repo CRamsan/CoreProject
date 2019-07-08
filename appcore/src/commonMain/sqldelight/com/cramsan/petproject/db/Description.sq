@@ -1,10 +1,11 @@
+import com.cramsan.petproject.appcore.model.AnimalType;
+
 CREATE TABLE Description (
 	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	plant_id	INTEGER NOT NULL,
-	animal_id	INTEGER NOT NULL,
+	animal_id	INTEGER AS AnimalType NOT NULL,
 	description	TEXT NOT NULL,
-	FOREIGN KEY(animal_id) REFERENCES Animal(id),
-	FOREIGN KEY(plant_id) REFERENCES Plant(id)
+    FOREIGN KEY(plant_id) REFERENCES Plant(id)
 );
 
 getDescription:

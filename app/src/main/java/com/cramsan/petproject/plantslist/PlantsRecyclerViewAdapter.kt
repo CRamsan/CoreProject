@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.cramsan.petproject.R
+import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 
 
@@ -13,11 +14,6 @@ import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentIntera
 
 import kotlinx.android.synthetic.main.view_plant.view.*
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
@@ -30,7 +26,7 @@ class PlantsRecyclerViewAdapter(
             val item = v.tag as Plant
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            mListener?.onListFragmentInteraction(item, AnimalType.CAT)
         }
     }
 

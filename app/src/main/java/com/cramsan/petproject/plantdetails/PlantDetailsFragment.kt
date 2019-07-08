@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cramsan.petproject.R
+import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import kotlinx.android.synthetic.main.fragment_plant_details.*
 
@@ -41,7 +42,7 @@ class PlantDetailsFragment : Fragment() {
             plant_details_danger.text = it.isToxic.toString()
             plant_details_description.text = it.description
         })
-        viewModel.reloadPlant(plantId)
+        viewModel.reloadPlant(AnimalType.CAT, plantId)
     }
 
 }

@@ -7,13 +7,9 @@ import com.cramsan.petproject.appcore.model.Toxicity
 
 interface ModelStorageInterface {
 
-    fun getPlants(animalType: AnimalType, forceUpdate: Boolean): List<Plant>
+    fun getPlant(animalType: AnimalType, plantId: Int): Plant
 
-    fun getPlants(forceUpdate: Boolean): List<Plant>
-
-    fun getPlant(plantId: Int): Plant?
-
-    fun getToxicity(animalType: AnimalType, plantId: Int) : Toxicity
+    fun getPlants(animalType: AnimalType): List<Plant>
 
     fun getPlantMetadata(animalType: AnimalType, plantId: Int) : PlantMetadata
 }

@@ -1,12 +1,12 @@
 import java.lang.Boolean;
+import com.cramsan.petproject.appcore.model.AnimalType;
 
 CREATE TABLE Toxicity (
 	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	plant_id	INTEGER NOT NULL,
-	animal_id	INTEGER NOT NULL,
+	animal_id	INTEGER AS AnimalType NOT NULL,
 	is_toxic	INTEGER as Boolean NOT NULL,
 	source	TEXT NOT NULL,
-	FOREIGN KEY(animal_id) REFERENCES Animal(id),
 	FOREIGN KEY(plant_id) REFERENCES Plant(id)
 );
 
