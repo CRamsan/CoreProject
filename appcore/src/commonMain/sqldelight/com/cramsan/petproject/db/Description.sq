@@ -4,15 +4,16 @@ CREATE TABLE Description (
 	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	plant_id	INTEGER NOT NULL,
 	animal_id	INTEGER AS AnimalType NOT NULL,
+	locale TEXT NOT NULL,
 	description	TEXT NOT NULL,
     FOREIGN KEY(plant_id) REFERENCES Plant(id)
 );
 
 getDescription:
-SELECT * FROM Description WHERE plant_id == ? AND animal_id == ?;
+SELECT * FROM Description WHERE plant_id == ? AND animal_id == ? AND locale == ?;
 
 insert:
-INSERT INTO Description(plant_id, animal_id, description) VALUES (?, ?, ?);
+INSERT INTO Description(plant_id, animal_id, locale, description) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Description;

@@ -1,0 +1,16 @@
+CREATE TABLE PlantFamily (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	family  TEXT NOT NULL,
+	plant_id	INTEGER NOT NULL,
+	locale TEXT NOT NULL,
+    FOREIGN KEY(plant_id) REFERENCES Plant(id)
+);
+
+getPlantFamily:
+SELECT * FROM PlantFamily WHERE plant_id == ? AND locale == ?;
+
+insert:
+INSERT INTO PlantFamily(plant_id, family, locale) VALUES (?, ?, ?);
+
+deleteAll:
+DELETE FROM PlantFamily;

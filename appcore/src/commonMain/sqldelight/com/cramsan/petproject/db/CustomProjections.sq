@@ -1,29 +1,37 @@
 getAllPlantsWithAnimalId:
 SELECT
-    Plant.id, scientific_name, main_common_name, family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names, Toxicity.is_toxic
+    Plant.id, scientific_name, PlantMainName.main_name, PlantFamily.family, family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names, Toxicity.is_toxic
 FROM
 	Plant
 INNER JOIN
     PlantCommonName ON PlantCommonName.plant_id = Plant.id
 INNER JOIN
+    PlantFamily ON PlantFamily.plant_id = Plant.id
+INNER JOIN
+    PlantMainName ON PlantMainName.plant_id = Plant.id
+INNER JOIN
     Toxicity ON Toxicity.plant_id = Plant.id
 WHERE
-    animal_id = ?
+    animal_id == ? AND PlantMainName.locale == ?
 GROUP BY
     Plant.id
 ;
 
 getPlantWithPlantIdAndAnimalId:
 SELECT
-    Plant.id, scientific_name, main_common_name, family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names, Toxicity.is_toxic
+    Plant.id, scientific_name, PlantMainName.main_name, PlantFamily.family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names, Toxicity.is_toxic
 FROM
 	Plant
 INNER JOIN
     PlantCommonName ON PlantCommonName.plant_id = Plant.id
 INNER JOIN
+    PlantFamily ON PlantFamily.plant_id = Plant.id
+INNER JOIN
+    PlantMainName ON PlantMainName.plant_id = Plant.id
+INNER JOIN
     Toxicity ON Toxicity.plant_id = Plant.id
 WHERE
-    animal_id = ? AND Plant.id = ?
+    animal_id == ? AND Plant.id == ? AND PlantMainName.locale == ?
 GROUP BY
     Plant.id
 ;

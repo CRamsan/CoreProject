@@ -24,7 +24,7 @@ internal class ModelStorageCommonTest {
     fun getPlants() {
         insertBaseEntries()
         var allPlants = modelStorage.getPlants(AnimalType.CAT)
-        assertEquals(allPlants.size, 101)
+        assertEquals(101, allPlants.size)
 
         modelStorageImpl.insertPlant(Plant(0,
             "Arum maculatum TEST",
@@ -36,7 +36,7 @@ internal class ModelStorageCommonTest {
         ), PlantMetadata(
             0, 0, AnimalType.CAT, true, "", ""))
         allPlants = modelStorage.getPlants(AnimalType.CAT)
-        assertEquals(allPlants.size, 102)
+        assertEquals(102, allPlants.size)
     }
 
     fun getPlantMetadata() {
@@ -45,10 +45,10 @@ internal class ModelStorageCommonTest {
     fun deleteAll() {
         insertBaseEntries()
         val allPlants = modelStorage.getPlants(AnimalType.CAT)
-        assertEquals(allPlants.size, 101)
+        assertEquals(101, allPlants.size)
         modelStorageImpl.deleteAll()
         val newAllPlants = modelStorage.getPlants(AnimalType.CAT)
-        assertEquals(newAllPlants.size, 0)
+        assertEquals(0, newAllPlants.size)
     }
 
     private fun insertBaseEntries() {
@@ -58,9 +58,11 @@ internal class ModelStorageCommonTest {
             "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
         )
         val newPlant = modelStorageImpl.sqlDelightDAO.getPlantEntry("Arum maculatum")
-        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", newPlant.id)
-        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Lord-and-Ladies", newPlant.id)
-        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Wake Robin", newPlant.id)
+        modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", newPlant.id, "en_us")
+        modelStorageImpl.sqlDelightDAO.insertPlantFamilyNameEntry("Arum", newPlant.id, "en_us")
+        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", newPlant.id, "en_us")
+        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Lord-and-Ladies", newPlant.id, "en_us")
+        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Wake Robin", newPlant.id, "en_us")
         modelStorageImpl.sqlDelightDAO.insertToxicityEntry(true,
             newPlant.id,
             AnimalType.DOG,
@@ -80,7 +82,9 @@ internal class ModelStorageCommonTest {
                 "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
             )
             val new = modelStorageImpl.sqlDelightDAO.getPlantEntry("Arum maculatum $i")
-            modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", new.id)
+            modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", new.id, "en_us")
+            modelStorageImpl.sqlDelightDAO.insertPlantFamilyNameEntry("Arum", new.id, "en_us")
+            modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", new.id, "en_us")
             modelStorageImpl.sqlDelightDAO.insertToxicityEntry(true,
                 new.id,
                 AnimalType.CAT,

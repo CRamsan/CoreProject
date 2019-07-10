@@ -11,10 +11,10 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
 
     var sqlDelightDAO: SQLDelightDAO = SQLDelightDAO(initializer)
 
-    override fun getPlants(animalType: AnimalType): List<Plant> {
+    override fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val list = sqlDelightDAO.getCustomPlantEntries(animalType)
+        val list = sqlDelightDAO.getCustomPlantEntries(animalType, locale)
         val mutableList = mutableListOf<Plant>()
 
         list.forEach {
@@ -22,7 +22,7 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
                 Plant(
                     it.id.toInt(),
                     it.scientific_name,
-                    it.main_common_name,
+                    it.main_name,
                     it.common_names,
                     it.image_url,
                     it.family,
@@ -32,15 +32,15 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         return mutableList
     }
 
-    override fun getPlant(animalType: AnimalType, plantId: Int): Plant {
+    override fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant {
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType)
+        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale)
 
         return Plant(
             plantEntry.id.toInt(),
             plantEntry.scientific_name,
-            plantEntry.main_common_name,
+            plantEntry.main_name,
             plantEntry.common_names,
             plantEntry.image_url,
             plantEntry.family,
@@ -48,7 +48,7 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         )
     }
 
-    override fun getPlantMetadata(animalType: AnimalType, plantId: Int) : PlantMetadata {
+    override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String) : PlantMetadata {
         return PlantMetadata(0, plantId, animalType, true, "This asd" +
                 "a sdas dasdasdasd wq da s da  eqwew dwad " +
                 "a ddasdasdasd wq da s da  eqwew dwad " +
@@ -57,13 +57,15 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
                 " dasdasdasd wq da s da  eqwew dwad ", "https://www.google.com")
     }
 
-    fun insertPlant(plant: Plant, plantMetadata: PlantMetadata) {
+    fun insertPlant(plant: Plant, plantMetadata: PlantMetadata, locale: String) {
         sqlDelightDAO.insertPlantEntry(plant.exactName, plant.mainCommonName, plant.family, plant.imageUrl)
         val plantEntry = sqlDelightDAO.getPlantEntry(plant.exactName)
         plant.commonNames.split(", ").forEach {
-            sqlDelightDAO.insertPlantCommonNameEntry(it, plantEntry.id)
+            sqlDelightDAO.insertPlantCommonNameEntry(it, plantEntry.id, locale)
         }
-        sqlDelightDAO.insertDescriptionEntry(plantEntry.id, plantMetadata.animalType, plantMetadata.description)
+        sqlDelightDAO.insertPlantFamilyNameEntry(plant.family, plantEntry.id, locale)
+        sqlDelightDAO.insertPlantMainNameEntry(plant.mainCommonName, plantEntry.id, locale)
+        sqlDelightDAO.insertDescriptionEntry(plantEntry.id, plantMetadata.animalType, plantMetadata.description, locale)
         sqlDelightDAO.insertToxicityEntry(plantMetadata.isToxic, plantEntry.id, plantMetadata.animalType, plantMetadata.source)
     }
 

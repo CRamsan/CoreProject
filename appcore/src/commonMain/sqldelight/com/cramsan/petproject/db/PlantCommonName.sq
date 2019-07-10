@@ -2,14 +2,15 @@ CREATE TABLE PlantCommonName (
 	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	common_name	TEXT NOT NULL,
 	plant_id	INTEGER NOT NULL,
+	locale TEXT NOT NULL,
 	FOREIGN KEY(id) REFERENCES Plant(id)
 );
 
 getPlantCommonNames:
-SELECT * FROM PlantCommonName WHERE plant_id == ?;
+SELECT * FROM PlantCommonName WHERE plant_id == ? AND locale == ?;
 
 insert:
-INSERT INTO PlantCommonName(common_name, plant_id) VALUES (?, ?);
+INSERT INTO PlantCommonName(common_name, plant_id, locale) VALUES (?, ?, ?);
 
 deleteAll:
 DELETE FROM PlantCommonName;
