@@ -11,9 +11,6 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.cramsan.petproject.appcore.framework.CoreFrameworkInterface
 import com.cramsan.petproject.appcore.storage.ModelStorageAPI
-import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
-import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 
 class MockCoreFramework : CoreFrameworkInterface {
 

@@ -36,6 +36,7 @@ class PlantDetailsFragment : Fragment() {
             plant_details_family.text = it.family
             Glide.with(this)
                 .load(it.imageUrl)
+                .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })
         viewModel.getPlantMetadata().observe(this, Observer {

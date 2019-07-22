@@ -4,7 +4,6 @@ import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
-import com.cramsan.petproject.appcore.model.Toxicity
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 
 class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface {
@@ -25,8 +24,7 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
                     it.main_name,
                     it.common_names,
                     it.image_url,
-                    it.family,
-                    it.is_toxic
+                    it.family
                 ))
         }
         return mutableList
@@ -43,24 +41,21 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
             plantEntry.main_name,
             plantEntry.common_names,
             plantEntry.image_url,
-            plantEntry.family,
-            plantEntry.is_toxic
+            plantEntry.family
         )
     }
 
     override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String) : PlantMetadata {
-        return PlantMetadata(0, plantId, animalType, true, "This asd" +
-                "a sdas dasdasdasd wq da s da  eqwew dwad " +
-                "a ddasdasdasd wq da s da  eqwew dwad " +
-                "as asd sa dasdasdasd wq da s da  eqwew dwad " +
-                " dasdasdasd wq da s da  eqwew dwad as  sa" +
-                " dasdasdasd wq da s da  eqwew dwad ", "https://www.google.com")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
+        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale)
+        return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
     }
 
-    fun insertPlant(plant: Plant, plantMetadata: PlantMetadata, locale: String) {
+    override fun insertPlant(plant: Plant, plantMetadata: PlantMetadata, locale: String) {
         sqlDelightDAO.insertPlantEntry(plant.exactName, plant.mainCommonName, plant.family, plant.imageUrl)
         val plantEntry = sqlDelightDAO.getPlantEntry(plant.exactName)
-        plant.commonNames.split(", ").forEach {
+        plant.commonNames.split("|").forEach {
             sqlDelightDAO.insertPlantCommonNameEntry(it, plantEntry.id, locale)
         }
         sqlDelightDAO.insertPlantFamilyNameEntry(plant.family, plantEntry.id, locale)

@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 class PlantListViewModel : ViewModel() {
 
-    private val modelStore = CoreFrameworkAPI.modelStorage
+    private val modelStore = CoreFrameworkAPI.modelProvider
 
     private val observablePlants = MutableLiveData<List<Plant>>()
 
@@ -28,8 +28,9 @@ class PlantListViewModel : ViewModel() {
     }
 
     private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlants(AnimalType.CAT)
+        val plants = modelStore.getPlants(AnimalType.CAT, "en")
         viewModelScope.launch {
+            CoreFrameworkAPI.threadUtil.assertIsUIThread()
             observablePlants.value = plants
         }
     }

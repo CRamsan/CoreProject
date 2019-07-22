@@ -5,10 +5,8 @@ class Plant(id: Int,
             val mainCommonName: String,
             commonNames: String,
             imageUrl: String,
-            val family: String,
-            isToxic: Boolean?) :
+            val family: String) :
     Item(id,
         scientificName,
         commonNames,
-        imageUrl,
-        isToxic)
+        imageUrl)

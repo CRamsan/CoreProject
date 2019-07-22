@@ -44,6 +44,7 @@ def androidMaterialVersion = "1.0.0"
 
 dependencies {
     implementation project(":appcore")
+    implementation project(":framework")
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$androidXCoreKtxVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$androidXLifecycleVersion"
@@ -52,6 +53,10 @@ dependencies {
     implementation "com.google.android.material:material:$androidMaterialVersion"
 
     implementation "com.github.bumptech.glide:glide:$globalGlideVersion"
+    implementation ("com.github.bumptech.glide:recyclerview-integration:$globalGlideVersion") {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+    }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"

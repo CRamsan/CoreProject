@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class PlantDetailsViewModel : ViewModel() {
 
-    private val modelStore = CoreFrameworkAPI.modelStorage
+    private val modelStore = CoreFrameworkAPI.modelProvider
 
     private val observablePlant = MutableLiveData<Plant>()
     private val observablePlantMetadata = MutableLiveData<PlantMetadata>()
@@ -34,8 +34,8 @@ class PlantDetailsViewModel : ViewModel() {
     }
 
     private suspend fun loadPlant(animalType: AnimalType, plantId: Int) = withContext(Dispatchers.IO) {
-        val plant = modelStore.getPlant(animalType, plantId)
-        val plantMetadata = modelStore.getPlantMetadata(AnimalType.CAT, plantId)
+        val plant = modelStore.getPlant(animalType, plantId, "en")
+        val plantMetadata = modelStore.getPlantMetadata(AnimalType.CAT, plantId, "en")
         viewModelScope.launch {
             observablePlant.value = plant
             observablePlantMetadata.value = plantMetadata

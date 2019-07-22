@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -43,8 +44,8 @@ class PlantsRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.exactName
-        holder.mContentView.text = item.family
+        holder.mViewHeader.text = item.mainCommonName
+        holder.mViewSubHeader.text = item.exactName
 
         with(holder.mView) {
             tag = item
@@ -55,11 +56,12 @@ class PlantsRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+        val mViewHeader: TextView = mView.viewPlantHeader
+        val mViewSubHeader: TextView = mView.viewPlantSubHeader
+        val mViewImage: ImageView = mView.viewPlantImage
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + mViewHeader.text + "'"
         }
     }
 }
