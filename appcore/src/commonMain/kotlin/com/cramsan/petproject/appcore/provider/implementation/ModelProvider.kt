@@ -4,6 +4,7 @@ import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 
 class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterface {
@@ -13,11 +14,17 @@ class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterf
     }
 
     override fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
-        val test = CoreFrameworkAPI.modelStorage.getPlants(animalType, locale)
+        return CoreFrameworkAPI.modelStorage.getPlants(animalType, locale)
+    }
+
+    override fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
+        var test = CoreFrameworkAPI.modelStorage.getPlantsWithToxicity(animalType, locale)
         if (test.isEmpty()) {
             insertAllData()
-            return CoreFrameworkAPI.modelStorage.getPlants(animalType, locale)
+            test = CoreFrameworkAPI.modelStorage.getPlantsWithToxicity(animalType, locale)
         }
+
+        test = test.sortedWith(compareBy {it.mainCommonName})
         return test
     }
 

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
+import com.cramsan.petproject.appcore.model.PresentablePlant
 
 /**
  * A fragment representing a list of Items.
@@ -50,7 +51,7 @@ class PlantsListFragment : Fragment() {
         }
 
         val model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
-        model.getPlants().observe(this, Observer<List<Plant>>{ plants ->
+        model.getPlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
             plantsAdapter?.updateValues(plants)
         })
         model.reloadPlants()
@@ -76,6 +77,6 @@ class PlantsListFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Plant, animalType: AnimalType)
+        fun onListFragmentInteraction(plantId: Int, animalType: AnimalType)
     }
 }

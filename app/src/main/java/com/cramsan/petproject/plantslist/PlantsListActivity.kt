@@ -19,9 +19,9 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
         setSupportActionBar(toolbar_2)
     }
 
-    override fun onListFragmentInteraction(item: Plant, animalType: AnimalType) {
+    override fun onListFragmentInteraction(plantId: Int, animalType: AnimalType) {
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
-        plantIntent.putExtra(PLANT_ID, item.id)
+        plantIntent.putExtra(PLANT_ID, plantId)
         startActivity(plantIntent)
     }
 }

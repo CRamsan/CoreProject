@@ -4,6 +4,7 @@ import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 
 class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface {
@@ -25,6 +26,24 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
                     it.common_names,
                     it.image_url,
                     it.family
+                ))
+        }
+        return mutableList
+    }
+
+    override fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
+        val list = sqlDelightDAO.getCustomPlantEntries(animalType, locale)
+        val mutableList = mutableListOf<PresentablePlant>()
+
+        list.forEach {
+            mutableList.add(
+                PresentablePlant(
+                    it.id,
+                    it.scientific_name,
+                    it.main_name,
+                    it.is_toxic
                 ))
         }
         return mutableList

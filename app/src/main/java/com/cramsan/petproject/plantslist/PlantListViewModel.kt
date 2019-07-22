@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
+import com.cramsan.petproject.appcore.model.PresentablePlant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,7 +16,7 @@ class PlantListViewModel : ViewModel() {
 
     private val modelStore = CoreFrameworkAPI.modelProvider
 
-    private val observablePlants = MutableLiveData<List<Plant>>()
+    private val observablePlants = MutableLiveData<List<PresentablePlant>>()
 
     fun reloadPlants() {
         viewModelScope.launch {
@@ -23,12 +24,12 @@ class PlantListViewModel : ViewModel() {
         }
     }
 
-    fun getPlants(): LiveData<List<Plant>> {
+    fun getPlants(): LiveData<List<PresentablePlant>> {
         return observablePlants
     }
 
     private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlants(AnimalType.CAT, "en")
+        val plants = modelStore.getPlantsWithToxicity(AnimalType.CAT, "en")
         viewModelScope.launch {
             CoreFrameworkAPI.threadUtil.assertIsUIThread()
             observablePlants.value = plants

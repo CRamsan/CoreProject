@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
-
+import com.cramsan.petproject.appcore.model.PresentablePlant
 
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
 
@@ -19,19 +19,20 @@ class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
 
-    private var mValues: List<Plant> = listOf()
+    private var mValues: List<PresentablePlant> = listOf()
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Plant
+            val item = v.tag as PresentablePlant
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item, AnimalType.CAT)
+
+            mListener?.onListFragmentInteraction(item.plantId.toInt(), AnimalType.CAT)
         }
     }
 
-    fun updateValues(values: List<Plant>) {
+    fun updateValues(values: List<PresentablePlant>) {
         mValues = values
         notifyDataSetChanged()
     }
@@ -45,7 +46,8 @@ class PlantsRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
         holder.mViewHeader.text = item.mainCommonName
-        holder.mViewSubHeader.text = item.exactName
+        holder.mViewSubHeader.text = item.scientificName
+        holder.mViewImage.setImageResource(if (item.isToxic) R.drawable.is_toxic else R.drawable.is_not_toxic)
 
         with(holder.mView) {
             tag = item
