@@ -3,6 +3,7 @@ package com.cramsan.petproject.appcore.storage.implementation
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import kotlin.test.assertEquals
 
 internal class ModelStorageCommonTest {
@@ -30,10 +31,9 @@ internal class ModelStorageCommonTest {
             "Adam and Eve test",
             "Araceae, Some Other name",
             "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ",
-            "Family something",
-            true
+            "Family something"
         ), PlantMetadata(
-            0, 0, AnimalType.CAT, true, "", ""), "en")
+            0,AnimalType.CAT , true, "", ""), "en")
         allPlants = modelStorage.getPlants(AnimalType.CAT, "en")
         assertEquals(102, allPlants.size)
     }

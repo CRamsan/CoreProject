@@ -10,7 +10,14 @@ import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.cramsan.petproject.appcore.framework.CoreFrameworkInterface
+import com.cramsan.petproject.appcore.provider.ModelProviderAPI
+import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.appcore.provider.implementation.ModelProviderInitializer
+import com.cramsan.petproject.appcore.provider.implementation.ModelProviderPlatformInitializer
 import com.cramsan.petproject.appcore.storage.ModelStorageAPI
+import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
+import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 
 class MockCoreFramework : CoreFrameworkInterface {
 
@@ -42,4 +49,12 @@ class MockCoreFramework : CoreFrameworkInterface {
         ModelStorageAPI.init(initializer)
         modelStorage = ModelStorageAPI.modelStorage
     }
+
+    override lateinit var modelProvider: ModelProviderInterface
+    override fun initModelProvider(platformInitializer: ModelProviderPlatformInitializer) {
+        val initializer = ModelProviderInitializer(platformInitializer)
+        ModelProviderAPI.init(initializer)
+        modelProvider = ModelProviderAPI.modelProvider
+    }
+
 }

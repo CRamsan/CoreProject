@@ -1,6 +1,6 @@
 getAllPlantsWithAnimalId:
 SELECT
-    Plant.id, scientific_name, PlantMainName.main_name, PlantFamily.family, family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names, Toxicity.is_toxic
+    Plant.id, scientific_name, PlantMainName.main_name, PlantFamily.family, image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names, Toxicity.is_toxic
 FROM
 	Plant
 INNER JOIN

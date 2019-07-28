@@ -6,6 +6,8 @@ CREATE TABLE PlantFamily (
     FOREIGN KEY(plant_id) REFERENCES Plant(id)
 );
 
+CREATE VIRTUAL TABLE PlantFamilySearch USING fts4(content="PlantFamily", id, family, plant_id);
+
 getPlantFamily:
 SELECT * FROM PlantFamily WHERE plant_id == ? AND locale == ?;
 

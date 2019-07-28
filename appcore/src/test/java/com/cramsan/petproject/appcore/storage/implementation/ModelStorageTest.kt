@@ -40,8 +40,9 @@ class ModelStorageTest {
 
     @Before
     fun setUp() {
-        val appContext = ApplicationProvider.getApplicationContext<Context>()
         modelStorageTest = ModelStorageCommonTest()
+        val appContext = ApplicationProvider.getApplicationContext<Context>()
+        modelStorageTest.setUp(ModelStoragePlatformInitializer(appContext))
         semaphore = Semaphore(0)
     }
 

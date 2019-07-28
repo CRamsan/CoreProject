@@ -13,7 +13,7 @@ getDescription:
 SELECT * FROM Description WHERE plant_id == ? AND animal_id == ? AND locale == ?;
 
 insert:
-INSERT INTO Description(plant_id, animal_id, locale, description) VALUES (?, ?, ?, ?);
+INSERT INTO Description(plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Description;

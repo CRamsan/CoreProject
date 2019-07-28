@@ -6,6 +6,8 @@ CREATE TABLE PlantCommonName (
 	FOREIGN KEY(id) REFERENCES Plant(id)
 );
 
+CREATE VIRTUAL TABLE PlantCommonNameSearch USING fts4(content="PlantCommonName", id, common_name, plant_id, locale);
+
 getPlantCommonNames:
 SELECT * FROM PlantCommonName WHERE plant_id == ? AND locale == ?;
 

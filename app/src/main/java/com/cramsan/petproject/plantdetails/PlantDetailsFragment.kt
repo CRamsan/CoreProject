@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cramsan.petproject.R
@@ -31,16 +32,29 @@ class PlantDetailsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(this, Observer {
             plant_details_title.text = it.mainCommonName
-            plant_details_scientific_name.text = it.exactName
-            plant_details_common_names.text = it.commonNames
-            plant_details_family.text = it.family
+            plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
+            plant_details_family.text = getString(R.string.plant_details_family, it.family)
+            it.commonNames.apply {
+                if(isEmpty()) {
+                    plant_details_common_names.visibility = View.GONE
+                } else {
+                    plant_details_common_names.visibility = View.VISIBLE
+                    plant_details_common_names.text = getString(R.string.plant_details_common_names, it.commonNames)
+                }
+            }
             Glide.with(this)
                 .load(it.imageUrl)
                 .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })
         viewModel.getPlantMetadata().observe(this, Observer {
-            plant_details_danger.text = it.isToxic.toString()
+            if (it.isToxic) {
+                plant_details_danger.text = getString(R.string.plant_details_dangerous)
+                plant_details_danger.setTextColor(resources.getColor(R.color.colorDanger, requireActivity().theme))
+            } else {
+                plant_details_danger.text = getString(R.string.plant_details_safe)
+                plant_details_danger.setTextColor(resources.getColor(R.color.colorSafe, requireActivity().theme))
+            }
             plant_details_description.text = it.description
         })
         viewModel.reloadPlant(AnimalType.CAT, plantId)
