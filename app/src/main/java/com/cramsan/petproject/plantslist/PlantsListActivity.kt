@@ -53,8 +53,6 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
-            isSubmitButtonEnabled = true
-            isQueryRefinementEnabled = true
             setOnQueryTextListener(object : OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     queryTextListener?.onQueryTextSubmit(query)
