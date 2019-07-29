@@ -24,12 +24,33 @@ class PlantListViewModel : ViewModel() {
         }
     }
 
-    fun getPlants(): LiveData<List<PresentablePlant>> {
+    fun searchPlants(query: String) {
+        viewModelScope.launch {
+            if (query.isEmpty()) {
+                loadPlants()
+            } else {
+                filterPlants(query)
+            }
+        }
+    }
+
+    fun observablePlants(): LiveData<List<PresentablePlant>> {
         return observablePlants
     }
 
     private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
         val plants = modelStore.getPlantsWithToxicity(AnimalType.CAT, "en")
+        viewModelScope.launch {
+            CoreFrameworkAPI.threadUtil.assertIsUIThread()
+            observablePlants.value = plants
+        }
+    }
+
+    private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO)  {
+        val plants = modelStore.getPlantsWithToxicityFiltered(AnimalType.CAT, query, "en")
+        if (plants == null) {
+            return@withContext
+        }
         viewModelScope.launch {
             CoreFrameworkAPI.threadUtil.assertIsUIThread()
             observablePlants.value = plants

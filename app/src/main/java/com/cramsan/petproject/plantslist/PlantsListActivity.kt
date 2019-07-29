@@ -1,17 +1,23 @@
 package com.cramsan.petproject.plantslist
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity;
-import com.cramsan.petproject.R
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.PLANT_ID
 
 import kotlinx.android.synthetic.main.activity_plants_list.*
+import com.cramsan.petproject.R
 
 class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmentInteractionListener {
+
+    private var queryTextListener: OnQueryTextListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,5 +29,38 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
         plantIntent.putExtra(PLANT_ID, plantId)
         startActivity(plantIntent)
+    }
+
+    override fun onRegisterAsSearchable(listener: OnQueryTextListener) {
+        queryTextListener = listener
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_plants_list, menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
+            // Assumes current activity is the searchable activity
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
+            isSubmitButtonEnabled = true
+            isQueryRefinementEnabled = true
+            setOnQueryTextListener(object : OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    queryTextListener?.onQueryTextSubmit(query)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    queryTextListener?.onQueryTextChange(newText)
+                    return true
+                }
+            })
+
+        }
+        return true
     }
 }

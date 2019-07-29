@@ -3,17 +3,16 @@ package com.cramsan.petproject.plantslist
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PresentablePlant
 
 /**
@@ -21,15 +20,17 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
  * Activities containing this fragment MUST implement the
  * [PlantsListFragment.OnListFragmentInteractionListener] interface.
  */
-class PlantsListFragment : Fragment() {
+class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     private var listener: OnListFragmentInteractionListener? = null
     private var plantsAdapter: PlantsRecyclerViewAdapter? = null
+    private lateinit var model: PlantListViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnListFragmentInteractionListener) {
             listener = context
+            listener?.onRegisterAsSearchable(this)
         } else {
             throw RuntimeException("$context must implement OnListFragmentInteractionListener")
         }
@@ -50,8 +51,8 @@ class PlantsListFragment : Fragment() {
             }
         }
 
-        val model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
-        model.getPlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
+        model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
+        model.observablePlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
             plantsAdapter?.updateValues(plants)
         })
         model.reloadPlants()
@@ -62,6 +63,15 @@ class PlantsListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        newText?.let { model.searchPlants(it) }
+        return true
     }
 
     /**
@@ -78,5 +88,7 @@ class PlantsListFragment : Fragment() {
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onListFragmentInteraction(plantId: Int, animalType: AnimalType)
+
+        fun onRegisterAsSearchable(listener: OnQueryTextListener)
     }
 }

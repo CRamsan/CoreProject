@@ -6,8 +6,12 @@ import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import kotlinx.coroutines.*
 
 class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterface {
+
+    lateinit var plantList: List<PresentablePlant>
+    var filterJob: Job? = null
 
     override fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant {
         return CoreFrameworkAPI.modelStorage.getPlant(animalType, plantId, locale)
@@ -24,8 +28,31 @@ class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterf
             test = CoreFrameworkAPI.modelStorage.getPlantsWithToxicity(animalType, locale)
         }
 
-        test = test.sortedWith(compareBy {it.mainCommonName})
-        return test
+        plantList = test.sortedWith(compareBy {it.mainCommonName})
+        return plantList
+    }
+
+    override suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType,
+                                                       query: String,
+                                                       locale: String): List<PresentablePlant>? = withContext(Dispatchers.Default) {
+        val list = checkNotNull(plantList)
+        val resultList = mutableListOf<PresentablePlant>()
+        filterJob?.cancelAndJoin()
+        val filterJobLocal = launch(Dispatchers.Default) {
+            for (plant in list) {
+                if (!isActive)
+                    break
+                if(plant.scientificName.contains(query, true) || plant.mainCommonName.contains(query, true)) {
+                    resultList.add(plant)
+                }
+            }
+        }
+        filterJob = filterJobLocal
+        if(filterJobLocal.isCancelled) {
+            return@withContext null
+        }
+
+        return@withContext resultList
     }
 
     override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata {
