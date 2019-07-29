@@ -1,5 +1,6 @@
 package com.cramsan.petproject.plantdetails
 
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +10,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
 import kotlinx.android.synthetic.main.fragment_plant_details.*
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
+import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 
 class PlantDetailsFragment : Fragment() {
 
@@ -27,6 +34,7 @@ class PlantDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
         val plantId = activity?.intent?.getIntExtra(PlantDetailsActivity.PLANT_ID, -1) ?: return
 
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
@@ -44,6 +52,30 @@ class PlantDetailsFragment : Fragment() {
             }
             Glide.with(this)
                 .load(it.imageUrl)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        CoreFrameworkAPI.eventLogger.log(Severity.ERROR, PlantDetailsActivity.classTag(), e.toString())
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        CoreFrameworkAPI.eventLogger.log(Severity.VERBOSE, PlantDetailsActivity.classTag(),
+                            "Resource loaded successfully")
+                        return false
+                    }
+
+                })
                 .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })

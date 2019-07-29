@@ -1,5 +1,7 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
@@ -14,14 +16,23 @@ class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterf
     var filterJob: Job? = null
 
     override fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlant")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
         return CoreFrameworkAPI.modelStorage.getPlant(animalType, plantId, locale)
     }
 
     override fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlants")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
         return CoreFrameworkAPI.modelStorage.getPlants(animalType, locale)
     }
 
     override fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
         var test = CoreFrameworkAPI.modelStorage.getPlantsWithToxicity(animalType, locale)
         if (test.isEmpty()) {
             insertAllData()
@@ -35,6 +46,9 @@ class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterf
     override suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType,
                                                        query: String,
                                                        locale: String): List<PresentablePlant>? = withContext(Dispatchers.Default) {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicityFiltered")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
         val list = checkNotNull(plantList)
         val resultList = mutableListOf<PresentablePlant>()
         filterJob?.cancelAndJoin()
@@ -56,10 +70,16 @@ class ModelProvider(initializer: ModelProviderInitializer) : ModelProviderInterf
     }
 
     override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
         return CoreFrameworkAPI.modelStorage.getPlantMetadata(animalType, plantId, locale)
     }
 
     private fun insertAllData() {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "insertAllData")
+        CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
+
         CoreFrameworkAPI.modelStorage.insertPlant(Plant(1, "Arum maculatum" , "Adam-and-Eve", "Arum|Lord-and-Ladies|Wake Robin|Starch Root|Bobbins|Cuckoo Plant", "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Arum_maculatum_fluy_80_05052007_3.jpg/1200px-Arum_maculatum_fluy_80_05052007_3.jpg", "Araceae"), PlantMetadata(1, AnimalType.CAT, true, "", "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"), "en")
         CoreFrameworkAPI.modelStorage.insertPlant(Plant(1, "Ricinus communis" , "African Wonder Tree", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Ricinus_March_2010-1.jpg/1200px-Ricinus_March_2010-1.jpg", ""), PlantMetadata(1, AnimalType.CAT, true, "", "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/african-wonder-tree"), "en")
         CoreFrameworkAPI.modelStorage.insertPlant(Plant(1, "Alocasia spp." , "Alocasia", "Elephant's Ear", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Alocasia_sanderiana.jpg/1200px-Alocasia_sanderiana.jpg", "Araceae"), PlantMetadata(1, AnimalType.CAT, true, "", "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/alocasia"), "en")

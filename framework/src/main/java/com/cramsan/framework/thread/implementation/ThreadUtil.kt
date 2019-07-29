@@ -3,7 +3,7 @@ package com.cramsan.framework.thread.implementation
 import android.os.Handler
 import android.os.Looper
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.implementation.getTag
+import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Executors
@@ -24,7 +24,7 @@ actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) :
     }
 
     override fun dispatchToUI(block: RunBlock) {
-        logger.assert(false, getTag(), "On Android we should not dispatch to the UI thread.")
+        logger.assert(false, classTag(), "On Android we should not dispatch to the UI thread.")
         if (isUIThread()) {
             block()
         } else {
@@ -37,10 +37,10 @@ actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer) :
     }
 
     override fun assertIsUIThread() {
-        logger.assert(isUIThread(), getTag(), "Not on UI thread!")
+        logger.assert(isUIThread(), classTag(), "Not on UI thread!")
     }
 
     override fun assertIsBackgroundThread() {
-        logger.assert(isBackgroundThread(), getTag(), "Not on background thread!")
+        logger.assert(isBackgroundThread(), classTag(), "Not on background thread!")
     }
 }

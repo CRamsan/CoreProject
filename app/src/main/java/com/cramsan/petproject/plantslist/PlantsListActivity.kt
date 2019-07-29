@@ -8,12 +8,15 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.PLANT_ID
 
 import kotlinx.android.synthetic.main.activity_plants_list.*
 import com.cramsan.petproject.R
+import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 
 class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmentInteractionListener {
 
@@ -21,21 +24,25 @@ class PlantsListActivity : AppCompatActivity(), PlantsListFragment.OnListFragmen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreate")
         setContentView(R.layout.activity_plants_list)
         setSupportActionBar(toolbar_2)
     }
 
     override fun onListFragmentInteraction(plantId: Int, animalType: AnimalType) {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onListFragmentInteraction")
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
         plantIntent.putExtra(PLANT_ID, plantId)
         startActivity(plantIntent)
     }
 
     override fun onRegisterAsSearchable(listener: OnQueryTextListener) {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onRegisterAsSearchable")
         queryTextListener = listener
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
 
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_plants_list, menu)

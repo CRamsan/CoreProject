@@ -1,5 +1,7 @@
 package com.cramsan.framework.thread
 
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 
@@ -13,6 +15,7 @@ object ThreadUtilAPI {
     }
 
     fun init(initializer: ThreadUtilInitializer) {
+        initializer.eventLoggerInterface.log(Severity.INFO, classTag(), "init")
         this.initializer = initializer
     }
 }

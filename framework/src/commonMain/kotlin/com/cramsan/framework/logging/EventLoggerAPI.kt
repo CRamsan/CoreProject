@@ -8,7 +8,7 @@ object EventLoggerAPI {
     private lateinit var initializer: EventLoggerInitializer
 
     private lateinit var internalEventLogger: EventLogger
-    val eventLogger: EventLoggerInterface by lazy {
+        val eventLogger: EventLoggerInterface by lazy {
         internalEventLogger = EventLogger(initializer)
         internalEventLogger
     }

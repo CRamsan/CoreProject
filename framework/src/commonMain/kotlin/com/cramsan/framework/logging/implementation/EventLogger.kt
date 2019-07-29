@@ -9,17 +9,21 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 class EventLogger(initializer: EventLoggerInitializer): EventLoggerInterface {
 
     var haltUtil: HaltUtilInterface? = null
+    private val targetSeverity: Severity = initializer.targetSeverity
 
     private var platformLogger = PlatformLogger()
 
     override fun log(severity: Severity, tag: String, message: String) {
+        if (severity < targetSeverity)
+            return
         platformLogger.log(severity, tag, message)
     }
 
     override fun assert(condition: Boolean, tag: String, message: String) {
-        if (!condition) {
-            platformLogger.log(Severity.ERROR, tag, message)
-            haltUtil?.stopThread()
+        if (condition) {
+            return
         }
+        platformLogger.log(Severity.ERROR, tag, message)
+        haltUtil?.stopThread()
     }
 }

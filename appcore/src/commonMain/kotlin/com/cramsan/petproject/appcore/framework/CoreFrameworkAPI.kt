@@ -2,6 +2,7 @@ package com.cramsan.petproject.appcore.framework
 
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.framework.implementation.CoreFramework
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -24,8 +25,8 @@ object CoreFrameworkAPI : CoreFrameworkInterface {
     override val eventLogger: EventLoggerInterface
         get() = coreFramework.eventLogger
 
-    override fun initEventLogger() {
-        coreFramework.initEventLogger()
+    override fun initEventLogger(targetSeverity: Severity) {
+        coreFramework.initEventLogger(targetSeverity)
     }
 
     override val threadUtil: ThreadUtilInterface

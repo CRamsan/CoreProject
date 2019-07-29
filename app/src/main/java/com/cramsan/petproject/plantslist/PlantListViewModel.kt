@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
@@ -19,12 +21,14 @@ class PlantListViewModel : ViewModel() {
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
 
     fun reloadPlants() {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
         viewModelScope.launch {
             loadPlants()
         }
     }
 
     fun searchPlants(query: String) {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "searchPlants")
         viewModelScope.launch {
             if (query.isEmpty()) {
                 loadPlants()
