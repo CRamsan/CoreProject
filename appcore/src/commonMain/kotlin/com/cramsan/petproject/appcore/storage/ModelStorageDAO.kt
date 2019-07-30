@@ -17,23 +17,23 @@ interface ModelStorageDAO {
 
     fun insertDescriptionEntry(plantId: Long, animalType: AnimalType, description:String, locale: String)
 
-    fun getPlantEntry(scientificName: String): Plant
+    fun getPlantEntry(scientificName: String): Plant?
 
     fun getAllPlantEntries(): List<Plant>
 
     fun getPlantCommonNameEntries(plantId: Long, locale: String): List<PlantCommonName>
 
-    fun getPlantMainNameEntry(plantId: Long, locale: String): PlantMainName
+    fun getPlantMainNameEntry(plantId: Long, locale: String): PlantMainName?
 
-    fun getPlantFamilyEntry(plantId: Long, locale: String): PlantFamily
+    fun getPlantFamilyEntry(plantId: Long, locale: String): PlantFamily?
 
-    fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity
+    fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity?
 
-    fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description
+    fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description?
 
     fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId>
 
-    fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId
+    fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId?
 
     fun deleteAll()
 }

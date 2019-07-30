@@ -57,7 +57,7 @@ internal class ModelStorageCommonTest {
             "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
         )
         val newPlant = modelStorageImpl.sqlDelightDAO.getPlantEntry("Arum maculatum")
-        modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", newPlant.id, "en")
+        modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", newPlant!!.id, "en")
         modelStorageImpl.sqlDelightDAO.insertPlantFamilyNameEntry("Arum", newPlant.id, "en")
         modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", newPlant.id, "en")
         modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Lord-and-Ladies", newPlant.id, "en")
@@ -81,7 +81,7 @@ internal class ModelStorageCommonTest {
                 "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
             )
             val new = modelStorageImpl.sqlDelightDAO.getPlantEntry("Arum maculatum $i")
-            modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", new.id, "en")
+            modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", new!!.id, "en")
             modelStorageImpl.sqlDelightDAO.insertPlantFamilyNameEntry("Arum", new.id, "en")
             modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", new.id, "en")
             modelStorageImpl.sqlDelightDAO.insertToxicityEntry(true,

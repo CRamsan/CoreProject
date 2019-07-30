@@ -40,8 +40,8 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         return database.descriptionQueries.insert(plantId, animalType, description, locale)
     }
 
-    override fun getPlantEntry(scientificName: String): Plant {
-        return database.plantQueries.getPlant(scientificName).executeAsOne()
+    override fun getPlantEntry(scientificName: String): Plant? {
+        return database.plantQueries.getPlant(scientificName).executeAsOneOrNull()
     }
 
     override fun getAllPlantEntries(): List<Plant> {
@@ -52,19 +52,19 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         return database.plantCommonNameQueries.getPlantCommonNames(plantId, locale).executeAsList()
     }
 
-    override fun getPlantMainNameEntry(plantId: Long, locale: String): PlantMainName {
+    override fun getPlantMainNameEntry(plantId: Long, locale: String): PlantMainName? {
         return database.plantMainNameQueries.getPlantMainName(plantId, locale).executeAsOne()
     }
 
-    override fun getPlantFamilyEntry(plantId: Long, locale: String): PlantFamily {
+    override fun getPlantFamilyEntry(plantId: Long, locale: String): PlantFamily? {
         return database.plantFamilyQueries.getPlantFamily(plantId, locale).executeAsOne()
     }
 
-    override fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity {
+    override fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity? {
         return database.toxicityQueries.getToxicity(plantId, animalType).executeAsOne()
     }
 
-    override fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description {
+    override fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description? {
         return database.descriptionQueries.getDescription(plantId, animalType, locale).executeAsOne()
     }
 
@@ -72,7 +72,7 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         return database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale).executeAsList()
     }
 
-    override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId {
+    override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {
         return database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOne()
     }
 

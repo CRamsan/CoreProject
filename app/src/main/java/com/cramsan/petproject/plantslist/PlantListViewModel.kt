@@ -51,7 +51,7 @@ class PlantListViewModel : ViewModel() {
     }
 
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlantsWithToxicityFiltered(AnimalType.CAT, query, "en")
+        val plants = modelStore.getPlantsWithToxicityFiltered(AnimalType.DOG, query, "en")
         if (plants == null) {
             return@withContext
         }
