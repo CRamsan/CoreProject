@@ -19,8 +19,10 @@
     <string name="plant_details_scientific_name">Scientific Name: %1$s</string>
     <string name="plant_details_common_names">Other names: %1$s</string>
     <string name="plant_details_family">Family: %1$s</string>
-    <string name="plant_details_dangerous">Dangerous for cats</string>
-    <string name="plant_details_safe">Safe for cats</string>
+    <string name="plant_details_cat_dangerous">Dangerous for cats</string>
+    <string name="plant_details_cat_safe">Safe for cats</string>
+    <string name="plant_details_dog_dangerous">Dangerous for dogs</string>
+    <string name="plant_details_dog_safe">Safe for dogs</string>
 
     <string name="todo">TODO</string>
     <string name="title_activity_main">MainActivity</string>

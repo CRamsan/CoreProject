@@ -27,6 +27,7 @@
         <activity
                 android:name=".plantdetails.PlantDetailsActivity"
                 android:label="@string/title_activity_plant_details"
+                android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

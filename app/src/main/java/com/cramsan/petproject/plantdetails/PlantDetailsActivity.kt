@@ -21,5 +21,6 @@ class PlantDetailsActivity : AppCompatActivity() {
 
     companion object {
         const val PLANT_ID = "plantId"
+        const val ANIMAL_TYPE = "animalType"
     }
 }

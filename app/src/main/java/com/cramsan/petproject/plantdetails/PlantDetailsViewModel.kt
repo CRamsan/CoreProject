@@ -38,7 +38,7 @@ class PlantDetailsViewModel : ViewModel() {
 
     private suspend fun loadPlant(animalType: AnimalType, plantId: Int) = withContext(Dispatchers.IO) {
         val plant = modelStore.getPlant(animalType, plantId, "en")
-        val plantMetadata = modelStore.getPlantMetadata(AnimalType.CAT, plantId, "en")
+        val plantMetadata = modelStore.getPlantMetadata(animalType, plantId, "en")
         viewModelScope.launch {
             observablePlant.value = plant
             observablePlantMetadata.value = plantMetadata

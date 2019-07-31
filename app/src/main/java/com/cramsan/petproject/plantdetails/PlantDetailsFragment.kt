@@ -24,6 +24,7 @@ import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 class PlantDetailsFragment : Fragment() {
 
     private lateinit var viewModel: PlantDetailsViewModel
+    private lateinit var animalType: AnimalType
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +37,9 @@ class PlantDetailsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
         val plantId = activity?.intent?.getIntExtra(PlantDetailsActivity.PLANT_ID, -1) ?: return
+        val animalTypeId = activity?.intent?.getIntExtra(PlantDetailsActivity.ANIMAL_TYPE, -1) ?: return
+
+        animalType = AnimalType.values()[animalTypeId]
 
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(this, Observer {
@@ -81,15 +85,21 @@ class PlantDetailsFragment : Fragment() {
         })
         viewModel.getPlantMetadata().observe(this, Observer {
             if (it.isToxic) {
-                plant_details_danger.text = getString(R.string.plant_details_dangerous)
+                plant_details_danger.text = when(animalType) {
+                    AnimalType.CAT -> getString(R.string.plant_details_cat_dangerous)
+                    AnimalType.DOG -> getString(R.string.plant_details_dog_dangerous)
+                }
+
                 plant_details_danger.setTextColor(resources.getColor(R.color.colorDanger, requireActivity().theme))
             } else {
-                plant_details_danger.text = getString(R.string.plant_details_safe)
+                plant_details_danger.text = when(animalType) {
+                    AnimalType.CAT -> getString(R.string.plant_details_cat_safe)
+                    AnimalType.DOG -> getString(R.string.plant_details_dog_safe)
+                }
                 plant_details_danger.setTextColor(resources.getColor(R.color.colorSafe, requireActivity().theme))
             }
             plant_details_description.text = it.description
         })
-        viewModel.reloadPlant(AnimalType.CAT, plantId)
+        viewModel.reloadPlant(animalType, plantId)
     }
-
 }

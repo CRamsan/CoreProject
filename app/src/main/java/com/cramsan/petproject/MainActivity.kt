@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreate")
+
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -43,9 +45,15 @@ class MainActivity : AppCompatActivity(),
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        if (savedInstanceState == null) {
+            setFragmentForAnimalType(AnimalType.CAT)
+        }
     }
 
     override fun onBackPressed() {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onBackPressed")
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -82,7 +90,16 @@ class MainActivity : AppCompatActivity(),
         return true
     }
 
+    fun setFragmentForAnimalType(animalType: AnimalType) {
+        val newFragment = PlantsListFragment(animalType)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_container, newFragment)
+        transaction.commit()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onOptionsItemSelected with index ${item.order}")
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -93,13 +110,15 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onOptionsItemSelected with index ${item.order}")
+
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_home -> {
-                // Handle the camera action
+                setFragmentForAnimalType(AnimalType.CAT)
             }
             R.id.nav_gallery -> {
-
+                setFragmentForAnimalType(AnimalType.DOG)
             }
             R.id.nav_slideshow -> {
 
@@ -123,6 +142,7 @@ class MainActivity : AppCompatActivity(),
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onListFragmentInteraction")
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
         plantIntent.putExtra(PlantDetailsActivity.PLANT_ID, plantId)
+        plantIntent.putExtra(PlantDetailsActivity.ANIMAL_TYPE, animalType.ordinal)
         startActivity(plantIntent)
     }
 

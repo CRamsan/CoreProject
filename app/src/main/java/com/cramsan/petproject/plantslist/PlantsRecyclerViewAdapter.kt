@@ -19,7 +19,8 @@ import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentIntera
 import kotlinx.android.synthetic.main.view_plant.view.*
 
 class PlantsRecyclerViewAdapter(
-    private val mListener: OnListFragmentInteractionListener?
+    private val mListener: OnListFragmentInteractionListener?,
+    private val animalType: AnimalType
 ) : RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
 
     private var mValues: List<PresentablePlant> = listOf()
@@ -31,7 +32,7 @@ class PlantsRecyclerViewAdapter(
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
 
-            mListener?.onListFragmentInteraction(item.plantId.toInt(), AnimalType.CAT)
+            mListener?.onListFragmentInteraction(item.plantId.toInt(), animalType)
         }
     }
 

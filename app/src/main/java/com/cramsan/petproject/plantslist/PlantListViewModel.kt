@@ -20,20 +20,20 @@ class PlantListViewModel : ViewModel() {
 
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
 
-    fun reloadPlants() {
+    fun reloadPlants(animalType: AnimalType) {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
         viewModelScope.launch {
-            loadPlants()
+            loadPlants(animalType)
         }
     }
 
-    fun searchPlants(query: String) {
+    fun searchPlants(query: String, animalType: AnimalType) {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "searchPlants")
         viewModelScope.launch {
             if (query.isEmpty()) {
-                loadPlants()
+                loadPlants(animalType)
             } else {
-                filterPlants(query)
+                filterPlants(query, animalType)
             }
         }
     }
@@ -42,16 +42,16 @@ class PlantListViewModel : ViewModel() {
         return observablePlants
     }
 
-    private suspend fun loadPlants() = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlantsWithToxicity(AnimalType.CAT, "en")
+    private suspend fun loadPlants(animalType: AnimalType) = withContext(Dispatchers.IO)  {
+        val plants = modelStore.getPlantsWithToxicity(animalType, "en")
         viewModelScope.launch {
             CoreFrameworkAPI.threadUtil.assertIsUIThread()
             observablePlants.value = plants
         }
     }
 
-    private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlantsWithToxicityFiltered(AnimalType.DOG, query, "en")
+    private suspend fun filterPlants(query: String, animalType: AnimalType) = withContext(Dispatchers.IO)  {
+        val plants = modelStore.getPlantsWithToxicityFiltered(animalType, query, "en")
         if (plants == null) {
             return@withContext
         }

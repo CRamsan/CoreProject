@@ -1,14 +1,18 @@
 package com.cramsan.petproject.plantslist
 
+import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cramsan.framework.logging.Severity
@@ -23,7 +27,7 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
  * Activities containing this fragment MUST implement the
  * [PlantsListFragment.OnListFragmentInteractionListener] interface.
  */
-class PlantsListFragment : Fragment(), OnQueryTextListener {
+class PlantsListFragment(private val animalType: AnimalType) : Fragment(), OnQueryTextListener {
 
     private var listener: OnListFragmentInteractionListener? = null
     private var plantsAdapter: PlantsRecyclerViewAdapter? = null
@@ -52,18 +56,23 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-                plantsAdapter = PlantsRecyclerViewAdapter(listener)
+                plantsAdapter = PlantsRecyclerViewAdapter(listener, animalType)
                 adapter = plantsAdapter
             }
         }
 
         model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onResume")
         model.observablePlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
             plantsAdapter?.updateValues(plants)
         })
-        model.reloadPlants()
+        model.reloadPlants(animalType)
 
-        return view
     }
 
     override fun onDetach() {
@@ -79,7 +88,7 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         CoreFrameworkAPI.eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextChange")
-        newText?.let { model.searchPlants(it) }
+        newText?.let { model.searchPlants(it, animalType) }
         return true
     }
 
