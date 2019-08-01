@@ -1,18 +1,14 @@
 package com.cramsan.petproject.plantslist
 
-import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cramsan.framework.logging.Severity
@@ -21,17 +17,29 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
+import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.ANIMAL_TYPE
 
 /**
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  * [PlantsListFragment.OnListFragmentInteractionListener] interface.
  */
-class PlantsListFragment(private val animalType: AnimalType) : Fragment(), OnQueryTextListener {
+class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     private var listener: OnListFragmentInteractionListener? = null
     private var plantsAdapter: PlantsRecyclerViewAdapter? = null
     private lateinit var model: PlantListViewModel
+    private lateinit var animalType: AnimalType
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreate")
+
+        val animalTypeInt = arguments?.getInt(ANIMAL_TYPE, 0)
+        animalTypeInt?.let {
+            animalType = AnimalType.values()[animalTypeInt]
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -75,6 +83,11 @@ class PlantsListFragment(private val animalType: AnimalType) : Fragment(), OnQue
 
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(ANIMAL_TYPE, animalType.ordinal)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onDetach() {
         super.onDetach()
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onDetach")
@@ -108,5 +121,15 @@ class PlantsListFragment(private val animalType: AnimalType) : Fragment(), OnQue
         fun onListFragmentInteraction(plantId: Int, animalType: AnimalType)
 
         fun onRegisterAsSearchable(listener: OnQueryTextListener)
+    }
+
+    companion object {
+        fun newInstace(animalType: AnimalType): PlantsListFragment {
+            val args = Bundle()
+            args.putInt(ANIMAL_TYPE, animalType.ordinal)
+            val instance = PlantsListFragment()
+            instance.arguments = args
+            return instance
+        }
     }
 }

@@ -4,8 +4,6 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -15,18 +13,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
+import androidx.transition.Fade
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionSet
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
     PlantsListFragment.OnListFragmentInteractionListener{
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
+    private var selectedTabId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +49,23 @@ class MainActivity : AppCompatActivity(),
 
         navView.setNavigationItemSelectedListener(this)
 
-        if (savedInstanceState == null) {
-            setFragmentForAnimalType(AnimalType.CAT)
+        var tabToLoad = R.id.nav_home
+        if (savedInstanceState != null) {
+            tabToLoad = savedInstanceState.getInt(SELECTED_TAB, R.id.nav_home)
         }
+        val selectedMenuItem = nav_view.menu.findItem(tabToLoad)
+        onNavigationItemSelected(selectedMenuItem)
+        nav_view.setCheckedItem(selectedMenuItem)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        // Save the user's current game state
+        outState?.run {
+            putInt(SELECTED_TAB, selectedTabId)
+        }
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(outState)
     }
 
     override fun onBackPressed() {
@@ -73,7 +90,6 @@ class MainActivity : AppCompatActivity(),
         (menu.findItem(R.id.action_search).actionView as SearchView).apply {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     queryTextListener?.onQueryTextSubmit(query)
@@ -90,27 +106,39 @@ class MainActivity : AppCompatActivity(),
         return true
     }
 
-    fun setFragmentForAnimalType(animalType: AnimalType) {
-        val newFragment = PlantsListFragment(animalType)
+    private fun setFragmentForAnimalType(animalType: AnimalType) {
+        val newFragment = PlantsListFragment.newInstace(animalType)
         val transaction = supportFragmentManager.beginTransaction()
+
+        val previousFragment = supportFragmentManager.findFragmentById(R.id.main_container)
+
+        val exitFade = Fade()
+        exitFade.duration = 100
+        previousFragment?.exitTransition = exitFade
+
+        val enterFade = Fade()
+        enterFade.startDelay = 100
+        enterFade.duration = 100
+        newFragment.enterTransition = enterFade
+
         transaction.replace(R.id.main_container, newFragment)
         transaction.commit()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onOptionsItemSelected with index ${item.order}")
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when(animalType) {
+            AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
+            AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onOptionsItemSelected with index ${item.order}")
+
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        drawerLayout.closeDrawer(GravityCompat.START)
+
+        if (selectedTabId == item.itemId) {
+            CoreFrameworkAPI.eventLogger.log(Severity.DEBUG, classTag(), "Tapping on previously selected menu item")
+            return true
+        }
 
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -120,12 +148,6 @@ class MainActivity : AppCompatActivity(),
             R.id.nav_gallery -> {
                 setFragmentForAnimalType(AnimalType.DOG)
             }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_tools -> {
-
-            }
             R.id.nav_share -> {
 
             }
@@ -133,8 +155,7 @@ class MainActivity : AppCompatActivity(),
 
             }
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        drawerLayout.closeDrawer(GravityCompat.START)
+        selectedTabId = item.itemId
         return true
     }
 
@@ -149,5 +170,9 @@ class MainActivity : AppCompatActivity(),
     override fun onRegisterAsSearchable(listener: SearchView.OnQueryTextListener) {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onRegisterAsSearchable")
         queryTextListener = listener
+    }
+
+    companion object {
+        const val SELECTED_TAB = "selectedTab"
     }
 }

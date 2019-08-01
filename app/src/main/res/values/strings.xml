@@ -7,12 +7,17 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string name="menu_cats">Cats</string>
+    <string name="menu_dogs">Dogs</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="menu_search">Search</string>
+    <string name="title_fragment_plants_cats">Dangerous Plants for Cats</string>
+    <string name="title_fragment_plants_dogs">Dangerous Plants for Dogs</string>
     <string name="title_activity_plants_list">PlantsList</string>
     <string name="title_activity_plant_details">Plant Details</string>
 
@@ -26,4 +31,5 @@
 
     <string name="todo">TODO</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="communicate">Communicate</string>
 </resources>
