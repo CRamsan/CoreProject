@@ -58,7 +58,9 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
         val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale)
-            ?: return null
+        if (plantEntry == null) {
+            return null
+        }
 
         return Plant(
             plantEntry.id.toInt(),
@@ -74,7 +76,10 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale) ?: return null
+        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale)
+        if (plantCustomEntry == null) {
+            return null
+        }
         return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
     }
 
@@ -93,15 +98,50 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
             CoreFrameworkAPI.eventLogger.log(Severity.ERROR, classTag(), "entry is null after writing")
             return
         }
+
         if (isNew) {
-            plant.commonNames.split("|").forEach {
-                sqlDelightDAO.insertPlantCommonNameEntry(it, plantEntry.id, locale)
-            }
             sqlDelightDAO.insertPlantFamilyNameEntry(plant.family, plantEntry.id, locale)
             sqlDelightDAO.insertPlantMainNameEntry(plant.mainCommonName, plantEntry.id, locale)
-            sqlDelightDAO.insertDescriptionEntry(plantEntry.id, plantMetadata.animalType, plantMetadata.description, locale)
         }
-        sqlDelightDAO.insertToxicityEntry(plantMetadata.isToxic, plantEntry.id, plantMetadata.animalType, plantMetadata.source)
+
+        if (sqlDelightDAO.getDescriptionEntry(plantEntry.id, plantMetadata.animalType, locale) == null) {
+            sqlDelightDAO.insertDescriptionEntry(
+                plantEntry.id,
+                plantMetadata.animalType,
+                plantMetadata.description,
+                locale
+            )
+        }
+
+        if(sqlDelightDAO.getToxicityEntry(plantEntry.id, plantMetadata.animalType) == null) {
+            sqlDelightDAO.insertToxicityEntry(
+                plantMetadata.isToxic,
+                plantEntry.id,
+                plantMetadata.animalType,
+                plantMetadata.source
+            )
+        }
+
+        val names = plant.commonNames.split(", ")
+        for (name in names) {
+            if (name.trim().isEmpty())
+                continue
+
+            val nameString = name.trim()
+            val commonNamesResult = sqlDelightDAO.getPlantCommonNameEntries(plantEntry.id, locale)
+            var shouldSkip = false
+            for (plantName in commonNamesResult) {
+                if (plantName.common_name.trim().equals(nameString)) {
+                    shouldSkip = true
+                    break
+                }
+            }
+            if (shouldSkip) {
+                continue
+            }
+            sqlDelightDAO.insertPlantCommonNameEntry(name, plantEntry.id, locale)
+        }
+
     }
 
     fun deleteAll() {

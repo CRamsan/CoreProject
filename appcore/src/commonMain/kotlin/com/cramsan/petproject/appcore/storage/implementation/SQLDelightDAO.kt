@@ -53,19 +53,19 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
     }
 
     override fun getPlantMainNameEntry(plantId: Long, locale: String): PlantMainName? {
-        return database.plantMainNameQueries.getPlantMainName(plantId, locale).executeAsOne()
+        return database.plantMainNameQueries.getPlantMainName(plantId, locale).executeAsOneOrNull()
     }
 
     override fun getPlantFamilyEntry(plantId: Long, locale: String): PlantFamily? {
-        return database.plantFamilyQueries.getPlantFamily(plantId, locale).executeAsOne()
+        return database.plantFamilyQueries.getPlantFamily(plantId, locale).executeAsOneOrNull()
     }
 
     override fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity? {
-        return database.toxicityQueries.getToxicity(plantId, animalType).executeAsOne()
+        return database.toxicityQueries.getToxicity(plantId, animalType).executeAsOneOrNull()
     }
 
     override fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description? {
-        return database.descriptionQueries.getDescription(plantId, animalType, locale).executeAsOne()
+        return database.descriptionQueries.getDescription(plantId, animalType, locale).executeAsOneOrNull()
     }
 
     override fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {
@@ -73,7 +73,7 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
     }
 
     override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {
-        return database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOne()
+        return database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOneOrNull()
     }
 
     override fun deleteAll() {
