@@ -1,5 +1,6 @@
 package com.cramsan.petproject.plantslist
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View

@@ -4,20 +4,20 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
-import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.ANIMAL_TYPE
+import kotlinx.android.synthetic.main.fragment_plants_list.*
 
 /**
  * A fragment representing a list of Items.
@@ -27,9 +27,10 @@ import com.cramsan.petproject.plantdetails.PlantDetailsActivity.Companion.ANIMAL
 class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     private var listener: OnListFragmentInteractionListener? = null
-    private var plantsAdapter: PlantsRecyclerViewAdapter? = null
+    private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
     private lateinit var model: PlantListViewModel
     private lateinit var animalType: AnimalType
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,7 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onAttach")
         if (context is OnListFragmentInteractionListener) {
             listener = context
-            listener?.onRegisterAsSearchable(this)
+            context.onRegisterAsSearchable(this)
         } else {
             throw RuntimeException("$context must implement OnListFragmentInteractionListener")
         }
@@ -60,24 +61,36 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreateView")
         val view = inflater.inflate(R.layout.fragment_plants_list, container, false)
 
+        layoutManager = LinearLayoutManager(context)
+        plantsAdapter = PlantsRecyclerViewAdapter(listener, animalType)
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = LinearLayoutManager(context)
-                plantsAdapter = PlantsRecyclerViewAdapter(listener, animalType)
-                adapter = plantsAdapter
+                this.layoutManager = layoutManager
+                this.adapter = plantsAdapter
             }
+        }
+
+        savedInstanceState?.let {
+            val startingOffset = savedInstanceState.getInt(SCROLL_POS, 0)
+            layoutManager.scrollToPosition(startingOffset)
         }
 
         model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        list.layoutManager = layoutManager
+        list.adapter = plantsAdapter
+    }
+
     override fun onResume() {
         super.onResume()
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onResume")
         model.observablePlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
-            plantsAdapter?.updateValues(plants)
+            plantsAdapter.updateValues(plants)
         })
         model.reloadPlants(animalType)
 
@@ -85,6 +98,8 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(ANIMAL_TYPE, animalType.ordinal)
+        outState.putInt(SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
+
         super.onSaveInstanceState(outState)
     }
 
@@ -124,12 +139,15 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
     }
 
     companion object {
-        fun newInstace(animalType: AnimalType): PlantsListFragment {
+        fun newInstance(animalType: AnimalType): PlantsListFragment {
             val args = Bundle()
             args.putInt(ANIMAL_TYPE, animalType.ordinal)
             val instance = PlantsListFragment()
             instance.arguments = args
             return instance
         }
+
+        const val ANIMAL_TYPE = "animalType"
+        const val SCROLL_POS = "scrollPosition"
     }
 }

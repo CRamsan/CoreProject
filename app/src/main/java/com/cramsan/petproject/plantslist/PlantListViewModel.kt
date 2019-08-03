@@ -51,10 +51,7 @@ class PlantListViewModel : ViewModel() {
     }
 
     private suspend fun filterPlants(query: String, animalType: AnimalType) = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlantsWithToxicityFiltered(animalType, query, "en")
-        if (plants == null) {
-            return@withContext
-        }
+        val plants = modelStore.getPlantsWithToxicityFiltered(animalType, query, "en") ?: return@withContext
         viewModelScope.launch {
             CoreFrameworkAPI.threadUtil.assertIsUIThread()
             observablePlants.value = plants

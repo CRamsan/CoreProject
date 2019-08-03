@@ -36,8 +36,8 @@ class PlantDetailsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
-        val plantId = activity?.intent?.getIntExtra(PlantDetailsActivity.PLANT_ID, -1) ?: return
-        val animalTypeId = activity?.intent?.getIntExtra(PlantDetailsActivity.ANIMAL_TYPE, -1) ?: return
+        val plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
+        val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
 
         animalType = AnimalType.values()[animalTypeId]
 
@@ -63,7 +63,7 @@ class PlantDetailsFragment : Fragment() {
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        CoreFrameworkAPI.eventLogger.log(Severity.ERROR, PlantDetailsActivity.classTag(), e.toString())
+                        CoreFrameworkAPI.eventLogger.log(Severity.ERROR, classTag(), e.toString())
                         return false
                     }
 
@@ -74,7 +74,7 @@ class PlantDetailsFragment : Fragment() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        CoreFrameworkAPI.eventLogger.log(Severity.VERBOSE, PlantDetailsActivity.classTag(),
+                        CoreFrameworkAPI.eventLogger.log(Severity.VERBOSE, classTag(),
                             "Resource loaded successfully")
                         return false
                     }
@@ -101,5 +101,10 @@ class PlantDetailsFragment : Fragment() {
             plant_details_description.text = it.description
         })
         viewModel.reloadPlant(animalType, plantId)
+    }
+
+    companion object {
+        const val PLANT_ID = "plantId"
+        const val ANIMAL_TYPE = "animalType"
     }
 }

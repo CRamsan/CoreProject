@@ -57,10 +57,7 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlant")
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale)
-        if (plantEntry == null) {
-            return null
-        }
+        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale) ?: return null
 
         return Plant(
             plantEntry.id.toInt(),
@@ -76,10 +73,7 @@ class ModelStorage(initializer: ModelStorageInitializer) : ModelStorageInterface
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
         CoreFrameworkAPI.threadUtil.assertIsBackgroundThread()
 
-        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale)
-        if (plantCustomEntry == null) {
-            return null
-        }
+        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale) ?: return null
         return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
     }
 

@@ -21,7 +21,9 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
+import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.plantslist.PlantsListFragment
+import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
@@ -50,11 +52,20 @@ class MainActivity : AppCompatActivity(),
         navView.setNavigationItemSelectedListener(this)
 
         var tabToLoad = R.id.nav_home
+        val selectedMenuItem: MenuItem?
         if (savedInstanceState != null) {
-            tabToLoad = savedInstanceState.getInt(SELECTED_TAB, R.id.nav_home)
+            tabToLoad = savedInstanceState.getInt(SELECTED_TAB, -1)
+            if (tabToLoad == -1) {
+                selectedMenuItem = nav_view.menu.findItem(tabToLoad)
+                onNavigationItemSelected(selectedMenuItem)
+            } else {
+                selectedMenuItem = nav_view.menu.findItem(tabToLoad)
+                selectedTabId = tabToLoad
+            }
+        } else {
+            selectedMenuItem = nav_view.menu.findItem(tabToLoad)
+            onNavigationItemSelected(selectedMenuItem)
         }
-        val selectedMenuItem = nav_view.menu.findItem(tabToLoad)
-        onNavigationItemSelected(selectedMenuItem)
         nav_view.setCheckedItem(selectedMenuItem)
     }
 
@@ -107,7 +118,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun setFragmentForAnimalType(animalType: AnimalType) {
-        val newFragment = PlantsListFragment.newInstace(animalType)
+        val newFragment = PlantsListFragment.newInstance(animalType)
         val transaction = supportFragmentManager.beginTransaction()
 
         val previousFragment = supportFragmentManager.findFragmentById(R.id.main_container)
@@ -159,11 +170,16 @@ class MainActivity : AppCompatActivity(),
         return true
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
     override fun onListFragmentInteraction(plantId: Int, animalType: AnimalType) {
         CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onListFragmentInteraction")
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
-        plantIntent.putExtra(PlantDetailsActivity.PLANT_ID, plantId)
-        plantIntent.putExtra(PlantDetailsActivity.ANIMAL_TYPE, animalType.ordinal)
+        plantIntent.putExtra(PLANT_ID, plantId)
+        plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
         startActivity(plantIntent)
     }
 
