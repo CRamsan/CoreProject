@@ -1,17 +1,13 @@
 package com.cramsan.framework.logging.implementation
 
-import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.PlatformLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.thread.ThreadUtilInterface
 
-class EventLogger(initializer: EventLoggerInitializer): EventLoggerInterface {
+class EventLogger(initializer: EventLoggerInitializer,
+                  private val platformLogger: PlatformLoggerInterface): EventLoggerInterface {
 
-    var haltUtil: HaltUtilInterface? = null
     private val targetSeverity: Severity = initializer.targetSeverity
-
-    private var platformLogger = PlatformLogger()
 
     override fun log(severity: Severity, tag: String, message: String) {
         if (severity < targetSeverity)
@@ -24,6 +20,5 @@ class EventLogger(initializer: EventLoggerInitializer): EventLoggerInterface {
             return
         }
         platformLogger.log(Severity.ERROR, tag, message)
-        haltUtil?.stopThread()
     }
 }

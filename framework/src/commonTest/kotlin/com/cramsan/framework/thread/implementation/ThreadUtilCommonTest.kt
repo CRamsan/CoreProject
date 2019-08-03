@@ -1,16 +1,29 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.logging.implementation.MockEventLogger
+import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.thread.ThreadUtilInterface
+import io.mockk.every
+import io.mockk.mockk
+import org.kodein.di.Kodein
+import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.provider
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ThreadUtilCommonTest {
 
+    private val kodein = Kodein {
+        bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
+    }
+
     private lateinit var threadUtil: ThreadUtilInterface
 
     fun setUp() {
-        val initializer = ThreadUtilInitializer(MockEventLogger())
+        val eventLoggerInterface: EventLoggerInterface by kodein.instance()
+
+        val initializer = ThreadUtilInitializer(eventLoggerInterface)
         threadUtil = ThreadUtil(initializer)
     }
 
