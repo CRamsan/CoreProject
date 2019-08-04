@@ -3,12 +3,15 @@ package com.cramsan.framework.halt.implementation
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import io.mockk.mockk
 import kotlinx.coroutines.*
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
+import org.kodein.di.newInstance
 
 class HaltUtilCommonTest {
 
@@ -20,9 +23,9 @@ class HaltUtilCommonTest {
     private lateinit var haltUtilImpl: HaltUtil
 
     fun setUp() {
-        val eventLoggerInterface: EventLoggerInterface by kodein.instance()
-        val initializer = HaltUtilInitializer(eventLoggerInterface)
-        haltUtilImpl = HaltUtil(initializer)
+        val initializer = HaltUtilInitializer()
+        val newHaltUtil by kodein.newInstance { HaltUtil(initializer, instance()) }
+        haltUtilImpl = newHaltUtil
         haltUtil = haltUtilImpl
     }
 

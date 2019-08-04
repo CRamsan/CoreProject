@@ -14,28 +14,33 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.transition.Fade
-import androidx.transition.TransitionInflater
-import androidx.transition.TransitionSet
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
 import kotlinx.android.synthetic.main.activity_main.*
+import org.kodein.di.android.kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
-    PlantsListFragment.OnListFragmentInteractionListener{
+    PlantsListFragment.OnListFragmentInteractionListener,
+    KodeinAware {
+
+    override val kodein by kodein()
+    private val eventLogger: EventLoggerInterface by instance()
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private var selectedTabId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreate")
+        eventLogger.log(Severity.INFO, classTag(), "onCreate")
 
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -80,7 +85,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onBackPressed() {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onBackPressed")
+        eventLogger.log(Severity.INFO, classTag(), "onBackPressed")
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -91,7 +96,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
+        eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -141,13 +146,13 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onOptionsItemSelected with index ${item.order}")
+        eventLogger.log(Severity.INFO, classTag(), "onOptionsItemSelected with index ${item.order}")
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
 
         if (selectedTabId == item.itemId) {
-            CoreFrameworkAPI.eventLogger.log(Severity.DEBUG, classTag(), "Tapping on previously selected menu item")
+            eventLogger.log(Severity.DEBUG, classTag(), "Tapping on previously selected menu item")
             return true
         }
 
@@ -176,7 +181,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onListFragmentInteraction(plantId: Int, animalType: AnimalType) {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onListFragmentInteraction")
+        eventLogger.log(Severity.INFO, classTag(), "onListFragmentInteraction")
         val plantIntent = Intent(this, PlantDetailsActivity::class.java)
         plantIntent.putExtra(PLANT_ID, plantId)
         plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
@@ -184,7 +189,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onRegisterAsSearchable(listener: SearchView.OnQueryTextListener) {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onRegisterAsSearchable")
+        eventLogger.log(Severity.INFO, classTag(), "onRegisterAsSearchable")
         queryTextListener = listener
     }
 

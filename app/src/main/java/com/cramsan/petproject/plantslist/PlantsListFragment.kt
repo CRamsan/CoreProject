@@ -11,20 +11,26 @@ import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
+import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import kotlinx.android.synthetic.main.fragment_plants_list.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
 
 /**
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  * [PlantsListFragment.OnListFragmentInteractionListener] interface.
  */
-class PlantsListFragment : Fragment(), OnQueryTextListener {
+class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
+
+    override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
+    private val eventLogger: EventLoggerInterface by instance()
 
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
@@ -34,7 +40,7 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreate")
+        eventLogger.log(Severity.INFO, classTag(), "onCreate")
 
         val animalTypeInt = arguments?.getInt(ANIMAL_TYPE, 0)
         animalTypeInt?.let {
@@ -44,7 +50,7 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onAttach")
+        eventLogger.log(Severity.INFO, classTag(), "onAttach")
         if (context is OnListFragmentInteractionListener) {
             listener = context
             context.onRegisterAsSearchable(this)
@@ -58,11 +64,11 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onCreateView")
+        eventLogger.log(Severity.INFO, classTag(), "onCreateView")
         val view = inflater.inflate(R.layout.fragment_plants_list, container, false)
 
         layoutManager = LinearLayoutManager(context)
-        plantsAdapter = PlantsRecyclerViewAdapter(listener, animalType)
+        plantsAdapter = PlantsRecyclerViewAdapter(listener, animalType, requireContext())
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -88,7 +94,7 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     override fun onResume() {
         super.onResume()
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onResume")
+        eventLogger.log(Severity.INFO, classTag(), "onResume")
         model.observablePlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
             plantsAdapter.updateValues(plants)
         })
@@ -105,17 +111,17 @@ class PlantsListFragment : Fragment(), OnQueryTextListener {
 
     override fun onDetach() {
         super.onDetach()
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onDetach")
+        eventLogger.log(Severity.INFO, classTag(), "onDetach")
         listener = null
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        CoreFrameworkAPI.eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextSubmit")
+        eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextSubmit")
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        CoreFrameworkAPI.eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextChange")
+        eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextChange")
         newText?.let { model.searchPlants(it, animalType) }
         return true
     }

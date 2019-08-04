@@ -1,22 +1,35 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
+import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import io.mockk.mockk
+import org.kodein.di.Kodein
+import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.provider
+import org.kodein.di.newInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 internal class ModelStorageCommonTest {
 
+    private val kodein = Kodein {
+        bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
+        bind<ThreadUtilInterface>() with provider { mockk<ThreadUtil>(relaxUnitFun = true) }
+    }
+
     private lateinit var modelStorage: ModelStorageInterface
-    private lateinit var modelStorageImpl: ModelStorage
 
     fun setUp(platformInitializer: ModelStoragePlatformInitializer) {
         val initializer = ModelStorageInitializer(platformInitializer)
-        modelStorageImpl = ModelStorage(initializer)
-        modelStorage = modelStorageImpl
+        val newModelStorage by kodein.newInstance { ModelStorage(initializer, instance(), instance()) }
+        modelStorage = newModelStorage
     }
 
     fun tearDown() {
@@ -26,9 +39,9 @@ internal class ModelStorageCommonTest {
     fun getPlants() {
         insertBaseEntries()
         var allPlants = modelStorage.getPlants(AnimalType.CAT, "en")
-        assertEquals(101, allPlants.size)
+        assertEquals(100, allPlants.size)
 
-        modelStorageImpl.insertPlant(Plant(0,
+        modelStorage.insertPlant(Plant(0,
             "Arum maculatum TEST",
             "Adam and Eve test",
             "Araceae, Some Other name",
@@ -37,11 +50,11 @@ internal class ModelStorageCommonTest {
         ), PlantMetadata(
             0,AnimalType.CAT , true, "", ""), "en")
         allPlants = modelStorage.getPlants(AnimalType.CAT, "en")
-        assertEquals(102, allPlants.size)
+        assertEquals(101, allPlants.size)
     }
 
     fun getPlant() {
-        modelStorageImpl.insertPlant(Plant(0,
+        modelStorage.insertPlant(Plant(0,
             "Arum maculatum TEST",
             "Adam and Eve test",
             "Araceae, Some Other name",
@@ -58,14 +71,16 @@ internal class ModelStorageCommonTest {
 
     fun getPlantMetadata() {
         insertBaseEntries()
-        assertNotNull(modelStorage.getPlantMetadata(AnimalType.CAT, 10, "en"))
+
+        val plant = modelStorage.getPlants(AnimalType.CAT, "en")[10]
+        assertNotNull(modelStorage.getPlantMetadata(AnimalType.CAT, plant.id, "en"))
     }
 
     fun deleteAll() {
         insertBaseEntries()
         val allPlants = modelStorage.getPlants(AnimalType.CAT, "en")
-        assertEquals(101, allPlants.size)
-        modelStorageImpl.deleteAll()
+        assertEquals(100, allPlants.size)
+        modelStorage.deleteAll()
         val newAllPlants = modelStorage.getPlants(AnimalType.CAT, "en")
         assertEquals(0, newAllPlants.size)
     }
@@ -92,44 +107,9 @@ internal class ModelStorageCommonTest {
     }
 
     private fun insertBaseEntries() {
-        modelStorageImpl.sqlDelightDAO.insertPlantEntry("Arum maculatum",
-            "Adam and Eve",
-            "Araceae",
-            "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
-        )
-        val newPlant = modelStorageImpl.sqlDelightDAO.getPlantEntry("Arum maculatum")
-        modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", newPlant!!.id, "en")
-        modelStorageImpl.sqlDelightDAO.insertPlantFamilyNameEntry("Arum", newPlant.id, "en")
-        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", newPlant.id, "en")
-        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Lord-and-Ladies", newPlant.id, "en")
-        modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Wake Robin", newPlant.id, "en")
-        modelStorageImpl.sqlDelightDAO.insertToxicityEntry(true,
-            newPlant.id,
-            AnimalType.DOG,
-            "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-        )
-        modelStorageImpl.sqlDelightDAO.insertToxicityEntry(false,
-            newPlant.id,
-            AnimalType.CAT,
-            "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-        )
-
         for (i in 1..100) {
-            modelStorageImpl.sqlDelightDAO.insertPlantEntry(
-                "Arum maculatum $i",
-                "Adam and Eve $i",
-                "Araceae",
-                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
-            )
-            val new = modelStorageImpl.sqlDelightDAO.getPlantEntry("Arum maculatum $i")
-            modelStorageImpl.sqlDelightDAO.insertPlantMainNameEntry("Arum", new!!.id, "en")
-            modelStorageImpl.sqlDelightDAO.insertPlantFamilyNameEntry("Arum", new.id, "en")
-            modelStorageImpl.sqlDelightDAO.insertPlantCommonNameEntry("Arum", new.id, "en")
-            modelStorageImpl.sqlDelightDAO.insertToxicityEntry(true,
-                new.id,
-                AnimalType.CAT,
-                "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/adam-and-eve"
-            )
+            modelStorage.insertPlant(Plant(1, "Howea forsteriana ${i}" , "Kentia Palm ${i}", "Forster Senty Palm", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Howea_forsteriana_Lord_Howe_Island.jpg/1200px-Howea_forsteriana_Lord_Howe_Island.jpg", "Howea forsteriana ${i}"), PlantMetadata(1, AnimalType.DOG, true, "${i}", "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/kentia-palm"), "en")
+            modelStorage.insertPlant(Plant(1, "Howea forsteriana ${i}" , "Kentia Palm ${i}", "Forster Senty Palm", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Howea_forsteriana_Lord_Howe_Island.jpg/1200px-Howea_forsteriana_Lord_Howe_Island.jpg", "Howea forsteriana ${i}"), PlantMetadata(1, AnimalType.CAT, false, "${i}", "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/kentia-palm"), "en")
         }
     }
 

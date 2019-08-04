@@ -21,8 +21,8 @@ class EventLoggerCommonTest {
     }
 
     fun logWithVerboseSeverity() {
-        val initializer = EventLoggerInitializer(Severity.VERBOSE)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.VERBOSE, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.log(Severity.VERBOSE, classTag(), "Message-1")
         eventLogger.log(Severity.DEBUG, classTag(), "Message-2")
         eventLogger.log(Severity.INFO, classTag(), "Message-3")
@@ -31,8 +31,8 @@ class EventLoggerCommonTest {
     }
 
     fun logWithDebugSeverity() {
-        val initializer = EventLoggerInitializer(Severity.DEBUG)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.DEBUG, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.log(Severity.VERBOSE, classTag(), "Message-1")
         eventLogger.log(Severity.DEBUG, classTag(), "Message-2")
         eventLogger.log(Severity.INFO, classTag(), "Message-3")
@@ -41,8 +41,8 @@ class EventLoggerCommonTest {
     }
 
     fun logWithInfoSeverity() {
-        val initializer = EventLoggerInitializer(Severity.INFO)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.INFO, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.log(Severity.VERBOSE, classTag(), "Message-1")
         eventLogger.log(Severity.DEBUG, classTag(), "Message-2")
         eventLogger.log(Severity.INFO, classTag(), "Message-3")
@@ -51,8 +51,8 @@ class EventLoggerCommonTest {
     }
 
     fun logWithWarningSeverity() {
-        val initializer = EventLoggerInitializer(Severity.WARNING)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.WARNING, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.log(Severity.VERBOSE, classTag(), "Message-1")
         eventLogger.log(Severity.DEBUG, classTag(), "Message-2")
         eventLogger.log(Severity.INFO, classTag(), "Message-3")
@@ -61,8 +61,8 @@ class EventLoggerCommonTest {
     }
 
     fun logWithErrorSeverity() {
-        val initializer = EventLoggerInitializer(Severity.ERROR)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.ERROR, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.log(Severity.VERBOSE, classTag(), "Message-1")
         eventLogger.log(Severity.DEBUG, classTag(), "Message-2")
         eventLogger.log(Severity.INFO, classTag(), "Message-3")
@@ -71,26 +71,26 @@ class EventLoggerCommonTest {
     }
 
     fun assertTrueOnErrorSeverity() {
-        val initializer = EventLoggerInitializer(Severity.ERROR)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.ERROR, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.assert(true, classTag(), "Assert-Message-1")
     }
 
     fun assertFalseOnErrorSeverity() {
-        val initializer = EventLoggerInitializer(Severity.ERROR)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.ERROR, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.assert(false, classTag(), "Assert-Message-1")
     }
 
     fun assertTrueOnVerboseSeverity() {
-        val initializer = EventLoggerInitializer(Severity.VERBOSE)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.VERBOSE, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.assert(true, classTag(), "Assert-Message-1")
     }
 
     fun assertFalseOnVerboseSeverity() {
-        val initializer = EventLoggerInitializer(Severity.VERBOSE)
-        val eventLogger by kodein.newInstance { EventLogger(initializer, instance()) }
+        val initializer by kodein.newInstance { EventLoggerInitializer(Severity.VERBOSE, instance()) }
+        val eventLogger = EventLogger(initializer)
         eventLogger.assert(true, classTag(), "Assert-Message-1")
     }
 }

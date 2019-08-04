@@ -1,34 +1,40 @@
 package com.cramsan.petproject.plantslist
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
+import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PresentablePlant
+import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
+import org.kodein.di.android.kodein
 
-class PlantListViewModel : ViewModel() {
+class PlantListViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
 
-    private val modelStore = CoreFrameworkAPI.modelProvider
+    override val kodein by kodein(application)
+    private val modelProvider: ModelProviderInterface by instance()
+    private val eventLogger: EventLoggerInterface by instance()
+    private val threadUtil: ThreadUtilInterface by instance()
 
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
 
     fun reloadPlants(animalType: AnimalType) {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
+        eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
         viewModelScope.launch {
             loadPlants(animalType)
         }
     }
 
     fun searchPlants(query: String, animalType: AnimalType) {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "searchPlants")
+        eventLogger.log(Severity.INFO, classTag(), "searchPlants")
         viewModelScope.launch {
             if (query.isEmpty()) {
                 loadPlants(animalType)
@@ -43,17 +49,17 @@ class PlantListViewModel : ViewModel() {
     }
 
     private suspend fun loadPlants(animalType: AnimalType) = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlantsWithToxicity(animalType, "en")
+        val plants = modelProvider.getPlantsWithToxicity(animalType, "en")
         viewModelScope.launch {
-            CoreFrameworkAPI.threadUtil.assertIsUIThread()
+            threadUtil.assertIsUIThread()
             observablePlants.value = plants
         }
     }
 
     private suspend fun filterPlants(query: String, animalType: AnimalType) = withContext(Dispatchers.IO)  {
-        val plants = modelStore.getPlantsWithToxicityFiltered(animalType, query, "en") ?: return@withContext
+        val plants = modelProvider.getPlantsWithToxicityFiltered(animalType, query, "en") ?: return@withContext
         viewModelScope.launch {
-            CoreFrameworkAPI.threadUtil.assertIsUIThread()
+            threadUtil.assertIsUIThread()
             observablePlants.value = plants
         }
     }

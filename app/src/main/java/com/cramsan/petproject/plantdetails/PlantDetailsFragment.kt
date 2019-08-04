@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -17,11 +16,18 @@ import kotlinx.android.synthetic.main.fragment_plant_details.*
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
+import com.cramsan.petproject.PetProjectApplication
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
+import org.kodein.di.android.kodein
 
-class PlantDetailsFragment : Fragment() {
+class PlantDetailsFragment : Fragment(), KodeinAware {
+
+    override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
+    private val eventLogger: EventLoggerInterface by instance()
 
     private lateinit var viewModel: PlantDetailsViewModel
     private lateinit var animalType: AnimalType
@@ -35,7 +41,7 @@ class PlantDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
+        eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
         val plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
 
@@ -63,7 +69,7 @@ class PlantDetailsFragment : Fragment() {
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        CoreFrameworkAPI.eventLogger.log(Severity.ERROR, classTag(), e.toString())
+                        eventLogger.log(Severity.ERROR, classTag(), e.toString())
                         return false
                     }
 
@@ -74,7 +80,7 @@ class PlantDetailsFragment : Fragment() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        CoreFrameworkAPI.eventLogger.log(Severity.VERBOSE, classTag(),
+                        eventLogger.log(Severity.VERBOSE, classTag(),
                             "Resource loaded successfully")
                         return false
                     }

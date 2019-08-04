@@ -1,28 +1,34 @@
 package com.cramsan.petproject.plantslist
 
-import android.os.Parcelable
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PresentablePlant
 
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
 
 import kotlinx.android.synthetic.main.view_plant.view.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
 
 class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentInteractionListener?,
-    private val animalType: AnimalType
-) : RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
+    private val animalType: AnimalType,
+    context: Context
+) :
+    RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>(), KodeinAware {
+
+    override val kodein by org.kodein.di.android.kodein(context)
+    private val eventLogger: EventLoggerInterface by instance()
 
     private var mValues: List<PresentablePlant> = listOf()
     private val mOnClickListener: View.OnClickListener
@@ -38,20 +44,20 @@ class PlantsRecyclerViewAdapter(
     }
 
     fun updateValues(values: List<PresentablePlant>) {
-        CoreFrameworkAPI.eventLogger.log(Severity.VERBOSE, classTag(), "updateValues")
+        eventLogger.log(Severity.VERBOSE, classTag(), "updateValues")
         mValues = values
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        CoreFrameworkAPI.eventLogger.log(Severity.DEBUG, classTag(), "onCreateViewHolder")
+        eventLogger.log(Severity.DEBUG, classTag(), "onCreateViewHolder")
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_plant, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        CoreFrameworkAPI.eventLogger.log(Severity.VERBOSE, classTag(), "onBindViewHolder")
+        eventLogger.log(Severity.VERBOSE, classTag(), "onBindViewHolder")
         val item = mValues[position]
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName

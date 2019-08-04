@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.logging.Severity
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
-import com.cramsan.petproject.appcore.framework.implementation.MockCoreFramework
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -27,17 +25,6 @@ class ModelStorageTest {
 
     private lateinit var modelStorageTest: ModelStorageCommonTest
     private lateinit var semaphore: Semaphore
-
-    companion object {
-        @BeforeClass
-        @JvmStatic
-        fun setup() {
-            CoreFrameworkAPI.init(MockCoreFramework())
-            CoreFrameworkAPI.initEventLogger(Severity.VERBOSE)
-            CoreFrameworkAPI.initThreadUtil()
-            CoreFrameworkAPI.initHaltUtil()
-        }
-    }
 
     @Before
     fun setUp() {

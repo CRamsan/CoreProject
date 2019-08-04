@@ -1,28 +1,32 @@
 package com.cramsan.petproject.plantdetails
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.appcore.framework.CoreFrameworkAPI
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
+import org.kodein.di.android.kodein
 
-class PlantDetailsViewModel : ViewModel() {
+class PlantDetailsViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
 
-    private val modelStore = CoreFrameworkAPI.modelProvider
+    override val kodein by kodein(application)
+    private val modelStore: ModelStorageInterface by instance()
+    private val eventLogger: EventLoggerInterface by instance()
 
     private val observablePlant = MutableLiveData<Plant>()
     private val observablePlantMetadata = MutableLiveData<PlantMetadata>()
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
-        CoreFrameworkAPI.eventLogger.log(Severity.INFO, classTag(), "reloadPlant")
+        eventLogger.log(Severity.INFO, classTag(), "reloadPlant")
         viewModelScope.launch {
             loadPlant(animalType, plantId)
         }

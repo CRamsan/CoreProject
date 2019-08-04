@@ -1,6 +1,5 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 

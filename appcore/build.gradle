@@ -52,6 +52,7 @@ dependencies {
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
+    testImplementation "io.mockk:mockk:$globalMockkVersion"
     testImplementation "junit:junit:$globalJUnitVersion"
     testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
 }
@@ -78,6 +79,9 @@ kotlin {
             dependencies {
                 implementation kotlin("test-common")
                 implementation kotlin("test-annotations-common")
+                implementation "io.mockk:mockk-common:$globalMockkVersion"
+                implementation "org.kodein.di:kodein-di-core:$globalKodeinVersion"
+                implementation "org.kodein.di:kodein-di-erased:$globalKodeinVersion"
                 implementation project(":framework")
             }
         }
