@@ -3,10 +3,11 @@ package com.cramsan.framework.halt.implementation
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.thread.implementation.ThreadUtil
-import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import io.mockk.mockk
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
@@ -40,10 +41,10 @@ class HaltUtilCommonTest {
     }
 
     fun testStopMainThread() {
-        //haltUtil.stopMainThread()
+        // haltUtil.stopMainThread()
     }
 
     fun testCrashApp() {
-        //haltUtil.crashApp()
+        // haltUtil.crashApp()
     }
 }

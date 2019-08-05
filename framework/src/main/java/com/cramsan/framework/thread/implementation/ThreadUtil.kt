@@ -8,8 +8,10 @@ import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Executors
 
-actual class ThreadUtil actual constructor(initializer: ThreadUtilInitializer,
-                                           eventLogger: EventLoggerInterface) : ThreadUtilInterface {
+actual class ThreadUtil actual constructor(
+    initializer: ThreadUtilInitializer,
+    eventLogger: EventLoggerInterface
+) : ThreadUtilInterface {
 
     private val logger: EventLoggerInterface = eventLogger
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }

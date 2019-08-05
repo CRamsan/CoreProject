@@ -2,14 +2,14 @@ package com.cramsan.petproject.plantslist
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
@@ -18,7 +18,7 @@ import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
-import kotlinx.android.synthetic.main.fragment_plants_list.*
+import kotlinx.android.synthetic.main.fragment_plants_list.list
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -60,7 +60,8 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -95,11 +96,10 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
     override fun onResume() {
         super.onResume()
         eventLogger.log(Severity.INFO, classTag(), "onResume")
-        model.observablePlants().observe(this, Observer<List<PresentablePlant>>{ plants ->
+        model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
         model.reloadPlants(animalType)
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

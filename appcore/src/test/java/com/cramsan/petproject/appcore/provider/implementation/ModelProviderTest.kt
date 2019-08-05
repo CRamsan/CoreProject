@@ -1,17 +1,11 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.logging.Severity
-import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
-
+import java.util.concurrent.Semaphore
 import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.Semaphore
 
 /**
  * Instrumented test, which will execute on an Android device.

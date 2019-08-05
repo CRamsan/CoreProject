@@ -3,17 +3,14 @@ package com.cramsan.petproject.appcore.storage.implementation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.logging.Severity
+import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-
 import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.Semaphore
 
 /**
  * Instrumented test, which will execute on an Android device.

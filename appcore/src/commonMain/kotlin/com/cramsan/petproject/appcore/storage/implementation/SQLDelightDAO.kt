@@ -2,7 +2,15 @@ package com.cramsan.petproject.appcore.storage.implementation
 
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.storage.ModelStorageDAO
-import com.cramsan.petproject.db.*
+import com.cramsan.petproject.db.Description
+import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
+import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
+import com.cramsan.petproject.db.PetProjectDB
+import com.cramsan.petproject.db.Plant
+import com.cramsan.petproject.db.PlantCommonName
+import com.cramsan.petproject.db.PlantFamily
+import com.cramsan.petproject.db.PlantMainName
+import com.cramsan.petproject.db.Toxicity
 
 class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
 
@@ -32,7 +40,7 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         database.plantFamilyQueries.insert(plantId, family, locale)
     }
 
-    override fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalType: AnimalType, source:String) {
+    override fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalType: AnimalType, source: String) {
         database.toxicityQueries.insert(plantId, animalType, isToxic, source)
     }
 

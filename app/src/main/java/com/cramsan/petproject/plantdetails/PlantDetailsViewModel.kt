@@ -1,7 +1,10 @@
 package com.cramsan.petproject.plantdetails
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
@@ -13,8 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
 import org.kodein.di.android.kodein
+import org.kodein.di.erased.instance
 
 class PlantDetailsViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
 

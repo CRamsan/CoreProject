@@ -4,13 +4,13 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.thread.ThreadUtilInterface
 import io.mockk.mockk
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.newInstance
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 class ThreadUtilCommonTest {
 
@@ -42,7 +42,7 @@ class ThreadUtilCommonTest {
         assertFalse(threadUtil.isBackgroundThread())
     }
 
-    fun testIsUIThreadInDispatchToUI(completion :() -> Unit) {
+    fun testIsUIThreadInDispatchToUI(completion: () -> Unit) {
         assertTrue(threadUtil.isUIThread())
         threadUtil.dispatchToUI {
             assertTrue(threadUtil.isUIThread())

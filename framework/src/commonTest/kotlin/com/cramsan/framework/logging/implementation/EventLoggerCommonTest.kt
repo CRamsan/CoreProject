@@ -17,7 +17,6 @@ class EventLoggerCommonTest {
     }
 
     fun setUp() {
-
     }
 
     fun logWithVerboseSeverity() {

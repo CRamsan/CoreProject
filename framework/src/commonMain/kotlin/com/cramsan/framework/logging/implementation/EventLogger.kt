@@ -4,7 +4,7 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.PlatformLoggerInterface
 import com.cramsan.framework.logging.Severity
 
-class EventLogger(initializer: EventLoggerInitializer): EventLoggerInterface {
+class EventLogger(initializer: EventLoggerInitializer) : EventLoggerInterface {
 
     private val targetSeverity: Severity = initializer.targetSeverity
     private val platformLogger: PlatformLoggerInterface = initializer.platformLogger

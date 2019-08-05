@@ -1,20 +1,9 @@
 package com.cramsan.framework.logging.implementation
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Semaphore
-
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Before
-import org.kodein.di.erased.instance
-import org.kodein.di.newInstance
 
 /**
  * Instrumented test, which will execute on an Android device.

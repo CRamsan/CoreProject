@@ -4,15 +4,14 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import android.view.MenuItem
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.transition.Fade
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
@@ -22,9 +21,10 @@ import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
-import kotlinx.android.synthetic.main.activity_main.*
-import org.kodein.di.android.kodein
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.nav_view
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
 class MainActivity : AppCompatActivity(),
@@ -40,16 +40,16 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "onCreate")
+            eventLogger.log(Severity.INFO, classTag(), "onCreate")
 
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+            val toolbar: Toolbar = findViewById(R.id.toolbar)
+            setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            val toggle = ActionBarDrawerToggle(
+                        this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity(),
                     return true
                 }
             })
-
         }
         return true
     }
@@ -139,7 +138,7 @@ class MainActivity : AppCompatActivity(),
 
         transaction.replace(R.id.main_container, newFragment)
         transaction.commit()
-        when(animalType) {
+        when (animalType) {
             AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
             AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
         }
@@ -165,10 +164,8 @@ class MainActivity : AppCompatActivity(),
                 setFragmentForAnimalType(AnimalType.DOG)
             }
             R.id.nav_share -> {
-
             }
             R.id.nav_send -> {
-
             }
         }
         selectedTabId = item.itemId
@@ -177,7 +174,6 @@ class MainActivity : AppCompatActivity(),
 
     override fun onDestroy() {
         super.onDestroy()
-
     }
 
     override fun onListFragmentInteraction(plantId: Int, animalType: AnimalType) {

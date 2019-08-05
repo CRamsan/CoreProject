@@ -1,18 +1,16 @@
 package com.cramsan.petproject.plantdetails
 
 import android.graphics.drawable.Drawable
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils.isEmpty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.cramsan.petproject.R
-import com.cramsan.petproject.appcore.model.AnimalType
-import kotlinx.android.synthetic.main.fragment_plant_details.*
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
@@ -20,9 +18,18 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.PetProjectApplication
+import com.cramsan.petproject.R
+import com.cramsan.petproject.appcore.model.AnimalType
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_family
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_title
 import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
 import org.kodein.di.android.kodein
+import org.kodein.di.erased.instance
 
 class PlantDetailsFragment : Fragment(), KodeinAware {
 
@@ -33,7 +40,8 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
     private lateinit var animalType: AnimalType
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_plant_details, container, false)
@@ -53,7 +61,7 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
             plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
             plant_details_family.text = getString(R.string.plant_details_family, it.family)
             it.commonNames.apply {
-                if(isEmpty()) {
+                if (isEmpty()) {
                     plant_details_common_names.visibility = View.GONE
                 } else {
                     plant_details_common_names.visibility = View.VISIBLE
@@ -84,21 +92,20 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
                             "Resource loaded successfully")
                         return false
                     }
-
                 })
                 .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })
         viewModel.getPlantMetadata().observe(this, Observer {
             if (it.isToxic) {
-                plant_details_danger.text = when(animalType) {
+                plant_details_danger.text = when (animalType) {
                     AnimalType.CAT -> getString(R.string.plant_details_cat_dangerous)
                     AnimalType.DOG -> getString(R.string.plant_details_dog_dangerous)
                 }
 
                 plant_details_danger.setTextColor(resources.getColor(R.color.colorDanger, requireActivity().theme))
             } else {
-                plant_details_danger.text = when(animalType) {
+                plant_details_danger.text = when (animalType) {
                     AnimalType.CAT -> getString(R.string.plant_details_cat_safe)
                     AnimalType.DOG -> getString(R.string.plant_details_dog_safe)
                 }

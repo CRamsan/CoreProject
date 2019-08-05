@@ -27,16 +27,14 @@ internal class ModelProviderCommonTest {
 
     fun setUp(platformInitializer: ModelProviderPlatformInitializer) {
         val initializer = ModelProviderInitializer(platformInitializer)
-        val newModelProvider by kodein.newInstance {  ModelProvider(initializer, instance(), instance(), instance()) }
+        val newModelProvider by kodein.newInstance { ModelProvider(initializer, instance(), instance(), instance()) }
         modelProviderImpl = newModelProvider
         modelProvider = modelProviderImpl
     }
 
     fun testNoop() {
-
     }
 
     fun tearDown() {
-
     }
 }

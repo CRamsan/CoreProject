@@ -1,16 +1,13 @@
 package com.cramsan.framework.thread.implementation
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Semaphore
-
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Before
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -45,7 +42,7 @@ class ThreadUtilTest {
         Thread { run {
             threadUtilTest.testIsBackgroundThread()
             semaphore.release()
-        }}.start()
+        } }.start()
         semaphore.acquire()
     }
 
@@ -87,14 +84,14 @@ class ThreadUtilTest {
         }
         semaphore.acquire()
     }
-    
+
     @Test
     fun testDispatchToBackground() {
         Thread { run {
             threadUtilTest.testDispatchToBackground {
                 semaphore.release()
             }
-        }}.start()
+        } }.start()
         semaphore.acquire()
     }
 

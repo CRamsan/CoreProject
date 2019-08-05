@@ -1,22 +1,22 @@
 package com.cramsan.petproject.plantslist
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
-
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
-
-import kotlinx.android.synthetic.main.view_plant.view.*
+import kotlinx.android.synthetic.main.view_plant.view.viewPlantHeader
+import kotlinx.android.synthetic.main.view_plant.view.viewPlantImage
+import kotlinx.android.synthetic.main.view_plant.view.viewPlantSubHeader
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 

@@ -10,9 +10,11 @@ import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 
-class ModelStorage(initializer: ModelStorageInitializer,
-                   private val eventLogger: EventLoggerInterface,
-                   private val threadUtil: ThreadUtilInterface) : ModelStorageInterface {
+class ModelStorage(
+    initializer: ModelStorageInitializer,
+    private val eventLogger: EventLoggerInterface,
+    private val threadUtil: ThreadUtilInterface
+) : ModelStorageInterface {
 
     private var sqlDelightDAO: SQLDelightDAO = SQLDelightDAO(initializer)
 
@@ -60,7 +62,7 @@ class ModelStorage(initializer: ModelStorageInitializer,
         eventLogger.log(Severity.INFO, classTag(), "getPlant")
         threadUtil.assertIsBackgroundThread()
 
-        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale) ?: return null
+        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType, locale) ?: return null
 
         return Plant(
             plantEntry.id.toInt(),
@@ -72,11 +74,11 @@ class ModelStorage(initializer: ModelStorageInitializer,
         )
     }
 
-    override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String) : PlantMetadata? {
+    override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {
         eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
         threadUtil.assertIsBackgroundThread()
 
-        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType,locale) ?: return null
+        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType, locale) ?: return null
         return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
     }
 
@@ -110,7 +112,7 @@ class ModelStorage(initializer: ModelStorageInitializer,
             )
         }
 
-        if(sqlDelightDAO.getToxicityEntry(plantEntry.id, plantMetadata.animalType) == null) {
+        if (sqlDelightDAO.getToxicityEntry(plantEntry.id, plantMetadata.animalType) == null) {
             sqlDelightDAO.insertToxicityEntry(
                 plantMetadata.isToxic,
                 plantEntry.id,
@@ -138,7 +140,6 @@ class ModelStorage(initializer: ModelStorageInitializer,
             }
             sqlDelightDAO.insertPlantCommonNameEntry(name, plantEntry.id, locale)
         }
-
     }
 
     override fun deleteAll() {

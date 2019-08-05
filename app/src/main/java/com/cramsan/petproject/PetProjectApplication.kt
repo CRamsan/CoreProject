@@ -38,7 +38,7 @@ class PetProjectApplication : Application(), KodeinAware {
         import(androidXModule(this@PetProjectApplication))
 
         bind<EventLoggerInterface>() with singleton {
-            val severity: Severity = when(BuildConfig.DEBUG) {
+            val severity: Severity = when (BuildConfig.DEBUG) {
                 true -> Severity.DEBUG
                 false -> Severity.INFO
             }

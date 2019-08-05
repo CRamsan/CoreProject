@@ -3,11 +3,9 @@ package com.cramsan.framework.haltUtil.implementation
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.halt.implementation.HaltUtilCommonTest
 import kotlinx.coroutines.runBlocking
-
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Before
 
 /**
  * Instrumented test, which will execute on an Android device.

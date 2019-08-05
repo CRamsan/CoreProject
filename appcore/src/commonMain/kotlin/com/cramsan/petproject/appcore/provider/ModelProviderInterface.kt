@@ -11,7 +11,7 @@ interface ModelProviderInterface {
 
     fun getPlants(animalType: AnimalType, locale: String): List<Plant>
 
-    fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String) : PlantMetadata?
+    fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata?
 
     fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant>
 
