@@ -7,7 +7,6 @@ import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,11 +28,6 @@ class ModelStorageTest {
         val appContext = ApplicationProvider.getApplicationContext<Context>()
         modelStorageTest.setUp(ModelStoragePlatformInitializer(appContext))
         semaphore = Semaphore(0)
-    }
-
-    @After
-    fun tearDown() {
-        modelStorageTest.tearDown()
     }
 
     @Test

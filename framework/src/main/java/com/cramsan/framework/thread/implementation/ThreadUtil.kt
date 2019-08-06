@@ -9,13 +9,12 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Executors
 
 actual class ThreadUtil actual constructor(
-    initializer: ThreadUtilInitializer,
     eventLogger: EventLoggerInterface
 ) : ThreadUtilInterface {
 
     private val logger: EventLoggerInterface = eventLogger
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
-    private val pool = Executors.newFixedThreadPool(10)
+    private val pool = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
 
     override fun isUIThread(): Boolean {
         return (Looper.myLooper() == mainHandler.looper)
@@ -44,5 +43,9 @@ actual class ThreadUtil actual constructor(
 
     override fun assertIsBackgroundThread() {
         logger.assert(isBackgroundThread(), classTag(), "Not on background thread!")
+    }
+
+    companion object {
+        private const val THREAD_POOL_SIZE = 10
     }
 }

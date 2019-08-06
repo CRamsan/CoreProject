@@ -1,3 +1,0 @@
-package com.cramsan.petproject.appcore.provider.implementation
-
-class ModelProviderInitializer(val platformInitializer: ModelProviderPlatformInitializer)

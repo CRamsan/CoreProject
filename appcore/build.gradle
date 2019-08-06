@@ -13,6 +13,7 @@ plugins {
     id "org.jetbrains.kotlin.multiplatform"
     id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.android.extensions"
+    id "io.gitlab.arturbosch.detekt"
 }
 
 apply plugin: "com.squareup.sqldelight"
@@ -56,6 +57,16 @@ dependencies {
     testImplementation "junit:junit:$globalJUnitVersion"
     testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
 }
+
+detekt {
+    toolVersion = "$globalDetektVersion"
+    input = files("src/main/java", "src/test/java", "src/androidTest/java",
+                  "src/commonMain/", "src/commonTest",
+                  "src/iosMain/", "src/iosTest")
+    filters = ".*_/resources/.*,.*_/build/.*"
+    config = files("detekt-config.yml")
+}
+
 
 kotlin {
     android("android") {
@@ -108,6 +119,22 @@ kotlin {
         }
     }
 }
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "src/**/*.kt"
+}
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "-F", "src/**/*.kt"
+}
+
+check.dependsOn ktlint
 
 configurations {
     // Workaround for https://youtrack.jetbrains.com/issue/KT-27170

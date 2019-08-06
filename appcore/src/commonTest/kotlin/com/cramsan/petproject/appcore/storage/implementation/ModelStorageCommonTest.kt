@@ -17,6 +17,7 @@ import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.newInstance
 
+@Suppress("MagicNumber")
 internal class ModelStorageCommonTest {
 
     private val kodein = Kodein {
@@ -30,9 +31,6 @@ internal class ModelStorageCommonTest {
         val initializer = ModelStorageInitializer(platformInitializer)
         val newModelStorage by kodein.newInstance { ModelStorage(initializer, instance(), instance()) }
         modelStorage = newModelStorage
-    }
-
-    fun tearDown() {
     }
 
     fun getPlants() {

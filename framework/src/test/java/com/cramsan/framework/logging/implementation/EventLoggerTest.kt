@@ -18,7 +18,6 @@ class EventLoggerTest {
     @Before
     fun setUp() {
         eventLoggerTest = EventLoggerCommonTest()
-        eventLoggerTest.setUp()
     }
 
     @Test

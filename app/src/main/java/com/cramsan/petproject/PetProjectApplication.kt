@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
-import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
@@ -13,11 +12,8 @@ import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.PlatformLogger
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
-import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
-import com.cramsan.petproject.appcore.provider.implementation.ModelProviderInitializer
-import com.cramsan.petproject.appcore.provider.implementation.ModelProviderPlatformInitializer
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
@@ -45,11 +41,11 @@ class PetProjectApplication : Application(), KodeinAware {
             EventLogger(EventLoggerInitializer(severity, PlatformLogger()))
         }
         bind<ThreadUtilInterface>() with singleton {
-            val threadUtil by kodein.newInstance { ThreadUtil(ThreadUtilInitializer(), instance()) }
+            val threadUtil by kodein.newInstance { ThreadUtil(instance()) }
             threadUtil
         }
         bind<HaltUtilInterface>() with singleton {
-            val haltUtil by kodein.newInstance { HaltUtil(HaltUtilInitializer(), instance()) }
+            val haltUtil by kodein.newInstance { HaltUtil(instance()) }
             haltUtil
         }
         bind<ModelStorageInterface>() with singleton {
@@ -62,8 +58,7 @@ class PetProjectApplication : Application(), KodeinAware {
         }
         bind<ModelProviderInterface>() with singleton {
             val modelProvider by kodein.newInstance {
-                ModelProvider(ModelProviderInitializer(ModelProviderPlatformInitializer()),
-                    instance(),
+                ModelProvider(instance(),
                     instance(),
                     instance()) }
             modelProvider

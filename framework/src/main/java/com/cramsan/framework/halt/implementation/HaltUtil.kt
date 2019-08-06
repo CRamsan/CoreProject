@@ -4,7 +4,6 @@ import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 
 actual class HaltUtil actual constructor(
-    initializer: HaltUtilInitializer,
     eventLogger: EventLoggerInterface
 ) :
     HaltUtilInterface {
@@ -13,7 +12,7 @@ actual class HaltUtil actual constructor(
 
     override fun stopThread() {
         while (shouldStop) {
-            Thread.sleep(1000)
+            Thread.sleep(sleepTime)
         }
     }
 
@@ -27,5 +26,9 @@ actual class HaltUtil actual constructor(
 
     override fun crashApp() {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    }
+
+    companion object {
+        private const val sleepTime = 1000L
     }
 }

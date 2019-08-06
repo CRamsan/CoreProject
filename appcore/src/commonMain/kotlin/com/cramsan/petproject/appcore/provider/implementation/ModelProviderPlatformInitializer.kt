@@ -1,3 +1,0 @@
-package com.cramsan.petproject.appcore.provider.implementation
-
-expect class ModelProviderPlatformInitializer

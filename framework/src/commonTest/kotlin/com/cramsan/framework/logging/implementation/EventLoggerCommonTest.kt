@@ -16,9 +16,6 @@ class EventLoggerCommonTest {
         bind<PlatformLoggerInterface>() with provider { mockk<PlatformLogger>(relaxUnitFun = true) }
     }
 
-    fun setUp() {
-    }
-
     fun logWithVerboseSeverity() {
         val initializer by kodein.newInstance { EventLoggerInitializer(Severity.VERBOSE, instance()) }
         val eventLogger = EventLogger(initializer)

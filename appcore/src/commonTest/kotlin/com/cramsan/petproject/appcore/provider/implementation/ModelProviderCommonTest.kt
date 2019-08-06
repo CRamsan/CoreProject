@@ -25,16 +25,9 @@ internal class ModelProviderCommonTest {
     private lateinit var modelProvider: ModelProviderInterface
     private lateinit var modelProviderImpl: ModelProvider
 
-    fun setUp(platformInitializer: ModelProviderPlatformInitializer) {
-        val initializer = ModelProviderInitializer(platformInitializer)
-        val newModelProvider by kodein.newInstance { ModelProvider(initializer, instance(), instance(), instance()) }
+    fun setUp() {
+        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), instance()) }
         modelProviderImpl = newModelProvider
         modelProvider = modelProviderImpl
-    }
-
-    fun testNoop() {
-    }
-
-    fun tearDown() {
     }
 }

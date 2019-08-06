@@ -3,6 +3,7 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.android.extensions"
+    id "io.gitlab.arturbosch.detekt"
 }
 
 android {
@@ -34,6 +35,31 @@ android {
     packagingOptions {
         exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
     }
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "src/**/*.kt"
+}
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "-F", "src/**/*.kt"
+}
+
+check.dependsOn ktlint
+
+detekt {
+    toolVersion = "$globalDetektVersion"
+    input = files("src/main/java",
+                  "src/test/java",
+                  "src/androidTest/java")
+    filters = ".*_/resources/.*,.*_/build/.*"
+    config = files("detekt-config.yml")
 }
 
 def constraintLayoutVersion = "1.1.3"

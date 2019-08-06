@@ -24,15 +24,14 @@ class HaltUtilCommonTest {
     private lateinit var haltUtilImpl: HaltUtil
 
     fun setUp() {
-        val initializer = HaltUtilInitializer()
-        val newHaltUtil by kodein.newInstance { HaltUtil(initializer, instance()) }
+        val newHaltUtil by kodein.newInstance { HaltUtil(instance()) }
         haltUtilImpl = newHaltUtil
         haltUtil = haltUtilImpl
     }
 
     suspend fun testStopThread() = coroutineScope {
         launch(Dispatchers.Default) {
-            delay(2000)
+            delay(DELAY_TIME)
             haltUtilImpl.resumeThread()
         }
         launch(Dispatchers.Main) {
@@ -46,5 +45,9 @@ class HaltUtilCommonTest {
 
     fun testCrashApp() {
         // haltUtil.crashApp()
+    }
+
+    companion object {
+        private const val DELAY_TIME = 2000L
     }
 }

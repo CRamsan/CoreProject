@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ModelProvider(
-    initializer: ModelProviderInitializer,
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface,
     private val modelStorage: ModelStorageInterface

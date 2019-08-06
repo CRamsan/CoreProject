@@ -21,8 +21,7 @@ class ThreadUtilCommonTest {
     private lateinit var threadUtil: ThreadUtilInterface
 
     fun setUp() {
-        val initializer = ThreadUtilInitializer()
-        val newThreadUtil by kodein.newInstance { ThreadUtil(initializer, instance()) }
+        val newThreadUtil by kodein.newInstance { ThreadUtil(instance()) }
         threadUtil = newThreadUtil
     }
 
