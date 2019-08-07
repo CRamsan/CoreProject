@@ -35,4 +35,4 @@ steps:
     releaseNotesOption: 'input'
     releaseNotesInput: 'Release Notes: TBD'
     destinationType: 'groups'
-    
+    distributionGroupId: 'Collaborators'
