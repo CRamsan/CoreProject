@@ -26,3 +26,13 @@ steps:
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'App Center'
+    appSlug: 'cramsan/Pet-Project-1'
+    appFile: 'app/build/outputs/apk/debug/app-debug.apk'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'Release Notes: TBD'
+    destinationType: 'groups'
+    
