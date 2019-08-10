@@ -28,6 +28,8 @@
     <string name="plant_details_cat_safe">Safe for cats</string>
     <string name="plant_details_dog_dangerous">Dangerous for dogs</string>
     <string name="plant_details_dog_safe">Safe for dogs</string>
+    <string name="plant_details_dog_unknown">Unknown for dogs</string>
+    <string name="plant_details_cat_unknown">Unknown for cats</string>
 
     <string name="todo">TODO</string>
     <string name="title_activity_main">MainActivity</string>

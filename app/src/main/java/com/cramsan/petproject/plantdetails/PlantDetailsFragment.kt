@@ -20,6 +20,7 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
@@ -97,19 +98,29 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
                 .into(plant_details_image)
         })
         viewModel.getPlantMetadata().observe(this, Observer {
-            if (it.isToxic) {
-                plant_details_danger.text = when (animalType) {
-                    AnimalType.CAT -> getString(R.string.plant_details_cat_dangerous)
-                    AnimalType.DOG -> getString(R.string.plant_details_dog_dangerous)
-                }
+            when (it.isToxic) {
+                ToxicityValue.TOXIC -> {
+                    plant_details_danger.text = when (animalType) {
+                        AnimalType.CAT -> getString(R.string.plant_details_cat_dangerous)
+                        AnimalType.DOG -> getString(R.string.plant_details_dog_dangerous)
+                    }
 
-                plant_details_danger.setTextColor(resources.getColor(R.color.colorDanger, requireActivity().theme))
-            } else {
-                plant_details_danger.text = when (animalType) {
-                    AnimalType.CAT -> getString(R.string.plant_details_cat_safe)
-                    AnimalType.DOG -> getString(R.string.plant_details_dog_safe)
+                    plant_details_danger.setTextColor(resources.getColor(R.color.colorDanger, requireActivity().theme))
                 }
-                plant_details_danger.setTextColor(resources.getColor(R.color.colorSafe, requireActivity().theme))
+                ToxicityValue.NON_TOXIC -> {
+                    plant_details_danger.text = when (animalType) {
+                        AnimalType.CAT -> getString(R.string.plant_details_cat_safe)
+                        AnimalType.DOG -> getString(R.string.plant_details_dog_safe)
+                    }
+                    plant_details_danger.setTextColor(resources.getColor(R.color.colorSafe, requireActivity().theme))
+                }
+                ToxicityValue.UNDETERMINED -> {
+                    plant_details_danger.text = when (animalType) {
+                        AnimalType.CAT -> getString(R.string.plant_details_cat_unknown)
+                        AnimalType.DOG -> getString(R.string.plant_details_dog_unknown)
+                    }
+                    plant_details_danger.setTextColor(resources.getColor(R.color.colorUndetermined, requireActivity().theme))
+                }
             }
             plant_details_description.text = it.description
         })

@@ -1,17 +1,14 @@
 getAllPlantsWithAnimalId:
 SELECT
     Plant.id, scientific_name, PlantMainName.main_name, PlantFamily.family,
-    image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names,
-    Toxicity.is_toxic
+    image_url, Toxicity.animal_id, Toxicity.is_toxic
 FROM
 	Plant
-INNER JOIN
-    PlantCommonName ON PlantCommonName.plant_id = Plant.id
 INNER JOIN
     PlantFamily ON PlantFamily.plant_id = Plant.id
 INNER JOIN
     PlantMainName ON PlantMainName.plant_id = Plant.id
-INNER JOIN
+LEFT JOIN
     Toxicity ON Toxicity.plant_id = Plant.id
 WHERE
     animal_id == ? AND PlantMainName.locale == ?
@@ -22,11 +19,11 @@ GROUP BY
 getPlantWithPlantIdAndAnimalId:
 SELECT
     Plant.id, scientific_name, PlantMainName.main_name, PlantFamily.family,
-    image_url, Toxicity.animal_id, group_concat(common_name, ", ") AS common_names,
+    image_url, Toxicity.animal_id, IFNULL(group_concat(common_name, ", "), "") AS common_names,
     Toxicity.is_toxic, description, source
 FROM
 	Plant
-INNER JOIN
+LEFT JOIN
     PlantCommonName ON PlantCommonName.plant_id = Plant.id
 INNER JOIN
     PlantFamily ON PlantFamily.plant_id = Plant.id

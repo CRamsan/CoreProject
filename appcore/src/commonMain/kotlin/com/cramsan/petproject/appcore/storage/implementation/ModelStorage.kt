@@ -8,6 +8,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.PresentablePlant
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 
 class ModelStorage(
@@ -31,7 +32,7 @@ class ModelStorage(
                     it.id.toInt(),
                     it.scientific_name,
                     it.main_name,
-                    it.common_names,
+                    "",
                     it.image_url,
                     it.family
                 ))
@@ -52,7 +53,7 @@ class ModelStorage(
                     it.id,
                     it.scientific_name,
                     it.main_name,
-                    it.is_toxic
+                    it.is_toxic ?: ToxicityValue.UNDETERMINED
                 ))
         }
         return mutableList

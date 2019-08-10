@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorDanger">#D81B60</color>
     <color name="colorSafe">#4CAF50</color>
+    <color name="colorUndetermined">#444444</color>
 </resources>

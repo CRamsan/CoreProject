@@ -84,4 +84,15 @@ class ModelStorageTest {
         }
         semaphore.acquire()
     }
+
+    @Test
+    fun testGetPlantMetadataForAll() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.getPlantMetadataForAll()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
 }

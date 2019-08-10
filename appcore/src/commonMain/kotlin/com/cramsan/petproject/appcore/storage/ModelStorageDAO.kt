@@ -1,6 +1,7 @@
 package com.cramsan.petproject.appcore.storage
 
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.db.Description
 import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
 import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
@@ -20,7 +21,7 @@ interface ModelStorageDAO {
 
     fun insertPlantFamilyNameEntry(family: String, plantId: Long, locale: String)
 
-    fun insertToxicityEntry(isToxic: Boolean, plantId: Long, animalType: AnimalType, source: String)
+    fun insertToxicityEntry(isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String)
 
     fun insertDescriptionEntry(plantId: Long, animalType: AnimalType, description: String, locale: String)
 

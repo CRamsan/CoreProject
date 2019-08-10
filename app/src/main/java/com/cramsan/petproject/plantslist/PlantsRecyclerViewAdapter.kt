@@ -13,6 +13,7 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
 import kotlinx.android.synthetic.main.view_plant.view.viewPlantHeader
 import kotlinx.android.synthetic.main.view_plant.view.viewPlantImage
@@ -61,7 +62,11 @@ class PlantsRecyclerViewAdapter(
         val item = mValues[position]
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName
-        holder.mViewImage.setImageResource(if (item.isToxic) R.drawable.is_toxic else R.drawable.is_not_toxic)
+        when (item.isToxic) {
+            ToxicityValue.TOXIC -> holder.mViewImage.setImageResource(R.drawable.is_toxic)
+            ToxicityValue.NON_TOXIC -> holder.mViewImage.setImageResource(R.drawable.is_not_toxic)
+            ToxicityValue.UNDETERMINED -> holder.mViewImage.setImageResource(R.drawable.is_undetermined_toxic)
+        }
 
         with(holder.mView) {
             tag = item

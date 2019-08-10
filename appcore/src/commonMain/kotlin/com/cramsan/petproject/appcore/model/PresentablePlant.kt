@@ -4,5 +4,5 @@ class PresentablePlant(
     val plantId: Long,
     val scientificName: String,
     val mainCommonName: String,
-    val isToxic: Boolean
+    val isToxic: ToxicityValue
 )
