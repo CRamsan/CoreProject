@@ -55,7 +55,7 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
             listener = context
             context.onRegisterAsSearchable(this)
         } else {
-            throw RuntimeException("$context must implement OnListFragmentInteractionListener")
+            throw InvalidContextException("$context must implement OnListFragmentInteractionListener")
         }
     }
 
@@ -138,11 +138,12 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onListFragmentInteraction(plantId: Int, animalType: AnimalType)
 
         fun onRegisterAsSearchable(listener: OnQueryTextListener)
     }
+
+    class InvalidContextException(message: String?) : RuntimeException(message)
 
     companion object {
         fun newInstance(animalType: AnimalType): PlantsListFragment {

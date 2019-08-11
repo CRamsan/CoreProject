@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -27,10 +26,6 @@ import kotlinx.android.synthetic.main.activity_main.nav_view
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
-import androidx.core.view.MenuItemCompat
-import android.view.View.OnFocusChangeListener
-
-
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
@@ -140,12 +135,12 @@ class MainActivity : AppCompatActivity(),
         val previousFragment = supportFragmentManager.findFragmentById(R.id.main_container)
 
         val exitFade = Fade()
-        exitFade.duration = 100
+        exitFade.duration = FADE_DURATION
         previousFragment?.exitTransition = exitFade
 
         val enterFade = Fade()
-        enterFade.startDelay = 100
-        enterFade.duration = 100
+        enterFade.startDelay = FADE_DURATION
+        enterFade.duration = FADE_DURATION
         newFragment.enterTransition = enterFade
 
         transaction.replace(R.id.main_container, newFragment)
@@ -193,5 +188,6 @@ class MainActivity : AppCompatActivity(),
 
     companion object {
         const val SELECTED_TAB = "selectedTab"
+        const val FADE_DURATION = 100L
     }
 }

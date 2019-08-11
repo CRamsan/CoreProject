@@ -26,10 +26,12 @@ class PlantDetailsActivity : AppCompatActivity(), PlantDetailsFragment.OnDetails
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
     override fun onPlantReady(plant: Plant) {
         supportActionBar?.title = plant.mainCommonName
     }
 
     override fun onPlantMetadataReady(plantMetadata: PlantMetadata) {
+        eventLogger.log(Severity.INFO, classTag(), "onPlantMetadataReady called")
     }
 }

@@ -37,7 +37,6 @@ import android.content.Intent
 import android.net.Uri
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_loading
 
-
 class PlantDetailsFragment : Fragment(), KodeinAware {
 
     override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
@@ -61,7 +60,7 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
         if (context is OnDetailsFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException("$context must implement OnListFragmentInteractionListener")
+            throw InvalidContextException("$context must implement OnListFragmentInteractionListener")
         }
     }
 
@@ -157,6 +156,8 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
         })
         viewModel.reloadPlant(animalType, plantId)
     }
+
+    class InvalidContextException(message: String?) : RuntimeException(message)
 
     interface OnDetailsFragmentInteractionListener {
         fun onPlantReady(plant: Plant)
