@@ -17,7 +17,6 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:name=".MainActivity"
-                android:label="@string/title_activity_main"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,7 +25,6 @@
         </activity>
         <activity
                 android:name=".plantdetails.PlantDetailsActivity"
-                android:label="@string/title_activity_plant_details"
                 android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
