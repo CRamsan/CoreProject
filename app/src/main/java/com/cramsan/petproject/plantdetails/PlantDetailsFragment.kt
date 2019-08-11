@@ -1,8 +1,8 @@
 package com.cramsan.petproject.plantdetails
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.text.TextUtils.isEmpty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,22 +20,29 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.appcore.model.Plant
+import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_family
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
-import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_title
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
+import android.content.Intent
+import android.net.Uri
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_loading
+
 
 class PlantDetailsFragment : Fragment(), KodeinAware {
 
     override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
     private val eventLogger: EventLoggerInterface by instance()
+    private var listener: OnDetailsFragmentInteractionListener? = null
 
     private lateinit var viewModel: PlantDetailsViewModel
     private lateinit var animalType: AnimalType
@@ -48,6 +55,16 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
         return inflater.inflate(R.layout.fragment_plant_details, container, false)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        eventLogger.log(Severity.INFO, classTag(), "onAttach")
+        if (context is OnDetailsFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement OnListFragmentInteractionListener")
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
@@ -56,11 +73,14 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
 
         animalType = AnimalType.values()[animalTypeId]
 
+        plant_details_image.visibility = View.INVISIBLE
+        plant_details_image_loading.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(this, Observer {
-            plant_details_title.text = it.mainCommonName
+            listener?.onPlantReady(it)
             plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
             plant_details_family.text = getString(R.string.plant_details_family, it.family)
+            plant_details_image_source.text = getString(R.string.plant_details_source, it.imageUrl)
             it.commonNames.apply {
                 if (isEmpty()) {
                     plant_details_common_names.visibility = View.GONE
@@ -91,14 +111,17 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
                     ): Boolean {
                         eventLogger.log(Severity.VERBOSE, classTag(),
                             "Resource loaded successfully")
+                        plant_details_image.visibility = View.VISIBLE
+                        plant_details_image_loading.visibility = View.INVISIBLE
                         return false
                     }
                 })
                 .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })
-        viewModel.getPlantMetadata().observe(this, Observer {
-            when (it.isToxic) {
+        viewModel.getPlantMetadata().observe(this, Observer { metadata ->
+            listener?.onPlantMetadataReady(metadata)
+            when (metadata.isToxic) {
                 ToxicityValue.TOXIC -> {
                     plant_details_danger.text = when (animalType) {
                         AnimalType.CAT -> getString(R.string.plant_details_cat_dangerous)
@@ -122,9 +145,22 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
                     plant_details_danger.setTextColor(resources.getColor(R.color.colorUndetermined, requireActivity().theme))
                 }
             }
-            plant_details_description.text = it.description
+            if (metadata.description.isEmpty()) {
+                plant_details_description.visibility = View.GONE
+            }
+            plant_details_description.text = metadata.description
+            plant_details_source.text = getString(R.string.plant_details_source, metadata.source)
+            plant_details_source.setOnClickListener {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(metadata.source))
+                startActivity(browserIntent)
+            }
         })
         viewModel.reloadPlant(animalType, plantId)
+    }
+
+    interface OnDetailsFragmentInteractionListener {
+        fun onPlantReady(plant: Plant)
+        fun onPlantMetadataReady(plantMetadata: PlantMetadata)
     }
 
     companion object {
