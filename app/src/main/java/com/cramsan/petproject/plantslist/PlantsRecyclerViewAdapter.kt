@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -16,7 +15,7 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
 import kotlinx.android.synthetic.main.view_plant.view.viewPlantHeader
-import kotlinx.android.synthetic.main.view_plant.view.viewPlantImage
+import kotlinx.android.synthetic.main.view_plant.view.viewPlantLayout
 import kotlinx.android.synthetic.main.view_plant.view.viewPlantSubHeader
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
@@ -63,9 +62,9 @@ class PlantsRecyclerViewAdapter(
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName
         when (item.isToxic) {
-            ToxicityValue.TOXIC -> holder.mViewImage.setImageResource(R.drawable.is_toxic)
-            ToxicityValue.NON_TOXIC -> holder.mViewImage.setImageResource(R.drawable.is_not_toxic)
-            ToxicityValue.UNDETERMINED -> holder.mViewImage.setImageResource(R.drawable.is_undetermined_toxic)
+            ToxicityValue.TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_dangerous)
+            ToxicityValue.NON_TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_safe)
+            ToxicityValue.UNDETERMINED -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_undetermined)
         }
 
         with(holder.mView) {
@@ -79,7 +78,7 @@ class PlantsRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mViewHeader: TextView = mView.viewPlantHeader
         val mViewSubHeader: TextView = mView.viewPlantSubHeader
-        val mViewImage: ImageView = mView.viewPlantImage
+        val mContainerView: View = mView.viewPlantLayout
 
         override fun toString(): String {
             return super.toString() + " '" + mViewHeader.text + "'"
