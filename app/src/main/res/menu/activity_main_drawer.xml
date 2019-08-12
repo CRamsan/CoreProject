@@ -8,14 +8,21 @@
             <group android:checkableBehavior="single">
             <item
                     android:id="@+id/nav_home"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_cat"
                     android:title="@string/drawer_menu_cats"/>
             <item
                     android:id="@+id/nav_gallery"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_dog"
                     android:title="@string/drawer_menu_dogs"/>
             </group>
         </menu>
     </item>
-
+    <item android:title="@string/drawer_group_more">
+        <menu>
+            <item
+                    android:id="@+id/nav_share"
+                    android:icon="@drawable/ic_menu_about"
+                    android:title="@string/drawer_menu_about"/>
+        </menu>
+    </item>
 </menu>

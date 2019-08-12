@@ -5,8 +5,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="drawer_group_plants">Toxicity of plants</string>
+    <string name="drawer_group_more">More</string>
     <string name="drawer_menu_cats">Cats</string>
     <string name="drawer_menu_dogs">Dogs</string>
+    <string name="drawer_menu_about">About</string>
 
     <string name="menu_search">Search</string>
     `
@@ -24,4 +26,5 @@
     <string name="plant_details_dog_safe">Safe for dogs</string>
     <string name="plant_details_dog_unknown">Unknown for dogs</string>
 
+    <string name="about_licence_flaticon">Icons made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from <a href="https://www.flaticon.com">www.flaticon.com</a></string>
 </resources>

@@ -16,6 +16,7 @@ import androidx.transition.Fade
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
+import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
@@ -167,6 +168,10 @@ class MainActivity : AppCompatActivity(),
             R.id.nav_gallery -> {
                 supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
                 setFragmentForAnimalType(AnimalType.DOG)
+            }
+            R.id.nav_share -> {
+                val aboutIntent = Intent(this, AboutActivity::class.java)
+                startActivity(aboutIntent)
             }
         }
         selectedTabId = item.itemId
