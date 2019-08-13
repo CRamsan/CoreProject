@@ -18,7 +18,7 @@ import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
-import kotlinx.android.synthetic.main.fragment_plants_list.list
+import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -89,8 +89,8 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        list.layoutManager = layoutManager
-        list.adapter = plantsAdapter
+        plant_list_recycler.layoutManager = layoutManager
+        plant_list_recycler.adapter = plantsAdapter
     }
 
     override fun onResume() {

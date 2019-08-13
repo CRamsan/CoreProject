@@ -14,9 +14,9 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
-import kotlinx.android.synthetic.main.view_plant.view.viewPlantHeader
-import kotlinx.android.synthetic.main.view_plant.view.viewPlantLayout
-import kotlinx.android.synthetic.main.view_plant.view.viewPlantSubHeader
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_header
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_layout
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_sub_header
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -76,9 +76,9 @@ class PlantsRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mViewHeader: TextView = mView.viewPlantHeader
-        val mViewSubHeader: TextView = mView.viewPlantSubHeader
-        val mContainerView: View = mView.viewPlantLayout
+        val mViewHeader: TextView = mView.plant_list_view_header
+        val mViewSubHeader: TextView = mView.plant_list_view_sub_header
+        val mContainerView: View = mView.plant_list_view_layout
 
         override fun toString(): String {
             return super.toString() + " '" + mViewHeader.text + "'"

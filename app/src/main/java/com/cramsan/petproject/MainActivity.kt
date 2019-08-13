@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(),
             eventLogger.log(Severity.INFO, classTag(), "onCreate")
 
         setContentView(R.layout.activity_main)
-            val toolbar: Toolbar = findViewById(R.id.toolbar)
+            val toolbar: Toolbar = findViewById(R.id.main_toolbar)
             setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(),
 
         navView.setNavigationItemSelectedListener(this)
 
-        var tabToLoad = R.id.nav_home
+        var tabToLoad = R.id.nav_list_cat
         val selectedMenuItem: MenuItem?
         if (savedInstanceState != null) {
             tabToLoad = savedInstanceState.getInt(SELECTED_TAB, -1)
@@ -68,10 +68,10 @@ class MainActivity : AppCompatActivity(),
                 selectedMenuItem = nav_view.menu.findItem(tabToLoad)
                 selectedTabId = tabToLoad
                 when (selectedMenuItem.itemId) {
-                    R.id.nav_home -> {
+                    R.id.nav_list_cat -> {
                         supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
                     }
-                    R.id.nav_gallery -> {
+                    R.id.nav_list_dog -> {
                         supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
                     }
                 }
@@ -161,15 +161,15 @@ class MainActivity : AppCompatActivity(),
 
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_home -> {
+            R.id.nav_list_cat -> {
                 supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
                 setFragmentForAnimalType(AnimalType.CAT)
             }
-            R.id.nav_gallery -> {
+            R.id.nav_list_dog -> {
                 supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
                 setFragmentForAnimalType(AnimalType.DOG)
             }
-            R.id.nav_share -> {
+            R.id.nav_about -> {
                 val aboutIntent = Intent(this, AboutActivity::class.java)
                 startActivity(aboutIntent)
             }

@@ -16,22 +16,18 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
                 android:name=".plantdetails.PlantDetailsActivity"
-                android:parentActivityName=".MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:parentActivityName=".MainActivity">
         </activity>
         <activity android:name=".about.AboutActivity"
-                  android:parentActivityName=".MainActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+                  android:parentActivityName=".MainActivity">
         </activity>
     </application>
 
