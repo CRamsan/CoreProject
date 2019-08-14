@@ -5,7 +5,6 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal"
               android:padding="8dp"
-              android:background="@color/colorLight"
               android:layout_margin="2dp"
               android:id="@+id/plant_list_view_layout"
               tools:background="@drawable/plant_list_view_background_dangerous">

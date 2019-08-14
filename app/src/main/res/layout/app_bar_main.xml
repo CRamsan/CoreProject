@@ -7,13 +7,11 @@
         tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-            style="@style/BaseAppBarLayout"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            style="@style/BaseAppBarLayout">
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/main_toolbar"
-                style="@style/BaseToolBar"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                style="@style/BaseToolBar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

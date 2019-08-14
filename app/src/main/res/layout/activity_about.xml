@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         style="@style/BaseCoordinatorLayout"
         tools:context=".about.AboutActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-            style="@style/BaseAppBarLayout"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            style="@style/BaseAppBarLayout">
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/about_toolbar"
-                style="@style/BaseToolBar"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                style="@style/BaseToolBar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
