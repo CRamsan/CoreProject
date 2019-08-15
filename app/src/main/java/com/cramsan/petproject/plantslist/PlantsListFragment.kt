@@ -18,6 +18,7 @@ import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
+import com.cramsan.petproject.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
@@ -27,10 +28,7 @@ import org.kodein.di.erased.instance
  * Activities containing this fragment MUST implement the
  * [PlantsListFragment.OnListFragmentInteractionListener] interface.
  */
-class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
-
-    override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
-    private val eventLogger: EventLoggerInterface by instance()
+class PlantsListFragment : BaseFragment(), OnQueryTextListener {
 
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
@@ -40,7 +38,6 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "onCreate")
 
         val animalTypeInt = arguments?.getInt(ANIMAL_TYPE, 0)
         animalTypeInt?.let {
@@ -50,7 +47,6 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        eventLogger.log(Severity.INFO, classTag(), "onAttach")
         if (context is OnListFragmentInteractionListener) {
             listener = context
             context.onRegisterAsSearchable(this)
@@ -65,7 +61,6 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "onCreateView")
         val view = inflater.inflate(R.layout.fragment_plants_list, container, false)
 
         layoutManager = LinearLayoutManager(context)
@@ -95,7 +90,6 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, classTag(), "onResume")
         model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
@@ -111,7 +105,6 @@ class PlantsListFragment : Fragment(), OnQueryTextListener, KodeinAware {
 
     override fun onDetach() {
         super.onDetach()
-        eventLogger.log(Severity.INFO, classTag(), "onDetach")
         listener = null
     }
 

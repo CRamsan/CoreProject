@@ -8,19 +8,13 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_plant_details.plant_details_toolbar
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.erased.instance
 
-class PlantDetailsActivity : AppCompatActivity(), PlantDetailsFragment.OnDetailsFragmentInteractionListener, KodeinAware {
-
-    override val kodein by kodein()
-    private val eventLogger: EventLoggerInterface by instance()
+class PlantDetailsActivity : BaseActivity(), PlantDetailsFragment.OnDetailsFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "onCreate")
         setContentView(R.layout.activity_plant_details)
         setSupportActionBar(plant_details_toolbar)
 

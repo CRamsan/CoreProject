@@ -18,6 +18,7 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.plantslist.PlantsListFragment
@@ -28,20 +29,15 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class MainActivity : AppCompatActivity(),
+class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener,
-    PlantsListFragment.OnListFragmentInteractionListener,
-    KodeinAware {
-
-    override val kodein by kodein()
-    private val eventLogger: EventLoggerInterface by instance()
+    PlantsListFragment.OnListFragmentInteractionListener {
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private var selectedTabId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            eventLogger.log(Severity.INFO, classTag(), "onCreate")
 
         setContentView(R.layout.activity_main)
             val toolbar: Toolbar = findViewById(R.id.main_toolbar)
@@ -164,17 +160,18 @@ class MainActivity : AppCompatActivity(),
             R.id.nav_list_cat -> {
                 supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
                 setFragmentForAnimalType(AnimalType.CAT)
+                selectedTabId = item.itemId
             }
             R.id.nav_list_dog -> {
                 supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
                 setFragmentForAnimalType(AnimalType.DOG)
+                selectedTabId = item.itemId
             }
             R.id.nav_about -> {
                 val aboutIntent = Intent(this, AboutActivity::class.java)
                 startActivity(aboutIntent)
             }
         }
-        selectedTabId = item.itemId
         return true
     }
 

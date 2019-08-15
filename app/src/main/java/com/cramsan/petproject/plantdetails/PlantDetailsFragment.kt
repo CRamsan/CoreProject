@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -14,10 +13,8 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
@@ -31,16 +28,13 @@ import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
 import android.content.Intent
 import android.net.Uri
+import com.cramsan.petproject.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_loading
 
-class PlantDetailsFragment : Fragment(), KodeinAware {
+class PlantDetailsFragment : BaseFragment() {
 
-    override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
-    private val eventLogger: EventLoggerInterface by instance()
     private var listener: OnDetailsFragmentInteractionListener? = null
 
     private lateinit var viewModel: PlantDetailsViewModel
@@ -51,12 +45,12 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_plant_details, container, false)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        eventLogger.log(Severity.INFO, classTag(), "onAttach")
         if (context is OnDetailsFragmentInteractionListener) {
             listener = context
         } else {
@@ -66,7 +60,6 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "onActivityCreated")
         val plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
 
@@ -80,6 +73,10 @@ class PlantDetailsFragment : Fragment(), KodeinAware {
             plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
             plant_details_family.text = getString(R.string.plant_details_family, it.family)
             plant_details_image_source.text = getString(R.string.plant_details_source, it.imageUrl)
+            plant_details_image_source.setOnClickListener {view ->
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.imageUrl))
+                startActivity(browserIntent)
+            }
             it.commonNames.apply {
                 if (isEmpty()) {
                     plant_details_common_names.visibility = View.GONE
