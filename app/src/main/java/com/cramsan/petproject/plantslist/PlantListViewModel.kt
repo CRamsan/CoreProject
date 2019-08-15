@@ -27,9 +27,11 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
     private val threadUtil: ThreadUtilInterface by instance()
 
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
+    private val observableLoading = MutableLiveData<Boolean>()
 
     fun reloadPlants(animalType: AnimalType) {
         eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
+        observableLoading.value = true
         viewModelScope.launch {
             loadPlants(animalType)
         }
@@ -50,10 +52,15 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
         return observablePlants
     }
 
+    fun observableLoading(): LiveData<Boolean> {
+        return observableLoading
+    }
+
     private suspend fun loadPlants(animalType: AnimalType) = withContext(Dispatchers.IO) {
         val plants = modelProvider.getPlantsWithToxicity(animalType, "en")
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
+            observableLoading.value = false
             observablePlants.value = plants
         }
     }

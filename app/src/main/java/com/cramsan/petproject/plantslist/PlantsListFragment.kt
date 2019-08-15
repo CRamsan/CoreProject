@@ -20,6 +20,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
+import kotlinx.android.synthetic.main.fragment_plants_list.plants_list_loading
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -79,6 +80,20 @@ class PlantsListFragment : BaseFragment(), OnQueryTextListener {
         }
 
         model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
+
+        model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
+            plantsAdapter.updateValues(plants)
+        })
+        model.observableLoading().observe(this, Observer<Boolean> { isLoading ->
+            if(isLoading) {
+                plants_list_loading.visibility = View.VISIBLE
+                plant_list_recycler.visibility = View.GONE
+            } else {
+                plants_list_loading.visibility = View.GONE
+                plant_list_recycler.visibility = View.VISIBLE
+            }
+        })
+
         return view
     }
 
@@ -90,9 +105,6 @@ class PlantsListFragment : BaseFragment(), OnQueryTextListener {
 
     override fun onResume() {
         super.onResume()
-        model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
-            plantsAdapter.updateValues(plants)
-        })
         model.reloadPlants(animalType)
     }
 
