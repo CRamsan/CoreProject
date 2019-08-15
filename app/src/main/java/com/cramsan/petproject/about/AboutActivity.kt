@@ -14,5 +14,6 @@ class AboutActivity : BaseActivity() {
         setSupportActionBar(about_toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle(R.string.title_activity_about)
     }
 }

@@ -14,6 +14,7 @@
     `
     <string name="title_fragment_plants_cats">Dangerous Plants for Cats</string>
     <string name="title_fragment_plants_dogs">Dangerous Plants for Dogs</string>
+    <string name="title_activity_about">About</string>
 
     <string name="plant_details_scientific_name">Scientific Name: %1$s</string>
     <string name="plant_details_common_names">Other names: %1$s</string>
