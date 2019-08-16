@@ -5,31 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
 import kotlinx.android.synthetic.main.fragment_plants_list.plants_list_loading
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
 
 /**
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  * [PlantsListFragment.OnListFragmentInteractionListener] interface.
  */
-class PlantsListFragment : BaseFragment(), OnQueryTextListener {
+class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
 
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
@@ -85,7 +80,7 @@ class PlantsListFragment : BaseFragment(), OnQueryTextListener {
             plantsAdapter.updateValues(plants)
         })
         model.observableLoading().observe(this, Observer<Boolean> { isLoading ->
-            if(isLoading) {
+            if (isLoading) {
                 plants_list_loading.visibility = View.VISIBLE
                 plant_list_recycler.visibility = View.GONE
             } else {
@@ -145,7 +140,7 @@ class PlantsListFragment : BaseFragment(), OnQueryTextListener {
     interface OnListFragmentInteractionListener {
         fun onListFragmentInteraction(plantId: Int, animalType: AnimalType)
 
-        fun onRegisterAsSearchable(listener: OnQueryTextListener)
+        fun onRegisterAsSearchable(listener: SearchView.OnQueryTextListener)
     }
 
     class InvalidContextException(message: String?) : RuntimeException(message)

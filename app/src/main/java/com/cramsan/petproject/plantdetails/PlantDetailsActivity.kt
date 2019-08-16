@@ -1,8 +1,6 @@
 package com.cramsan.petproject.plantdetails
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
@@ -17,7 +15,6 @@ class PlantDetailsActivity : BaseActivity(), PlantDetailsFragment.OnDetailsFragm
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_details)
         setSupportActionBar(plant_details_toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

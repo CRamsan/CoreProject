@@ -1,7 +1,9 @@
 package com.cramsan.petproject.plantdetails
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,18 +22,16 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.ToxicityValue
+import com.cramsan.petproject.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_family
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_loading
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
-import android.content.Intent
-import android.net.Uri
-import com.cramsan.petproject.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_loading
 
 class PlantDetailsFragment : BaseFragment() {
 
@@ -73,7 +73,7 @@ class PlantDetailsFragment : BaseFragment() {
             plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
             plant_details_family.text = getString(R.string.plant_details_family, it.family)
             plant_details_image_source.text = getString(R.string.plant_details_source, it.imageUrl)
-            plant_details_image_source.setOnClickListener {view ->
+            plant_details_image_source.setOnClickListener { _ ->
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.imageUrl))
                 startActivity(browserIntent)
             }

@@ -46,7 +46,7 @@ class ModelProvider(
         threadUtil.assertIsBackgroundThread()
 
         var test = modelStorage.getPlantsWithToxicity(animalType, locale)
-        if (test.isEmpty()) {
+        if (test.size < 500) {
             insertAllData1()
             insertAllData2()
             insertAllData3()
