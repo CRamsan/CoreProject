@@ -26,7 +26,8 @@
                 android:id="@+id/plant_details_image"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" android:scaleType="centerCrop"/>
+                app:layout_constraintEnd_toEndOf="parent" android:scaleType="centerCrop"
+                android:contentDescription="@string/plant_details_empty_image_description"/>
         <TextView
                 tools:text="Source: https://......."
                 android:layout_width="0dp"
