@@ -33,6 +33,9 @@ import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
+import com.google.android.gms.ads.AdRequest
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_banner_ad
+
 
 class PlantDetailsFragment : BaseFragment() {
 
@@ -153,6 +156,10 @@ class PlantDetailsFragment : BaseFragment() {
             }
         })
         viewModel.reloadPlant(animalType, plantId)
+
+        val mAdView = plant_details_banner_ad
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     class InvalidContextException(message: String?) : RuntimeException(message)

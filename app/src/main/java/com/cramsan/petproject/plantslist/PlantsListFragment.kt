@@ -16,6 +16,8 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
+import com.google.android.gms.ads.AdRequest
+import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_banner_ad
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
 import kotlinx.android.synthetic.main.fragment_plants_list.plants_list_loading
 
@@ -90,6 +92,14 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
         })
 
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val mAdView = plant_list_banner_ad
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

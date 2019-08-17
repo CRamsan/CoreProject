@@ -18,6 +18,7 @@ import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
+import com.google.android.gms.ads.MobileAds
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -63,6 +64,7 @@ class PetProjectApplication : Application(), KodeinAware {
                     instance()) }
             modelProvider
         }
+        MobileAds.initialize(applicationContext)
     }
 
     override fun onCreate() {
