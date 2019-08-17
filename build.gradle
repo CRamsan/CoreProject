@@ -1,7 +1,7 @@
 buildscript {
     ext {
         globalCompileSdkVersion = 28
-        globalMinSdkVersion = 23
+        globalMinSdkVersion = 22
         globalTargetSdkVersion = 28
         globalVersionCode = 1
         globalVersionName = "1.0"

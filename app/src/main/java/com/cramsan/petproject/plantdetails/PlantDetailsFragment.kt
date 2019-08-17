@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -124,21 +125,21 @@ class PlantDetailsFragment : BaseFragment() {
                         AnimalType.DOG -> getString(R.string.plant_details_dog_dangerous)
                     }
 
-                    plant_details_danger.setTextColor(resources.getColor(R.color.colorDanger, requireActivity().theme))
+                    plant_details_danger.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorDanger))
                 }
                 ToxicityValue.NON_TOXIC -> {
                     plant_details_danger.text = when (animalType) {
                         AnimalType.CAT -> getString(R.string.plant_details_cat_safe)
                         AnimalType.DOG -> getString(R.string.plant_details_dog_safe)
                     }
-                    plant_details_danger.setTextColor(resources.getColor(R.color.colorSafe, requireActivity().theme))
+                    plant_details_danger.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorSafe))
                 }
                 ToxicityValue.UNDETERMINED -> {
                     plant_details_danger.text = when (animalType) {
                         AnimalType.CAT -> getString(R.string.plant_details_cat_unknown)
                         AnimalType.DOG -> getString(R.string.plant_details_dog_unknown)
                     }
-                    plant_details_danger.setTextColor(resources.getColor(R.color.colorUndetermined, requireActivity().theme))
+                    plant_details_danger.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorUndetermined))
                 }
             }
             if (metadata.description.isEmpty()) {
