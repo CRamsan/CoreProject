@@ -24,6 +24,8 @@ import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
+import com.google.android.gms.ads.AdRequest
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_banner_ad
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
@@ -33,9 +35,6 @@ import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
-import com.google.android.gms.ads.AdRequest
-import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_banner_ad
-
 
 class PlantDetailsFragment : BaseFragment() {
 
