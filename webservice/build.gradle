@@ -1,0 +1,52 @@
+plugins {
+    id "org.springframework.boot" version '2.1.7.RELEASE'
+    id "io.spring.dependency-management" version '1.0.7.RELEASE'
+    id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.plugin.spring"
+    id "org.jetbrains.kotlin.plugin.jpa"
+    id "io.gitlab.arturbosch.detekt"
+}
+
+group = 'com.cramsan.petproject.webservice'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "src/**/*.kt"
+}
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "-F", "src/**/*.kt"
+}
+
+check.dependsOn ktlint
+
+dependencies {
+    implementation project(":appcore")
+    implementation project(":framework")
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
+    implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = globalJavaCompatibility
+    }
+}

@@ -71,6 +71,8 @@ detekt {
 kotlin {
     android("android") {
     }
+    jvm("jvm") {
+    }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
     iosX64("ios") {
@@ -94,6 +96,22 @@ kotlin {
                 implementation "org.kodein.di:kodein-di-core:$globalKodeinVersion"
                 implementation "org.kodein.di:kodein-di-erased:$globalKodeinVersion"
                 implementation project(":framework")
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation kotlin("stdlib-jdk8")
+                implementation "com.squareup.sqldelight:sqlite-driver:$globalSqlDelightVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation kotlin("test")
+                implementation kotlin("test-junit")
+                implementation "io.mockk:mockk:$globalMockkVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
             }
         }
         androidMain {

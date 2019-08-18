@@ -3,5 +3,6 @@ rootProject.name = 'PetProject'
 include 'app'
 include 'appcore'
 include 'framework'
+include 'webservice'
 
 enableFeaturePreview('GRADLE_METADATA')
