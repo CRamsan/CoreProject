@@ -5,6 +5,6 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 
 actual class ModelStoragePlatformInitializer {
     actual fun getSqlDriver(): SqlDriver {
-        return JdbcSqliteDriver("jdbc:sqlite:test")
+        return JdbcSqliteDriver("jdbc:sqlite:petprojectjvmsql")
     }
 }
