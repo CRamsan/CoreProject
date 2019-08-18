@@ -20,7 +20,7 @@ class APIController {
 
     @GetMapping("/plants")
     fun plants(model: Model): String {
-        val result = modelStorage.getPlantsWithToxicity(AnimalType.CAT, "")
+        val result = modelStorage.getPlantsWithToxicity(AnimalType.CAT, "en")
         model["title"] = "Blog ${result.size}"
         return "blog ${result.size}"
     }

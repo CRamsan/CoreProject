@@ -9,4 +9,7 @@ actual class ModelStoragePlatformInitializer(val context: Context) {
     actual fun getSqlDriver(): SqlDriver {
         return AndroidSqliteDriver(PetProjectDB.Schema, context, "petproject.db")
     }
+
+    actual fun afterConnecting(driver: SqlDriver) {
+    }
 }

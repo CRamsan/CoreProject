@@ -19,10 +19,12 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
 
     init {
         val sqlDriver = initializer.platformInitializer.getSqlDriver()
+
         database = PetProjectDB(sqlDriver,
             DescriptionAdapter = Description.Adapter(AnimalTypeAdapter()),
             ToxicityAdapter = Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
         )
+        initializer.platformInitializer.afterConnecting(sqlDriver)
     }
 
     override fun insertPlantEntry(scientificName: String, mainCommonName: String, family: String, imageUrl: String) {
