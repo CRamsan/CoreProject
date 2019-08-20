@@ -11,8 +11,11 @@ CREATE VIRTUAL TABLE PlantFamilySearch USING fts4(content="PlantFamily", id, fam
 getPlantFamily:
 SELECT * FROM PlantFamily WHERE plant_id == ? AND locale == ?;
 
+getAllPlantFamily:
+SELECT * FROM PlantFamily;
+
 insert:
-INSERT INTO PlantFamily(plant_id, family, locale) VALUES (?, ?, ?);
+INSERT INTO PlantFamily(id, plant_id, family, locale) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM PlantFamily;

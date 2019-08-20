@@ -11,8 +11,11 @@ CREATE VIRTUAL TABLE PlantMainNameSearch USING fts4(content="PlantMainName", id,
 getPlantMainName:
 SELECT * FROM PlantMainName WHERE plant_id == ? AND locale == ?;
 
+getAllPlantMainName:
+SELECT * FROM PlantMainName;
+
 insert:
-INSERT INTO PlantMainName(plant_id, main_name, locale) VALUES (?, ?, ?);
+INSERT INTO PlantMainName(id, plant_id, main_name, locale) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM PlantMainName;

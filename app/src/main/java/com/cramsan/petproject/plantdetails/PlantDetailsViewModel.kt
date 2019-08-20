@@ -11,7 +11,7 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
-import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,7 +22,7 @@ import org.kodein.di.erased.instance
 class PlantDetailsViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
 
     override val kodein by kodein(application)
-    private val modelStore: ModelStorageInterface by instance()
+    private val modelProvider: ModelProviderInterface by instance()
     private val eventLogger: EventLoggerInterface by instance()
 
     private val observablePlant = MutableLiveData<Plant>()
@@ -44,8 +44,8 @@ class PlantDetailsViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private suspend fun loadPlant(animalType: AnimalType, plantId: Int) = withContext(Dispatchers.IO) {
-        val plant = modelStore.getPlant(animalType, plantId, "en")
-        val plantMetadata = modelStore.getPlantMetadata(animalType, plantId, "en")
+        val plant = modelProvider.getPlant(animalType, plantId, "en")
+        val plantMetadata = modelProvider.getPlantMetadata(animalType, plantId, "en")
         viewModelScope.launch {
             observablePlant.value = plant
             observablePlantMetadata.value = plantMetadata

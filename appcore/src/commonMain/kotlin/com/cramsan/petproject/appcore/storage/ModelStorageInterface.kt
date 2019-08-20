@@ -1,21 +1,44 @@
 package com.cramsan.petproject.appcore.storage
 
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
-import com.cramsan.petproject.appcore.model.PlantMetadata
-import com.cramsan.petproject.appcore.model.PresentablePlant
+import com.cramsan.petproject.db.Description
+import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
+import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
+import com.cramsan.petproject.db.Plant
+import com.cramsan.petproject.db.PlantCommonName
+import com.cramsan.petproject.db.PlantFamily
+import com.cramsan.petproject.db.PlantMainName
+import com.cramsan.petproject.db.Toxicity
 
 interface ModelStorageInterface {
 
-    fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant?
+    fun insertPlant(plant: Plant)
 
-    fun getPlants(animalType: AnimalType, locale: String): List<Plant>
+    fun getPlants(): List<Plant>
 
-    fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata?
+    fun insertPlantMainName(plantMainName: PlantMainName)
 
-    fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant>
+    fun getPlantsMainName(): List<PlantMainName>
 
-    fun insertPlant(plant: Plant, plantMetadata: PlantMetadata, locale: String)
+    fun insertPlantCommonName(plantCommonName: PlantCommonName)
+
+    fun getPlantsCommonNames(): List<PlantCommonName>
+
+    fun insertPlantFamily(plantFamily: PlantFamily)
+
+    fun getPlantsFamily(): List<PlantFamily>
+
+    fun insertDescription(description: Description)
+
+    fun getDescription(): List<Description>
+
+    fun insertToxicity(toxicity: Toxicity)
+
+    fun getToxicity(): List<Toxicity>
+
+    fun getCustomPlantEntry(animalType: AnimalType, plantId: Int, locale: String): GetPlantWithPlantIdAndAnimalId?
+
+    fun getCustomPlantsEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId>
 
     fun deleteAll()
 }

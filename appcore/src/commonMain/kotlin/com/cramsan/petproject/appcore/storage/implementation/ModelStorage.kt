@@ -5,11 +5,15 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
-import com.cramsan.petproject.appcore.model.PlantMetadata
-import com.cramsan.petproject.appcore.model.PresentablePlant
-import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import com.cramsan.petproject.db.Description
+import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
+import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
+import com.cramsan.petproject.db.Plant
+import com.cramsan.petproject.db.PlantCommonName
+import com.cramsan.petproject.db.PlantFamily
+import com.cramsan.petproject.db.PlantMainName
+import com.cramsan.petproject.db.Toxicity
 
 class ModelStorage(
     initializer: ModelStorageInitializer,
@@ -19,128 +23,108 @@ class ModelStorage(
 
     private var sqlDelightDAO: SQLDelightDAO = SQLDelightDAO(initializer)
 
-    override fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
-        eventLogger.log(Severity.INFO, classTag(), "getPlants")
-        threadUtil.assertIsBackgroundThread()
-
-        val list = sqlDelightDAO.getCustomPlantEntries(animalType, locale)
-        val mutableList = mutableListOf<Plant>()
-
-        list.forEach {
-            mutableList.add(
-                Plant(
-                    it.id.toInt(),
-                    it.scientific_name,
-                    it.main_name,
-                    "",
-                    it.image_url,
-                    it.family
-                ))
-        }
-        return mutableList
-    }
-
-    override fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
-        eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
-        threadUtil.assertIsBackgroundThread()
-
-        val list = sqlDelightDAO.getCustomPlantEntries(animalType, locale)
-        val mutableList = mutableListOf<PresentablePlant>()
-
-        list.forEach {
-            mutableList.add(
-                PresentablePlant(
-                    it.id,
-                    it.scientific_name,
-                    it.main_name,
-                    it.is_toxic ?: ToxicityValue.UNDETERMINED
-                ))
-        }
-        return mutableList
-    }
-
-    override fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant? {
-        eventLogger.log(Severity.INFO, classTag(), "getPlant")
-        threadUtil.assertIsBackgroundThread()
-
-        val plantEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType, locale) ?: return null
-
-        return Plant(
-            plantEntry.id.toInt(),
-            plantEntry.scientific_name,
-            plantEntry.main_name,
-            plantEntry.common_names,
-            plantEntry.image_url,
-            plantEntry.family
-        )
-    }
-
-    override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {
-        eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
-        threadUtil.assertIsBackgroundThread()
-
-        val plantCustomEntry = sqlDelightDAO.getCustomPlantEntry(plantId.toLong(), animalType, locale) ?: return null
-        return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
-    }
-
-    override fun insertPlant(plant: Plant, plantMetadata: PlantMetadata, locale: String) {
+    override fun insertPlant(plant: Plant) {
         eventLogger.log(Severity.INFO, classTag(), "insertPlant")
         threadUtil.assertIsBackgroundThread()
 
-        var isNew = false
-        if (sqlDelightDAO.getPlantEntry(plant.exactName) == null) {
-            sqlDelightDAO.insertPlantEntry(plant.exactName, plant.mainCommonName, plant.family, plant.imageUrl)
-            isNew = true
-        }
+        sqlDelightDAO.insertPlantEntry(plant.id, plant.scientific_name, plant.image_url)
+    }
 
-        val plantEntry = sqlDelightDAO.getPlantEntry(plant.exactName)
-        if (plantEntry == null) {
-            eventLogger.log(Severity.ERROR, classTag(), "entry is null after writing")
-            return
-        }
+    override fun getPlants(): List<Plant> {
+        eventLogger.log(Severity.INFO, classTag(), "getPlants")
+        threadUtil.assertIsBackgroundThread()
 
-        if (isNew) {
-            sqlDelightDAO.insertPlantFamilyNameEntry(plant.family, plantEntry.id, locale)
-            sqlDelightDAO.insertPlantMainNameEntry(plant.mainCommonName, plantEntry.id, locale)
-        }
+        return sqlDelightDAO.getAllPlantEntries()
+    }
 
-        if (sqlDelightDAO.getDescriptionEntry(plantEntry.id, plantMetadata.animalType, locale) == null) {
-            sqlDelightDAO.insertDescriptionEntry(
-                plantEntry.id,
-                plantMetadata.animalType,
-                plantMetadata.description,
-                locale
-            )
-        }
+    override fun insertPlantMainName(plantMainName: PlantMainName) {
+        eventLogger.log(Severity.INFO, classTag(), "insertPlantMainName")
+        threadUtil.assertIsBackgroundThread()
 
-        if (sqlDelightDAO.getToxicityEntry(plantEntry.id, plantMetadata.animalType) == null) {
-            sqlDelightDAO.insertToxicityEntry(
-                plantMetadata.isToxic,
-                plantEntry.id,
-                plantMetadata.animalType,
-                plantMetadata.source
-            )
-        }
+        sqlDelightDAO.insertPlantMainNameEntry(plantMainName.id, plantMainName.main_name, plantMainName.plant_id, plantMainName.locale)
+    }
 
-        val names = plant.commonNames.split(", ")
-        for (name in names) {
-            if (name.trim().isEmpty())
-                continue
+    override fun getPlantsMainName(): List<PlantMainName> {
+        eventLogger.log(Severity.INFO, classTag(), "getPlantsMainName")
+        threadUtil.assertIsBackgroundThread()
 
-            val nameString = name.trim()
-            val commonNamesResult = sqlDelightDAO.getPlantCommonNameEntries(plantEntry.id, locale)
-            var shouldSkip = false
-            for (plantName in commonNamesResult) {
-                if (plantName.common_name.trim().equals(nameString)) {
-                    shouldSkip = true
-                    break
-                }
-            }
-            if (shouldSkip) {
-                continue
-            }
-            sqlDelightDAO.insertPlantCommonNameEntry(name, plantEntry.id, locale)
-        }
+        return sqlDelightDAO.getAllPlantMainNameEntries()
+    }
+
+    override fun insertPlantCommonName(plantCommonName: PlantCommonName) {
+        eventLogger.log(Severity.INFO, classTag(), "insertPlantCommonName")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.insertPlantCommonNameEntry(plantCommonName.id, plantCommonName.common_name, plantCommonName.plant_id, plantCommonName.locale)
+    }
+
+    override fun getPlantsCommonNames(): List<PlantCommonName> {
+        eventLogger.log(Severity.INFO, classTag(), "getPlantsCommonNames")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.getAllPlantCommonNameEntries()
+    }
+
+    override fun insertPlantFamily(plantFamily: PlantFamily) {
+        eventLogger.log(Severity.INFO, classTag(), "insertPlantFamily")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.insertPlantFamilyNameEntry(plantFamily.id, plantFamily.family, plantFamily.plant_id, plantFamily.locale)
+    }
+
+    override fun getPlantsFamily(): List<PlantFamily> {
+        eventLogger.log(Severity.INFO, classTag(), "getPlantsFamily")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.getAllPlantFamilyEntries()
+    }
+
+    override fun insertDescription(description: Description) {
+        eventLogger.log(Severity.INFO, classTag(), "insertDescription")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.insertDescriptionEntry(description.id, description.plant_id, description.animal_id, description.description, description.locale)
+    }
+
+    override fun getDescription(): List<Description> {
+        eventLogger.log(Severity.INFO, classTag(), "getDescription")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.getAllDescriptionEntries()
+    }
+
+    override fun insertToxicity(toxicity: Toxicity) {
+        eventLogger.log(Severity.INFO, classTag(), "insertToxicity")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.insertToxicityEntry(toxicity.id, toxicity.is_toxic, toxicity.plant_id, toxicity.animal_id, toxicity.source)
+    }
+
+    override fun getToxicity(): List<Toxicity> {
+        eventLogger.log(Severity.INFO, classTag(), "getToxicity")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.getAllToxicityEntries()
+    }
+
+    override fun getCustomPlantEntry(
+        animalType: AnimalType,
+        plantId: Int,
+        locale: String
+    ): GetPlantWithPlantIdAndAnimalId? {
+        eventLogger.log(Severity.INFO, classTag(), "getCustomPlantEntry")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.getCustomPlantEntry(plantId.toLong(),
+            animalType,
+            locale)
+    }
+
+    override fun getCustomPlantsEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {
+        eventLogger.log(Severity.INFO, classTag(), "getCustomPlantsEntries")
+        threadUtil.assertIsBackgroundThread()
+
+        return sqlDelightDAO.getCustomPlantEntries(animalType, locale)
     }
 
     override fun deleteAll() {

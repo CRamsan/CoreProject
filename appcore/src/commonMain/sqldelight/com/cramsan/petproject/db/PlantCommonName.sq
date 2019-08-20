@@ -11,8 +11,11 @@ CREATE VIRTUAL TABLE PlantCommonNameSearch USING fts4(content="PlantCommonName",
 getPlantCommonNames:
 SELECT * FROM PlantCommonName WHERE plant_id == ? AND locale == ?;
 
+getAllPlantCommonNames:
+SELECT * FROM PlantCommonName;
+
 insert:
-INSERT INTO PlantCommonName(common_name, plant_id, locale) VALUES (?, ?, ?);
+INSERT INTO PlantCommonName(id, common_name, plant_id, locale) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM PlantCommonName;

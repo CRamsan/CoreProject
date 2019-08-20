@@ -13,7 +13,7 @@ getAll:
 SELECT * FROM Plant;
 
 insert:
-INSERT INTO Plant(scientific_name, image_url) VALUES (?, ?);
+INSERT INTO Plant(id, scientific_name, image_url) VALUES (?, ?, ?);
 
 deleteAll:
 DELETE FROM Plant;

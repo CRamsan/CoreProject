@@ -12,8 +12,11 @@ CREATE TABLE Description (
 getDescription:
 SELECT * FROM Description WHERE plant_id == ? AND animal_id == ? AND locale == ?;
 
+getAllDescription:
+SELECT * FROM Description;
+
 insert:
-INSERT INTO Description(plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?);
+INSERT INTO Description(id, plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Description;

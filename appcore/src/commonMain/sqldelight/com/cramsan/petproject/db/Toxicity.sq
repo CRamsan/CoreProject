@@ -14,8 +14,11 @@ CREATE TABLE Toxicity (
 getToxicity:
 SELECT * FROM Toxicity WHERE plant_id == ? AND animal_id == ?;
 
+getAllToxicity:
+SELECT * FROM Toxicity;
+
 insert:
-INSERT INTO Toxicity(plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?);
+INSERT INTO Toxicity(id, plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Toxicity;
