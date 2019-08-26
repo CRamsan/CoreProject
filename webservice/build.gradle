@@ -5,6 +5,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.spring"
     id "org.jetbrains.kotlin.plugin.jpa"
     id "io.gitlab.arturbosch.detekt"
+    id 'war'
 }
 
 group = 'com.cramsan.petproject.webservice'
@@ -40,6 +41,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
