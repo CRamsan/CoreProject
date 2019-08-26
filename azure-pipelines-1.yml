@@ -33,5 +33,5 @@ steps:
     deployToSlotOrASE: true
     resourceGroupName: 'PetProject'
     slotName: 'production'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: './webservice/build/libs/webservice-0.0.1-SNAPSHOT.jar'
     runtimeStack: 'TOMCAT|8.5-jre8'
