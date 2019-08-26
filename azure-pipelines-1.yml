@@ -25,6 +25,7 @@ steps:
   inputs:
     contents: '**/*.war'
     targetFolder: '$(build.artifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Connection-PetProject-Service'
