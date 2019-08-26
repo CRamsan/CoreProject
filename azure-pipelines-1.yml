@@ -26,6 +26,14 @@ steps:
     contents: '**/*.war'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Connection-PetProject-Service'
+    appType: 'webAppLinux'
+    WebAppName: 'PetProject-Test3'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'JAVA|8-jre8'
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Connection-PetProject-Service'
