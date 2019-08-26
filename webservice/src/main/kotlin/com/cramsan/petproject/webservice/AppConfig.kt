@@ -41,7 +41,7 @@ class AppConfig {
 
     @Bean
     fun modelStorage(): ModelStorageInterface {
-        val dbPath: String? = sqliteResource!!.filename
+        val dbPath: String? = sqliteResource!!.uri.path
         if (dbPath == null) {
             throw UnsupportedOperationException("Path for sqlite is null")
         }
