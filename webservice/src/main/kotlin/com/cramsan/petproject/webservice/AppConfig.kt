@@ -16,6 +16,7 @@ import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatfor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 
 @Configuration
@@ -36,12 +37,13 @@ class AppConfig {
         return HaltUtil(eventLogger())
     }
 
-    @Value("classpath:PetProject.sql")
-    var sqliteResource: Resource? = null
-
     @Bean
     fun modelStorage(): ModelStorageInterface {
-        val dbPath: String? = sqliteResource!!.uri.path
+        val resource =  ClassPathResource("PetProject.sql")
+        if (!resource.isFile || !resource.exists()) {
+            throw UnsupportedOperationException("File not found")
+        }
+        val dbPath: String? = resource.uri.path
         if (dbPath == null) {
             throw UnsupportedOperationException("Path for sqlite is null")
         }
