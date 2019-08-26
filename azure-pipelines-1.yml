@@ -32,7 +32,7 @@ steps:
     azureSubscription: 'Connection-PetProject-Service'
     appType: 'webAppLinux'
     WebAppName: 'PetProject-Test3'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: 'webservice/build/libs/webservice-0.0.1-SNAPSHOT.war'
     RuntimeStack: 'JAVA|8-jre8'
 - task: AzureWebApp@1
   inputs:
@@ -42,5 +42,5 @@ steps:
     deployToSlotOrASE: true
     resourceGroupName: 'PetProject'
     slotName: 'production'
-    package: './webservice/build/libs/webservice-0.0.1-SNAPSHOT.war'
+    package: 'webservice/build/libs/webservice-0.0.1-SNAPSHOT.war'
     runtimeStack: 'TOMCAT|8.5-jre8'
