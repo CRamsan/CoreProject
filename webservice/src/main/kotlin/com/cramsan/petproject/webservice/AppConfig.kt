@@ -15,6 +15,8 @@ import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitial
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.Resource
 
 @Configuration
 class AppConfig {
@@ -34,10 +36,17 @@ class AppConfig {
         return HaltUtil(eventLogger())
     }
 
+    @Value("classpath:PetProject.sql")
+    var sqliteResource: Resource? = null
+
     @Bean
     fun modelStorage(): ModelStorageInterface {
+        val dbPath: String? = sqliteResource!!.filename
+        if (dbPath == null) {
+            throw UnsupportedOperationException("Path for sqlite is null")
+        }
         return ModelStorage(
-                ModelStorageInitializer(ModelStoragePlatformInitializer()),
+                ModelStorageInitializer(ModelStoragePlatformInitializer(dbPath)),
                 eventLogger(),
                 threadUtil())
     }
