@@ -20,8 +20,18 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'build'
+    tasks: ':webservice:build'
 - task: CopyFiles@2
   inputs:
     contents: '**/*.jar'
     targetFolder: '$(build.artifactStagingDirectory)'
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Connection-PetProject-Service'
+    appType: 'webAppLinux'
+    appName: 'PetProject-Test3'
+    deployToSlotOrASE: true
+    resourceGroupName: 'PetProject'
+    slotName: 'production'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    runtimeStack: 'TOMCAT|8.5-jre8'
