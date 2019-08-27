@@ -31,6 +31,7 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Connection-PetProject-Service'
     appType: 'webAppLinux'
-    deploymentType: 'zipDeploy' 
+    deploymentType: 'zipDeploy'
+    webAppName: 'PetProject-Test3'
     packageForLinux: 'webservice/build/libs/webservice-0.0.1-SNAPSHOT.jar'
     RuntimeStack: 'JAVA|8-jre8'
