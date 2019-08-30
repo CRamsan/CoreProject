@@ -33,6 +33,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
     private lateinit var model: PlantListViewModel
     private lateinit var animalType: AnimalType
     private lateinit var layoutManager: LinearLayoutManager
+    private var searchQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
         savedInstanceState?.let {
             val startingOffset = savedInstanceState.getInt(SCROLL_POS, 0)
             layoutManager.scrollToPosition(startingOffset)
+            searchQuery = savedInstanceState.getString(SEARCH_QUERY)
         }
 
         model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
@@ -108,14 +110,20 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
         plant_list_recycler.adapter = plantsAdapter
     }
 
-    override fun onResume() {
-        super.onResume()
-        model.reloadPlants(animalType)
+    override fun onStart() {
+        super.onStart()
+        val loadedSearchQuery = searchQuery
+        if (loadedSearchQuery?.isNotBlank() == true) {
+            model.searchPlants(loadedSearchQuery, animalType)
+        } else {
+            model.reloadPlants(animalType)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(ANIMAL_TYPE, animalType.ordinal)
         outState.putInt(SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
+        outState.putString(SEARCH_QUERY, searchQuery)
 
         super.onSaveInstanceState(outState)
     }
@@ -132,7 +140,12 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextChange")
-        newText?.let { model.searchPlants(it, animalType) }
+        newText?.let {
+            if (newText.length > 1) {
+                searchQuery = newText
+            }
+            model.searchPlants(it, animalType)
+        }
         return true
     }
 
@@ -165,6 +178,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
         }
 
         const val ANIMAL_TYPE = "animalType"
+        const val SEARCH_QUERY = "searchQuery"
         const val SCROLL_POS = "scrollPosition"
     }
 }

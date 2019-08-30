@@ -80,7 +80,8 @@ class ModelProvider(
                     it.is_toxic ?: ToxicityValue.UNDETERMINED
                 ))
         }
-        return mutableList
+        plantList = mutableList.sortedBy { it.mainCommonName }
+        return plantList
     }
 
     override suspend fun getPlantsWithToxicityFiltered(
@@ -95,6 +96,7 @@ class ModelProvider(
         val resultList = mutableListOf<PresentablePlant>()
         filterJob?.cancelAndJoin()
         val filterJobLocal = launch(Dispatchers.Default) {
+            eventLogger.log(Severity.DEBUG, classTag(), "Starting Job $this")
             for (plant in list) {
                 if (!isActive)
                     break
@@ -105,10 +107,12 @@ class ModelProvider(
         }
         filterJob = filterJobLocal
         if (filterJobLocal.isCancelled) {
+            eventLogger.log(Severity.DEBUG, classTag(), "Cancelling filterJob $filterJob")
             return@withContext null
         }
 
-        return@withContext resultList
+        eventLogger.log(Severity.DEBUG, classTag(), "Filtering returned ${resultList.size} results")
+        return@withContext resultList.sortedBy { it.mainCommonName }
     }
 
     override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {

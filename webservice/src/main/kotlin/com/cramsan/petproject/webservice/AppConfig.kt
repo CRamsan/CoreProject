@@ -15,9 +15,7 @@ import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitial
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
-import org.springframework.core.io.Resource
 
 @Configuration
 class AppConfig {
@@ -39,7 +37,7 @@ class AppConfig {
 
     @Bean
     fun modelStorage(): ModelStorageInterface {
-        val resource =  ClassPathResource("PetProject.sql")
+        val resource = ClassPathResource("PetProject.sql")
         if (!resource.isFile || !resource.exists()) {
             throw UnsupportedOperationException("File not found")
         }

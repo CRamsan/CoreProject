@@ -108,7 +108,8 @@ class MainActivity : BaseActivity(),
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    return false
+                    queryTextListener?.onQueryTextChange(query)
+                    return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {

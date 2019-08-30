@@ -7,7 +7,7 @@ import java.sql.SQLException
 
 actual class ModelStoragePlatformInitializer(val dbPath: String) {
     actual fun getSqlDriver(): SqlDriver {
-        return JdbcSqliteDriver("jdbc:sqlite:${dbPath}")
+        return JdbcSqliteDriver("jdbc:sqlite:$dbPath")
     }
 
     actual fun afterConnecting(driver: SqlDriver) {
