@@ -42,10 +42,10 @@ class ModelProvider(
 
         return Plant(
             plantEntry.id.toInt(),
-            plantEntry.scientific_name,
-            plantEntry.main_name,
-            plantEntry.common_names,
-            plantEntry.image_url,
+            plantEntry.scientificName,
+            plantEntry.mainName,
+            plantEntry.commonNames,
+            plantEntry.imageUrl,
             plantEntry.family
         )
     }
@@ -61,10 +61,10 @@ class ModelProvider(
             mutableList.add(
                 Plant(
                     it.id.toInt(),
-                    it.scientific_name,
-                    it.main_name,
+                    it.scientificName,
+                    it.mainName,
                     "",
-                    it.image_url,
+                    it.imageUrl,
                     it.family
                 ))
         }
@@ -87,9 +87,9 @@ class ModelProvider(
             mutableList.add(
                 PresentablePlant(
                     it.id,
-                    it.scientific_name,
-                    it.main_name,
-                    it.is_toxic ?: ToxicityValue.UNDETERMINED
+                    it.scientificName,
+                    it.mainName,
+                    it.isToxic ?: ToxicityValue.UNDETERMINED
                 ))
         }
         plantList = mutableList.sortedBy { it.mainCommonName }
@@ -132,7 +132,7 @@ class ModelProvider(
         threadUtil.assertIsBackgroundThread()
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
-        return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
+        return PlantMetadata(plantId, animalType, plantCustomEntry.isToxic, plantCustomEntry.description, plantCustomEntry.source)
     }
 
     suspend fun downloadDatabaseEntries() {

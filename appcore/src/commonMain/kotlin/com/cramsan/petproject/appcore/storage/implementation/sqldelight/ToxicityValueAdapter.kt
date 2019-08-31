@@ -1,4 +1,4 @@
-package com.cramsan.petproject.appcore.storage.implementation
+package com.cramsan.petproject.appcore.storage.implementation.sqldelight
 
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.squareup.sqldelight.ColumnAdapter

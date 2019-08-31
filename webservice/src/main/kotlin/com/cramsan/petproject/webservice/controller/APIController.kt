@@ -1,12 +1,12 @@
 package com.cramsan.petproject.webservice.controller
 
+import com.cramsan.petproject.appcore.storage.Description
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.db.Description
-import com.cramsan.petproject.db.Plant
-import com.cramsan.petproject.db.PlantCommonName
-import com.cramsan.petproject.db.PlantFamily
-import com.cramsan.petproject.db.PlantMainName
-import com.cramsan.petproject.db.Toxicity
+import com.cramsan.petproject.appcore.storage.Plant
+import com.cramsan.petproject.appcore.storage.PlantCommonName
+import com.cramsan.petproject.appcore.storage.PlantFamily
+import com.cramsan.petproject.appcore.storage.PlantMainName
+import com.cramsan.petproject.appcore.storage.Toxicity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

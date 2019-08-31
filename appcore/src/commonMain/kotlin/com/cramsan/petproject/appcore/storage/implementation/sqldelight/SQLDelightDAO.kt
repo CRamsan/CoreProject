@@ -1,17 +1,10 @@
-package com.cramsan.petproject.appcore.storage.implementation
+package com.cramsan.petproject.appcore.storage.implementation.sqldelight
 
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageDAO
-import com.cramsan.petproject.db.Description
-import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
-import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
 import com.cramsan.petproject.db.PetProjectDB
-import com.cramsan.petproject.db.Plant
-import com.cramsan.petproject.db.PlantCommonName
-import com.cramsan.petproject.db.PlantFamily
-import com.cramsan.petproject.db.PlantMainName
-import com.cramsan.petproject.db.Toxicity
 
 class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
 
@@ -21,8 +14,8 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
         val sqlDriver = initializer.platformInitializer.getSqlDriver()
 
         database = PetProjectDB(sqlDriver,
-            DescriptionAdapter = Description.Adapter(AnimalTypeAdapter()),
-            ToxicityAdapter = Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
+            DescriptionAdapter = com.cramsan.petproject.db.Description.Adapter(AnimalTypeAdapter()),
+            ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
         )
         initializer.platformInitializer.afterConnecting(sqlDriver)
     }
@@ -52,64 +45,80 @@ class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
     }
 
     override fun getPlantEntry(scientificName: String): Plant? {
-        return database.plantQueries.getPlant(scientificName).executeAsOneOrNull()
+        val result = database.plantQueries.getPlant(scientificName).executeAsOneOrNull() ?: return null
+        return Plant(result)
     }
 
     override fun getAllPlantEntries(): List<Plant> {
-        return database.plantQueries.getAll().executeAsList()
+        val result = database.plantQueries.getAll().executeAsList()
+        return result.map { Plant(it) }
     }
 
     override fun getPlantCommonNameEntries(plantId: Long, locale: String): List<PlantCommonName> {
-        return database.plantCommonNameQueries.getPlantCommonNames(plantId, locale).executeAsList()
+        val result = database.plantCommonNameQueries.getPlantCommonNames(plantId, locale).executeAsList()
+        return result.map { PlantCommonName(it) }
     }
 
     override fun getAllPlantCommonNameEntries(): List<PlantCommonName> {
-        return database.plantCommonNameQueries.getAllPlantCommonNames().executeAsList()
+        val result = database.plantCommonNameQueries.getAllPlantCommonNames().executeAsList()
+        return result.map { PlantCommonName(it) }
     }
 
     override fun getPlantMainNameEntry(plantId: Long, locale: String): PlantMainName? {
-        return database.plantMainNameQueries.getPlantMainName(plantId, locale).executeAsOneOrNull()
+        val result = database.plantMainNameQueries.getPlantMainName(plantId, locale).executeAsOneOrNull() ?: return null
+        return PlantMainName(result)
     }
 
     override fun getAllPlantMainNameEntries(): List<PlantMainName> {
-        return database.plantMainNameQueries.getAllPlantMainName().executeAsList()
+        val result = database.plantMainNameQueries.getAllPlantMainName().executeAsList()
+        return result.map { PlantMainName(it) }
     }
 
     override fun getPlantFamilyEntry(plantId: Long, locale: String): PlantFamily? {
-        return database.plantFamilyQueries.getPlantFamily(plantId, locale).executeAsOneOrNull()
+        val result = database.plantFamilyQueries.getPlantFamily(plantId, locale).executeAsOneOrNull() ?: return null
+        return PlantFamily(result)
     }
 
     override fun getAllPlantFamilyEntries(): List<PlantFamily> {
-        return database.plantFamilyQueries.getAllPlantFamily().executeAsList()
+        val result = database.plantFamilyQueries.getAllPlantFamily().executeAsList()
+        return result.map { PlantFamily(it) }
     }
 
     override fun getToxicityEntry(plantId: Long, animalType: AnimalType): Toxicity? {
-        return database.toxicityQueries.getToxicity(plantId, animalType).executeAsOneOrNull()
+        val result = database.toxicityQueries.getToxicity(plantId, animalType).executeAsOneOrNull() ?: return null
+        return Toxicity(result)
     }
 
     override fun getAllToxicityEntries(): List<Toxicity> {
-        return database.toxicityQueries.getAllToxicity().executeAsList()
+        val result = database.toxicityQueries.getAllToxicity().executeAsList()
+        return result.map { Toxicity(it) }
     }
 
     override fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description? {
-        return database.descriptionQueries.getDescription(plantId, animalType, locale).executeAsOneOrNull()
+        val result = database.descriptionQueries.getDescription(plantId, animalType, locale).executeAsOneOrNull() ?: return null
+        return Description(result)
     }
 
     override fun getAllDescriptionEntries(): List<Description> {
-        return database.descriptionQueries.getAllDescription().executeAsList()
+        val result = database.descriptionQueries.getAllDescription().executeAsList()
+        return result.map { Description(it) }
     }
 
     override fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {
-        return database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale).executeAsList()
+        val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale).executeAsList()
+        return result.map { GetAllPlantsWithAnimalId(it) }
     }
 
     override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {
-        return database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOneOrNull()
+        val result = database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOneOrNull() ?: return null
+        return GetPlantWithPlantIdAndAnimalId(result)
     }
 
     override fun deleteAll() {
         database.toxicityQueries.deleteAll()
         database.plantCommonNameQueries.deleteAll()
+        database.plantFamilyQueries.deleteAll()
+        database.descriptionQueries.deleteAll()
         database.plantQueries.deleteAll()
     }
 }

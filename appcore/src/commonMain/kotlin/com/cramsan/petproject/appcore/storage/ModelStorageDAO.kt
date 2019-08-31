@@ -2,14 +2,6 @@ package com.cramsan.petproject.appcore.storage
 
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import com.cramsan.petproject.db.Description
-import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
-import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
-import com.cramsan.petproject.db.Plant
-import com.cramsan.petproject.db.PlantCommonName
-import com.cramsan.petproject.db.PlantFamily
-import com.cramsan.petproject.db.PlantMainName
-import com.cramsan.petproject.db.Toxicity
 
 interface ModelStorageDAO {
 

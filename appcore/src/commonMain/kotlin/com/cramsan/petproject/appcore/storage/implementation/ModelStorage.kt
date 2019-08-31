@@ -5,15 +5,16 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.appcore.storage.Description
+import com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId
+import com.cramsan.petproject.appcore.storage.GetPlantWithPlantIdAndAnimalId
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.db.Description
-import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
-import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
-import com.cramsan.petproject.db.Plant
-import com.cramsan.petproject.db.PlantCommonName
-import com.cramsan.petproject.db.PlantFamily
-import com.cramsan.petproject.db.PlantMainName
-import com.cramsan.petproject.db.Toxicity
+import com.cramsan.petproject.appcore.storage.Plant
+import com.cramsan.petproject.appcore.storage.PlantCommonName
+import com.cramsan.petproject.appcore.storage.PlantFamily
+import com.cramsan.petproject.appcore.storage.PlantMainName
+import com.cramsan.petproject.appcore.storage.Toxicity
+import com.cramsan.petproject.appcore.storage.implementation.sqldelight.SQLDelightDAO
 
 class ModelStorage(
     initializer: ModelStorageInitializer,
@@ -27,7 +28,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlant")
         threadUtil.assertIsBackgroundThread()
 
-        sqlDelightDAO.insertPlantEntry(plant.id, plant.scientific_name, plant.image_url)
+        sqlDelightDAO.insertPlantEntry(plant.id, plant.scientificNames, plant.imageUrl)
     }
 
     override fun getPlants(): List<Plant> {
@@ -41,7 +42,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlantMainName")
         threadUtil.assertIsBackgroundThread()
 
-        sqlDelightDAO.insertPlantMainNameEntry(plantMainName.id, plantMainName.main_name, plantMainName.plant_id, plantMainName.locale)
+        sqlDelightDAO.insertPlantMainNameEntry(plantMainName.id, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
     }
 
     override fun getPlantsMainName(): List<PlantMainName> {
@@ -55,7 +56,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlantCommonName")
         threadUtil.assertIsBackgroundThread()
 
-        return sqlDelightDAO.insertPlantCommonNameEntry(plantCommonName.id, plantCommonName.common_name, plantCommonName.plant_id, plantCommonName.locale)
+        return sqlDelightDAO.insertPlantCommonNameEntry(plantCommonName.id, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
     }
 
     override fun getPlantsCommonNames(): List<PlantCommonName> {
@@ -69,7 +70,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlantFamily")
         threadUtil.assertIsBackgroundThread()
 
-        return sqlDelightDAO.insertPlantFamilyNameEntry(plantFamily.id, plantFamily.family, plantFamily.plant_id, plantFamily.locale)
+        return sqlDelightDAO.insertPlantFamilyNameEntry(plantFamily.id, plantFamily.family, plantFamily.plantId, plantFamily.locale)
     }
 
     override fun getPlantsFamily(): List<PlantFamily> {
@@ -83,7 +84,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertDescription")
         threadUtil.assertIsBackgroundThread()
 
-        return sqlDelightDAO.insertDescriptionEntry(description.id, description.plant_id, description.animal_id, description.description, description.locale)
+        return sqlDelightDAO.insertDescriptionEntry(description.id, description.plantId, description.animalId, description.description, description.locale)
     }
 
     override fun getDescription(): List<Description> {
@@ -97,7 +98,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertToxicity")
         threadUtil.assertIsBackgroundThread()
 
-        return sqlDelightDAO.insertToxicityEntry(toxicity.id, toxicity.is_toxic, toxicity.plant_id, toxicity.animal_id, toxicity.source)
+        return sqlDelightDAO.insertToxicityEntry(toxicity.id, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
     }
 
     override fun getToxicity(): List<Toxicity> {
