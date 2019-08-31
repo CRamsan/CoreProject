@@ -3,8 +3,9 @@ package com.cramsan.framework.halt.implementation
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 
-actual class HaltUtil actual constructor(eventLogger: EventLoggerInterface) :
-    HaltUtilInterface {
+actual class HaltUtil actual constructor(
+    private val eventLogger: EventLoggerInterface
+) : HaltUtilInterface {
 
     private var shouldStop = true
 

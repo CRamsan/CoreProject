@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.http.HttpInterface
+import com.cramsan.framework.http.implementation.Http
+import com.cramsan.framework.http.implementation.HttpInitializer
+import com.cramsan.framework.http.implementation.backend.KtorEngine
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
@@ -57,9 +61,18 @@ class PetProjectApplication : Application(), KodeinAware {
                 instance()) }
             modelStorage
         }
+        bind<HttpInterface>() with singleton {
+            val engine = KtorEngine(instance())
+            val http by kodein.newInstance {
+                Http(instance(),
+                    instance(),
+                    HttpInitializer(engine)) }
+            http
+        }
         bind<ModelProviderInterface>() with singleton {
             val modelProvider by kodein.newInstance {
                 ModelProvider(instance(),
+                    instance(),
                     instance(),
                     instance()) }
             modelProvider

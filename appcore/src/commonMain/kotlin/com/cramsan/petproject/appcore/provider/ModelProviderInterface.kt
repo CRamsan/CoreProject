@@ -7,13 +7,13 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 
 interface ModelProviderInterface {
 
-    fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant?
+    suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant?
 
-    fun getPlants(animalType: AnimalType, locale: String): List<Plant>
+    suspend fun getPlants(animalType: AnimalType, locale: String): List<Plant>
 
-    fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata?
+    suspend fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata?
 
-    fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant>
+    suspend fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant>
 
     suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType, query: String, locale: String): List<PresentablePlant>?
 }

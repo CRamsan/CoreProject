@@ -9,10 +9,9 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Executors
 
 actual class ThreadUtil actual constructor(
-    eventLogger: EventLoggerInterface
+    private val eventLogger: EventLoggerInterface
 ) : ThreadUtilInterface {
 
-    private val logger: EventLoggerInterface = eventLogger
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
     private val pool = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
 
@@ -25,7 +24,7 @@ actual class ThreadUtil actual constructor(
     }
 
     override fun dispatchToUI(block: RunBlock) {
-        logger.assert(false, classTag(), "On Android we should not dispatch to the UI thread.")
+        eventLogger.assert(false, classTag(), "On Android we should not dispatch to the UI thread.")
         if (isUIThread()) {
             block()
         } else {
@@ -38,11 +37,11 @@ actual class ThreadUtil actual constructor(
     }
 
     override fun assertIsUIThread() {
-        logger.assert(isUIThread(), classTag(), "Not on UI thread!")
+        eventLogger.assert(isUIThread(), classTag(), "Not on UI thread!")
     }
 
     override fun assertIsBackgroundThread() {
-        logger.assert(isBackgroundThread(), classTag(), "Not on background thread!")
+        eventLogger.assert(isBackgroundThread(), classTag(), "Not on background thread!")
     }
 
     companion object {

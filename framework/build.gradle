@@ -61,6 +61,8 @@ check.dependsOn ktlint
 
 dependencies {
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+    implementation "io.ktor:ktor-client-android:$globalKtorVersion"
+    implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "io.mockk:mockk:$globalMockkVersion"
@@ -72,7 +74,6 @@ kotlin {
     android("android") {
     }
     jvm("jvm") {
-
     }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
@@ -85,6 +86,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin("stdlib-common")
+                implementation "io.ktor:ktor-client-core:$globalKtorVersion"
+                implementation "io.ktor:ktor-client-json:$globalKtorVersion"
             }
         }
         commonTest {
@@ -101,6 +104,8 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin("stdlib-jdk8")
+                implementation "io.ktor:ktor-client-apache:$globalKtorVersion"
+                implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
             }
         }
         jvmTest {

@@ -26,7 +26,7 @@ internal class ModelProviderCommonTest {
     private lateinit var modelProviderImpl: ModelProvider
 
     fun setUp() {
-        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), instance()) }
+        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), instance(), instance()) }
         modelProviderImpl = newModelProvider
         modelProvider = modelProviderImpl
     }

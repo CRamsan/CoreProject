@@ -1,5 +1,6 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
+import com.cramsan.framework.http.HttpInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
@@ -11,6 +12,11 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import com.cramsan.petproject.db.Description
+import com.cramsan.petproject.db.PlantCommonName
+import com.cramsan.petproject.db.PlantFamily
+import com.cramsan.petproject.db.PlantMainName
+import com.cramsan.petproject.db.Toxicity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -21,13 +27,14 @@ import kotlinx.coroutines.withContext
 class ModelProvider(
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface,
-    private val modelStorage: ModelStorageInterface
+    private val modelStorage: ModelStorageInterface,
+    private val http: HttpInterface
 ) : ModelProviderInterface {
 
     lateinit var plantList: List<PresentablePlant>
     var filterJob: Job? = null
 
-    override fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant? {
+    override suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant? {
         eventLogger.log(Severity.INFO, classTag(), "getPlant")
         threadUtil.assertIsBackgroundThread()
 
@@ -43,7 +50,7 @@ class ModelProvider(
         )
     }
 
-    override fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
+    override suspend fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
         eventLogger.log(Severity.INFO, classTag(), "getPlants")
         threadUtil.assertIsBackgroundThread()
 
@@ -64,12 +71,17 @@ class ModelProvider(
         return mutableList
     }
 
-    override fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
+    override suspend fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
         eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
         threadUtil.assertIsBackgroundThread()
 
-        val list = modelStorage.getCustomPlantsEntries(animalType, locale)
+        var list = modelStorage.getCustomPlantsEntries(animalType, locale)
         val mutableList = mutableListOf<PresentablePlant>()
+
+        if (list.isEmpty()) {
+            downloadDatabaseEntries()
+            list = modelStorage.getCustomPlantsEntries(animalType, locale)
+        }
 
         list.forEach {
             mutableList.add(
@@ -115,11 +127,39 @@ class ModelProvider(
         return@withContext resultList.sortedBy { it.mainCommonName }
     }
 
-    override fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {
+    override suspend fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {
         eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
         threadUtil.assertIsBackgroundThread()
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         return PlantMetadata(plantId, animalType, plantCustomEntry.is_toxic, plantCustomEntry.description, plantCustomEntry.source)
+    }
+
+    suspend fun downloadDatabaseEntries() {
+        val plants = http.get("", listOf<com.cramsan.petproject.db.Plant>()::class)
+        val mainNames = http.get("", listOf<PlantMainName>()::class)
+        val commonNames = http.get("", listOf<PlantCommonName>()::class)
+        val families = http.get("", listOf<PlantFamily>()::class)
+        val descriptions = http.get("", listOf<Description>()::class)
+        val toxicities = http.get("", listOf<Toxicity>()::class)
+
+        plants.forEach {
+            modelStorage.insertPlant(it)
+        }
+        mainNames.forEach {
+            modelStorage.insertPlantMainName(it)
+        }
+        commonNames.forEach {
+            modelStorage.insertPlantCommonName(it)
+        }
+        families.forEach {
+            modelStorage.insertPlantFamily(it)
+        }
+        descriptions.forEach {
+            modelStorage.insertDescription(it)
+        }
+        toxicities.forEach {
+            modelStorage.insertToxicity(it)
+        }
     }
 }

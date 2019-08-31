@@ -36,11 +36,14 @@ dependencies {
     implementation project(":appcore")
     implementation project(":framework")
 
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+    implementation "com.microsoft.azure:azure-spring-boot-starter:2.1.6"
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
