@@ -9,6 +9,8 @@ import io.ktor.client.call.call
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.defaultSerializer
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.http.HttpMethod
+import io.ktor.http.takeFrom
 import kotlin.reflect.KClass
 
 class KtorEngine(
@@ -35,6 +37,8 @@ class KtorEngine(
 
     override suspend fun <T : Any> get(url: String, c: KClass<T>): T {
         val builder = HttpRequestBuilder()
+        builder.method = HttpMethod.Get
+        builder.url.takeFrom(url)
         val clientCall = this.client.call(builder)
         val typeInfo = TypeInfo(c, reifiedType)
         return clientCall.receive(typeInfo) as T

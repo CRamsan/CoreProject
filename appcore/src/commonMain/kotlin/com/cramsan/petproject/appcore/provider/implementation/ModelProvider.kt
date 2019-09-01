@@ -75,13 +75,9 @@ class ModelProvider(
         eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
         threadUtil.assertIsBackgroundThread()
 
+        downloadDatabaseEntriesIfNeeded()
         var list = modelStorage.getCustomPlantsEntries(animalType, locale)
         val mutableList = mutableListOf<PresentablePlant>()
-
-        if (list.isEmpty()) {
-            downloadDatabaseEntries()
-            list = modelStorage.getCustomPlantsEntries(animalType, locale)
-        }
 
         list.forEach {
             mutableList.add(
@@ -135,13 +131,18 @@ class ModelProvider(
         return PlantMetadata(plantId, animalType, plantCustomEntry.isToxic, plantCustomEntry.description, plantCustomEntry.source)
     }
 
-    suspend fun downloadDatabaseEntries() {
-        val plants = http.get("", listOf<com.cramsan.petproject.appcore.storage.Plant>()::class)
-        val mainNames = http.get("", listOf<PlantMainName>()::class)
-        val commonNames = http.get("", listOf<PlantCommonName>()::class)
-        val families = http.get("", listOf<PlantFamily>()::class)
-        val descriptions = http.get("", listOf<Description>()::class)
-        val toxicities = http.get("", listOf<Toxicity>()::class)
+    private suspend fun downloadDatabaseEntriesIfNeeded() {
+
+        if (modelStorage.getToxicity().size > 1000) {
+            return
+        }
+
+        val plants = http.get("https://cramsan.com/data/Plant.json", listOf<com.cramsan.petproject.appcore.storage.Plant>()::class)
+        val mainNames = http.get("https://cramsan.com/data/PlantMainName.json", listOf<PlantMainName>()::class)
+        val commonNames = http.get("https://cramsan.com/data/PlantCommonName.json", listOf<PlantCommonName>()::class)
+        val families = http.get("https://cramsan.com/data/PlantFamily.json", listOf<PlantFamily>()::class)
+        val descriptions = http.get("https://cramsan.com/data/Description.json", listOf<Description>()::class)
+        val toxicities = http.get("https://cramsan.com/data/Toxicity.json", listOf<Toxicity>()::class)
 
         plants.forEach {
             modelStorage.insertPlant(it)
