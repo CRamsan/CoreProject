@@ -11,12 +11,12 @@ import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.appcore.storage.Description
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.db.Description
-import com.cramsan.petproject.db.PlantCommonName
-import com.cramsan.petproject.db.PlantFamily
-import com.cramsan.petproject.db.PlantMainName
-import com.cramsan.petproject.db.Toxicity
+import com.cramsan.petproject.appcore.storage.PlantCommonName
+import com.cramsan.petproject.appcore.storage.PlantFamily
+import com.cramsan.petproject.appcore.storage.PlantMainName
+import com.cramsan.petproject.appcore.storage.Toxicity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -136,7 +136,7 @@ class ModelProvider(
     }
 
     suspend fun downloadDatabaseEntries() {
-        val plants = http.get("", listOf<com.cramsan.petproject.db.Plant>()::class)
+        val plants = http.get("", listOf<com.cramsan.petproject.appcore.storage.Plant>()::class)
         val mainNames = http.get("", listOf<PlantMainName>()::class)
         val commonNames = http.get("", listOf<PlantCommonName>()::class)
         val families = http.get("", listOf<PlantFamily>()::class)
