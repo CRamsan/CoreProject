@@ -27,7 +27,7 @@ class Description(private val plantDescription: Description) : com.cramsan.petpr
 class Plant(private val plant: Plant) : com.cramsan.petproject.appcore.storage.Plant {
     override val id: Long
         get() = plant.id
-    override val scientificNames: String
+    override val scientificName: String
         get() = plant.scientific_name
     override val imageUrl: String
         get() = plant.image_url
@@ -96,12 +96,6 @@ class GetAllPlantsWithAnimalId(
         get() = getAllPlantsWithAnimalId.scientific_name
     override val mainName: String
         get() = getAllPlantsWithAnimalId.main_name
-    override val family: String
-        get() = getAllPlantsWithAnimalId.family
-    override val imageUrl: String
-        get() = getAllPlantsWithAnimalId.image_url
-    override val animalId: AnimalType?
-        get() = getAllPlantsWithAnimalId.animal_id
     override val isToxic: ToxicityValue?
         get() = getAllPlantsWithAnimalId.is_toxic
 }

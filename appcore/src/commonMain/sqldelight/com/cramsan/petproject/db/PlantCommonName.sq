@@ -15,7 +15,7 @@ getAllPlantCommonNames:
 SELECT * FROM PlantCommonName;
 
 insert:
-INSERT INTO PlantCommonName(id, common_name, plant_id, locale) VALUES (?, ?, ?, ?);
+INSERT OR REPLACE INTO PlantCommonName(id, common_name, plant_id, locale) VALUES (?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM PlantCommonName;

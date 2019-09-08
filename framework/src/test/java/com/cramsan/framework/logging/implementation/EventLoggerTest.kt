@@ -45,6 +45,7 @@ class EventLoggerTest {
         eventLoggerTest.logWithErrorSeverity()
     }
 
+    /*
     @Test
     fun assertTrueOnErrorSeverity() {
         eventLoggerTest.assertTrueOnErrorSeverity()
@@ -64,4 +65,5 @@ class EventLoggerTest {
     fun assertFalseOnVerboseSeverity() {
         eventLoggerTest.assertFalseOnVerboseSeverity()
     }
+    */
 }

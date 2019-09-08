@@ -2,18 +2,21 @@ package com.cramsan.petproject
 
 import android.app.Application
 import android.content.Context
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
-import com.cramsan.framework.http.HttpInterface
-import com.cramsan.framework.http.implementation.Http
-import com.cramsan.framework.http.implementation.HttpInitializer
-import com.cramsan.framework.http.implementation.backend.KtorEngine
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.PlatformLogger
+import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.preferences.implementation.PlatformPreferences
+import com.cramsan.framework.preferences.implementation.Preferences
+import com.cramsan.framework.preferences.implementation.PreferencesInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -45,13 +48,18 @@ class PetProjectApplication : Application(), KodeinAware {
             }
             EventLogger(EventLoggerInitializer(severity, PlatformLogger()))
         }
-        bind<ThreadUtilInterface>() with singleton {
-            val threadUtil by kodein.newInstance { ThreadUtil(instance()) }
-            threadUtil
-        }
         bind<HaltUtilInterface>() with singleton {
             val haltUtil by kodein.newInstance { HaltUtil(instance()) }
             haltUtil
+        }
+        bind<ThreadUtilInterface>() with singleton {
+            val threadUtil by kodein.newInstance { ThreadUtil(instance(), instance()) }
+            threadUtil
+        }
+        bind<AssertUtilInterface>() with singleton {
+            val initializer = AssertUtilInitializer(BuildConfig.DEBUG)
+            val assertUtil by kodein.newInstance { AssertUtil(initializer, instance(), instance()) }
+            assertUtil
         }
         bind<ModelStorageInterface>() with singleton {
             val context: Context = this@PetProjectApplication
@@ -61,13 +69,13 @@ class PetProjectApplication : Application(), KodeinAware {
                 instance()) }
             modelStorage
         }
-        bind<HttpInterface>() with singleton {
-            val engine = KtorEngine(instance())
-            val http by kodein.newInstance {
-                Http(instance(),
-                    instance(),
-                    HttpInitializer(engine)) }
-            http
+        bind<PreferencesInterface>() with singleton {
+            val context = this@PetProjectApplication
+            val preferencesInitializer = PreferencesInitializer(PlatformPreferences(context))
+            val preferences by kodein.newInstance {
+                Preferences(preferencesInitializer)
+            }
+            preferences
         }
         bind<ModelProviderInterface>() with singleton {
             val modelProvider by kodein.newInstance {

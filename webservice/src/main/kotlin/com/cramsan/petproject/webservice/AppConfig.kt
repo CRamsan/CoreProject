@@ -1,5 +1,8 @@
 package com.cramsan.petproject.webservice
 
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -26,13 +29,18 @@ class AppConfig {
     }
 
     @Bean
-    fun threadUtil(): ThreadUtilInterface {
-        return ThreadUtil(eventLogger())
+    fun haltUtil(): HaltUtilInterface {
+        return HaltUtil(eventLogger())
     }
 
     @Bean
-    fun haltUtil(): HaltUtilInterface {
-        return HaltUtil(eventLogger())
+    fun assertUtil(): AssertUtilInterface {
+        return AssertUtil(AssertUtilInitializer(false), eventLogger(), haltUtil())
+    }
+
+    @Bean
+    fun threadUtil(): ThreadUtilInterface {
+        return ThreadUtil(eventLogger(), assertUtil())
     }
 
     @Bean

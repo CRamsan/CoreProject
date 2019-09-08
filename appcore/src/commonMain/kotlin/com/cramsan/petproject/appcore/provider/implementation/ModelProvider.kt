@@ -1,15 +1,16 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
-import com.cramsan.framework.http.HttpInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
+import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
+import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.storage.Description
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
@@ -17,6 +18,10 @@ import com.cramsan.petproject.appcore.storage.PlantCommonName
 import com.cramsan.petproject.appcore.storage.PlantFamily
 import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
+import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.defaultSerializer
+import io.ktor.client.request.get
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -28,17 +33,89 @@ class ModelProvider(
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface,
     private val modelStorage: ModelStorageInterface,
-    private val http: HttpInterface
+    private val preferences: PreferencesInterface
 ) : ModelProviderInterface {
 
-    lateinit var plantList: List<PresentablePlant>
-    var filterJob: Job? = null
+    private val http: HttpClient = HttpClient() {
+        install(JsonFeature) {
+            serializer = defaultSerializer()
+        }
+    }
+
+    private lateinit var plantList: List<PresentablePlant>
+    private val listeners = mutableListOf<ModelProviderEventListenerInterface>()
+    private var filterJob: Job? = null
+    private var isCatalogReady = false
+    private val LAST_UPDATE = "LastUpdate"
+
+    override fun isCatalogAvailable(currentTime: Long): Boolean {
+        if (isCatalogReady)
+            return true
+        val lastSave = preferences.loadLong(LAST_UPDATE)
+        if (lastSave != null && currentTime - lastSave < 86400) {
+            return true
+        }
+        return false
+    }
+
+    override suspend fun downloadCatalog(currentTime: Long): Boolean {
+        eventLogger.log(Severity.INFO, classTag(), "downloadCatalog")
+        threadUtil.assertIsBackgroundThread()
+
+        val lastSave = preferences.loadLong(LAST_UPDATE)
+        if (lastSave != null && currentTime - lastSave < 86400) {
+            return false
+        }
+        listeners.forEach {
+            it.onCatalogUpdate(false)
+        }
+
+        val plants: ArrayList<com.cramsan.petproject.appcore.storage.Plant.PlantImp> = http.get("https://cramsan.com/data/plant/")
+        val mainNames: ArrayList<PlantMainName.PlantMainNameImpl> = http.get("https://cramsan.com/data/name/")
+        val toxicities: ArrayList<Toxicity.ToxicityImpl> = http.get("https://cramsan.com/data/toxicity/")
+
+        plants.forEach {
+            modelStorage.insertPlant(it)
+        }
+        mainNames.forEach {
+            modelStorage.insertPlantMainName(it)
+        }
+        toxicities.forEach {
+            modelStorage.insertToxicity(it)
+        }
+        isCatalogReady = true
+        preferences.saveLong(LAST_UPDATE, currentTime)
+        listeners.forEach {
+            it.onCatalogUpdate(true)
+        }
+        return true
+    }
+
+    override fun registerForCatalogEvents(listener: ModelProviderEventListenerInterface) {
+        listeners.add(listener)
+    }
+
+    override fun deregisterForCatalogEvents(listener: ModelProviderEventListenerInterface) {
+        listeners.remove(listener)
+    }
 
     override suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant? {
         eventLogger.log(Severity.INFO, classTag(), "getPlant")
         threadUtil.assertIsBackgroundThread()
 
-        val plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
+        var plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale)
+
+        if (plantEntry == null) {
+            val commonName: ArrayList<PlantCommonName.PlantCommonNameImpl> = http.get("https://cramsan.com/data/common_name/$plantId/")
+            val family: PlantFamily.PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
+            val description: Description.DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
+            commonName.forEach {
+                modelStorage.insertPlantCommonName(it)
+            }
+            modelStorage.insertPlantFamily(family)
+            modelStorage.insertDescription(description)
+            plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
+        }
 
         return Plant(
             plantEntry.id.toInt(),
@@ -50,33 +127,11 @@ class ModelProvider(
         )
     }
 
-    override suspend fun getPlants(animalType: AnimalType, locale: String): List<Plant> {
-        eventLogger.log(Severity.INFO, classTag(), "getPlants")
-        threadUtil.assertIsBackgroundThread()
-
-        val list = modelStorage.getCustomPlantsEntries(animalType, locale)
-        val mutableList = mutableListOf<Plant>()
-
-        list.forEach {
-            mutableList.add(
-                Plant(
-                    it.id.toInt(),
-                    it.scientificName,
-                    it.mainName,
-                    "",
-                    it.imageUrl,
-                    it.family
-                ))
-        }
-        return mutableList
-    }
-
     override suspend fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
         eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
         threadUtil.assertIsBackgroundThread()
 
-        downloadDatabaseEntriesIfNeeded()
-        var list = modelStorage.getCustomPlantsEntries(animalType, locale)
+        val list = modelStorage.getCustomPlantsEntries(animalType, locale)
         val mutableList = mutableListOf<PresentablePlant>()
 
         list.forEach {
@@ -129,38 +184,5 @@ class ModelProvider(
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         return PlantMetadata(plantId, animalType, plantCustomEntry.isToxic, plantCustomEntry.description, plantCustomEntry.source)
-    }
-
-    private suspend fun downloadDatabaseEntriesIfNeeded() {
-
-        if (modelStorage.getToxicity().size > 1000) {
-            return
-        }
-
-        val plants = http.get("https://cramsan.com/data/Plant.json", listOf<com.cramsan.petproject.appcore.storage.Plant>()::class)
-        val mainNames = http.get("https://cramsan.com/data/PlantMainName.json", listOf<PlantMainName>()::class)
-        val commonNames = http.get("https://cramsan.com/data/PlantCommonName.json", listOf<PlantCommonName>()::class)
-        val families = http.get("https://cramsan.com/data/PlantFamily.json", listOf<PlantFamily>()::class)
-        val descriptions = http.get("https://cramsan.com/data/Description.json", listOf<Description>()::class)
-        val toxicities = http.get("https://cramsan.com/data/Toxicity.json", listOf<Toxicity>()::class)
-
-        plants.forEach {
-            modelStorage.insertPlant(it)
-        }
-        mainNames.forEach {
-            modelStorage.insertPlantMainName(it)
-        }
-        commonNames.forEach {
-            modelStorage.insertPlantCommonName(it)
-        }
-        families.forEach {
-            modelStorage.insertPlantFamily(it)
-        }
-        descriptions.forEach {
-            modelStorage.insertDescription(it)
-        }
-        toxicities.forEach {
-            modelStorage.insertToxicity(it)
-        }
     }
 }

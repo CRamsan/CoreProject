@@ -14,11 +14,4 @@ class EventLogger(initializer: EventLoggerInitializer) : EventLoggerInterface {
             return
         platformLogger.log(severity, tag, message)
     }
-
-    override fun assert(condition: Boolean, tag: String, message: String) {
-        if (condition) {
-            return
-        }
-        platformLogger.log(Severity.ERROR, tag, message)
-    }
 }

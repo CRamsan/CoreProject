@@ -28,7 +28,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlant")
         threadUtil.assertIsBackgroundThread()
 
-        sqlDelightDAO.insertPlantEntry(plant.id, plant.scientificNames, plant.imageUrl)
+        sqlDelightDAO.insertPlantEntry(plant.id, plant.scientificName, plant.imageUrl)
     }
 
     override fun getPlants(): List<Plant> {

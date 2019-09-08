@@ -16,7 +16,7 @@ getAllDescription:
 SELECT * FROM Description;
 
 insert:
-INSERT INTO Description(id, plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Description(id, plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Description;

@@ -1,5 +1,7 @@
 package com.cramsan.framework.thread.implementation
 
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.thread.ThreadUtilInterface
@@ -16,12 +18,13 @@ class ThreadUtilCommonTest {
 
     private val kodein = Kodein {
         bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
+        bind<AssertUtilInterface>() with provider { mockk<AssertUtil>(relaxUnitFun = true) }
     }
 
     private lateinit var threadUtil: ThreadUtilInterface
 
     fun setUp() {
-        val newThreadUtil by kodein.newInstance { ThreadUtil(instance()) }
+        val newThreadUtil by kodein.newInstance { ThreadUtil(instance(), instance()) }
         threadUtil = newThreadUtil
     }
 

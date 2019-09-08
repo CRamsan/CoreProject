@@ -79,7 +79,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
         }
 
         model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
-
+        model.animalType = animalType
         model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
@@ -114,9 +114,9 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
         super.onStart()
         val loadedSearchQuery = searchQuery
         if (loadedSearchQuery?.isNotBlank() == true) {
-            model.searchPlants(loadedSearchQuery, animalType)
+            model.searchPlants(loadedSearchQuery)
         } else {
-            model.reloadPlants(animalType)
+            model.reloadPlants()
         }
     }
 
@@ -144,7 +144,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener {
             if (newText.length > 1) {
                 searchQuery = newText
             }
-            model.searchPlants(it, animalType)
+            model.searchPlants(it)
         }
         return true
     }

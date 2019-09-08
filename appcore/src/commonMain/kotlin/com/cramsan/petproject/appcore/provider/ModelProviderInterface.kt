@@ -7,9 +7,15 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 
 interface ModelProviderInterface {
 
-    suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant?
+    fun isCatalogAvailable(currentTime: Long): Boolean
 
-    suspend fun getPlants(animalType: AnimalType, locale: String): List<Plant>
+    suspend fun downloadCatalog(currentTime: Long): Boolean
+
+    fun registerForCatalogEvents(listener: ModelProviderEventListenerInterface)
+
+    fun deregisterForCatalogEvents(listener: ModelProviderEventListenerInterface)
+
+    suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant?
 
     suspend fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata?
 

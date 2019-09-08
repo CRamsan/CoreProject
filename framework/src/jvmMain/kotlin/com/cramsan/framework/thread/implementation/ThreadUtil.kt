@@ -1,10 +1,15 @@
 package com.cramsan.framework.thread.implementation
 
+import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 
-actual class ThreadUtil actual constructor(eventLogger: EventLoggerInterface) : ThreadUtilInterface {
+actual class ThreadUtil actual constructor(
+    eventLogger: EventLoggerInterface,
+    assertUtil: AssertUtilInterface
+) : ThreadUtilInterface {
+
     override fun isUIThread(): Boolean {
         return false
     }

@@ -1,0 +1,5 @@
+package com.cramsan.framework.preferences.implementation
+
+import com.cramsan.framework.preferences.PlatformPreferencesInterface
+
+class PreferencesInitializer(val platformPreferences: PlatformPreferencesInterface)

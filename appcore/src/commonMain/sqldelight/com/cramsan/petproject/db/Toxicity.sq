@@ -18,7 +18,7 @@ getAllToxicity:
 SELECT * FROM Toxicity;
 
 insert:
-INSERT INTO Toxicity(id, plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Toxicity(id, plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM Toxicity;

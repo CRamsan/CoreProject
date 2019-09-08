@@ -11,12 +11,17 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.transition.Fade
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
+import com.cramsan.petproject.downloadcatalog.DownloadCatalogDialogFragment
+import com.cramsan.petproject.downloadcatalog.DownloadCatalogViewModel
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.plantslist.PlantsListFragment
@@ -30,6 +35,7 @@ class MainActivity : BaseActivity(),
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private var selectedTabId: Int = -1
+    private lateinit var model: DownloadCatalogViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +53,15 @@ class MainActivity : BaseActivity(),
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        model = ViewModelProviders.of(this).get(DownloadCatalogViewModel::class.java)
+        model.observableLoading().observe(this, Observer<Boolean> { isLoading ->
+            if (isLoading) {
+                val dialog = DownloadCatalogDialogFragment()
+                dialog.show(supportFragmentManager, "")
+            }
+        })
+        model.downloadCatalog()
 
         var tabToLoad = R.id.nav_list_cat
         val selectedMenuItem: MenuItem?

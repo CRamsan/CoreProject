@@ -66,6 +66,7 @@ class EventLoggerCommonTest {
         eventLogger.log(Severity.ERROR, classTag(), "Message-5")
     }
 
+    /*
     fun assertTrueOnErrorSeverity() {
         val initializer by kodein.newInstance { EventLoggerInitializer(Severity.ERROR, instance()) }
         val eventLogger = EventLogger(initializer)
@@ -89,4 +90,5 @@ class EventLoggerCommonTest {
         val eventLogger = EventLogger(initializer)
         eventLogger.assert(true, classTag(), "Assert-Message-1")
     }
+     */
 }

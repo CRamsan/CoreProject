@@ -29,5 +29,6 @@ class ModelStorageTest {
 
     @Test
     fun passTest() {
+        assert(true)
     }
 }

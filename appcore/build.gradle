@@ -50,6 +50,8 @@ android {
 
 dependencies {
     implementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
+    implementation "io.ktor:ktor-client-android:$globalKtorVersion"
+    implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
@@ -70,6 +72,7 @@ detekt {
 
 kotlin {
     android("android") {
+
     }
     jvm("jvm") {
     }
@@ -85,6 +88,8 @@ kotlin {
             dependencies {
                 implementation kotlin("stdlib-common")
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
+                implementation "io.ktor:ktor-client-core:$globalKtorVersion"
+                implementation "io.ktor:ktor-client-json:$globalKtorVersion"
                 implementation project(":framework")
             }
         }
@@ -101,6 +106,8 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin("stdlib-jdk8")
+                implementation "io.ktor:ktor-client-apache:$globalKtorVersion"
+                implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
                 implementation "com.squareup.sqldelight:sqlite-driver:$globalSqlDelightVersion"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
