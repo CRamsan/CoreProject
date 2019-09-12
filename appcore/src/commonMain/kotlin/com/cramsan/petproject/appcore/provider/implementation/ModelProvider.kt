@@ -106,12 +106,17 @@ class ModelProvider(
         var plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale)
 
         if (plantEntry == null) {
-            val commonName: ArrayList<PlantCommonName.PlantCommonNameImpl> = http.get("https://cramsan.com/data/common_name/$plantId/")
+            try {
+                val commonName: ArrayList<PlantCommonName.PlantCommonNameImpl> = http.get("https://cramsan.com/data/common_name/$plantId/")
+                commonName.forEach {
+                    modelStorage.insertPlantCommonName(it)
+                }
+            } catch (cause: Throwable) {
+                eventLogger.log(Severity.WARNING, classTag(), cause.toString())
+            }
+
             val family: PlantFamily.PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
             val description: Description.DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
-            commonName.forEach {
-                modelStorage.insertPlantCommonName(it)
-            }
             modelStorage.insertPlantFamily(family)
             modelStorage.insertDescription(description)
             plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null

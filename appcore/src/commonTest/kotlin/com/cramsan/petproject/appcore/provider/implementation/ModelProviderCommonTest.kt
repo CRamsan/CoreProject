@@ -5,8 +5,9 @@ import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
-import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
+import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import io.mockk.mockk
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -19,15 +20,19 @@ internal class ModelProviderCommonTest {
     private val kodein = Kodein {
         bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
         bind<ThreadUtilInterface>() with provider { mockk<ThreadUtil>(relaxUnitFun = true) }
-        bind<ModelStorageInterface>() with provider { mockk<ModelStorage>(relaxUnitFun = true) }
     }
 
     private lateinit var modelProvider: ModelProviderInterface
     private lateinit var modelProviderImpl: ModelProvider
 
-    fun setUp() {
-        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), instance(), instance()) }
+    fun setUp(platformInitializer: ModelStoragePlatformInitializer) {
+        val modelStorage by kodein.newInstance { ModelStorage(ModelStorageInitializer(platformInitializer), instance(), instance()) }
+        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), modelStorage, instance()) }
         modelProviderImpl = newModelProvider
         modelProvider = modelProviderImpl
+    }
+
+    fun testFiltering() {
+
     }
 }

@@ -3,6 +3,9 @@ package com.cramsan.petproject.appcore.storage.implementation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Semaphore
 import org.junit.Before
 import org.junit.Test
@@ -30,5 +33,71 @@ class ModelStorageTest {
     @Test
     fun passTest() {
         assert(true)
+    }
+
+    @Test
+    fun testGetPlants() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.getPlants()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testGetPlant() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.getPlant()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testGetPlantMetadata() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.getPlantMetadata()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testDeleteAll() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.deleteAll()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testInsertPlant() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.insertPlant()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
+    }
+
+    @Test
+    fun testGetPlantMetadataForAll() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelStorageTest.getPlantMetadataForAll()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
     }
 }
