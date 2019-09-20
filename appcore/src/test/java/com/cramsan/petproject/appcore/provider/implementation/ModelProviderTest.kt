@@ -3,6 +3,7 @@ package com.cramsan.petproject.appcore.provider.implementation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.cramsan.framework.preferences.implementation.PlatformPreferences
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import java.util.concurrent.Semaphore
 import org.junit.Before
@@ -25,7 +26,7 @@ class ModelProviderTest {
     fun setUp() {
         modelProviderTest = ModelProviderCommonTest()
         val appContext = ApplicationProvider.getApplicationContext<Context>()
-        modelProviderTest.setUp(ModelStoragePlatformInitializer(appContext))
+        modelProviderTest.setUp(ModelStoragePlatformInitializer(appContext), PlatformPreferences(appContext))
         semaphore = Semaphore(0)
     }
 

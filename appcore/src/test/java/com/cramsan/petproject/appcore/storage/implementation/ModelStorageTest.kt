@@ -3,10 +3,11 @@ package com.cramsan.petproject.appcore.storage.implementation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Semaphore
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +29,11 @@ class ModelStorageTest {
         val appContext = ApplicationProvider.getApplicationContext<Context>()
         modelStorageTest.setUp(ModelStoragePlatformInitializer(appContext))
         semaphore = Semaphore(0)
+    }
+
+    @After
+    fun tearDown() {
+        modelStorageTest.endTest()
     }
 
     @Test
@@ -73,28 +79,6 @@ class ModelStorageTest {
         runBlocking {
             launch(Dispatchers.IO) {
                 modelStorageTest.deleteAll()
-                semaphore.release()
-            }
-        }
-        semaphore.acquire()
-    }
-
-    @Test
-    fun testInsertPlant() {
-        runBlocking {
-            launch(Dispatchers.IO) {
-                modelStorageTest.insertPlant()
-                semaphore.release()
-            }
-        }
-        semaphore.acquire()
-    }
-
-    @Test
-    fun testGetPlantMetadataForAll() {
-        runBlocking {
-            launch(Dispatchers.IO) {
-                modelStorageTest.getPlantMetadataForAll()
                 semaphore.release()
             }
         }

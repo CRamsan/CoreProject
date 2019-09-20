@@ -14,13 +14,13 @@ import com.cramsan.petproject.appcore.storage.PlantFamily
 import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
 import io.mockk.mockk
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.newInstance
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 @Suppress("MagicNumber")
 internal class ModelStorageCommonTest {
@@ -72,7 +72,7 @@ internal class ModelStorageCommonTest {
         modelStorage.insertPlantCommonName(PlantCommonName.PlantCommonNameImpl(435, "Name 5", plantId, "en"))
         modelStorage.insertPlantMainName(PlantMainName.PlantMainNameImpl(234, "Adam and Eve test", plantId, "en"))
         modelStorage.insertToxicity(Toxicity.ToxicityImpl(432, plantId, AnimalType.CAT.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
-        modelStorage.insertToxicity(Toxicity.ToxicityImpl(432, plantId, AnimalType.DOG.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
+        modelStorage.insertToxicity(Toxicity.ToxicityImpl(745, plantId, AnimalType.DOG.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
         val allPlants = modelStorage.getPlants()
         assertEquals(1, allPlants.size)
 
@@ -96,19 +96,24 @@ internal class ModelStorageCommonTest {
         assertEquals(0, newAllPlants.size)
     }
 
-    fun insertBaseEntries() {
+    private fun insertBaseEntries() {
 
-        for(i in 1..100) {
+        var descriptionId = 0L
+        var familyId = 0L
+        var commonNameId = 0L
+        var mainNameId = 0L
+        var toxicityId = 0L
+        for (i in 1..100) {
             val plantId: Long = i.toLong()
             modelStorage.insertPlant(Plant.PlantImp(plantId,
                 "Arum maculatum TEST $i",
                 "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"))
-            modelStorage.insertDescription(Description.DescriptionImpl(2349, plantId, AnimalType.CAT.ordinal, "en", "desc"))
-            modelStorage.insertPlantFamily(PlantFamily.PlantFamilyImpl(342, "Some Family $i", plantId, "en"))
-            modelStorage.insertPlantCommonName(PlantCommonName.PlantCommonNameImpl(435, "Name $i", plantId, "en"))
-            modelStorage.insertPlantMainName(PlantMainName.PlantMainNameImpl(234, "Adam and Eve $i", plantId, "en"))
-            modelStorage.insertToxicity(Toxicity.ToxicityImpl(432, plantId, AnimalType.CAT.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
-            modelStorage.insertToxicity(Toxicity.ToxicityImpl(432, plantId, AnimalType.DOG.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
+            modelStorage.insertDescription(Description.DescriptionImpl(descriptionId++, plantId, AnimalType.CAT.ordinal, "en", "desc"))
+            modelStorage.insertPlantFamily(PlantFamily.PlantFamilyImpl(familyId++, "Some Family $i", plantId, "en"))
+            modelStorage.insertPlantCommonName(PlantCommonName.PlantCommonNameImpl(commonNameId++, "Name $i", plantId, "en"))
+            modelStorage.insertPlantMainName(PlantMainName.PlantMainNameImpl(mainNameId++, "Adam and Eve $i", plantId, "en"))
+            modelStorage.insertToxicity(Toxicity.ToxicityImpl(toxicityId++, plantId, AnimalType.CAT.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
+            modelStorage.insertToxicity(Toxicity.ToxicityImpl(toxicityId++, plantId, AnimalType.DOG.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
         }
     }
 }
