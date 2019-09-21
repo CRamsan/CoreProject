@@ -56,6 +56,10 @@ class ModelProvider(
             return true
         val lastSave = preferences.loadLong(LAST_UPDATE)
         if (lastSave != null && currentTime - lastSave < 86400) {
+            isCatalogReady = true
+            listeners.forEach {
+                it.onCatalogUpdate(true)
+            }
             return true
         }
         return false
@@ -69,6 +73,7 @@ class ModelProvider(
             val lastSave = preferences.loadLong(LAST_UPDATE)
             if (lastSave != null && currentTime - lastSave < 86400) {
                 eventLogger.log(Severity.INFO, classTag(), "Using cached data")
+                isCatalogReady = true
                 return false
             }
 
