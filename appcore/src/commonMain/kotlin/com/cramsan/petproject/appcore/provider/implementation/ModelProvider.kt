@@ -27,6 +27,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 class ModelProvider(
@@ -46,6 +48,7 @@ class ModelProvider(
     private val listeners = mutableListOf<ModelProviderEventListenerInterface>()
     private var filterJob: Job? = null
     private var isCatalogReady = false
+    private val mutex = Mutex()
     private val LAST_UPDATE = "LastUpdate"
 
     override fun isCatalogAvailable(currentTime: Long): Boolean {
@@ -62,31 +65,37 @@ class ModelProvider(
         eventLogger.log(Severity.INFO, classTag(), "downloadCatalog")
         threadUtil.assertIsBackgroundThread()
 
-        val lastSave = preferences.loadLong(LAST_UPDATE)
-        if (lastSave != null && currentTime - lastSave < 86400) {
-            return false
-        }
-        listeners.forEach {
-            it.onCatalogUpdate(false)
-        }
+        mutex.withLock {
+            val lastSave = preferences.loadLong(LAST_UPDATE)
+            if (lastSave != null && currentTime - lastSave < 86400) {
+                eventLogger.log(Severity.INFO, classTag(), "Using cached data")
+                return false
+            }
 
-        val plants: ArrayList<com.cramsan.petproject.appcore.storage.Plant.PlantImp> = http.get("https://cramsan.com/data/plant/")
-        val mainNames: ArrayList<PlantMainName.PlantMainNameImpl> = http.get("https://cramsan.com/data/name/")
-        val toxicities: ArrayList<Toxicity.ToxicityImpl> = http.get("https://cramsan.com/data/toxicity/")
+            eventLogger.log(Severity.INFO, classTag(), "Downloading data")
+            listeners.forEach {
+                it.onCatalogUpdate(false)
+            }
 
-        plants.forEach {
-            modelStorage.insertPlant(it)
-        }
-        mainNames.forEach {
-            modelStorage.insertPlantMainName(it)
-        }
-        toxicities.forEach {
-            modelStorage.insertToxicity(it)
-        }
-        isCatalogReady = true
-        preferences.saveLong(LAST_UPDATE, currentTime)
-        listeners.forEach {
-            it.onCatalogUpdate(true)
+            val plants: ArrayList<com.cramsan.petproject.appcore.storage.Plant.PlantImp> =
+                http.get("https://cramsan.com/data/plant/")
+            val mainNames: ArrayList<PlantMainName.PlantMainNameImpl> = http.get("https://cramsan.com/data/name/")
+            val toxicities: ArrayList<Toxicity.ToxicityImpl> = http.get("https://cramsan.com/data/toxicity/")
+
+            plants.forEach {
+                modelStorage.insertPlant(it)
+            }
+            mainNames.forEach {
+                modelStorage.insertPlantMainName(it)
+            }
+            toxicities.forEach {
+                modelStorage.insertToxicity(it)
+            }
+            isCatalogReady = true
+            preferences.saveLong(LAST_UPDATE, currentTime)
+            listeners.forEach {
+                it.onCatalogUpdate(true)
+            }
         }
         return true
     }
@@ -102,6 +111,11 @@ class ModelProvider(
     override suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant? {
         eventLogger.log(Severity.INFO, classTag(), "getPlant")
         threadUtil.assertIsBackgroundThread()
+
+        if (!isCatalogReady) {
+            eventLogger.log(Severity.INFO, classTag(), "Catalog is not ready")
+            return null
+        }
 
         var plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale)
 
@@ -136,6 +150,11 @@ class ModelProvider(
         eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
         threadUtil.assertIsBackgroundThread()
 
+        if (!isCatalogReady) {
+            eventLogger.log(Severity.INFO, classTag(), "Catalog is not ready")
+            return emptyList()
+        }
+
         val list = modelStorage.getCustomPlantsEntries(animalType, locale)
         val mutableList = mutableListOf<PresentablePlant>()
 
@@ -159,6 +178,11 @@ class ModelProvider(
     ): List<PresentablePlant>? = withContext(Dispatchers.Default) {
         eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicityFiltered")
         threadUtil.assertIsBackgroundThread()
+
+        if (!isCatalogReady) {
+            eventLogger.log(Severity.INFO, classTag(), "Catalog is not ready")
+            return@withContext null
+        }
 
         val list = plantList
         val resultList = mutableListOf<PresentablePlant>()

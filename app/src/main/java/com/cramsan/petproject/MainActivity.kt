@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -19,7 +20,6 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
-import com.cramsan.petproject.downloadcatalog.DownloadCatalogDialogFragment
 import com.cramsan.petproject.downloadcatalog.DownloadCatalogViewModel
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
@@ -27,6 +27,7 @@ import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.nav_view
+import kotlinx.android.synthetic.main.app_bar_main.download_catalog_loading
 
 class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener,
@@ -56,8 +57,9 @@ class MainActivity : BaseActivity(),
         model = ViewModelProviders.of(this).get(DownloadCatalogViewModel::class.java)
         model.observableLoading().observe(this, Observer<Boolean> { isLoading ->
             if (isLoading) {
-                val dialog = DownloadCatalogDialogFragment()
-                dialog.show(supportFragmentManager, "")
+                download_catalog_loading.visibility = View.VISIBLE
+            } else {
+                download_catalog_loading.visibility = View.GONE
             }
         })
         model.downloadCatalog()
