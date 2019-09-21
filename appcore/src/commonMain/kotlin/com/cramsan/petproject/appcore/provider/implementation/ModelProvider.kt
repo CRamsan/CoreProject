@@ -166,8 +166,10 @@ class ModelProvider(
         val filterJobLocal = launch(Dispatchers.Default) {
             eventLogger.log(Severity.DEBUG, classTag(), "Starting Job $this")
             for (plant in list) {
-                if (!isActive)
+                if (!isActive) {
+                    eventLogger.log(Severity.DEBUG, classTag(), "Early cancelling Job $this")
                     break
+                }
                 if (plant.scientificName.contains(query, true) || plant.mainCommonName.contains(query, true)) {
                     resultList.add(plant)
                 }
@@ -178,7 +180,7 @@ class ModelProvider(
             eventLogger.log(Severity.DEBUG, classTag(), "Cancelling filterJob $filterJob")
             return@withContext null
         }
-
+        filterJobLocal.join()
         eventLogger.log(Severity.DEBUG, classTag(), "Filtering returned ${resultList.size} results")
         return@withContext resultList.sortedBy { it.mainCommonName }
     }

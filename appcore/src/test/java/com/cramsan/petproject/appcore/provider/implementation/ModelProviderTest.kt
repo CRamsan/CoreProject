@@ -6,6 +6,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.preferences.implementation.PlatformPreferences
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import java.util.concurrent.Semaphore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +34,13 @@ class ModelProviderTest {
     }
 
     @Test
-    fun passTest() {
-        assert(true)
+    fun testFiltering() {
+        runBlocking {
+            launch(Dispatchers.IO) {
+                modelProviderTest.testFiltering()
+                semaphore.release()
+            }
+        }
+        semaphore.acquire()
     }
 }
