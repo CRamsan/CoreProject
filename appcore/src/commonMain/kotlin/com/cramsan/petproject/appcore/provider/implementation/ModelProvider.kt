@@ -47,7 +47,7 @@ class ModelProvider(
     private lateinit var plantList: List<PresentablePlant>
     private val listeners = mutableListOf<ModelProviderEventListenerInterface>()
     private var filterJob: Job? = null
-    private var isCatalogReady = false
+    var isCatalogReady = false
     private val mutex = Mutex()
     private val LAST_UPDATE = "LastUpdate"
 

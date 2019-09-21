@@ -52,6 +52,7 @@ internal class ModelProviderCommonTest {
 
     suspend fun testFiltering() = coroutineScope {
         insertBaseEntries()
+        modelProviderImpl.isCatalogReady = true
         modelProvider.getPlantsWithToxicity(AnimalType.CAT, "en")
         var result = modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "100", "en")
         assertNotNull(result)
