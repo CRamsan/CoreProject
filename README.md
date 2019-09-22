@@ -14,4 +14,4 @@ The project is currently in active development.
 	2. [AppCore](/appcore/)
 	3. Front-End
 		1. [Android](/app/)
-		. [WebService](/webservice/)
+		2. [WebService](/webservice/)
