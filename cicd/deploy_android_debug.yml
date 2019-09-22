@@ -26,13 +26,12 @@ steps:
   inputs:
     apkFiles: '**/*-unsigned.apk'
     apksign: true
-    apksignerKeystoreFile: $env:KEYSTORE_FILE
+    apksignerKeystoreFile: $(KeyStoreFile)
     apksignerKeystorePassword: $env:KEY_PASSWORD
     apksignerKeystoreAlias: $env:KEYSTORE_ALIAS
     apksignerKeyPassword: $env:KEY_PASSWORD
   env:
     KEY_PASSWORD: $(KeyPassword)
-    KEYSTORE_FILE: $(KeyStoreFile)
     KEYSTORE_ALIAS: $(KeyStoreAlias)
     KEYSTORE_PASSWORD: $(KeyStorePassword)
 - task: CopyFiles@2
