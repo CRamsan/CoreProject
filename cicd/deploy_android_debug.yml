@@ -18,13 +18,9 @@ steps:
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
+    publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'app:build'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TEST-*.xml'
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
