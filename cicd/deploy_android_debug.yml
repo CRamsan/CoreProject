@@ -20,7 +20,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'app:build'
+    tasks: 'build'
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
