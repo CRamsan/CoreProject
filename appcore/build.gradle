@@ -150,7 +150,7 @@ task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
     main = "com.pinterest.ktlint.Main"
-    args "src/**/*.kt"
+    args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/checkstyle-result.xml", "src/**/*.kt"
 }
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
