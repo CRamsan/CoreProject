@@ -23,6 +23,7 @@ import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -57,14 +58,15 @@ internal class ModelProviderCommonTest {
         var result = modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "100", "en")
         assertNotNull(result)
         assertEquals(result.size, 1)
-        for (i in 0..99) {
-            launch {
-                modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "100", "en")
+        val job = launch {
+            for (i in 0..99) {
+                    modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "100", "en")
             }
+            result = modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "65", "en")
         }
-        result = modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "65", "en")
+        job.join()
         assertNotNull(result)
-        assertEquals(result.size, 1)
+        assertEquals(result!!.size, 1)
     }
 
     private fun insertBaseEntries() {
