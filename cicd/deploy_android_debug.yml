@@ -22,6 +22,19 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     checkStyleRunAnalysis: true
     tasks: 'build'
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*-unsigned.apk'
+    apksign: true
+    apksignerKeystoreFile: $env:KEYSTORE_FILE
+    apksignerKeystorePassword: $env:KEY_PASSWORD
+    apksignerKeystoreAlias: $env:KEYSTORE_ALIAS
+    apksignerKeyPassword: $env:KEY_PASSWORD
+  env:
+    KEY_PASSWORD: $(KeyPassword)
+    KEYSTORE_FILE: $(KeyStoreFile)
+    KEYSTORE_ALIAS: $(KeyStoreAlias)
+    KEYSTORE_PASSWORD: $(KeyStorePassword)
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
