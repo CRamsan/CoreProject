@@ -26,6 +26,7 @@ steps:
   inputs:
     apkFiles: '**/*-unsigned.apk'
     apksign: true
+    zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
     apksignerKeystorePassword: $env:KEY_PASSWORD
     apksignerKeystoreAlias: $env:KEYSTORE_ALIAS
