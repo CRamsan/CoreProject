@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/plant_main_menu_view"
+              android:orientation="vertical"
+              style="@style/BaseContentLayout">
+
+    <Button
+            android:text="@string/drawer_menu_cats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            style="@style/MainMenuButtonStyle"
+            android:drawableStart="@drawable/ic_cat"/>
+    <Button
+            android:text="@string/drawer_menu_dogs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            style="@style/MainMenuButtonStyle"
+            android:drawableStart="@drawable/ic_dog"/>
+</LinearLayout>
