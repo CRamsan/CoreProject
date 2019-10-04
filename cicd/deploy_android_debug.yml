@@ -28,13 +28,9 @@ steps:
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
-    apksignerKeystorePassword: $env:KeyStorePassword
-    apksignerKeystoreAlias: $env:KEYSTORE_ALIAS
-    apksignerKeyPassword: $env:KEY_PASSWORD
-  env:
-    KEY_PASSWORD: $(KeyPassword)
-    KEYSTORE_ALIAS: $(KeyStoreAlias)
-    KEYSTORE_PASSWORD: $(KeyStorePassword)
+    apksignerKeystorePassword: $(KeyStorePassword)
+    apksignerKeystoreAlias: $(KeyStoreAlias)
+    apksignerKeyPassword: $(KeyPassword)
 
 - task: CopyFiles@2
   inputs:
