@@ -25,7 +25,7 @@ steps:
 - task: AndroidSigning@3
   inputs:
     apkFiles: '**/*-unsigned.apk'
-    apksign: false
+    apksign: true
     zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
     apksignerKeystorePassword: $env:KEY_PASSWORD
@@ -35,6 +35,7 @@ steps:
     KEY_PASSWORD: $(KeyPassword)
     KEYSTORE_ALIAS: $(KeyStoreAlias)
     KEYSTORE_PASSWORD: $(KeyStorePassword)
+
 - task: CopyFiles@2
   inputs:
     contents: '**/*.apk'
