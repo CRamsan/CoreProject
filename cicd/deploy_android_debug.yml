@@ -28,7 +28,7 @@ steps:
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
-    apksignerKeystorePassword: $env:KEY_PASSWORD
+    apksignerKeystorePassword: $env:KeyStorePassword
     apksignerKeystoreAlias: $env:KEYSTORE_ALIAS
     apksignerKeyPassword: $env:KEY_PASSWORD
   env:
