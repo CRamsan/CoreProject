@@ -13,7 +13,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import com.cramsan.petproject.plantslist.PlantsListFragment.OnListFragmentInteractionListener
 import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_header
 import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_layout
 import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_sub_header

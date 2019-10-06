@@ -27,10 +27,9 @@ class DownloadDialogActivity : BaseActivity() {
                 finish()
             }
         })
-        if(viewModel.isCatalogReady()) {
+        if (viewModel.isCatalogReady()) {
             finish()
         }
         viewModel.downloadCatalog()
     }
-
 }

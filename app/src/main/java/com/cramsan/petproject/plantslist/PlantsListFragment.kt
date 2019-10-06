@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.preferences.PreferencesInterface
@@ -85,6 +84,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
         }
         animalType = AnimalType.values()[animalTypeId]
         preferences.saveInt(ANIMAL_TYPE, animalTypeId)
+        listener?.onAnimalTypeReady(animalType)
 
         layoutManager = LinearLayoutManager(context)
         plantsAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
@@ -171,6 +171,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
      */
     interface OnListFragmentInteractionListener {
         fun onNewSearchable(listener: SearchView.OnQueryTextListener)
+        fun onAnimalTypeReady(animalType: AnimalType)
     }
 
     class InvalidContextException(message: String?) : RuntimeException(message)
