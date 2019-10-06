@@ -32,4 +32,6 @@ class DownloadDialogActivity : BaseActivity() {
         }
         viewModel.downloadCatalog()
     }
+
+    override fun onBackPressed() = Unit
 }

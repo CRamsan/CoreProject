@@ -34,11 +34,6 @@ class MainMenuFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(DownloadCatalogViewModel::class.java)
-        if (!viewModel.isCatalogReady()) {
-            val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
-            startActivity(intent)
-        }
-
         main_menu_cats.setOnClickListener {
             val intent = Intent(requireContext(), PlantsListActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, AnimalType.CAT.ordinal)
@@ -51,6 +46,14 @@ class MainMenuFragment : BaseFragment() {
         }
         main_menu_about.setOnClickListener {
             val intent = Intent(requireContext(), AboutActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!viewModel.isCatalogReady()) {
+            val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
             startActivity(intent)
         }
     }

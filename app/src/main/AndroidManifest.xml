@@ -15,7 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".dialog.DownloadDialogActivity">
+        <activity android:name=".dialog.DownloadDialogActivity"
+                  android:theme="@style/AppTheme.Transparent">
         </activity>
         <activity android:name=".mainmenu.MainMenuActivity">
             <intent-filter>
