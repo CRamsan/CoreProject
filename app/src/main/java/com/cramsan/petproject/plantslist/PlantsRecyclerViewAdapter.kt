@@ -21,7 +21,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
 class PlantsRecyclerViewAdapter(
-    private val mListener: OnListFragmentInteractionListener?,
+    private val mListener: OnListFragmentAdapterListener?,
     private val animalType: AnimalType,
     context: Context
 ) :
@@ -39,7 +39,7 @@ class PlantsRecyclerViewAdapter(
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
 
-            mListener?.onListFragmentInteraction(item.plantId.toInt(), animalType)
+            mListener?.onNewItemSelected(item.plantId.toInt(), animalType)
         }
     }
 
@@ -83,5 +83,9 @@ class PlantsRecyclerViewAdapter(
         override fun toString(): String {
             return super.toString() + " '" + mViewHeader.text + "'"
         }
+    }
+
+    interface OnListFragmentAdapterListener {
+        fun onNewItemSelected(plantId: Int, animalType: AnimalType)
     }
 }

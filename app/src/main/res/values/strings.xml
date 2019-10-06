@@ -27,8 +27,11 @@
     <string name="plant_details_dog_dangerous">Dangerous for dogs</string>
     <string name="plant_details_dog_safe">Safe for dogs</string>
     <string name="plant_details_dog_unknown">Unknown for dogs</string>
-    <string name="download_catalog_loading">We are retrieving the latest information. Please wait a few seconds...</string>
+    <string name="download_catalog_loading">We are retrieving the latest information. Please wait a few seconds…
+    </string>
 
-    <string name="about_licence_flaticon">Icons made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from <a href="https://www.flaticon.com">www.flaticon.com</a></string>
+    <string name="about_licence_flaticon">Icons made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from
+        <a href="https://www.flaticon.com">www.flaticon.com</a>
+    </string>
     <string name="banned_ad_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

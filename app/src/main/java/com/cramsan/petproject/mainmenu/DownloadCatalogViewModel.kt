@@ -1,4 +1,4 @@
-package com.cramsan.petproject.downloadcatalog
+package com.cramsan.petproject.mainmenu
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -33,6 +33,12 @@ class DownloadCatalogViewModel(application: Application) : AndroidViewModel(appl
     override fun onCleared() {
         super.onCleared()
         modelProvider.deregisterForCatalogEvents(this)
+    }
+
+    fun isCatalogReady(): Boolean {
+        eventLogger.log(Severity.INFO, classTag(), "isCatalogReady")
+        val unixTime = System.currentTimeMillis() / 1000L
+        return modelProvider.isCatalogAvailable(unixTime)
     }
 
     fun downloadCatalog() {

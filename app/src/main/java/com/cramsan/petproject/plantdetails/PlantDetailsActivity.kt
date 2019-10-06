@@ -1,6 +1,6 @@
 package com.cramsan.petproject.plantdetails
 
-import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
@@ -10,13 +10,12 @@ import com.cramsan.petproject.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_plant_details.plant_details_toolbar
 
 class PlantDetailsActivity : BaseActivity(), PlantDetailsFragment.OnDetailsFragmentInteractionListener {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_plant_details)
-        setSupportActionBar(plant_details_toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
+    override val contentViewLayout: Int
+        get() = R.layout.activity_plant_details
+    override val titleResource: Int?
+        get() = null
+    override val toolbar: Toolbar?
+        get() = plant_details_toolbar
 
     override fun onPlantReady(plant: Plant) {
         supportActionBar?.title = plant.mainCommonName

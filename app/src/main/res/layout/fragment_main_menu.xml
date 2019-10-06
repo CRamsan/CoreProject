@@ -3,19 +3,47 @@
               android:id="@+id/plant_main_menu_view"
               android:orientation="vertical"
               style="@style/BaseContentLayout">
-
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     <Button
             android:text="@string/drawer_menu_cats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:id="@+id/main_menu_cats"
             style="@style/MainMenuButtonStyle"
             android:drawableStart="@drawable/ic_cat"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     <Button
             android:text="@string/drawer_menu_dogs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:id="@+id/main_menu_dogs"
             style="@style/MainMenuButtonStyle"
             android:drawableStart="@drawable/ic_dog"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    <Button
+            android:text="@string/drawer_menu_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:id="@+id/main_menu_about"
+            style="@style/MainMenuButtonStyle"
+            android:drawableStart="@drawable/ic_dog"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 </LinearLayout>
