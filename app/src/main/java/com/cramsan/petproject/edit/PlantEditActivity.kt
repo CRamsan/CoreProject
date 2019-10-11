@@ -7,7 +7,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.base.BaseActivity
-import com.cramsan.petproject.plantdetails.PlantDetailsFragment
 import kotlinx.android.synthetic.main.activity_plant_edit.plant_edit_toolbar
 
 class PlantEditActivity : BaseActivity(), PlantEditFragment.OnEditFragmentInteractionListener {
