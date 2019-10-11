@@ -3,22 +3,15 @@ package com.cramsan.petproject.appcore.storage.implementation.sqldelight
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageDAO
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
 import com.cramsan.petproject.db.PetProjectDB
+import com.squareup.sqldelight.db.SqlDriver
 
-class SQLDelightDAO(initializer: ModelStorageInitializer) : ModelStorageDAO {
+class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
-    private var database: PetProjectDB
-
-    init {
-        val sqlDriver = initializer.platformInitializer.getSqlDriver()
-
-        database = PetProjectDB(sqlDriver,
-            DescriptionAdapter = com.cramsan.petproject.db.Description.Adapter(AnimalTypeAdapter()),
-            ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
-        )
-        initializer.platformInitializer.afterConnecting(sqlDriver)
-    }
+    private var database: PetProjectDB = PetProjectDB(sqlDriver,
+        DescriptionAdapter = com.cramsan.petproject.db.Description.Adapter(AnimalTypeAdapter()),
+        ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
+    )
 
     override fun insertPlantEntry(plantId: Long, scientificName: String, imageUrl: String) {
         database.plantQueries.insert(plantId, scientificName, imageUrl)

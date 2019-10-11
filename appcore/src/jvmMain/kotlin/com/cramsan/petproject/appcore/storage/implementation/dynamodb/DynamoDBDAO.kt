@@ -1,4 +1,4 @@
-package com.cramsan.petproject.appcore.storage.implementation.azuresql
+package com.cramsan.petproject.appcore.storage.implementation.dynamodb
 
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
@@ -11,10 +11,12 @@ import com.cramsan.petproject.appcore.storage.PlantCommonName
 import com.cramsan.petproject.appcore.storage.PlantFamily
 import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient
 
-actual class AzureSQLDAO actual constructor(initializer: ModelStorageInitializer) :
-    ModelStorageDAO {
+class DynamoDBDAO : ModelStorageDAO {
+
+    val ddb: DynamoDbClient? = null
+
     override fun insertPlantEntry(plantId: Long, scientificName: String, imageUrl: String) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }

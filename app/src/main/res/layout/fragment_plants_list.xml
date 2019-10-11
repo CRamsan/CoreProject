@@ -24,8 +24,17 @@
                 app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
                 style="@style/BaseContentLayout"
                 tools:listitem="@layout/view_plant"
-                tools:context=".plantslist.PlantsListFragment"/>
-
+                tools:context=".plantslist.PlantsListFragment">
+        </androidx.recyclerview.widget.RecyclerView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/plant_list_add_plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="16dp"
+                app:srcCompat="@drawable/ic_plus"/>
     </FrameLayout>
     <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"

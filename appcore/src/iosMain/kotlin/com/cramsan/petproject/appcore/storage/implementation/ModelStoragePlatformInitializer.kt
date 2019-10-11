@@ -1,13 +1,9 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
-import com.squareup.sqldelight.db.SqlDriver
+import com.cramsan.petproject.appcore.storage.ModelStorageDAO
 
 actual class ModelStoragePlatformInitializer {
-    actual fun getSqlDriver(): SqlDriver {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun afterConnecting(driver: SqlDriver) {
+    actual fun getModelStorageDAO(): ModelStorageDAO {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 }

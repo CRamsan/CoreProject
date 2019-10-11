@@ -1,9 +1,7 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
-import com.squareup.sqldelight.db.SqlDriver
+import com.cramsan.petproject.appcore.storage.ModelStorageDAO
 
 expect class ModelStoragePlatformInitializer {
-    fun getSqlDriver(): SqlDriver
-
-    fun afterConnecting(driver: SqlDriver)
+    fun getModelStorageDAO(): ModelStorageDAO
 }

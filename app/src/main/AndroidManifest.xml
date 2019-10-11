@@ -30,6 +30,10 @@
                 android:parentActivityName=".mainmenu.MainMenuActivity">
         </activity>
         <activity
+                android:name=".edit.PlantEditActivity"
+                android:parentActivityName=".plantslist.PlantsListActivity">
+        </activity>
+        <activity
                 android:name=".plantdetails.PlantDetailsActivity"
                 android:parentActivityName=".plantslist.PlantsListActivity">
         </activity>

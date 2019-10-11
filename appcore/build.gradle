@@ -18,6 +18,9 @@ plugins {
 
 apply plugin: "com.squareup.sqldelight"
 
+repositories {
+    mavenCentral()
+}
 sqldelight {
     PetProjectDB {
         packageName = "com.cramsan.petproject.db"
@@ -75,6 +78,7 @@ kotlin {
 
     }
     jvm("jvm") {
+
     }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
@@ -111,8 +115,10 @@ kotlin {
                 implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
                 implementation "com.squareup.sqldelight:sqlite-driver:$globalSqlDelightVersion"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation "software.amazon.awssdk:dynamodb:2.9.16"
             }
         }
+
         jvmTest {
             dependencies {
                 implementation kotlin("test")

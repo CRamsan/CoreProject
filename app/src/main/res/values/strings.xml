@@ -27,9 +27,15 @@
     <string name="plant_details_dog_dangerous">Dangerous for dogs</string>
     <string name="plant_details_dog_safe">Safe for dogs</string>
     <string name="plant_details_dog_unknown">Unknown for dogs</string>
-    <string name="download_catalog_loading">We are retrieving the latest information. Please wait a few seconds…
-    </string>
-
+    <string name="download_catalog_loading">We are retrieving the latest information. Please wait a few seconds…</string>
+    <string name="plant_edit_scientific_name">Scientific Name:</string>
+    <string name="plant_edit_main_name">Main Name:</string>
+    <string name="plant_edit_family">Family:</string>
+    <string name="plant_edit_dangerous_dog">Dangerous for Dogs:</string>
+    <string name="plant_edit_dangerous_cat">Dangerous for Cats:</string>
+    <string name="plant_edit_safe">Safe</string>
+    <string name="plant_edit_unknown">Unknown</string>
+    <string name="plant_edit_dangerous">Dangerous</string>
     <string name="about_licence_flaticon">Icons made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from
         <a href="https://www.flaticon.com">www.flaticon.com</a>
     </string>

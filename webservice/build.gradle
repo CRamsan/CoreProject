@@ -41,9 +41,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation 'org.springframework.data:spring-data-releasetrain:1.4.6.RELEASE'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+    implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
     implementation "com.microsoft.azure:azure-spring-boot-starter:2.1.6"
+
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
