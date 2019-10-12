@@ -56,16 +56,16 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView5">
                 <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/plant_edit_cat_safe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/plant_edit_safe"/>
                 <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/plant_edit_cat_undetermined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1"
                         android:checked="true" android:text="@string/plant_edit_unknown"/>
                 <RadioButton
-                        android:id="@+id/radioButton4"
+                        android:id="@+id/plant_edit_cat_unsafe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/plant_edit_dangerous"/>
             </RadioGroup>
@@ -78,16 +78,16 @@
                     app:layout_constraintHorizontal_bias="0.0" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6">
                 <RadioButton
-                        android:id="@+id/radioButton7"
+                        android:id="@+id/plant_edit_dog_safe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/plant_edit_safe"/>
                 <RadioButton
-                        android:id="@+id/radioButton6"
+                        android:id="@+id/plant_edit_dog_undetermined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1"
                         android:checked="true" android:text="@string/plant_edit_unknown"/>
                 <RadioButton
-                        android:id="@+id/radioButton5"
+                        android:id="@+id/plant_edit_dog_unsafe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/plant_edit_dangerous"/>
             </RadioGroup>
@@ -148,5 +148,5 @@
             android:clickable="true"
             android:focusable="true"
             android:layout_margin="16dp"
-            app:srcCompat="@drawable/ic_plus"/>
+            app:srcCompat="@drawable/ic_save"/>
 </FrameLayout>

@@ -9,46 +9,51 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
-import com.cramsan.petproject.appcore.model.PlantMetadata
-import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.appcore.model.ToxicityValue
+import com.cramsan.petproject.appcore.storage.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class PlantEditViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
+class PlantEditViewModel(application: Application) : AndroidViewModel(application),
+    KodeinAware {
 
     override val kodein by kodein(application)
-    private val modelProvider: ModelProviderInterface by instance()
+    private val modelStorage: ModelStorageInterface by instance()
     private val eventLogger: EventLoggerInterface by instance()
 
-    private val observablePlant = MutableLiveData<Plant>()
-    private val observablePlantMetadata = MutableLiveData<PlantMetadata>()
+    private val observableIsComplete = MutableLiveData<Boolean>()
+    private val observableIsLoading = MutableLiveData<Boolean>()
 
-    fun reloadPlant(animalType: AnimalType, plantId: Int) {
-        eventLogger.log(Severity.INFO, classTag(), "reloadPlant")
-        viewModelScope.launch {
-            loadPlant(animalType, plantId)
-        }
+    fun isComplete(): LiveData<Boolean> {
+        return observableIsComplete
     }
 
-    fun getPlant(): LiveData<Plant> {
-        return observablePlant
+    fun isLoading(): LiveData<Boolean> {
+        return observableIsLoading
     }
 
-    fun getPlantMetadata(): LiveData<PlantMetadata> {
-        return observablePlantMetadata
-    }
-
-    private suspend fun loadPlant(animalType: AnimalType, plantId: Int) = withContext(Dispatchers.IO) {
-        val plant = modelProvider.getPlant(animalType, plantId, "en")
-        val plantMetadata = modelProvider.getPlantMetadata(animalType, plantId, "en")
-        viewModelScope.launch {
-            observablePlant.value = plant
-            observablePlantMetadata.value = plantMetadata
+    fun savePlant(mainName: String, scientificName: String, family: String, toxicityForCats: ToxicityValue, toxicityForDogs: ToxicityValue) {
+        eventLogger.log(Severity.INFO, classTag(), "savePlant")
+        observableIsLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            modelStorage.insertPlant(Plant.PlantImp(-1, scientificName, ""))
+            val plant = modelStorage.getPlant(scientificName)
+            if (plant == null) {
+                eventLogger.log(Severity.WARNING, classTag(), "Plant entry could not be created")
+                return@launch
+            }
+            modelStorage.insertPlantMainName(PlantMainName.PlantMainNameImpl(-1, mainName, plant.id, "en"))
+            modelStorage.insertPlantFamily(PlantFamily.PlantFamilyImpl(-1, family, plant.id, "en"))
+            modelStorage.insertToxicity(Toxicity.ToxicityImpl(-1, plant.id, AnimalType.DOG.ordinal, toxicityForDogs.ordinal, ""))
+            modelStorage.insertToxicity(Toxicity.ToxicityImpl(-1, plant.id, AnimalType.CAT.ordinal, toxicityForCats.ordinal, ""))
+            eventLogger.log(Severity.INFO, classTag(), "Plant saved")
+            viewModelScope.launch(Dispatchers.Main) {
+                observableIsComplete.value = true
+                observableIsLoading.value = true
+            }
         }
     }
 }

@@ -28,7 +28,12 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlant")
         threadUtil.assertIsBackgroundThread()
 
-        modelStorageDAO.insertPlantEntry(plant.id, plant.scientificName, plant.imageUrl)
+        val plantId = if (plant.id.toInt() == -1) {
+            null
+        } else {
+            plant.id
+        }
+        modelStorageDAO.insertPlantEntry(plantId, plant.scientificName, plant.imageUrl)
     }
 
     override fun getPlants(): List<Plant> {
@@ -38,11 +43,30 @@ class ModelStorage(
         return modelStorageDAO.getAllPlantEntries()
     }
 
+    override fun getPlant(scientificName: String): Plant? {
+        eventLogger.log(Severity.INFO, classTag(), "getPlant")
+        threadUtil.assertIsBackgroundThread()
+
+        return modelStorageDAO.getPlantEntry(scientificName)
+    }
+
     override fun insertPlantMainName(plantMainName: PlantMainName) {
         eventLogger.log(Severity.INFO, classTag(), "insertPlantMainName")
         threadUtil.assertIsBackgroundThread()
 
-        modelStorageDAO.insertPlantMainNameEntry(plantMainName.id, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
+        val plantMainNameId = if (plantMainName.id.toInt() == -1) {
+            null
+        } else {
+            plantMainName.id
+        }
+        modelStorageDAO.insertPlantMainNameEntry(plantMainNameId, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
+    }
+
+    override fun getPlantMainName(plantId: Long, locale: String): PlantMainName? {
+        eventLogger.log(Severity.INFO, classTag(), "getPlantMainName")
+        threadUtil.assertIsBackgroundThread()
+
+        return modelStorageDAO.getPlantMainNameEntry(plantId, locale)
     }
 
     override fun getPlantsMainName(): List<PlantMainName> {
@@ -56,7 +80,12 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlantCommonName")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.insertPlantCommonNameEntry(plantCommonName.id, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
+        val plantCommonNameId = if (plantCommonName.id.toInt() == -1) {
+            null
+        } else {
+            plantCommonName.id
+        }
+        return modelStorageDAO.insertPlantCommonNameEntry(plantCommonNameId, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
     }
 
     override fun getPlantsCommonNames(): List<PlantCommonName> {
@@ -70,7 +99,19 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertPlantFamily")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.insertPlantFamilyNameEntry(plantFamily.id, plantFamily.family, plantFamily.plantId, plantFamily.locale)
+        val plantFamilyId = if (plantFamily.id.toInt() == -1) {
+            null
+        } else {
+            plantFamily.id
+        }
+        return modelStorageDAO.insertPlantFamilyNameEntry(plantFamilyId, plantFamily.family, plantFamily.plantId, plantFamily.locale)
+    }
+
+    override fun getPlantFamily(plantId: Long, locale: String): PlantFamily? {
+        eventLogger.log(Severity.INFO, classTag(), "getPlantFamily")
+        threadUtil.assertIsBackgroundThread()
+
+        return modelStorageDAO.getPlantFamilyEntry(plantId, locale)
     }
 
     override fun getPlantsFamily(): List<PlantFamily> {
@@ -84,7 +125,12 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertDescription")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.insertDescriptionEntry(description.id, description.plantId, description.animalId, description.description, description.locale)
+        val descriptionId = if (description.id.toInt() == -1) {
+            null
+        } else {
+            description.id
+        }
+        return modelStorageDAO.insertDescriptionEntry(descriptionId, description.plantId, description.animalId, description.description, description.locale)
     }
 
     override fun getDescription(): List<Description> {
@@ -98,7 +144,19 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, classTag(), "insertToxicity")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.insertToxicityEntry(toxicity.id, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
+        val toxicityId = if (toxicity.id.toInt() == -1) {
+            null
+        } else {
+            toxicity.id
+        }
+        return modelStorageDAO.insertToxicityEntry(toxicityId, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
+    }
+
+    override fun getToxicity(plantId: Long, animalType: AnimalType): Toxicity? {
+        eventLogger.log(Severity.INFO, classTag(), "getToxicity")
+        threadUtil.assertIsBackgroundThread()
+
+        return modelStorageDAO.getToxicityEntry(plantId, animalType)
     }
 
     override fun getToxicity(): List<Toxicity> {

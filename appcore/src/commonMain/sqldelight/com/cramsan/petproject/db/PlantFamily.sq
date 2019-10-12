@@ -17,5 +17,8 @@ SELECT * FROM PlantFamily;
 insert:
 INSERT OR REPLACE INTO PlantFamily(id, plant_id, family, locale) VALUES (?, ?, ?, ?);
 
+insertNew:
+INSERT INTO PlantFamily(plant_id, family, locale) VALUES (?, ?, ?);
+
 deleteAll:
 DELETE FROM PlantFamily;

@@ -13,27 +13,47 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
     )
 
-    override fun insertPlantEntry(plantId: Long, scientificName: String, imageUrl: String) {
-        database.plantQueries.insert(plantId, scientificName, imageUrl)
+    override fun insertPlantEntry(plantId: Long?, scientificName: String, imageUrl: String) {
+        if (plantId != null) {
+            database.plantQueries.insert(plantId, scientificName, imageUrl)
+        } else {
+            database.plantQueries.insertNew(scientificName, imageUrl)
+        }
     }
 
-    override fun insertPlantCommonNameEntry(commonNameId: Long, commonName: String, plantId: Long, locale: String) {
-        database.plantCommonNameQueries.insert(commonNameId, commonName, plantId, locale)
+    override fun insertPlantCommonNameEntry(commonNameId: Long?, commonName: String, plantId: Long, locale: String) {
+        if (commonNameId != null) {
+            database.plantCommonNameQueries.insert(commonNameId, commonName, plantId, locale)
+        } else {
+            database.plantCommonNameQueries.insertNew(commonName, plantId, locale)
+        }
     }
 
-    override fun insertPlantMainNameEntry(mainNameId: Long, mainName: String, plantId: Long, locale: String) {
-        database.plantMainNameQueries.insert(mainNameId, plantId, mainName, locale)
+    override fun insertPlantMainNameEntry(mainNameId: Long?, mainName: String, plantId: Long, locale: String) {
+        if (mainNameId != null) {
+            database.plantMainNameQueries.insert(mainNameId, plantId, mainName, locale)
+        } else {
+            database.plantMainNameQueries.insertNew(plantId, mainName, locale)
+        }
     }
 
-    override fun insertPlantFamilyNameEntry(familyId: Long, family: String, plantId: Long, locale: String) {
-        database.plantFamilyQueries.insert(familyId, plantId, family, locale)
+    override fun insertPlantFamilyNameEntry(familyId: Long?, family: String, plantId: Long, locale: String) {
+        if (familyId != null) {
+            database.plantFamilyQueries.insert(familyId, plantId, family, locale)
+        } else {
+            database.plantFamilyQueries.insertNew(plantId, family, locale)
+        }
     }
 
-    override fun insertToxicityEntry(toxicityId: Long, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String) {
-        database.toxicityQueries.insert(toxicityId, plantId, animalType, isToxic, source)
+    override fun insertToxicityEntry(toxicityId: Long?, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String) {
+        if (toxicityId != null) {
+            database.toxicityQueries.insert(toxicityId, plantId, animalType, isToxic, source)
+        } else {
+            database.toxicityQueries.insertNew(plantId, animalType, isToxic, source)
+        }
     }
 
-    override fun insertDescriptionEntry(descriptionId: Long, plantId: Long, animalType: AnimalType, description: String, locale: String) {
+    override fun insertDescriptionEntry(descriptionId: Long?, plantId: Long, animalType: AnimalType, description: String, locale: String) {
         return database.descriptionQueries.insert(descriptionId, plantId, animalType, description, locale)
     }
 

@@ -21,14 +21,8 @@ class MainMenuFragment : BaseFragment() {
 
     private lateinit var viewModel: DownloadCatalogViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_main_menu, container, false)
-    }
+    override val contentViewLayout: Int
+        get() = R.layout.fragment_main_menu
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

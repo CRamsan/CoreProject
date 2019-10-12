@@ -5,17 +5,17 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 
 interface ModelStorageDAO {
 
-    fun insertPlantEntry(plantId: Long, scientificName: String, imageUrl: String)
+    fun insertPlantEntry(plantId: Long?, scientificName: String, imageUrl: String)
 
-    fun insertPlantCommonNameEntry(commonNameId: Long, commonName: String, plantId: Long, locale: String)
+    fun insertPlantCommonNameEntry(commonNameId: Long?, commonName: String, plantId: Long, locale: String)
 
-    fun insertPlantMainNameEntry(mainNameId: Long, mainName: String, plantId: Long, locale: String)
+    fun insertPlantMainNameEntry(mainNameId: Long?, mainName: String, plantId: Long, locale: String)
 
-    fun insertPlantFamilyNameEntry(familyId: Long, family: String, plantId: Long, locale: String)
+    fun insertPlantFamilyNameEntry(familyId: Long?, family: String, plantId: Long, locale: String)
 
-    fun insertToxicityEntry(toxicityId: Long, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String)
+    fun insertToxicityEntry(toxicityId: Long?, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String)
 
-    fun insertDescriptionEntry(descriptionId: Long, plantId: Long, animalType: AnimalType, description: String, locale: String)
+    fun insertDescriptionEntry(descriptionId: Long?, plantId: Long, animalType: AnimalType, description: String, locale: String)
 
     fun getPlantEntry(scientificName: String): Plant?
 

@@ -1,58 +1,59 @@
 package com.cramsan.petproject.edit
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
-import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_plant_edit.*
 
 class PlantEditFragment : BaseFragment() {
-
-    private var editener: OnEditFragmentInteractionListener? = null
 
     private lateinit var viewModel: PlantEditViewModel
     private lateinit var animalType: AnimalType
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_plant_edit, container, false)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnEditFragmentInteractionListener) {
-            editener = context
-        } else {
-            throw InvalidContextException("$context must implement OnEditFragmentInteractionListener")
-        }
-    }
+    override val contentViewLayout: Int
+        get() = R.layout.fragment_plant_edit
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
 
         animalType = AnimalType.values()[animalTypeId]
-    }
+        viewModel = ViewModelProviders.of(this).get(PlantEditViewModel::class.java)
+        viewModel.isComplete().observe(this, Observer {
+            if (it) {
+                requireActivity().finish()
+            }
+        })
 
-    class InvalidContextException(message: String?) : RuntimeException(message)
+        viewModel.isLoading().observe(this, Observer {
+            plant_edit_save.isEnabled = !it
+        })
 
-    interface OnEditFragmentInteractionListener {
-        fun onPlantReady(plant: Plant)
-        fun onPlantMetadataReady(plantMetadata: PlantMetadata)
+        plant_edit_save.setOnClickListener {
+            val plantName = plant_edit_main_name.text.toString()
+            val plantScientificName = plant_edit_scientific_name.text.toString()
+            val plantFamily = plant_edit_family.text.toString()
+            var toxicityForCats = ToxicityValue.UNDETERMINED
+            if (plant_edit_cat_safe.isChecked) {
+                toxicityForCats = ToxicityValue.NON_TOXIC
+            } else if (plant_edit_cat_unsafe.isChecked) {
+                toxicityForCats = ToxicityValue.TOXIC
+            }
+            var toxicityForDogs = ToxicityValue.UNDETERMINED
+            if (plant_edit_dog_safe.isChecked) {
+                toxicityForDogs = ToxicityValue.NON_TOXIC
+            } else if (plant_edit_dog_unsafe.isChecked) {
+                toxicityForDogs = ToxicityValue.TOXIC
+            }
+            viewModel.savePlant(plantName, plantScientificName, plantFamily, toxicityForCats, toxicityForDogs)
+        }
     }
 
     companion object {
-        const val PLANT_ID = "plantId"
         const val ANIMAL_TYPE = "animalType"
     }
 }

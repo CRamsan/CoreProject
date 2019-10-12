@@ -17,5 +17,8 @@ SELECT * FROM PlantCommonName;
 insert:
 INSERT OR REPLACE INTO PlantCommonName(id, common_name, plant_id, locale) VALUES (?, ?, ?, ?);
 
+insertNew:
+INSERT INTO PlantCommonName(common_name, plant_id, locale) VALUES (?, ?, ?);
+
 deleteAll:
 DELETE FROM PlantCommonName;

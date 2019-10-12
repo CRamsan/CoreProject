@@ -25,8 +25,8 @@ class PlantDetailsViewModel(application: Application) : AndroidViewModel(applica
     private val modelProvider: ModelProviderInterface by instance()
     private val eventLogger: EventLoggerInterface by instance()
 
-    private val observablePlant = MutableLiveData<Plant>()
-    private val observablePlantMetadata = MutableLiveData<PlantMetadata>()
+    private val observablePlant = MutableLiveData<Plant?>()
+    private val observablePlantMetadata = MutableLiveData<PlantMetadata?>()
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
         eventLogger.log(Severity.INFO, classTag(), "reloadPlant")
@@ -35,11 +35,11 @@ class PlantDetailsViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun getPlant(): LiveData<Plant> {
+    fun getPlant(): LiveData<Plant?> {
         return observablePlant
     }
 
-    fun getPlantMetadata(): LiveData<PlantMetadata> {
+    fun getPlantMetadata(): LiveData<PlantMetadata?> {
         return observablePlantMetadata
     }
 

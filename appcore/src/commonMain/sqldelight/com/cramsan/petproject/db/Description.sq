@@ -18,5 +18,8 @@ SELECT * FROM Description;
 insert:
 INSERT OR REPLACE INTO Description(id, plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?, ?);
 
+insertNew:
+INSERT INTO Description(plant_id, animal_id, description, locale) VALUES (?, ?, ?, ?);
+
 deleteAll:
 DELETE FROM Description;

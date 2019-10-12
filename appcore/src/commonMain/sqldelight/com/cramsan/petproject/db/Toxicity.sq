@@ -20,5 +20,8 @@ SELECT * FROM Toxicity;
 insert:
 INSERT OR REPLACE INTO Toxicity(id, plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?, ?);
 
+insertNew:
+INSERT INTO Toxicity(plant_id, animal_id, is_toxic, source) VALUES (?, ?, ?, ?);
+
 deleteAll:
 DELETE FROM Toxicity;

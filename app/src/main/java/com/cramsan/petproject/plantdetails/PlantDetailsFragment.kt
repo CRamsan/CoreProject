@@ -43,14 +43,8 @@ class PlantDetailsFragment : BaseFragment() {
     private lateinit var viewModel: PlantDetailsViewModel
     private lateinit var animalType: AnimalType
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_plant_details, container, false)
-    }
+    override val contentViewLayout: Int
+        get() = R.layout.fragment_plant_details
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -72,6 +66,11 @@ class PlantDetailsFragment : BaseFragment() {
         plant_details_image_loading.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(this, Observer {
+            if (it == null) {
+                eventLogger.log(Severity.WARNING, classTag(), "Plant is null")
+                return@Observer
+            }
+
             listener?.onPlantReady(it)
             plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
             plant_details_family.text = getString(R.string.plant_details_family, it.family)
@@ -119,6 +118,11 @@ class PlantDetailsFragment : BaseFragment() {
                 .into(plant_details_image)
         })
         viewModel.getPlantMetadata().observe(this, Observer { metadata ->
+            if (metadata == null) {
+                eventLogger.log(Severity.WARNING, classTag(), "Metadata is null")
+                return@Observer
+            }
+
             listener?.onPlantMetadataReady(metadata)
             when (metadata.isToxic) {
                 ToxicityValue.TOXIC -> {

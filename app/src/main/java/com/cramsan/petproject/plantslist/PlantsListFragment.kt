@@ -37,6 +37,9 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
 
     private val preferences: PreferencesInterface by instance()
 
+    override val contentViewLayout: Int
+        get() = R.layout.fragment_plants_list
+
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
     private lateinit var model: PlantListViewModel
@@ -52,15 +55,6 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
         } else {
             throw InvalidContextException("$context must implement OnListFragmentInteractionListener")
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_plants_list, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

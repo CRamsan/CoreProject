@@ -14,10 +14,12 @@ import com.cramsan.petproject.PetProjectApplication
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
-open class BaseFragment : Fragment(), KodeinAware {
+abstract class BaseFragment : Fragment(), KodeinAware {
 
     override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
     protected val eventLogger: EventLoggerInterface by instance()
+
+    abstract val contentViewLayout: Int
 
     @CallSuper
     override fun onAttach(context: Context) {
@@ -37,9 +39,11 @@ open class BaseFragment : Fragment(), KodeinAware {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         eventLogger.log(Severity.INFO, classTag(), "onCreateView")
-        return null
+        return inflater.inflate(contentViewLayout, container, false)
     }
+
 
     @CallSuper
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -17,24 +17,24 @@ class DynamoDBDAO : ModelStorageDAO {
 
     val ddb: DynamoDbClient? = null
 
-    override fun insertPlantEntry(plantId: Long, scientificName: String, imageUrl: String) {
+    override fun insertPlantEntry(plantId: Long?, scientificName: String, imageUrl: String) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun insertPlantCommonNameEntry(commonNameId: Long, commonName: String, plantId: Long, locale: String) {
+    override fun insertPlantCommonNameEntry(commonNameId: Long?, commonName: String, plantId: Long, locale: String) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun insertPlantMainNameEntry(mainNameId: Long, mainName: String, plantId: Long, locale: String) {
+    override fun insertPlantMainNameEntry(mainNameId: Long?, mainName: String, plantId: Long, locale: String) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun insertPlantFamilyNameEntry(familyId: Long, family: String, plantId: Long, locale: String) {
+    override fun insertPlantFamilyNameEntry(familyId: Long?, family: String, plantId: Long, locale: String) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun insertToxicityEntry(
-        toxicityId: Long,
+        toxicityId: Long?,
         isToxic: ToxicityValue,
         plantId: Long,
         animalType: AnimalType,
@@ -44,7 +44,7 @@ class DynamoDBDAO : ModelStorageDAO {
     }
 
     override fun insertDescriptionEntry(
-        descriptionId: Long,
+        descriptionId: Long?,
         plantId: Long,
         animalType: AnimalType,
         description: String,

@@ -8,7 +8,7 @@ buildscript {
 
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
-        globalAndroidBuildToolsVersion = '3.4.2'
+        globalAndroidBuildToolsVersion = '3.5.0'
         globalAndroidXJUnitVersion = "1.1.1"
         globalCoroutinesVersion = "1.2.2"
         globalDetektVersion = "1.0.0-RC16"

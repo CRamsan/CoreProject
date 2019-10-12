@@ -6,9 +6,13 @@ interface ModelStorageInterface {
 
     fun insertPlant(plant: Plant)
 
+    fun getPlant(scientificName: String): Plant?
+
     fun getPlants(): List<Plant>
 
     fun insertPlantMainName(plantMainName: PlantMainName)
+
+    fun getPlantMainName(plantId: Long, locale: String): PlantMainName?
 
     fun getPlantsMainName(): List<PlantMainName>
 
@@ -18,6 +22,8 @@ interface ModelStorageInterface {
 
     fun insertPlantFamily(plantFamily: PlantFamily)
 
+    fun getPlantFamily(plantId: Long, locale: String): PlantFamily?
+
     fun getPlantsFamily(): List<PlantFamily>
 
     fun insertDescription(description: Description)
@@ -25,6 +31,8 @@ interface ModelStorageInterface {
     fun getDescription(): List<Description>
 
     fun insertToxicity(toxicity: Toxicity)
+
+    fun getToxicity(plantId: Long, animalType: AnimalType): Toxicity?
 
     fun getToxicity(): List<Toxicity>
 

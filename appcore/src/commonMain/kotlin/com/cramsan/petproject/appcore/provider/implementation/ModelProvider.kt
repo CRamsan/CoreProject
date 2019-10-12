@@ -134,10 +134,25 @@ class ModelProvider(
                 eventLogger.log(Severity.WARNING, classTag(), cause.toString())
             }
 
-            val family: PlantFamily.PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
-            val description: Description.DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
-            modelStorage.insertPlantFamily(family)
-            modelStorage.insertDescription(description)
+            var family: PlantFamily? = null
+            try {
+                family = http.get("https://cramsan.com/data/family/$plantId/")
+            } catch (cause: Throwable) {
+                eventLogger.log(Severity.WARNING, classTag(), cause.toString())
+            }
+
+            var description: Description? = null
+            try {
+                description = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
+            } catch (cause: Throwable) {
+                eventLogger.log(Severity.WARNING, classTag(), cause.toString())
+            }
+            if (family != null) {
+                modelStorage.insertPlantFamily(family)
+            }
+            if (description != null) {
+                modelStorage.insertDescription(description)
+            }
             plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         }
 
