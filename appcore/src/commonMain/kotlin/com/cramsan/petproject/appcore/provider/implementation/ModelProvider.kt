@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.io.errors.IOException
 
 class ModelProvider(
     private val eventLogger: EventLoggerInterface,
@@ -130,29 +131,14 @@ class ModelProvider(
                 commonName.forEach {
                     modelStorage.insertPlantCommonName(it)
                 }
-            } catch (cause: Throwable) {
+            } catch (cause: IOException) {
                 eventLogger.log(Severity.WARNING, classTag(), cause.toString())
             }
 
-            var family: PlantFamily? = null
-            try {
-                family = http.get("https://cramsan.com/data/family/$plantId/")
-            } catch (cause: Throwable) {
-                eventLogger.log(Severity.WARNING, classTag(), cause.toString())
-            }
-
-            var description: Description? = null
-            try {
-                description = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
-            } catch (cause: Throwable) {
-                eventLogger.log(Severity.WARNING, classTag(), cause.toString())
-            }
-            if (family != null) {
-                modelStorage.insertPlantFamily(family)
-            }
-            if (description != null) {
-                modelStorage.insertDescription(description)
-            }
+            val family: PlantFamily.PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
+            val description: Description.DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
+            modelStorage.insertPlantFamily(family)
+            modelStorage.insertDescription(description)
             plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         }
 

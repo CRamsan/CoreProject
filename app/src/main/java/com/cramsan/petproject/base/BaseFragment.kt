@@ -44,7 +44,6 @@ abstract class BaseFragment : Fragment(), KodeinAware {
         return inflater.inflate(contentViewLayout, container, false)
     }
 
-
     @CallSuper
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

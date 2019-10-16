@@ -29,14 +29,12 @@ class PlantEditFragment : BaseFragment() {
             }
         })
 
-        viewModel.isLoading().observe(this, Observer {
-            plant_edit_save.isEnabled = !it
-        })
+        plant_edit_cancel.setOnClickListener {
+            requireActivity().finish()
+        }
 
         plant_edit_save.setOnClickListener {
-            val plantName = plant_edit_main_name.text.toString()
-            val plantScientificName = plant_edit_scientific_name.text.toString()
-            val plantFamily = plant_edit_family.text.toString()
+            val plantName = plant_edit_scientific_name.text.toString()
             var toxicityForCats = ToxicityValue.UNDETERMINED
             if (plant_edit_cat_safe.isChecked) {
                 toxicityForCats = ToxicityValue.NON_TOXIC
@@ -49,7 +47,7 @@ class PlantEditFragment : BaseFragment() {
             } else if (plant_edit_dog_unsafe.isChecked) {
                 toxicityForDogs = ToxicityValue.TOXIC
             }
-            viewModel.savePlant(plantName, plantScientificName, plantFamily, toxicityForCats, toxicityForDogs)
+            viewModel.savePlant(plantName, toxicityForCats, toxicityForDogs)
         }
     }
 

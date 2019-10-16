@@ -1,0 +1,3 @@
+package com.cramsan.petproject.appcore.feedback.implementation
+
+class FeedbackManagerInitializer(val platformInitializer: FeedbackManagerPlatformInitializer)

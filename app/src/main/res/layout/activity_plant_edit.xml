@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:tools="http://schemas.android.com/tools"
         style="@style/BaseCoordinatorLayout"
         tools:context=".edit.PlantEditActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-            style="@style/BaseAppBarLayout">
+    <include layout="@layout/content_plant_edit" />
 
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/plant_edit_toolbar"
-                style="@style/BaseToolBar"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_plant_edit"/>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

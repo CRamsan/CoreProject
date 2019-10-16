@@ -90,6 +90,10 @@ dependencies {
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
     implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
 
+    def appCenterSdkVersion = '2.3.0'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
     kapt "com.github.bumptech.glide:compiler:$globalGlideVersion"
 
     testImplementation "junit:junit:$globalJUnitVersion"

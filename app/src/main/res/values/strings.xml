@@ -29,7 +29,7 @@
     <string name="plant_details_dog_unknown">Unknown for dogs</string>
     <string name="download_catalog_loading">We are retrieving the latest information. Please wait a few seconds…</string>
     <string name="plant_edit_scientific_name">Scientific Name:</string>
-    <string name="plant_edit_main_name">Main Name:</string>
+    <string name="plant_edit_main_name">Suggest a new plant</string>
     <string name="plant_edit_family">Family:</string>
     <string name="plant_edit_dangerous_dog">Dangerous for Dogs:</string>
     <string name="plant_edit_dangerous_cat">Dangerous for Cats:</string>
@@ -40,4 +40,6 @@
         <a href="https://www.flaticon.com">www.flaticon.com</a>
     </string>
     <string name="banned_ad_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="plant_edit_send">Send</string>
+    <string name="plant_edit_cancel">Cancel</string>
 </resources>

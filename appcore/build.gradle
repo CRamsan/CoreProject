@@ -39,6 +39,7 @@ android {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -55,6 +56,7 @@ dependencies {
     implementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
     implementation "io.ktor:ktor-client-android:$globalKtorVersion"
     implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
+    implementation "software.amazon.awssdk:dynamodb:2.9.16"
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
@@ -75,11 +77,14 @@ detekt {
 
 kotlin {
     android("android") {
-
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = globalJavaCompatibility
+            }
+        }
     }
-    jvm("jvm") {
 
-    }
+    jvm("jvm") { }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
     iosX64("ios") {
@@ -115,7 +120,6 @@ kotlin {
                 implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
                 implementation "com.squareup.sqldelight:sqlite-driver:$globalSqlDelightVersion"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
-                implementation "software.amazon.awssdk:dynamodb:2.9.16"
             }
         }
 

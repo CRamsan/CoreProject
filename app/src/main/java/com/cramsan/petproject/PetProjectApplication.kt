@@ -19,6 +19,11 @@ import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.petproject.appcore.feedback.FeedbackManagerInterface
+import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManager
+import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManagerInitializer
+import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManagerPlatformInitializer
+import com.cramsan.petproject.appcore.feedback.implementation.dynamodb.DynamoDBDAO
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
@@ -26,6 +31,9 @@ import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import com.google.android.gms.ads.MobileAds
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -85,11 +93,23 @@ class PetProjectApplication : Application(), KodeinAware {
                     instance()) }
             modelProvider
         }
+        bind<FeedbackManagerInterface>() with singleton {
+            val initializer = FeedbackManagerInitializer(FeedbackManagerPlatformInitializer(DynamoDBDAO()))
+            val feedbackManager by kodein.newInstance {
+                FeedbackManager(initializer,
+                    instance(),
+                    instance()) }
+            feedbackManager
+        }
         MobileAds.initialize(applicationContext)
     }
 
     override fun onCreate() {
         super.onCreate()
         eventLogger.log(Severity.INFO, classTag(), "onCreate called")
+        AppCenter.start(
+            this, "1206f21f-1b20-483f-9385-9b8cbc0e504d",
+            Analytics::class.java, Crashes::class.java
+        )
     }
 }
