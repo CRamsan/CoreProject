@@ -22,6 +22,8 @@ import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
+import com.cramsan.petproject.feedback.PlantFeedbackActivity
+import com.cramsan.petproject.feedback.PlantFeedbackFragment
 import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_banner_ad
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
@@ -33,6 +35,7 @@ import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_image_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scientific_name
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
+import kotlinx.android.synthetic.main.fragment_plant_details.plant_feedback_save
 
 class PlantDetailsFragment : BaseFragment() {
 
@@ -156,6 +159,15 @@ class PlantDetailsFragment : BaseFragment() {
                 startActivity(browserIntent)
             }
         })
+
+        plant_feedback_save.setOnClickListener {
+            eventLogger.log(Severity.INFO, classTag(), "onClick")
+            val plantIntent = Intent(requireContext(), PlantFeedbackActivity::class.java)
+            plantIntent.putExtra(PlantFeedbackFragment.PLANT_ID, plantId)
+            plantIntent.putExtra(PlantFeedbackFragment.ANIMAL_TYPE, animalType.ordinal)
+            startActivity(plantIntent)
+        }
+
         viewModel.reloadPlant(animalType, plantId)
 
         val mAdView = plant_details_banner_ad

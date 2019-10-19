@@ -30,6 +30,10 @@
                 android:name=".edit.PlantEditActivity"
                 android:theme="@style/AppTheme.Transparent">
         </activity>
+        <activity
+                android:name=".feedback.PlantFeedbackActivity"
+                android:theme="@style/AppTheme.Transparent">
+        </activity>
         <activity android:name=".dialog.DownloadDialogActivity"
                   android:theme="@style/AppTheme.Transparent">
         </activity>

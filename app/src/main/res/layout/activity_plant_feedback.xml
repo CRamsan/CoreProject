@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:tools="http://schemas.android.com/tools"
+        style="@style/BaseCoordinatorLayout"
+        tools:context=".feedback.PlantFeedbackActivity">
+
+    <include layout="@layout/content_plant_feedback" />
+
+</FrameLayout>

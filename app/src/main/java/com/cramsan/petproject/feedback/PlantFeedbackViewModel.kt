@@ -1,4 +1,4 @@
-package com.cramsan.petproject.edit
+package com.cramsan.petproject.feedback
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,10 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
-import com.cramsan.petproject.appcore.feedback.FeedbackManagerInterface
-import com.cramsan.petproject.appcore.model.ToxicityValue
-import com.cramsan.petproject.appcore.model.feedback.Feedback
-import com.cramsan.petproject.appcore.model.feedback.FeedbackType
+import com.cramsan.petproject.appcore.model.AnimalType
 import com.microsoft.appcenter.analytics.Analytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,11 +16,10 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class PlantEditViewModel(application: Application) : AndroidViewModel(application),
+class PlantFeedbackViewModel(application: Application) : AndroidViewModel(application),
     KodeinAware {
 
     override val kodein by kodein(application)
-    private val feedbackManager: FeedbackManagerInterface by instance()
     private val eventLogger: EventLoggerInterface by instance()
 
     private val observableIsComplete = MutableLiveData<Boolean>()
@@ -32,11 +28,10 @@ class PlantEditViewModel(application: Application) : AndroidViewModel(applicatio
         return observableIsComplete
     }
 
-    fun savePlant(mainName: String, toxicityForCats: ToxicityValue, toxicityForDogs: ToxicityValue) {
-        eventLogger.log(Severity.INFO, classTag(), "savePlant")
+    fun sendFeedback(animal: AnimalType, plantId: Long, photo: Boolean, scientificName: Boolean, name: Boolean, link: Boolean, text: String) {
+        eventLogger.log(Severity.INFO, classTag(), "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
-            val suggestion = "$mainName: Cats:${toxicityForCats.name} - Dogs:${toxicityForDogs.name}"
-            val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
+            val suggestion = "Animal:${animal.name} - PlantId:$plantId - Photo: $photo - ScientifiName:$scientificName - Name:$name - Link:$link - Text:$text"
             Analytics.trackEvent(suggestion)
             viewModelScope.launch {
                 observableIsComplete.value = true
