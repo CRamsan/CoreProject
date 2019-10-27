@@ -19,11 +19,12 @@ import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.petproject.appcore.feedback.FeedbackManagerDAO
 import com.cramsan.petproject.appcore.feedback.FeedbackManagerInterface
 import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManager
 import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManagerInitializer
 import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManagerPlatformInitializer
-import com.cramsan.petproject.appcore.feedback.implementation.dynamodb.DynamoDBDAO
+import com.cramsan.petproject.appcore.model.feedback.Feedback
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
@@ -94,7 +95,12 @@ class PetProjectApplication : Application(), KodeinAware {
             modelProvider
         }
         bind<FeedbackManagerInterface>() with singleton {
-            val initializer = FeedbackManagerInitializer(FeedbackManagerPlatformInitializer(DynamoDBDAO()))
+            class DummyDAO: FeedbackManagerDAO {
+                override fun submitFeedback(feedback: Feedback) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            }
+            val initializer = FeedbackManagerInitializer(FeedbackManagerPlatformInitializer(DummyDAO()))
             val feedbackManager by kodein.newInstance {
                 FeedbackManager(initializer,
                     instance(),

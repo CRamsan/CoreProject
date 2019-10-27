@@ -3,7 +3,6 @@ plugins {
     id "org.jetbrains.kotlin.multiplatform"
     id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.android.extensions"
-    id "io.gitlab.arturbosch.detekt"
 }
 
 android {
@@ -31,39 +30,11 @@ android {
     }
 }
 
-/**
- * Configuring detekt for static analysis
- */
-detekt {
-    toolVersion = "$globalDetektVersion"
-    input = files("src/main/java", "src/test/java", "src/androidTest/java",
-                  "src/commonMain/", "src/commonTest",
-                  "src/iosMain/", "src/iosTest")
-    filters = ".*_/resources/.*,.*_/build/.*"
-    config = files("detekt-config.yml")
-}
-
-task ktlint(type: JavaExec, group: "verification") {
-    description = "Check Kotlin code style."
-    classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/checkstyle-result.xml", "src/**/*.kt"
-}
-
-task ktlintFormat(type: JavaExec, group: "formatting") {
-    description = "Fix Kotlin code style deviations."
-    classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "-F", "src/**/*.kt"
-}
-
-check.dependsOn ktlint
-
 dependencies {
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
 
-    implementation "com.squareup.okhttp3:okhttp:4.1.0"
-    implementation "com.google.code.gson:gson:2.8.5"
+    implementation "com.squareup.okhttp3:okhttp:$globalOkhttpVersion"
+    implementation "com.google.code.gson:gson:$globalGsonVerion"
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "io.mockk:mockk:$globalMockkVersion"
@@ -135,9 +106,4 @@ kotlin {
             }
         }
     }
-}
-
-configurations {
-    // Workaround for https://youtrack.jetbrains.com/issue/KT-27170
-    compileClasspath
 }

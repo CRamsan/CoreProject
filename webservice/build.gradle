@@ -1,10 +1,9 @@
 plugins {
-    id "org.springframework.boot" version '2.1.7.RELEASE'
-    id "io.spring.dependency-management" version '1.0.7.RELEASE'
+    id "org.springframework.boot" version "2.1.7.RELEASE"
+    id "io.spring.dependency-management" version "1.0.7.RELEASE"
     id "org.jetbrains.kotlin.jvm"
     id "org.jetbrains.kotlin.plugin.spring"
     id "org.jetbrains.kotlin.plugin.jpa"
-    id "io.gitlab.arturbosch.detekt"
     id 'war'
 }
 
@@ -16,41 +15,21 @@ repositories {
     mavenCentral()
 }
 
-task ktlint(type: JavaExec, group: "verification") {
-    description = "Check Kotlin code style."
-    classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/checkstyle-result.xml", "src/**/*.kt"
-}
-
-task ktlintFormat(type: JavaExec, group: "formatting") {
-    description = "Fix Kotlin code style deviations."
-    classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "-F", "src/**/*.kt"
-}
-
-check.dependsOn ktlint
-
 dependencies {
     implementation project(":appcore")
     implementation project(":framework")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-devtools")
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation 'org.springframework.data:spring-data-releasetrain:1.4.6.RELEASE'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
-    implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
-    implementation "com.microsoft.azure:azure-spring-boot-starter:2.1.6"
 
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 bootWar {
