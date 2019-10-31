@@ -34,6 +34,12 @@ android {
         targetCompatibility globalJavaCompatibility
     }
 
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = globalJavaCompatibility
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/*'
     }

@@ -72,7 +72,13 @@ kotlin {
         }
     }
 
-    jvm("jvm") { }
+    jvm("jvm") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = globalJavaCompatibility
+            }
+        }
+    }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
     iosX64("ios") {

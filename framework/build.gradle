@@ -44,8 +44,18 @@ dependencies {
 
 kotlin {
     android("android") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = globalJavaCompatibility
+            }
+        }
     }
     jvm("jvm") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = globalJavaCompatibility
+            }
+        }
     }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
