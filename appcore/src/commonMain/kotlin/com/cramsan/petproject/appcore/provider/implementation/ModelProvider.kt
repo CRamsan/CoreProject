@@ -19,6 +19,7 @@ import com.cramsan.petproject.appcore.storage.PlantFamily
 import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
 import io.ktor.client.HttpClient
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.defaultSerializer
 import io.ktor.client.request.get
@@ -39,7 +40,7 @@ class ModelProvider(
     private val preferences: PreferencesInterface
 ) : ModelProviderInterface {
 
-    private val http: HttpClient = HttpClient() {
+    private val http: HttpClient = HttpClient {
         install(JsonFeature) {
             serializer = defaultSerializer()
         }
@@ -131,7 +132,7 @@ class ModelProvider(
                 commonName.forEach {
                     modelStorage.insertPlantCommonName(it)
                 }
-            } catch (cause: IOException) {
+            } catch (cause: ClientRequestException) {
                 eventLogger.log(Severity.WARNING, classTag(), cause.toString())
             }
 
