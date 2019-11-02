@@ -41,7 +41,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/plant_details_divider_1" android:maxLines="1"
                     android:ellipsize="end"
                     app:layout_constraintStart_toStartOf="parent" android:paddingStart="8dp"
-                    android:paddingEnd="8dp" android:background="@color/transparentTextBackground"
+                    android:paddingEnd="8dp"
                     android:textAlignment="textEnd"/>
             <View
                     android:id="@+id/plant_details_divider_1"

@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="TextView"
+                    android:text="Give us some feedback:"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plantFeedbackBrokenLinkCheckBox" />
 
@@ -106,22 +106,22 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="end"
             android:orientation="horizontal">
 
         <Button
                 android:id="@+id/plant_feedback_cancel"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/plant_edit_cancel" />
 
         <Button
                 android:id="@+id/plant_feedback_save"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/plant_edit_send" />
     </LinearLayout>
 

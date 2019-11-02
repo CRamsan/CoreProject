@@ -15,7 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mainmenu.MainMenuActivity">
+        <activity android:name=".mainmenu.MainMenuActivity"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -24,6 +25,7 @@
         </activity>
         <activity
                 android:name=".plantslist.PlantsListActivity"
+                android:theme="@style/AppTheme.NoActionBar"
                 android:parentActivityName=".mainmenu.MainMenuActivity">
         </activity>
         <activity
@@ -39,10 +41,12 @@
         </activity>
         <activity
                 android:name=".plantdetails.PlantDetailsActivity"
+                android:theme="@style/AppTheme.NoActionBar"
                 android:parentActivityName=".plantslist.PlantsListActivity">
         </activity>
         <activity
                 android:name=".about.AboutActivity"
+                android:theme="@style/AppTheme.NoActionBar"
                 android:parentActivityName=".mainmenu.MainMenuActivity">
         </activity>
 

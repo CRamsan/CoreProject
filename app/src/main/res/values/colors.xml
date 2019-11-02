@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorBackground">#121212</color>
-    <color name="colorOnBackground">#232323</color>
-    <color name="colorPrimary">#FF5722</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
     <color name="colorDanger">#D81B60</color>
     <color name="colorSafe">#4CAF50</color>
     <color name="colorUndetermined">#444444</color>
-    <color name="transparentTextBackground">#99000000</color>
-    <color name="transparentActivityBackground">#77000000</color>
 </resources>
