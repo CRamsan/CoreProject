@@ -41,8 +41,8 @@ class MainMenuFragment : BaseFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         if (!viewModel.isCatalogReady()) {
             val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
             startActivity(intent)
