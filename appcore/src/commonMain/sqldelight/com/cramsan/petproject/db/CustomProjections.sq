@@ -9,8 +9,19 @@ LEFT JOIN
     Toxicity ON Toxicity.plant_id = Plant.id
 WHERE
     animal_id == ? AND PlantMainName.locale == ?
-GROUP BY
-    Plant.id
+;
+
+getAllPlantsWithAnimalIdAll:
+SELECT
+    Plant.id, scientific_name, PlantMainName.main_name, Toxicity.animal_id, Toxicity.is_toxic
+FROM
+	Plant
+INNER JOIN
+    PlantMainName ON PlantMainName.plant_id = Plant.id
+LEFT JOIN
+    Toxicity ON Toxicity.plant_id = Plant.id
+WHERE
+    PlantMainName.locale == ?
 ;
 
 getPlantWithPlantIdAndAnimalId:

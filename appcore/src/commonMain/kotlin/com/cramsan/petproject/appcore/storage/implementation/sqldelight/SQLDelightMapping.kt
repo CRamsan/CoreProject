@@ -4,6 +4,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.db.Description
 import com.cramsan.petproject.db.GetAllPlantsWithAnimalId
+import com.cramsan.petproject.db.GetAllPlantsWithAnimalIdAll
 import com.cramsan.petproject.db.GetPlantWithPlantIdAndAnimalId
 import com.cramsan.petproject.db.Plant
 import com.cramsan.petproject.db.PlantCommonName
@@ -87,9 +88,21 @@ class Toxicity(
         get() = toxicity.source
 }
 
-class GetAllPlantsWithAnimalId(
+class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId{
     private val getAllPlantsWithAnimalId: GetAllPlantsWithAnimalId
-) : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId {
+
+    constructor(getAllPlantsWithAnimalId: GetAllPlantsWithAnimalId) {
+        this.getAllPlantsWithAnimalId = getAllPlantsWithAnimalId
+    }
+
+    constructor(getAllPlantsWithAnimalIdAll: GetAllPlantsWithAnimalIdAll) {
+        this.getAllPlantsWithAnimalId = GetAllPlantsWithAnimalId.Impl(getAllPlantsWithAnimalIdAll.id,
+            getAllPlantsWithAnimalIdAll.scientific_name,
+            getAllPlantsWithAnimalIdAll.main_name,
+            getAllPlantsWithAnimalIdAll.animal_id,
+            getAllPlantsWithAnimalIdAll.is_toxic)
+    }
+
     override val id: Long
         get() = getAllPlantsWithAnimalId.id
     override val scientificName: String

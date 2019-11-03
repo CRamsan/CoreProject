@@ -118,8 +118,13 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
     }
 
     override fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {
-        val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale).executeAsList()
-        return result.map { GetAllPlantsWithAnimalId(it) }
+        return if (animalType == AnimalType.ALL) {
+            val result = database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(locale).executeAsList()
+            result.map { GetAllPlantsWithAnimalId(it) }
+        } else {
+            val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale).executeAsList()
+            result.map { GetAllPlantsWithAnimalId(it) }
+        }
     }
 
     override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {

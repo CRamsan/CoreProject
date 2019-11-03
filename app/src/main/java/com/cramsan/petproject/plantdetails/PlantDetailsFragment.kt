@@ -130,6 +130,7 @@ class PlantDetailsFragment : BaseFragment() {
                     plant_details_danger.text = when (animalType) {
                         AnimalType.CAT -> getString(R.string.plant_details_cat_dangerous)
                         AnimalType.DOG -> getString(R.string.plant_details_dog_dangerous)
+                        AnimalType.ALL -> TODO()
                     }
 
                     plant_details_danger.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorDanger))
@@ -138,6 +139,7 @@ class PlantDetailsFragment : BaseFragment() {
                     plant_details_danger.text = when (animalType) {
                         AnimalType.CAT -> getString(R.string.plant_details_cat_safe)
                         AnimalType.DOG -> getString(R.string.plant_details_dog_safe)
+                        AnimalType.ALL -> TODO()
                     }
                     plant_details_danger.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorSafe))
                 }
@@ -145,6 +147,7 @@ class PlantDetailsFragment : BaseFragment() {
                     plant_details_danger.text = when (animalType) {
                         AnimalType.CAT -> getString(R.string.plant_details_cat_unknown)
                         AnimalType.DOG -> getString(R.string.plant_details_dog_unknown)
+                        AnimalType.ALL -> TODO()
                     }
                     plant_details_danger.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorUndetermined))
                 }
