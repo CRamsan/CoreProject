@@ -16,14 +16,11 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.dialog.DownloadDialogActivity
-import com.cramsan.petproject.edit.PlantEditActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment
-import com.cramsan.petproject.plantslist.PlantListViewModel
 import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
-import com.cramsan.petproject.plantslist.PlantsRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_about
 import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_cats
 import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_dogs
@@ -31,10 +28,9 @@ import kotlinx.android.synthetic.main.fragment_main_menu.plant_list_recycler
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_list_view
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_view
 import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
-import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_add_plant
 
 class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
-PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
+AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     private lateinit var viewModel: DownloadCatalogViewModel
 
@@ -42,8 +38,8 @@ PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         get() = R.layout.fragment_main_menu
 
     private var listener: PlantsListFragment.OnListFragmentInteractionListener? = null
-    private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
-    private lateinit var model: PlantListViewModel
+    private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
+    private lateinit var model: AllPlantListViewModel
     private val animalType = AnimalType.ALL
     private lateinit var layoutManager: LinearLayoutManager
     private var searchQuery: String? = null
@@ -86,11 +82,11 @@ PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         listener?.onAnimalTypeReady(AnimalType.ALL)
 
         layoutManager = LinearLayoutManager(context)
-        plantsAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
+        plantsAdapter = AllPlantsRecyclerViewAdapter(this, animalType, requireContext())
         plant_list_recycler.layoutManager = layoutManager
         plant_list_recycler.adapter = plantsAdapter
 
-        model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
+        model = ViewModelProviders.of(this).get(AllPlantListViewModel::class.java)
         model.animalType = animalType
         model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)

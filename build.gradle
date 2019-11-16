@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        globalCompileSdkVersion = 28
+        globalCompileSdkVersion = 29
         globalMinSdkVersion = 22
-        globalTargetSdkVersion = 28
+        globalTargetSdkVersion = 29
         globalVersionCode = 1
         globalVersionName = "1.0"
 
@@ -28,7 +28,7 @@ buildscript {
         globalKtorVersion = "1.2.3"
         globalMockkVersion = "1.9.3"
         globalOkhttpVersion = "4.1.0"
-        globalRobolectricVersion = "4.3"
+        globalRobolectricVersion = "4.3.1"
         globalSqlDelightVersion = "1.2.0"
     }
 

@@ -171,6 +171,7 @@ class ModelProvider(
                     it.id,
                     it.scientificName,
                     it.mainName,
+                    it.animalId ?: AnimalType.ALL,
                     it.isToxic ?: ToxicityValue.UNDETERMINED
                 ))
         }

@@ -109,6 +109,8 @@ class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPl
         get() = getAllPlantsWithAnimalId.scientific_name
     override val mainName: String
         get() = getAllPlantsWithAnimalId.main_name
+    override val animalId: AnimalType?
+        get() = getAllPlantsWithAnimalId.animal_id
     override val isToxic: ToxicityValue?
         get() = getAllPlantsWithAnimalId.is_toxic
 }
