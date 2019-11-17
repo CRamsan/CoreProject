@@ -11,6 +11,7 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.PetProjectApplication
+import com.cramsan.petproject.plantslist.PlantsListFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -90,5 +91,11 @@ abstract class BaseFragment : Fragment(), KodeinAware {
     override fun onDetach() {
         super.onDetach()
         eventLogger.log(Severity.INFO, classTag(), "onDetach")
+    }
+
+    @CallSuper
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        eventLogger.log(Severity.INFO, classTag(), "onSaveInstanceState")
     }
 }

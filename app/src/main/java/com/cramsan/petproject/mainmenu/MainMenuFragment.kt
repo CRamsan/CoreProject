@@ -113,6 +113,8 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         }
         val loadedSearchQuery = searchQuery
         if (loadedSearchQuery?.isNotBlank() == true) {
+            plant_main_menu_view.visibility = View.GONE
+            plant_main_menu_list_view.visibility = View.VISIBLE
             model.searchPlants(loadedSearchQuery)
         } else {
             model.reloadPlants()
