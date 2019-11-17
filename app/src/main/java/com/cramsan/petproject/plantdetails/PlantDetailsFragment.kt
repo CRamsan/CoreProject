@@ -24,8 +24,6 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.feedback.PlantFeedbackActivity
 import com.cramsan.petproject.feedback.PlantFeedbackFragment
-import com.google.android.gms.ads.AdRequest
-import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_banner_ad
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
@@ -172,10 +170,6 @@ class PlantDetailsFragment : BaseFragment() {
         }
 
         viewModel.reloadPlant(animalType, plantId)
-
-        val mAdView = plant_details_banner_ad
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 
     class InvalidContextException(message: String?) : RuntimeException(message)

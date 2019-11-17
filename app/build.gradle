@@ -55,7 +55,7 @@ dependencies {
     implementation "com.google.android.material:material:$globalAndroidMaterialVersion"
 
     implementation "com.github.bumptech.glide:glide:$globalGlideVersion"
-    implementation "com.google.android.gms:play-services-ads:$globalFirebaseVersion"
+    //implementation "com.google.android.gms:play-services-ads:$globalFirebaseVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"

@@ -6,12 +6,11 @@
         android:id="@+id/plant_details_view"
         style="@style/BaseContentLayout">
     <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/plant_details_banner_ad">
+            app:layout_constraintEnd_toEndOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -130,20 +129,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:layout_marginBottom="585dp"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toTopOf="@+id/plant_details_banner_ad"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_info" />
-
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/plant_details_banner_ad"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/banned_ad_id"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
+            app:layout_constraintEnd_toEndOf="parent" app:srcCompat="@drawable/ic_info"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

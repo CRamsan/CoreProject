@@ -31,7 +31,6 @@ import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
-import com.google.android.gms.ads.MobileAds
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes
@@ -107,7 +106,6 @@ class PetProjectApplication : Application(), KodeinAware {
                     instance()) }
             feedbackManager
         }
-        MobileAds.initialize(applicationContext)
     }
 
     override fun onCreate() {
