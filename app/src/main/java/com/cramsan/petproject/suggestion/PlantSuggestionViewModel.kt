@@ -1,4 +1,4 @@
-package com.cramsan.petproject.edit
+package com.cramsan.petproject.suggestion
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -19,7 +19,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class PlantEditViewModel(application: Application) : AndroidViewModel(application),
+class PlantSuggestionViewModel(application: Application) : AndroidViewModel(application),
     KodeinAware {
 
     override val kodein by kodein(application)

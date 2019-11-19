@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_plant_edit.*
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.*
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackBrokenLinkCheckBox
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackNameCheckBox
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackPhotoCheckBox

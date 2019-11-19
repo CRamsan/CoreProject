@@ -28,19 +28,19 @@
     <string name="plant_details_dog_safe">Safe for dogs</string>
     <string name="plant_details_dog_unknown">Unknown for dogs</string>
     <string name="download_catalog_loading">We are retrieving the latest information. Please wait a few seconds…</string>
-    <string name="plant_edit_scientific_name">Scientific Name:</string>
-    <string name="plant_edit_main_name">Suggest a new plant</string>
-    <string name="plant_edit_family">Family:</string>
-    <string name="plant_edit_dangerous_dog">Dangerous for Dogs:</string>
-    <string name="plant_edit_dangerous_cat">Dangerous for Cats:</string>
-    <string name="plant_edit_safe">Safe</string>
-    <string name="plant_edit_unknown">Unknown</string>
-    <string name="plant_edit_dangerous">Dangerous</string>
+    <string name="plant_suggestion_scientific_name">Scientific Name:</string>
+    <string name="plant_suggestion_main_name">Suggest a new plant</string>
+    <string name="plant_suggestion_family">Family:</string>
+    <string name="plant_suggestion_dangerous_dog">Dangerous for Dogs:</string>
+    <string name="plant_suggestion_dangerous_cat">Dangerous for Cats:</string>
+    <string name="plant_suggestion_safe">Safe</string>
+    <string name="plant_suggestion_unknown">Unknown</string>
+    <string name="plant_suggestion_dangerous">Dangerous</string>
     <string name="about_licence_flaticon">Icons made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from
         <a href="https://www.flaticon.com">www.flaticon.com</a>
     </string>
     <string name="banned_ad_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="plant_edit_send">Send</string>
-    <string name="plant_edit_cancel">Cancel</string>
+    <string name="plant_suggestion_send">Send</string>
+    <string name="plant_suggestion_cancel">Cancel</string>
     <string name="leave_some_feedback">Report a problem</string>
 </resources>

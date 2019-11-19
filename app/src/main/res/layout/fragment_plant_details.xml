@@ -33,15 +33,16 @@
                     app:layout_constraintEnd_toEndOf="parent" android:scaleType="centerCrop"
                     android:contentDescription="@string/plant_details_empty_image_description"/>
             <TextView
-                    tools:text="Source: https://......."
+                    android:id="@+id/plant_details_image_source"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/plant_details_image_source" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/plant_details_divider_1" android:maxLines="1"
-                    android:ellipsize="end"
-                    app:layout_constraintStart_toStartOf="parent" android:paddingStart="8dp"
+                    android:background="@color/colorAccent" android:ellipsize="end"
+                    android:maxLines="1" android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:textAlignment="textEnd"/>
+                    android:textAlignment="textEnd"
+                    app:layout_constraintBottom_toTopOf="@+id/plant_details_divider_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" tools:text="Source: https://......."/>
             <View
                     android:id="@+id/plant_details_divider_1"
                     android:layout_height="1dp"

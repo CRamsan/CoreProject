@@ -15,7 +15,7 @@ import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
-import com.cramsan.petproject.dialog.DownloadDialogActivity
+import com.cramsan.petproject.download.DownloadDialogActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment
 import com.cramsan.petproject.plantslist.PlantsListActivity

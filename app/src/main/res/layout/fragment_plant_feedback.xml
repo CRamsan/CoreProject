@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@drawable/dialog"
-        android:id="@+id/plant_edit_view"
+        android:id="@+id/plant_suggestion_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
@@ -115,14 +115,14 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/plant_edit_cancel" />
+                android:text="@string/plant_suggestion_cancel" />
 
         <Button
                 android:id="@+id/plant_feedback_save"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/plant_edit_send" />
+                android:text="@string/plant_suggestion_send" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.cramsan.petproject.dialog
+package com.cramsan.petproject.download
 
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar

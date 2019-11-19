@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@drawable/dialog"
-        android:id="@+id/plant_edit_view"
+        android:id="@+id/plant_suggestion_view"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content">
 
             <EditText
-                    android:id="@+id/plant_edit_scientific_name"
+                    android:id="@+id/plant_suggestion_scientific_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -47,26 +47,26 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5">
 
                 <RadioButton
-                        android:id="@+id/plant_edit_cat_safe"
+                        android:id="@+id/plant_suggestion_cat_safe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/plant_edit_safe" />
+                        android:text="@string/plant_suggestion_safe" />
 
                 <RadioButton
-                        android:id="@+id/plant_edit_cat_undetermined"
+                        android:id="@+id/plant_suggestion_cat_undetermined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="@string/plant_edit_unknown" />
+                        android:text="@string/plant_suggestion_unknown" />
 
                 <RadioButton
-                        android:id="@+id/plant_edit_cat_unsafe"
+                        android:id="@+id/plant_suggestion_cat_unsafe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/plant_edit_dangerous" />
+                        android:text="@string/plant_suggestion_dangerous" />
             </RadioGroup>
 
             <RadioGroup
@@ -82,26 +82,26 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView6">
 
                 <RadioButton
-                        android:id="@+id/plant_edit_dog_safe"
+                        android:id="@+id/plant_suggestion_dog_safe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/plant_edit_safe" />
+                        android:text="@string/plant_suggestion_safe" />
 
                 <RadioButton
-                        android:id="@+id/plant_edit_dog_undetermined"
+                        android:id="@+id/plant_suggestion_dog_undetermined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="@string/plant_edit_unknown" />
+                        android:text="@string/plant_suggestion_unknown" />
 
                 <RadioButton
-                        android:id="@+id/plant_edit_dog_unsafe"
+                        android:id="@+id/plant_suggestion_dog_unsafe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/plant_edit_dangerous" />
+                        android:text="@string/plant_suggestion_dangerous" />
 
             </RadioGroup>
 
@@ -112,7 +112,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/plant_edit_main_name"
+                    android:text="@string/plant_suggestion_main_name"
                     android:textSize="@dimen/text_size_h1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,12 +124,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/plant_edit_dangerous_cat"
+                    android:text="@string/plant_suggestion_dangerous_cat"
                     android:textSize="@dimen/text_size_h2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/plant_edit_scientific_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/plant_suggestion_scientific_name" />
 
             <TextView
                     android:id="@+id/textView6"
@@ -138,7 +138,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/plant_edit_dangerous_dog"
+                    android:text="@string/plant_suggestion_dangerous_dog"
                     android:textSize="@dimen/text_size_h2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -154,18 +154,18 @@
             android:orientation="horizontal">
 
         <Button
-                android:id="@+id/plant_edit_cancel"
+                android:id="@+id/plant_suggestion_cancel"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/plant_edit_cancel" />
+                android:text="@string/plant_suggestion_cancel" />
 
         <Button
-                android:id="@+id/plant_edit_save"
+                android:id="@+id/plant_suggestion_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/plant_edit_send" />
+                android:text="@string/plant_suggestion_send" />
 
     </LinearLayout>
 

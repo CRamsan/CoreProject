@@ -29,14 +29,14 @@
                 android:parentActivityName=".mainmenu.MainMenuActivity">
         </activity>
         <activity
-                android:name=".edit.PlantEditActivity"
+                android:name=".suggestion.PlantSuggestionActivity"
                 android:theme="@style/AppTheme.Transparent">
         </activity>
         <activity
                 android:name=".feedback.PlantFeedbackActivity"
                 android:theme="@style/AppTheme.Transparent">
         </activity>
-        <activity android:name=".dialog.DownloadDialogActivity"
+        <activity android:name=".download.DownloadDialogActivity"
                   android:theme="@style/AppTheme.Transparent">
         </activity>
         <activity

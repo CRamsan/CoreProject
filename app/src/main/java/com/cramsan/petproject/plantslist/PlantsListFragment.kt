@@ -15,7 +15,7 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
-import com.cramsan.petproject.edit.PlantEditActivity
+import com.cramsan.petproject.suggestion.PlantSuggestionActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_add_plant
@@ -94,7 +94,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
             }
         })
         plant_list_add_plant.setOnClickListener {
-            val intent = Intent(requireContext(), PlantEditActivity::class.java)
+            val intent = Intent(requireContext(), PlantSuggestionActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, animalType.ordinal)
             startActivity(intent)
         }
