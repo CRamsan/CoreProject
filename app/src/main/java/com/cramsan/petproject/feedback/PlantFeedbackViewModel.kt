@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
+import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.microsoft.appcenter.analytics.Analytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -21,6 +21,7 @@ class PlantFeedbackViewModel(application: Application) : AndroidViewModel(applic
 
     override val kodein by kodein(application)
     private val eventLogger: EventLoggerInterface by instance()
+    private val metricsClient: MetricsInterface by instance()
 
     private val observableIsComplete = MutableLiveData<Boolean>()
 
@@ -32,7 +33,7 @@ class PlantFeedbackViewModel(application: Application) : AndroidViewModel(applic
         eventLogger.log(Severity.INFO, classTag(), "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.name} - PlantId:$plantId - Photo: $photo - ScientifiName:$scientificName - Name:$name - Link:$link - Text:$text"
-            Analytics.trackEvent(suggestion)
+            metricsClient.log(suggestion)
             viewModelScope.launch {
                 observableIsComplete.value = true
             }

@@ -64,8 +64,7 @@ dependencies {
     implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
     implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
 
-    implementation "com.microsoft.appcenter:appcenter-analytics:$globalAppCenterSdkVersion"
-    implementation "com.microsoft.appcenter:appcenter-crashes:$globalAppCenterSdkVersion"
+    implementation "com.microsoft.appcenter:appcenter:$globalAppCenterSdkVersion"
 
     kapt "com.github.bumptech.glide:compiler:$globalGlideVersion"
 

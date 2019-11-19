@@ -35,6 +35,8 @@ dependencies {
 
     implementation "com.squareup.okhttp3:okhttp:$globalOkhttpVersion"
     implementation "com.google.code.gson:gson:$globalGsonVerion"
+    implementation "com.microsoft.appcenter:appcenter-analytics:$globalAppCenterSdkVersion"
+    implementation "com.microsoft.appcenter:appcenter-crashes:$globalAppCenterSdkVersion"
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "io.mockk:mockk:$globalMockkVersion"

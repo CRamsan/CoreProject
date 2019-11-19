@@ -5,6 +5,10 @@ import android.content.Context
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.assert.implementation.AssertUtilInitializer
+import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.implementation.CrashHandler
+import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
+import com.cramsan.framework.crashehandler.implementation.PlatformCrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -13,6 +17,10 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.PlatformLogger
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.Metrics
+import com.cramsan.framework.metrics.implementation.MetricsInitializer
+import com.cramsan.framework.metrics.implementation.PlatformMetrics
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.PlatformPreferences
 import com.cramsan.framework.preferences.implementation.Preferences
@@ -32,8 +40,6 @@ import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
 import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
 import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.analytics.Analytics
-import com.microsoft.appcenter.crashes.Crashes
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -45,10 +51,18 @@ import org.kodein.di.newInstance
 class PetProjectApplication : Application(), KodeinAware {
 
     private val eventLogger: EventLoggerInterface by instance()
+    private val crashHandler: CrashHandlerInterface by instance()
+    private val metrics: MetricsInterface by instance()
 
     override val kodein = Kodein.lazy {
         import(androidXModule(this@PetProjectApplication))
 
+        bind<CrashHandlerInterface>() with singleton {
+            CrashHandler(CrashHandlerInitializer(PlatformCrashHandler()))
+        }
+        bind<MetricsInterface>() with singleton {
+            Metrics(MetricsInitializer(PlatformMetrics()))
+        }
         bind<EventLoggerInterface>() with singleton {
             val severity: Severity = when (BuildConfig.DEBUG) {
                 true -> Severity.DEBUG
@@ -111,9 +125,8 @@ class PetProjectApplication : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         eventLogger.log(Severity.INFO, classTag(), "onCreate called")
-        AppCenter.start(
-            this, "1206f21f-1b20-483f-9385-9b8cbc0e504d",
-            Analytics::class.java, Crashes::class.java
-        )
+        AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
+        crashHandler.initialize()
+        metrics.initialize()
     }
 }
