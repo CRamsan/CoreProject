@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+sourceCompatibility = "$javaCompatibility"
+
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutines"
+    implementation project(":doom:lib")
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class' : 'com.cramsan.awslib.AWTRunner'
+        )
+    }
+}
+
+application {
+    mainClassName = 'com.cramsan.awslib.AWTRunner'
+}
+
+compileKotlin {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "$javaCompatibility"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "$javaCompatibility"
+}

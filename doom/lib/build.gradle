@@ -1,0 +1,84 @@
+plugins {
+    id 'org.jetbrains.dokka' version "0.9.18"
+    id "org.jetbrains.kotlin.multiplatform"
+}
+
+
+/**
+ * Configure Dokka
+ * https://github.com/CRamsan/Doom-Project/issues/2
+ */
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+/**
+ * Configure multiplatform project
+ */
+kotlin {
+    targets {
+        fromPreset(presets.jvm, 'jvm')
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$kotlinCoroutines"
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion"
+                implementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion"
+
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines"
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
+                implementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutines"
+            }
+        }
+    }
+
+    targets.all {
+        compilations.all {
+            kotlinOptions {
+                allWarningsAsErrors = true
+            }
+        }
+    }
+
+    jvm {
+        compilations.each {
+            it.kotlinOptions {
+                // Setup the Kotlin compiler options for the 'main' compilation:
+                jvmTarget = "$javaCompatibility"
+            }
+        }
+    }
+}
+
+/**
+ * Log test results
+ */
+tasks {
+    jvmTest {
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
+
+configurations {
+    // Why do we need this?
+    compileClasspath
+}

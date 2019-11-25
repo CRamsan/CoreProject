@@ -1,0 +1,25 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+sourceCompatibility = "$javaCompatibility"
+
+compileKotlin {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "$javaCompatibility"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "$javaCompatibility"
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation project(":doom:lib")
+}

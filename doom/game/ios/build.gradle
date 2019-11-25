@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.6'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: "robovm"
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+sourceCompatibility = "$javaCompatibility"
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+dependencies {
+    implementation project(":doom:game:core")
+    implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+    implementation "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+}
+
+ext {
+    mainClassName = "com.cramsan.awsgame.IOSLauncher"
+}
+
+launchIPhoneSimulator.dependsOn build
+launchIPadSimulator.dependsOn build
+launchIOSDevice.dependsOn build
+createIPA.dependsOn build
+
+robovm {
+    archs = "thumbv7:arm64"
+}

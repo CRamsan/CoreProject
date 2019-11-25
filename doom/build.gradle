@@ -1,0 +1,15 @@
+subprojects {
+    group 'com.cramsan.awslib'
+    version '0.0.1'
+    repositories {
+        jcenter()
+        google()
+    }
+    ext {
+        appName = "AWSGame"
+        kotlinVersion = '1.3.31'
+        kotlinCoroutines = '1.2.1'
+        javaCompatibility = '1.8'
+    }
+}
+

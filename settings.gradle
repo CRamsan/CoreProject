@@ -13,11 +13,19 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'PetProject'
-
-include 'app'
-include 'appcore'
 include 'framework'
-include 'webservice'
+
+include 'petproject:app'
+include 'petproject:appcore'
+include 'petproject:webservice'
+
+include 'doom:lib'
+include 'doom:lib:sample'
+
+include 'doom:game'
+include 'doom:game:core'
+include 'doom:game:desktop'
+include 'doom:game:android'
+include 'doom:game:ios'
 
 enableFeaturePreview('GRADLE_METADATA')
