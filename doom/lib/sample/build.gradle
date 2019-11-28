@@ -4,10 +4,10 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-sourceCompatibility = "$javaCompatibility"
+sourceCompatibility = globalJavaCompatibility
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$globalCoroutinesVersion"
     implementation project(":doom:lib")
 }
 
@@ -30,8 +30,8 @@ compileKotlin {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "$javaCompatibility"
+    kotlinOptions.jvmTarget = globalJavaCompatibility
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "$javaCompatibility"
+    kotlinOptions.jvmTarget = globalJavaCompatibility
 }

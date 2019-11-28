@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-sourceCompatibility = "$javaCompatibility"
+sourceCompatibility = globalJavaCompatibility
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "com.cramsan.awsgame.desktop.DesktopLauncher"
@@ -10,8 +10,8 @@ project.ext.assetsDir = new File("../android/assets")
 
 dependencies {
     implementation project(":doom:game:core")
-    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$globalGdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-desktop"
 }
 
 task run(dependsOn: classes, type: JavaExec) {

@@ -1,16 +1,5 @@
 plugins {
-    id 'org.jetbrains.dokka' version "0.9.18"
     id "org.jetbrains.kotlin.multiplatform"
-}
-
-
-/**
- * Configure Dokka
- * https://github.com/CRamsan/Doom-Project/issues/2
- */
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
 }
 
 /**
@@ -23,28 +12,28 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$kotlinCoroutines"
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$globalKotlinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
             }
         }
         commonTest {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion"
-                implementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion"
+                implementation "org.jetbrains.kotlin:kotlin-test-common:$globalKotlinVersion"
+                implementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$globalCoroutinesVersion"
 
             }
         }
         jvmMain {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines"
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
         }
         jvmTest {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
-                implementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutines"
+                implementation "org.jetbrains.kotlin:kotlin-test:$globalKotlinVersion"
+                implementation "org.jetbrains.kotlin:kotlin-test-junit:$globalKotlinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$globalCoroutinesVersion"
             }
         }
     }
@@ -61,7 +50,7 @@ kotlin {
         compilations.each {
             it.kotlinOptions {
                 // Setup the Kotlin compiler options for the 'main' compilation:
-                jvmTarget = "$javaCompatibility"
+                jvmTarget = globalJavaCompatibility
             }
         }
     }
@@ -76,9 +65,4 @@ tasks {
             events "passed", "skipped", "failed"
         }
     }
-}
-
-configurations {
-    // Why do we need this?
-    compileClasspath
 }

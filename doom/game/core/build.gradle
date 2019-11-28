@@ -2,7 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-sourceCompatibility = "$javaCompatibility"
+sourceCompatibility = globalJavaCompatibility
 
 compileKotlin {
     kotlinOptions {
@@ -11,15 +11,15 @@ compileKotlin {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "$javaCompatibility"
+    kotlinOptions.jvmTarget = globalJavaCompatibility
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "$javaCompatibility"
+    kotlinOptions.jvmTarget = globalJavaCompatibility
 }
 
 dependencies {
-    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "com.badlogicgames.gdx:gdx:$globalGdxVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation project(":doom:lib")
 }

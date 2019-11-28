@@ -16,15 +16,15 @@ apply plugin: "robovm"
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-sourceCompatibility = "$javaCompatibility"
+sourceCompatibility = globalJavaCompatibility
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 dependencies {
     implementation project(":doom:game:core")
-    implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
-    implementation "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
-    implementation "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+    implementation "com.mobidevelop.robovm:robovm-rt:$globalRoboVMVersion"
+    implementation "com.mobidevelop.robovm:robovm-cocoatouch:$globalRoboVMVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-robovm:$globalGdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-ios"
 }
 
 ext {
