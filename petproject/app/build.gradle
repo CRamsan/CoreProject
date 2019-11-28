@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    buildToolsVersion globalAndroidBuildToolsVersion
     compileSdkVersion globalCompileSdkVersion
     defaultConfig {
         applicationId "com.cramsan.petproject"

@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        globalAndroidBuildToolsVersion = "29.0.2"
         globalCompileSdkVersion = 29
         globalMinSdkVersion = 22
         globalTargetSdkVersion = 29
@@ -8,7 +9,7 @@ buildscript {
 
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
-        globalAndroidBuildToolsVersion = "3.5.0"
+        globalAndroidGradlePluginVersion = "3.5.2"
         globalAndroidMaterialVersion = "1.0.0"
         globalAndroidXJUnitVersion = "1.1.1"
         globalAndroidXLifecycleVersion = "2.1.0"
@@ -30,6 +31,12 @@ buildscript {
         globalOkhttpVersion = "4.1.0"
         globalRobolectricVersion = "4.3.1"
         globalSqlDelightVersion = "1.2.0"
+
+        globalGdxVersion = '1.9.9'
+        globalRoboVMVersion = '2.3.6'
+        globalBox2DLightsVersion = '1.4'
+        globalAshleyVersion = '1.7.0'
+        globalAiVersion = '1.8.0'
     }
 
     repositories {
@@ -37,7 +44,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$globalAndroidBuildToolsVersion"
+        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
     }
 }
 

@@ -27,6 +27,7 @@ sqldelight {
 }
 
 android {
+    buildToolsVersion globalAndroidBuildToolsVersion
     compileSdkVersion globalCompileSdkVersion
     defaultConfig {
         minSdkVersion globalMinSdkVersion
