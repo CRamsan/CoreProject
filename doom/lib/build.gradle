@@ -66,3 +66,8 @@ tasks {
         }
     }
 }
+
+configurations {
+    // https://youtrack.jetbrains.com/issue/KT-27170
+    compileClasspath
+}
