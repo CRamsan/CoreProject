@@ -29,9 +29,8 @@ compileKotlin {
     }
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = globalJavaCompatibility
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = globalJavaCompatibility
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = globalJavaCompatibility
+    }
 }

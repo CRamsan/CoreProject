@@ -6,9 +6,14 @@ plugins {
  * Configure multiplatform project
  */
 kotlin {
-    targets {
-        fromPreset(presets.jvm, 'jvm')
+    jvm("jvm") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = globalJavaCompatibility
+            }
+        }
     }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -42,15 +47,6 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 allWarningsAsErrors = true
-            }
-        }
-    }
-
-    jvm {
-        compilations.each {
-            it.kotlinOptions {
-                // Setup the Kotlin compiler options for the 'main' compilation:
-                jvmTarget = globalJavaCompatibility
             }
         }
     }

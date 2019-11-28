@@ -39,7 +39,6 @@ android {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility
     }
-
     testOptions {
         unitTests {
             includeAndroidResources = true

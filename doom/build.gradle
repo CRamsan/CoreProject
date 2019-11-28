@@ -1,12 +1,6 @@
 subprojects {
     group 'com.cramsan.awslib'
     version '0.0.1'
-    repositories {
-        jcenter()
-        google()
-    }
     ext {
-        appName = "AWSGame"
     }
 }
-
