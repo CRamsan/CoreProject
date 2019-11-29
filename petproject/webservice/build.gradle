@@ -1,6 +1,6 @@
 plugins {
-    id "org.springframework.boot"
-    id "io.spring.dependency-management"
+    id "org.springframework.boot" version "$globalSpringFrameworkVersion"
+    id "io.spring.dependency-management" version "$globalSpringDependencyManagement"
     id "org.jetbrains.kotlin.jvm"
     id "org.jetbrains.kotlin.plugin.spring"
     id "org.jetbrains.kotlin.plugin.jpa"
@@ -9,7 +9,7 @@ plugins {
 
 group = 'com.cramsan.petproject.webservice'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = globalJavaCompatibility
 
 repositories {
     mavenCentral()
