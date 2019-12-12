@@ -1,11 +1,20 @@
 package com.cramsan.awsgame
 
 import com.badlogic.gdx.ApplicationAdapter
+import com.cramsan.awslib.dsl.scene
+import com.cramsan.awslib.entitymanager.EntityManagerEventListener
+import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
+import com.cramsan.awslib.entitymanager.implementation.EntityManager
+import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
+import com.cramsan.awslib.scene.Scene
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class AWSGame : ApplicationAdapter() {
+class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
     private var player: Player? = null
-    private var map: Map? = null
+    private var scene: Scene? = null
+    private lateinit var map: Map
     private var controls: Controls? = null
     private var camera: Camera? = null
 
@@ -21,12 +30,60 @@ class AWSGame : ApplicationAdapter() {
         orthoCamera = com.badlogic.gdx.graphics.OrthographicCamera(VIRTUAL_WIDTH.toFloat(), VIRTUAL_HEIGHT.toFloat())
         orthoCamera!!.setToOrtho(true, VIRTUAL_WIDTH.toFloat(), VIRTUAL_HEIGHT.toFloat())
 
-        this.player = Player(15.3, -1.2, Math.PI * 0.3)
         this.map = Map(32)
         this.controls = Controls()
         this.camera = Camera(orthoCamera!!, 320.0, Math.PI * 0.4)
 
-        this.map!!.randomize()
+        val sceneConfig = scene {
+            player {
+                posX = 12
+                posY = 29
+                speed = 20
+            }
+
+            entities {
+                dog {
+                    id = 5
+                    posX = 15
+                    posY = 26
+                    priority = 5
+                    enabled = false
+                }
+                scientist {
+                    id = 1
+                    group = 0
+                    posX = 2
+                    posY = 23
+                }
+            }
+
+            triggers {
+                entity {
+                    id = 523
+                    eventId = 912
+                    targetId = 1
+                    enabled = true
+
+                }
+            }
+            events {
+                interactive {
+                    id = 912
+                    text = "Welcome to this new game"
+                }
+                swapEntity {
+                    id = 482
+                    disableEntityId = 1
+                }
+            }
+
+        } ?: return
+        val entityManager = EntityManager(this.map.map, sceneConfig.triggerList, sceneConfig.eventList, this)
+        scene = Scene(entityManager, sceneConfig)
+
+        this.player = Player(sceneConfig.player)
+
+        scene!!.loadScene()
     }
 
     override fun resize(width: Int, height: Int) {
@@ -62,10 +119,29 @@ class AWSGame : ApplicationAdapter() {
 
         seconds = com.badlogic.gdx.Gdx.graphics.deltaTime
 
-        map!!.update(seconds.toDouble())
+        map.update(seconds.toDouble())
         controls!!.update()
-        player!!.update(controls!!, map!!, seconds.toDouble())
-        camera!!.render(player!!, map!!)
+        GlobalScope.launch {
+            scene!!.runTurn(controls!!.turnAction)
+        }
+        //player!!.update(controls!!, map, seconds.toDouble())
+        camera!!.render(player!!, map)
+    }
+
+    override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun onInteractionRequired(
+        text: String?,
+        options: List<InteractiveEventOption>,
+        eventReceiver: EntityManagerInteractionReceiver
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {

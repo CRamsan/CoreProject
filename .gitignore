@@ -3,7 +3,7 @@
 .DS_Store
 .externalNativeBuild
 /local.properties
-/build
+build/
 /buildSrc/build/
 /captures
 

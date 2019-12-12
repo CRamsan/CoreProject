@@ -3,6 +3,7 @@ package com.cramsan.awslib
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
+import com.cramsan.awslib.utils.map.MapLoader
 
 import java.awt.*
 
@@ -15,7 +16,7 @@ class AWTRunner {
 
         private fun createAndShowGUI() {
 
-            val map = GameMap(MapLoader.loadCSVMap("map1.txt"))
+            val map = GameMap(MapLoader().loadCSVMap("map1.txt"))
 
             val sceneConfig = scene {
                 player {

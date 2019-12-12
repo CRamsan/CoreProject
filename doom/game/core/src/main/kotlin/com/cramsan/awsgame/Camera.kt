@@ -24,7 +24,7 @@ class Camera(private val camera: com.badlogic.gdx.graphics.OrthographicCamera, p
     }
 
     fun render(player: Player, map: Map) {
-        this.drawSky(player.direction, map.skybox, map.light)
+        this.drawSky(player.angleFromDirection(player.direction), map.skybox, map.light)
         this.drawColumns(player, map)
         this.drawWeapon(player.weapon, player.paces)
     }
@@ -55,7 +55,7 @@ class Camera(private val camera: com.badlogic.gdx.graphics.OrthographicCamera, p
         var column = 0
         while (column < this.resolution) {
             val angle = this.fov * (column / this.resolution - 0.5)
-            val ray = map.cast(player.toPoint(), player.direction + angle, this.range)
+            val ray = map.cast(player.toPoint(), player.angleFromDirection(player.direction) + angle, this.range)
             this.drawColumn(column.toDouble(), ray, angle, map)
             column++
         }

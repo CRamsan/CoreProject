@@ -1,7 +1,11 @@
 package com.cramsan.awsgame
 
-class Player(protected var x: Double, protected var y: Double, var direction: Double) {
+import com.cramsan.awslib.entity.implementation.Player
+import com.cramsan.awslib.enums.Direction
+
+class Player(val player: Player) {
     var paces: Double = 0.toDouble()
+    var direction = Direction.NORTH
 
     var weapon: com.badlogic.gdx.graphics.Texture
 
@@ -10,26 +14,34 @@ class Player(protected var x: Double, protected var y: Double, var direction: Do
         this.weapon = com.badlogic.gdx.graphics.Texture(com.badlogic.gdx.Gdx.files.internal("knife_hand.png"))
     }
 
-    fun rotate(angle: Double) {
-        this.direction = (this.direction + angle + AWSGame.CIRCLE) % AWSGame.CIRCLE
+    fun rotate(direction: Direction) {
+        this.direction = direction
     }
 
-    fun walk(distance: Double, map: Map) {
-        val dx = Math.cos(this.direction) * distance
-        val dy = Math.sin(this.direction) * distance
-        if (map.get(this.x + dx, this.y)!! <= 0) this.x += dx
-        if (map.get(this.x, this.y + dy)!! <= 0) this.y += dy
-        this.paces += distance
+    fun angleFromDirection(direction: Direction): Double {
+        return when(direction) {
+            Direction.NORTH -> 0.0
+            Direction.SOUTH -> 180.0
+            Direction.WEST -> 270.0
+            Direction.EAST -> 90.0
+            Direction.KEEP -> 0.0
+        }
     }
 
+    /*
+    fun walk(direction: Direction) {
+        var action = TurnAction(TurnActionType.MOVE, direction)
+        scene.runTurn(action)
+        this.paces++
+    }
+    */
+
+    /*
     fun update(controls: Controls, map: Map, seconds: Double) {
-        if (controls.left) this.rotate(-Math.PI * seconds)
-        if (controls.right) this.rotate(Math.PI * seconds)
-        if (controls.forward) this.walk(3 * seconds, map)
-        if (controls.backward) this.walk(-3 * seconds, map)
     }
+    */
 
     fun toPoint(): Point {
-        return Point(this.x, this.y)
+        return Point(this.player.posX.toDouble(), this.player.posY.toDouble())
     }
 }

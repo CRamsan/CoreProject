@@ -2,18 +2,20 @@ package com.cramsan.awsgame
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
+import com.cramsan.awslib.map.GameMap
+import com.cramsan.awslib.utils.map.MapLoader
 
 class Map(protected var size: Int) {
-    protected var wallGrid: IntArray
     var light: Double = 0.toDouble()
     var skybox: com.badlogic.gdx.graphics.Texture
     var wallTexture: com.badlogic.gdx.graphics.Texture
+    var map: GameMap
 
     init {
-        this.wallGrid = IntArray(this.size * this.size)
         this.light = 0.0
         this.skybox = com.badlogic.gdx.graphics.Texture(com.badlogic.gdx.Gdx.files.internal("deathvalley_panorama.jpg"))
         this.wallTexture = com.badlogic.gdx.graphics.Texture(com.badlogic.gdx.Gdx.files.internal("wall_texture.jpg"))
+        map = GameMap(MapLoader().loadCSVMap(Gdx.files.internal("map1.txt").file().absolutePath))
     }
 
     operator fun get(px: Double, py: Double): Int? {
@@ -21,13 +23,9 @@ class Map(protected var size: Int) {
         var y = py
         x = Math.floor(x)
         y = Math.floor(y)
-        return if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) -1 else this.wallGrid[(y * this.size + x).toInt()]
-    }
-
-    fun randomize() {
-        for (i in 0 until this.size * this.size) {
-            this.wallGrid[i] = if (Math.random() < 0.3) 1 else 0
-        }
+        return if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) -1 else this.map.cellAt(x.toInt(),
+            y.toInt()
+        ).terrain.value
     }
 
     fun cast(point: Point, angle: Double, range: Double): Ray {

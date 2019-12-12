@@ -2,47 +2,28 @@ package com.cramsan.awsgame
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.cramsan.awslib.entitymanager.implementation.TurnAction
+import com.cramsan.awslib.enums.Direction
+import com.cramsan.awslib.enums.TurnActionType
 
 class Controls {
-    var left: Boolean = false
-    var right: Boolean = false
-    var forward: Boolean = false
-    var backward: Boolean = false
 
-    init {
-        backward = false
-        forward = backward
-        right = forward
-        left = right
-    }
+    var direction: Direction = Direction.KEEP
+    var turnAction: TurnAction = TurnAction(TurnActionType.NONE, Direction.KEEP)
 
     fun update() {
-        backward = false
-        forward = backward
-        right = forward
-        left = right
-
-        if (com.badlogic.gdx.Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.LEFT)) {
-            left = true
+        turnAction = TurnAction(TurnActionType.NONE, Direction.KEEP)
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            turnAction = TurnAction(TurnActionType.MOVE, Direction.WEST)
         }
-        if (com.badlogic.gdx.Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.RIGHT)) {
-            right = true
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            turnAction = TurnAction(TurnActionType.MOVE, Direction.EAST)
         }
-        if (com.badlogic.gdx.Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.UP)) {
-            forward = true
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            turnAction = TurnAction(TurnActionType.MOVE, Direction.NORTH)
         }
-        if (com.badlogic.gdx.Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.DOWN)) {
-            backward = true
-        }
-
-        if (com.badlogic.gdx.Gdx.input.isTouched) {
-            if (com.badlogic.gdx.Gdx.input.y < com.badlogic.gdx.Gdx.graphics.height * 0.5) {
-                forward = true
-            } else if (com.badlogic.gdx.Gdx.input.x < com.badlogic.gdx.Gdx.graphics.width * 0.5) {
-                left = true
-            } else if (com.badlogic.gdx.Gdx.input.x > com.badlogic.gdx.Gdx.graphics.width * 0.5) {
-                right = true
-            }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            turnAction = TurnAction(TurnActionType.MOVE, Direction.SOUTH)
         }
     }
 }
