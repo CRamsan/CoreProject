@@ -5,7 +5,6 @@ import com.cramsan.awslib.enums.Direction
 
 class Player(val player: Player) {
     var paces: Double = 0.toDouble()
-    var direction = Direction.NORTH
 
     var weapon: com.badlogic.gdx.graphics.Texture
 
@@ -14,16 +13,48 @@ class Player(val player: Player) {
         this.weapon = com.badlogic.gdx.graphics.Texture(com.badlogic.gdx.Gdx.files.internal("knife_hand.png"))
     }
 
-    fun rotate(direction: Direction) {
-        this.direction = direction
+    fun getGameDirectionFromInput(inputDirection: com.cramsan.awsgame.Direction): Direction {
+        return when(inputDirection) {
+            com.cramsan.awsgame.Direction.UP -> direction()
+            com.cramsan.awsgame.Direction.DOWN -> {
+                when(direction()) {
+                    Direction.NORTH -> Direction.SOUTH
+                    Direction.SOUTH -> Direction.NORTH
+                    Direction.WEST -> Direction.EAST
+                    Direction.EAST -> Direction.WEST
+                    Direction.KEEP -> Direction.KEEP
+                }
+            }
+            com.cramsan.awsgame.Direction.LEFT -> {
+                this.player.heading = when(direction()) {
+                    Direction.NORTH -> Direction.WEST
+                    Direction.SOUTH -> Direction.EAST
+                    Direction.WEST -> Direction.SOUTH
+                    Direction.EAST -> Direction.NORTH
+                    Direction.KEEP -> Direction.KEEP
+                }
+                Direction.KEEP
+            }
+            com.cramsan.awsgame.Direction.RIGHT -> {
+                this.player.heading = when(direction()) {
+                    Direction.NORTH -> Direction.EAST
+                    Direction.SOUTH -> Direction.WEST
+                    Direction.WEST -> Direction.NORTH
+                    Direction.EAST -> Direction.SOUTH
+                    Direction.KEEP -> Direction.KEEP
+                }
+                Direction.KEEP
+            }
+            com.cramsan.awsgame.Direction.NONE -> Direction.KEEP
+        }
     }
 
-    fun angleFromDirection(direction: Direction): Double {
-        return when(direction) {
-            Direction.NORTH -> 0.0
-            Direction.SOUTH -> 180.0
-            Direction.WEST -> 270.0
-            Direction.EAST -> 90.0
+    fun angleFromDirection(): Double {
+        return when(direction()) {
+            Direction.NORTH -> Math.PI * -0.5
+            Direction.SOUTH -> Math.PI * 0.5
+            Direction.WEST -> Math.PI * 1.0
+            Direction.EAST -> Math.PI * 0.0
             Direction.KEEP -> 0.0
         }
     }
@@ -35,13 +66,15 @@ class Player(val player: Player) {
         this.paces++
     }
     */
-
-    /*
+/*
     fun update(controls: Controls, map: Map, seconds: Double) {
     }
     */
+    fun direction(): Direction {
+        return this.player.heading
+    }
 
     fun toPoint(): Point {
-        return Point(this.player.posX.toDouble(), this.player.posY.toDouble())
+        return Point(this.player.posX.toDouble() + 0.5, this.player.posY.toDouble() + 0.5)
     }
 }

@@ -1,17 +1,18 @@
 package com.cramsan.awsgame
 
-import java.util.ArrayList
+class Ray(var map: Map,
+          origin: Step,
+          var sin: Double,
+          var cos: Double,
+          range: Double) {
 
-class Ray(protected var map: Map, origin: Step, protected var sin: Double, protected var cos: Double, range: Double) {
-    var steps: MutableList<Step>
+    var steps: MutableList<Step> = mutableListOf()
 
     init {
-        this.steps = java.util.ArrayList()
-
         this.cast(origin, range)
     }
 
-    protected fun cast(origin: Step, range: Double) {
+    fun cast(origin: Step, range: Double) {
         val stepX = step(sin, cos, origin.x, origin.y, false)
         val stepY = step(cos, sin, origin.y, origin.x, true)
         val nextStep = if (stepX.length2 < stepY.length2)
@@ -25,14 +26,14 @@ class Ray(protected var map: Map, origin: Step, protected var sin: Double, prote
         }
     }
 
-    protected fun step(rise: Double, run: Double, x: Double, y: Double, inverted: Boolean): Step {
+    fun step(rise: Double, run: Double, x: Double, y: Double, inverted: Boolean): Step {
         if (run == 0.0) return Step(0.0, 0.0, 0.0, 0.0, java.lang.Double.POSITIVE_INFINITY, 0.0, 0.0)
         val dx = if (run > 0) Math.floor(x + 1) - x else Math.ceil(x - 1) - x
         val dy = dx * (rise / run)
         return Step(if (inverted) y + dy else x + dx, if (inverted) x + dx else y + dy, 0.0, 0.0, dx * dx + dy * dy, 0.0, 0.0)
     }
 
-    protected fun inspect(step: Step, shiftX: Double, shiftY: Double, distance: Double, offset: Double): Step {
+    fun inspect(step: Step, shiftX: Double, shiftY: Double, distance: Double, offset: Double): Step {
         val dx: Double = if (cos < 0) shiftX else 0.0
         val dy: Double = if (sin < 0) shiftY else 0.0
         step.height = map.get((step.x - dx), step.y - dy)!!.toDouble()

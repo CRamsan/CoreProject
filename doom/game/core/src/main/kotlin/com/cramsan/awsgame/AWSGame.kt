@@ -1,10 +1,16 @@
 package com.cramsan.awsgame
 
 import com.badlogic.gdx.ApplicationAdapter
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Gdx.input
+import com.badlogic.gdx.Input
+import com.badlogic.gdx.math.Rectangle
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
+import com.cramsan.awslib.entitymanager.implementation.TurnAction
+import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.scene.Scene
 import kotlinx.coroutines.GlobalScope
@@ -103,28 +109,38 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
         val w = VIRTUAL_WIDTH.toFloat() * scale
         val h = VIRTUAL_HEIGHT.toFloat() * scale
-        viewport = com.badlogic.gdx.math.Rectangle(crop.x, crop.y, w, h)
+        viewport = Rectangle(crop.x, crop.y, w, h)
     }
 
     override fun render() {
-        if (com.badlogic.gdx.Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE)) {
-            com.badlogic.gdx.Gdx.app.exit()
+        if (input.isKeyPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit()
         }
 
-        com.badlogic.gdx.Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
-        com.badlogic.gdx.Gdx.gl.glClear(com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT)
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClear(com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT)
 
         orthoCamera!!.update()
-        com.badlogic.gdx.Gdx.gl.glViewport(viewport!!.x.toInt(), viewport!!.y.toInt(), viewport!!.width.toInt(), viewport!!.height.toInt())
+        Gdx.gl.glViewport(viewport!!.x.toInt(), viewport!!.y.toInt(), viewport!!.width.toInt(), viewport!!.height.toInt())
 
-        seconds = com.badlogic.gdx.Gdx.graphics.deltaTime
+        seconds = Gdx.graphics.deltaTime
 
         map.update(seconds.toDouble())
-        controls!!.update()
-        GlobalScope.launch {
-            scene!!.runTurn(controls!!.turnAction)
+        controls!!.update(seconds)
+        val direction = controls!!.direction
+        if (direction != Direction.NONE) {
+            val gameDirection = player!!.getGameDirectionFromInput(controls!!.direction)
+            if (direction == Direction.UP || direction == Direction.DOWN) {
+                GlobalScope.launch {
+                    scene!!.runTurn(TurnAction(TurnActionType.MOVE, gameDirection))
+                }
+            }
+            println("Direction " + player!!.direction())
+            println("Angle " + player!!.angleFromDirection())
+            println("X: " + player!!.toPoint().x)
+            println("Y: " + player!!.toPoint().y)
+            println("-------s")
         }
-        //player!!.update(controls!!, map, seconds.toDouble())
         camera!!.render(player!!, map)
     }
 

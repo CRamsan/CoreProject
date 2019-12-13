@@ -2,28 +2,49 @@ package com.cramsan.awsgame
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.cramsan.awslib.entitymanager.implementation.TurnAction
-import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.TurnActionType
 
 class Controls {
 
-    var direction: Direction = Direction.KEEP
-    var turnAction: TurnAction = TurnAction(TurnActionType.NONE, Direction.KEEP)
+    lateinit var direction: Direction
+    var inputBuffer = 0.0
+    var handingInput = false
 
-    fun update() {
-        turnAction = TurnAction(TurnActionType.NONE, Direction.KEEP)
+    fun update(delta: Float) {
+        direction = Direction.NONE
+
+        if (handingInput) {
+            inputBuffer += delta
+            if (inputBuffer > 0.2) {
+                inputBuffer = 0.0
+                handingInput = false
+                return
+            }
+            return
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            turnAction = TurnAction(TurnActionType.MOVE, Direction.WEST)
+            direction = Direction.LEFT
+            inputBuffer = 0.0
+            handingInput = true
+            return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            turnAction = TurnAction(TurnActionType.MOVE, Direction.EAST)
+            direction = Direction.RIGHT
+            inputBuffer = 0.0
+            handingInput = true
+            return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            turnAction = TurnAction(TurnActionType.MOVE, Direction.NORTH)
+            direction = Direction.UP
+            inputBuffer = 0.0
+            handingInput = true
+            return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            turnAction = TurnAction(TurnActionType.MOVE, Direction.SOUTH)
+            direction = Direction.DOWN
+            inputBuffer = 0.0
+            handingInput = true
+            return
         }
     }
 }

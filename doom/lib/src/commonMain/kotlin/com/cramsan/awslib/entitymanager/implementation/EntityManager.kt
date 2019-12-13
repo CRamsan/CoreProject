@@ -144,7 +144,6 @@ class EntityManager(
         var y = entity.posY
 
         entity.nextTurnAction.direction.apply {
-            entity.heading = this
             when (this) {
                 Direction.NORTH -> {
                     y--

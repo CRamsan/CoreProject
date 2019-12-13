@@ -1,19 +1,22 @@
 package com.cramsan.awsgame
 
-class Camera(private val camera: com.badlogic.gdx.graphics.OrthographicCamera, protected var resolution: Double, protected var fov: Double) {
-    protected var width: Double = 0.toDouble()
-    protected var height: Double = 0.toDouble()
-    protected var spacing: Double = 0.toDouble()
-    protected var range: Double = 0.toDouble()
-    protected var lightRange: Double = 0.toDouble()
-    protected var scale: Double = 0.toDouble()
-    private val batch: com.badlogic.gdx.graphics.g2d.SpriteBatch
-    private val shapeRenderer: com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+
+class Camera(private val camera: OrthographicCamera, private var resolution: Double, private var fov: Double) {
+    private var width: Double = 0.toDouble()
+    private var height: Double = 0.toDouble()
+    private var spacing: Double = 0.toDouble()
+    private var range: Double = 0.toDouble()
+    private var lightRange: Double = 0.toDouble()
+    private var scale: Double = 0.toDouble()
+    private val batch: SpriteBatch = SpriteBatch()
+    private val shapeRenderer: ShapeRenderer
 
     init {
-        this.batch = com.badlogic.gdx.graphics.g2d.SpriteBatch()
         this.batch.projectionMatrix = camera.combined
-        this.shapeRenderer = com.badlogic.gdx.graphics.glutils.ShapeRenderer()
+        this.shapeRenderer = ShapeRenderer()
         this.shapeRenderer.projectionMatrix = camera.combined
         this.width = this.camera.viewportWidth.toDouble()
         this.height = this.camera.viewportHeight.toDouble()
@@ -24,7 +27,7 @@ class Camera(private val camera: com.badlogic.gdx.graphics.OrthographicCamera, p
     }
 
     fun render(player: Player, map: Map) {
-        this.drawSky(player.angleFromDirection(player.direction), map.skybox, map.light)
+        this.drawSky(player.angleFromDirection(), map.skybox, map.light)
         this.drawColumns(player, map)
         this.drawWeapon(player.weapon, player.paces)
     }
@@ -55,7 +58,7 @@ class Camera(private val camera: com.badlogic.gdx.graphics.OrthographicCamera, p
         var column = 0
         while (column < this.resolution) {
             val angle = this.fov * (column / this.resolution - 0.5)
-            val ray = map.cast(player.toPoint(), player.angleFromDirection(player.direction) + angle, this.range)
+            val ray = map.cast(player.toPoint(), player.angleFromDirection() + angle, this.range)
             this.drawColumn(column.toDouble(), ray, angle, map)
             column++
         }
