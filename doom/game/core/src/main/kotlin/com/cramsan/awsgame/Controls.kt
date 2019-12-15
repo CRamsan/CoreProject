@@ -3,47 +3,34 @@ package com.cramsan.awsgame
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 
+/**
+ * This class should be called once a frame to update the state. It is the ownership of this class to handle user inputs
+ * and to ensure inputs are generated every X amount of time.
+ */
 class Controls {
 
-    lateinit var direction: Direction
-    var inputBuffer = 0.0
-    var handingInput = false
+    /**
+     * Direction that the user input
+     */
+    lateinit var inputDirection: InputDirection
 
-    fun update(delta: Float) {
-        direction = Direction.NONE
-
-        if (handingInput) {
-            inputBuffer += delta
-            if (inputBuffer > 0.2) {
-                inputBuffer = 0.0
-                handingInput = false
-                return
-            }
-            return
-        }
+    fun update() {
+        inputDirection = InputDirection.NONE
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            direction = Direction.LEFT
-            inputBuffer = 0.0
-            handingInput = true
+            inputDirection = InputDirection.LEFT
             return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            direction = Direction.RIGHT
-            inputBuffer = 0.0
-            handingInput = true
+            inputDirection = InputDirection.RIGHT
             return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            direction = Direction.UP
-            inputBuffer = 0.0
-            handingInput = true
+            inputDirection = InputDirection.UP
             return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            direction = Direction.DOWN
-            inputBuffer = 0.0
-            handingInput = true
+            inputDirection = InputDirection.DOWN
             return
         }
     }

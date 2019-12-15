@@ -44,4 +44,17 @@ class Map(private var size: Int) {
             this.light = max(this.light - 10 * seconds, 0.0)
         else if (Math.random() * 5 < seconds) this.light = 2.0
     }
+
+    fun printMap() {
+        var y = 0
+        while (y < map.height) {
+            var x = 0
+            while (x < map.width) {
+                print(map.cellAt(x, y).terrain.value)
+                x++
+            }
+            println()
+            y++
+        }
+    }
 }

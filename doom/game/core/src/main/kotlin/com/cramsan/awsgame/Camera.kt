@@ -27,7 +27,7 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
     }
 
     fun render(player: Player, map: Map) {
-        this.drawSky(player.angleFromDirection(), map.skybox, map.light)
+        this.drawSky(player.angle(), map.skybox, map.light)
         this.drawColumns(player, map)
         this.drawWeapon(player.weapon, player.paces)
     }
@@ -58,7 +58,7 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         var column = 0
         while (column < this.resolution) {
             val angle = this.fov * (column / this.resolution - 0.5)
-            val ray = map.cast(player.toPoint(), player.angleFromDirection() + angle, this.range)
+            val ray = map.cast(player.toPoint(), player.angle() + angle, this.range)
             this.drawColumn(column.toDouble(), ray, angle, map)
             column++
         }

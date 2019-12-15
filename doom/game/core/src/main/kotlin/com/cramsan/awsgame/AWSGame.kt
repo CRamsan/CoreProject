@@ -126,20 +126,13 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
         seconds = Gdx.graphics.deltaTime
 
         map.update(seconds.toDouble())
-        controls!!.update(seconds)
-        val direction = controls!!.direction
-        if (direction != Direction.NONE) {
-            val gameDirection = player!!.getGameDirectionFromInput(controls!!.direction)
-            if (direction == Direction.UP || direction == Direction.DOWN) {
-                GlobalScope.launch {
-                    scene!!.runTurn(TurnAction(TurnActionType.MOVE, gameDirection))
-                }
+        controls!!.update()
+        val direction = controls!!.inputDirection
+        player!!.update(seconds, direction)
+        player?.move?.let {
+            GlobalScope.launch {
+                scene!!.runTurn(TurnAction(TurnActionType.MOVE, it))
             }
-            println("Direction " + player!!.direction())
-            println("Angle " + player!!.angleFromDirection())
-            println("X: " + player!!.toPoint().x)
-            println("Y: " + player!!.toPoint().y)
-            println("-------s")
         }
         camera!!.render(player!!, map)
     }
@@ -161,7 +154,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     }
 
     companion object {
-        val CIRCLE = Math.PI * 2
+        const val CIRCLE = Math.PI * 2
 
         private val VIRTUAL_WIDTH = 1024
         private val VIRTUAL_HEIGHT = 640

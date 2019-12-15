@@ -1,80 +1,125 @@
 package com.cramsan.awsgame
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Texture
 import com.cramsan.awslib.entity.implementation.Player
-import com.cramsan.awslib.enums.Direction
+import kotlin.math.PI
 
 class Player(val player: Player) {
-    var paces: Double = 0.toDouble()
 
-    var weapon: com.badlogic.gdx.graphics.Texture
+    private val transitionTime = 0.5F
+    private var transitionCounter = 0.0F
 
-    init {
-        this.paces = 0.0
-        this.weapon = com.badlogic.gdx.graphics.Texture(com.badlogic.gdx.Gdx.files.internal("knife_hand.png"))
-    }
+    private var isTurning = false
+    private var startingAngle = 0.0
+    private var turnDirection = 0.0
 
-    fun getGameDirectionFromInput(inputDirection: com.cramsan.awsgame.Direction): Direction {
-        return when(inputDirection) {
-            com.cramsan.awsgame.Direction.UP -> direction()
-            com.cramsan.awsgame.Direction.DOWN -> {
-                when(direction()) {
-                    Direction.NORTH -> Direction.SOUTH
-                    Direction.SOUTH -> Direction.NORTH
-                    Direction.WEST -> Direction.EAST
-                    Direction.EAST -> Direction.WEST
-                    Direction.KEEP -> Direction.KEEP
+    private var isMoving = false
+    private var startingX = 0.0
+    private var startingY = 0.0
+    private var smoothAngle = 0.0
+    private lateinit var pointLocation: Point
+
+    private var inputBuffer: Float = 0.0F
+    private var blockedInput: Boolean = false
+
+    var paces: Double = 0.0
+    var weapon: Texture = Texture(Gdx.files.internal("knife_hand.png"))
+    var move: com.cramsan.awslib.enums.Direction? = null
+
+    fun update(delta: Float, inputDirection: InputDirection) {
+
+        move = null
+        if (blockedInput) {
+            inputBuffer += delta
+            paces += delta
+            transitionCounter += delta
+
+            if (isTurning) {
+                var completion = transitionCounter / transitionTime
+                if (completion > 1) {
+                    completion = 1F
                 }
+                val newAngle = startingAngle + ((PI / 2) * completion * turnDirection)
+                smoothAngle = newAngle
             }
-            com.cramsan.awsgame.Direction.LEFT -> {
-                this.player.heading = when(direction()) {
-                    Direction.NORTH -> Direction.WEST
-                    Direction.SOUTH -> Direction.EAST
-                    Direction.WEST -> Direction.SOUTH
-                    Direction.EAST -> Direction.NORTH
-                    Direction.KEEP -> Direction.KEEP
+
+            if (isMoving) {
+                var completion = transitionCounter / transitionTime
+                if (completion > 1) {
+                    completion = 1F
                 }
-                Direction.KEEP
+                val x = this.player.posX.toDouble() + 0.5
+                val y = this.player.posY.toDouble() + 0.5
+                val dX = completion * (x - startingX)
+                val dY = completion * (y - startingY)
+                pointLocation = Point(startingX + dX, startingY + dY)
             }
-            com.cramsan.awsgame.Direction.RIGHT -> {
-                this.player.heading = when(direction()) {
-                    Direction.NORTH -> Direction.EAST
-                    Direction.SOUTH -> Direction.WEST
-                    Direction.WEST -> Direction.NORTH
-                    Direction.EAST -> Direction.SOUTH
-                    Direction.KEEP -> Direction.KEEP
-                }
-                Direction.KEEP
+
+            if (inputBuffer > transitionTime) {
+                inputBuffer = 0.0F
+                blockedInput = false
+                isTurning = false
+                isMoving = false
+                return
             }
-            com.cramsan.awsgame.Direction.NONE -> Direction.KEEP
+            return
         }
-    }
 
-    fun angleFromDirection(): Double {
-        return when(direction()) {
-            Direction.NORTH -> Math.PI * -0.5
-            Direction.SOUTH -> Math.PI * 0.5
-            Direction.WEST -> Math.PI * 1.0
-            Direction.EAST -> Math.PI * 0.0
-            Direction.KEEP -> 0.0
+        smoothAngle = direction().angle()
+        pointLocation = Point(this.player.posX.toDouble() + 0.5, this.player.posY.toDouble() + 0.5)
+
+        if (inputDirection == InputDirection.NONE) {
+            return
         }
+
+        when(inputDirection) {
+            InputDirection.LEFT -> {
+                startingAngle = direction().angle()
+                this.player.heading = direction().turnLeft().direction
+                isTurning = true
+                transitionCounter = 0.0F
+                turnDirection = -1.0
+            }
+            InputDirection.RIGHT -> {
+                startingAngle = direction().angle()
+                this.player.heading = direction().turnRight().direction
+                isTurning = true
+                transitionCounter = 0.0F
+                turnDirection = 1.0
+            }
+            InputDirection.UP -> {
+                move = direction().direction
+                isMoving = true
+                val point = toPoint()
+                startingX = point.x
+                startingY = point.y
+                transitionCounter = 0.0F
+            }
+            InputDirection.DOWN -> {
+                move = direction().turnAround().direction
+                isMoving = true
+                val point = toPoint()
+                startingX = point.x
+                startingY = point.y
+                transitionCounter = 0.0F
+            }
+            else -> {
+                TODO()
+            }
+        }
+        blockedInput = true
     }
 
-    /*
-    fun walk(direction: Direction) {
-        var action = TurnAction(TurnActionType.MOVE, direction)
-        scene.runTurn(action)
-        this.paces++
+    fun angle(): Double {
+        return smoothAngle
     }
-    */
-/*
-    fun update(controls: Controls, map: Map, seconds: Double) {
-    }
-    */
+
     fun direction(): Direction {
-        return this.player.heading
+        return Direction.fromInternalDirection(this.player.heading)
     }
 
     fun toPoint(): Point {
-        return Point(this.player.posX.toDouble() + 0.5, this.player.posY.toDouble() + 0.5)
+        return pointLocation
     }
 }
