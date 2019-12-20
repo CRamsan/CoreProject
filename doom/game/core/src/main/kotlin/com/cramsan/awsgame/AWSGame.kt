@@ -10,12 +10,16 @@ import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
+import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.scene.Scene
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+/**
+ * This code is based on the raycaster demo from https://github.com/walle/raycaster
+ */
 class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
     private var player: Player? = null
@@ -25,7 +29,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     private var camera: Camera? = null
 
     private var seconds = 0f
-    private var viewport: com.badlogic.gdx.math.Rectangle? = null
+    private var viewport: Rectangle? = null
     private var scale = 1f
     private var orthoCamera: com.badlogic.gdx.graphics.OrthographicCamera? = null
 
@@ -38,7 +42,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
         this.map = Map(32)
         this.controls = Controls()
-        this.camera = Camera(orthoCamera!!, 320.0, Math.PI * 0.4)
+        this.camera = Camera(orthoCamera!!, 320.0, Math.PI * 0.3)
 
         val sceneConfig = scene {
             player {
@@ -127,11 +131,16 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
         map.update(seconds.toDouble())
         controls!!.update()
-        val direction = controls!!.inputDirection
-        player!!.update(seconds, direction)
-        player?.move?.let {
+        val input = controls!!.input
+        player!!.update(seconds, input)
+        player!!.move?.let {
             GlobalScope.launch {
                 scene!!.runTurn(TurnAction(TurnActionType.MOVE, it))
+            }
+        }
+        if(player!!.isAttacking) {
+            GlobalScope.launch {
+                scene!!.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
             }
         }
         camera!!.render(player!!, map)
@@ -156,8 +165,8 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     companion object {
         const val CIRCLE = Math.PI * 2
 
-        private val VIRTUAL_WIDTH = 1024
-        private val VIRTUAL_HEIGHT = 640
+        private val VIRTUAL_WIDTH = 160
+        private val VIRTUAL_HEIGHT = 80
         private val ASPECT_RATIO = VIRTUAL_WIDTH.toFloat() / VIRTUAL_HEIGHT.toFloat()
     }
 }

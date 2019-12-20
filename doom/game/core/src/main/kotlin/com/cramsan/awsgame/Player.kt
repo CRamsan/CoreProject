@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.cramsan.awslib.entity.implementation.Player
 import kotlin.math.PI
 
-class Player(val player: Player) {
+class Player(private val player: Player) {
 
     private val transitionTime = 0.5F
     private var transitionCounter = 0.0F
@@ -20,6 +20,8 @@ class Player(val player: Player) {
     private var smoothAngle = 0.0
     private lateinit var pointLocation: Point
 
+    var isAttacking = false
+
     private var inputBuffer: Float = 0.0F
     private var blockedInput: Boolean = false
 
@@ -27,9 +29,11 @@ class Player(val player: Player) {
     var weapon: Texture = Texture(Gdx.files.internal("knife_hand.png"))
     var move: com.cramsan.awslib.enums.Direction? = null
 
-    fun update(delta: Float, inputDirection: InputDirection) {
+    fun update(delta: Float, gameInput: GameInput) {
 
         move = null
+        isAttacking = false
+
         if (blockedInput) {
             inputBuffer += delta
             paces += delta
@@ -66,29 +70,29 @@ class Player(val player: Player) {
             return
         }
 
-        smoothAngle = direction().angle()
+        smoothAngle += 0.01// = direction().angle()
         pointLocation = Point(this.player.posX.toDouble() + 0.5, this.player.posY.toDouble() + 0.5)
 
-        if (inputDirection == InputDirection.NONE) {
+        if (gameInput == GameInput.NONE) {
             return
         }
 
-        when(inputDirection) {
-            InputDirection.LEFT -> {
+        when(gameInput) {
+            GameInput.LEFT -> {
                 startingAngle = direction().angle()
                 this.player.heading = direction().turnLeft().direction
                 isTurning = true
                 transitionCounter = 0.0F
                 turnDirection = -1.0
             }
-            InputDirection.RIGHT -> {
+            GameInput.RIGHT -> {
                 startingAngle = direction().angle()
                 this.player.heading = direction().turnRight().direction
                 isTurning = true
                 transitionCounter = 0.0F
                 turnDirection = 1.0
             }
-            InputDirection.UP -> {
+            GameInput.UP -> {
                 move = direction().direction
                 isMoving = true
                 val point = toPoint()
@@ -96,9 +100,17 @@ class Player(val player: Player) {
                 startingY = point.y
                 transitionCounter = 0.0F
             }
-            InputDirection.DOWN -> {
+            GameInput.DOWN -> {
                 move = direction().turnAround().direction
                 isMoving = true
+                val point = toPoint()
+                startingX = point.x
+                startingY = point.y
+                transitionCounter = 0.0F
+            }
+            GameInput.ACTION -> {
+                isMoving = true
+                isAttacking = true
                 val point = toPoint()
                 startingX = point.x
                 startingY = point.y

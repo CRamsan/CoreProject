@@ -12,25 +12,29 @@ class Controls {
     /**
      * Direction that the user input
      */
-    lateinit var inputDirection: InputDirection
+    lateinit var input: GameInput
 
     fun update() {
-        inputDirection = InputDirection.NONE
+        input = GameInput.NONE
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            inputDirection = InputDirection.LEFT
+            input = GameInput.LEFT
             return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            inputDirection = InputDirection.RIGHT
+            input = GameInput.RIGHT
             return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            inputDirection = InputDirection.UP
+            input = GameInput.UP
             return
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            inputDirection = InputDirection.DOWN
+            input = GameInput.DOWN
+            return
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            input = GameInput.ACTION
             return
         }
     }

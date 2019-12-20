@@ -2,6 +2,7 @@ package com.cramsan.awsgame
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
+import com.cramsan.awslib.map.Cell
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.map.MapLoader
 import kotlin.math.cos
@@ -22,14 +23,15 @@ class Map(private var size: Int) {
         map = GameMap(MapLoader().loadCSVMap(Gdx.files.internal("map1.txt").file().absolutePath))
     }
 
-    operator fun get(px: Double, py: Double): Int? {
+    operator fun get(px: Double, py: Double): Cell? {
         var x = px
         var y = py
         x = floor(x)
         y = floor(y)
-        return if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) -1 else this.map.cellAt(x.toInt(),
-            y.toInt()
-        ).terrain.value
+        return if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1)
+            null
+        else
+            this.map.cellAt(x.toInt(), y.toInt())
     }
 
     fun cast(point: Point, angle: Double, range: Double): Ray {
@@ -43,18 +45,5 @@ class Map(private var size: Int) {
         if (this.light > 0)
             this.light = max(this.light - 10 * seconds, 0.0)
         else if (Math.random() * 5 < seconds) this.light = 2.0
-    }
-
-    fun printMap() {
-        var y = 0
-        while (y < map.height) {
-            var x = 0
-            while (x < map.width) {
-                print(map.cellAt(x, y).terrain.value)
-                x++
-            }
-            println()
-            y++
-        }
     }
 }

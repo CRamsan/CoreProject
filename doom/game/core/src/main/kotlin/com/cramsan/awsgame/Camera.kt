@@ -1,8 +1,12 @@
 package com.cramsan.awsgame
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import kotlin.math.*
 
 class Camera(private val camera: OrthographicCamera, private var resolution: Double, private var fov: Double) {
     private var width: Double = 0.toDouble()
@@ -32,7 +36,7 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         this.drawWeapon(player.weapon, player.paces)
     }
 
-    private fun drawSky(direction: Double, sky: com.badlogic.gdx.graphics.Texture, ambient: Double) {
+    private fun drawSky(direction: Double, sky: Texture, ambient: Double) {
         val width = this.width * (AWSGame.CIRCLE / this.fov)
         val left = -width * direction / AWSGame.CIRCLE
 
@@ -44,13 +48,13 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         batch.end()
 
         if (ambient > 0) {
-            com.badlogic.gdx.Gdx.gl.glEnable(com.badlogic.gdx.graphics.GL20.GL_BLEND)
-            com.badlogic.gdx.Gdx.gl.glBlendFunc(com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA, com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA)
+            Gdx.gl.glEnable(GL20.GL_BLEND)
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
             shapeRenderer.setColor(1f, 1f, 1f, (ambient * 0.1).toFloat())
-            shapeRenderer.begin(com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled)
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
             shapeRenderer.rect(0f, 0f, this.width.toFloat(), (this.height * 0.5).toFloat())
             shapeRenderer.end()
-            com.badlogic.gdx.Gdx.gl.glDisable(com.badlogic.gdx.graphics.GL20.GL_BLEND)
+            Gdx.gl.glDisable(GL20.GL_BLEND)
         }
     }
 
@@ -64,9 +68,9 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         }
     }
 
-    private fun drawWeapon(weapon: com.badlogic.gdx.graphics.Texture, paces: Double) {
-        val bobX = Math.cos(paces * 2) * this.scale * 6.0
-        val bobY = Math.sin(paces * 4) * this.scale * 6.0
+    private fun drawWeapon(weapon: Texture, paces: Double) {
+        val bobX = cos(paces * 2) * this.scale * 6.0
+        val bobY = sin(paces * 4) * this.scale * 6.0
         val left = this.width * 0.66 + bobX
         val top = this.height * 0.6 + bobY
         batch.begin()
@@ -76,42 +80,44 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
 
     private fun drawColumn(column: Double, ray: Ray, angle: Double, map: Map) {
         val texture = map.wallTexture
-        val left = Math.floor(column * this.spacing)
-        val width = Math.ceil(this.spacing)
-        var hit = -1
+        val left = floor(column * this.spacing)
+        val width = ceil(this.spacing)
+        var hit = 0
 
-        while (++hit < ray.steps.size && ray.steps[hit].height <= 0);
+        while (hit < ray.steps.size && ray.steps[hit].height <= 0) {
+            hit++
+        }
 
         for (s in ray.steps.indices.reversed()) {
             val step = ray.steps[s]
-            var rainDrops = Math.pow(Math.random(), 3.0) * s
+            var rainDrops = Math.random().pow(3.0) * s
             var rain: Projection? = null
             if (rainDrops > 0) {
                 rain = this.project(0.1, angle, step.distance)
             }
 
             if (s == hit) {
-                val textureX = Math.floor(texture.width * step.offset)
+                val textureX = floor(texture.width * step.offset)
                 val wall = this.project(step.height, angle, step.distance)
 
                 batch.begin()
                 batch.draw(texture, left.toFloat(), wall.top.toFloat(), width.toFloat(), wall.height.toFloat(), textureX.toInt(), 0, 1, texture.height, false, true)
                 batch.end()
 
-                com.badlogic.gdx.Gdx.gl.glEnable(com.badlogic.gdx.graphics.GL20.GL_BLEND)
-                com.badlogic.gdx.Gdx.gl.glBlendFunc(com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA, com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA)
-                shapeRenderer.setColor(0f, 0f, 0f, Math.max((step.distance + step.shading) / this.lightRange - map.light, 0.0).toFloat())
-                shapeRenderer.begin(com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled)
+                Gdx.gl.glEnable(GL20.GL_BLEND)
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+                shapeRenderer.setColor(0f, 0f, 0f, max((step.distance + step.shading) / this.lightRange - map.light, 0.0).toFloat())
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
                 shapeRenderer.rect(left.toFloat(), wall.top.toFloat(), width.toFloat(), wall.height.toFloat())
                 shapeRenderer.end()
-                com.badlogic.gdx.Gdx.gl.glDisable(com.badlogic.gdx.graphics.GL20.GL_BLEND)
+                Gdx.gl.glDisable(GL20.GL_BLEND)
             }
 
             if (rain != null) {
-                com.badlogic.gdx.Gdx.gl.glEnable(com.badlogic.gdx.graphics.GL20.GL_BLEND)
-                com.badlogic.gdx.Gdx.gl.glBlendFunc(com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA, com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA)
+                Gdx.gl.glEnable(GL20.GL_BLEND)
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
                 shapeRenderer.setColor(1f, 1f, 1f, 0.15f)
-                shapeRenderer.begin(com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled)
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
                 while (--rainDrops > 0) {
                     shapeRenderer.rect(left.toFloat(), (Math.random() * rain.top).toFloat(), 1f, rain.height.toFloat())
                 }
@@ -121,7 +127,7 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
     }
 
     private fun project(height: Double, angle: Double, distance: Double): Projection {
-        val z = distance * Math.cos(angle)
+        val z = distance * cos(angle)
         val wallHeight = this.height * height / z
         val bottom = this.height / 2 * (1 + 1 / z)
         return Projection(bottom - wallHeight, wallHeight)

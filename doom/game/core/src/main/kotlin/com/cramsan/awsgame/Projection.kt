@@ -1,3 +1,3 @@
 package com.cramsan.awsgame
 
-class Projection(var top: Double, var height: Double)
+data class Projection(val top: Double, val height: Double)
