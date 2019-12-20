@@ -41,9 +41,7 @@ class Map(private var size: Int) {
             range)
     }
 
-    fun update(seconds: Double) {
-        if (this.light > 0)
-            this.light = max(this.light - 10 * seconds, 0.0)
-        else if (Math.random() * 5 < seconds) this.light = 2.0
+    fun update() {
+        this.light = 0.0
     }
 }

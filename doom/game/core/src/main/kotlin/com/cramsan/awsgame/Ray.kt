@@ -20,7 +20,7 @@ class Ray(var map: Map,
     private fun cast(origin: Step, range: Double) {
         val stepX = step(sin, cos, origin.x, origin.y, false)
         val stepY = step(cos, sin, origin.y, origin.x, true)
-        val nextStep = if (stepX.length2 < stepY.length2)
+        val nextStep = if (stepX.length < stepY.length)
             inspect(stepX, 1.0, 0.0, origin.distance, stepX.y)
         else
             inspect(stepY, 0.0, 1.0, origin.distance, stepY.x)
@@ -55,7 +55,7 @@ class Ray(var map: Map,
             TerrainType.END -> 1.0
             null -> 0.0
         }
-        step.distance = distance + sqrt(step.length2)
+        step.distance = distance + sqrt(step.length)
         if (shiftX == 1.0)
             step.shading = (if (cos < 0) 2 else 0).toDouble()
         else

@@ -42,7 +42,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
         this.map = Map(32)
         this.controls = Controls()
-        this.camera = Camera(orthoCamera!!, 320.0, Math.PI * 0.3)
+        this.camera = Camera(orthoCamera!!, 320.0, Math.PI * 0.4)
 
         val sceneConfig = scene {
             player {
@@ -129,7 +129,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
 
         seconds = Gdx.graphics.deltaTime
 
-        map.update(seconds.toDouble())
+        map.update()
         controls!!.update()
         val input = controls!!.input
         player!!.update(seconds, input)
@@ -165,8 +165,8 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     companion object {
         const val CIRCLE = Math.PI * 2
 
-        private val VIRTUAL_WIDTH = 160
-        private val VIRTUAL_HEIGHT = 80
+        private val VIRTUAL_WIDTH = 1024
+        private val VIRTUAL_HEIGHT = 640
         private val ASPECT_RATIO = VIRTUAL_WIDTH.toFloat() / VIRTUAL_HEIGHT.toFloat()
     }
 }

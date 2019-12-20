@@ -70,7 +70,7 @@ class Player(private val player: Player) {
             return
         }
 
-        smoothAngle += 0.01// = direction().angle()
+        smoothAngle = direction().angle()
         pointLocation = Point(this.player.posX.toDouble() + 0.5, this.player.posY.toDouble() + 0.5)
 
         if (gameInput == GameInput.NONE) {
