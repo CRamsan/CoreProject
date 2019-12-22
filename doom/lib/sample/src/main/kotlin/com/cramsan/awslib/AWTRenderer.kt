@@ -42,7 +42,7 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
 
     fun startScene(manager: EntityManager, sceneConfig: SceneConfig, map: GameMap) {
         add(RendererCanvas(manager, map))
-
+        val mainPlayer = sceneConfig.player
         runBlocking {
             val scene = Scene(manager, sceneConfig)
             scene.setListener(object : SceneEventsCallback {
@@ -62,13 +62,25 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
 
             this@AWTRenderer.addKeyListener(object : KeyAdapter() {
                 override fun keyTyped(e: KeyEvent?) {
-                    var action = TurnAction(TurnActionType.NONE, Direction.KEEP)
-                    when (e?.keyChar) {
-                        'w' -> action = TurnAction(TurnActionType.MOVE, Direction.NORTH)
-                        's' -> action = TurnAction(TurnActionType.MOVE, Direction.SOUTH)
-                        'a' -> action = TurnAction(TurnActionType.MOVE, Direction.WEST)
-                        'd' -> action = TurnAction(TurnActionType.MOVE, Direction.EAST)
-                        ' ' -> action = TurnAction(TurnActionType.ATTACK, Direction.KEEP)
+                    val action = when (e?.keyChar) {
+                        'w' -> {
+                            mainPlayer.heading = Direction.NORTH
+                            TurnAction(TurnActionType.MOVE, Direction.NORTH)
+                        }
+                        's' -> {
+                            mainPlayer.heading = Direction.SOUTH
+                            TurnAction(TurnActionType.MOVE, Direction.SOUTH)
+                        }
+                        'a' -> {
+                            mainPlayer.heading = Direction.WEST
+                            TurnAction(TurnActionType.MOVE, Direction.WEST)
+                        }
+                        'd' -> {
+                            mainPlayer.heading = Direction.EAST
+                            TurnAction(TurnActionType.MOVE, Direction.EAST)
+                        }
+                        ' ' -> TurnAction(TurnActionType.ATTACK, Direction.KEEP)
+                        else -> TurnAction(TurnActionType.NONE, Direction.KEEP)
                     }
                     GlobalScope.launch {
                         scene.runTurn(action)

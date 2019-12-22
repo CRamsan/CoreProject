@@ -59,9 +59,10 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         val texture = map.wallTexture
         val left = floor(column * this.spacing)
         val width = ceil(this.spacing)
-        var hit = -1
+        var hit = 0
 
-        while (++hit < ray.steps.size && ray.steps[hit].height <= 0) {
+        while (hit < ray.steps.size && ray.steps[hit].height <= 0) {
+            hit++
         }
 
         for (s in ray.steps.indices.reversed()) {

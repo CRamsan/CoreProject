@@ -68,6 +68,7 @@ class GameEntityTriggerTests {
         val scene = Scene(entityManager, sceneConfig)
         scene.loadScene()
 
+        player.heading = Direction.SOUTH
         scene.runTurn(TurnAction(TurnActionType.MOVE, Direction.SOUTH))
         assertEquals(5, player.posX)
         assertEquals(5, player.posY)
@@ -147,6 +148,7 @@ class GameEntityTriggerTests {
         val scene = Scene(entityManager, sceneConfig)
 
         scene.loadScene()
+        player.heading = Direction.SOUTH
         scene.runTurn(TurnAction(TurnActionType.MOVE, Direction.SOUTH))
         assertEquals(5, player.posX)
         assertEquals(5, player.posY)
