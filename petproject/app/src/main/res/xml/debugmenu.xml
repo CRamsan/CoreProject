@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+            app:key="clearCache"
+            app:title="@string/menu_debug_clear_cache"/>
+
+    <Preference
+            app:key="killApp"
+            app:title="@string/menu_debug_kill_app"/>
+
+</PreferenceScreen>

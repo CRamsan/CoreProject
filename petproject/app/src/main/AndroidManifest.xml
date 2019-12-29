@@ -49,7 +49,11 @@
                 android:theme="@style/AppTheme.NoActionBar"
                 android:parentActivityName=".mainmenu.MainMenuActivity">
         </activity>
-
+        <activity
+                android:name=".debugmenu.DebugMenuActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:parentActivityName=".mainmenu.MainMenuActivity">
+        </activity>
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-1144760940024029~7209899318"/>

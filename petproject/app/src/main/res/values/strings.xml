@@ -11,10 +11,15 @@
     <string name="drawer_menu_about">About</string>
 
     <string name="menu_search">Search</string>
-    `
+    <string name="menu_debug">Debug</string>
+
+    <string name="menu_debug_clear_cache">Clear Cache</string>
+    <string name="menu_debug_kill_app">Kill Application</string>
+
     <string name="title_fragment_plants_cats">Dangerous Plants for Cats</string>
     <string name="title_fragment_plants_dogs">Dangerous Plants for Dogs</string>
     <string name="title_activity_about">About</string>
+    <string name="title_activity_debug">Debug</string>
 
     <string name="plant_details_empty_image_description">Image is still loading</string>
     <string name="plant_details_scientific_name">Scientific Name: %1$s</string>

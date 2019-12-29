@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import kotlinx.io.errors.IOException
 
 class ModelProvider(
     private val eventLogger: EventLoggerInterface,
@@ -223,5 +222,14 @@ class ModelProvider(
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         return PlantMetadata(plantId, animalType, plantCustomEntry.isToxic, plantCustomEntry.description, plantCustomEntry.source)
+    }
+
+    override suspend fun deleteAll() {
+        eventLogger.log(Severity.INFO, classTag(), "deleteAll")
+        threadUtil.assertIsBackgroundThread()
+
+        modelStorage.deleteAll()
+        preferences.saveLong(LAST_UPDATE, 0)
+        isCatalogReady = false
     }
 }

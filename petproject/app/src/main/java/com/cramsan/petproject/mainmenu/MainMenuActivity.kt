@@ -2,7 +2,9 @@ package com.cramsan.petproject.mainmenu
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
@@ -10,6 +12,8 @@ import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
+import com.cramsan.petproject.debugmenu.DebugMenuActivity
+import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import kotlinx.android.synthetic.main.activity_main_menu.main_menu_toolbar
 
@@ -50,6 +54,23 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
             })
         }
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_debug -> {
+            val intent = Intent(this, DebugMenuActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
+        R.id.action_search -> {
+            super.onOptionsItemSelected(item)
+        }
+
+        else -> {
+            eventLogger.log(Severity.DEBUG, classTag(), "Action item not handled")
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onNewSearchable(listener: SearchView.OnQueryTextListener) {

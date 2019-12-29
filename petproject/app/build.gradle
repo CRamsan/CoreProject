@@ -53,6 +53,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$globalAndroidXLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$globalAndroidXLifecycleVersion"
     implementation "androidx.recyclerview:recyclerview:$globalAndroidXRecyclerViewVersion"
+    implementation "androidx.preference:preference:$globalAndroidXPreferencesVersion"
+    implementation "androidx.preference:preference-ktx:$globalAndroidXPreferencesVersion"
     implementation "com.google.android.material:material:$globalAndroidMaterialVersion"
 
     implementation "com.github.bumptech.glide:glide:$globalGlideVersion"
