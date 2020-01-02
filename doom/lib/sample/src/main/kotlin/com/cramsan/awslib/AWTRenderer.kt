@@ -97,7 +97,7 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
 
     }
-    override suspend fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+    override fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
         System.out.println("Options: ")
         options.forEachIndexed { index, interactiveEventOption ->
             System.out.println("$index) $interactiveEventOption")
@@ -127,11 +127,15 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
             selectedOption = options[selection]
 
             System.out.println("You selected $selectedOption")
-            eventReceiver.selectOption(selectedOption)
+            GlobalScope.launch {
+                eventReceiver.selectOption(selectedOption)
+            }
         } else {
             showInputDialog(text)
             System.out.println("Continuing")
-            eventReceiver.selectOption(null)
+            GlobalScope.launch {
+                eventReceiver.selectOption(null)
+            }
         }
     }
 

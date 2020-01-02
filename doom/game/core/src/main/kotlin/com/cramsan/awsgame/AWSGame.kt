@@ -150,7 +150,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun onInteractionRequired(
+    override fun onInteractionRequired(
         text: String?,
         options: List<InteractiveEventOption>,
         eventReceiver: EntityManagerInteractionReceiver

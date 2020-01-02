@@ -140,8 +140,10 @@ class GameEntityTriggerTests {
         val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, object : EntityManagerEventListener {
             override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
             override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
-            override suspend fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
-                eventReceiver.selectOption(options[targetIndex])
+            override fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+                runTest {
+                    eventReceiver.selectOption(options[targetIndex])
+                }
             }
         })
         val player = sceneConfig.player
@@ -205,9 +207,11 @@ class GameEntityTriggerTests {
         val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, object : EntityManagerEventListener {
             override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
             override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
-            override suspend fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
-                assertEquals(0, options.size)
-                eventReceiver.selectOption(null)
+            override fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+                runTest {
+                    assertEquals(0, options.size)
+                    eventReceiver.selectOption(null)
+                }
             }
         })
         val player = sceneConfig.player
