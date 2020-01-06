@@ -5,6 +5,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Rectangle
+import com.cramsan.awsgame.renderer.Camera
+import com.cramsan.awsgame.renderer.Map
+import com.cramsan.awsgame.renderer.Player
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
@@ -165,8 +168,8 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     companion object {
         const val CIRCLE = Math.PI * 2
 
-        private val VIRTUAL_WIDTH = 1024
-        private val VIRTUAL_HEIGHT = 640
-        private val ASPECT_RATIO = VIRTUAL_WIDTH.toFloat() / VIRTUAL_HEIGHT.toFloat()
+        const val VIRTUAL_WIDTH = 1024
+        const val VIRTUAL_HEIGHT = 640
+        const val ASPECT_RATIO = VIRTUAL_WIDTH.toFloat() / VIRTUAL_HEIGHT.toFloat()
     }
 }
