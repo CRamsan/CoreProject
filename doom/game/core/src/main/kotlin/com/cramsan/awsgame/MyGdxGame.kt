@@ -59,6 +59,10 @@ class MyGdxGame : Game() {
         listener?.onGameCreated()
     }
 
+    fun setScreen(newScreen: BaseScreen) {
+        this.setScreen(newScreen, true)
+    }
+
     fun setScreen(
         newScreen: BaseScreen,
         isInitialLoad: Boolean

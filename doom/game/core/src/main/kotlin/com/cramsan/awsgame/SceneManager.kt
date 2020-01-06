@@ -1,5 +1,6 @@
 package com.cramsan.awsgame
 
+import com.cramsan.awsgame.screen.FPSGame
 import com.cramsan.awsgame.screen.GameScreen
 import com.cramsan.awsgame.screen.MainMenuScreen
 
@@ -26,19 +27,19 @@ object SceneManager {
         game = null
     }
 
-    private var parameterManager: GameParameterManager? = null
-    fun startGameScreen(newParameterManager: GameParameterManager?) {
+    private var parameterHolder: GameParameterManager? = null
+    fun startGameScreen(newParameterHolder: GameParameterManager?) {
         if (game == null) {
             throw RuntimeException("Game parameter is null")
         }
-        if (parameterManager == null) {
-            parameterManager =
-                newParameterManager ?: throw RuntimeException("GameParameterManager not provided.")
-        } else if (newParameterManager != null) {
+        if (parameterHolder == null) {
+            parameterHolder =
+                newParameterHolder ?: throw RuntimeException("GameParameterManager not provided.")
+        } else if (newParameterHolder != null) {
             throw RuntimeException("GameParameterManager already set and cannot be overridden")
         }
-        val screen: GameScreen? = null //new KnightsVsNinjasScreen(parameterManager);
-        game!!.screen = screen
+        val screen: GameScreen = FPSGame();
+        game!!.setScreen(screen)
     }
 
     @JvmOverloads
@@ -46,7 +47,7 @@ object SceneManager {
         if (game == null) {
             throw RuntimeException("Game parameter is null")
         }
-        parameterManager = null
+        parameterHolder = null
         val screen = MainMenuScreen()
         game!!.setScreen(screen, isInitialLoad)
     }

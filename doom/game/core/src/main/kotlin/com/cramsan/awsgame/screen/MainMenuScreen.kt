@@ -2,16 +2,16 @@ package com.cramsan.awsgame.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
-import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.*
 import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.cramsan.awsgame.GameParameterManager
+import com.cramsan.awsgame.SceneManager
 
 
 /**
@@ -43,26 +43,10 @@ class MainMenuScreen : BaseScreen(), Screen {
         val button1 = Button(mySkin, "small")
         button1.setSize((col_width * 4).toFloat(), row_height.toFloat())
         button1.setPosition(col_width.toFloat(), (Gdx.graphics.height - row_height * 3).toFloat())
-        button1.addListener(object : InputListener() {
-            override fun touchUp(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ) {
-                outputLabel!!.setText("Press a Button")
-            }
-
-            override fun touchDown(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ): Boolean {
-                outputLabel!!.setText("Pressed Button")
-                return true
+        button1.addListener(object : ChangeListener() {
+            override fun changed(event: ChangeEvent?, actor: Actor?) {
+                outputLabel!!.setText("Going to Game")
+                SceneManager.startGameScreen(GameParameterManager())
             }
         })
         stage!!.addActor(button1)

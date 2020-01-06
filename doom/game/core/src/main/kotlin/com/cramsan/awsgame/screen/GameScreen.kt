@@ -1,6 +1,6 @@
 package com.cramsan.awsgame.screen
 
-abstract class GameScreen() : BaseScreen() {
+abstract class GameScreen : BaseScreen() {
 
     override fun performCustomUpdate(delta: Float) {}
 

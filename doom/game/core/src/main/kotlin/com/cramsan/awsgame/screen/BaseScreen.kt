@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL30
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.cramsan.awsgame.AWSGame
 import com.cramsan.awsgame.subsystems.AudioManager
 import com.cramsan.awsgame.subsystems.CallbackManager
 
@@ -23,7 +21,7 @@ abstract class BaseScreen : Screen {
     var audioManager: AudioManager? = null
 
     init {
-        cam = OrthographicCamera(AWSGame.VIRTUAL_WIDTH.toFloat(), AWSGame.VIRTUAL_HEIGHT.toFloat())
+        cam = OrthographicCamera(FPSGame.VIRTUAL_WIDTH.toFloat(), FPSGame.VIRTUAL_HEIGHT.toFloat())
         viewport = StretchViewport(cam.viewportWidth, cam.viewportHeight, cam)
         callbackManager = CallbackManager()
     }

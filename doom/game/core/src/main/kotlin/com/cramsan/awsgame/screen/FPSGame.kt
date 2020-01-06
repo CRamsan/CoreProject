@@ -1,10 +1,10 @@
-package com.cramsan.awsgame
+package com.cramsan.awsgame.screen
 
-import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Rectangle
+import com.cramsan.awsgame.Controls
 import com.cramsan.awsgame.renderer.Camera
 import com.cramsan.awsgame.renderer.Map
 import com.cramsan.awsgame.renderer.Player
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 /**
  * This code is based on the raycaster demo from https://github.com/walle/raycaster
  */
-class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
+class FPSGame : GameScreen(), EntityManagerEventListener {
 
     private var player: Player? = null
     private var scene: Scene? = null
@@ -32,11 +32,13 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     private var camera: Camera? = null
 
     private var seconds = 0f
+
     private var viewport: Rectangle? = null
     private var scale = 1f
     private var orthoCamera: com.badlogic.gdx.graphics.OrthographicCamera? = null
 
-    override fun create() {
+    override fun screenInit() {
+        super.screenInit()
         // Setup 2d camera with top left coordinates
         // http://stackoverflow.com/questions/7708379/changing-the-coordinate-system-in-libgdx-java/7751183#7751183
         // This forces us to flip textures on the y axis, eg. in Camera#drawSky
@@ -90,8 +92,8 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
                 }
             }
 
-        } ?: return
-        val entityManager = EntityManager(this.map.map, sceneConfig.triggerList, sceneConfig.eventList, this)
+        }
+        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, this)
         scene = Scene(entityManager, sceneConfig)
 
         this.player = Player(sceneConfig.player)
@@ -119,7 +121,7 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
         viewport = Rectangle(crop.x, crop.y, w, h)
     }
 
-    override fun render() {
+    override fun performRender() {
         if (input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit()
         }
@@ -162,6 +164,10 @@ class AWSGame : ApplicationAdapter(), EntityManagerEventListener {
     }
 
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun levelId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

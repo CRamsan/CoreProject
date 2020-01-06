@@ -1,17 +1,17 @@
 package com.cramsan.awsgame;
 
+import com.cramsan.awsgame.screen.FPSGame;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.cramsan.awsgame.AWSGame;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override
     protected IOSApplication createApplication() {
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new AWSGame(), config);
+        return new IOSApplication(new FPSGame(), config);
     }
 
     public static void main(String[] argv) {
