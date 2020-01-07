@@ -3,15 +3,17 @@ package com.cramsan.awsgame.screen
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.scenes.scene2d.*
-import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
-import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.cramsan.awsgame.GameParameterManager
 import com.cramsan.awsgame.SceneManager
+import com.cramsan.awsgame.subsystems.ui.UIToolKit
 
 
 /**
@@ -20,138 +22,38 @@ import com.cramsan.awsgame.SceneManager
 class MainMenuScreen : BaseScreen(), Screen {
 
     private var stage: Stage? = null
-    private var outputLabel: Label? = null
+    private var batch: SpriteBatch? = null
+    private var background: Texture? = null
 
     override fun screenInit() {
+        super.screenInit()
         stage = Stage(ScreenViewport())
         Gdx.input.inputProcessor = stage
 
-        val row_height = Gdx.graphics.width / 12
-        val col_width = Gdx.graphics.width / 12
+        background = Texture(Gdx.files.internal("main_menu.jpg"))
+        batch = SpriteBatch()
 
-        val mySkin = Skin(Gdx.files.internal("glassy-ui.json"))
+        val mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
 
-        val title =
-            Label("Buttons with Skins", mySkin, "big-black")
-        title.setSize(Gdx.graphics.width.toFloat(), row_height * 2.toFloat())
-        title.setPosition(0f, Gdx.graphics.height - row_height * 2.toFloat())
-        title.setAlignment(Align.center)
-        stage!!.addActor(title)
+        val parentTable = Table(mySkin)
+        val mainPane = Table()
+        mainPane.setFillParent(true)
+        mainPane.add(parentTable).width(UIToolKit.DIALOG_WIDTH.toFloat())
+            .pad(UIToolKit.DIALOG_PAD.toFloat())
 
-        // Button
-        // Button
-        val button1 = Button(mySkin, "small")
-        button1.setSize((col_width * 4).toFloat(), row_height.toFloat())
-        button1.setPosition(col_width.toFloat(), (Gdx.graphics.height - row_height * 3).toFloat())
-        button1.addListener(object : ChangeListener() {
-            override fun changed(event: ChangeEvent?, actor: Actor?) {
-                outputLabel!!.setText("Going to Game")
+        val startGameButton = TextButton("Start", mySkin)
+        startGameButton.addListener(object : ChangeListener() {
+            override fun changed(
+                event: ChangeEvent,
+                actor: Actor
+            ) {
                 SceneManager.startGameScreen(GameParameterManager())
             }
         })
-        stage!!.addActor(button1)
+        parentTable.add(startGameButton).pad(UIToolKit.DIALOG_TABLE_PAD.toFloat()).row()
 
-        // Text Button
-        // Text Button
-        val button2: Button = TextButton("Text Button", mySkin, "small")
-        button2.setSize((col_width * 4).toFloat(), row_height.toFloat())
-        button2.setPosition((col_width * 7).toFloat(), (Gdx.graphics.height - row_height * 3).toFloat())
-        button2.addListener(object : InputListener() {
-            override fun touchUp(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ) {
-                outputLabel!!.setText("Press a Button")
-            }
-
-            override fun touchDown(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ): Boolean {
-                outputLabel!!.setText("Pressed Text Button")
-                return true
-            }
-        })
-        stage!!.addActor(button2)
-
-
-        // ImageButton
-        // ImageButton
-        val button3 = ImageButton(mySkin)
-        button3.setSize((col_width * 4).toFloat(), (row_height * 2).toFloat())
-        button3.getStyle().imageUp =
-            TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal("switch_off.png"))))
-        button3.getStyle().imageDown =
-            TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal("switch_on.png"))))
-        button3.setPosition(col_width.toFloat(), (Gdx.graphics.height - row_height * 6).toFloat())
-        button3.addListener(object : InputListener() {
-            override fun touchUp(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ) {
-                outputLabel!!.setText("Press a Button")
-            }
-
-            override fun touchDown(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ): Boolean {
-                outputLabel!!.setText("Pressed Image Button")
-                return true
-            }
-        })
-        stage!!.addActor(button3)
-
-        //ImageTextButton
-        //ImageTextButton
-        val button4 = ImageTextButton("ImageText Btn", mySkin, "small")
-        button4.setSize(col_width * 4.toFloat(), (row_height * 2).toFloat())
-        button4.style.imageUp =
-            TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal("switch_off.png"))))
-        button4.style.imageDown =
-            TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal("switch_on.png"))))
-        button4.setPosition(col_width * 7.toFloat(), Gdx.graphics.height - row_height * 6.toFloat())
-        button4.addListener(object : InputListener() {
-            override fun touchUp(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ) {
-                outputLabel!!.setText("Press a Button")
-            }
-
-            override fun touchDown(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ): Boolean {
-                outputLabel!!.setText("Pressed Image Text Button")
-                return true
-            }
-        })
-        stage!!.addActor(button4)
-
-        outputLabel = Label("Press a Button", mySkin, "black")
-        outputLabel!!.setSize(Gdx.graphics.width.toFloat(), row_height.toFloat())
-        outputLabel!!.setPosition(0f, row_height.toFloat())
-        outputLabel!!.setAlignment(Align.center)
-        stage!!.addActor(outputLabel)
+        stage!!.addActor(mainPane)
+        stage!!.isDebugAll = true
     }
 
     override fun performCustomUpdate(delta: Float) {
@@ -159,8 +61,15 @@ class MainMenuScreen : BaseScreen(), Screen {
 
     override fun performRender() {
         super.performRender()
+
+        batch!!.projectionMatrix = viewport.camera.combined
+        batch!!.begin()
+        batch!!.draw(background, 0F, 0F, viewport.worldWidth, viewport.worldHeight)
+        batch!!.end()
+
+        stage!!.viewport.apply()
         stage?.act();
-        stage?.draw();
+        stage!!.draw()
     }
 
     override fun dispose() {

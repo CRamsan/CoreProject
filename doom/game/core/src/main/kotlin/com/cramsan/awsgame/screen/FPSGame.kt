@@ -33,7 +33,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
     private var seconds = 0f
 
-    private var viewport: Rectangle? = null
+    private var viewportR: Rectangle? = null
     private var scale = 1f
     private var orthoCamera: com.badlogic.gdx.graphics.OrthographicCamera? = null
 
@@ -118,7 +118,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
         val w = VIRTUAL_WIDTH.toFloat() * scale
         val h = VIRTUAL_HEIGHT.toFloat() * scale
-        viewport = Rectangle(crop.x, crop.y, w, h)
+        viewportR = Rectangle(crop.x, crop.y, w, h)
     }
 
     override fun performRender() {
@@ -130,7 +130,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         Gdx.gl.glClear(com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT)
 
         orthoCamera!!.update()
-        Gdx.gl.glViewport(viewport!!.x.toInt(), viewport!!.y.toInt(), viewport!!.width.toInt(), viewport!!.height.toInt())
+        Gdx.gl.glViewport(viewportR!!.x.toInt(), viewportR!!.y.toInt(), viewportR!!.width.toInt(), viewportR!!.height.toInt())
 
         seconds = Gdx.graphics.deltaTime
 

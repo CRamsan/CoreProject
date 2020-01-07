@@ -16,12 +16,12 @@ import com.cramsan.awsgame.subsystems.CallbackManager
 abstract class BaseScreen : Screen {
 
     private val cam: OrthographicCamera
-    private val viewport: Viewport
+    val viewport: Viewport
     var callbackManager: CallbackManager
     var audioManager: AudioManager? = null
 
     init {
-        cam = OrthographicCamera(FPSGame.VIRTUAL_WIDTH.toFloat(), FPSGame.VIRTUAL_HEIGHT.toFloat())
+        cam = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.width.toFloat())
         viewport = StretchViewport(cam.viewportWidth, cam.viewportHeight, cam)
         callbackManager = CallbackManager()
     }
@@ -45,10 +45,10 @@ abstract class BaseScreen : Screen {
      * This method will render the scene always after a fixed time step
      */
     open fun performRender() {
-        viewport.apply()
-        cam.update()
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT)
+        viewport.apply()
+        cam.update()
     }
 
     /**
