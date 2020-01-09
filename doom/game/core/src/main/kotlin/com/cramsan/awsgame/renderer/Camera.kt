@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.utils.viewport.Viewport
 import kotlin.math.*
 
-class Camera(private val camera: OrthographicCamera, private var resolution: Double, private var fov: Double) {
+class Camera(private val camera: OrthographicCamera, private var resolution: Double, private var fov: Double, private val viewport: Viewport) {
     private var width: Double = 0.toDouble()
     private var height: Double = 0.toDouble()
     private var spacing: Double = 0.toDouble()
@@ -50,6 +51,7 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         val bobY = sin(paces * 4) * this.scale * 6.0
         val left = this.width * 0.66 + bobX
         val top = this.height * 0.6 + bobY
+        batch.projectionMatrix = viewport.camera.combined
         batch.begin()
         batch.draw(weapon, left.toFloat(), top.toFloat(), (weapon.width * this.scale).toFloat(), (weapon.height * this.scale).toFloat(), 0, 0, weapon.width, weapon.height, false, true)
         batch.end()
@@ -72,6 +74,7 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
                 val textureX = floor(texture.width * step.offset)
                 val wall = this.project(step.height, angle, step.distance)
 
+                batch.projectionMatrix = viewport.camera.combined
                 batch.begin()
                 batch.draw(texture, left.toFloat(), wall.top.toFloat(), width.toFloat(), wall.height.toFloat(), textureX.toInt(), 0, 1, texture.height, false, true)
                 batch.end()

@@ -3,7 +3,9 @@ package com.cramsan.awsgame.screen
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.utils.viewport.StretchViewport
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.cramsan.awsgame.Controls
 import com.cramsan.awsgame.renderer.Camera
 import com.cramsan.awsgame.renderer.Map
@@ -33,21 +35,22 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
     private var seconds = 0f
 
-    private var viewportR: Rectangle? = null
-    private var scale = 1f
-    private var orthoCamera: com.badlogic.gdx.graphics.OrthographicCamera? = null
+    private var gameViewport: Viewport? = null
+    private var orthoCamera: OrthographicCamera? = null
 
     override fun screenInit() {
         super.screenInit()
         // Setup 2d camera with top left coordinates
         // http://stackoverflow.com/questions/7708379/changing-the-coordinate-system-in-libgdx-java/7751183#7751183
         // This forces us to flip textures on the y axis, eg. in Camera#drawSky
-        orthoCamera = com.badlogic.gdx.graphics.OrthographicCamera(VIRTUAL_WIDTH.toFloat(), VIRTUAL_HEIGHT.toFloat())
-        orthoCamera!!.setToOrtho(true, VIRTUAL_WIDTH.toFloat(), VIRTUAL_HEIGHT.toFloat())
+        orthoCamera = OrthographicCamera(Gdx.graphics.width.toFloat(), ((Gdx.graphics.height / 2).toFloat()))
+        orthoCamera!!.setToOrtho(true)
+        gameViewport = StretchViewport(orthoCamera!!.viewportWidth, orthoCamera!!.viewportHeight, orthoCamera)
+        (gameViewport as StretchViewport).setScreenPosition(0, Gdx.graphics.height / 2)
 
         this.map = Map(32)
         this.controls = Controls()
-        this.camera = Camera(orthoCamera!!, 320.0, Math.PI * 0.4)
+        this.camera = Camera(orthoCamera!!, orthoCamera!!.viewportWidth.toDouble(), Math.PI * 0.4, gameViewport as StretchViewport)
 
         val sceneConfig = scene {
             player {
@@ -102,36 +105,19 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
     }
 
     override fun resize(width: Int, height: Int) {
-        // calculate new viewport
-        val aspectRatio = width.toFloat() / height.toFloat()
-
-        val crop = com.badlogic.gdx.math.Vector2(0f, 0f)
-        if (aspectRatio > ASPECT_RATIO) {
-            scale = height.toFloat() / VIRTUAL_HEIGHT.toFloat()
-            crop.x = (width - VIRTUAL_WIDTH * scale) / 2f
-        } else if (aspectRatio < ASPECT_RATIO) {
-            scale = width.toFloat() / VIRTUAL_WIDTH.toFloat()
-            crop.y = (height - VIRTUAL_HEIGHT * scale) / 2f
-        } else {
-            scale = width.toFloat() / VIRTUAL_WIDTH.toFloat()
-        }
-
-        val w = VIRTUAL_WIDTH.toFloat() * scale
-        val h = VIRTUAL_HEIGHT.toFloat() * scale
-        viewportR = Rectangle(crop.x, crop.y, w, h)
+        super.resize(width, height)
+        gameViewport!!.update(width, height / 2)
+        (gameViewport as StretchViewport).setScreenPosition(0, Gdx.graphics.height / 2)
     }
 
     override fun performRender() {
+        super.performRender()
         if (input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit()
         }
 
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
-        Gdx.gl.glClear(com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT)
-
         orthoCamera!!.update()
-        Gdx.gl.glViewport(viewportR!!.x.toInt(), viewportR!!.y.toInt(), viewportR!!.width.toInt(), viewportR!!.height.toInt())
-
+        gameViewport!!.apply()
         seconds = Gdx.graphics.deltaTime
 
         map.update()
@@ -169,13 +155,5 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
     override fun levelId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    companion object {
-        const val CIRCLE = Math.PI * 2
-
-        const val VIRTUAL_WIDTH = 1024
-        const val VIRTUAL_HEIGHT = 640
-        const val ASPECT_RATIO = VIRTUAL_WIDTH.toFloat() / VIRTUAL_HEIGHT.toFloat()
     }
 }

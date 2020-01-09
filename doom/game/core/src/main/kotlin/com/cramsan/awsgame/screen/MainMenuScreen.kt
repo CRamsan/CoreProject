@@ -62,6 +62,9 @@ class MainMenuScreen : BaseScreen(), Screen {
     override fun performRender() {
         super.performRender()
 
+        viewport.apply()
+        cam.update()
+
         batch!!.projectionMatrix = viewport.camera.combined
         batch!!.begin()
         batch!!.draw(background, 0F, 0F, viewport.worldWidth, viewport.worldHeight)

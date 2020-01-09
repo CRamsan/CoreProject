@@ -15,7 +15,7 @@ import com.cramsan.awsgame.subsystems.CallbackManager
  */
 abstract class BaseScreen : Screen {
 
-    private val cam: OrthographicCamera
+    val cam: OrthographicCamera
     val viewport: Viewport
     var callbackManager: CallbackManager
     var audioManager: AudioManager? = null
@@ -47,8 +47,6 @@ abstract class BaseScreen : Screen {
     open fun performRender() {
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT)
-        viewport.apply()
-        cam.update()
     }
 
     /**
