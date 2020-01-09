@@ -1,19 +1,13 @@
 package com.cramsan.awsgame.screen
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.*
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.cramsan.awsgame.Controls
-import com.cramsan.awsgame.GameParameterManager
-import com.cramsan.awsgame.SceneManager
 import com.cramsan.awsgame.renderer.Camera
 import com.cramsan.awsgame.renderer.Map
 import com.cramsan.awsgame.renderer.Player
@@ -50,9 +44,6 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
     override fun screenInit() {
         super.screenInit()
-
-        stage = Stage(ScreenViewport())
-        Gdx.input.inputProcessor = stage
 
         // Setup 2d camera with top left coordinates
         // http://stackoverflow.com/questions/7708379/changing-the-coordinate-system-in-libgdx-java/7751183#7751183
@@ -116,11 +107,13 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         this.player = Player(sceneConfig.player)
         scene!!.loadScene()
 
+        stage = Stage(StretchViewport(orthoCamera!!.viewportWidth, orthoCamera!!.viewportHeight, orthoCamera))
+        Gdx.input.inputProcessor = stage
+
         val mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
         val parentTable = VerticalGroup()
         val mainPane = Table()
-        mainPane.width = Gdx.graphics.width.toFloat()
-        mainPane.height = (Gdx.graphics.height / 2).toFloat()
+        mainPane.setFillParent(true)
         mainPane.add(parentTable).width(UIToolKit.DIALOG_WIDTH.toFloat())
             .pad(UIToolKit.DIALOG_PAD.toFloat())
 
@@ -154,11 +147,12 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         super.resize(width, height)
         gameViewport!!.update(width, height / 2)
         (gameViewport as StretchViewport).setScreenPosition(0, Gdx.graphics.height / 2)
+        stage!!.viewport.update(width, height / 2, true);
     }
 
     override fun performRender() {
         super.performRender()
-        if (input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit()
         }
 
