@@ -27,6 +27,7 @@ class MainMenuScreen : BaseScreen(), Screen {
 
     override fun screenInit() {
         super.screenInit()
+
         stage = Stage(ScreenViewport())
         Gdx.input.inputProcessor = stage
 

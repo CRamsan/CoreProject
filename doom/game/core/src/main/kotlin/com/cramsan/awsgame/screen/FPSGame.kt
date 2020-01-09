@@ -4,12 +4,20 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.cramsan.awsgame.Controls
+import com.cramsan.awsgame.GameParameterManager
+import com.cramsan.awsgame.SceneManager
 import com.cramsan.awsgame.renderer.Camera
 import com.cramsan.awsgame.renderer.Map
 import com.cramsan.awsgame.renderer.Player
+import com.cramsan.awsgame.subsystems.ui.UIToolKit
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
@@ -27,6 +35,8 @@ import kotlinx.coroutines.launch
  */
 class FPSGame : GameScreen(), EntityManagerEventListener {
 
+    private var stage: Stage? = null
+
     private var player: Player? = null
     private var scene: Scene? = null
     private lateinit var map: Map
@@ -40,6 +50,10 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
     override fun screenInit() {
         super.screenInit()
+
+        stage = Stage(ScreenViewport())
+        Gdx.input.inputProcessor = stage
+
         // Setup 2d camera with top left coordinates
         // http://stackoverflow.com/questions/7708379/changing-the-coordinate-system-in-libgdx-java/7751183#7751183
         // This forces us to flip textures on the y axis, eg. in Camera#drawSky
@@ -100,8 +114,40 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         scene = Scene(entityManager, sceneConfig)
 
         this.player = Player(sceneConfig.player)
-
         scene!!.loadScene()
+
+        val mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
+        val parentTable = VerticalGroup()
+        val mainPane = Table()
+        mainPane.width = Gdx.graphics.width.toFloat()
+        mainPane.height = (Gdx.graphics.height / 2).toFloat()
+        mainPane.add(parentTable).width(UIToolKit.DIALOG_WIDTH.toFloat())
+            .pad(UIToolKit.DIALOG_PAD.toFloat())
+
+        val row1 = HorizontalGroup()
+        val health = Label("100", mySkin)
+        val armor = Label("80", mySkin)
+        val ammo = Label("20", mySkin)
+        val direction = Label("N", mySkin)
+        row1.addActor(health)
+        row1.addActor(armor)
+        row1.addActor(ammo)
+        row1.addActor(direction)
+        parentTable.addActor(row1)
+
+        val row2 = HorizontalGroup()
+        val up = TextButton("UP", mySkin)
+        val down = TextButton("DOWN", mySkin)
+        val left = TextButton("LEFT", mySkin)
+        val right = TextButton("RIGHT", mySkin)
+        row2.addActor(up)
+        row2.addActor(down)
+        row2.addActor(left)
+        row2.addActor(right)
+        parentTable.addActor(row2)
+
+        stage!!.addActor(mainPane)
+        stage!!.isDebugAll = true
     }
 
     override fun resize(width: Int, height: Int) {
@@ -135,6 +181,11 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
             }
         }
         camera!!.render(player!!, map)
+
+        //render the UI
+        stage!!.viewport.apply()
+        stage?.act();
+        stage!!.draw()
     }
 
     override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {
