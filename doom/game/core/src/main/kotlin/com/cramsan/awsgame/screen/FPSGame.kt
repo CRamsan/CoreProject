@@ -2,6 +2,7 @@ package com.cramsan.awsgame.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.*
@@ -41,6 +42,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
     private var gameViewport: Viewport? = null
     private var orthoCamera: OrthographicCamera? = null
+    private var uiCamera: OrthographicCamera? = null
 
     override fun screenInit() {
         super.screenInit()
@@ -106,38 +108,34 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
         this.player = Player(sceneConfig.player)
         scene!!.loadScene()
-
-        stage = Stage(StretchViewport(orthoCamera!!.viewportWidth, orthoCamera!!.viewportHeight, orthoCamera))
+        uiCamera = OrthographicCamera(Gdx.graphics.width.toFloat(), ((Gdx.graphics.height / 2).toFloat()))
+        uiCamera!!.setToOrtho(false)
+        stage = Stage(StretchViewport(uiCamera!!.viewportWidth, uiCamera!!.viewportHeight, uiCamera))
         Gdx.input.inputProcessor = stage
 
         val mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
-        val parentTable = VerticalGroup()
-        val mainPane = Table()
+        val mainPane = Table(mySkin)
         mainPane.setFillParent(true)
-        mainPane.add(parentTable).width(UIToolKit.DIALOG_WIDTH.toFloat())
-            .pad(UIToolKit.DIALOG_PAD.toFloat())
 
-        val row1 = HorizontalGroup()
         val health = Label("100", mySkin)
         val armor = Label("80", mySkin)
         val ammo = Label("20", mySkin)
         val direction = Label("N", mySkin)
-        row1.addActor(health)
-        row1.addActor(armor)
-        row1.addActor(ammo)
-        row1.addActor(direction)
-        parentTable.addActor(row1)
+        mainPane.add(health)
+        mainPane.add(armor)
+        mainPane.add(ammo)
+        mainPane.add(direction)
+        mainPane.row()
 
-        val row2 = HorizontalGroup()
         val up = TextButton("UP", mySkin)
         val down = TextButton("DOWN", mySkin)
         val left = TextButton("LEFT", mySkin)
         val right = TextButton("RIGHT", mySkin)
-        row2.addActor(up)
-        row2.addActor(down)
-        row2.addActor(left)
-        row2.addActor(right)
-        parentTable.addActor(row2)
+        mainPane.add(up).width(Value.percentWidth(0.25F, mainPane)).center()
+        mainPane.add(down).width(Value.percentWidth(0.25F, mainPane)).center()
+        mainPane.add(left).width(Value.percentWidth(0.25F, mainPane)).center()
+        mainPane.add(right).width(Value.percentWidth(0.25F, mainPane)).center()
+        mainPane.row()
 
         stage!!.addActor(mainPane)
         stage!!.isDebugAll = true
@@ -177,6 +175,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         camera!!.render(player!!, map)
 
         //render the UI
+        uiCamera!!.update()
         stage!!.viewport.apply()
         stage?.act();
         stage!!.draw()

@@ -30,7 +30,8 @@ class MyGdxGame : Game() {
         if (!isSkipSplashScreen) {
             splashScreen = SplashScreen(1f, object : IResourcesLoaded {
                 override fun onResourcesLoaded() {
-                    startMainMenuScreen(true)
+                    SceneManager.startGameScreen(GameParameterManager())
+                    //startMainMenuScreen(true)
                 }
             })
             this.setScreen(splashScreen)
