@@ -8,49 +8,30 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        <Button
-                android:text="@string/drawer_menu_cats"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
+
+        <ImageButton
                 android:id="@+id/main_menu_cats"
-                style="@style/MainMenuButtonStyle"
-                android:drawableStart="@drawable/ic_cat"/>
-        <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        <Button
-                android:text="@string/drawer_menu_dogs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:scaleType="centerCrop"
+                android:src="@drawable/main_menu_cat" />
+
+        <ImageButton
                 android:id="@+id/main_menu_dogs"
-                style="@style/MainMenuButtonStyle"
-                android:drawableStart="@drawable/ic_dog"/>
-        <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:scaleType="centerCrop"
+                android:src="@drawable/main_menu_dog" />
+
         <Button
                 android:text="@string/drawer_menu_about"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/main_menu_about"
-                style="@style/MainMenuButtonStyle"
                 android:drawableStart="@drawable/ic_dog"/>
-        <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
     </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/plant_main_menu_list_view"

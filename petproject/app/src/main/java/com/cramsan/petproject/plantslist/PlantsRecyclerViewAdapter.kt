@@ -61,9 +61,9 @@ class PlantsRecyclerViewAdapter(
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName
         when (item.isToxic) {
-            ToxicityValue.TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_dangerous)
-            ToxicityValue.NON_TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_safe)
-            ToxicityValue.UNDETERMINED -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_undetermined)
+            ToxicityValue.TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_view_item_danger)
+            ToxicityValue.NON_TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_view_item_safe)
+            ToxicityValue.UNDETERMINED -> holder.mContainerView.setBackgroundResource(R.drawable.plant_view_item_undetermined)
         }
 
         with(holder.mView) {

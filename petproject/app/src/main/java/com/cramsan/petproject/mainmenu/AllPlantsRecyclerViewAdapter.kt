@@ -75,9 +75,11 @@ class AllPlantsRecyclerViewAdapter(
             else -> holder.mViewIcon.visibility = View.GONE
         }
         when (item.isToxic) {
+            /*
             ToxicityValue.TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_dangerous)
             ToxicityValue.NON_TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_safe)
-            ToxicityValue.UNDETERMINED -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background_undetermined)
+            ToxicityValue.UNDETERMINED -> holder.mContainerView.setBackgroundResource(R.drawable.plant_list_view_background)
+             */
         }
 
         with(holder.mView) {
