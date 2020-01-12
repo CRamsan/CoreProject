@@ -43,6 +43,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
     private var gameViewport: Viewport? = null
     private var orthoCamera: OrthographicCamera? = null
     private var uiCamera: OrthographicCamera? = null
+    private var mySkin: Skin? = null
 
     override fun screenInit() {
         super.screenInit()
@@ -113,29 +114,9 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         stage = Stage(StretchViewport(uiCamera!!.viewportWidth, uiCamera!!.viewportHeight, uiCamera))
         Gdx.input.inputProcessor = stage
 
-        val mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
-        val mainPane = Table(mySkin)
-        mainPane.setFillParent(true)
+        mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
 
-        val health = Label("100", mySkin)
-        val armor = Label("80", mySkin)
-        val ammo = Label("20", mySkin)
-        val direction = Label("N", mySkin)
-        mainPane.add(health)
-        mainPane.add(armor)
-        mainPane.add(ammo)
-        mainPane.add(direction)
-        mainPane.row()
-
-        val up = TextButton("UP", mySkin)
-        val down = TextButton("DOWN", mySkin)
-        val left = TextButton("LEFT", mySkin)
-        val right = TextButton("RIGHT", mySkin)
-        mainPane.add(up).width(Value.percentWidth(0.25F, mainPane)).center()
-        mainPane.add(down).width(Value.percentWidth(0.25F, mainPane)).center()
-        mainPane.add(left).width(Value.percentWidth(0.25F, mainPane)).center()
-        mainPane.add(right).width(Value.percentWidth(0.25F, mainPane)).center()
-        mainPane.row()
+        val mainPane = UIToolKit.createNavigationMenu(mySkin!!);
 
         stage!!.addActor(mainPane)
         stage!!.isDebugAll = true
@@ -186,11 +167,12 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
     }
 
     override fun onInteractionRequired(
-        text: String?,
+        text: String,
         options: List<InteractiveEventOption>,
         eventReceiver: EntityManagerInteractionReceiver
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val newPane = UIToolKit.createTextPane(this.mySkin!!, text, options, eventReceiver)
+        stage!!.addActor(newPane)
     }
 
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {

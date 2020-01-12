@@ -97,7 +97,7 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
 
     }
-    override fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+    override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
         System.out.println("Options: ")
         options.forEachIndexed { index, interactiveEventOption ->
             System.out.println("$index) $interactiveEventOption")

@@ -292,10 +292,11 @@ class EntityManager(
     }
 
     private suspend fun handleInteractiveEntityEvent(event: InteractiveEvent): BaseEvent? {
-        GlobalScope.launch(Dispatchers.Main) {
-            eventListener?.onInteractionRequired(event.text, event.options, this@EntityManager)
-        }
+        println("About to send callback")
+        eventListener?.onInteractionRequired(event.text, event.options, this@EntityManager)
+        println("Sent callback")
         val testEvent = channel.receive()
+        println("Got callback")
         return if (testEvent.type == EventType.NOOP) {
             null
         } else {
@@ -337,18 +338,24 @@ class EntityManager(
         }
     }
     override suspend fun selectOption(option: InteractiveEventOption?) {
+        println("SelectIotuin")
         if (option == null) {
+            println("SelectIotuin null")
             channel.send(NoopEvent())
             return
         }
 
+        println("SelectIotuin Test")
         if (option.eventId == InitialValues.INVALID_ID) {
+            println("SelectIotuin INVALID")
             channel.send(NoopEvent())
             return
         }
 
+        println("SelectIotuin TEST 2")
         val eEvent = eventMap.getValue(option.eventId)
         channel.send(eEvent)
+        println("SelectIotuin TEST 3")
     }
 
     override fun processGameEntityState() {

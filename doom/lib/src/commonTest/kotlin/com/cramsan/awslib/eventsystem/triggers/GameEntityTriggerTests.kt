@@ -13,6 +13,8 @@ import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -140,8 +142,11 @@ class GameEntityTriggerTests {
         val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, object : EntityManagerEventListener {
             override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
             override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
-            override fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
-                runTest {
+            override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+                GlobalScope.launch {
+                    options.forEach {
+                        println("EcentID: ${it.eventId} - ${it.id} - ${it.label}")
+                    }
                     eventReceiver.selectOption(options[targetIndex])
                 }
             }
@@ -207,7 +212,7 @@ class GameEntityTriggerTests {
         val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, object : EntityManagerEventListener {
             override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
             override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
-            override fun onInteractionRequired(text: String?, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+            override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
                 runTest {
                     assertEquals(0, options.size)
                     eventReceiver.selectOption(null)

@@ -39,8 +39,7 @@ class MainMenuScreen : BaseScreen(), Screen {
         val parentTable = Table(mySkin)
         val mainPane = Table()
         mainPane.setFillParent(true)
-        mainPane.add(parentTable).width(UIToolKit.DIALOG_WIDTH.toFloat())
-            .pad(UIToolKit.DIALOG_PAD.toFloat())
+        mainPane.add(parentTable)
 
         val startGameButton = TextButton("Start", mySkin)
         startGameButton.addListener(object : ChangeListener() {
@@ -51,7 +50,7 @@ class MainMenuScreen : BaseScreen(), Screen {
                 SceneManager.startGameScreen(GameParameterManager())
             }
         })
-        parentTable.add(startGameButton).pad(UIToolKit.DIALOG_TABLE_PAD.toFloat()).row()
+        parentTable.add(startGameButton).row()
 
         stage!!.addActor(mainPane)
         stage!!.isDebugAll = true
