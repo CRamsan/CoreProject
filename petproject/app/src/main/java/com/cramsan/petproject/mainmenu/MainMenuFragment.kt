@@ -21,7 +21,6 @@ import com.cramsan.petproject.plantdetails.PlantDetailsFragment
 import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
-import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_about
 import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_cats
 import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_dogs
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_list_recycler
@@ -66,10 +65,6 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         main_menu_dogs.setOnClickListener {
             val intent = Intent(requireContext(), PlantsListActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, AnimalType.DOG.ordinal)
-            startActivity(intent)
-        }
-        main_menu_about.setOnClickListener {
-            val intent = Intent(requireContext(), AboutActivity::class.java)
             startActivity(intent)
         }
 

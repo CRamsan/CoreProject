@@ -10,10 +10,10 @@ import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
+import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.debugmenu.DebugMenuActivity
-import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import kotlinx.android.synthetic.main.activity_main_menu.main_menu_toolbar
 
@@ -34,7 +34,7 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
         eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -66,7 +66,11 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
         R.id.action_search -> {
             super.onOptionsItemSelected(item)
         }
-
+        R.id.action_about -> {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+            true
+        }
         else -> {
             eventLogger.log(Severity.DEBUG, classTag(), "Action item not handled")
             super.onOptionsItemSelected(item)

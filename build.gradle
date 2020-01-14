@@ -9,7 +9,7 @@ buildscript {
 
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
-        globalAndroidGradlePluginVersion = "3.5.2"
+        globalAndroidGradlePluginVersion = '3.5.3'
         globalAndroidMaterialVersion = "1.0.0"
         globalAndroidXJUnitVersion = "1.1.1"
         globalAndroidXLifecycleVersion = "2.1.0"

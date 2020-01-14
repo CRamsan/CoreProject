@@ -31,7 +31,7 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
         eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.plant_list, menu)
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
