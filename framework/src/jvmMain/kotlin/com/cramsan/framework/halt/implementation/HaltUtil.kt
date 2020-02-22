@@ -2,8 +2,11 @@ package com.cramsan.framework.halt.implementation
 
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
+import kotlin.system.exitProcess
 
-actual class HaltUtil actual constructor(eventLogger: EventLoggerInterface) : HaltUtilInterface {
+actual class HaltUtil actual constructor(private val eventLogger: EventLoggerInterface) : HaltUtilInterface {
 
     private var shouldStop = true
 
@@ -17,12 +20,8 @@ actual class HaltUtil actual constructor(eventLogger: EventLoggerInterface) : Ha
         shouldStop = false
     }
 
-    override fun stopMainThread() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun crashApp() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        exitProcess(1)
     }
 
     companion object {

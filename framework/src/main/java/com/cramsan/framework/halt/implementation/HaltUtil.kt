@@ -10,6 +10,7 @@ actual class HaltUtil actual constructor(
     private var shouldStop = true
 
     override fun stopThread() {
+        shouldStop = true
         while (shouldStop) {
             Thread.sleep(sleepTime)
         }
@@ -19,12 +20,8 @@ actual class HaltUtil actual constructor(
         shouldStop = false
     }
 
-    override fun stopMainThread() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun crashApp() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        android.os.Process.killProcess(android.os.Process.myPid())
     }
 
     companion object {

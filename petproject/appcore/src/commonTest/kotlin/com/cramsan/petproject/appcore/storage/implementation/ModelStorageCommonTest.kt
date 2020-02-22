@@ -45,7 +45,7 @@ internal class ModelStorageCommonTest {
     fun getPlants() {
         insertBaseEntries()
         var allPlants = modelStorage.getPlants()
-        assertEquals(100, allPlants.size)
+        assertEquals(10, allPlants.size)
 
         val plantId: Long = 25432
         modelStorage.insertPlant(Plant.PlantImp(plantId,
@@ -59,7 +59,7 @@ internal class ModelStorageCommonTest {
         modelStorage.insertToxicity(Toxicity.ToxicityImpl(432, plantId, AnimalType.DOG.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
 
         allPlants = modelStorage.getPlants()
-        assertEquals(101, allPlants.size)
+        assertEquals(11, allPlants.size)
     }
 
     fun getPlant() {
@@ -83,14 +83,14 @@ internal class ModelStorageCommonTest {
     fun getPlantMetadata() {
         insertBaseEntries()
 
-        val plant = modelStorage.getPlants()[10]
+        val plant = modelStorage.getPlants()[9]
         assertNotNull(modelStorage.getCustomPlantEntry(AnimalType.CAT, plant.id.toInt(), "en"))
     }
 
     fun deleteAll() {
         insertBaseEntries()
         val allPlants = modelStorage.getPlants()
-        assertEquals(100, allPlants.size)
+        assertEquals(10, allPlants.size)
         modelStorage.deleteAll()
         val newAllPlants = modelStorage.getPlants()
         assertEquals(0, newAllPlants.size)
@@ -103,7 +103,7 @@ internal class ModelStorageCommonTest {
         var commonNameId = 0L
         var mainNameId = 0L
         var toxicityId = 0L
-        for (i in 1..100) {
+        for (i in 1..10) {
             val plantId: Long = i.toLong()
             modelStorage.insertPlant(Plant.PlantImp(plantId,
                 "Arum maculatum TEST $i",

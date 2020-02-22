@@ -1,20 +1,14 @@
 package com.cramsan.framework.thread.implementation
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /**
- * Unit test. This will be executed in a mocked Android environment.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(AndroidJUnit4::class)
 class ThreadUtilTest {
 
     private lateinit var threadUtilTest: ThreadUtilCommonTest
@@ -28,13 +22,8 @@ class ThreadUtilTest {
     }
 
     @Test
-    fun testIsUIThread() {
-        threadUtilTest.testIsUIThread()
-    }
-
-    @Test
-    fun testIsNotBackgroundThread() {
-        threadUtilTest.testIsNotBackgroundThread()
+    fun testIsBackgroundThread() {
+        threadUtilTest.testIsBackgroundThread()
     }
 
     @Test
@@ -78,28 +67,12 @@ class ThreadUtilTest {
     }
 
     @Test
-    fun testIsUIThreadInDispatchToUI() {
-        threadUtilTest.testIsUIThreadInDispatchToUI {
-            semaphore.release()
-        }
-        semaphore.acquire()
-    }
-
-    @Test
     fun testDispatchToBackground() {
         Thread { run {
             threadUtilTest.testDispatchToBackground {
                 semaphore.release()
             }
         } }.start()
-        semaphore.acquire()
-    }
-
-    @Test
-    fun testDispatchToBackgroundFromUIThread() {
-        threadUtilTest.testDispatchToBackgroundFromUIThread {
-            semaphore.release()
-        }
         semaphore.acquire()
     }
 }

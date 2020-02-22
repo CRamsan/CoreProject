@@ -64,7 +64,7 @@ class PlantDetailsFragment : BaseFragment() {
         plant_details_image.visibility = View.INVISIBLE
         plant_details_image_loading.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
-        viewModel.getPlant().observe(this, Observer {
+        viewModel.getPlant().observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 eventLogger.log(Severity.WARNING, classTag(), "Plant is null")
                 return@Observer
@@ -116,7 +116,7 @@ class PlantDetailsFragment : BaseFragment() {
                 .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })
-        viewModel.getPlantMetadata().observe(this, Observer { metadata ->
+        viewModel.getPlantMetadata().observe(viewLifecycleOwner, Observer { metadata ->
             if (metadata == null) {
                 eventLogger.log(Severity.WARNING, classTag(), "Metadata is null")
                 return@Observer

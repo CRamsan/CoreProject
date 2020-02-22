@@ -34,6 +34,7 @@ android {
         targetSdkVersion globalTargetSdkVersion
         versionCode globalVersionCode
         versionName globalVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility globalJavaCompatibility
@@ -146,6 +147,17 @@ kotlin {
         iosTest {
             dependencies {
             }
+        }
+    }
+}
+
+/**
+ * Log test results
+ */
+tasks {
+    jvmTest {
+        testLogging {
+            events "passed", "skipped", "failed"
         }
     }
 }

@@ -41,6 +41,7 @@ dependencies {
 
     testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     testImplementation "io.mockk:mockk:$globalMockkVersion"
+    testImplementation "io.mockk:mockk-android:$globalMockkVersion"
     testImplementation "junit:junit:$globalJUnitVersion"
     testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
 }
@@ -94,8 +95,8 @@ kotlin {
                 implementation kotlin("test")
                 implementation kotlin("test-junit")
                 implementation "io.mockk:mockk:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
                 implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
         }
         androidMain {
@@ -117,6 +118,14 @@ kotlin {
         iosTest {
             dependencies {
             }
+        }
+    }
+}
+
+tasks {
+    jvmTest {
+        testLogging {
+            events "passed", "skipped", "failed"
         }
     }
 }

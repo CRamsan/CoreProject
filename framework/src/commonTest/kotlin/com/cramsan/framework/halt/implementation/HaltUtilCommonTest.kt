@@ -1,50 +1,48 @@
 package com.cramsan.framework.halt.implementation
 
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.provider
-import org.kodein.di.newInstance
+import kotlin.test.assertTrue
 
 class HaltUtilCommonTest {
 
-    private val kodein = Kodein {
-        bind<EventLoggerInterface>() with provider { mockk<EventLogger>() }
-    }
-
-    private lateinit var haltUtil: HaltUtilInterface
-    private lateinit var haltUtilImpl: HaltUtil
-
-    fun setUp() {
-        val newHaltUtil by kodein.newInstance { HaltUtil(instance()) }
-        haltUtilImpl = newHaltUtil
-        haltUtil = haltUtilImpl
-    }
-
     suspend fun testStopThread() = coroutineScope {
+        val eventLogger = mockkClass(EventLogger::class)
+        val haltUtil = HaltUtil(eventLogger)
+
         launch(Dispatchers.Default) {
             delay(DELAY_TIME)
-            haltUtilImpl.resumeThread()
+            haltUtil.resumeThread()
         }
-        launch(Dispatchers.Main) {
-            haltUtil.stopThread()
-        }
+        haltUtil.stopThread()
     }
 
-    fun testStopMainThread() {
-        // haltUtil.stopMainThread()
-    }
+    suspend fun testStopResumeStopThread() = coroutineScope {
+        val eventLogger = mockkClass(EventLogger::class)
+        val haltUtil = HaltUtil(eventLogger)
 
-    fun testCrashApp() {
-        // haltUtil.crashApp()
+        launch(Dispatchers.Default) {
+            delay(DELAY_TIME)
+            haltUtil.resumeThread()
+        }
+        haltUtil.stopThread()
+        var didWait = false
+        launch(Dispatchers.Default) {
+            delay(DELAY_TIME)
+            haltUtil.resumeThread()
+            didWait = true
+        }
+        haltUtil.stopThread()
+        assertTrue(didWait)
     }
 
     companion object {

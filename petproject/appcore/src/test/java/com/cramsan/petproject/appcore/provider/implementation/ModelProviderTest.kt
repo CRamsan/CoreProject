@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 import org.kodein.di.erased.provider
 
 /**
- * Instrumented test, which will execute on an Android device.
+ * Unit test. This will be executed in a mocked Android environment.
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */

@@ -30,7 +30,7 @@ class PlantFeedbackFragment : BaseFragment() {
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
         animalType = AnimalType.values()[animalTypeId]
         viewModel = ViewModelProviders.of(this).get(PlantFeedbackViewModel::class.java)
-        viewModel.isComplete().observe(this, Observer {
+        viewModel.isComplete().observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().finish()
             }

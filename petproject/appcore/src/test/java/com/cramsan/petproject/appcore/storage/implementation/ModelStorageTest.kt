@@ -13,7 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Instrumented test, which will execute on an Android device.
+ * Unit test. This will be executed in a mocked Android environment.
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
@@ -34,11 +34,6 @@ class ModelStorageTest {
     @After
     fun tearDown() {
         modelStorageTest.endTest()
-    }
-
-    @Test
-    fun passTest() {
-        assert(true)
     }
 
     @Test

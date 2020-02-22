@@ -83,10 +83,10 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
         model = ViewModelProviders.of(this).get(AllPlantListViewModel::class.java)
         model.animalType = animalType
-        model.observablePlants().observe(this, Observer<List<PresentablePlant>> { plants ->
+        model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
-        model.observableLoading().observe(this, Observer<Boolean> { isLoading ->
+        model.observableLoading().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
             if (isLoading) {
                 plants_list_loading.visibility = View.VISIBLE
                 plant_list_recycler.visibility = View.GONE

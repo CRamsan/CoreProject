@@ -10,19 +10,20 @@ buildscript {
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
         globalAndroidGradlePluginVersion = '3.5.3'
-        globalAndroidMaterialVersion = "1.0.0"
+        globalAndroidMaterialVersion = "1.1.0"
         globalAndroidXJUnitVersion = "1.1.1"
-        globalAndroidXLifecycleVersion = "2.1.0"
-        globalAndroidXRecyclerViewVersion = "1.0.0"
+        globalAndroidXLifecycleVersion = "2.2.0"
+        globalAndroidXRecyclerViewVersion = "1.1.0"
         globalAndroidXPreferencesVersion = "1.1.0"
         globalAppCenterSdkVersion = "2.4.1"
-        globalCoroutinesVersion = "1.2.2"
+        globalCoroutinesVersion = "1.3.3"
         globalConstraintLayoutVersion = "1.1.3"
         globalDetektVersion = initDetektVersion
         globalEspressoVersion = "3.2.0"
         globalFirebaseVersion = "18.2.0"
         globalGlideVersion = "4.10.0"
         globalGsonVerion = "2.8.5"
+        globalHamcrestVersion = "1.3"
         globalJUnitVersion = "4.12"
         globalKodeinVersion = "6.5.0"
         globalKotlinVersion = initKotlinVersion
@@ -34,6 +35,7 @@ buildscript {
         globalSpringFrameworkVersion = "2.1.7.RELEASE"
         globalSpringDependencyManagement = "1.0.7.RELEASE"
         globalSqlDelightVersion = "1.2.1"
+        globalUIAutomatorVersion = "2.2.0"
 
         globalGdxVersion = '1.9.10'
         globalRoboVMVersion = '2.3.8'

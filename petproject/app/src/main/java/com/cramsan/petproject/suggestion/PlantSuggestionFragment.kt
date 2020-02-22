@@ -23,7 +23,7 @@ class PlantSuggestionFragment : BaseFragment() {
 
         animalType = AnimalType.values()[animalTypeId]
         viewModel = ViewModelProviders.of(this).get(PlantSuggestionViewModel::class.java)
-        viewModel.isComplete().observe(this, Observer {
+        viewModel.isComplete().observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().finish()
             }

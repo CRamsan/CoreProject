@@ -77,5 +77,8 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     androidTestImplementation "androidx.test:rules:$globalAndroidXJUnitVersion"
     androidTestImplementation "androidx.test:runner:$globalAndroidXJUnitVersion"
+    androidTestImplementation "org.hamcrest:hamcrest-library:$globalHamcrestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
 }
