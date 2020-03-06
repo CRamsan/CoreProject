@@ -57,6 +57,7 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
         when (animalType) {
             AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
             AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
+            else -> TODO()
         }
     }
 }
