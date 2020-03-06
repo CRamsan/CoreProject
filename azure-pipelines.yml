@@ -20,6 +20,7 @@ steps:
   inputs:
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
+    options: '--info'
     gradleOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
@@ -28,6 +29,7 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     checkStyleRunAnalysis: true
     tasks: 'auraxiscontrolcenter:build'
+
 - task: AndroidSigning@3
   inputs:
     apkFiles: '**/*-unsigned.apk'
