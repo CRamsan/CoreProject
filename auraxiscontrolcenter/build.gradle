@@ -1,0 +1,46 @@
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlin.kapt"
+    id "org.jetbrains.kotlin.android.extensions"
+}
+
+android {
+    buildToolsVersion globalAndroidBuildToolsVersion
+    compileSdkVersion globalCompileSdkVersion
+    defaultConfig {
+        applicationId "com.cesarandres.ps2link"
+        minSdkVersion globalMinSdkVersion
+        targetSdkVersion globalTargetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 72
+        versionName "5.0.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+        }
+    }
+    compileOptions {
+        sourceCompatibility globalJavaCompatibility
+        targetCompatibility globalJavaCompatibility
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = globalJavaCompatibility
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+    implementation 'org.twitter4j:twitter4j-core:4.0.7'
+    implementation "androidx.appcompat:appcompat:1.1.0"
+}
