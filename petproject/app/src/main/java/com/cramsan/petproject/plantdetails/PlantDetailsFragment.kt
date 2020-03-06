@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -63,7 +63,7 @@ class PlantDetailsFragment : BaseFragment() {
 
         plant_details_image.visibility = View.INVISIBLE
         plant_details_image_loading.visibility = View.VISIBLE
-        viewModel = ViewModelProviders.of(this).get(PlantDetailsViewModel::class.java)
+        viewModel = getViewModel(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 eventLogger.log(Severity.WARNING, classTag(), "Plant is null")

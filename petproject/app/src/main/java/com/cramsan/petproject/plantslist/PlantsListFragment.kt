@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
@@ -79,7 +79,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
         plant_list_recycler.layoutManager = layoutManager
         plant_list_recycler.adapter = plantsAdapter
 
-        model = ViewModelProviders.of(this).get(PlantListViewModel::class.java)
+        model = getViewModel(PlantListViewModel::class.java)
         model.animalType = animalType
         model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)

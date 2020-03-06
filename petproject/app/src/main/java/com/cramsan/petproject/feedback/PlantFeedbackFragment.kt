@@ -2,11 +2,10 @@ package com.cramsan.petproject.feedback
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_plant_suggestion.*
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackBrokenLinkCheckBox
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackNameCheckBox
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackPhotoCheckBox
@@ -29,7 +28,7 @@ class PlantFeedbackFragment : BaseFragment() {
         plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
         animalType = AnimalType.values()[animalTypeId]
-        viewModel = ViewModelProviders.of(this).get(PlantFeedbackViewModel::class.java)
+        viewModel = getViewModel(PlantFeedbackViewModel::class.java)
         viewModel.isComplete().observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().finish()

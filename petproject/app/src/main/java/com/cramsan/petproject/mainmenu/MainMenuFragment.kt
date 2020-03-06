@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.petproject.R
-import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
@@ -31,12 +30,11 @@ import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
 class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
 AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
-    private lateinit var viewModel: DownloadCatalogViewModel
-
     override val contentViewLayout: Int
         get() = R.layout.fragment_main_menu
 
     private var listener: PlantsListFragment.OnListFragmentInteractionListener? = null
+    private lateinit var viewModel: DownloadCatalogViewModel
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
     private lateinit var model: AllPlantListViewModel
     private val animalType = AnimalType.ALL
@@ -56,7 +54,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(DownloadCatalogViewModel::class.java)
+        viewModel = getViewModel(DownloadCatalogViewModel::class.java)
         main_menu_cats.setOnClickListener {
             val intent = Intent(requireContext(), PlantsListActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, AnimalType.CAT.ordinal)
@@ -81,7 +79,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         plant_list_recycler.layoutManager = layoutManager
         plant_list_recycler.adapter = plantsAdapter
 
-        model = ViewModelProviders.of(this).get(AllPlantListViewModel::class.java)
+        model = getViewModel(AllPlantListViewModel::class.java)
         model.animalType = animalType
         model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)

@@ -58,7 +58,6 @@ dependencies {
     implementation "com.google.android.material:material:$globalAndroidMaterialVersion"
 
     implementation "com.github.bumptech.glide:glide:$globalGlideVersion"
-    //implementation "com.google.android.gms:play-services-ads:$globalFirebaseVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
@@ -75,10 +74,13 @@ dependencies {
 
     androidTestImplementation "androidx.test.ext:junit:$globalAndroidXJUnitVersion"
     androidTestImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
-    androidTestImplementation "androidx.test:rules:$globalAndroidXJUnitVersion"
-    androidTestImplementation "androidx.test:runner:$globalAndroidXJUnitVersion"
-    androidTestImplementation "org.hamcrest:hamcrest-library:$globalHamcrestVersion"
+    androidTestImplementation "androidx.test:core:$globalAndroidXTestVersion"
+    androidTestImplementation "androidx.test:rules:$globalAndroidXTestVersion"
+    androidTestImplementation "androidx.test:runner:$globalAndroidXTestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
+    androidTestImplementation "org.hamcrest:hamcrest-library:$globalHamcrestVersion"
+    androidTestImplementation "io.mockk:mockk:$globalMockkVersion"
+    androidTestImplementation "io.mockk:mockk-android:$globalMockkVersion"
 }

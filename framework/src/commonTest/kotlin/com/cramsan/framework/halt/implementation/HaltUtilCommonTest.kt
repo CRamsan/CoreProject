@@ -1,10 +1,5 @@
 package com.cramsan.framework.halt.implementation
 
-import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.assert.implementation.AssertUtilInitializer
-import com.cramsan.framework.halt.HaltUtilInterface
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers

@@ -2,7 +2,7 @@ package com.cramsan.petproject.suggestion
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
@@ -22,7 +22,7 @@ class PlantSuggestionFragment : BaseFragment() {
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
 
         animalType = AnimalType.values()[animalTypeId]
-        viewModel = ViewModelProviders.of(this).get(PlantSuggestionViewModel::class.java)
+        viewModel = getViewModel(PlantSuggestionViewModel::class.java)
         viewModel.isComplete().observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().finish()

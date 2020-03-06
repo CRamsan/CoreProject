@@ -4,6 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/download_dialog_activity"
         tools:context="com.cramsan.petproject.download.DownloadDialogActivity">
 
     <include android:layout_width="300dp" android:layout_height="wrap_content"
