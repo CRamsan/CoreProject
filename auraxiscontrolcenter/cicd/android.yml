@@ -44,3 +44,13 @@ steps:
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'App Center'
+    appSlug: 'cramsan/AuraxisControlCenter'
+    appFile: 'auraxiscontrolcenter/build/outputs/apk/release/auraxiscontrolcenter-release-unsigned.apk'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'Release Notes: TBD'
+    destinationType: 'groups'
+    distributionGroupId: '368466ff-a4a5-49e3-9f13-7ed11ac71160'
