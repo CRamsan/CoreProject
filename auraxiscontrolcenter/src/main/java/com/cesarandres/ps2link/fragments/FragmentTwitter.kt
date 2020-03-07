@@ -204,7 +204,7 @@ class FragmentTwitter : BaseFragment() {
             startActivity(i)
         }
         val data = activityContainer.data
-        listRoot.adapter = TwitterItemAdapter(activity!!, users, data!!)
+        listRoot.adapter = TwitterItemAdapter(activity!!, users, data!!, imageLoader)
     }
 
     /**

@@ -11,12 +11,14 @@ import android.widget.TextView
 
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.Directive
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
 
 import java.util.ArrayList
 
-class DirectiveTierListAdapter(private val fragment: BaseFragment) : BaseExpandableListAdapter(),
+class DirectiveTierListAdapter(private val fragment: BaseFragment,
+                               private val dbgCensus: DBGCensus) : BaseExpandableListAdapter(),
     OnGroupExpandListener {
     private val expandableList: EmbeddableExpandableListView? = null
     private var directives: ArrayList<Directive>? = null
@@ -76,7 +78,7 @@ class DirectiveTierListAdapter(private val fragment: BaseFragment) : BaseExpanda
         val pbar = convertView.findViewById<View>(R.id.progressBarDirectiveProgress) as ProgressBar
         var name: String? = "None"
         try {
-            name = headerTitle.name!!.localizedName
+            name = headerTitle.name!!.localizedName(dbgCensus.currentLang)
         } catch (e: Exception) {
 
         }

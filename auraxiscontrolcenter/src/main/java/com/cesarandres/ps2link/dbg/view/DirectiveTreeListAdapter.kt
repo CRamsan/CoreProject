@@ -7,6 +7,7 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView.OnGroupExpandListener
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.volley.toolbox.ImageLoader
 
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.ApplicationPS2Link
@@ -18,7 +19,9 @@ import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
 
 import java.util.ArrayList
 
-class DirectiveTreeListAdapter(private val fragment: BaseFragment) : BaseExpandableListAdapter(),
+class DirectiveTreeListAdapter(private val fragment: BaseFragment,
+                               private val imageLoader: ImageLoader,
+                               private val dbgCensus: DBGCensus) : BaseExpandableListAdapter(),
     OnGroupExpandListener {
 
     protected var mInflater: LayoutInflater
@@ -28,7 +31,7 @@ class DirectiveTreeListAdapter(private val fragment: BaseFragment) : BaseExpanda
     private var nextList: EmbeddableExpandableListView? = null
 
     init {
-        this.nextAdapter = DirectiveTierListAdapter(fragment)
+        this.nextAdapter = DirectiveTierListAdapter(fragment, dbgCensus)
         this.mInflater = LayoutInflater.from(fragment.activity)
     }
 
@@ -101,9 +104,9 @@ class DirectiveTreeListAdapter(private val fragment: BaseFragment) : BaseExpanda
         val tree = this.directiveTrees!![groupPosition]
         holder.treeIcon!!.setImageUrl(
             DBGCensus.ENDPOINT_URL + "/" + tree.directive_tier!!.imagePath,
-            ApplicationPS2Link.mImageLoader
+            imageLoader
         )
-        holder.treeName!!.text = tree.directive_tree_id_join_directive_tree!!.name!!.localizedName
+        holder.treeName!!.text = tree.directive_tree_id_join_directive_tree!!.name!!.localizedName(dbgCensus.currentLang)
         holder.treeValue!!.text = Integer.toString(tree.current_level_value)
         val resID = this.fragment.activity!!.resources.getIdentifier(
             "objective_progress_" + tree.current_directive_tier_id

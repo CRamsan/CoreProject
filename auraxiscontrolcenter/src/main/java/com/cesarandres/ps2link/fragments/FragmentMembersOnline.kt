@@ -91,7 +91,7 @@ class FragmentMembersOnline : BaseFragment() {
     fun downloadOutfitMembers() {
         setProgressButton(true)
         val url =
-            DBGCensus.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + DBGCensus.currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + this.outfitId)!!.toString()
+            dbgCensus.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + dbgCensus.currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + this.outfitId)!!.toString()
 
         val success = Listener<Outfit_member_response> { response ->
             setProgressButton(false)
@@ -109,7 +109,7 @@ class FragmentMembersOnline : BaseFragment() {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Outfit_member_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Outfit_member_response::class.java, success, error, this)
     }
 
     /**
@@ -119,13 +119,13 @@ class FragmentMembersOnline : BaseFragment() {
     private fun updateContent(members: ArrayList<Member>?) {
         val listRoot = view!!.findViewById<View>(R.id.listViewMemberList) as ListView
 
-        listRoot.adapter = OnlineMemberItemAdapter(members!!, activity!!)
+        listRoot.adapter = OnlineMemberItemAdapter(members!!, activity!!, dbgCensus)
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             mCallbacks.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Member).character_id,
-                    DBGCensus.currentNamespace.name
+                    dbgCensus.currentNamespace.name
                 )
             )
         }

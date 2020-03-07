@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.volley.toolbox.ImageLoader
 
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.ApplicationPS2Link
@@ -27,7 +28,8 @@ class WeaponItemAdapter(
     private val weaponKills: ArrayList<WeaponStat>,
     private val weaponKilledBy: ArrayList<WeaponStat>,
     private val characterFaction: String,
-    var isMyWeapons: Boolean
+    var isMyWeapons: Boolean,
+    val imageLoader: ImageLoader
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
@@ -170,7 +172,7 @@ class WeaponItemAdapter(
 
         holder.weaponImage!!.setImageUrl(
             DBGCensus.ENDPOINT_URL + "/" + stat.imagePath,
-            ApplicationPS2Link.mImageLoader
+            imageLoader
         )
 
         return convertView

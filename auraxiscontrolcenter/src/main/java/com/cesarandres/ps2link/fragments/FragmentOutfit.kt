@@ -113,7 +113,7 @@ class FragmentOutfit : BaseFragment() {
                     leaderButton.setOnClickListener {
                         mCallbacks.onItemSelected(
                             ActivityMode.ACTIVITY_PROFILE.toString(),
-                            arrayOf(outfit.leader_character_id, DBGCensus.currentNamespace.name)
+                            arrayOf(outfit.leader_character_id, dbgCensus.currentNamespace.name)
                         )
                     }
                 }
@@ -135,7 +135,7 @@ class FragmentOutfit : BaseFragment() {
                 if (isChecked) {
                     editor.putString("preferedOutfit", outfit.outfit_Id)
                     editor.putString("preferedOutfitName", outfit.name)
-                    editor.putString("preferedOutfitNamespace", DBGCensus.currentNamespace.name)
+                    editor.putString("preferedOutfitNamespace", dbgCensus.currentNamespace.name)
                 } else {
                     editor.putString("preferedOutfitName", "")
                     editor.putString("preferedOutfit", "")
@@ -169,7 +169,7 @@ class FragmentOutfit : BaseFragment() {
      */
     fun downloadOutfit(outfitId: String?) {
         this.setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.OUTFIT,
             outfitId,
@@ -179,7 +179,7 @@ class FragmentOutfit : BaseFragment() {
             setProgressButton(false)
             try {
                 outfit = response.outfit_list!![0]
-                outfit!!.namespace = DBGCensus.currentNamespace
+                outfit!!.namespace = dbgCensus.currentNamespace
                 outfit!!.isCached = isCached
                 updateUI(outfit!!)
                 val task = UpdateOutfitToTable()
@@ -197,7 +197,7 @@ class FragmentOutfit : BaseFragment() {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Outfit_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Outfit_response::class.java, success, error, this)
     }
 
     /**

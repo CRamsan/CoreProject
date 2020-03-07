@@ -38,9 +38,20 @@ android {
 }
 
 dependencies {
+    implementation project(":framework")
+
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     implementation 'org.twitter4j:twitter4j-core:4.0.7'
     implementation "androidx.appcompat:appcompat:1.1.0"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
+
+    implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
+
+    implementation "com.microsoft.appcenter:appcenter:$globalAppCenterSdkVersion"
 }

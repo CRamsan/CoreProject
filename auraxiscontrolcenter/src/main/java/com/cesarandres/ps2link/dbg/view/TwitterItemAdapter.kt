@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.android.volley.toolbox.ImageLoader
 
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.ApplicationPS2Link
@@ -17,7 +18,10 @@ import org.ocpsoft.prettytime.PrettyTime
 
 import java.util.Date
 
-class TwitterItemAdapter(context: Context, users: Array<String>, data: ObjectDataSource) :
+class TwitterItemAdapter(context: Context,
+                         users: Array<String>,
+                         data: ObjectDataSource,
+                         val imageLoader: ImageLoader) :
     DBItemAdapter() {
 
     init {
@@ -85,7 +89,7 @@ class TwitterItemAdapter(context: Context, users: Array<String>, data: ObjectDat
         holder.tweetTag!!.text = "@" + tweet.tag!!
         val updateTime = p.format(Date(tweet.date!! * 1000L))
 
-        holder.userImage!!.setImageUrl(tweet.imgUrl, ApplicationPS2Link.mImageLoader)
+        holder.userImage!!.setImageUrl(tweet.imgUrl, imageLoader)
         holder.tweetDate!!.text = updateTime
 
         return convertView

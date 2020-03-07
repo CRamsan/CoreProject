@@ -8,9 +8,11 @@ import android.widget.ExpandableListView
 import android.widget.ExpandableListView.OnGroupExpandListener
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.android.volley.toolbox.ImageLoader
 
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.DirectiveTreeCategory
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
 
@@ -18,7 +20,9 @@ import java.util.ArrayList
 
 class DirectiveTreeCategoryListAdapter(
     private val fragment: BaseFragment,
-    private val expandableList: ExpandableListView
+    private val expandableList: ExpandableListView,
+    private val dbgCensus: DBGCensus,
+    private val imageLoader: ImageLoader
 ) : BaseExpandableListAdapter(), OnGroupExpandListener {
 
     protected var mInflater: LayoutInflater
@@ -28,7 +32,7 @@ class DirectiveTreeCategoryListAdapter(
 
     init {
         this.mInflater = LayoutInflater.from(fragment.activity)
-        this.nextAdapter = DirectiveTreeListAdapter(fragment)
+        this.nextAdapter = DirectiveTreeListAdapter(fragment, imageLoader, dbgCensus)
     }
 
     override fun getChild(groupPosition: Int, childPosititon: Int): Any? {
@@ -94,7 +98,7 @@ class DirectiveTreeCategoryListAdapter(
         }
 
         val category = this.categories!![groupPosition]
-        holder.categoryName!!.text = category.name!!.localizedName
+        holder.categoryName!!.text = category.name!!.localizedName(dbgCensus.currentLang)
         holder.progress!!.max = category.maxValue
         holder.progress!!.progress = category.currentValue
 

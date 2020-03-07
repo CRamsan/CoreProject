@@ -61,8 +61,8 @@ class DirectiveTreeCategory : Comparable<DirectiveTreeCategory> {
     }
 
     override fun compareTo(another: DirectiveTreeCategory): Int {
-        return this.name!!.localizedName!!.compareTo(
-            another.name!!.localizedName!!,
+        return this.name!!.en!!.compareTo(
+            another.name!!.en!!,
             ignoreCase = true
         )
     }

@@ -19,7 +19,7 @@ class CharacterDirectiveTree : Comparable<CharacterDirectiveTree> {
     }
 
     override fun compareTo(another: CharacterDirectiveTree): Int {
-        this.directive_tree_id_join_directive_tree!!.name!!.localizedName!!.compareTo(another.directive_tree_id_join_directive_tree!!.name!!.localizedName!!)
+        this.directive_tree_id_join_directive_tree!!.name!!.en!!.compareTo(another.directive_tree_id_join_directive_tree!!.name!!.en!!)
         return 1
     }
 }

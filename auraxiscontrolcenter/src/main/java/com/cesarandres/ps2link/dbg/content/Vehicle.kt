@@ -20,7 +20,7 @@ class Vehicle : IContainDrawable {
         get() = if (name == null) {
             null
         } else {
-            name!!.localizedName
+            name!!.en
         }
 
     override val imagePath: String?

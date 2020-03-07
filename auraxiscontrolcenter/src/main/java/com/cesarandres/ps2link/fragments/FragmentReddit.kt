@@ -115,7 +115,7 @@ class FragmentReddit : BaseFragment() {
             setProgressButton(false)
             try {
                 val listRoot = view!!.findViewById<View>(R.id.listViewRedditList) as ListView
-                listRoot.adapter = RedditItemAdapter(this!!.activity!!, response.data!!.children)
+                listRoot.adapter = RedditItemAdapter(this!!.activity!!, response.data!!.children, imageLoader)
             } catch (e: Exception) {
                 Toast.makeText(
                     activity,
@@ -136,7 +136,7 @@ class FragmentReddit : BaseFragment() {
 
         val gsonOject = GsonRequest(url, Content::class.java, null, success, error)
         gsonOject.tag = this
-        ApplicationPS2Link.volley!!.add(gsonOject)
+        volley.add(gsonOject)
     }
 
     companion object {

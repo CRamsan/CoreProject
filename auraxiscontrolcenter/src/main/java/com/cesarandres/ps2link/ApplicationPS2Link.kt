@@ -1,22 +1,113 @@
 package com.cesarandres.ps2link
 
 import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
-import android.os.AsyncTask
 
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.volley.BitmapLruCache
+import com.cesarandres.ps2link.module.CacheManager
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilInitializer
+import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.implementation.CrashHandler
+import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
+import com.cramsan.framework.crashehandler.implementation.PlatformCrashHandler
+import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
+import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerInitializer
+import com.cramsan.framework.logging.implementation.PlatformLogger
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.Metrics
+import com.cramsan.framework.metrics.implementation.MetricsInitializer
+import com.cramsan.framework.metrics.implementation.PlatformMetrics
+import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.preferences.implementation.PlatformPreferences
+import com.cramsan.framework.preferences.implementation.Preferences
+import com.cramsan.framework.preferences.implementation.PreferencesInitializer
+import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.microsoft.appcenter.AppCenter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.androidXModule
+import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.singleton
+import org.kodein.di.newInstance
 
-import java.io.File
-import java.util.Arrays
-import java.util.Comparator
 import java.util.Locale
 
-class ApplicationPS2Link : Application() {
+class ApplicationPS2Link : Application(), KodeinAware {
+
+    private val eventLogger: EventLoggerInterface by instance()
+    private val crashHandler: CrashHandlerInterface by instance()
+    private val cacheManager: CacheManager by instance()
+    private val metrics: MetricsInterface by instance()
+    private val dbgCensus: DBGCensus by instance()
+
+    override val kodein = Kodein.lazy {
+        import(androidXModule(this@ApplicationPS2Link))
+
+        bind<CrashHandlerInterface>() with singleton {
+            CrashHandler(CrashHandlerInitializer(PlatformCrashHandler()))
+        }
+        bind<MetricsInterface>() with singleton {
+            Metrics(MetricsInitializer(PlatformMetrics()))
+        }
+        bind<EventLoggerInterface>() with singleton {
+            val severity: Severity = when (BuildConfig.DEBUG) {
+                true -> Severity.DEBUG
+                false -> Severity.INFO
+            }
+            EventLogger(EventLoggerInitializer(severity, PlatformLogger()))
+        }
+        bind<HaltUtilInterface>() with singleton {
+            val haltUtil by kodein.newInstance { HaltUtil(instance()) }
+            haltUtil
+        }
+        bind<ThreadUtilInterface>() with singleton {
+            val threadUtil by kodein.newInstance { ThreadUtil(instance(), instance()) }
+            threadUtil
+        }
+        bind<AssertUtilInterface>() with singleton {
+            val initializer = AssertUtilInitializer(BuildConfig.DEBUG)
+            val assertUtil by kodein.newInstance { AssertUtil(initializer, instance(), instance()) }
+            assertUtil
+        }
+        bind<PreferencesInterface>() with singleton {
+            val context = this@ApplicationPS2Link
+            val preferencesInitializer = PreferencesInitializer(PlatformPreferences(context))
+            val preferences by kodein.newInstance {
+                Preferences(preferencesInitializer)
+            }
+            preferences
+        }
+        bind<RequestQueue>() with singleton {
+            Volley.newRequestQueue(this@ApplicationPS2Link)
+        }
+        bind<ImageLoader>() with singleton {
+            val loader by kodein.newInstance {
+                ImageLoader(instance(), BitmapLruCache())
+            }
+            loader
+        }
+        bind<CacheManager>() with singleton {
+            CacheManager(this@ApplicationPS2Link)
+        }
+        bind<DBGCensus>() with singleton {
+            DBGCensus(this@ApplicationPS2Link)
+        }
+    }
 
     /*
      * (non-Javadoc)
@@ -25,27 +116,22 @@ class ApplicationPS2Link : Application() {
      */
     override fun onCreate() {
         super.onCreate()
+        eventLogger.log(Severity.INFO, classTag(), "onCreate called")
+        AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
+        crashHandler.initialize()
+        metrics.initialize()
 
-
-        if (volley == null) {
-            ApplicationPS2Link.volley = Volley.newRequestQueue(this)
-        }
-        if (mImageLoader == null) {
-            mImageLoader = ImageLoader(
-                ApplicationPS2Link.volley,
-                BitmapLruCache()
-            )
-        }
-
-        if (getCacheSize(this) > MAX_CACHE_SIZE) {
-            ClearCache().execute()
+        GlobalScope.launch {
+            if (cacheManager.getCacheSize() > CacheManager.MAX_CACHE_SIZE) {
+                cacheManager.clearCache()
+            }
         }
 
         val lang = Locale.getDefault().language
-        DBGCensus.currentLang = DBGCensus.CensusLang.EN
+        dbgCensus.currentLang = DBGCensus.CensusLang.EN
         for (clang in DBGCensus.CensusLang.values()) {
             if (lang.equals(clang.name, ignoreCase = true)) {
-                DBGCensus.currentLang = clang
+                dbgCensus.currentLang = clang
             }
         }
     }
@@ -78,81 +164,10 @@ class ApplicationPS2Link : Application() {
         PS2, NC, TR, VS
     }
 
-    /**
-     * This AsyncTask will delete all the files from the cache.
-     */
-    inner class ClearCache : AsyncTask<String, Int, Boolean>() {
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPreExecute()
-         */
-        override fun onPreExecute() {}
-
-        override fun doInBackground(vararg args: String): Boolean? {
-            val fileList = fileList()
-            for (file in fileList) {
-                deleteFile(file)
-            }
-            return null
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-         */
-        override fun onPostExecute(result: Boolean?) {
-
-        }
-    }
-
-    /**
-     * This AsyncTask will delete the least used files from the cache until it reaches its maximum size allowed.
-     */
-    inner class TrimCache : AsyncTask<String, Int, Boolean>() {
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPreExecute()
-         */
-        override fun onPreExecute() {}
-
-        override fun doInBackground(vararg args: String): Boolean? {
-
-            val files = filesDir.listFiles()
-
-            Arrays.sort(files!!) { f1, f2 ->
-                java.lang.Long.valueOf(f1.lastModified()).compareTo(f2.lastModified())
-            }
-
-            var i = 0
-            while (getCacheSize(applicationContext) > MAX_CACHE_SIZE && i < files.size) {
-                deleteFile(files[i].absolutePath)
-                i++
-            }
-
-            return null
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-         */
-        override fun onPostExecute(result: Boolean?) {
-
-        }
-    }
 
     companion object {
 
         internal val ACTIVITY_MODE_KEY = "activity_mode"
-        private val MAX_CACHE_SIZE = 2000000 //2 MB
-        var volley: RequestQueue? = null
-        var mImageLoader: ImageLoader? = null
         /**
          * @return the bitmap holding the data for the background for all activities
          */
@@ -168,17 +183,5 @@ class ApplicationPS2Link : Application() {
          * method should only be called after the wallpaper has been set
          */
         var wallpaperMode = WallPaperMode.PS2
-
-        /**
-         * @return the size in bytes of all the files in the cache
-         */
-        fun getCacheSize(context: Context): Long {
-            val fileList = context.fileList()
-            var size: Long = 0
-            for (file in fileList) {
-                size += File(file).length()
-            }
-            return size
-        }
     }
 }

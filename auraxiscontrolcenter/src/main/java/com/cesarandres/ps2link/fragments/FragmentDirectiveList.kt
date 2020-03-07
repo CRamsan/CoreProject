@@ -80,7 +80,7 @@ class FragmentDirectiveList : BaseFragment() {
         this.profileId = arguments!!.getString("PARAM_0")
         this.expandableListView =
             activity!!.findViewById<View>(R.id.expandableListViewDirectiveList) as ExpandableListView
-        this.adapter = DirectiveTreeCategoryListAdapter(this, expandableListView!!)
+        this.adapter = DirectiveTreeCategoryListAdapter(this, expandableListView!!, dbgCensus, imageLoader)
     }
 
     /*
@@ -99,7 +99,7 @@ class FragmentDirectiveList : BaseFragment() {
     fun downloadDirectivesList(profileId: String?) {
         this.setProgressButton(true)
         //TODO Fix this language use
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET, PS2Collection.CHARACTERS_DIRECTIVE, null,
             QueryString.generateQeuryString().AddComparison(
                 "character_id",
@@ -119,7 +119,7 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(url, Characters_directive_list::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Characters_directive_list::class.java, success, error, this)
     }
 
     /**
@@ -139,7 +139,7 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(
+        dbgCensus.sendGsonRequest(
             url,
             Characters_directive_objective_list::class.java,
             success,
@@ -164,7 +164,7 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(
+        dbgCensus.sendGsonRequest(
             url,
             Characters_directive_tree_list::class.java,
             success,
@@ -184,7 +184,7 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(url, Directive_tier_list::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Directive_tier_list::class.java, success, error, this)
     }
 
     fun downloadAllDirectives(profileId: String?) {
@@ -198,7 +198,7 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(url, Directive_list::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Directive_list::class.java, success, error, this)
     }
 
     /**
@@ -220,7 +220,7 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(
+        dbgCensus.sendGsonRequest(
             url,
             Characters_directive_tier_list::class.java,
             success,

@@ -120,7 +120,8 @@ class PetProjectApplication : Application(), KodeinAware {
             val feedbackManager by kodein.newInstance {
                 FeedbackManager(initializer,
                     instance(),
-                    instance()) }
+                    instance())
+            }
             feedbackManager
         }
         bind<ViewModelProvider>() with factory {
@@ -131,7 +132,7 @@ class PetProjectApplication : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         eventLogger.log(Severity.INFO, classTag(), "onCreate called")
-        AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
+        AppCenter.start(this, "2cbdd11d-e4ef-4626-b09f-2a7deb82664a")
         crashHandler.initialize()
         metrics.initialize()
     }

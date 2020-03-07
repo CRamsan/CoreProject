@@ -88,43 +88,43 @@ class FragmentMainMenu : BaseFragment() {
         buttonCharacters.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_PROFILE_LIST.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonServers.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_SERVER_LIST.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonOutfit.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_OUTFIT_LIST.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonNews.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_LINK_MENU.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonTwitter.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_TWITTER.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonReddit.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_REDDIT.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonAbout.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_ABOUT.toString(),
-                null!!
+                emptyArray()
             )
         }
         buttonDonate.setOnClickListener {
@@ -137,7 +137,7 @@ class FragmentMainMenu : BaseFragment() {
         buttonSettings.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_SETTINGS.toString(),
-                null!!
+                emptyArray()
             )
         }
 

@@ -11,11 +11,14 @@ import android.widget.ProgressBar
 import android.widget.ToggleButton
 
 import androidx.fragment.app.FragmentTransaction
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.ImageLoader
 
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.base.BaseActivity
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.base.BaseFragment.FragmentCallbacks
+import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.fragments.FragmentAbout
 import com.cesarandres.ps2link.fragments.FragmentAddOutfit
 import com.cesarandres.ps2link.fragments.FragmentAddProfile
@@ -29,6 +32,9 @@ import com.cesarandres.ps2link.fragments.holders.FragmentOutfitPager
 import com.cesarandres.ps2link.fragments.holders.FragmentProfilePager
 import com.cesarandres.ps2link.fragments.holders.FragmentRedditPager
 import com.cesarandres.ps2link.module.ObjectDataSource
+import com.cramsan.framework.logging.EventLoggerInterface
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
 
 /**
  * Class that will hold the current fragments. It behaves differently if it is
@@ -42,7 +48,7 @@ import com.cesarandres.ps2link.module.ObjectDataSource
  * current fragment on top of the stack. This works correctly in phone mode, it
  * has not been tested in tablets yet.
  */
-class ActivityContainer : BaseActivity(), FragmentCallbacks {
+class ActivityContainer : BaseActivity(), KodeinAware, FragmentCallbacks {
 
     protected lateinit var fragmentTitle: Button
     protected lateinit var fragmentProgress: ProgressBar
@@ -51,6 +57,13 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
     protected lateinit var fragmentAdd: ImageButton
     protected lateinit var fragmentStar: ToggleButton
     protected lateinit var fragmentAppend: ToggleButton
+
+    override val kodein by lazy { (application as ApplicationPS2Link).kodein }
+    protected val eventLogger: EventLoggerInterface by instance()
+    protected val volley: RequestQueue by instance()
+    protected val dbgCensus: DBGCensus by instance()
+    protected val imageLoader: ImageLoader by instance()
+
     /**
      * @return current activity mode
      */
@@ -166,7 +179,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
         }
 
         // Open the database for all other fragments to use
-        data = ObjectDataSource(this)
+        data = ObjectDataSource(this, dbgCensus)
         data!!.open()
     }
 

@@ -109,7 +109,7 @@ class FragmentMembersList : BaseFragment() {
      */
     fun downloadOutfitMembers() {
         setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.OUTFIT,
             "",
@@ -143,7 +143,7 @@ class FragmentMembersList : BaseFragment() {
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
-        DBGCensus.sendGsonRequest(url, Outfit_member_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Outfit_member_response::class.java, success, error, this)
     }
 
     /**
@@ -160,7 +160,7 @@ class FragmentMembersList : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Member).character_id,
-                    DBGCensus.currentNamespace.name
+                    dbgCensus.currentNamespace.name
                 )
             )
         }

@@ -29,7 +29,7 @@ import java.util.Locale
 
 import android.widget.Toast.*
 
-class ServerItemAdapter(private val context: Context, serverList: List<World>) : BaseAdapter() {
+class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGCensus) : BaseAdapter() {
     private val mInflater: LayoutInflater
     private val serverList: ArrayList<World>
     private val channelMap: HashMap<CompoundButton.OnCheckedChangeListener, String>
@@ -45,7 +45,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>) :
             settings.getBoolean(FragmentSettings.PREF_KEY_NOTIFICATION_ENABLE, false)
 
         for (world in this.serverList) {
-            var channel = DBGCensus.currentNamespace.toString() + "-" + world.world_id
+            var channel = dbgCensus.currentNamespace.toString() + "-" + world.world_id
             channel = channel.replace(":v2", "")
             world.isRegistered = settings.getBoolean("parse_$channel", false)
             // REMOVE THIS TO ENABLE PUSH NOTIFICATIONS
@@ -63,7 +63,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>) :
         var name: String?
         var population: String? = ""
         for (world in this.serverList) {
-            name = world.name!!.localizedName
+            name = world.name!!.localizedName(dbgCensus.currentLang)
             try {
                 if (name == "Briggs") {
                     population = serverList.live!!.briggs!!.status
@@ -117,7 +117,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>) :
 
     fun onItemSelected(index: Int, context: Context) {
         val world = this.serverList[index]
-        var channel = DBGCensus.currentNamespace.toString() + "-" +
+        var channel = dbgCensus.currentNamespace.toString() + "-" +
                 this.serverList[index].world_id
         channel = channel.replace(":v2", "")
         if (world.isRegistered) {
@@ -239,7 +239,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>) :
         holder.serverAlertCheckBox!!.isEnabled = notificationsEnabled
         holder.serverAlertCheckBox!!.isChecked = this.serverList[position].isRegistered
 
-        val name = this.serverList[position].name!!.localizedName
+        val name = this.serverList[position].name!!.localizedName(dbgCensus.currentLang)
 
         if (name == "Briggs") {
             holder.serverRegion!!.text = "(AU)"
@@ -279,14 +279,14 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>) :
                 ) {
                     holder.serverAlert!!.text =
                         (context.resources.getString(R.string.text_server_alert_current)
-                                + " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName)
+                                + " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
 
                     holder.serverAlert!!.setTextColor(Color.argb(255, 120, 235, 235))
                     holder.serverAlert!!.setTypeface(null, Typeface.BOLD)
                 } else {
                     holder.serverAlert!!.text =
                         (context.resources.getString(R.string.text_server_alert_recently)
-                                + " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName)
+                                + " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
                     holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
                     holder.serverAlert!!.setTextColor(Color.GRAY)
                 }

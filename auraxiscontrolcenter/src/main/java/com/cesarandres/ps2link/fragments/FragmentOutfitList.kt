@@ -49,7 +49,7 @@ class FragmentOutfitList : BaseFragment() {
         this.fragmentAdd.setOnClickListener {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_OUTFIT.toString(),
-                null!!
+                emptyArray()
             )
         }
         this.fragmentUpdate.setOnClickListener { ReadOutfitsTable().execute() }

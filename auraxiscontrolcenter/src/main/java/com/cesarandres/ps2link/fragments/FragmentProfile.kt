@@ -160,7 +160,7 @@ class FragmentProfile : BaseFragment() {
 
                 if (character.server != null) {
                     (activity!!.findViewById<View>(R.id.textViewServerText) as TextView).text =
-                        character.server!!.name!!.localizedName
+                        character.server!!.name!!.localizedName(dbgCensus.currentLang)
                 } else {
                     (activity!!.findViewById<View>(R.id.textViewServerText) as TextView).text =
                         activity!!.resources.getString(R.string.text_unknown)
@@ -183,7 +183,7 @@ class FragmentProfile : BaseFragment() {
                 if (isChecked) {
                     editor.putString("preferedProfile", profile!!.characterId)
                     editor.putString("preferedProfileName", profile!!.name!!.first)
-                    editor.putString("preferedProfileNamespace", DBGCensus.currentNamespace.name)
+                    editor.putString("preferedProfileNamespace", dbgCensus.currentNamespace.name)
                 } else {
                     editor.putString("preferedProfileName", "")
                     editor.putString("preferedProfile", "")
@@ -217,7 +217,7 @@ class FragmentProfile : BaseFragment() {
      */
     fun downloadProfiles(character_id: String?) {
         this.setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.CHARACTER,
             character_id,
@@ -231,7 +231,7 @@ class FragmentProfile : BaseFragment() {
             setProgressButton(false)
             try {
                 profile = response.character_list!![0]
-                profile!!.namespace = DBGCensus.currentNamespace
+                profile!!.namespace = dbgCensus.currentNamespace
                 profile!!.isCached = isCached
                 updateUI(profile!!)
                 val task = UpdateProfileToTable()
@@ -249,7 +249,7 @@ class FragmentProfile : BaseFragment() {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
     }
 
     /**

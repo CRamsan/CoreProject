@@ -59,7 +59,7 @@ class FragmentKillList : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterEvent).important_character_id,
-                    DBGCensus.currentNamespace.name
+                    dbgCensus.currentNamespace.name
                 )
             )
         }
@@ -84,7 +84,7 @@ class FragmentKillList : BaseFragment() {
      */
     fun downloadKillList(character_id: String?) {
         setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.CHARACTERS_EVENT, null,
             QueryString.generateQeuryString().AddComparison(
@@ -107,7 +107,10 @@ class FragmentKillList : BaseFragment() {
                 val listRoot = activity!!.findViewById<View>(R.id.listViewKillList) as ListView
                 listRoot.adapter =
                     KillItemAdapter(activity!!, response.characters_event_list!!,
-                        this!!.profileId!!
+                        this!!.profileId!!,
+                        volley,
+                        imageLoader,
+                        dbgCensus
                     )
             } catch (e: Exception) {
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
@@ -120,7 +123,7 @@ class FragmentKillList : BaseFragment() {
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
-        DBGCensus.sendGsonRequest(
+        dbgCensus.sendGsonRequest(
             url,
             Characters_event_list_response::class.java,
             success,

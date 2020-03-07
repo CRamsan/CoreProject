@@ -45,7 +45,8 @@ class FragmentOutfitPager : BaseFragment(), ButtonSelectSource.SourceSelectionCh
         val view = inflater.inflate(R.layout.fragment_outfit_pager, container, false)
         selectionButton = ButtonSelectSource(
             activity!!,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup
+            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            dbgCensus
         )
         selectionButton!!.listener = this
         return view
@@ -66,7 +67,7 @@ class FragmentOutfitPager : BaseFragment(), ButtonSelectSource.SourceSelectionCh
 
         outfitId = extras!!.getString("PARAM_0")
         this.namespace = extras.getString("PARAM_1")
-        DBGCensus.currentNamespace = Namespace.valueOf(namespace!!)
+        dbgCensus.currentNamespace = Namespace.valueOf(namespace!!)
 
         this.fragmentUpdate.setOnClickListener {
             val fragment: Fragment

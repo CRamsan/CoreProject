@@ -60,7 +60,7 @@ class FragmentFriendList : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterFriend).character_id,
-                    DBGCensus.currentNamespace.name
+                    dbgCensus.currentNamespace.name
                 )
             )
         }
@@ -84,7 +84,7 @@ class FragmentFriendList : BaseFragment() {
      */
     fun downloadFriendsList(character_id: String?) {
         setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.CHARACTERS_FRIEND,
             null,
@@ -114,7 +114,7 @@ class FragmentFriendList : BaseFragment() {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(
+        dbgCensus.sendGsonRequest(
             url,
             Character_friend_list_response::class.java,
             success,

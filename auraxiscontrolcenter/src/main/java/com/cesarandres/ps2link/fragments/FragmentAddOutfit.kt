@@ -61,7 +61,8 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
         val view = inflater.inflate(R.layout.fragment_add_outfit, container, false)
         selectionButton = ButtonSelectSource(
             activity!!,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup
+            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            dbgCensus
         )
         selectionButton!!.listener = this
         return view
@@ -110,7 +111,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
      * information.
      */
     fun downloadOutfits() {
-        this.lastUsedNamespace = DBGCensus.currentNamespace
+        this.lastUsedNamespace = dbgCensus.currentNamespace
 
         val searchField = activity!!.findViewById<View>(R.id.fieldSearchOutfit) as EditText
         val searchTagField = activity!!.findViewById<View>(R.id.fieldSearchTag) as EditText
@@ -158,7 +159,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
 
         query.AddCommand(QueryCommand.LIMIT, "15")
 
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.OUTFIT,
             "",
@@ -203,7 +204,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Outfit_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Outfit_response::class.java, success, error, this)
     }
 
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {

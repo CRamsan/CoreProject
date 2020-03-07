@@ -115,10 +115,10 @@ class FragmentWeaponList : BaseFragment() {
         }
 
         setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             "characters_weapon_stat_by_faction/?" +
-                    "character_id=" + character_id + "&c:join=item^show:image_path'name." + DBGCensus.currentLang.name.toLowerCase() +
-                    "&c:join=vehicle^show:image_path'name." + DBGCensus.currentLang.name.toLowerCase() + "&c:limit=10000"
+                    "character_id=" + character_id + "&c:join=item^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() +
+                    "&c:join=vehicle^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() + "&c:limit=10000"
         )!!.toString()
 
         val success = Listener<Weapon_list_response> { response ->
@@ -138,7 +138,7 @@ class FragmentWeaponList : BaseFragment() {
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
-        DBGCensus.sendGsonRequest(url, Weapon_list_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Weapon_list_response::class.java, success, error, this)
     }
 
     /**
@@ -180,7 +180,7 @@ class FragmentWeaponList : BaseFragment() {
                 } else {
                     try {
                         if (weapon.item_id_join_item != null) {
-                            weaponName = weapon.item_id_join_item!!.name!!.localizedName
+                            weaponName = weapon.item_id_join_item!!.name!!.localizedName(dbgCensus.currentLang)
                         } else {
                             continue
                         }
@@ -213,7 +213,7 @@ class FragmentWeaponList : BaseFragment() {
 
                     if (weapon.vehicle_id_join_vehicle != null) {
                         stat.name = weaponName
-                        stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName
+                        stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName(dbgCensus.currentLang)
                     } else {
                         stat.name = weaponName
                     }
@@ -287,7 +287,8 @@ class FragmentWeaponList : BaseFragment() {
                 weaponKills!!,
                 weaponKilledBy!!,
                 profileFaction!!,
-                this@FragmentWeaponList.fragmentMyWeapons.isChecked
+                this@FragmentWeaponList.fragmentMyWeapons.isChecked,
+                imageLoader
             )
             setProgressButton(false)
         }

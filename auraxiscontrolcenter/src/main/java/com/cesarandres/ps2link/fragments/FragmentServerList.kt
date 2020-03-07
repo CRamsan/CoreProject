@@ -57,7 +57,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         val view = inflater.inflate(R.layout.fragment_server_list, container, false)
         selectionButton = ButtonSelectSource(
             activity!!,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup
+            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            dbgCensus
         )
         selectionButton!!.listener = this
         return view
@@ -99,7 +100,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
      */
     fun downloadServers() {
         setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET, PS2Collection.WORLD, "",
             QueryString.generateQeuryString().AddCommand(QueryCommand.LIMIT, "10")
         )!!.toString()
@@ -107,7 +108,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         val success = Listener<Server_response> { response ->
             try {
                 val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
-                listRoot.adapter = ServerItemAdapter(activity!!, response.world_list!!)
+                listRoot.adapter = ServerItemAdapter(activity!!, response.world_list!!, dbgCensus)
 
                 for (world in response.world_list!!) {
                     downloadServerAlert(world.world_id)
@@ -127,7 +128,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
-        DBGCensus.sendGsonRequest(url, Server_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Server_response::class.java, success, error, this)
     }
 
     /**
@@ -158,7 +159,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Server_Status_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Server_Status_response::class.java, success, error, this)
     }
 
     /**
@@ -169,7 +170,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         // The URL looks like this:
         // http://census.daybreakgames.com/get/ps2:v2/world_event?
         // world_id=17&c:limit=1&type=METAGAME&c:join=metagame_event&c:lang=en
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET, PS2Collection.WORLD_EVENT, "",
             QueryString.generateQeuryString().AddCommand(
                 QueryCommand.LIMIT,
@@ -201,11 +202,11 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
 
         val error = ErrorListener { setProgressButton(false) }
 
-        DBGCensus.sendGsonRequest(url, World_event_list_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, World_event_list_response::class.java, success, error, this)
     }
 
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
-        ApplicationPS2Link.volley!!.cancelAll(this)
+        volley.cancelAll(this)
         downloadServers()
     }
 }

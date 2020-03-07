@@ -12,11 +12,15 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.cesarandres.ps2link.R
+import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.Member
 
 import java.util.ArrayList
 
-class OnlineMemberItemAdapter(members: ArrayList<Member>, context: Context) : BaseAdapter() {
+class OnlineMemberItemAdapter(members: ArrayList<Member>,
+                              context: Context,
+                              private val dbgCensus: DBGCensus
+) : BaseAdapter() {
     protected var mInflater: LayoutInflater
     private val membersOnline: ArrayList<Member>
 
@@ -78,7 +82,7 @@ class OnlineMemberItemAdapter(members: ArrayList<Member>, context: Context) : Ba
                 holder.memberRank!!.setTextColor(Color.GREEN)
             }
             holder.memberName!!.text = getItem(position).character!!.name!!.first
-            val currentClass = getItem(position).character!!.profile!!.name!!.localizedName
+            val currentClass = getItem(position).character!!.profile!!.name!!.localizedName(dbgCensus.currentLang)
             val currentClassId = getItem(position).character!!.profile_id
             holder.memberRank!!.text = currentClass
 

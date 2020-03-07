@@ -57,7 +57,8 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
         val view = inflater.inflate(R.layout.fragment_add_profile, container, false)
         selectionButton = ButtonSelectSource(
             activity!!,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup
+            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            dbgCensus
         )
         selectionButton!!.listener = this
         return view
@@ -104,7 +105,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
      */
     private fun downloadProfiles() {
         val searchField = view!!.findViewById<View>(R.id.fieldSearchProfile) as EditText
-        this.lastUsedNamespace = DBGCensus.currentNamespace
+        this.lastUsedNamespace = dbgCensus.currentNamespace
         if (searchField.text.toString().length < 3) {
             Toast.makeText(activity, R.string.text_profile_name_too_short, Toast.LENGTH_SHORT)
                 .show()
@@ -116,7 +117,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
         listRoot.onItemClickListener = null
         listRoot.adapter = LoadingItemAdapter(this!!.activity!!)
 
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.CHARACTER_NAME,
             "",
@@ -160,7 +161,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
     }
 
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {

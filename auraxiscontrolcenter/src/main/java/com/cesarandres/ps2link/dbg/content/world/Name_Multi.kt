@@ -10,16 +10,14 @@ open class Name_Multi {
     var it: String? = null
     var tr: String? = null
 
-    val localizedName: String?
-        get() {
-            when (DBGCensus.currentLang) {
-                DBGCensus.CensusLang.DE -> return this.de
-                DBGCensus.CensusLang.ES -> return this.es
-                DBGCensus.CensusLang.FR -> return this.fr
-                DBGCensus.CensusLang.IT -> return this.it
-                DBGCensus.CensusLang.TR -> return this.tr
-                DBGCensus.CensusLang.EN -> return this.en
-                else -> return this.en
-            }
+    fun localizedName(currentLang: DBGCensus.CensusLang): String? {
+        return when (currentLang) {
+            DBGCensus.CensusLang.DE -> this.de
+            DBGCensus.CensusLang.ES -> this.es
+            DBGCensus.CensusLang.FR -> this.fr
+            DBGCensus.CensusLang.IT -> this.it
+            DBGCensus.CensusLang.TR -> this.tr
+            DBGCensus.CensusLang.EN -> this.en
         }
+    }
 }

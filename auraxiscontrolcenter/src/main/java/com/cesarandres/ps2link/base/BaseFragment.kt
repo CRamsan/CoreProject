@@ -13,11 +13,18 @@ import android.widget.ProgressBar
 import android.widget.ToggleButton
 
 import androidx.fragment.app.Fragment
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.ImageLoader
 
 import com.cesarandres.ps2link.ActivityContainer
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
+import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.util.Logger
+import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.preferences.PreferencesInterface
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
 
 /**
  * This class extends fragment to add the support for a callback. All the
@@ -29,7 +36,7 @@ import com.cesarandres.ps2link.dbg.util.Logger
 /**
  * @author cramsan
  */
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(), KodeinAware {
     protected var mCallbacks = emptyCallbacks
     protected lateinit var fragmentTitle: Button
     protected lateinit var fragmentProgress: ProgressBar
@@ -40,6 +47,12 @@ abstract class BaseFragment : Fragment() {
     protected lateinit var fragmentAppend: ToggleButton
     protected lateinit var fragmentMyWeapons: ToggleButton
     private var currentTask: AsyncTask<*, *, *>? = null
+
+    override val kodein by lazy { (requireActivity().application as ApplicationPS2Link).kodein }
+    protected val eventLogger: EventLoggerInterface by instance()
+    protected val volley: RequestQueue by instance()
+    protected val dbgCensus: DBGCensus by instance()
+    protected val imageLoader: ImageLoader by instance()
 
     /**
      * @return the ActivityContainer object that this class belongs to
@@ -160,7 +173,7 @@ abstract class BaseFragment : Fragment() {
         Logger.log(Log.INFO, this, "Fragment onStop")
         super.onStop()
         // When a fragment is stopped all tasks should be cancelled
-        ApplicationPS2Link.volley!!.cancelAll(this)
+        volley.cancelAll(this)
         if (currentTask != null) {
             currentTask!!.cancel(true)
         }

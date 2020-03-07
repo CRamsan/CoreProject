@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.volley.RequestQueue
 
 import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.android.volley.VolleyError
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
@@ -36,7 +38,10 @@ import java.util.Locale
 class KillItemAdapter(
     private val context: Context,
     private val events: ArrayList<CharacterEvent>,
-    private val characterId: String
+    private val characterId: String,
+    private val volley: RequestQueue,
+    private val imageLoader: ImageLoader,
+    private val dbgCensus: DBGCensus
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
@@ -97,7 +102,7 @@ class KillItemAdapter(
             holder.weaponName!!.text = getItem(position).weapon_name
             holder.weaponImage!!.setImageUrl(
                 getItem(position).imagePath,
-                ApplicationPS2Link.mImageLoader
+                imageLoader
             )
         } else {
             holder.weaponName!!.text = context.getText(R.string.text_loading_ellipsis)
@@ -184,7 +189,7 @@ class KillItemAdapter(
         view: View
     ) {
         val url =
-            DBGCensus.generateGameDataRequest(Verb.GET, collection, resource_id, null)!!.toString()
+            dbgCensus.generateGameDataRequest(Verb.GET, collection, resource_id, null)!!.toString()
         val success = Listener<Item_list_response> { response ->
             var item: IContainDrawable? = null
 
@@ -205,7 +210,7 @@ class KillItemAdapter(
                 events[position].imagePath = DBGCensus.ENDPOINT_URL + "/" + item.imagePath
                 image!!.setImageUrl(
                     DBGCensus.ENDPOINT_URL + "/" + item.imagePath,
-                    ApplicationPS2Link.mImageLoader
+                    imageLoader
                 )
             } else {
                 events[position].weapon_name = context.getText(R.string.text_unknown).toString()
@@ -222,7 +227,7 @@ class KillItemAdapter(
 
         val request = GsonRequest(url, Item_list_response::class.java, null, success, error)
         requestTable[view] = request
-        ApplicationPS2Link.volley!!.add(request)
+        volley.add(request)
     }
 
     internal class ViewHolder {

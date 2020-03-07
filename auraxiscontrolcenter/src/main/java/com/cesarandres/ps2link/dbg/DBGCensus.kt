@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link.dbg
 
+import android.content.Context
 import android.util.Log
 import com.android.volley.RequestQueue
 
@@ -10,6 +11,11 @@ import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
+import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.thread.ThreadUtilInterface
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.erased.instance
 
 import java.net.MalformedURLException
 import java.net.URL
@@ -29,12 +35,12 @@ import java.net.URL
  * http://census.daybreakgames.com/.
  */
 
-object DBGCensus {
+class DBGCensus(context: Context) : KodeinAware {
 
-    val SERVICE_ID = "s:PS2Link"
-    val ENDPOINT_URL = "http://census.daybreakgames.com"
-    val IMG = "img"
-    val ITEM = "item"
+    override val kodein by kodein(context)
+    private val eventLogger: EventLoggerInterface by instance()
+    private val threadUtil: ThreadUtilInterface by instance()
+    private val volley: RequestQueue by instance()
 
     var currentNamespace = Namespace.PS2PC
     var currentLang = CensusLang.EN
@@ -63,7 +69,7 @@ object DBGCensus {
         var requestDataURL: URL? = null
         try {
             requestDataURL = URL(
-                ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + DBGCensus.currentNamespace + "/" + collection.toString() + "/"
+                ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + currentNamespace + "/" + collection.toString() + "/"
                         + identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
             )
         } catch (e: MalformedURLException) {
@@ -81,7 +87,7 @@ object DBGCensus {
         var requestDataURL: URL? = null
         try {
             requestDataURL =
-                URL(ENDPOINT_URL + "/" + SERVICE_ID + "/" + Verb.GET + "/" + DBGCensus.currentNamespace + "/" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
+                URL(ENDPOINT_URL + "/" + SERVICE_ID + "/" + Verb.GET + "/" + currentNamespace + "/" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
         } catch (e: MalformedURLException) {
             Logger.log(Log.ERROR, "DBGCensus", "There was a problem creating the URL")
         }
@@ -106,7 +112,7 @@ object DBGCensus {
     ) {
         val gsonOject = GsonRequest(url, responseClass, null, success, error)
         gsonOject.setTag(caller)
-        ApplicationPS2Link.volley!!.add(gsonOject)
+        volley.add(gsonOject)
     }
 
     enum class CensusLang {
@@ -137,5 +143,12 @@ object DBGCensus {
         override fun toString(): String {
             return this.imagetype
         }
+    }
+
+    companion object {
+        const val SERVICE_ID = "s:PS2Link"
+        const val ENDPOINT_URL = "http://census.daybreakgames.com"
+        const val IMG = "img"
+        const val ITEM = "item"
     }
 }

@@ -71,7 +71,7 @@ class FragmentStatList : BaseFragment() {
      */
     fun downloadStatList(character_id: String?) {
         setProgressButton(true)
-        val url = DBGCensus.generateGameDataRequest(
+        val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
             PS2Collection.CHARACTER,
             character_id,
@@ -100,6 +100,6 @@ class FragmentStatList : BaseFragment() {
                 .show()
         }
 
-        DBGCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
+        dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
     }
 }
