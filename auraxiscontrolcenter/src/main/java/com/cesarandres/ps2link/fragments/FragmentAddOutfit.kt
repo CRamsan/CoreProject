@@ -177,7 +177,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
                         mCallbacks.onItemSelected(
                             ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                             arrayOf(
-                                (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_Id,
+                                (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,
                                 lastUsedNamespace!!.name
                             )
                         )
@@ -237,7 +237,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
             val data = activityContainer.data
             var outfit: Outfit? = null
             for (i in 0 until count) {
-                outfit = data!!.getOutfit(list[i].outfit_Id!!)
+                outfit = data!!.getOutfit(list[i].outfit_id!!)
                 // If outfit is not in cache
                 if (outfit == null) {
                     val newOutfit = list[i]

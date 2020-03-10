@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link.dbg.volley
 
+import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkResponse
 import com.android.volley.ParseError
@@ -8,6 +9,7 @@ import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.android.volley.toolbox.HttpHeaderParser
+import com.cesarandres.ps2link.dbg.util.Logger
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 
@@ -63,6 +65,8 @@ class GsonRequest<T>
         try {
             val json = String(response.data, charset(HttpHeaderParser.parseCharset(response.headers)))
             val jsonObject = gson.fromJson(json, clazz)
+            Logger.log(Log.DEBUG, "GsonRequest", "Request URL: $url")
+            Logger.log(Log.DEBUG, "GsonRequest", "JSON Response: $json")
             return Response.success<Any>(
                 jsonObject,
                 HttpHeaderParser.parseCacheHeaders(response)

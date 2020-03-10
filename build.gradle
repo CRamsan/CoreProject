@@ -16,7 +16,7 @@ buildscript {
         globalAndroidXLifecycleVersion = "2.2.0"
         globalAndroidXRecyclerViewVersion = "1.1.0"
         globalAndroidXPreferencesVersion = "1.1.0"
-        globalAppCenterSdkVersion = "2.4.1"
+        globalAppCenterSdkVersion = "3.0.0"
         globalCoroutinesVersion = "1.3.3"
         globalConstraintLayoutVersion = "1.1.3"
         globalDetektVersion = initDetektVersion

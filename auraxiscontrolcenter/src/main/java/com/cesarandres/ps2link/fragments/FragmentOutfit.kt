@@ -123,7 +123,7 @@ class FragmentOutfit : BaseFragment() {
             this.fragmentStar.setOnCheckedChangeListener(null)
             val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
             val preferedOutfitId = settings.getString("preferedOutfit", "")
-            if (preferedOutfitId == outfit.outfit_Id) {
+            if (preferedOutfitId == outfit.outfit_id) {
                 this.fragmentStar.isChecked = true
             } else {
                 this.fragmentStar.isChecked = false
@@ -133,7 +133,7 @@ class FragmentOutfit : BaseFragment() {
                 val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
                 val editor = settings.edit()
                 if (isChecked) {
-                    editor.putString("preferedOutfit", outfit.outfit_Id)
+                    editor.putString("preferedOutfit", outfit.outfit_id)
                     editor.putString("preferedOutfitName", outfit.name)
                     editor.putString("preferedOutfitNamespace", dbgCensus.currentNamespace.name)
                 } else {
@@ -245,7 +245,7 @@ class FragmentOutfit : BaseFragment() {
             } else {
                 outfit = result
                 updateUI(result)
-                downloadOutfit(result.outfit_Id)
+                downloadOutfit(result.outfit_id)
             }
         }
     }

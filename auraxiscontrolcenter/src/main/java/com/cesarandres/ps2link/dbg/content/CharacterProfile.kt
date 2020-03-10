@@ -9,7 +9,7 @@ import com.cesarandres.ps2link.dbg.content.character.Stats
 import com.cesarandres.ps2link.dbg.content.character.Times
 
 class CharacterProfile {
-    var characterId: String? = null
+    var character_id: String? = null
     var name: Name? = null
     var active_profile_id: String? = null
     var certs: Certs? = null

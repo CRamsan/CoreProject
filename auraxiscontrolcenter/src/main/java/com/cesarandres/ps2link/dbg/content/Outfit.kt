@@ -5,7 +5,7 @@ import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import java.util.ArrayList
 
 class Outfit {
-    var outfit_Id: String? = null
+    var outfit_id: String? = null
     var name: String? = null
     var alias: String? = null
     var leader_character_id: String? = null

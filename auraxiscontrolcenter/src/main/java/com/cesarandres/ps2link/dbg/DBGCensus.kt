@@ -147,7 +147,7 @@ class DBGCensus(context: Context) : KodeinAware {
 
     companion object {
         const val SERVICE_ID = "s:PS2Link"
-        const val ENDPOINT_URL = "http://census.daybreakgames.com"
+        const val ENDPOINT_URL = "https://census.daybreakgames.com"
         const val IMG = "img"
         const val ITEM = "item"
     }

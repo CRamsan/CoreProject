@@ -27,7 +27,7 @@ class BitmapLruCache
     /* (non-Javadoc)
      * @see com.android.volley.toolbox.ImageLoader.ImageCache#getBitmap(java.lang.String)
      */
-    override fun getBitmap(url: String): Bitmap {
+    override fun getBitmap(url: String): Bitmap? {
         return get(url)
     }
 

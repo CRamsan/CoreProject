@@ -208,8 +208,9 @@ class KillItemAdapter(
                 name!!.text = weaponName
 
                 events[position].imagePath = DBGCensus.ENDPOINT_URL + "/" + item.imagePath
+                val imageUrl = DBGCensus.ENDPOINT_URL + "/" + item.imagePath
                 image!!.setImageUrl(
-                    DBGCensus.ENDPOINT_URL + "/" + item.imagePath,
+                    imageUrl,
                     imageLoader
                 )
             } else {

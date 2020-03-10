@@ -64,7 +64,7 @@ class FragmentProfileList : BaseFragment() {
             mCallbacks.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
-                    (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).characterId,
+                    (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).character_id,
                     dbgCensus.currentNamespace.name
                 )
             )

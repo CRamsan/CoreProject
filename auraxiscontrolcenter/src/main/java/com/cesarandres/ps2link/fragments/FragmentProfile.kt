@@ -153,7 +153,7 @@ class FragmentProfile : BaseFragment() {
                     outfitButton.setOnClickListener {
                         mCallbacks.onItemSelected(
                             ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
-                            arrayOf(character.outfit!!.outfit_Id, character.namespace!!.name)
+                            arrayOf(character.outfit!!.outfit_id, character.namespace!!.name)
                         )
                     }
                 }
@@ -171,7 +171,7 @@ class FragmentProfile : BaseFragment() {
             this.fragmentStar.setOnCheckedChangeListener(null)
             val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
             val preferedProfileId = settings.getString("preferedProfile", "")
-            if (preferedProfileId == character.characterId) {
+            if (preferedProfileId == character.character_id) {
                 this.fragmentStar.isChecked = true
             } else {
                 this.fragmentStar.isChecked = false
@@ -181,7 +181,7 @@ class FragmentProfile : BaseFragment() {
                 val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
                 val editor = settings.edit()
                 if (isChecked) {
-                    editor.putString("preferedProfile", profile!!.characterId)
+                    editor.putString("preferedProfile", profile!!.character_id)
                     editor.putString("preferedProfileName", profile!!.name!!.first)
                     editor.putString("preferedProfileNamespace", dbgCensus.currentNamespace.name)
                 } else {
@@ -297,7 +297,7 @@ class FragmentProfile : BaseFragment() {
             } else {
                 profile = result
                 updateUI(result)
-                downloadProfiles(result.characterId)
+                downloadProfiles(result.character_id)
             }
         }
     }
@@ -334,7 +334,7 @@ class FragmentProfile : BaseFragment() {
                 }
 
                 if (profile.outfit != null) {
-                    var outfit = data.getOutfit(profile.outfit!!.outfit_Id!!)
+                    var outfit = data.getOutfit(profile.outfit!!.outfit_id!!)
                     if (outfit == null) {
                         outfit = profile.outfit
                         data.insertOutfit(outfit!!, true)
@@ -381,7 +381,7 @@ class FragmentProfile : BaseFragment() {
             val profile = args[0]
             val data = activityContainer.data
             try {
-                if (data!!.getCharacter(profile.characterId!!) == null) {
+                if (data!!.getCharacter(profile.character_id!!) == null) {
                     data.insertCharacter(profile, false)
                 } else {
                     data.updateCharacter(profile, false)

@@ -141,7 +141,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                         mCallbacks.onItemSelected(
                             ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                             arrayOf(
-                                (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).characterId,
+                                (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).character_id,
                                 lastUsedNamespace!!.name
                             )
                         )

@@ -139,7 +139,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
     fun downloadServerPopulation() {
         setProgressButton(true)
         // This is not an standard API call
-        val url = "http://census.daybreakgames.com/s:PS2Link/json/status/ps2"
+        val url = "https://census.daybreakgames.com/s:PS2Link/json/status/ps2"
 
         val success = Listener<Server_Status_response> { response ->
             setProgressButton(false)

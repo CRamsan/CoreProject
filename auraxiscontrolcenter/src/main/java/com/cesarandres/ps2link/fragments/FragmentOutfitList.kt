@@ -58,7 +58,7 @@ class FragmentOutfitList : BaseFragment() {
             mCallbacks.onItemSelected(
                 ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                 arrayOf(
-                    (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_Id,
+                    (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,
                     (myAdapter.getItemAtPosition(myItemInt) as Outfit).namespace!!.name
                 )
             )

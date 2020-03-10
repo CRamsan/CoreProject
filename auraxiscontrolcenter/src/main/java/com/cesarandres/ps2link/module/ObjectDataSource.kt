@@ -243,7 +243,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
      */
     fun insertCharacter(character: CharacterProfile, temp: Boolean): Boolean {
         val values = ContentValues()
-        values.put(SQLiteManager.CHARACTERS_COLUMN_ID, character.characterId)
+        values.put(SQLiteManager.CHARACTERS_COLUMN_ID, character.character_id)
         values.put(SQLiteManager.CHARACTERS_COLUMN_NAME_FIRST, character.name!!.first)
         values.put(SQLiteManager.CHARACTERS_COLUMN_NAME_FIRST_LOWER, character.name!!.first_lower)
         values.put(SQLiteManager.CHARACTERS_COLUMN_ACTIVE_PROFILE_ID, character.active_profile_id)
@@ -313,7 +313,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
      * @param character Character to remove from the databse
      */
     fun deleteCharacter(character: CharacterProfile) {
-        val id = character.characterId
+        val id = character.character_id
         val target = SQLiteManager.TABLE_CHARACTERS_NAME
         try {
             database!!.delete(target, SQLiteManager.CHARACTERS_COLUMN_ID + " = " + id, null)
@@ -363,7 +363,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         val target = SQLiteManager.TABLE_CHARACTERS_NAME
 
         val values = ContentValues()
-        values.put(SQLiteManager.CHARACTERS_COLUMN_ID, character.characterId)
+        values.put(SQLiteManager.CHARACTERS_COLUMN_ID, character.character_id)
         values.put(SQLiteManager.CHARACTERS_COLUMN_NAME_FIRST, character.name!!.first)
         values.put(SQLiteManager.CHARACTERS_COLUMN_NAME_FIRST_LOWER, character.name!!.first_lower)
         values.put(SQLiteManager.CHARACTERS_COLUMN_ACTIVE_PROFILE_ID, character.active_profile_id)
@@ -405,7 +405,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             rowsChanged = database!!.update(
                 target,
                 values,
-                SQLiteManager.CHARACTERS_COLUMN_ID + " = " + character.characterId,
+                SQLiteManager.CHARACTERS_COLUMN_ID + " = " + character.character_id,
                 null
             )
         } catch (e: IllegalStateException) {
@@ -421,7 +421,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
      */
     fun cursorToCharacterProfile(cursor: Cursor): CharacterProfile {
         val character = CharacterProfile()
-        character.characterId = cursor.getString(0)
+        character.character_id = cursor.getString(0)
         var name = Name()
         name.first = cursor.getString(1)
         name.first_lower = cursor.getString(2)
@@ -983,7 +983,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     fun insertOutfit(outfit: Outfit, temp: Boolean): Boolean {
         val target = SQLiteManager.TABLE_OUTFITS_NAME
         val values = ContentValues()
-        values.put(SQLiteManager.OUTFIT_COLUMN_ID, outfit.outfit_Id)
+        values.put(SQLiteManager.OUTFIT_COLUMN_ID, outfit.outfit_id)
         values.put(SQLiteManager.OUTFIT_COLUMN_NAME, outfit.name)
         values.put(SQLiteManager.OUTFIT_COLUMN_ALIAS, outfit.alias)
         values.put(SQLiteManager.OUTFIT_COLUMN_LEADER_CHARACTER_ID, outfit.leader_character_id)
@@ -1011,7 +1011,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
      * @param outfit outfit to be removed from the database
      */
     fun deleteOutfit(outfit: Outfit) {
-        val id = outfit.outfit_Id
+        val id = outfit.outfit_id
         val target = SQLiteManager.TABLE_OUTFITS_NAME
         try {
             database!!.delete(target, SQLiteManager.OUTFIT_COLUMN_ID + " = " + id, null)
@@ -1047,7 +1047,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             cursor!!.moveToFirst()
             while (!cursor.isAfterLast) {
                 val outfit = cursorToOutfit(cursor)
-                deleteAllMembers(outfit.outfit_Id)
+                deleteAllMembers(outfit.outfit_id)
                 cursor.moveToNext()
             }
             cursor.close()
@@ -1075,7 +1075,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
      */
     fun cursorToOutfit(cursor: Cursor): Outfit {
         val outfit = Outfit()
-        outfit.outfit_Id = cursor.getString(0)
+        outfit.outfit_id = cursor.getString(0)
         outfit.name = cursor.getString(1)
         outfit.alias = cursor.getString(2)
         outfit.leader_character_id = cursor.getString(3)
@@ -1193,7 +1193,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         val target = SQLiteManager.TABLE_OUTFITS_NAME
 
         val values = ContentValues()
-        values.put(SQLiteManager.OUTFIT_COLUMN_ID, outfit.outfit_Id)
+        values.put(SQLiteManager.OUTFIT_COLUMN_ID, outfit.outfit_id)
         values.put(SQLiteManager.OUTFIT_COLUMN_NAME, outfit.name)
         values.put(SQLiteManager.OUTFIT_COLUMN_ALIAS, outfit.alias)
         values.put(SQLiteManager.OUTFIT_COLUMN_LEADER_CHARACTER_ID, outfit.leader_character_id)
@@ -1210,7 +1210,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             rowsChanged = database!!.update(
                 target,
                 values,
-                SQLiteManager.OUTFIT_COLUMN_ID + " = " + outfit.outfit_Id,
+                SQLiteManager.OUTFIT_COLUMN_ID + " = " + outfit.outfit_id,
                 null
             )
         } catch (e: IllegalStateException) {
