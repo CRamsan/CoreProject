@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_margin="25dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -73,10 +74,11 @@
                 android:id="@+id/buttonAbout"
                 style="@style/ButtonStyle"
                 android:text="@string/title_about" />
-          	
+
           	<Button
                 android:id="@+id/buttonDonate"
                 style="@style/ButtonStyle"
+                android:visibility="gone"
                 android:text="@string/title_donate" />
 
         </LinearLayout>
@@ -88,6 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:typeface="monospace"
             android:background="@drawable/ps2_button"
@@ -95,6 +98,7 @@
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView1"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 

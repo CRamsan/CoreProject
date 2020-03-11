@@ -1,5 +1,5 @@
 package com.cramsan.framework.crashehandler.implementation
 
-expect class PlatformCrashHandler {
-    fun initialize()
-}
+import com.cramsan.framework.crashehandler.CrashHandlerInterface
+
+expect class PlatformCrashHandler : CrashHandlerInterface

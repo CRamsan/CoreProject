@@ -3,11 +3,10 @@ package com.cramsan.framework.metrics.implementation
 import com.cramsan.framework.metrics.MetricsInterface
 import com.microsoft.appcenter.analytics.Analytics
 
-actual class PlatformMetrics: MetricsInterface {
-    private val metrics = AppCenterMetricsInitializer()
+actual class PlatformMetrics(private val metricsPlatformInitializer: MetricsPlatformInitializer): MetricsInterface {
 
     override fun initialize() {
-        metrics.initialize()
+        metricsPlatformInitializer.initialize()
     }
 
     override fun log(event: String) {

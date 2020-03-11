@@ -1,10 +1,10 @@
 package com.cramsan.framework.crashehandler.implementation
 
-actual class PlatformCrashHandler {
+import com.cramsan.framework.crashehandler.CrashHandlerInterface
 
-    private val crashHandler = AppCenterCrashHandlerInitializer()
+actual class PlatformCrashHandler(private val crashHandlerPlatformInitializer: CrashHandlerPlatformInitializer): CrashHandlerInterface {
 
-    actual fun initialize() {
-        crashHandler.initialize()
+    override fun initialize() {
+        crashHandlerPlatformInitializer.initialize()
     }
 }

@@ -1,6 +1,8 @@
 package com.cramsan.framework.crashehandler.implementation
 
-actual class PlatformCrashHandler {
-    actual fun initialize() {
+import com.cramsan.framework.crashehandler.CrashHandlerInterface
+
+actual class PlatformCrashHandler: CrashHandlerInterface {
+    override fun initialize() {
     }
 }

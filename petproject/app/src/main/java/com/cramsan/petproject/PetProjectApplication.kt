@@ -8,6 +8,7 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.PlatformCrashHandler
@@ -20,6 +21,7 @@ import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.PlatformLogger
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsInitializer
 import com.cramsan.framework.metrics.implementation.PlatformMetrics
@@ -61,10 +63,10 @@ class PetProjectApplication : Application(), KodeinAware {
         import(androidXModule(this@PetProjectApplication))
 
         bind<CrashHandlerInterface>() with singleton {
-            CrashHandler(CrashHandlerInitializer(PlatformCrashHandler()))
+            CrashHandler(CrashHandlerInitializer(PlatformCrashHandler(AppCenterPlatformCrashHandlerInitializer())))
         }
         bind<MetricsInterface>() with singleton {
-            Metrics(MetricsInitializer(PlatformMetrics()))
+            Metrics(MetricsInitializer(PlatformMetrics(AppCenterPlatformMetricsInitializer())))
         }
         bind<EventLoggerInterface>() with singleton {
             val severity: Severity = when (BuildConfig.DEBUG) {
