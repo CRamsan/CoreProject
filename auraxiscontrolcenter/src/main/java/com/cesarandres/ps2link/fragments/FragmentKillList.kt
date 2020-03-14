@@ -55,7 +55,7 @@ class FragmentKillList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         val listRoot = activity!!.findViewById<View>(R.id.listViewKillList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterEvent).important_character_id,

@@ -20,11 +20,11 @@ import android.widget.ListView
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.dbg.view.TwitterItemAdapter
-import com.cesarandres.ps2link.module.ObjectDataSource
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
 import com.cesarandres.ps2link.module.twitter.TwitterUtil
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 
 import java.util.ArrayList
 import java.util.Arrays
@@ -241,9 +241,9 @@ class FragmentTwitter : BaseFragment() {
                     tweetList = TwitterUtil.getTweets(user)
                     data.insertAllTweets(tweetList, user)
                 } catch (e: TwitterException) {
-                    Logger.log(Log.WARN, this@FragmentTwitter, "Error trying retrieve tweets")
+                    eventLogger.log(Severity.WARNING, classTag(), "Error trying retrieve tweets")
                 } catch (e: IllegalStateException) {
-                    Logger.log(Log.INFO, this@FragmentTwitter, "DB was closed. This is normal.")
+                    eventLogger.log(Severity.ERROR, classTag(), "DB was closed. This is normal.")
                     break
                 }
 

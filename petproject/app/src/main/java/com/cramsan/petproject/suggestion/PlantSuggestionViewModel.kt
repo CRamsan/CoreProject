@@ -36,7 +36,7 @@ class PlantSuggestionViewModel(application: Application) : AndroidViewModel(appl
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "$mainName: Cats:${toxicityForCats.name} - Dogs:${toxicityForDogs.name}"
             val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
-            metricsClient.log(suggestion)
+            metricsClient.log(classTag(), suggestion)
             viewModelScope.launch {
                 observableIsComplete.value = true
             }

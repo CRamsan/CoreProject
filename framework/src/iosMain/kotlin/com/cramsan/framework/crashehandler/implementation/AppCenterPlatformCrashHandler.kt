@@ -1,6 +1,6 @@
 package com.cramsan.framework.crashehandler.implementation
 
-actual class PlatformCrashHandler {
+actual class AppCenterPlatformCrashHandler {
     actual fun initialize() {
     }
 }

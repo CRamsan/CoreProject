@@ -20,9 +20,9 @@ import com.cesarandres.ps2link.ActivityContainer
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.util.Logger
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -37,7 +37,7 @@ import org.kodein.di.erased.instance
  * @author cramsan
  */
 abstract class BaseFragment : Fragment(), KodeinAware {
-    protected var mCallbacks = emptyCallbacks
+    protected var mCallbacks: FragmentCallbacks? = null
     protected lateinit var fragmentTitle: Button
     protected lateinit var fragmentProgress: ProgressBar
     protected lateinit var fragmentUpdate: ImageButton
@@ -66,8 +66,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
      */
     override fun onAttach(activity: Activity) {
-        Logger.log(Log.INFO, this, "Fragment onAttach")
         super.onAttach(activity)
+        eventLogger.log(Severity.INFO, classTag(), "OnAttach")
         check(activity is FragmentCallbacks) { "Activity must implement fragment's callbacks." }
         mCallbacks = activity
     }
@@ -78,8 +78,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        Logger.log(Log.INFO, this, "Fragment onCreate")
         super.onCreate(savedInstanceState)
+        eventLogger.log(Severity.INFO, classTag(), "OnCreate")
     }
 
     /*
@@ -94,7 +94,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Logger.log(Log.INFO, this, "Fragment onCreateView")
+        eventLogger.log(Severity.INFO, classTag(), "OnCreateView")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -104,8 +104,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Logger.log(Log.INFO, this, "Fragment onActivityCreated")
         super.onActivityCreated(savedInstanceState)
+        eventLogger.log(Severity.INFO, classTag(), "OnActivityCreated")
 
         this.fragmentTitle = activity!!.findViewById<View>(R.id.buttonFragmentTitle) as Button
         this.fragmentProgress =
@@ -130,8 +130,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * android.support.v4.app.Fragment#onViewStateRestored(android.os.Bundle)
      */
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        Logger.log(Log.INFO, this, "Fragment onViewStateRestored")
         super.onViewStateRestored(savedInstanceState)
+        eventLogger.log(Severity.INFO, classTag(), "OnViewStateRestored")
     }
 
     /*
@@ -140,8 +140,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onStart()
      */
     override fun onStart() {
-        Logger.log(Log.INFO, this, "Fragment onStart")
         super.onStart()
+        eventLogger.log(Severity.INFO, classTag(), "OnStart")
     }
 
     /*
@@ -150,8 +150,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onResume()
      */
     override fun onResume() {
-        Logger.log(Log.INFO, this, "Fragment onResume")
         super.onResume()
+        eventLogger.log(Severity.INFO, classTag(), "OnResume")
     }
 
     /*
@@ -160,8 +160,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onPause()
      */
     override fun onPause() {
-        Logger.log(Log.INFO, this, "Fragment onPause")
         super.onPause()
+        eventLogger.log(Severity.INFO, classTag(), "OnPause")
     }
 
     /*
@@ -170,8 +170,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onStop()
      */
     override fun onStop() {
-        Logger.log(Log.INFO, this, "Fragment onStop")
         super.onStop()
+        eventLogger.log(Severity.INFO, classTag(), "OnStop")
         // When a fragment is stopped all tasks should be cancelled
         volley.cancelAll(this)
         if (currentTask != null) {
@@ -185,8 +185,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onDestroyView()
      */
     override fun onDestroyView() {
-        Logger.log(Log.INFO, this, "Fragment onDestroyView")
         super.onDestroyView()
+        eventLogger.log(Severity.INFO, classTag(), "OnDestroyView")
     }
 
     /*
@@ -195,8 +195,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onDestroy()
      */
     override fun onDestroy() {
-        Logger.log(Log.INFO, this, "Fragment onDestroy")
         super.onDestroy()
+        eventLogger.log(Severity.INFO, classTag(), "OnDestroy")
     }
 
     /*
@@ -205,9 +205,9 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * @see android.support.v4.app.Fragment#onDetach()
      */
     override fun onDetach() {
-        Logger.log(Log.INFO, this, "Fragment onDetach")
         super.onDetach()
-        mCallbacks = emptyCallbacks
+        eventLogger.log(Severity.INFO, classTag(), "OnDetach")
+        mCallbacks = null
     }
 
     /**
@@ -251,18 +251,5 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     interface FragmentCallbacks {
         fun onItemSelected(id: String, args: Array<String?>)
-    }
-
-    companion object {
-
-        private val emptyCallbacks: FragmentCallbacks = object : FragmentCallbacks {
-            override fun onItemSelected(id: String, args: Array<String?>) {
-                Logger.log(
-                    Log.WARN,
-                    this,
-                    "Item selected when no activity was set, this should never happen"
-                )
-            }
-        }
     }
 }

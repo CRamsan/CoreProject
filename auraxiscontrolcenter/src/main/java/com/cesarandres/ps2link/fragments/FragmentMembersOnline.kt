@@ -121,7 +121,7 @@ class FragmentMembersOnline : BaseFragment() {
 
         listRoot.adapter = OnlineMemberItemAdapter(members!!, activity!!, dbgCensus)
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Member).character_id,

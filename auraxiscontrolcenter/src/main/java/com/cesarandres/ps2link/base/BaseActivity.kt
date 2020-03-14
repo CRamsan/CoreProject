@@ -6,21 +6,34 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import android.widget.Toast
-
 import androidx.fragment.app.FragmentActivity
-
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.ImageLoader
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.WallPaperMode
 import com.cesarandres.ps2link.R
+import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.module.BitmapWorkerTask
-
+import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
+import com.cramsan.framework.metrics.MetricsInterface
 import org.json.JSONException
 import org.json.JSONObject
+import org.kodein.di.KodeinAware
+import org.kodein.di.erased.instance
 
 /**
  * This fragment handles setting the background for all activities.
  */
-abstract class BaseActivity : FragmentActivity() {
+abstract class BaseActivity : FragmentActivity(), KodeinAware {
+
+    override val kodein by lazy { (application as ApplicationPS2Link).kodein }
+    protected val eventLogger: EventLoggerInterface by instance()
+    protected val metrics: MetricsInterface by instance()
+    protected val volley: RequestQueue by instance()
+    protected val dbgCensus: DBGCensus by instance()
+    protected val imageLoader: ImageLoader by instance()
 
     private var currentTask: BitmapWorkerTask? = null
 
@@ -31,7 +44,12 @@ abstract class BaseActivity : FragmentActivity() {
      */
     override fun onStart() {
         super.onStart()
+        eventLogger.log(Severity.INFO, classTag(), "OnStart")
+    }
 
+    override fun onRestart() {
+        super.onRestart()
+        eventLogger.log(Severity.INFO, classTag(), "OnRestart")
     }
 
     /*
@@ -41,6 +59,7 @@ abstract class BaseActivity : FragmentActivity() {
      */
     override fun onResume() {
         super.onResume()
+        eventLogger.log(Severity.INFO, classTag(), "OnResume")
 
         // Read the current wallpaper from the settings
         val settings = getSharedPreferences("PREFERENCES", 0)
@@ -76,8 +95,25 @@ abstract class BaseActivity : FragmentActivity() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        eventLogger.log(Severity.INFO, classTag(), "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        eventLogger.log(Severity.INFO, classTag(), "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        eventLogger.log(Severity.INFO, classTag(), "onDestroy")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        eventLogger.log(Severity.INFO, classTag(), "OnActivityResult")
+
         if (requestCode == 1001) {
             //int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
             val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")

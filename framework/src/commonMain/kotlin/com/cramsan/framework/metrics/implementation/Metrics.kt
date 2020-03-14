@@ -10,7 +10,11 @@ class Metrics(initializer: MetricsInitializer): MetricsInterface {
         platformMetrics.initialize()
     }
 
-    override fun log(event: String) {
-        platformMetrics.log(event)
+    override fun log(tag: String, event: String) {
+        platformMetrics.log(tag, event)
+    }
+
+    override fun log(tag: String, event: String, metadata: Map<String, String>) {
+        platformMetrics.log(tag, event, metadata)
     }
 }

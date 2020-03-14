@@ -11,7 +11,7 @@ import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
-import com.cramsan.framework.crashehandler.implementation.PlatformCrashHandler
+import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -24,7 +24,7 @@ import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsInitializer
-import com.cramsan.framework.metrics.implementation.PlatformMetrics
+import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetrics
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.PlatformPreferences
 import com.cramsan.framework.preferences.implementation.Preferences
@@ -63,10 +63,10 @@ class PetProjectApplication : Application(), KodeinAware {
         import(androidXModule(this@PetProjectApplication))
 
         bind<CrashHandlerInterface>() with singleton {
-            CrashHandler(CrashHandlerInitializer(PlatformCrashHandler(AppCenterPlatformCrashHandlerInitializer())))
+            CrashHandler(CrashHandlerInitializer(AppCenterPlatformCrashHandler(AppCenterPlatformCrashHandlerInitializer())))
         }
         bind<MetricsInterface>() with singleton {
-            Metrics(MetricsInitializer(PlatformMetrics(AppCenterPlatformMetricsInitializer())))
+            Metrics(MetricsInitializer(AppCenterPlatformMetrics(AppCenterPlatformMetricsInitializer())))
         }
         bind<EventLoggerInterface>() with singleton {
             val severity: Severity = when (BuildConfig.DEBUG) {

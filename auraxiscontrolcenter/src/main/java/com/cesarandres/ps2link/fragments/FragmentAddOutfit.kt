@@ -174,7 +174,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
 
                 listRoot.onItemClickListener =
                     OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-                        mCallbacks.onItemSelected(
+                        mCallbacks!!.onItemSelected(
                             ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                             arrayOf(
                                 (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,

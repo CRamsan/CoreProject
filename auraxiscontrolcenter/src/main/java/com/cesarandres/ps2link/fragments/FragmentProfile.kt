@@ -24,9 +24,10 @@ import com.cesarandres.ps2link.dbg.content.CharacterProfile
 import com.cesarandres.ps2link.dbg.content.Faction
 import com.cesarandres.ps2link.dbg.content.response.Character_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.classTag
 
 import org.ocpsoft.prettytime.PrettyTime
 
@@ -151,7 +152,7 @@ class FragmentProfile : BaseFragment() {
                     outfitButton.isEnabled = true
                     outfitButton.alpha = 1f
                     outfitButton.setOnClickListener {
-                        mCallbacks.onItemSelected(
+                        mCallbacks!!.onItemSelected(
                             ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                             arrayOf(character.outfit!!.outfit_id, character.namespace!!.name)
                         )
@@ -207,7 +208,7 @@ class FragmentProfile : BaseFragment() {
                 }
             }
         } catch (e: NullPointerException) {
-            Logger.log(Log.ERROR, this, "Null Pointer while trying to set character data on UI")
+            eventLogger.log(Severity.ERROR, classTag(), "Null Pointer while trying to set character data on UI")
         }
 
     }

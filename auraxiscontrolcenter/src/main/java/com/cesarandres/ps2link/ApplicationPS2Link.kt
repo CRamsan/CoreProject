@@ -16,7 +16,7 @@ import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
-import com.cramsan.framework.crashehandler.implementation.PlatformCrashHandler
+import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -29,7 +29,7 @@ import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsInitializer
-import com.cramsan.framework.metrics.implementation.PlatformMetrics
+import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetrics
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.PlatformPreferences
 import com.cramsan.framework.preferences.implementation.Preferences
@@ -61,10 +61,10 @@ class ApplicationPS2Link : Application(), KodeinAware {
         import(androidXModule(this@ApplicationPS2Link))
 
         bind<CrashHandlerInterface>() with singleton {
-            CrashHandler(CrashHandlerInitializer(PlatformCrashHandler(AppCenterPlatformCrashHandlerInitializer())))
+            CrashHandler(CrashHandlerInitializer(AppCenterPlatformCrashHandler(AppCenterPlatformCrashHandlerInitializer())))
         }
         bind<MetricsInterface>() with singleton {
-            Metrics(MetricsInitializer(PlatformMetrics(AppCenterPlatformMetricsInitializer())))
+            Metrics(MetricsInitializer(AppCenterPlatformMetrics(AppCenterPlatformMetricsInitializer())))
         }
         bind<EventLoggerInterface>() with singleton {
             val severity: Severity = when (BuildConfig.DEBUG) {
@@ -122,7 +122,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
         AppCenter.start(this, "2cbdd11d-e4ef-4626-b09f-2a7deb82664a")
         crashHandler.initialize()
         metrics.initialize()
-
+        metrics.log(classTag(), "Application started")
         GlobalScope.launch {
             if (cacheManager.getCacheSize() > CacheManager.MAX_CACHE_SIZE) {
                 cacheManager.clearCache()
@@ -134,6 +134,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
         for (clang in DBGCensus.CensusLang.values()) {
             if (lang.equals(clang.name, ignoreCase = true)) {
                 dbgCensus.currentLang = clang
+                metrics.log(classTag(), "Language Set", mapOf("Lang" to clang.name))
             }
         }
     }

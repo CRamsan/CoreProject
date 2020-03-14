@@ -56,7 +56,7 @@ class FragmentFriendList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         val listRoot = activity!!.findViewById<View>(R.id.listViewFriendList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterFriend).character_id,

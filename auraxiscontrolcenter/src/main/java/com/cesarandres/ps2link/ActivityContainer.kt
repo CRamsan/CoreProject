@@ -33,6 +33,7 @@ import com.cesarandres.ps2link.fragments.holders.FragmentProfilePager
 import com.cesarandres.ps2link.fragments.holders.FragmentRedditPager
 import com.cesarandres.ps2link.module.ObjectDataSource
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.classTag
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -48,7 +49,7 @@ import org.kodein.di.erased.instance
  * current fragment on top of the stack. This works correctly in phone mode, it
  * has not been tested in tablets yet.
  */
-class ActivityContainer : BaseActivity(), KodeinAware, FragmentCallbacks {
+class ActivityContainer : BaseActivity(), FragmentCallbacks {
 
     protected lateinit var fragmentTitle: Button
     protected lateinit var fragmentProgress: ProgressBar
@@ -57,12 +58,6 @@ class ActivityContainer : BaseActivity(), KodeinAware, FragmentCallbacks {
     protected lateinit var fragmentAdd: ImageButton
     protected lateinit var fragmentStar: ToggleButton
     protected lateinit var fragmentAppend: ToggleButton
-
-    override val kodein by lazy { (application as ApplicationPS2Link).kodein }
-    protected val eventLogger: EventLoggerInterface by instance()
-    protected val volley: RequestQueue by instance()
-    protected val dbgCensus: DBGCensus by instance()
-    protected val imageLoader: ImageLoader by instance()
 
     /**
      * @return current activity mode
@@ -211,8 +206,8 @@ class ActivityContainer : BaseActivity(), KodeinAware, FragmentCallbacks {
      * (java.lang.String, java.lang.String[])
      */
     override fun onItemSelected(id: String, args: Array<String?>) {
+        metrics.log(classTag(), "OnItemSelected")
         // Reset the database, this will also force some tasks to end
-
         val mode = ActivityMode.valueOf(id)
         // Seen as we can't have embedded fragments, we will create a new
         // activity if we want to open a profile or outfit pager. With all other
@@ -328,6 +323,7 @@ class ActivityContainer : BaseActivity(), KodeinAware, FragmentCallbacks {
      * if we are on tablet mode we will pop the top of the stack.
      */
     fun upNavigation() {
+        metrics.log(classTag(), "Up Navigation")
         if (this.activityMode != ActivityMode.ACTIVITY_MAIN_MENU) {
             if (isTablet) {
                 if (supportFragmentManager.backStackEntryCount > 0) {

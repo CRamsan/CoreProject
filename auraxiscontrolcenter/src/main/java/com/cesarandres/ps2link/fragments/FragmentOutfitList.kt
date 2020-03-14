@@ -47,7 +47,7 @@ class FragmentOutfitList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_outfits)
         this.fragmentAdd.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_OUTFIT.toString(),
                 emptyArray()
             )
@@ -55,7 +55,7 @@ class FragmentOutfitList : BaseFragment() {
         this.fragmentUpdate.setOnClickListener { ReadOutfitsTable().execute() }
         val listRoot = activity!!.findViewById<View>(R.id.listViewOutfitList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,

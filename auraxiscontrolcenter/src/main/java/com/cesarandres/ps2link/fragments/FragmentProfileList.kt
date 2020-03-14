@@ -54,14 +54,14 @@ class FragmentProfileList : BaseFragment() {
             task.execute()
         }
         this.fragmentAdd.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_PROFILE.toString(),
                 emptyArray()
             )
         }
         val listRoot = activity!!.findViewById<View>(R.id.listViewProfileList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).character_id,

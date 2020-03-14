@@ -156,7 +156,7 @@ class FragmentMembersList : BaseFragment() {
         listRoot.adapter = MemberItemAdapter(activity!!, outfitId!!, data!!, shownOffline)
 
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Member).character_id,

@@ -86,43 +86,43 @@ class FragmentMainMenu : BaseFragment() {
         val buttonSettings = activity!!.findViewById<View>(R.id.buttonSettings) as Button
 
         buttonCharacters.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_PROFILE_LIST.toString(),
                 emptyArray()
             )
         }
         buttonServers.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_SERVER_LIST.toString(),
                 emptyArray()
             )
         }
         buttonOutfit.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_OUTFIT_LIST.toString(),
                 emptyArray()
             )
         }
         buttonNews.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_LINK_MENU.toString(),
                 emptyArray()
             )
         }
         buttonTwitter.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_TWITTER.toString(),
                 emptyArray()
             )
         }
         buttonReddit.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_REDDIT.toString(),
                 emptyArray()
             )
         }
         buttonAbout.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ABOUT.toString(),
                 emptyArray()
             )
@@ -135,7 +135,7 @@ class FragmentMainMenu : BaseFragment() {
             }
         }
         buttonSettings.setOnClickListener {
-            mCallbacks.onItemSelected(
+            mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_SETTINGS.toString(),
                 emptyArray()
             )
@@ -239,7 +239,7 @@ class FragmentMainMenu : BaseFragment() {
         if (preferedProfileId != "") {
             buttonPreferedProfile.setOnClickListener {
                 val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
-                mCallbacks.onItemSelected(
+                mCallbacks!!.onItemSelected(
                     ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                     arrayOf(
                         settings.getString("preferedProfile", ""),
@@ -261,7 +261,7 @@ class FragmentMainMenu : BaseFragment() {
 
             buttonPreferedOutfit.setOnClickListener {
                 val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
-                mCallbacks.onItemSelected(
+                mCallbacks!!.onItemSelected(
                     ApplicationPS2Link.ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                     arrayOf(
                         settings.getString("preferedOutfit", ""),

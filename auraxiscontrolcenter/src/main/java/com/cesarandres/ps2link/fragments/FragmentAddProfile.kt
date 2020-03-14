@@ -138,7 +138,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                     response.character_name_list!!, false)
                 listRoot.onItemClickListener =
                     OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-                        mCallbacks.onItemSelected(
+                        mCallbacks!!.onItemSelected(
                             ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                             arrayOf(
                                 (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).character_id,
