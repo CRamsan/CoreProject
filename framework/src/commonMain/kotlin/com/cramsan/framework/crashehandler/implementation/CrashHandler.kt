@@ -1,12 +1,11 @@
 package com.cramsan.framework.crashehandler.implementation
 
+import com.cramsan.framework.base.implementation.BaseModule
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
 
-class CrashHandler(initializer: CrashHandlerInitializer): CrashHandlerInterface {
-
-    private val platformCrashHandler = initializer.platformCrashHandler
+class CrashHandler(val initializer: CrashHandlerInitializer): BaseModule<CrashHandlerManifest>(initializer), CrashHandlerInterface {
 
     override fun initialize() {
-        platformCrashHandler.initialize()
+        initializer.platformInitializer.platformDelegate.initialize()
     }
 }

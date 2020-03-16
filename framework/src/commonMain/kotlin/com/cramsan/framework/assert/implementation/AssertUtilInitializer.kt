@@ -1,3 +1,6 @@
 package com.cramsan.framework.assert.implementation
 
-class AssertUtilInitializer(val haltOnFailure: Boolean)
+import com.cramsan.framework.base.implementation.BaseModuleInitializer
+
+class AssertUtilInitializer(val haltOnFailure: Boolean) :
+    BaseModuleInitializer<AssertUtilManifest>(AssertUtilNoopPlatformInitializer())

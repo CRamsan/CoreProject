@@ -4,7 +4,7 @@ import com.cramsan.framework.metrics.MetricsInterface
 
 class Metrics(initializer: MetricsInitializer): MetricsInterface {
 
-    private val platformMetrics = initializer.platformMetrics
+    private val platformMetrics = initializer.platformInitializer.platformMetrics
 
     override fun initialize() {
         platformMetrics.initialize()

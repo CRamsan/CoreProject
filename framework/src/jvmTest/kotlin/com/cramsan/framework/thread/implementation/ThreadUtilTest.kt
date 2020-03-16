@@ -1,5 +1,8 @@
 package com.cramsan.framework.thread.implementation
 
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.logging.EventLoggerInterface
+import io.mockk.mockk
 import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,19 +20,22 @@ class ThreadUtilTest {
     @Before
     fun setUp() {
         threadUtilTest = ThreadUtilCommonTest()
-        threadUtilTest.setUp()
         semaphore = Semaphore(0)
     }
 
     @Test
     fun testIsBackgroundThread() {
-        threadUtilTest.testIsBackgroundThread()
+        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
+        threadUtilTest.testIsBackgroundThread(ThreadUtilJVM(eventLogger, haltUtil))
     }
 
     @Test
     fun testIsBackgroundThreadInJavaThread() {
+        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         Thread { run {
-            threadUtilTest.testIsBackgroundThread()
+            threadUtilTest.testIsBackgroundThread(ThreadUtilJVM(eventLogger, haltUtil))
             semaphore.release()
         } }.start()
         semaphore.acquire()
@@ -37,8 +43,10 @@ class ThreadUtilTest {
 
     @Test
     fun testIsNotUIThreadInJavaThread() {
+        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         Thread { run {
-            threadUtilTest.testIsNotUIThread()
+            threadUtilTest.testIsNotUIThread(ThreadUtilJVM(eventLogger, haltUtil))
             semaphore.release()
         } }.start()
         semaphore.acquire()
@@ -46,9 +54,11 @@ class ThreadUtilTest {
 
     @Test
     fun testIsBackgroundThreadInCoroutine() {
+        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         runBlocking {
             launch(Dispatchers.IO) {
-                threadUtilTest.testIsBackgroundThread()
+                threadUtilTest.testIsBackgroundThread(ThreadUtilJVM(eventLogger, haltUtil))
                 semaphore.release()
             }
         }
@@ -57,9 +67,11 @@ class ThreadUtilTest {
 
     @Test
     fun testIsNotUIThreadInCoroutine() {
+        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         runBlocking {
             launch(Dispatchers.IO) {
-                threadUtilTest.testIsNotUIThread()
+                threadUtilTest.testIsNotUIThread(ThreadUtilJVM(eventLogger, haltUtil))
                 semaphore.release()
             }
         }
@@ -68,8 +80,10 @@ class ThreadUtilTest {
 
     @Test
     fun testDispatchToBackground() {
+        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         Thread { run {
-            threadUtilTest.testDispatchToBackground {
+            threadUtilTest.testDispatchToBackground(ThreadUtilJVM(eventLogger, haltUtil)) {
                 semaphore.release()
             }
         } }.start()

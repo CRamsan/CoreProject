@@ -32,8 +32,6 @@ android {
 }
 
 dependencies {
-    implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
-
     implementation "com.squareup.okhttp3:okhttp:$globalOkhttpVersion"
     implementation "com.google.code.gson:gson:$globalGsonVerion"
     implementation "com.microsoft.appcenter:appcenter-analytics:$globalAppCenterSdkVersion"
@@ -81,8 +79,6 @@ kotlin {
 
                 implementation "io.mockk:mockk-common:$globalMockkVersion"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
-                implementation "org.kodein.di:kodein-di-core:$globalKodeinVersion"
-                implementation "org.kodein.di:kodein-di-erased:$globalKodeinVersion"
             }
         }
         jvmMain {
@@ -95,7 +91,6 @@ kotlin {
                 implementation kotlin("test")
                 implementation kotlin("test-junit")
                 implementation "io.mockk:mockk:$globalMockkVersion"
-                implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
         }

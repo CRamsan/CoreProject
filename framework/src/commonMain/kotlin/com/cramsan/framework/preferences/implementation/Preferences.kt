@@ -4,7 +4,7 @@ import com.cramsan.framework.preferences.PreferencesInterface
 
 class Preferences(initializer: PreferencesInitializer) : PreferencesInterface {
 
-    private val platformPreferences = initializer.platformPreferences
+    private val platformPreferences = initializer.platformPreferences.platformPreferences
 
     override fun saveString(key: String, value: String) {
         platformPreferences.saveString(key, value)

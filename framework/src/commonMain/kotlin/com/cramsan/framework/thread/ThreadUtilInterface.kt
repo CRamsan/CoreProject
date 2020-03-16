@@ -1,8 +1,11 @@
 package com.cramsan.framework.thread
 
+import com.cramsan.framework.base.BaseModuleInterface
+import com.cramsan.framework.thread.implementation.ThreadUtilManifest
+
 typealias RunBlock = () -> Unit
 
-interface ThreadUtilInterface {
+interface ThreadUtilInterface : BaseModuleInterface<ThreadUtilManifest>{
     fun isUIThread(): Boolean
     fun isBackgroundThread(): Boolean
     fun dispatchToBackground(block: RunBlock)

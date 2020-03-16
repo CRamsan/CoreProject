@@ -1,50 +1,28 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.thread.ThreadUtilInterface
-import io.mockk.mockk
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import org.kodein.di.Kodein
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.provider
-import org.kodein.di.newInstance
 
 class ThreadUtilCommonTest {
 
-    private val kodein = Kodein {
-        bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
-        bind<AssertUtilInterface>() with provider { mockk<AssertUtil>(relaxUnitFun = true) }
-    }
-
-    private lateinit var threadUtil: ThreadUtilInterface
-
-    fun setUp() {
-        val newThreadUtil by kodein.newInstance { ThreadUtil(instance(), instance()) }
-        threadUtil = newThreadUtil
-    }
-
-    fun testIsUIThread() {
+    fun testIsUIThread(threadUtil: ThreadUtilInterface) {
         assertTrue(threadUtil.isUIThread())
     }
 
-    fun testIsNotUIThread() {
+    fun testIsNotUIThread(threadUtil: ThreadUtilInterface) {
         assertFalse(threadUtil.isUIThread())
     }
 
-    fun testIsBackgroundThread() {
+    fun testIsBackgroundThread(threadUtil: ThreadUtilInterface) {
         assertTrue(threadUtil.isBackgroundThread())
     }
 
-    fun testIsNotBackgroundThread() {
+    fun testIsNotBackgroundThread(threadUtil: ThreadUtilInterface) {
         assertFalse(threadUtil.isBackgroundThread())
     }
 
-    fun testIsUIThreadInDispatchToUI(completion: () -> Unit) {
+    fun testIsUIThreadInDispatchToUI(threadUtil: ThreadUtilInterface, completion: () -> Unit) {
         assertTrue(threadUtil.isUIThread())
         threadUtil.dispatchToUI {
             assertTrue(threadUtil.isUIThread())
@@ -52,7 +30,7 @@ class ThreadUtilCommonTest {
         }
     }
 
-    fun testDispatchToBackground(completion: () -> Unit) {
+    fun testDispatchToBackground(threadUtil: ThreadUtilInterface, completion: () -> Unit) {
         assertTrue(threadUtil.isBackgroundThread())
         threadUtil.dispatchToBackground {
             assertTrue(threadUtil.isBackgroundThread())
@@ -61,7 +39,7 @@ class ThreadUtilCommonTest {
         assertTrue(threadUtil.isBackgroundThread())
     }
 
-    fun testDispatchToBackgroundFromUIThread(completion: () -> Unit) {
+    fun testDispatchToBackgroundFromUIThread(threadUtil: ThreadUtilInterface, completion: () -> Unit) {
         assertTrue(threadUtil.isUIThread())
         threadUtil.dispatchToBackground {
             assertTrue(threadUtil.isBackgroundThread())

@@ -1,0 +1,3 @@
+package com.cramsan.framework.crashehandler.implementation
+
+interface CrashHandlerManifest

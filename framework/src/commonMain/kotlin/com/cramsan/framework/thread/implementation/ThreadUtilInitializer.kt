@@ -1,0 +1,6 @@
+package com.cramsan.framework.thread.implementation
+
+import com.cramsan.framework.base.implementation.BaseModuleInitializer
+import com.cramsan.framework.thread.ThreadUtilPlatformInitializerInteface
+
+class ThreadUtilInitializer(val platformInitializer: ThreadUtilPlatformInitializerInteface) : BaseModuleInitializer<ThreadUtilManifest>(platformInitializer)

@@ -5,13 +5,17 @@ import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.halt.implementation.HaltUtilInitializer
+import com.cramsan.framework.halt.implementation.HaltUtilJVM
+import com.cramsan.framework.halt.implementation.HaltUtilJVMInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.logging.implementation.EventLoggerInitializer
-import com.cramsan.framework.logging.implementation.PlatformLogger
+import com.cramsan.framework.logging.implementation.*
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
+import com.cramsan.framework.thread.implementation.ThreadUtilJVM
+import com.cramsan.framework.thread.implementation.ThreadUtilJVMInitializer
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
@@ -25,12 +29,12 @@ class AppConfig {
 
     @Bean
     fun eventLogger(): EventLoggerInterface {
-        return EventLogger(EventLoggerInitializer(Severity.INFO, PlatformLogger()))
+        return EventLogger(EventLoggerInitializer(LoggerJVMInitializer(LoggerJVM()), Severity.INFO))
     }
 
     @Bean
     fun haltUtil(): HaltUtilInterface {
-        return HaltUtil(eventLogger())
+        return HaltUtil(HaltUtilInitializer(HaltUtilJVMInitializer(HaltUtilJVM())))
     }
 
     @Bean
@@ -40,7 +44,7 @@ class AppConfig {
 
     @Bean
     fun threadUtil(): ThreadUtilInterface {
-        return ThreadUtil(eventLogger(), assertUtil())
+        return ThreadUtil(ThreadUtilInitializer(ThreadUtilJVMInitializer(ThreadUtilJVM(eventLogger(), assertUtil()))))
     }
 
     @Bean

@@ -1,0 +1,5 @@
+package com.cramsan.framework.assert.implementation
+
+import com.cramsan.framework.base.BaseModulePlatformInitializerInterface
+
+class AssertUtilNoopPlatformInitializer :BaseModulePlatformInitializerInterface<AssertUtilManifest>

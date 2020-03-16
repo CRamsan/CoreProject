@@ -9,7 +9,7 @@ import io.mockk.*
 class AssertUtilCommonTest {
 
     fun assertTrueWithHaltEnabled() {
-        val initializer = AssertUtilInitializer(true)
+       val initializer = AssertUtilInitializer(true)
         val eventLogger = mockkClass(EventLogger::class)
         val haltUtil = mockkClass(HaltUtil::class)
         val assertUtil = AssertUtil(initializer, eventLogger, haltUtil)

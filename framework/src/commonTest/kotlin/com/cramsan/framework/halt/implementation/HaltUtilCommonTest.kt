@@ -1,7 +1,5 @@
 package com.cramsan.framework.halt.implementation
 
-import com.cramsan.framework.logging.implementation.EventLogger
-import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -10,9 +8,8 @@ import kotlin.test.assertTrue
 
 class HaltUtilCommonTest {
 
-    suspend fun testStopThread() = coroutineScope {
-        val eventLogger = mockkClass(EventLogger::class)
-        val haltUtil = HaltUtil(eventLogger)
+    suspend fun testStopThread(haltUtilInitializer: HaltUtilInitializer) = coroutineScope {
+        val haltUtil = HaltUtil(haltUtilInitializer)
 
         launch(Dispatchers.Default) {
             delay(DELAY_TIME)
@@ -21,9 +18,8 @@ class HaltUtilCommonTest {
         haltUtil.stopThread()
     }
 
-    suspend fun testStopResumeStopThread() = coroutineScope {
-        val eventLogger = mockkClass(EventLogger::class)
-        val haltUtil = HaltUtil(eventLogger)
+    suspend fun testStopResumeStopThread(haltUtilInitializer: HaltUtilInitializer) = coroutineScope {
+        val haltUtil = HaltUtil(haltUtilInitializer)
 
         launch(Dispatchers.Default) {
             delay(DELAY_TIME)

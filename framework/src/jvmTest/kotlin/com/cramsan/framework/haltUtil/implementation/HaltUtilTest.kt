@@ -1,6 +1,6 @@
 package com.cramsan.framework.haltUtil.implementation
 
-import com.cramsan.framework.halt.implementation.HaltUtilCommonTest
+import com.cramsan.framework.halt.implementation.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +21,7 @@ class HaltUtilTest {
     @Test
     fun testStopThread() {
         runBlocking {
-            haltUtilTest.testStopThread()
+            haltUtilTest.testStopThread(HaltUtilInitializer(HaltUtilJVMInitializer(HaltUtilJVM())))
         }
     }
 }

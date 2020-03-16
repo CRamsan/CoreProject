@@ -13,29 +13,37 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
-import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandlerInitializer
+import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
-import com.cramsan.framework.crashehandler.implementation.AppCenterPlatformCrashHandler
+import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.halt.implementation.HaltUtilAndroid
+import com.cramsan.framework.halt.implementation.HaltUtilAndroidInitializer
+import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
-import com.cramsan.framework.logging.implementation.PlatformLogger
+import com.cramsan.framework.logging.implementation.LoggerAndroid
+import com.cramsan.framework.logging.implementation.LoggerAndroidInitializer
 import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetricsInitializer
+import com.cramsan.framework.metrics.implementation.AppCenterMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsInitializer
-import com.cramsan.framework.metrics.implementation.AppCenterPlatformMetrics
+import com.cramsan.framework.metrics.implementation.AppCenterMetrics
 import com.cramsan.framework.preferences.PreferencesInterface
-import com.cramsan.framework.preferences.implementation.PlatformPreferences
 import com.cramsan.framework.preferences.implementation.Preferences
+import com.cramsan.framework.preferences.implementation.PreferencesAndroid
+import com.cramsan.framework.preferences.implementation.PreferencesAndroidInitializer
 import com.cramsan.framework.preferences.implementation.PreferencesInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
+import com.cramsan.framework.thread.implementation.ThreadUtilAndroidInitializer
+import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.microsoft.appcenter.AppCenter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -61,24 +69,27 @@ class ApplicationPS2Link : Application(), KodeinAware {
         import(androidXModule(this@ApplicationPS2Link))
 
         bind<CrashHandlerInterface>() with singleton {
-            CrashHandler(CrashHandlerInitializer(AppCenterPlatformCrashHandler(AppCenterPlatformCrashHandlerInitializer())))
+            CrashHandler(CrashHandlerInitializer(AppCenterCrashHandlerInitializer(AppCenterCrashHandler())))
         }
         bind<MetricsInterface>() with singleton {
-            Metrics(MetricsInitializer(AppCenterPlatformMetrics(AppCenterPlatformMetricsInitializer())))
+            Metrics(MetricsInitializer(AppCenterMetricsInitializer(AppCenterMetrics())))
         }
         bind<EventLoggerInterface>() with singleton {
             val severity: Severity = when (BuildConfig.DEBUG) {
                 true -> Severity.DEBUG
                 false -> Severity.INFO
             }
-            EventLogger(EventLoggerInitializer(severity, PlatformLogger()))
+            EventLogger(EventLoggerInitializer(LoggerAndroidInitializer(LoggerAndroid()), severity))
         }
         bind<HaltUtilInterface>() with singleton {
-            val haltUtil by kodein.newInstance { HaltUtil(instance()) }
-            haltUtil
+            HaltUtil(HaltUtilInitializer(HaltUtilAndroidInitializer(HaltUtilAndroid())))
         }
         bind<ThreadUtilInterface>() with singleton {
-            val threadUtil by kodein.newInstance { ThreadUtil(instance(), instance()) }
+            val threadUtil by kodein.newInstance { ThreadUtil(
+                ThreadUtilInitializer(
+                    ThreadUtilAndroidInitializer(ThreadUtilAndroid(instance()))
+                )
+            ) }
             threadUtil
         }
         bind<AssertUtilInterface>() with singleton {
@@ -88,7 +99,11 @@ class ApplicationPS2Link : Application(), KodeinAware {
         }
         bind<PreferencesInterface>() with singleton {
             val context = this@ApplicationPS2Link
-            val preferencesInitializer = PreferencesInitializer(PlatformPreferences(context))
+            val preferencesInitializer = PreferencesInitializer(
+                PreferencesAndroidInitializer(
+                    PreferencesAndroid(context)
+                )
+            )
             val preferences by kodein.newInstance {
                 Preferences(preferencesInitializer)
             }

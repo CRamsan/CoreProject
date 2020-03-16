@@ -2,7 +2,6 @@ package com.cramsan.framework.assert.implementation
 
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertTrue
 
 /**
  *
