@@ -11,7 +11,7 @@ The project is currently in active development.
 1. [Design & Architecture](/petproject/DESIGN.md)
 2. Components
 	1. [Framework](/framework/)
-	2. [AppCore](/appcore/)
+	2. [AppCore](/petproject/appcore/)
 	3. Front-End
 		1. [Android](/petproject/app/)
 		2. [WebService](/petproject/webservice/)
