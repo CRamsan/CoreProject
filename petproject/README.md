@@ -8,10 +8,10 @@ The project is currently in active development.
 
 ## Table of Contents
 
-1. [Design & Architecture](/DESIGN.md)
+1. [Design & Architecture](/petproject/DESIGN.md)
 2. Components
 	1. [Framework](/framework/)
 	2. [AppCore](/appcore/)
 	3. Front-End
-		1. [Android](/app/)
-		2. [WebService](/webservice/)
+		1. [Android](/petproject/app/)
+		2. [WebService](/petproject/webservice/)
