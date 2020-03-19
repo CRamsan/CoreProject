@@ -12,6 +12,10 @@ trigger:
     include:
     - auraxiscontrolcenter/*
     - framework/*
+    - build.gradle
+    - gradle.properties
+    - settings.gradle
+
 pool:
   vmImage: 'ubuntu-latest'
 
