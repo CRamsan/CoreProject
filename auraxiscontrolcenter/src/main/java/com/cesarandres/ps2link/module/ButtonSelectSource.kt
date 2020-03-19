@@ -27,6 +27,7 @@ import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 class ButtonSelectSource(private val context: Context,
                          root: ViewGroup,
                          private val dbgCensus: DBGCensus) {
+    var namespace = Namespace.PS2PC
 
     private val pcNamespaceButton: ImageButton
     private val ps4euNamespaceButton: ImageButton
@@ -38,7 +39,7 @@ class ButtonSelectSource(private val context: Context,
         val settings = context.getSharedPreferences("PREFERENCES", 0)
         val lastNamespace = settings.getString("lastNamespace", Namespace.PS2PC.name)
         val currentNamespace = Namespace.valueOf(lastNamespace!!)
-        dbgCensus.currentNamespace = currentNamespace
+        namespace = currentNamespace
 
         pcNamespaceButton = View.inflate(context, R.layout.layout_title_button, null) as ImageButton
         pcNamespaceButton.setImageResource(R.drawable.namespace_pc)
@@ -79,7 +80,7 @@ class ButtonSelectSource(private val context: Context,
         val editor = settings.edit()
         editor.putString("lastNamespace", namespace.name)
         editor.commit()
-        dbgCensus.currentNamespace = namespace
+        this.namespace = namespace
         pcNamespaceButton.visibility = if (namespace == Namespace.PS2PC) View.VISIBLE else View.GONE
         ps4euNamespaceButton.visibility =
             if (namespace == Namespace.PS2PS4EU) View.VISIBLE else View.GONE

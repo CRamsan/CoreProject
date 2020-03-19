@@ -29,6 +29,7 @@ class FragmentMembersOnline : BaseFragment() {
 
     private var outfitId: String? = null
     private val outfitName: String? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -59,6 +60,7 @@ class FragmentMembersOnline : BaseFragment() {
         } else {
             this.outfitId = savedInstanceState.getString("outfitId")
         }
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
 
         this.fragmentTitle.text = outfitName
     }
@@ -91,7 +93,7 @@ class FragmentMembersOnline : BaseFragment() {
     fun downloadOutfitMembers() {
         setProgressButton(true)
         val url =
-            dbgCensus.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + dbgCensus.currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + this.outfitId)!!.toString()
+            dbgCensus.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + dbgCensus.currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + this.outfitId, namespace!!)!!.toString()
 
         val success = Listener<Outfit_member_response> { response ->
             setProgressButton(false)
@@ -125,7 +127,7 @@ class FragmentMembersOnline : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Member).character_id,
-                    dbgCensus.currentNamespace.name
+                    this.namespace!!.name
                 )
             )
         }

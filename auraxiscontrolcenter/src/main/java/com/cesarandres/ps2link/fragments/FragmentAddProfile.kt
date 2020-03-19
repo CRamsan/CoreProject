@@ -105,7 +105,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
      */
     private fun downloadProfiles() {
         val searchField = view!!.findViewById<View>(R.id.fieldSearchProfile) as EditText
-        this.lastUsedNamespace = dbgCensus.currentNamespace
+        this.lastUsedNamespace = selectionButton!!.namespace
         if (searchField.text.toString().length < 3) {
             Toast.makeText(activity, R.string.text_profile_name_too_short, Toast.LENGTH_SHORT)
                 .show()
@@ -128,7 +128,8 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                     searchField.text.toString().toLowerCase(Locale.getDefault())
                 )
                 .AddCommand(QueryCommand.LIMIT, "25")
-                .AddCommand(QueryCommand.JOIN, "character")
+                .AddCommand(QueryCommand.JOIN, "character"),
+            selectionButton!!.namespace
         )!!.toString()
 
         val success = Listener<Character_list_response> { response ->

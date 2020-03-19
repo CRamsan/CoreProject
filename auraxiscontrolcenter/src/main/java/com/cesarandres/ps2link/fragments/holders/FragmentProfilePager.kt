@@ -30,7 +30,7 @@ import java.util.HashMap
 /**
  * This fragment holds a view pager for all the profile related fragments
  */
-class FragmentProfilePager : BaseFragment(), ButtonSelectSource.SourceSelectionChangedListener {
+class FragmentProfilePager : BaseFragment() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var profileId: String? = null
@@ -64,12 +64,6 @@ class FragmentProfilePager : BaseFragment(), ButtonSelectSource.SourceSelectionC
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_pager, container, false)
-        selectionButton = ButtonSelectSource(
-            activityContainer,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
-            dbgCensus
-        )
-        selectionButton!!.listener = this
         return view
     }
 
@@ -104,7 +98,6 @@ class FragmentProfilePager : BaseFragment(), ButtonSelectSource.SourceSelectionC
         }
         profileId = extras!!.getString("PARAM_0")
         this.namespace = extras.getString("PARAM_1")
-        dbgCensus.currentNamespace = Namespace.valueOf(this!!.namespace!!)
 
         this.fragmentUpdate.visibility = View.VISIBLE
         this.fragmentUpdate.setOnClickListener(View.OnClickListener {
@@ -186,7 +179,6 @@ class FragmentProfilePager : BaseFragment(), ButtonSelectSource.SourceSelectionC
     override fun onDestroyView() {
         super.onDestroyView()
         val titleLayout = activity!!.findViewById<View>(R.id.linearLayoutTitle) as LinearLayout
-        selectionButton!!.removeButtons(activity!!, titleLayout)
     }
 
     /*
@@ -201,10 +193,6 @@ class FragmentProfilePager : BaseFragment(), ButtonSelectSource.SourceSelectionC
         if ("" != profileName) {
             savedInstanceState.putString("ProfileName", profileName)
         }
-    }
-
-    override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
-        this.fragmentUpdate.performClick()
     }
 
     /**
@@ -269,7 +257,7 @@ class FragmentProfilePager : BaseFragment(), ButtonSelectSource.SourceSelectionC
          * @see android.support.v4.view.PagerAdapter#getCount()
          */
         override fun getCount(): Int {
-            return 5
+            return 4
         }
 
         /*

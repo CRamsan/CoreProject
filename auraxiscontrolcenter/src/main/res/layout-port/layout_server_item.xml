@@ -58,7 +58,8 @@
             android:id="@+id/checkBoxServerAlert"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:clickable="false"/>
+            android:clickable="false"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout

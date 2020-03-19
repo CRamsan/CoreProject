@@ -109,8 +109,8 @@ class FragmentDirectiveList : BaseFragment() {
                 "c:limit",
                 SearchModifier.EQUALS,
                 "5000"
-            )
-        )!!.toString()
+            ),
+        null!!)!!.toString()
 
         val success = Listener<Characters_directive_list> { response ->
             charactersDirective = response.characters_directive_list

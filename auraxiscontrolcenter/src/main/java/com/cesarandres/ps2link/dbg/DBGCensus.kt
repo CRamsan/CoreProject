@@ -42,7 +42,6 @@ class DBGCensus(context: Context) : KodeinAware {
     private val threadUtil: ThreadUtilInterface by instance()
     private val volley: RequestQueue by instance()
 
-    var currentNamespace = Namespace.PS2PC
     var currentLang = CensusLang.EN
 
     /**
@@ -56,7 +55,8 @@ class DBGCensus(context: Context) : KodeinAware {
         verb: Verb,
         collection: PS2Collection,
         identifier: String?,
-        query: QueryString?
+        query: QueryString?,
+        namespace: Namespace
     ): URL? {
         var identifier = identifier
         var query = query
@@ -69,7 +69,7 @@ class DBGCensus(context: Context) : KodeinAware {
         var requestDataURL: URL? = null
         try {
             requestDataURL = URL(
-                ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + currentNamespace + "/" + collection.toString() + "/"
+                ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/"
                         + identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
             )
         } catch (e: MalformedURLException) {
@@ -83,11 +83,11 @@ class DBGCensus(context: Context) : KodeinAware {
      * @param urlParams that will be attached to the end of the default request body.
      * @return url to retrieve the requested resource
      */
-    fun generateGameDataRequest(urlParams: String): URL? {
+    fun generateGameDataRequest(urlParams: String, namespace: Namespace): URL? {
         var requestDataURL: URL? = null
         try {
             requestDataURL =
-                URL(ENDPOINT_URL + "/" + SERVICE_ID + "/" + Verb.GET + "/" + currentNamespace + "/" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
+                URL(ENDPOINT_URL + "/" + SERVICE_ID + "/" + Verb.GET + "/" + namespace + "/" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
         } catch (e: MalformedURLException) {
             Logger.log(Log.ERROR, "DBGCensus", "There was a problem creating the URL")
         }

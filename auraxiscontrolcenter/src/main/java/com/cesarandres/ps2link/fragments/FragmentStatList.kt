@@ -29,6 +29,7 @@ import com.cesarandres.ps2link.dbg.view.StatItemAdapter
 class FragmentStatList : BaseFragment() {
 
     private var profileId: String? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -54,6 +55,7 @@ class FragmentStatList : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         this.profileId = arguments!!.getString("PARAM_0")
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
     }
 
     /*
@@ -76,7 +78,8 @@ class FragmentStatList : BaseFragment() {
             PS2Collection.CHARACTER,
             character_id,
             QueryString.generateQeuryString().AddCommand(QueryCommand.RESOLVE, "stat_history")
-                .AddCommand(QueryCommand.HIDE, "name,battle_rank,certs,times,daily_ribbon")
+                .AddCommand(QueryCommand.HIDE, "name,battle_rank,certs,times,daily_ribbon"),
+            this.namespace!!
         )!!.toString()
 
         val success = Listener<Character_list_response> { response ->

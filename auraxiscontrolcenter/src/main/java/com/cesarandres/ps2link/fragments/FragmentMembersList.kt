@@ -38,6 +38,7 @@ class FragmentMembersList : BaseFragment() {
     private var outfitSize: Int = 0
     private var outfitId: String? = null
     private var outfitName: String? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -72,6 +73,7 @@ class FragmentMembersList : BaseFragment() {
             this.outfitName = savedInstanceState.getString("outfitName")
             this.shownOffline = savedInstanceState.getBoolean("showOffline")
         }
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
 
         this.fragmentShowOffline.setOnCheckedChangeListener { buttonView, isChecked ->
             shownOffline = isChecked
@@ -121,7 +123,8 @@ class FragmentMembersList : BaseFragment() {
                 .AddCommand(
                     QueryCommand.RESOLVE,
                     "member_online_status,member,member_character(name,type.faction)"
-                )
+                ),
+            namespace!!
         )!!.toString()
 
         val success = Listener<Outfit_member_response> { response ->
@@ -160,7 +163,7 @@ class FragmentMembersList : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as Member).character_id,
-                    dbgCensus.currentNamespace.name
+                    namespace!!.name
                 )
             )
         }

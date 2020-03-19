@@ -111,7 +111,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
      * information.
      */
     fun downloadOutfits() {
-        this.lastUsedNamespace = dbgCensus.currentNamespace
+        this.lastUsedNamespace = selectionButton!!.namespace
 
         val searchField = activity!!.findViewById<View>(R.id.fieldSearchOutfit) as EditText
         val searchTagField = activity!!.findViewById<View>(R.id.fieldSearchTag) as EditText
@@ -163,7 +163,8 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
             Verb.GET,
             PS2Collection.OUTFIT,
             "",
-            query
+            query,
+            selectionButton!!.namespace
         )!!.toString()
 
         val success = Listener<Outfit_response> { response ->

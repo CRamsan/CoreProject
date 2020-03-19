@@ -42,6 +42,7 @@ class FragmentProfile : BaseFragment() {
     private var isCached: Boolean = false
     private var profile: CharacterProfile? = null
     private var profileId: String? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -55,6 +56,7 @@ class FragmentProfile : BaseFragment() {
         val task = UpdateProfileFromTable()
         setCurrentTask(task)
         this.profileId = arguments!!.getString("PARAM_0")
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
         task.execute(this.profileId)
     }
 
@@ -184,7 +186,7 @@ class FragmentProfile : BaseFragment() {
                 if (isChecked) {
                     editor.putString("preferedProfile", profile!!.character_id)
                     editor.putString("preferedProfileName", profile!!.name!!.first)
-                    editor.putString("preferedProfileNamespace", dbgCensus.currentNamespace.name)
+                    editor.putString("preferedProfileNamespace", character.namespace!!.name)
                 } else {
                     editor.putString("preferedProfileName", "")
                     editor.putString("preferedProfile", "")
@@ -226,13 +228,14 @@ class FragmentProfile : BaseFragment() {
                 QueryCommand.RESOLVE,
                 "outfit,world,online_status"
             )
-                .AddCommand(QueryCommand.JOIN, "type:world^inject_at:server")
+                .AddCommand(QueryCommand.JOIN, "type:world^inject_at:server"),
+            this.namespace!!
         )!!.toString()
         val success = Listener<Character_list_response> { response ->
             setProgressButton(false)
             try {
                 profile = response.character_list!![0]
-                profile!!.namespace = dbgCensus.currentNamespace
+                profile!!.namespace = this.namespace!!
                 profile!!.isCached = isCached
                 updateUI(profile!!)
                 val task = UpdateProfileToTable()

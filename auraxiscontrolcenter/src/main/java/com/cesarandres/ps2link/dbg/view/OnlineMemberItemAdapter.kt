@@ -82,9 +82,7 @@ class OnlineMemberItemAdapter(members: ArrayList<Member>,
                 holder.memberRank!!.setTextColor(Color.GREEN)
             }
             holder.memberName!!.text = getItem(position).character!!.name!!.first
-            val currentClass = getItem(position).character!!.profile!!.name!!.localizedName(dbgCensus.currentLang)
             val currentClassId = getItem(position).character!!.profile_id
-            holder.memberRank!!.text = currentClass
 
             if (currentClassId == "4" || currentClassId == "19" || currentClassId == "12") {
                 holder.classIcon!!.setImageBitmap(lia_icon)

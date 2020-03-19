@@ -29,7 +29,7 @@ import java.util.HashMap
  * This fragment has a view pager that displays the online member next to all
  * the member.
  */
-class FragmentOutfitPager : BaseFragment(), ButtonSelectSource.SourceSelectionChangedListener {
+class FragmentOutfitPager : BaseFragment() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var outfitId: String? = null
@@ -43,12 +43,6 @@ class FragmentOutfitPager : BaseFragment(), ButtonSelectSource.SourceSelectionCh
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_outfit_pager, container, false)
-        selectionButton = ButtonSelectSource(
-            activity!!,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
-            dbgCensus
-        )
-        selectionButton!!.listener = this
         return view
     }
 
@@ -67,7 +61,6 @@ class FragmentOutfitPager : BaseFragment(), ButtonSelectSource.SourceSelectionCh
 
         outfitId = extras!!.getString("PARAM_0")
         this.namespace = extras.getString("PARAM_1")
-        dbgCensus.currentNamespace = Namespace.valueOf(namespace!!)
 
         this.fragmentUpdate.setOnClickListener {
             val fragment: Fragment
@@ -147,12 +140,9 @@ class FragmentOutfitPager : BaseFragment(), ButtonSelectSource.SourceSelectionCh
         activityContainer.activityMode = ActivityMode.ACTIVITY_MEMBER_LIST
     }
 
-    override fun onSourceSelectionChanged(selectedNamespace: Namespace) {}
-
     override fun onDestroyView() {
         super.onDestroyView()
         val titleLayout = activity!!.findViewById<View>(R.id.linearLayoutTitle) as LinearLayout
-        selectionButton!!.removeButtons(activity!!, titleLayout)
     }
 
     /**

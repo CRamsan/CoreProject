@@ -53,8 +53,9 @@
             android:id="@+id/networkImageViewTweet"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
             android:focusable="false"
-            tools:ignore="MissingRegistered" />
+            tools:ignore="MissingRegistered"/>
 
         <TextView
             android:id="@+id/textViewTwitterText"
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -40,6 +40,7 @@ class FragmentOutfit : BaseFragment() {
     private var isCached: Boolean = false
     private var outfitId: String? = null
     private var outfit: Outfit? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -53,6 +54,7 @@ class FragmentOutfit : BaseFragment() {
         val task = UpdateOutfitFromTable()
         setCurrentTask(task)
         this.outfitId = arguments!!.getString("PARAM_0")
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
         task.execute(this.outfitId)
     }
 
@@ -114,7 +116,7 @@ class FragmentOutfit : BaseFragment() {
                     leaderButton.setOnClickListener {
                         mCallbacks!!.onItemSelected(
                             ActivityMode.ACTIVITY_PROFILE.toString(),
-                            arrayOf(outfit.leader_character_id, dbgCensus.currentNamespace.name)
+                            arrayOf(outfit.leader_character_id, this.namespace!!.name)
                         )
                     }
                 }
@@ -136,7 +138,7 @@ class FragmentOutfit : BaseFragment() {
                 if (isChecked) {
                     editor.putString("preferedOutfit", outfit.outfit_id)
                     editor.putString("preferedOutfitName", outfit.name)
-                    editor.putString("preferedOutfitNamespace", dbgCensus.currentNamespace.name)
+                    editor.putString("preferedOutfitNamespace", this.namespace!!.name)
                 } else {
                     editor.putString("preferedOutfitName", "")
                     editor.putString("preferedOutfit", "")
@@ -174,13 +176,14 @@ class FragmentOutfit : BaseFragment() {
             Verb.GET,
             PS2Collection.OUTFIT,
             outfitId,
-            QueryString.generateQeuryString().AddCommand(QueryCommand.RESOLVE, "leader")
+            QueryString.generateQeuryString().AddCommand(QueryCommand.RESOLVE, "leader"),
+            this.namespace!!
         )!!.toString()
         val success = Listener<Outfit_response> { response ->
             setProgressButton(false)
             try {
                 outfit = response.outfit_list!![0]
-                outfit!!.namespace = dbgCensus.currentNamespace
+                outfit!!.namespace = this.namespace
                 outfit!!.isCached = isCached
                 updateUI(outfit!!)
                 val task = UpdateOutfitToTable()

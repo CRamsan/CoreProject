@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.SQLException
+import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.cesarandres.ps2link.dbg.DBGCensus
@@ -1363,6 +1364,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             insertId = database!!.insert(target, null, values)
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while inserting a tweet")
+        } catch (e : SQLiteConstraintException) {
+            Logger.log(Log.INFO, this, "Invalid constraint: ${e.localizedMessage}")
         }
 
         return insertId != -1L

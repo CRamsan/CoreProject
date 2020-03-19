@@ -39,6 +39,7 @@ class FragmentWeaponList : BaseFragment() {
 
     private var weaponKills: ArrayList<WeaponStat>? = null
     private var weaponKilledBy: ArrayList<WeaponStat>? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -79,6 +80,7 @@ class FragmentWeaponList : BaseFragment() {
         }
 
         this.profileId = arguments!!.getString("PARAM_0")
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
         this.profileFaction = ""
     }
 
@@ -118,7 +120,8 @@ class FragmentWeaponList : BaseFragment() {
         val url = dbgCensus.generateGameDataRequest(
             "characters_weapon_stat_by_faction/?" +
                     "character_id=" + character_id + "&c:join=item^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() +
-                    "&c:join=vehicle^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() + "&c:limit=10000"
+                    "&c:join=vehicle^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() + "&c:limit=10000",
+            namespace!!
         )!!.toString()
 
         val success = Listener<Weapon_list_response> { response ->

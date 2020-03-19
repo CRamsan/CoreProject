@@ -61,11 +61,12 @@ class FragmentProfileList : BaseFragment() {
         }
         val listRoot = activity!!.findViewById<View>(R.id.listViewProfileList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
+            val profile = (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile)
             mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
-                    (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile).character_id,
-                    dbgCensus.currentNamespace.name
+                    profile.character_id,
+                    profile.namespace!!.name
                 )
             )
         }

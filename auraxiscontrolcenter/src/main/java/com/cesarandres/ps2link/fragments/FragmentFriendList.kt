@@ -30,6 +30,7 @@ import com.cesarandres.ps2link.dbg.view.FriendItemAdapter
 class FragmentFriendList : BaseFragment() {
 
     private var profileId: String? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -60,13 +61,13 @@ class FragmentFriendList : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterFriend).character_id,
-                    dbgCensus.currentNamespace.name
+                    namespace!!.name
                 )
             )
         }
 
         this.profileId = arguments!!.getString("PARAM_0")
-
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
     }
 
     /*
@@ -93,7 +94,8 @@ class FragmentFriendList : BaseFragment() {
                 SearchModifier.EQUALS,
                 character_id!!
             )
-                .AddCommand(QueryCommand.RESOLVE, "character_name")
+                .AddCommand(QueryCommand.RESOLVE, "character_name"),
+            this.namespace!!
         )!!.toString()
 
         val success = Listener<Character_friend_list_response> { response ->

@@ -89,7 +89,8 @@ class TwitterItemAdapter(context: Context,
         holder.tweetTag!!.text = "@" + tweet.tag!!
         val updateTime = p.format(Date(tweet.date!! * 1000L))
 
-        holder.userImage!!.setImageUrl(tweet.imgUrl, imageLoader)
+        val newURL = tweet.imgUrl!!.replace("http:", "https:")
+        holder.userImage!!.setImageUrl(newURL, imageLoader)
         holder.tweetDate!!.text = updateTime
 
         return convertView

@@ -29,7 +29,7 @@ import java.util.Locale
 
 import android.widget.Toast.*
 
-class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGCensus) : BaseAdapter() {
+class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGCensus, val namespace: DBGCensus.Namespace) : BaseAdapter() {
     private val mInflater: LayoutInflater
     private val serverList: ArrayList<World>
     private val channelMap: HashMap<CompoundButton.OnCheckedChangeListener, String>
@@ -45,7 +45,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
             settings.getBoolean(FragmentSettings.PREF_KEY_NOTIFICATION_ENABLE, false)
 
         for (world in this.serverList) {
-            var channel = dbgCensus.currentNamespace.toString() + "-" + world.world_id
+            var channel = namespace.toString() + "-" + world.world_id
             channel = channel.replace(":v2", "")
             world.isRegistered = settings.getBoolean("parse_$channel", false)
             // REMOVE THIS TO ENABLE PUSH NOTIFICATIONS
@@ -117,7 +117,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
 
     fun onItemSelected(index: Int, context: Context) {
         val world = this.serverList[index]
-        var channel = dbgCensus.currentNamespace.toString() + "-" +
+        var channel = namespace.toString() + "-" +
                 this.serverList[index].world_id
         channel = channel.replace(":v2", "")
         if (world.isRegistered) {
@@ -135,7 +135,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
         // REMOVE THIS TO ENABLE PUSH NOTIFICATIONS
         //ParsePush.unsubscribeInBackground(channel);
         //world.setIsRegistered(false);
-        makeText(context, R.string.toast_push_notifications_disabled, LENGTH_LONG).show()
+        //makeText(context, R.string.toast_push_notifications_disabled, LENGTH_LONG).show()
 
         notifyDataSetInvalidated()
     }
@@ -238,6 +238,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
 
         holder.serverAlertCheckBox!!.isEnabled = notificationsEnabled
         holder.serverAlertCheckBox!!.isChecked = this.serverList[position].isRegistered
+        holder.serverAlertCheckBox!!.visibility = View.GONE
 
         val name = this.serverList[position].name!!.localizedName(dbgCensus.currentLang)
 
@@ -303,6 +304,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                         + " " + context.resources.getString(R.string.text_none))
             holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
         }
+        holder.serverAlert!!.visibility = View.GONE
 
         return convertView
     }

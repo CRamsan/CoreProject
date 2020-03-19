@@ -29,6 +29,7 @@ import com.cesarandres.ps2link.dbg.view.KillItemAdapter
 class FragmentKillList : BaseFragment() {
 
     private var profileId: String? = null
+    private var namespace: DBGCensus.Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -59,13 +60,13 @@ class FragmentKillList : BaseFragment() {
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
                 arrayOf(
                     (myAdapter.getItemAtPosition(myItemInt) as CharacterEvent).important_character_id,
-                    dbgCensus.currentNamespace.name
+                    this.namespace!!.name
                 )
             )
         }
 
         this.profileId = arguments!!.getString("PARAM_0")
-
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
     }
 
     /*
@@ -96,7 +97,8 @@ class FragmentKillList : BaseFragment() {
                     QueryCommand.RESOLVE,
                     "character,attacker"
                 ).AddCommand(QueryCommand.LIMIT, "100")
-                .AddComparison("type", SearchModifier.EQUALS, "DEATH,KILL")
+                .AddComparison("type", SearchModifier.EQUALS, "DEATH,KILL"),
+            this.namespace!!
         )!!.toString()
         val success = Listener<Characters_event_list_response> { response ->
             setProgressButton(false)
@@ -108,6 +110,7 @@ class FragmentKillList : BaseFragment() {
                 listRoot.adapter =
                     KillItemAdapter(activity!!, response.characters_event_list!!,
                         this!!.profileId!!,
+                        this.namespace!!,
                         volley,
                         imageLoader,
                         dbgCensus

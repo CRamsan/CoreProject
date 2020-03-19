@@ -39,6 +39,7 @@ class KillItemAdapter(
     private val context: Context,
     private val events: ArrayList<CharacterEvent>,
     private val characterId: String,
+    private val namespace: DBGCensus.Namespace,
     private val volley: RequestQueue,
     private val imageLoader: ImageLoader,
     private val dbgCensus: DBGCensus
@@ -137,13 +138,15 @@ class KillItemAdapter(
                 holder.weaponImage!!.setImageUrl("", null)
             }
         }
+        holder.weaponImage!!.visibility = View.GONE
+        holder.weaponName!!.visibility = View.GONE
 
         val date = Date(java.lang.Long.parseLong(getItem(position).timestamp!! + "000"))
         val format = SimpleDateFormat("MMM dd hh:mm:ss a", Locale.getDefault())
         holder.time!!.text = format.format(date)
 
         try {
-            if (getItem(position).attacker!!.character_Id == this.characterId) {
+            if (getItem(position).attacker_character_id == this.characterId) {
                 holder.name!!.text = getItem(position).character!!.name!!.first
                 getItem(position).important_character_id = getItem(position).character_id
                 if (getItem(position).character_id == this.characterId) {
@@ -174,7 +177,7 @@ class KillItemAdapter(
                 }
             }
         } catch (e: NullPointerException) {
-
+            e.printStackTrace()
         }
 
         return convertView
@@ -189,7 +192,7 @@ class KillItemAdapter(
         view: View
     ) {
         val url =
-            dbgCensus.generateGameDataRequest(Verb.GET, collection, resource_id, null)!!.toString()
+            dbgCensus.generateGameDataRequest(Verb.GET, collection, resource_id, null, namespace)!!.toString()
         val success = Listener<Item_list_response> { response ->
             var item: IContainDrawable? = null
 

@@ -102,13 +102,14 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         setProgressButton(true)
         val url = dbgCensus.generateGameDataRequest(
             Verb.GET, PS2Collection.WORLD, "",
-            QueryString.generateQeuryString().AddCommand(QueryCommand.LIMIT, "10")
+            QueryString.generateQeuryString().AddCommand(QueryCommand.LIMIT, "10"),
+            selectionButton!!.namespace
         )!!.toString()
 
         val success = Listener<Server_response> { response ->
             try {
                 val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
-                listRoot.adapter = ServerItemAdapter(activity!!, response.world_list!!, dbgCensus)
+                listRoot.adapter = ServerItemAdapter(activity!!, response.world_list!!, dbgCensus, selectionButton!!.namespace)
 
                 for (world in response.world_list!!) {
                     downloadServerAlert(world.world_id)
@@ -183,7 +184,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 "after", QueryString.SearchModifier.EQUALS,
                 //Get metagame events that are newer than  minutes
                 java.lang.Long.toString(System.currentTimeMillis() / 1000L - 7200)
-            ).AddCommand(QueryCommand.JOIN, "metagame_event")
+            ).AddCommand(QueryCommand.JOIN, "metagame_event"),
+            selectionButton!!.namespace
         )!!.toString()
 
         val success = Listener<World_event_list_response> { response ->
