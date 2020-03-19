@@ -24,7 +24,7 @@ import com.cramsan.framework.halt.implementation.HaltUtilAndroidInitializer
 import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.LoggerAndroid
@@ -133,11 +133,11 @@ class ApplicationPS2Link : Application(), KodeinAware {
      */
     override fun onCreate() {
         super.onCreate()
-        eventLogger.log(Severity.INFO, classTag(), "onCreate called")
+        eventLogger.log(Severity.INFO, "ApplicationPS2Link", "onCreate called")
         AppCenter.start(this, "2cbdd11d-e4ef-4626-b09f-2a7deb82664a")
         crashHandler.initialize()
         metrics.initialize()
-        metrics.log(classTag(), "Application started")
+        metrics.log("ApplicationPS2Link", "Application Started")
         GlobalScope.launch {
             if (cacheManager.getCacheSize() > CacheManager.MAX_CACHE_SIZE) {
                 cacheManager.clearCache()
@@ -149,7 +149,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
         for (clang in DBGCensus.CensusLang.values()) {
             if (lang.equals(clang.name, ignoreCase = true)) {
                 dbgCensus.currentLang = clang
-                metrics.log(classTag(), "Language Set", mapOf("Lang" to clang.name))
+                metrics.log("ApplicationPS2Link", "Language Set", mapOf("Lang" to clang.name))
             }
         }
     }

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.Dispatchers
@@ -36,13 +36,13 @@ class DownloadCatalogViewModel(application: Application) : AndroidViewModel(appl
     }
 
     fun isCatalogReady(): Boolean {
-        eventLogger.log(Severity.INFO, classTag(), "isCatalogReady")
+        eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "isCatalogReady")
         val unixTime = System.currentTimeMillis() / 1000L
         return modelProvider.isCatalogAvailable(unixTime)
     }
 
     fun downloadCatalog() {
-        eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
+        eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "reloadPlants")
         val unixTime = System.currentTimeMillis() / 1000L
         if (modelProvider.isCatalogAvailable(unixTime)) {
             observableLoading.value = false

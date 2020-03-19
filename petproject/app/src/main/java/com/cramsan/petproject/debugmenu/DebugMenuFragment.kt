@@ -5,7 +5,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -27,7 +27,7 @@ class DebugMenuFragment : PreferenceFragmentCompat(), KodeinAware {
 
         val testPreference: Preference? = findPreference("clearCache")
         testPreference?.setOnPreferenceClickListener {
-            eventLogger.log(Severity.INFO, classTag(), "ClearCache")
+            eventLogger.log(Severity.INFO, "DebugMenuFragment", "ClearCache")
             GlobalScope.async(Dispatchers.IO) {
                 modelProvider.deleteAll()
             }
@@ -36,7 +36,7 @@ class DebugMenuFragment : PreferenceFragmentCompat(), KodeinAware {
 
         val killPreference: Preference? = findPreference("killApp")
         killPreference?.setOnPreferenceClickListener {
-            eventLogger.log(Severity.INFO, classTag(), "KillApp")
+            eventLogger.log(Severity.INFO, "DebugMenuFragment", "KillApp")
             activity?.finishAffinity()
             true
         }

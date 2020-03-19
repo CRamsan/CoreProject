@@ -16,7 +16,7 @@ import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.module.BitmapWorkerTask
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.metrics.MetricsInterface
 import org.json.JSONException
 import org.json.JSONObject
@@ -44,12 +44,12 @@ abstract class BaseActivity : FragmentActivity(), KodeinAware {
      */
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, classTag(), "OnStart")
+        eventLogger.log(Severity.INFO, "BaseActivity", "OnStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        eventLogger.log(Severity.INFO, classTag(), "OnRestart")
+        eventLogger.log(Severity.INFO, "BaseActivity", "OnRestart")
     }
 
     /*
@@ -59,7 +59,7 @@ abstract class BaseActivity : FragmentActivity(), KodeinAware {
      */
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, classTag(), "OnResume")
+        eventLogger.log(Severity.INFO, "BaseActivity", "OnResume")
 
         // Read the current wallpaper from the settings
         val settings = getSharedPreferences("PREFERENCES", 0)
@@ -97,22 +97,22 @@ abstract class BaseActivity : FragmentActivity(), KodeinAware {
 
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, classTag(), "onPause")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, classTag(), "onStop")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, classTag(), "onDestroy")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onDestroy")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        eventLogger.log(Severity.INFO, classTag(), "OnActivityResult")
+        eventLogger.log(Severity.INFO, "BaseActivity", "OnActivityResult")
 
         if (requestCode == 1001) {
             //int responseCode = data.getIntExtra("RESPONSE_CODE", 0);

@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
@@ -128,7 +128,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     }
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
-        eventLogger.log(Severity.INFO, classTag(), "onNewItemSelected")
+        eventLogger.log(Severity.INFO, "MainMenuFragment", "onNewItemSelected")
         val plantIntent = Intent(requireContext(), PlantDetailsActivity::class.java)
         plantIntent.putExtra(PlantDetailsFragment.PLANT_ID, plantId)
         plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
@@ -136,12 +136,12 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextSubmit")
+        eventLogger.log(Severity.DEBUG, "MainMenuFragment", "onQueryTextSubmit")
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextChange")
+        eventLogger.log(Severity.DEBUG, "MainMenuFragment", "onQueryTextChange")
         newText?.let {
             if (!newText.isEmpty()) {
                 searchQuery = newText

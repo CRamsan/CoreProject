@@ -3,7 +3,7 @@ package com.cramsan.framework.thread.implementation
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 
@@ -25,14 +25,14 @@ class ThreadUtilJVM constructor(
     }
 
     override fun dispatchToUI(block: RunBlock) {
-        assertUtil.assert(false, classTag(), "dispatchToUI: UIThread is not supported")
+        assertUtil.assert(false, "ThreadUtilJVM", "dispatchToUI: UIThread is not supported")
     }
 
     override fun assertIsUIThread() {
-        assertUtil.assert(false, classTag(), "assertIsUIThread: Always return false")
+        assertUtil.assert(false, "ThreadUtilJVM", "assertIsUIThread: Always return false")
     }
 
     override fun assertIsBackgroundThread() {
-        eventLogger.log(Severity.INFO, classTag(), "assertIsBackgroundThread: Always returning True")
+        eventLogger.log(Severity.INFO, "ThreadUtilJVM", "assertIsBackgroundThread: Always returning True")
     }
 }

@@ -25,7 +25,7 @@ import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 
 import java.text.DateFormat
 import java.util.Date
@@ -114,6 +114,7 @@ class FragmentOutfit : BaseFragment() {
                     leaderButton.isEnabled = true
                     leaderButton.alpha = 1f
                     leaderButton.setOnClickListener {
+                        metrics.log("FragmentOutfit", "Open Outfit Leader")
                         mCallbacks!!.onItemSelected(
                             ActivityMode.ACTIVITY_PROFILE.toString(),
                             arrayOf(outfit.leader_character_id, this.namespace!!.name)
@@ -162,7 +163,7 @@ class FragmentOutfit : BaseFragment() {
                 }
             }
         } catch (e: NullPointerException) {
-            eventLogger.log(Severity.ERROR, classTag(), "Null Pointer while trying to set character data on UI")
+            eventLogger.log(Severity.ERROR, "FragmentOutfit", "Null Pointer while trying to set character data on UI")
         }
 
     }

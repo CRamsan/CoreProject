@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.model.feedback.Feedback
@@ -32,11 +32,11 @@ class PlantSuggestionViewModel(application: Application) : AndroidViewModel(appl
     }
 
     fun savePlant(mainName: String, toxicityForCats: ToxicityValue, toxicityForDogs: ToxicityValue) {
-        eventLogger.log(Severity.INFO, classTag(), "savePlant")
+        eventLogger.log(Severity.INFO, "PlantSuggestionViewModel", "savePlant")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "$mainName: Cats:${toxicityForCats.name} - Dogs:${toxicityForDogs.name}"
             val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
-            metricsClient.log(classTag(), suggestion)
+            metricsClient.log("PlantSuggestionViewModel", suggestion)
             viewModelScope.launch {
                 observableIsComplete.value = true
             }

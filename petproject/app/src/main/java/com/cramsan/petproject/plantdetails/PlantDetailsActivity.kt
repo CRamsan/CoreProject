@@ -2,7 +2,7 @@ package com.cramsan.petproject.plantdetails
 
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
@@ -22,6 +22,6 @@ class PlantDetailsActivity : BaseActivity(), PlantDetailsFragment.OnDetailsFragm
     }
 
     override fun onPlantMetadataReady(plantMetadata: PlantMetadata) {
-        eventLogger.log(Severity.INFO, classTag(), "onPlantMetadataReady called")
+        eventLogger.log(Severity.INFO, "PlantDetailsActivity", "onPlantMetadataReady called")
     }
 }

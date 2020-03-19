@@ -24,7 +24,7 @@ import com.cesarandres.ps2link.dbg.view.TwitterItemAdapter
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
 import com.cesarandres.ps2link.module.twitter.TwitterUtil
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 
 import java.util.ArrayList
 import java.util.Arrays
@@ -86,6 +86,7 @@ class FragmentTwitter : BaseFragment() {
         }
 
         this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentTwitter", "Update")
             val usersnames = ArrayList<String>()
 
             for (user in this@FragmentTwitter.users!!) {
@@ -241,9 +242,9 @@ class FragmentTwitter : BaseFragment() {
                     tweetList = TwitterUtil.getTweets(user)
                     data.insertAllTweets(tweetList, user)
                 } catch (e: TwitterException) {
-                    eventLogger.log(Severity.WARNING, classTag(), "Error trying retrieve tweets")
+                    eventLogger.log(Severity.WARNING, "FragmentTwitter", "Error trying retrieve tweets")
                 } catch (e: IllegalStateException) {
-                    eventLogger.log(Severity.ERROR, classTag(), "DB was closed. This is normal.")
+                    eventLogger.log(Severity.ERROR, "FragmentTwitter", "DB was closed. This is normal.")
                     break
                 }
 

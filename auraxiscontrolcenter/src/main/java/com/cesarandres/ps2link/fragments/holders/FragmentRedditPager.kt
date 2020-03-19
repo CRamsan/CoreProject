@@ -22,6 +22,7 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.fragments.FragmentReddit
 
+
 import java.util.HashMap
 
 /**
@@ -93,6 +94,7 @@ class FragmentRedditPager : BaseFragment() {
                 PS4 -> intentUri = FragmentReddit.REDDIT_URL + PS2_PS4
                 else -> intentUri = FragmentReddit.REDDIT_URL + PS2_PC
             }
+            metrics.log("FragmentRedditPager", "Open Reddit URL", mapOf("Site" to intentUri))
             val openRedditIntent = Intent(Intent.ACTION_VIEW, Uri.parse(intentUri))
             startActivity(openRedditIntent)
         }
@@ -123,6 +125,7 @@ class FragmentRedditPager : BaseFragment() {
 
         this.fragmentUpdate.visibility = View.VISIBLE
         this.fragmentUpdate.setOnClickListener(View.OnClickListener {
+            metrics.log("FragmentRedditPager", "Update")
             val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
                 ?: return@OnClickListener
             when (mViewPager!!.currentItem) {
@@ -133,7 +136,9 @@ class FragmentRedditPager : BaseFragment() {
         })
 
         mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(arg0: Int) {}
+            override fun onPageSelected(arg0: Int) {
+                metrics.log("FragmentRedditPager", "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
+            }
 
             override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
 

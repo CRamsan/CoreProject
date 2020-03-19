@@ -22,7 +22,8 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
+import com.cramsan.framework.metrics.MetricsInterface
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -52,6 +53,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
     protected val eventLogger: EventLoggerInterface by instance()
     protected val volley: RequestQueue by instance()
     protected val dbgCensus: DBGCensus by instance()
+    protected val metrics: MetricsInterface by instance()
     protected val imageLoader: ImageLoader by instance()
 
     /**
@@ -67,7 +69,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
-        eventLogger.log(Severity.INFO, classTag(), "OnAttach")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnAttach")
         check(activity is FragmentCallbacks) { "Activity must implement fragment's callbacks." }
         mCallbacks = activity
     }
@@ -79,7 +81,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "OnCreate")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnCreate")
     }
 
     /*
@@ -94,7 +96,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        eventLogger.log(Severity.INFO, classTag(), "OnCreateView")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnCreateView")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -105,7 +107,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "OnActivityCreated")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnActivityCreated")
 
         this.fragmentTitle = activity!!.findViewById<View>(R.id.buttonFragmentTitle) as Button
         this.fragmentProgress =
@@ -131,7 +133,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "OnViewStateRestored")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnViewStateRestored")
     }
 
     /*
@@ -141,7 +143,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, classTag(), "OnStart")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnStart")
     }
 
     /*
@@ -151,7 +153,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, classTag(), "OnResume")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnResume")
     }
 
     /*
@@ -161,7 +163,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, classTag(), "OnPause")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnPause")
     }
 
     /*
@@ -171,7 +173,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, classTag(), "OnStop")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnStop")
         // When a fragment is stopped all tasks should be cancelled
         volley.cancelAll(this)
         if (currentTask != null) {
@@ -186,7 +188,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onDestroyView() {
         super.onDestroyView()
-        eventLogger.log(Severity.INFO, classTag(), "OnDestroyView")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnDestroyView")
     }
 
     /*
@@ -196,7 +198,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, classTag(), "OnDestroy")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnDestroy")
     }
 
     /*
@@ -206,7 +208,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      */
     override fun onDetach() {
         super.onDetach()
-        eventLogger.log(Severity.INFO, classTag(), "OnDetach")
+        eventLogger.log(Severity.INFO, "BaseFragment", "OnDetach")
         mCallbacks = null
     }
 

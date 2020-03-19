@@ -16,6 +16,8 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 
+import com.cramsan.framework.metrics.MetricsInterface
+
 /**
  * @author Cesar Ramirez
  *
@@ -26,6 +28,7 @@ import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 @SuppressLint("CutPasteId")
 class ButtonSelectSource(private val context: Context,
                          root: ViewGroup,
+                         private val metrics: MetricsInterface,
                          private val dbgCensus: DBGCensus) {
     var namespace = Namespace.PS2PC
 
@@ -86,6 +89,7 @@ class ButtonSelectSource(private val context: Context,
             if (namespace == Namespace.PS2PS4EU) View.VISIBLE else View.GONE
         ps4usNamespaceButton.visibility =
             if (namespace == Namespace.PS2PS4US) View.VISIBLE else View.GONE
+        metrics.log("ButtonSelectSource", "OnNamespaceButtonClicked", mapOf("Namespace" to namespace.name))
 
         if (listener != null) {
             listener!!.onSourceSelectionChanged(namespace)

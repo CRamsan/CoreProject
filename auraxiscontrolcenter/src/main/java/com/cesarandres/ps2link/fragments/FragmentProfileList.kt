@@ -16,6 +16,7 @@ import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.CharacterProfile
 import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
 
+
 import java.util.ArrayList
 
 /**
@@ -49,11 +50,13 @@ class FragmentProfileList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_profiles)
         this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentProfileList", "Update")
             val task = ReadProfilesTable()
             setCurrentTask(task)
             task.execute()
         }
         this.fragmentAdd.setOnClickListener {
+            metrics.log("FragmentProfileList", "Add Profile")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_PROFILE.toString(),
                 emptyArray()

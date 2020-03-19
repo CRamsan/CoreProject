@@ -2,7 +2,7 @@ package com.cramsan.petproject.appcore.provider.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -67,18 +67,18 @@ class ModelProvider(
     }
 
     override suspend fun downloadCatalog(currentTime: Long): Boolean {
-        eventLogger.log(Severity.INFO, classTag(), "downloadCatalog")
+        eventLogger.log(Severity.INFO, "ModelProvider", "downloadCatalog")
         threadUtil.assertIsBackgroundThread()
 
         mutex.withLock {
             val lastSave = preferences.loadLong(LAST_UPDATE)
             if (lastSave != null && currentTime - lastSave < 86400) {
-                eventLogger.log(Severity.INFO, classTag(), "Using cached data")
+                eventLogger.log(Severity.INFO, "ModelProvider", "Using cached data")
                 isCatalogReady = true
                 return false
             }
 
-            eventLogger.log(Severity.INFO, classTag(), "Downloading data")
+            eventLogger.log(Severity.INFO, "ModelProvider", "Downloading data")
             listeners.forEach {
                 it.onCatalogUpdate(false)
             }
@@ -115,11 +115,11 @@ class ModelProvider(
     }
 
     override suspend fun getPlant(animalType: AnimalType, plantId: Int, locale: String): Plant? {
-        eventLogger.log(Severity.INFO, classTag(), "getPlant")
+        eventLogger.log(Severity.INFO, "ModelProvider", "getPlant")
         threadUtil.assertIsBackgroundThread()
 
         if (!isCatalogReady) {
-            eventLogger.log(Severity.INFO, classTag(), "Catalog is not ready")
+            eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
             return null
         }
 
@@ -132,7 +132,7 @@ class ModelProvider(
                     modelStorage.insertPlantCommonName(it)
                 }
             } catch (cause: ClientRequestException) {
-                eventLogger.log(Severity.WARNING, classTag(), cause.toString())
+                eventLogger.log(Severity.WARNING, "ModelProvider", cause.toString())
             }
 
             val family: PlantFamily.PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
@@ -153,11 +153,11 @@ class ModelProvider(
     }
 
     override suspend fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant> {
-        eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicity")
+        eventLogger.log(Severity.INFO, "ModelProvider", "getPlantsWithToxicity")
         threadUtil.assertIsBackgroundThread()
 
         if (!isCatalogReady) {
-            eventLogger.log(Severity.INFO, classTag(), "Catalog is not ready")
+            eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
             return emptyList()
         }
 
@@ -183,11 +183,11 @@ class ModelProvider(
         query: String,
         locale: String
     ): List<PresentablePlant>? = withContext(Dispatchers.Default) {
-        eventLogger.log(Severity.INFO, classTag(), "getPlantsWithToxicityFiltered")
+        eventLogger.log(Severity.INFO, "ModelProvider", "getPlantsWithToxicityFiltered")
         threadUtil.assertIsBackgroundThread()
 
         if (!isCatalogReady) {
-            eventLogger.log(Severity.INFO, classTag(), "Catalog is not ready")
+            eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
             return@withContext null
         }
 
@@ -195,10 +195,10 @@ class ModelProvider(
         val resultList = mutableListOf<PresentablePlant>()
         filterJob?.cancelAndJoin()
         val filterJobLocal = launch(Dispatchers.Default) {
-            eventLogger.log(Severity.DEBUG, classTag(), "Starting Job $this")
+            eventLogger.log(Severity.DEBUG, "ModelProvider", "Starting Job $this")
             for (plant in list) {
                 if (!isActive) {
-                    eventLogger.log(Severity.DEBUG, classTag(), "Early cancelling Job $this")
+                    eventLogger.log(Severity.DEBUG, "ModelProvider", "Early cancelling Job $this")
                     break
                 }
                 if (plant.scientificName.contains(query, true) || plant.mainCommonName.contains(query, true)) {
@@ -208,16 +208,16 @@ class ModelProvider(
         }
         filterJob = filterJobLocal
         if (filterJobLocal.isCancelled) {
-            eventLogger.log(Severity.DEBUG, classTag(), "Cancelling filterJob $filterJob")
+            eventLogger.log(Severity.DEBUG, "ModelProvider", "Cancelling filterJob $filterJob")
             return@withContext null
         }
         filterJobLocal.join()
-        eventLogger.log(Severity.DEBUG, classTag(), "Filtering returned ${resultList.size} results")
+        eventLogger.log(Severity.DEBUG, "ModelProvider", "Filtering returned ${resultList.size} results")
         return@withContext resultList.sortedBy { it.mainCommonName }
     }
 
     override suspend fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {
-        eventLogger.log(Severity.INFO, classTag(), "getPlantMetadata")
+        eventLogger.log(Severity.INFO, "ModelProvider", "getPlantMetadata")
         threadUtil.assertIsBackgroundThread()
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
@@ -225,7 +225,7 @@ class ModelProvider(
     }
 
     override suspend fun deleteAll() {
-        eventLogger.log(Severity.INFO, classTag(), "deleteAll")
+        eventLogger.log(Severity.INFO, "ModelProvider", "deleteAll")
         threadUtil.assertIsBackgroundThread()
 
         modelStorage.deleteAll()

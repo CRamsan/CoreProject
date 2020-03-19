@@ -34,6 +34,7 @@ import com.cesarandres.ps2link.dbg.view.ServerItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 
+
 import java.util.ArrayList
 
 /**
@@ -58,6 +59,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         selectionButton = ButtonSelectSource(
             activity!!,
             activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            metrics,
             dbgCensus
         )
         selectionButton!!.listener = this
@@ -73,7 +75,10 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_servers)
-        this.fragmentUpdate.setOnClickListener { downloadServers() }
+        this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentServerList", "Update")
+            downloadServers()
+        }
 
         val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->

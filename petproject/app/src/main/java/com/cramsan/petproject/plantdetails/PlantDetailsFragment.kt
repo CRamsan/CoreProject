@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
@@ -66,7 +66,7 @@ class PlantDetailsFragment : BaseFragment() {
         viewModel = getViewModel(PlantDetailsViewModel::class.java)
         viewModel.getPlant().observe(viewLifecycleOwner, Observer {
             if (it == null) {
-                eventLogger.log(Severity.WARNING, classTag(), "Plant is null")
+                eventLogger.log(Severity.WARNING, "PlantDetailsFragment", "Plant is null")
                 return@Observer
             }
 
@@ -95,7 +95,7 @@ class PlantDetailsFragment : BaseFragment() {
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        eventLogger.log(Severity.ERROR, classTag(), e.toString())
+                        eventLogger.log(Severity.ERROR, "PlantDetailsFragment", e.toString())
                         return false
                     }
 
@@ -106,7 +106,7 @@ class PlantDetailsFragment : BaseFragment() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        eventLogger.log(Severity.VERBOSE, classTag(),
+                        eventLogger.log(Severity.VERBOSE, "PlantDetailsFragment",
                             "Resource loaded successfully")
                         plant_details_image.visibility = View.VISIBLE
                         plant_details_image_loading.visibility = View.INVISIBLE
@@ -118,7 +118,7 @@ class PlantDetailsFragment : BaseFragment() {
         })
         viewModel.getPlantMetadata().observe(viewLifecycleOwner, Observer { metadata ->
             if (metadata == null) {
-                eventLogger.log(Severity.WARNING, classTag(), "Metadata is null")
+                eventLogger.log(Severity.WARNING, "PlantDetailsFragment", "Metadata is null")
                 return@Observer
             }
 
@@ -162,7 +162,7 @@ class PlantDetailsFragment : BaseFragment() {
         })
 
         plant_feedback_save.setOnClickListener {
-            eventLogger.log(Severity.INFO, classTag(), "onClick")
+            eventLogger.log(Severity.INFO, "PlantDetailsFragment", "onClick")
             val plantIntent = Intent(requireContext(), PlantFeedbackActivity::class.java)
             plantIntent.putExtra(PlantFeedbackFragment.PLANT_ID, plantId)
             plantIntent.putExtra(PlantFeedbackFragment.ANIMAL_TYPE, animalType.ordinal)

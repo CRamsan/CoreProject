@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
@@ -43,20 +43,20 @@ class PlantsRecyclerViewAdapter(
     }
 
     fun updateValues(values: List<PresentablePlant>) {
-        eventLogger.log(Severity.VERBOSE, classTag(), "updateValues")
+        eventLogger.log(Severity.VERBOSE, "PlantsRecyclerViewAdapter", "updateValues")
         mValues = values
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        eventLogger.log(Severity.DEBUG, classTag(), "onCreateViewHolder")
+        eventLogger.log(Severity.DEBUG, "PlantsRecyclerViewAdapter", "onCreateViewHolder")
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_plant, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        eventLogger.log(Severity.VERBOSE, classTag(), "onBindViewHolder")
+        eventLogger.log(Severity.VERBOSE, "PlantsRecyclerViewAdapter", "onBindViewHolder")
         val item = mValues[position]
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName

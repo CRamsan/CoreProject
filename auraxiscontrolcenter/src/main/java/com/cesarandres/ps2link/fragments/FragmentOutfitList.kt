@@ -14,6 +14,7 @@ import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.content.Outfit
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 
+
 import java.util.ArrayList
 
 /**
@@ -47,12 +48,16 @@ class FragmentOutfitList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_outfits)
         this.fragmentAdd.setOnClickListener {
+            metrics.log("FragmentOutfitList", "Add Outfit")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_OUTFIT.toString(),
                 emptyArray()
             )
         }
-        this.fragmentUpdate.setOnClickListener { ReadOutfitsTable().execute() }
+        this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentOutfitList", "Update")
+            ReadOutfitsTable().execute()
+        }
         val listRoot = activity!!.findViewById<View>(R.id.listViewOutfitList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             mCallbacks!!.onItemSelected(

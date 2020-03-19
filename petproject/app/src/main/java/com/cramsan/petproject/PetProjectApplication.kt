@@ -19,7 +19,7 @@ import com.cramsan.framework.halt.implementation.HaltUtilAndroidInitializer
 import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.LoggerAndroid
@@ -140,7 +140,7 @@ class PetProjectApplication : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
-        eventLogger.log(Severity.INFO, classTag(), "onCreate called")
+        eventLogger.log(Severity.INFO, "PetProjectApplication", "onCreate called")
         AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
         crashHandler.initialize()
         metrics.initialize()

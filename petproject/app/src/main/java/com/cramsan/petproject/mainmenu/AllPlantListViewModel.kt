@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
@@ -51,7 +51,7 @@ class AllPlantListViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun reloadPlants() {
-        eventLogger.log(Severity.INFO, classTag(), "reloadPlants")
+        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "reloadPlants")
         observableLoading.value = true
         viewModelScope.launch {
             loadPlants()
@@ -59,7 +59,7 @@ class AllPlantListViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun searchPlants(query: String) {
-        eventLogger.log(Severity.INFO, classTag(), "searchPlants")
+        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "searchPlants")
         viewModelScope.launch {
             if (query.isEmpty()) {
                 loadPlants()

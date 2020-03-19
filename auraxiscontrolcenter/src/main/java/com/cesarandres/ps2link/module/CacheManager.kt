@@ -3,7 +3,7 @@ package com.cesarandres.ps2link.module
 import android.content.Context
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.thread.ThreadUtilInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,7 +23,7 @@ class CacheManager(val context: Context) : KodeinAware {
      * This AsyncTask will delete all the files from the cache.
      */
     suspend fun clearCache() = withContext(Dispatchers.IO) {
-        eventLogger.log(Severity.INFO, classTag(), "Starting to clear cache")
+        eventLogger.log(Severity.INFO, "CacheManager", "Starting to clear cache")
         val fileList = context.fileList()
         for (file in fileList) {
             context.deleteFile(file)
@@ -34,7 +34,7 @@ class CacheManager(val context: Context) : KodeinAware {
      * This AsyncTask will delete the least used files from the cache until it reaches its maximum size allowed.
      */
     suspend fun trimCache() =  withContext(Dispatchers.IO){
-        eventLogger.log(Severity.INFO, classTag(), "Starting to trim cache")
+        eventLogger.log(Severity.INFO, "CacheManager", "Starting to trim cache")
         threadUtil.assertIsBackgroundThread()
         val files = context.filesDir.listFiles()
 

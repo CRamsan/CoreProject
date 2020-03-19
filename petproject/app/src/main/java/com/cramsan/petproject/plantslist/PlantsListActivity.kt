@@ -6,7 +6,7 @@ import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
@@ -23,12 +23,12 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
     private var queryTextListener: SearchView.OnQueryTextListener? = null
 
     override fun onNewSearchable(listener: SearchView.OnQueryTextListener) {
-        eventLogger.log(Severity.INFO, classTag(), "onNewSearchable")
+        eventLogger.log(Severity.INFO, "PlantsListActivity", "onNewSearchable")
         queryTextListener = listener
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
+        eventLogger.log(Severity.INFO, "PlantsListActivity", "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.plant_list, menu)

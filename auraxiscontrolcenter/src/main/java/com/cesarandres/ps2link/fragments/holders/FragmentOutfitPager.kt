@@ -23,6 +23,7 @@ import com.cesarandres.ps2link.fragments.FragmentMembersOnline
 import com.cesarandres.ps2link.fragments.FragmentOutfit
 import com.cesarandres.ps2link.module.ButtonSelectSource
 
+
 import java.util.HashMap
 
 /**
@@ -63,6 +64,7 @@ class FragmentOutfitPager : BaseFragment() {
         this.namespace = extras.getString("PARAM_1")
 
         this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentOutfitPager", "Update")
             val fragment: Fragment
             try {
                 when (mViewPager!!.currentItem) {
@@ -92,6 +94,7 @@ class FragmentOutfitPager : BaseFragment() {
 
         mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(arg0: Int) {
+                metrics.log("FragmentOutfitPager", "OnFragmentSelected", mapOf("Activity" to "Outfit", "Fragment" to arg0.toString()))
                 when (arg0) {
                     OUTFIT -> {
                         fragmentShowOffline.visibility = View.GONE

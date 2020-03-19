@@ -31,6 +31,7 @@ import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 
+
 import java.util.Locale
 
 /**
@@ -58,6 +59,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
         selectionButton = ButtonSelectSource(
             activity!!,
             activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            metrics,
             dbgCensus
         )
         selectionButton!!.listener = this
@@ -76,9 +78,14 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
         this.fragmentTitle.text = getString(R.string.title_profiles)
         val buttonCharacters =
             activity!!.findViewById<View>(R.id.imageButtonSearchProfile) as ImageButton
-        buttonCharacters.setOnClickListener { downloadProfiles() }
-        this.fragmentUpdate.setOnClickListener { downloadProfiles() }
-
+        buttonCharacters.setOnClickListener {
+            metrics.log("FragmentAddProfile", "Search Profile")
+            downloadProfiles()
+        }
+        this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentAddProfile", "Update")
+            downloadProfiles()
+        }
     }
 
     override fun onResume() {

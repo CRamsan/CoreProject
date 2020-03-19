@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.R
 import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -31,7 +31,7 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
     private var queryTextListener: SearchView.OnQueryTextListener? = null
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        eventLogger.log(Severity.INFO, classTag(), "onCreateOptionsMenu")
+        eventLogger.log(Severity.INFO, "MainMenuActivity", "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -72,13 +72,13 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
             true
         }
         else -> {
-            eventLogger.log(Severity.DEBUG, classTag(), "Action item not handled")
+            eventLogger.log(Severity.DEBUG, "MainMenuActivity", "Action item not handled")
             super.onOptionsItemSelected(item)
         }
     }
 
     override fun onNewSearchable(listener: SearchView.OnQueryTextListener) {
-        eventLogger.log(Severity.INFO, classTag(), "onNewSearchable")
+        eventLogger.log(Severity.INFO, "MainMenuActivity", "onNewSearchable")
         queryTextListener = listener
     }
 

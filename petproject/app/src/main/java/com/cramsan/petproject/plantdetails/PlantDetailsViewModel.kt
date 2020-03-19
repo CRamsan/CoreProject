@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
@@ -29,7 +29,7 @@ class PlantDetailsViewModel(application: Application) : AndroidViewModel(applica
     private val observablePlantMetadata = MutableLiveData<PlantMetadata?>()
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
-        eventLogger.log(Severity.INFO, classTag(), "reloadPlant")
+        eventLogger.log(Severity.INFO, "PlantDetailsViewModel", "reloadPlant")
         viewModelScope.launch {
             loadPlant(animalType, plantId)
         }

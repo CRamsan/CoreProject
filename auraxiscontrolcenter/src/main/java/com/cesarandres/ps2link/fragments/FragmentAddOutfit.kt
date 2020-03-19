@@ -31,6 +31,7 @@ import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 
+
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.ArrayList
@@ -62,6 +63,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
         selectionButton = ButtonSelectSource(
             activity!!,
             activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
+            metrics,
             dbgCensus
         )
         selectionButton!!.listener = this
@@ -80,9 +82,15 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
         this.fragmentTitle.text = getString(R.string.title_outfits)
         val buttonOutfits =
             activity!!.findViewById<View>(R.id.imageButtonSearchOutfit) as ImageButton
-        buttonOutfits.setOnClickListener { downloadOutfits() }
+        buttonOutfits.setOnClickListener {
+            metrics.log("FragmentAddOutfit", "Search")
+            downloadOutfits()
+        }
 
-        this.fragmentUpdate.setOnClickListener { downloadOutfits() }
+        this.fragmentUpdate.setOnClickListener {
+            metrics.log("FragmentAddOutfit", "Update")
+            downloadOutfits()
+        }
 
     }
 

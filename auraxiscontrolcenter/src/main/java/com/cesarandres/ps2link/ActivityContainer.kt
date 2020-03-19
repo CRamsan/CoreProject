@@ -33,7 +33,7 @@ import com.cesarandres.ps2link.fragments.holders.FragmentProfilePager
 import com.cesarandres.ps2link.fragments.holders.FragmentRedditPager
 import com.cesarandres.ps2link.module.ObjectDataSource
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.classTag
+
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -206,7 +206,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * (java.lang.String, java.lang.String[])
      */
     override fun onItemSelected(id: String, args: Array<String?>) {
-        metrics.log(classTag(), "OnItemSelected")
+        metrics.log("ActivityContainer", "OnItemSelected", mapOf("Mode" to id))
         // Reset the database, this will also force some tasks to end
         val mode = ActivityMode.valueOf(id)
         // Seen as we can't have embedded fragments, we will create a new
@@ -323,7 +323,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * if we are on tablet mode we will pop the top of the stack.
      */
     fun upNavigation() {
-        metrics.log(classTag(), "Up Navigation")
+        metrics.log("ActivityContainer", "Up Navigation")
         if (this.activityMode != ActivityMode.ACTIVITY_MAIN_MENU) {
             if (isTablet) {
                 if (supportFragmentManager.backStackEntryCount > 0) {

@@ -25,6 +25,7 @@ import com.cesarandres.ps2link.fragments.FragmentStatList
 import com.cesarandres.ps2link.fragments.FragmentWeaponList
 import com.cesarandres.ps2link.module.ButtonSelectSource
 
+
 import java.util.HashMap
 
 /**
@@ -101,6 +102,7 @@ class FragmentProfilePager : BaseFragment() {
 
         this.fragmentUpdate.visibility = View.VISIBLE
         this.fragmentUpdate.setOnClickListener(View.OnClickListener {
+            metrics.log("FragmentProfilePager", "Update")
             val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
                 ?: return@OnClickListener
             when (mViewPager!!.currentItem) {
@@ -123,6 +125,7 @@ class FragmentProfilePager : BaseFragment() {
 
         mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(arg0: Int) {
+                metrics.log("FragmentProfilePager", "OnFragmentSelected", mapOf("Activity" to "Profile", "Fragment" to arg0.toString()))
                 when (arg0) {
                     PROFILE -> {
                         fragmentStar.visibility = View.VISIBLE

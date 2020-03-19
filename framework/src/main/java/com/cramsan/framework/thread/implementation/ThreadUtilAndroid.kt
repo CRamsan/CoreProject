@@ -3,8 +3,6 @@ package com.cramsan.framework.thread.implementation
 import android.os.Handler
 import android.os.Looper
 import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.classTag
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 import java.util.concurrent.Executors
@@ -25,7 +23,7 @@ class ThreadUtilAndroid constructor(
     }
 
     override fun dispatchToUI(block: RunBlock) {
-        assertUtil.assert(false, classTag(), "On Android we should not dispatch to the UI thread.")
+        assertUtil.assert(false, "Test", "On Android we should not dispatch to the UI thread.")
         if (isUIThread()) {
             block()
         } else {
@@ -38,11 +36,11 @@ class ThreadUtilAndroid constructor(
     }
 
     override fun assertIsUIThread() {
-        assertUtil.assert(isUIThread(), classTag(), "Not on UI thread!")
+        assertUtil.assert(isUIThread(), "Test", "Not on UI thread!")
     }
 
     override fun assertIsBackgroundThread() {
-        assertUtil.assert(isBackgroundThread(), classTag(), "Not on background thread!")
+        assertUtil.assert(isBackgroundThread(), "Test", "Not on background thread!")
     }
     companion object {
         private const val THREAD_POOL_SIZE = 10

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import kotlinx.coroutines.Dispatchers
@@ -30,10 +30,10 @@ class PlantFeedbackViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun sendFeedback(animal: AnimalType, plantId: Long, photo: Boolean, scientificName: Boolean, name: Boolean, link: Boolean, text: String) {
-        eventLogger.log(Severity.INFO, classTag(), "sendFeedback")
+        eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.name} - PlantId:$plantId - Photo: $photo - ScientifiName:$scientificName - Name:$name - Link:$link - Text:$text"
-            metricsClient.log(classTag(), suggestion)
+            metricsClient.log("PlantFeedbackViewModel", suggestion)
             viewModelScope.launch {
                 observableIsComplete.value = true
             }

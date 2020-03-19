@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.factory
@@ -31,7 +31,7 @@ abstract class BaseActivity : AppCompatActivity(),
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, classTag(), "onCreate")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onCreate")
 
         setContentView(contentViewLayout)
 
@@ -47,37 +47,37 @@ abstract class BaseActivity : AppCompatActivity(),
     @CallSuper
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, classTag(), "onStart")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onStart")
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, classTag(), "onResume")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onResume")
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, classTag(), "onPause")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onPause")
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, classTag(), "onStop")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onStop")
     }
 
     @CallSuper
     override fun onRestart() {
         super.onRestart()
-        eventLogger.log(Severity.INFO, classTag(), "onRestart")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onRestart")
     }
 
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, classTag(), "onDestroy")
+        eventLogger.log(Severity.INFO, "BaseActivity", "onDestroy")
     }
 
     protected fun <T : ViewModel> getViewModel(modelClass: Class<T>): T {

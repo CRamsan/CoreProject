@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.classTag
+
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -128,7 +128,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
     }
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
-        eventLogger.log(Severity.INFO, classTag(), "onNewItemSelected")
+        eventLogger.log(Severity.INFO, "PlantsListFragment", "onNewItemSelected")
         val plantIntent = Intent(requireContext(), PlantDetailsActivity::class.java)
         plantIntent.putExtra(PLANT_ID, plantId)
         plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
@@ -136,12 +136,12 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextSubmit")
+        eventLogger.log(Severity.DEBUG, "PlantsListFragment", "onQueryTextSubmit")
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        eventLogger.log(Severity.DEBUG, classTag(), "onQueryTextChange")
+        eventLogger.log(Severity.DEBUG, "PlantsListFragment", "onQueryTextChange")
         newText?.let {
             if (newText.length > 1) {
                 searchQuery = newText
