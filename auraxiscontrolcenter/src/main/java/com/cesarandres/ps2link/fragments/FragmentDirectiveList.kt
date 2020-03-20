@@ -32,6 +32,8 @@ import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
 import com.cesarandres.ps2link.dbg.view.DirectiveTreeCategoryListAdapter
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 import java.util.ArrayList
 import java.util.HashMap
@@ -117,7 +119,11 @@ class FragmentDirectiveList : BaseFragment() {
             downloadDirectivesObjectives(profileId)
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+            setProgressButton(false)
+        }
 
         dbgCensus.sendGsonRequest(url, Characters_directive_list::class.java, success, error, this)
     }
@@ -137,7 +143,11 @@ class FragmentDirectiveList : BaseFragment() {
             downloadDirectiveTrees(profileId)
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+            setProgressButton(false)
+        }
 
         dbgCensus.sendGsonRequest(
             url,
@@ -162,7 +172,11 @@ class FragmentDirectiveList : BaseFragment() {
             downloadAllDirectiveTiers(profileId)
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+            setProgressButton(false)
+        }
 
         dbgCensus.sendGsonRequest(
             url,
@@ -182,7 +196,11 @@ class FragmentDirectiveList : BaseFragment() {
             downloadAllDirectives(profileId)
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+            setProgressButton(false)
+        }
 
         dbgCensus.sendGsonRequest(url, Directive_tier_list::class.java, success, error, this)
     }
@@ -196,7 +214,11 @@ class FragmentDirectiveList : BaseFragment() {
             downloadDirectiveTiers(profileId)
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            setProgressButton(false)
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+        }
 
         dbgCensus.sendGsonRequest(url, Directive_list::class.java, success, error, this)
     }
@@ -218,7 +240,11 @@ class FragmentDirectiveList : BaseFragment() {
             setProgressButton(false)
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+            setProgressButton(false)
+        }
 
         dbgCensus.sendGsonRequest(
             url,
@@ -322,5 +348,9 @@ class FragmentDirectiveList : BaseFragment() {
         java.util.Collections.sort(this.charactersDirectiveTreeCategories!!)
 
         return true
+    }
+
+    companion object {
+        private const val TAG = "FragmentDirectiveList"
     }
 }

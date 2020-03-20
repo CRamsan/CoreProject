@@ -24,7 +24,9 @@ import com.cesarandres.ps2link.dbg.content.item.Weapon
 import com.cesarandres.ps2link.dbg.content.item.WeaponStat
 import com.cesarandres.ps2link.dbg.content.response.Weapon_list_response
 import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
+import com.cesarandres.ps2link.module.Constants
 import com.cesarandres.ps2link.module.ObjectDataSource
+import com.cramsan.framework.logging.Severity
 
 import java.util.ArrayList
 import java.util.HashMap
@@ -131,6 +133,8 @@ class FragmentWeaponList : BaseFragment() {
                 setCurrentTask(currentTask)
                 currentTask.execute(response)
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -138,6 +142,8 @@ class FragmentWeaponList : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -342,5 +348,9 @@ class FragmentWeaponList : BaseFragment() {
                 ).show()
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentWeaponList"
     }
 }

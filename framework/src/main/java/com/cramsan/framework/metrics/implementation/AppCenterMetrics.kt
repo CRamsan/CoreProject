@@ -11,16 +11,10 @@ class AppCenterMetrics: MetricsInterface {
     }
 
     override fun log(tag: String, event: String) {
-        Analytics.trackEvent(event, mapOf(KEY_TAG to tag))
+        Analytics.trackEvent("${event}-${tag}")
     }
 
     override fun log(tag: String, event: String, metadata: Map<String, String>) {
-        val map: MutableMap<String, String> = mutableMapOf(KEY_TAG to tag)
-        map.putAll(metadata)
-        Analytics.trackEvent(event, map)
-    }
-
-    companion object {
-        const val KEY_TAG = "Tag"
+        Analytics.trackEvent("${event}-${tag}", metadata)
     }
 }

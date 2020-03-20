@@ -22,6 +22,8 @@ import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.dbg.view.StatItemAdapter
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 /**
  * Retrieve the stats for the given character
@@ -92,6 +94,8 @@ class FragmentStatList : BaseFragment() {
                     this!!.profileId!!
                 )
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -99,10 +103,16 @@ class FragmentStatList : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
 
         dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
+    }
+
+    companion object {
+        private const val TAG = "FragmentStatList"
     }
 }

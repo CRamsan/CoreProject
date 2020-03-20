@@ -23,7 +23,7 @@ class CacheManager(val context: Context) : KodeinAware {
      * This AsyncTask will delete all the files from the cache.
      */
     suspend fun clearCache() = withContext(Dispatchers.IO) {
-        eventLogger.log(Severity.INFO, "CacheManager", "Starting to clear cache")
+        eventLogger.log(Severity.INFO, TAG, "Starting to clear cache")
         val fileList = context.fileList()
         for (file in fileList) {
             context.deleteFile(file)
@@ -34,7 +34,7 @@ class CacheManager(val context: Context) : KodeinAware {
      * This AsyncTask will delete the least used files from the cache until it reaches its maximum size allowed.
      */
     suspend fun trimCache() =  withContext(Dispatchers.IO){
-        eventLogger.log(Severity.INFO, "CacheManager", "Starting to trim cache")
+        eventLogger.log(Severity.INFO, TAG, "Starting to trim cache")
         threadUtil.assertIsBackgroundThread()
         val files = context.filesDir.listFiles()
 
@@ -63,5 +63,6 @@ class CacheManager(val context: Context) : KodeinAware {
 
     companion object {
         const val MAX_CACHE_SIZE = 5000000 //5 MB
+        private const val TAG = "CacheManager"
     }
 }

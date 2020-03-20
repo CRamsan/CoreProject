@@ -87,56 +87,56 @@ class FragmentMainMenu : BaseFragment() {
         val buttonSettings = activity!!.findViewById<View>(R.id.buttonSettings) as Button
 
         buttonCharacters.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Profile")
+            metrics.log(TAG, "Open Profile")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_PROFILE_LIST.toString(),
                 emptyArray()
             )
         }
         buttonServers.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Servers")
+            metrics.log(TAG, "Open Servers")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_SERVER_LIST.toString(),
                 emptyArray()
             )
         }
         buttonOutfit.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Outfit")
+            metrics.log(TAG, "Open Outfit")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_OUTFIT_LIST.toString(),
                 emptyArray()
             )
         }
         buttonNews.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open News")
+            metrics.log(TAG, "Open News")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_LINK_MENU.toString(),
                 emptyArray()
             )
         }
         buttonTwitter.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Twitter")
+            metrics.log(TAG, "Open Twitter")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_TWITTER.toString(),
                 emptyArray()
             )
         }
         buttonReddit.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Reddit")
+            metrics.log(TAG, "Open Reddit")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_REDDIT.toString(),
                 emptyArray()
             )
         }
         buttonAbout.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open About")
+            metrics.log(TAG, "Open About")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ABOUT.toString(),
                 emptyArray()
             )
         }
         buttonDonate.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Donate")
+            metrics.log(TAG, "Open Donate")
             if (mService != null) {
                 val task = DownloadDonationsTask()
                 setCurrentTask(task)
@@ -144,7 +144,7 @@ class FragmentMainMenu : BaseFragment() {
             }
         }
         buttonSettings.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Open Settings")
+            metrics.log(TAG, "Open Settings")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_SETTINGS.toString(),
                 emptyArray()
@@ -153,7 +153,7 @@ class FragmentMainMenu : BaseFragment() {
 
         val buttonPS2Background = activity!!.findViewById<View>(R.id.buttonPS2) as ImageButton
         buttonPS2Background.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Select Default Background")
+            metrics.log(TAG, "Select Default Background")
             val background = activity!!.findViewById<View>(R.id.imageViewBackground) as ImageView
             background.setImageResource(R.drawable.ps2_activity_background)
             background.scaleType = ScaleType.FIT_START
@@ -166,7 +166,7 @@ class FragmentMainMenu : BaseFragment() {
 
         val buttonNCBackground = activity!!.findViewById<View>(R.id.buttonNC) as ImageButton
         buttonNCBackground.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Select NC Background")
+            metrics.log(TAG, "Select NC Background")
             promptForPermissions()
             val task = BitmapWorkerTask(
                 activity!!.findViewById<View>(R.id.imageViewBackground) as ImageView,
@@ -181,7 +181,7 @@ class FragmentMainMenu : BaseFragment() {
 
         val buttonTRBackground = activity!!.findViewById<View>(R.id.buttonTR) as ImageButton
         buttonTRBackground.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Select TR Background")
+            metrics.log(TAG, "Select TR Background")
             promptForPermissions()
             val task = BitmapWorkerTask(
                 activity!!.findViewById<View>(R.id.imageViewBackground) as ImageView,
@@ -196,7 +196,7 @@ class FragmentMainMenu : BaseFragment() {
 
         val buttonVSBackground = activity!!.findViewById<View>(R.id.buttonVS) as ImageButton
         buttonVSBackground.setOnClickListener {
-            metrics.log("FragmentMainMenu", "Select VS Background")
+            metrics.log(TAG, "Select VS Background")
             promptForPermissions()
             val task = BitmapWorkerTask(
                 activity!!.findViewById<View>(R.id.imageViewBackground) as ImageView,
@@ -252,7 +252,7 @@ class FragmentMainMenu : BaseFragment() {
             activity!!.findViewById<View>(R.id.buttonPreferedProfile) as Button
         if (preferedProfileId != "") {
             buttonPreferedProfile.setOnClickListener {
-                metrics.log("FragmentMainMenu", "Open Preferred Profile")
+                metrics.log(TAG, "Open Preferred Profile")
                 val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
                 mCallbacks!!.onItemSelected(
                     ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
@@ -275,7 +275,7 @@ class FragmentMainMenu : BaseFragment() {
         if (preferedOutfitId != "") {
 
             buttonPreferedOutfit.setOnClickListener {
-                metrics.log("FragmentMainMenu", "Open Preferred Outfit")
+                metrics.log(TAG, "Open Preferred Outfit")
                 val settings = activity!!.getSharedPreferences("PREFERENCES", 0)
                 mCallbacks!!.onItemSelected(
                     ApplicationPS2Link.ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
@@ -487,6 +487,7 @@ class FragmentMainMenu : BaseFragment() {
     }
 
     companion object {
+        private const val TAG = "FragmentMainMenu"
 
         private var mService: IInAppBillingService? = null
     }

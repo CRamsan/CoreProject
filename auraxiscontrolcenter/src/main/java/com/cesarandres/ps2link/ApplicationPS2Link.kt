@@ -133,11 +133,11 @@ class ApplicationPS2Link : Application(), KodeinAware {
      */
     override fun onCreate() {
         super.onCreate()
-        eventLogger.log(Severity.INFO, "ApplicationPS2Link", "onCreate called")
+        eventLogger.log(Severity.INFO, TAG, "onCreate called")
         AppCenter.start(this, "2cbdd11d-e4ef-4626-b09f-2a7deb82664a")
         crashHandler.initialize()
         metrics.initialize()
-        metrics.log("ApplicationPS2Link", "Application Started")
+        metrics.log(TAG, "Application Started")
         GlobalScope.launch {
             if (cacheManager.getCacheSize() > CacheManager.MAX_CACHE_SIZE) {
                 cacheManager.clearCache()
@@ -149,7 +149,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
         for (clang in DBGCensus.CensusLang.values()) {
             if (lang.equals(clang.name, ignoreCase = true)) {
                 dbgCensus.currentLang = clang
-                metrics.log("ApplicationPS2Link", "Language Set", mapOf("Lang" to clang.name))
+                metrics.log(TAG, "Language Set", mapOf("Lang" to clang.name))
             }
         }
     }
@@ -201,5 +201,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
          * method should only be called after the wallpaper has been set
          */
         var wallpaperMode = WallPaperMode.PS2
+
+        private const val TAG = "ApplicationPS2Link"
     }
 }

@@ -43,11 +43,15 @@ class FragmentAbout : BaseFragment() {
         this.fragmentTitle.text = getString(R.string.title_about)
         val buttonHomepage = activity!!.findViewById<View>(R.id.buttonAboutHomepage) as Button
         buttonHomepage.setOnClickListener {
-            metrics.log("FragmentAbout", "Go To Website")
+            metrics.log(TAG, "Go To Website")
             val url = activity!!.resources.getString(R.string.url_homepage)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentAbout"
     }
 }

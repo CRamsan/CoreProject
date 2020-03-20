@@ -206,7 +206,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * (java.lang.String, java.lang.String[])
      */
     override fun onItemSelected(id: String, args: Array<String?>) {
-        metrics.log("ActivityContainer", "OnItemSelected", mapOf("Mode" to id))
+        metrics.log(TAG, "OnItemSelected", mapOf("Mode" to id))
         // Reset the database, this will also force some tasks to end
         val mode = ActivityMode.valueOf(id)
         // Seen as we can't have embedded fragments, we will create a new
@@ -323,7 +323,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * if we are on tablet mode we will pop the top of the stack.
      */
     fun upNavigation() {
-        metrics.log("ActivityContainer", "Up Navigation")
+        metrics.log(TAG, "Up Navigation")
         if (this.activityMode != ActivityMode.ACTIVITY_MAIN_MENU) {
             if (isTablet) {
                 if (supportFragmentManager.backStackEntryCount > 0) {
@@ -343,5 +343,9 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
                 finish()
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "ActivityContainer"
     }
 }

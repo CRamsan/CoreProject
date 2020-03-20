@@ -50,13 +50,13 @@ class FragmentProfileList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_profiles)
         this.fragmentUpdate.setOnClickListener {
-            metrics.log("FragmentProfileList", "Update")
+            metrics.log(TAG, "Update")
             val task = ReadProfilesTable()
             setCurrentTask(task)
             task.execute()
         }
         this.fragmentAdd.setOnClickListener {
-            metrics.log("FragmentProfileList", "Add Profile")
+            metrics.log(TAG, "Add Profile")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_PROFILE.toString(),
                 emptyArray()
@@ -130,5 +130,9 @@ class FragmentProfileList : BaseFragment() {
             }
             setProgressButton(false)
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentProfileList"
     }
 }

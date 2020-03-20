@@ -30,6 +30,8 @@ import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 
 import java.util.Locale
@@ -79,11 +81,11 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
         val buttonCharacters =
             activity!!.findViewById<View>(R.id.imageButtonSearchProfile) as ImageButton
         buttonCharacters.setOnClickListener {
-            metrics.log("FragmentAddProfile", "Search Profile")
+            metrics.log(TAG, "Search Profile")
             downloadProfiles()
         }
         this.fragmentUpdate.setOnClickListener {
-            metrics.log("FragmentAddProfile", "Update")
+            metrics.log(TAG, "Update")
             downloadProfiles()
         }
     }
@@ -155,6 +157,8 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                         )
                     }
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -165,6 +169,8 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
             if (listRoot != null) {
                 listRoot.adapter = null
             }
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -174,5 +180,9 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
 
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
         downloadProfiles()
+    }
+
+    companion object {
+        private const val TAG = "FragmentAddProfile"
     }
 }

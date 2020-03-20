@@ -89,7 +89,7 @@ class ButtonSelectSource(private val context: Context,
             if (namespace == Namespace.PS2PS4EU) View.VISIBLE else View.GONE
         ps4usNamespaceButton.visibility =
             if (namespace == Namespace.PS2PS4US) View.VISIBLE else View.GONE
-        metrics.log("ButtonSelectSource", "OnNamespaceButtonClicked", mapOf("Namespace" to namespace.name))
+        metrics.log(TAG, "OnNamespaceButtonClicked", mapOf("Namespace" to namespace.name))
 
         if (listener != null) {
             listener!!.onSourceSelectionChanged(namespace)
@@ -104,5 +104,9 @@ class ButtonSelectSource(private val context: Context,
 
     interface SourceSelectionChangedListener {
         fun onSourceSelectionChanged(selectedNamespace: DBGCensus.Namespace)
+    }
+
+    companion object {
+        private const val TAG = "ButtonSelectSource"
     }
 }

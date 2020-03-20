@@ -86,7 +86,7 @@ class FragmentTwitter : BaseFragment() {
         }
 
         this.fragmentUpdate.setOnClickListener {
-            metrics.log("FragmentTwitter", "Update")
+            metrics.log(TAG, "Update")
             val usersnames = ArrayList<String>()
 
             for (user in this@FragmentTwitter.users!!) {
@@ -242,9 +242,11 @@ class FragmentTwitter : BaseFragment() {
                     tweetList = TwitterUtil.getTweets(user)
                     data.insertAllTweets(tweetList, user)
                 } catch (e: TwitterException) {
-                    eventLogger.log(Severity.WARNING, "FragmentTwitter", "Error trying retrieve tweets")
+                    metrics.log(TAG, "Error Retrieving Tweets")
+                    eventLogger.log(Severity.WARNING, TAG, "Error trying retrieve tweets")
                 } catch (e: IllegalStateException) {
-                    eventLogger.log(Severity.ERROR, "FragmentTwitter", "DB was closed. This is normal.")
+                    metrics.log(TAG, "Error accessing the DB")
+                    eventLogger.log(Severity.ERROR, TAG, "DB was closed. This is normal.")
                     break
                 }
 
@@ -264,5 +266,9 @@ class FragmentTwitter : BaseFragment() {
             setProgressButton(false)
             loaded = true
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentTwitter"
     }
 }

@@ -26,6 +26,7 @@ import com.cesarandres.ps2link.dbg.content.response.Character_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
+import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
 
 
@@ -154,7 +155,7 @@ class FragmentProfile : BaseFragment() {
                     outfitButton.isEnabled = true
                     outfitButton.alpha = 1f
                     outfitButton.setOnClickListener {
-                        metrics.log("FragmentProfile", "Open Outfit")
+                        metrics.log(TAG, "Open Outfit")
                         mCallbacks!!.onItemSelected(
                             ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
                             arrayOf(character.outfit!!.outfit_id, character.namespace!!.name)
@@ -211,7 +212,8 @@ class FragmentProfile : BaseFragment() {
                 }
             }
         } catch (e: NullPointerException) {
-            eventLogger.log(Severity.ERROR, "FragmentProfile", "Null Pointer while trying to set character data on UI")
+            metrics.log(TAG, "NPE when updating the UI")
+            eventLogger.log(Severity.ERROR, TAG, "Null Pointer while trying to set character data on UI")
         }
 
     }
@@ -243,6 +245,8 @@ class FragmentProfile : BaseFragment() {
                 setCurrentTask(task)
                 task.execute(profile)
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -250,6 +254,8 @@ class FragmentProfile : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -454,4 +460,7 @@ class FragmentProfile : BaseFragment() {
         }
     }
 
+    companion object {
+        private const val TAG = "FragmentProfile"
+    }
 }

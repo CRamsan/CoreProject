@@ -94,7 +94,7 @@ class FragmentRedditPager : BaseFragment() {
                 PS4 -> intentUri = FragmentReddit.REDDIT_URL + PS2_PS4
                 else -> intentUri = FragmentReddit.REDDIT_URL + PS2_PC
             }
-            metrics.log("FragmentRedditPager", "Open Reddit URL", mapOf("Site" to intentUri))
+            metrics.log(TAG, "Open Reddit URL", mapOf("Site" to intentUri))
             val openRedditIntent = Intent(Intent.ACTION_VIEW, Uri.parse(intentUri))
             startActivity(openRedditIntent)
         }
@@ -125,7 +125,7 @@ class FragmentRedditPager : BaseFragment() {
 
         this.fragmentUpdate.visibility = View.VISIBLE
         this.fragmentUpdate.setOnClickListener(View.OnClickListener {
-            metrics.log("FragmentRedditPager", "Update")
+            metrics.log(TAG, "Update")
             val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
                 ?: return@OnClickListener
             when (mViewPager!!.currentItem) {
@@ -137,7 +137,7 @@ class FragmentRedditPager : BaseFragment() {
 
         mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(arg0: Int) {
-                metrics.log("FragmentRedditPager", "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
+                metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
             }
 
             override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
@@ -249,7 +249,7 @@ class FragmentRedditPager : BaseFragment() {
     }
 
     companion object {
-
+        private const val TAG = "FragmentRedditPager"
         val PS2_PC = "Planetside"
         val PS2_PS4 = "PS4Planetside2"
         private val PC = 0

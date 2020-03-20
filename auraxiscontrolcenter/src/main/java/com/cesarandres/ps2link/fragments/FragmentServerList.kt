@@ -33,6 +33,8 @@ import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.dbg.view.ServerItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 
 import java.util.ArrayList
@@ -76,7 +78,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_servers)
         this.fragmentUpdate.setOnClickListener {
-            metrics.log("FragmentServerList", "Update")
+            metrics.log(TAG, "Update")
             downloadServers()
         }
 
@@ -121,6 +123,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 }
 
             } catch (e: Exception) {
+                metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
+                eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -131,6 +135,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServers")
+            eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServers")
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -154,6 +160,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 val servers = response.ps2
                 (listRoot.adapter as ServerItemAdapter).setServerPopulation(servers!!)
             } catch (e: Exception) {
+                metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerPopulation")
+                eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerPopulation")
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -161,6 +169,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerPopulation")
+            eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerPopulation")
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -202,12 +212,18 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                     (listRoot.adapter as ServerItemAdapter).setServerAlert(events[0])
                 }
             } catch (e: Exception) {
+                metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerAlert")
+                eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerAlert")
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
         }
 
-        val error = ErrorListener { setProgressButton(false) }
+        val error = ErrorListener {
+            metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
+            eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
+            setProgressButton(false)
+        }
 
         dbgCensus.sendGsonRequest(url, World_event_list_response::class.java, success, error, this)
     }
@@ -215,5 +231,9 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
         volley.cancelAll(this)
         downloadServers()
+    }
+
+    companion object {
+        private const val TAG = "FragmentServerList"
     }
 }

@@ -48,14 +48,14 @@ class FragmentOutfitList : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         this.fragmentTitle.text = getString(R.string.title_outfits)
         this.fragmentAdd.setOnClickListener {
-            metrics.log("FragmentOutfitList", "Add Outfit")
+            metrics.log(TAG, "Add Outfit")
             mCallbacks!!.onItemSelected(
                 ActivityMode.ACTIVITY_ADD_OUTFIT.toString(),
                 emptyArray()
             )
         }
         this.fragmentUpdate.setOnClickListener {
-            metrics.log("FragmentOutfitList", "Update")
+            metrics.log(TAG, "Update")
             ReadOutfitsTable().execute()
         }
         val listRoot = activity!!.findViewById<View>(R.id.listViewOutfitList) as ListView
@@ -124,5 +124,9 @@ class FragmentOutfitList : BaseFragment() {
             listRoot.adapter = OutfitItemAdapter(activity!!, result)
             setProgressButton(false)
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentOutfitList"
     }
 }

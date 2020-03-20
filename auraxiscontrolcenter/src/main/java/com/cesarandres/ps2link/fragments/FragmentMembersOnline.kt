@@ -17,6 +17,8 @@ import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.Member
 import com.cesarandres.ps2link.dbg.content.response.Outfit_member_response
 import com.cesarandres.ps2link.dbg.view.OnlineMemberItemAdapter
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 import java.util.ArrayList
 
@@ -100,6 +102,8 @@ class FragmentMembersOnline : BaseFragment() {
             try {
                 updateContent(response.outfit_member_list)
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -107,6 +111,8 @@ class FragmentMembersOnline : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -131,6 +137,9 @@ class FragmentMembersOnline : BaseFragment() {
                 )
             )
         }
+    }
 
+    companion object {
+        private const val TAG = "FragmentMembersOnline"
     }
 }

@@ -102,7 +102,7 @@ class FragmentProfilePager : BaseFragment() {
 
         this.fragmentUpdate.visibility = View.VISIBLE
         this.fragmentUpdate.setOnClickListener(View.OnClickListener {
-            metrics.log("FragmentProfilePager", "Update")
+            metrics.log(TAG, "Update")
             val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
                 ?: return@OnClickListener
             when (mViewPager!!.currentItem) {
@@ -125,7 +125,7 @@ class FragmentProfilePager : BaseFragment() {
 
         mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(arg0: Int) {
-                metrics.log("FragmentProfilePager", "OnFragmentSelected", mapOf("Activity" to "Profile", "Fragment" to arg0.toString()))
+                metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Profile", "Fragment" to arg0.toString()))
                 when (arg0) {
                     PROFILE -> {
                         fragmentStar.visibility = View.VISIBLE
@@ -290,7 +290,7 @@ class FragmentProfilePager : BaseFragment() {
     }
 
     companion object {
-
+        private const val TAG = "FragmentProfilePager"
         private val PROFILE = 0
         private val FRIENDS = 1
         private val STATS = 2

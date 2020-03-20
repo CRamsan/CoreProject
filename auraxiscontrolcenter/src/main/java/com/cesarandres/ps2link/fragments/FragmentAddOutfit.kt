@@ -30,6 +30,8 @@ import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 
 import java.io.UnsupportedEncodingException
@@ -83,12 +85,12 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
         val buttonOutfits =
             activity!!.findViewById<View>(R.id.imageButtonSearchOutfit) as ImageButton
         buttonOutfits.setOnClickListener {
-            metrics.log("FragmentAddOutfit", "Search")
+            metrics.log(TAG, "Search")
             downloadOutfits()
         }
 
         this.fragmentUpdate.setOnClickListener {
-            metrics.log("FragmentAddOutfit", "Update")
+            metrics.log(TAG, "Update")
             downloadOutfits()
         }
 
@@ -198,6 +200,8 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
                 currentTask.execute(response.outfit_list)
                 listRoot.isTextFilterEnabled = true
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -209,6 +213,8 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
             if (listRoot != null) {
                 listRoot.adapter = null
             }
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -272,5 +278,9 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
         override fun onPostExecute(result: Boolean?) {
             setProgressButton(false)
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentAddOutfit"
     }
 }

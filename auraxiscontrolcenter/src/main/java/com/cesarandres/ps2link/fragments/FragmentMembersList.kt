@@ -23,6 +23,8 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
 import com.cesarandres.ps2link.dbg.view.MemberItemAdapter
+import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.logging.Severity
 
 import java.util.ArrayList
 
@@ -136,6 +138,8 @@ class FragmentMembersList : BaseFragment() {
                 // Check this warning
                 task.execute(list)
             } catch (e: Exception) {
+                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -143,6 +147,8 @@ class FragmentMembersList : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
+            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
+            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
         }
@@ -218,5 +224,9 @@ class FragmentMembersList : BaseFragment() {
             setProgressButton(false)
             updateContent()
         }
+    }
+
+    companion object {
+        private const val TAG = "FragmentMembersList"
     }
 }
