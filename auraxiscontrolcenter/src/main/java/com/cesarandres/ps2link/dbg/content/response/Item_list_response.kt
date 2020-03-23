@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.dbg.content.response
 
 import com.cesarandres.ps2link.dbg.content.Item
 import com.cesarandres.ps2link.dbg.content.Vehicle
-
 import java.util.ArrayList
 
 class Item_list_response {

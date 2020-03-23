@@ -11,6 +11,5 @@ class EmbeddableExpandableListView(context: Context) : ExpandableListView(contex
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(measuredWidth, rows * row_height)
-
     }
 }

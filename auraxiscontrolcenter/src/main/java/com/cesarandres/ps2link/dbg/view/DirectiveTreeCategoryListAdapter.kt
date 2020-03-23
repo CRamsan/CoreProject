@@ -9,13 +9,11 @@ import android.widget.ExpandableListView.OnGroupExpandListener
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.DirectiveTreeCategory
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
-
 import java.util.ArrayList
 
 class DirectiveTreeCategoryListAdapter(
@@ -44,8 +42,11 @@ class DirectiveTreeCategoryListAdapter(
     }
 
     override fun getChildView(
-        groupPosition: Int, childPosition: Int,
-        isLastChild: Boolean, convertView: View, parent: ViewGroup
+        groupPosition: Int,
+        childPosition: Int,
+        isLastChild: Boolean,
+        convertView: View,
+        parent: ViewGroup
     ): View {
 
         this.nextAdapter.setDirectiveTrees(this.categories!![groupPosition].characterDirectiveTreeList!!)
@@ -78,8 +79,10 @@ class DirectiveTreeCategoryListAdapter(
     }
 
     override fun getGroupView(
-        groupPosition: Int, isExpanded: Boolean,
-        convertView: View?, parent: ViewGroup
+        groupPosition: Int,
+        isExpanded: Boolean,
+        convertView: View?,
+        parent: ViewGroup
     ): View {
         var convertView = convertView
         val holder: ViewHolder

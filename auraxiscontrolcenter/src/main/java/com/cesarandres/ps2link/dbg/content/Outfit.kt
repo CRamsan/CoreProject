@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.dbg.content
 
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
-
 import java.util.ArrayList
 
 class Outfit {
@@ -17,5 +16,4 @@ class Outfit {
     var namespace: Namespace? = null
     var members: ArrayList<Member>? = null
     var leader: CharacterProfile? = null
-
 }

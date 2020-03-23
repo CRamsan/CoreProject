@@ -7,16 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
-
-import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.android.volley.VolleyError
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
@@ -82,7 +77,6 @@ class FragmentReddit : BaseFragment() {
      */
     override fun onPause() {
         super.onPause()
-
     }
 
     /*

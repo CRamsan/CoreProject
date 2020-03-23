@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.dbg.view
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
 import android.preference.PreferenceManager
@@ -13,8 +12,6 @@ import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
-import android.widget.Toast
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.World
@@ -22,12 +19,9 @@ import com.cesarandres.ps2link.dbg.content.WorldEvent
 import com.cesarandres.ps2link.dbg.content.response.server.PS2
 import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.fragments.FragmentSettings
-
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Locale
-
-import android.widget.Toast.*
 
 class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGCensus, val namespace: DBGCensus.Namespace) : BaseAdapter() {
     private val mInflater: LayoutInflater
@@ -121,9 +115,9 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                 this.serverList[index].world_id
         channel = channel.replace(":v2", "")
         if (world.isRegistered) {
-            //ParsePush.unsubscribeInBackground(channel);
+            // ParsePush.unsubscribeInBackground(channel);
         } else {
-            //ParsePush.subscribeInBackground(channel);
+            // ParsePush.subscribeInBackground(channel);
         }
         world.isRegistered = !world.isRegistered
 
@@ -133,9 +127,9 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
         editor.commit()
 
         // REMOVE THIS TO ENABLE PUSH NOTIFICATIONS
-        //ParsePush.unsubscribeInBackground(channel);
-        //world.setIsRegistered(false);
-        //makeText(context, R.string.toast_push_notifications_disabled, LENGTH_LONG).show()
+        // ParsePush.unsubscribeInBackground(channel);
+        // world.setIsRegistered(false);
+        // makeText(context, R.string.toast_push_notifications_disabled, LENGTH_LONG).show()
 
         notifyDataSetInvalidated()
     }
@@ -279,29 +273,28 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                     lastAlert.metagame_event_state == "139"
                 ) {
                     holder.serverAlert!!.text =
-                        (context.resources.getString(R.string.text_server_alert_current)
-                                + " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
+                        (context.resources.getString(R.string.text_server_alert_current) +
+                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
 
                     holder.serverAlert!!.setTextColor(Color.argb(255, 120, 235, 235))
                     holder.serverAlert!!.setTypeface(null, Typeface.BOLD)
                 } else {
                     holder.serverAlert!!.text =
-                        (context.resources.getString(R.string.text_server_alert_recently)
-                                + " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
+                        (context.resources.getString(R.string.text_server_alert_recently) +
+                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
                     holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
                     holder.serverAlert!!.setTextColor(Color.GRAY)
                 }
             } catch (e: NullPointerException) {
                 holder.serverAlert!!.text =
-                    (context.resources.getString(R.string.text_server_alert_recently)
-                            + " " + context.resources.getString(R.string.text_unknown).toUpperCase())
+                    (context.resources.getString(R.string.text_server_alert_recently) +
+                            " " + context.resources.getString(R.string.text_unknown).toUpperCase())
                 holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
             }
-
         } else {
             holder.serverAlert!!.text =
-                (context.resources.getString(R.string.text_server_alert_recently)
-                        + " " + context.resources.getString(R.string.text_none))
+                (context.resources.getString(R.string.text_server_alert_recently) +
+                        " " + context.resources.getString(R.string.text_none))
             holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
         }
         holder.serverAlert!!.visibility = View.GONE

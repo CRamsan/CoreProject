@@ -1,6 +1,5 @@
 package com.cesarandres.ps2link.dbg.content
 
-
 class CharacterDirective {
 
     var character_id: String? = null
@@ -12,5 +11,4 @@ class CharacterDirective {
 
     var directiveObjective: CharacterDirectiveObjective? = null
     var objective: Objective? = null
-
 }

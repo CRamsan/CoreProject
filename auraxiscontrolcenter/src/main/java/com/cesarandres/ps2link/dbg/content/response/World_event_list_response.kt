@@ -1,8 +1,6 @@
 package com.cesarandres.ps2link.dbg.content.response
 
-import com.cesarandres.ps2link.dbg.content.CharacterEvent
 import com.cesarandres.ps2link.dbg.content.WorldEvent
-
 import java.util.ArrayList
 
 class World_event_list_response {

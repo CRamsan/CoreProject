@@ -7,23 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.fragments.FragmentMembersList
 import com.cesarandres.ps2link.fragments.FragmentMembersOnline
 import com.cesarandres.ps2link.fragments.FragmentOutfit
 import com.cesarandres.ps2link.module.ButtonSelectSource
-
-
 import java.util.HashMap
 
 /**
@@ -120,17 +114,14 @@ class FragmentOutfitPager : BaseFragment() {
             }
 
             override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-
             }
 
             override fun onPageScrollStateChanged(arg0: Int) {
-
             }
         })
 
         this.fragmentAppend.visibility = View.VISIBLE
         this.fragmentStar.visibility = View.VISIBLE
-
     }
 
     /*

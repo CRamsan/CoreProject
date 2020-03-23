@@ -17,5 +17,4 @@ class Content {
      * @param data The data
      */
     var data: Data? = null
-
 }

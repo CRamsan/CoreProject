@@ -8,20 +8,19 @@ import android.widget.ExpandableListView.OnGroupExpandListener
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
-
 import com.android.volley.toolbox.NetworkImageView
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.CharacterDirectiveTree
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
-
 import java.util.ArrayList
 
-class DirectiveTreeListAdapter(private val fragment: BaseFragment,
-                               private val imageLoader: ImageLoader,
-                               private val dbgCensus: DBGCensus) : BaseExpandableListAdapter(),
+class DirectiveTreeListAdapter(
+    private val fragment: BaseFragment,
+    private val imageLoader: ImageLoader,
+    private val dbgCensus: DBGCensus
+) : BaseExpandableListAdapter(),
     OnGroupExpandListener {
 
     protected var mInflater: LayoutInflater
@@ -44,8 +43,11 @@ class DirectiveTreeListAdapter(private val fragment: BaseFragment,
     }
 
     override fun getChildView(
-        groupPosition: Int, childPosition: Int,
-        isLastChild: Boolean, convertView: View, parent: ViewGroup
+        groupPosition: Int,
+        childPosition: Int,
+        isLastChild: Boolean,
+        convertView: View,
+        parent: ViewGroup
     ): View {
 
         this.nextAdapter.setDirectives(this.directiveTrees!![groupPosition].directive_tier!!.directives!!)
@@ -78,8 +80,10 @@ class DirectiveTreeListAdapter(private val fragment: BaseFragment,
     }
 
     override fun getGroupView(
-        groupPosition: Int, isExpanded: Boolean,
-        convertView: View?, parent: ViewGroup
+        groupPosition: Int,
+        isExpanded: Boolean,
+        convertView: View?,
+        parent: ViewGroup
     ): View {
         var convertView = convertView
         val holder: ViewHolder
@@ -109,8 +113,8 @@ class DirectiveTreeListAdapter(private val fragment: BaseFragment,
         holder.treeName!!.text = tree.directive_tree_id_join_directive_tree!!.name!!.localizedName(dbgCensus.currentLang)
         holder.treeValue!!.text = Integer.toString(tree.current_level_value)
         val resID = this.fragment.activity!!.resources.getIdentifier(
-            "objective_progress_" + tree.current_directive_tier_id
-                    + "_0", "drawable", "com.cesarandres.ps2link"
+            "objective_progress_" + tree.current_directive_tier_id +
+                    "_0", "drawable", "com.cesarandres.ps2link"
         )
         holder.treeLevel!!.setImageResource(resID)
         return convertView

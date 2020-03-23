@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.fragments
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
@@ -26,8 +24,6 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-
-
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
@@ -122,7 +118,6 @@ class FragmentOutfit : BaseFragment() {
                         )
                     }
                 }
-
             }
 
             this.fragmentStar.setOnCheckedChangeListener(null)
@@ -167,7 +162,6 @@ class FragmentOutfit : BaseFragment() {
             metrics.log(TAG, "NPE when updating the UI")
             eventLogger.log(Severity.ERROR, TAG, "Null Pointer while trying to set character data on UI")
         }
-
     }
 
     /**
@@ -290,9 +284,7 @@ class FragmentOutfit : BaseFragment() {
                 } else {
                     data.insertOutfit(outfit, !outfit.isCached)
                 }
-
             } catch (e: Exception) {
-
             }
 
             return outfit

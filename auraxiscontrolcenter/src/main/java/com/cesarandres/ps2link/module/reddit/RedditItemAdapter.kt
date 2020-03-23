@@ -7,18 +7,16 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
-
 import com.android.volley.toolbox.NetworkImageView
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
-
+import java.util.Date
 import org.ocpsoft.prettytime.PrettyTime
 
-import java.util.Date
-
-class RedditItemAdapter(private val context: Context,
-                        private val children: List<Child>,
-                        private val imageLoader: ImageLoader) :
+class RedditItemAdapter(
+    private val context: Context,
+    private val children: List<Child>,
+    private val imageLoader: ImageLoader
+) :
     BaseAdapter() {
     protected var mInflater: LayoutInflater
 

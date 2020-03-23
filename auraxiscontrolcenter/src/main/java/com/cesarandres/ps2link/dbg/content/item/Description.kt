@@ -7,5 +7,4 @@ class Description {
     var fr: String? = null
     var it: String? = null
     var tr: String? = null
-
 }

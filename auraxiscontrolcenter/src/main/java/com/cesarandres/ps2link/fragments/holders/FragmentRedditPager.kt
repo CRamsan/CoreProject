@@ -11,18 +11,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.fragments.FragmentReddit
-
-
 import java.util.HashMap
 
 /**
@@ -42,7 +38,6 @@ class FragmentRedditPager : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
-
         }
     }
 
@@ -141,11 +136,9 @@ class FragmentRedditPager : BaseFragment() {
             }
 
             override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-
             }
 
             override fun onPageScrollStateChanged(arg0: Int) {
-
             }
         })
     }

@@ -2,20 +2,15 @@ package com.cesarandres.ps2link.module
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.res.Resources
 import android.util.TypedValue
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.widget.ImageButton
 import android.widget.LinearLayout
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
-
 import com.cramsan.framework.metrics.MetricsInterface
 
 /**
@@ -26,10 +21,12 @@ import com.cramsan.framework.metrics.MetricsInterface
  * from the ps2:v1, ps2ps4us:v2 and ps2ps4eu:v2 namespace
  */
 @SuppressLint("CutPasteId")
-class ButtonSelectSource(private val context: Context,
-                         root: ViewGroup,
-                         private val metrics: MetricsInterface,
-                         private val dbgCensus: DBGCensus) {
+class ButtonSelectSource(
+    private val context: Context,
+    root: ViewGroup,
+    private val metrics: MetricsInterface,
+    private val dbgCensus: DBGCensus
+) {
     var namespace = Namespace.PS2PC
 
     private val pcNamespaceButton: ImageButton

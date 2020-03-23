@@ -59,5 +59,4 @@ class CharactersDirectiveList {
     @SerializedName("directive_tree_id")
     @Expose
     var directiveTreeId: String? = null
-
 }

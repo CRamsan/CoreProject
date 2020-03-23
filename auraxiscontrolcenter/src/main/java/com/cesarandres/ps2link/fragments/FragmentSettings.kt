@@ -2,23 +2,18 @@ package com.cesarandres.ps2link.fragments
 
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.EditText
-import android.widget.TimePicker
 import android.widget.Toast
-
-import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
+import com.cesarandres.ps2link.R
+import com.cesarandres.ps2link.base.BaseFragment
 
 /**
  * Fragment that will provide settings for the user
@@ -29,7 +24,6 @@ class FragmentSettings : BaseFragment() {
     private var fromTimeMinutes: Int = 0
     private var toTimeHours: Int = 0
     private var toTimeMinutes: Int = 0
-
 
     /*
      * (non-Javadoc)
@@ -65,7 +59,7 @@ class FragmentSettings : BaseFragment() {
 
         var checkEnabled = prefs.getBoolean(PREF_KEY_NOTIFICATION_ENABLE, false)
 
-        //MODIFY THIS TO REENABLE NOTIFICATIONS
+        // MODIFY THIS TO REENABLE NOTIFICATIONS
         checkEnabled = false
 
         val enabledCheckbox =
@@ -86,7 +80,7 @@ class FragmentSettings : BaseFragment() {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = prefs.edit()
 
-            //MODIFY THIS TO REENABLE NOTIFICATIONS
+            // MODIFY THIS TO REENABLE NOTIFICATIONS
             editor.putBoolean(PREF_KEY_NOTIFICATION_ENABLE, false)
             makeText(context, R.string.toast_push_notifications_disabled, LENGTH_LONG).show()
 
@@ -160,7 +154,6 @@ class FragmentSettings : BaseFragment() {
      */
     override fun onPause() {
         super.onPause()
-
     }
 
     /*
@@ -182,7 +175,7 @@ class FragmentSettings : BaseFragment() {
         super.onDestroyView()
     }
 
-    //TODO This needs to be localized
+    // TODO This needs to be localized
     private fun setTimeText(editView: EditText, hours: Int, minutes: Int) {
         var hourOfDay = hours
         var partOfDay = "AM"

@@ -1,13 +1,9 @@
 package com.cesarandres.ps2link.module.twitter
 
 import java.util.ArrayList
-
-import twitter4j.ResponseList
-import twitter4j.Status
 import twitter4j.Twitter
 import twitter4j.TwitterException
 import twitter4j.TwitterFactory
-import twitter4j.User
 import twitter4j.conf.ConfigurationBuilder
 
 /**
@@ -65,7 +61,7 @@ object TwitterUtil {
 
     /**
      * @param twitter a configured Twitter object
-     * @param users   a list of users to retrieve tweets from
+     * @param users a list of users to retrieve tweets from
      * @return an arraylist with all the tweets found
      * @throws TwitterException this exception is thrown where there is an error
      * communicating with the twitter API

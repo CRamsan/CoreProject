@@ -42,12 +42,12 @@ class PS2Tweet : Comparable<PS2Tweet> {
     var id: String? = null
 
     /**
-     * @param id      id of this tweet. This is unique for every tweet
-     * @param user    user that originally created or retweeted this tweet
-     * @param date    unix time of when this tweet was created
+     * @param id id of this tweet. This is unique for every tweet
+     * @param user user that originally created or retweeted this tweet
+     * @param date unix time of when this tweet was created
      * @param content text contained in this tweet
-     * @param tag     tag or alias of the user
-     * @param imgUrl  url to retrieve the image of the user
+     * @param tag tag or alias of the user
+     * @param imgUrl url to retrieve the image of the user
      */
     constructor(id: String, user: String, date: Int, content: String, tag: String, imgUrl: String) {
         this.user = user

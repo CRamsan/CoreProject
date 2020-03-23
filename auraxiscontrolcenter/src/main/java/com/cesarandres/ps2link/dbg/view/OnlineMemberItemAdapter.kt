@@ -10,16 +10,15 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.Member
-
 import java.util.ArrayList
 
-class OnlineMemberItemAdapter(members: ArrayList<Member>,
-                              context: Context,
-                              private val dbgCensus: DBGCensus
+class OnlineMemberItemAdapter(
+    members: ArrayList<Member>,
+    context: Context,
+    private val dbgCensus: DBGCensus
 ) : BaseAdapter() {
     protected var mInflater: LayoutInflater
     private val membersOnline: ArrayList<Member>
@@ -99,7 +98,6 @@ class OnlineMemberItemAdapter(members: ArrayList<Member>,
             } else {
                 holder.classIcon!!.setImageBitmap(null)
             }
-
         } catch (e: NullPointerException) {
             holder.memberName!!.text = "UNKOWN"
             holder.memberRank!!.text = "UNKOWN"

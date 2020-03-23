@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.dbg.volley
 
 import android.graphics.Bitmap
 import android.util.LruCache
-
 import com.android.volley.toolbox.ImageLoader.ImageCache
 
 /**

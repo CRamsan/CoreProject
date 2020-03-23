@@ -5,29 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.CompoundButton
 import android.widget.ListView
 import android.widget.Toast
-
-import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.android.volley.VolleyError
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.CharacterProfile
 import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.item.Weapon
 import com.cesarandres.ps2link.dbg.content.item.WeaponStat
 import com.cesarandres.ps2link.dbg.content.response.Weapon_list_response
 import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
 import com.cesarandres.ps2link.module.Constants
-import com.cesarandres.ps2link.module.ObjectDataSource
 import com.cramsan.framework.logging.Severity
-
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -196,7 +188,6 @@ class FragmentWeaponList : BaseFragment() {
                     } catch (e: Exception) {
                         continue
                     }
-
                 }
 
                 if (weapon.stat_name == "weapon_vehicle_kills" ||
@@ -219,7 +210,6 @@ class FragmentWeaponList : BaseFragment() {
                         stat.imagePath = weapon.vehicle_id_join_vehicle!!.image_path
                     }
 
-
                     if (weapon.vehicle_id_join_vehicle != null) {
                         stat.name = weaponName
                         stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName(dbgCensus.currentLang)
@@ -236,7 +226,6 @@ class FragmentWeaponList : BaseFragment() {
                     stat.kills = weapon.value_nc +
                             weapon.value_tr +
                             weapon.value_vs
-
                 } else {
                     if (profileFaction == Faction.VS) {
                         statA = weapon.value_tr

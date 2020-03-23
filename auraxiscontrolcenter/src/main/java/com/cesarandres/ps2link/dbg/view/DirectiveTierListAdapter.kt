@@ -8,17 +8,17 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView.OnGroupExpandListener
 import android.widget.ProgressBar
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.content.Directive
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
-
 import java.util.ArrayList
 
-class DirectiveTierListAdapter(private val fragment: BaseFragment,
-                               private val dbgCensus: DBGCensus) : BaseExpandableListAdapter(),
+class DirectiveTierListAdapter(
+    private val fragment: BaseFragment,
+    private val dbgCensus: DBGCensus
+) : BaseExpandableListAdapter(),
     OnGroupExpandListener {
     private val expandableList: EmbeddableExpandableListView? = null
     private var directives: ArrayList<Directive>? = null
@@ -32,8 +32,11 @@ class DirectiveTierListAdapter(private val fragment: BaseFragment,
     }
 
     override fun getChildView(
-        groupPosition: Int, childPosition: Int,
-        isLastChild: Boolean, convertView: View, parent: ViewGroup
+        groupPosition: Int,
+        childPosition: Int,
+        isLastChild: Boolean,
+        convertView: View,
+        parent: ViewGroup
     ): View {
 
         return convertView
@@ -54,7 +57,6 @@ class DirectiveTierListAdapter(private val fragment: BaseFragment,
             this.directives = ArrayList()
             return this.directives!!.size
         }
-
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -62,8 +64,10 @@ class DirectiveTierListAdapter(private val fragment: BaseFragment,
     }
 
     override fun getGroupView(
-        groupPosition: Int, isExpanded: Boolean,
-        convertView: View?, parent: ViewGroup
+        groupPosition: Int,
+        isExpanded: Boolean,
+        convertView: View?,
+        parent: ViewGroup
     ): View {
         var convertView = convertView
         val headerTitle = getGroup(groupPosition) as Directive
@@ -80,7 +84,6 @@ class DirectiveTierListAdapter(private val fragment: BaseFragment,
         try {
             name = headerTitle.name!!.localizedName(dbgCensus.currentLang)
         } catch (e: Exception) {
-
         }
 
         lblListHeader.text = name
@@ -88,9 +91,8 @@ class DirectiveTierListAdapter(private val fragment: BaseFragment,
         val max = 0
         try {
             value = Integer.parseInt(headerTitle.directive!!.directiveObjective!!.state_data!!)
-            //max = Integer.parseInt(headerTitle.getDirective().getDirectiveObjective().getObjective_id_join_objective().getParam1());
+            // max = Integer.parseInt(headerTitle.getDirective().getDirectiveObjective().getObjective_id_join_objective().getParam1());
         } catch (e: Exception) {
-
         }
 
         pbar.progress = value

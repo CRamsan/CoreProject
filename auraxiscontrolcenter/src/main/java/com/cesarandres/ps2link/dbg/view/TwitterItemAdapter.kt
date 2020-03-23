@@ -7,21 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
-
 import com.android.volley.toolbox.NetworkImageView
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.module.ObjectDataSource
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
-
+import java.util.Date
 import org.ocpsoft.prettytime.PrettyTime
 
-import java.util.Date
-
-class TwitterItemAdapter(context: Context,
-                         users: Array<String>,
-                         data: ObjectDataSource,
-                         val imageLoader: ImageLoader) :
+class TwitterItemAdapter(
+    context: Context,
+    users: Array<String>,
+    data: ObjectDataSource,
+    val imageLoader: ImageLoader
+) :
     DBItemAdapter() {
 
     init {

@@ -10,5 +10,4 @@ class World {
     var population: String? = null
     var isRegistered: Boolean = false
     var lastAlert: WorldEvent? = null
-
 }

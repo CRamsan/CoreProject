@@ -1,13 +1,11 @@
 package com.cesarandres.ps2link.dbg.view
 
 import android.content.Context
-import android.database.CursorIndexOutOfBoundsException
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.content.Member
 import com.cesarandres.ps2link.dbg.content.character.Name

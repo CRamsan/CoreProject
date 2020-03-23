@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.content.CharacterFriend
-
 import java.util.ArrayList
 import java.util.Collections
 

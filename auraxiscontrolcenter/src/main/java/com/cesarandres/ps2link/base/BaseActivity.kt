@@ -16,7 +16,6 @@ import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.module.BitmapWorkerTask
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.metrics.MetricsInterface
 import org.json.JSONException
 import org.json.JSONObject
@@ -115,15 +114,15 @@ abstract class BaseActivity : FragmentActivity(), KodeinAware {
         eventLogger.log(Severity.INFO, "BaseActivity", "OnActivityResult")
 
         if (requestCode == 1001) {
-            //int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
+            // int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
             val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
-            //String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
+            // String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
 
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     val jo = JSONObject(purchaseData!!)
-                    //We can use this later
-                    //String sku = jo.getString("productId");
+                    // We can use this later
+                    // String sku = jo.getString("productId");
                     Toast.makeText(
                         this,
                         resources.getString(R.string.text_thanks),
@@ -137,7 +136,6 @@ abstract class BaseActivity : FragmentActivity(), KodeinAware {
                     ).show()
                     e.printStackTrace()
                 }
-
             }
         } else {
             Toast.makeText(

@@ -4,29 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
-
-import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.android.volley.VolleyError
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.World
-import com.cesarandres.ps2link.dbg.content.WorldEvent
 import com.cesarandres.ps2link.dbg.content.response.Server_Status_response
 import com.cesarandres.ps2link.dbg.content.response.Server_response
 import com.cesarandres.ps2link.dbg.content.response.World_event_list_response
-import com.cesarandres.ps2link.dbg.content.response.server.PS2
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
@@ -35,9 +26,6 @@ import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-
-
-import java.util.ArrayList
 
 /**
  * This fragment will display the servers and theirs status
@@ -121,7 +109,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 for (world in response.world_list!!) {
                     downloadServerAlert(world.world_id)
                 }
-
             } catch (e: Exception) {
                 metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
                 eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
@@ -197,7 +184,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 "METAGAME"
             ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId!!).AddComparison(
                 "after", QueryString.SearchModifier.EQUALS,
-                //Get metagame events that are newer than  minutes
+                // Get metagame events that are newer than  minutes
                 java.lang.Long.toString(System.currentTimeMillis() / 1000L - 7200)
             ).AddCommand(QueryCommand.JOIN, "metagame_event"),
             selectionButton!!.namespace

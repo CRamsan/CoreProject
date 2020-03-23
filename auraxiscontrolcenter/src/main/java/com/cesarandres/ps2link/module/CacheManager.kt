@@ -3,15 +3,14 @@ package com.cesarandres.ps2link.module
 import android.content.Context
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.thread.ThreadUtilInterface
+import java.io.File
+import java.util.Arrays
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
-import java.io.File
-import java.util.*
 
 class CacheManager(val context: Context) : KodeinAware {
 
@@ -33,7 +32,7 @@ class CacheManager(val context: Context) : KodeinAware {
     /**
      * This AsyncTask will delete the least used files from the cache until it reaches its maximum size allowed.
      */
-    suspend fun trimCache() =  withContext(Dispatchers.IO){
+    suspend fun trimCache() = withContext(Dispatchers.IO) {
         eventLogger.log(Severity.INFO, TAG, "Starting to trim cache")
         threadUtil.assertIsBackgroundThread()
         val files = context.filesDir.listFiles()
@@ -52,7 +51,7 @@ class CacheManager(val context: Context) : KodeinAware {
     /**
      * @return the size in bytes of all the files in the cache
      */
-    suspend fun getCacheSize(): Long = withContext(Dispatchers.IO){
+    suspend fun getCacheSize(): Long = withContext(Dispatchers.IO) {
         val fileList = context.fileList()
         var size: Long = 0
         for (file in fileList) {
@@ -62,7 +61,7 @@ class CacheManager(val context: Context) : KodeinAware {
     }
 
     companion object {
-        const val MAX_CACHE_SIZE = 5000000 //5 MB
+        const val MAX_CACHE_SIZE = 5000000 // 5 MB
         private const val TAG = "CacheManager"
     }
 }

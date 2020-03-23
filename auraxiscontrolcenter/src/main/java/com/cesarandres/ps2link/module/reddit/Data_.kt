@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.module.reddit
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
 import java.util.ArrayList
 
 class Data_ {
@@ -378,5 +377,4 @@ class Data_ {
      */
     @Expose
     var ups: Int? = null
-
 }

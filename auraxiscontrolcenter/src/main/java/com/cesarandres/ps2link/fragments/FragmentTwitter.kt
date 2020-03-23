@@ -1,22 +1,17 @@
 package com.cesarandres.ps2link.fragments
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.LinearLayout
 import android.widget.ListView
-
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
@@ -24,11 +19,8 @@ import com.cesarandres.ps2link.dbg.view.TwitterItemAdapter
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
 import com.cesarandres.ps2link.module.twitter.TwitterUtil
 import com.cramsan.framework.logging.Severity
-
-
 import java.util.ArrayList
 import java.util.Arrays
-
 import twitter4j.TwitterException
 
 /**
@@ -198,8 +190,8 @@ class FragmentTwitter : BaseFragment() {
         val listRoot = activity!!.findViewById<View>(R.id.listViewTweetList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             val url =
-                ("https://twitter.com/#!/" + (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).tag + "/status/"
-                        + (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).id)
+                ("https://twitter.com/#!/" + (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).tag + "/status/" +
+                        (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).id)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -249,7 +241,6 @@ class FragmentTwitter : BaseFragment() {
                     eventLogger.log(Severity.ERROR, TAG, "DB was closed. This is normal.")
                     break
                 }
-
             }
             return users as Array<String>
         }

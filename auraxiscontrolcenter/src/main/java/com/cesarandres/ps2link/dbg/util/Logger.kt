@@ -8,8 +8,8 @@ import android.util.Log
 object Logger {
 
     /**
-     * @param level   logging level
-     * @param tag     will be used as a tag for the message
+     * @param level logging level
+     * @param tag will be used as a tag for the message
      * @param message actual message
      */
     fun log(level: Int, tag: Any, message: String) {
@@ -17,8 +17,8 @@ object Logger {
     }
 
     /**
-     * @param level   logging level
-     * @param tag     will be used as a tag for the message
+     * @param level logging level
+     * @param tag will be used as a tag for the message
      * @param message actual message
      */
     fun log(level: Int, tag: String, message: String) {
@@ -35,5 +35,4 @@ object Logger {
             else -> Log.w(tag, "EXCEPECTED DEBUG LEVEL:-$message")
         }
     }
-
 }

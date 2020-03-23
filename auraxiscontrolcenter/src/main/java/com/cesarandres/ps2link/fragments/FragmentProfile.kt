@@ -3,7 +3,6 @@ package com.cesarandres.ps2link.fragments
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
@@ -28,11 +26,8 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-
-
-import org.ocpsoft.prettytime.PrettyTime
-
 import java.util.Date
+import org.ocpsoft.prettytime.PrettyTime
 
 /**
  * This fragment will read a profile from the database and display it to the
@@ -170,7 +165,6 @@ class FragmentProfile : BaseFragment() {
                     (activity!!.findViewById<View>(R.id.textViewServerText) as TextView).text =
                         activity!!.resources.getString(R.string.text_unknown)
                 }
-
             }
 
             this.fragmentStar.setOnCheckedChangeListener(null)
@@ -215,7 +209,6 @@ class FragmentProfile : BaseFragment() {
             metrics.log(TAG, "NPE when updating the UI")
             eventLogger.log(Severity.ERROR, TAG, "Null Pointer while trying to set character data on UI")
         }
-
     }
 
     /**
@@ -351,9 +344,7 @@ class FragmentProfile : BaseFragment() {
                         data.insertOutfit(outfit!!, true)
                     }
                 }
-
             } catch (e: Exception) {
-
             }
 
             return profile
@@ -399,7 +390,6 @@ class FragmentProfile : BaseFragment() {
                 }
                 isCached = true
             } finally {
-
             }
             return profile
         }
@@ -442,7 +432,6 @@ class FragmentProfile : BaseFragment() {
                 data!!.updateCharacter(profile, true)
                 isCached = false
             } catch (e: Exception) {
-
             }
 
             return profile

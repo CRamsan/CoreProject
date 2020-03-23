@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.module.reddit
 
 import com.google.gson.annotations.Expose
-
 import java.util.ArrayList
 
 class Data {
@@ -38,5 +37,4 @@ class Data {
      */
     @Expose
     var before: Any? = null
-
 }

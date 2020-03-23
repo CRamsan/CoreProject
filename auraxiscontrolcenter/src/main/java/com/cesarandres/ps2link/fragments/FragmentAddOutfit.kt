@@ -11,13 +11,11 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
-
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.dbg.DBGCensus.Verb
 import com.cesarandres.ps2link.dbg.content.Outfit
@@ -32,8 +30,6 @@ import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-
-
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.ArrayList
@@ -93,7 +89,6 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
             metrics.log(TAG, "Update")
             downloadOutfits()
         }
-
     }
 
     override fun onDestroyView() {

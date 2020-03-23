@@ -2,7 +2,6 @@ package com.cesarandres.ps2link
 
 import android.app.Application
 import android.graphics.Bitmap
-
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
@@ -13,10 +12,10 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
-import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
@@ -24,16 +23,15 @@ import com.cramsan.framework.halt.implementation.HaltUtilAndroidInitializer
 import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.logging.implementation.LoggerAndroidInitializer
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.AppCenterMetrics
 import com.cramsan.framework.metrics.implementation.AppCenterMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsInitializer
-import com.cramsan.framework.metrics.implementation.AppCenterMetrics
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
@@ -45,6 +43,7 @@ import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroidInitializer
 import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.microsoft.appcenter.AppCenter
+import java.util.Locale
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
@@ -54,8 +53,6 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.singleton
 import org.kodein.di.newInstance
-
-import java.util.Locale
 
 class ApplicationPS2Link : Application(), KodeinAware {
 
@@ -174,14 +171,12 @@ class ApplicationPS2Link : Application(), KodeinAware {
         ACTIVITY_SETTINGS
     }
 
-
     /**
      * This enum holds the reference for all four background types.
      */
     enum class WallPaperMode {
         PS2, NC, TR, VS
     }
-
 
     companion object {
 

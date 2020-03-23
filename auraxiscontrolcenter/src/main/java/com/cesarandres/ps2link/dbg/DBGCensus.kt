@@ -3,22 +3,19 @@ package com.cesarandres.ps2link.dbg
 import android.content.Context
 import android.util.Log
 import com.android.volley.RequestQueue
-
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
+import java.net.MalformedURLException
+import java.net.URL
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
-
-import java.net.MalformedURLException
-import java.net.URL
 
 /**
  * This class will be in charge of formatting requests for DBG Census API and
@@ -45,10 +42,10 @@ class DBGCensus(context: Context) : KodeinAware {
     var currentLang = CensusLang.EN
 
     /**
-     * @param verb       action to realize, count or get
+     * @param verb action to realize, count or get
      * @param collection resource collection to retrieve
      * @param identifier id of the resource
-     * @param query      query with parameters for the search
+     * @param query query with parameters for the search
      * @return the url to retrieve the requested resource
      */
     fun generateGameDataRequest(
@@ -69,8 +66,8 @@ class DBGCensus(context: Context) : KodeinAware {
         var requestDataURL: URL? = null
         try {
             requestDataURL = URL(
-                ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/"
-                        + identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
+                ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/" +
+                        identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
             )
         } catch (e: MalformedURLException) {
             Logger.log(Log.ERROR, "DBGCensus", "There was a problem creating the URL")
@@ -96,14 +93,14 @@ class DBGCensus(context: Context) : KodeinAware {
     }
 
     /**
-     * @param url           the url to request
+     * @param url the url to request
      * @param responseClass the class to which retrieve data will be serialized into
-     * @param success       run this on success
-     * @param error         run this when the request fails
-     * @param caller        this is used to tag the call. Usually a fragment or activity
+     * @param success run this on success
+     * @param error run this when the request fails
+     * @param caller this is used to tag the call. Usually a fragment or activity
      * is a good tag
      */
-    fun <T>sendGsonRequest(
+    fun <T> sendGsonRequest(
         url: String,
         responseClass: Class<T>,
         success: Listener<T>,

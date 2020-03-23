@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.content.CharacterProfile
 import com.cesarandres.ps2link.dbg.content.Faction
-
 import java.util.ArrayList
 
 class ProfileItemAdapter(

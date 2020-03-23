@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.content.character.Stat
-
 import java.util.ArrayList
 
 class StatItemAdapter(
@@ -88,7 +86,6 @@ class StatItemAdapter(
         sph.thisWeek = score.thisWeek / (time.thisWeek / 3600f)
         sph.thisMonth = score.thisMonth / (time.thisMonth / 3600f)
         this.stats.add(0, sph)
-
     }
 
     override fun getCount(): Int {

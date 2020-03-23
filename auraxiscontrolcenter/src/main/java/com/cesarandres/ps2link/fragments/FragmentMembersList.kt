@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
-
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link
@@ -25,7 +24,6 @@ import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
 import com.cesarandres.ps2link.dbg.view.MemberItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-
 import java.util.ArrayList
 
 /**
@@ -173,7 +171,6 @@ class FragmentMembersList : BaseFragment() {
                 )
             )
         }
-
     }
 
     /**

@@ -9,5 +9,4 @@ open class Name {
         this.first = ""
         this.first_lower = ""
     }
-
 }

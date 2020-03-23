@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
-
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.content.Outfit
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
-
-
 import java.util.ArrayList
 
 /**
@@ -68,7 +65,6 @@ class FragmentOutfitList : BaseFragment() {
                 )
             )
         }
-
     }
 
     /*

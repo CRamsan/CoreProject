@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.dbg.content
 
 import com.google.gson.annotations.Expose
 
-
 class Description {
 
     /**
@@ -13,5 +12,4 @@ class Description {
      */
     @Expose
     var en: String? = null
-
 }

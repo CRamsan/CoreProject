@@ -3,9 +3,7 @@ package com.cesarandres.ps2link.dbg.content
 import com.cesarandres.ps2link.dbg.content.world.Name_Multi
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
 import java.util.ArrayList
-
 
 class DirectiveTreeCategory : Comparable<DirectiveTreeCategory> {
 

@@ -9,16 +9,11 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.ToggleButton
-
 import androidx.fragment.app.FragmentTransaction
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.ImageLoader
-
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.base.BaseActivity
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.base.BaseFragment.FragmentCallbacks
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.fragments.FragmentAbout
 import com.cesarandres.ps2link.fragments.FragmentAddOutfit
 import com.cesarandres.ps2link.fragments.FragmentAddProfile
@@ -32,10 +27,6 @@ import com.cesarandres.ps2link.fragments.holders.FragmentOutfitPager
 import com.cesarandres.ps2link.fragments.holders.FragmentProfilePager
 import com.cesarandres.ps2link.fragments.holders.FragmentRedditPager
 import com.cesarandres.ps2link.module.ObjectDataSource
-import com.cramsan.framework.logging.EventLoggerInterface
-
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
 
 /**
  * Class that will hold the current fragments. It behaves differently if it is
@@ -164,7 +155,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
                 // outfit pager, finish the activity
                 if (activityMode == ActivityMode.ACTIVITY_PROFILE || activityMode == ActivityMode.ACTIVITY_MEMBER_LIST) {
                     finish()
-                } else {// In any other case, we are back at the first
+                } else { // In any other case, we are back at the first
                     // activity, so just empty the second panel
                     activityMode = ActivityMode.ACTIVITY_MAIN_MENU
                     fragmentTitle.setText(R.string.app_name_capital)

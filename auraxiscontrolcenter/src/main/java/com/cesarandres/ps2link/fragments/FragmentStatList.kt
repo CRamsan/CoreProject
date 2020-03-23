@@ -6,17 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
-
-import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.android.volley.VolleyError
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.CharacterProfile
-import com.cesarandres.ps2link.dbg.content.character.Stats
 import com.cesarandres.ps2link.dbg.content.response.Character_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString

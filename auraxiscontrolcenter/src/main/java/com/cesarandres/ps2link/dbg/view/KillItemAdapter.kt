@@ -11,14 +11,10 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.RequestQueue
-
-import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Verb
@@ -28,7 +24,6 @@ import com.cesarandres.ps2link.dbg.content.item.IContainDrawable
 import com.cesarandres.ps2link.dbg.content.response.Item_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
-
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.Date

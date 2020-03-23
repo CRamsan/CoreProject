@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.content.Outfit
-
 import java.util.ArrayList
 
 class OutfitItemAdapter(private val context: Context, outfitList: List<Outfit>) : BaseAdapter() {

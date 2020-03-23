@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.cesarandres.ps2link.dbg.DBGCensus
-
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.dbg.content.CharacterProfile
 import com.cesarandres.ps2link.dbg.content.Faction
@@ -23,7 +22,6 @@ import com.cesarandres.ps2link.dbg.content.character.Times
 import com.cesarandres.ps2link.dbg.content.world.Name_Multi
 import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
-
 import java.util.ArrayList
 
 /**
@@ -214,7 +212,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             dbHelper.close()
             database = dbHelper.writableDatabase
         }
-
     }
 
     /**
@@ -223,7 +220,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     fun close() {
 
         dbHelper.close()
-
     }
 
     /**
@@ -239,7 +235,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param character Character to be stored in the database
-     * @param temp      Boolean to set the character as a temporary or permanent entry
+     * @param temp Boolean to set the character as a temporary or permanent entry
      * @return True if the operation was successful, false otherwise
      */
     fun insertCharacter(character: CharacterProfile, temp: Boolean): Boolean {
@@ -297,7 +293,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     /**
      * @param characterList Arraylist with all the characters that need to be stored in
      * the database
-     * @param temp          Boolean to set the character as a temporary or permanent entry
+     * @param temp Boolean to set the character as a temporary or permanent entry
      * @return the number of characters successfully stored
      */
     fun insertAllCharacters(characterList: ArrayList<CharacterProfile>, temp: Boolean): Int {
@@ -321,7 +317,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while deleting a single character")
         }
-
     }
 
     /**
@@ -357,7 +352,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param character Character with more current information
-     * @param temp      true if the character is just a temporary one, false otherwise
+     * @param temp true if the character is just a temporary one, false otherwise
      * @return the number of rows updated
      */
     fun updateCharacter(character: CharacterProfile, temp: Boolean): Int {
@@ -574,7 +569,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while deleting faction")
         }
-
     }
 
     /**
@@ -663,9 +657,9 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     }
 
     /**
-     * @param member    the member to be inserted
+     * @param member the member to be inserted
      * @param outfit_id id of the outfit the member belongs to
-     * @param temp      true for a temporary member, false for a permanent one
+     * @param temp true for a temporary member, false for a permanent one
      * @return true if the operation was succesful, false otherwise
      */
     fun insertMember(member: Member, outfit_id: String, temp: Boolean): Boolean {
@@ -710,7 +704,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while deleting member")
         }
-
     }
 
     /**
@@ -747,8 +740,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param outfit_id outfit id to read members from
-     * @param index     position to start reading from
-     * @param count     number of members to read
+     * @param index position to start reading from
+     * @param count number of members to read
      * @return an arraylist with all the members from the requested outfit
      * inside the given range
      */
@@ -766,8 +759,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                 null,
                 null,
                 null,
-                "LIMIT "
-                        + count + " OFFSET " + index
+                "LIMIT " +
+                        count + " OFFSET " + index
             )
 
             cursor.moveToFirst()
@@ -785,7 +778,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     }
 
     /**
-     * @param outfit_id   outfit id of the outfit to read from
+     * @param outfit_id outfit id of the outfit to read from
      * @param showOffline true will read all members, false will read only online
      * members
      * @return an arraylist with all the members of the outfit that match the
@@ -813,14 +806,13 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                 cursor = database!!.query(
                     target,
                     allColumnsMembers,
-                    SQLiteManager.MEMBERS_COLUMN_OUTFIT_ID + " = ? AND "
-                            + SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
+                    SQLiteManager.MEMBERS_COLUMN_OUTFIT_ID + " = ? AND " +
+                            SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
                     whereArgs,
                     null,
                     null,
                     null
                 )
-
             }
 
             cursor!!.moveToFirst()
@@ -838,8 +830,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param memberList arraylist containing all the members to add to the database
-     * @param outfit_id  outfit id of the outfit this members belong to
-     * @param temp       true will set the member as temporary, false will set it as
+     * @param outfit_id outfit id of the outfit this members belong to
+     * @param temp true will set the member as temporary, false will set it as
      * permanent
      * @return number of entries added
      */
@@ -886,7 +878,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     }
 
     /**
-     * @param outfit_id   id of the outfit to read from
+     * @param outfit_id id of the outfit to read from
      * @param showOffline true for reading all members, false will only read online
      * members
      * @return a cursor that points to the members that match the given
@@ -912,8 +904,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                 cursor = database!!.query(
                     target,
                     allColumnsMembers,
-                    SQLiteManager.MEMBERS_COLUMN_OUTFIT_ID + " = ? AND "
-                            + SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
+                    SQLiteManager.MEMBERS_COLUMN_OUTFIT_ID + " = ? AND " +
+                            SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
                     whereArgs,
                     null,
                     null,
@@ -930,7 +922,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     /**
      * @param member member with more current information than the one on the
      * database
-     * @param temp   true will set the member as temporary, false will set it as
+     * @param temp true will set the member as temporary, false will set it as
      * permanent
      * @return the number of rows changed
      */
@@ -972,12 +964,11 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while removing members")
         }
-
     }
 
     /**
      * @param outfit outfit to be inserted into the database
-     * @param temp   true will set this outfit as temporary, false will set it as
+     * @param temp true will set this outfit as temporary, false will set it as
      * permanent
      * @return true if the operation was succesful, false otherwise
      */
@@ -1019,7 +1010,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while deleting an outfit")
         }
-
     }
 
     /**
@@ -1140,7 +1130,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param outfitList arraylist with outfits to be inserted to the database
-     * @param temp       true will set the outfits as temporary, false will set them as
+     * @param temp true will set the outfits as temporary, false will set them as
      * permanent
      * @return the number of rows changed
      */
@@ -1187,7 +1177,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param outfit outfit with more current information
-     * @param temp   true to set it as temporary, false to set it as permanent
+     * @param temp true to set it as temporary, false to set it as permanent
      * @return the number of rows changed
      */
     fun updateOutfit(outfit: Outfit, temp: Boolean): Int {
@@ -1254,7 +1244,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while deleting a world")
         }
-
     }
 
     /**
@@ -1291,7 +1280,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             while (!cursor.isAfterLast) {
                 world = cursorToWorld(cursor)
                 cursor.moveToNext()
-
             }
             // Make sure to close the cursor
             cursor.close()
@@ -1364,7 +1352,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             insertId = database!!.insert(target, null, values)
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while inserting a tweet")
-        } catch (e : SQLiteConstraintException) {
+        } catch (e: SQLiteConstraintException) {
             Logger.log(Log.INFO, this, "Invalid constraint: ${e.localizedMessage}")
         }
 
@@ -1373,7 +1361,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
     /**
      * @param tweetList an arraylist with all the tweets to be stored
-     * @param owner     the person who wrote or RTed the tweet
+     * @param owner the person who wrote or RTed the tweet
      * @return the number of entries added
      */
     fun insertAllTweets(tweetList: ArrayList<PS2Tweet>, owner: String): Int {
@@ -1399,7 +1387,6 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         } catch (e: IllegalStateException) {
             Logger.log(Log.INFO, this, "Connection closed while removing a tweet")
         }
-
     }
 
     /**
@@ -1420,9 +1407,9 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     }
 
     /**
-     * @param users     array with users to retrieve tweets from
+     * @param users array with users to retrieve tweets from
      * @param startDate string with the start date in unix time
-     * @param endDate   string with the end date in unix time
+     * @param endDate string with the end date in unix time
      * @return the arraylist with all the tweets that match the criteria
      */
     fun getAllTweets(
@@ -1439,8 +1426,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                 cursor = database!!.query(
                     SQLiteManager.TABLE_TWEETS_NAME,
                     allColumnsTweet,
-                    SQLiteManager.TWEETS_COLUMN_OWNER + " = " + users[i]
-                            + SQLiteManager.TWEETS_COLUMN_DATE + " BETWEEN ? AND ?",
+                    SQLiteManager.TWEETS_COLUMN_OWNER + " = " + users[i] +
+                            SQLiteManager.TWEETS_COLUMN_DATE + " BETWEEN ? AND ?",
                     betweenArgs,
                     null,
                     null,
@@ -1538,8 +1525,8 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     }
 
     /**
-     * @param users      array with the users to retrieve users from
-     * @param pageSize   number of tweets to retrieve
+     * @param users array with the users to retrieve users from
+     * @param pageSize number of tweets to retrieve
      * @param pageNumber tweets will be read on sections of length pageSize. This is
      * the nth section to retrieve
      * @return arraylist with the tweets found
@@ -1643,7 +1630,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 
         /**
          * @param cursor Cursor pointing to the somewhere in the database
-         * @param index  position to move the cursor to
+         * @param index position to move the cursor to
          * @return the cursor on the requested position
          */
         fun cursorToPosition(cursor: Cursor, index: Int): Cursor {
@@ -1682,5 +1669,4 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
             return tweet
         }
     }
-
 }

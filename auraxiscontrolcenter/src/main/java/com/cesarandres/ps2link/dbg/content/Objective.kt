@@ -1,6 +1,5 @@
 package com.cesarandres.ps2link.dbg.content
 
-
 class Objective {
 
     var objective_group_id: String? = null

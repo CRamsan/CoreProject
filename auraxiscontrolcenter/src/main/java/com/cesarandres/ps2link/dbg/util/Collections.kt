@@ -42,8 +42,8 @@ class Collections {
             "world_stat_history"
         ),
         ZONE("zone"),
-        //This are a new set of directives added later on on the Census implementation. Not all the collections have been added,
-        //instead they will be added when needed.
+        // This are a new set of directives added later on on the Census implementation. Not all the collections have been added,
+        // instead they will be added when needed.
         CHARACTERS_DIRECTIVE("characters_directive");
 
         override fun toString(): String {

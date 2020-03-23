@@ -6,12 +6,9 @@ import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.os.AsyncTask
 import android.os.Environment
-import android.view.Display
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
-
 import com.cesarandres.ps2link.ApplicationPS2Link
-
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -27,7 +24,7 @@ import java.lang.ref.WeakReference
 class BitmapWorkerTask
 /**
  * @param imageView View where to where the image will be set after resizing
- * @param context   Activity that requested this task
+ * @param context Activity that requested this task
  */
     (imageView: ImageView, private val context: Activity) : AsyncTask<String, Void, Bitmap>() {
     private val imageViewReference: WeakReference<ImageView>?
@@ -93,7 +90,6 @@ class BitmapWorkerTask
                 e.printStackTrace()
                 return null
             }
-
         } else {
             try {
                 if (isCancelled) {
@@ -106,9 +102,7 @@ class BitmapWorkerTask
                 System.gc()
                 return null
             }
-
         }
-
     }
 
     /*
@@ -131,8 +125,8 @@ class BitmapWorkerTask
         private val PUBLIC_DIR = "AuraxisControlCenter"
 
         /**
-         * @param options   Set of options to apply to the image transformation
-         * @param reqWidth  width of the resulting image
+         * @param options Set of options to apply to the image transformation
+         * @param reqWidth width of the resulting image
          * @param reqHeight height of the resulting image
          * @return the biggest ratio for the given size
          */
@@ -164,8 +158,8 @@ class BitmapWorkerTask
         }
 
         /**
-         * @param ims       Stream from the image or resource to resize
-         * @param reqWidth  resulting image width
+         * @param ims Stream from the image or resource to resize
+         * @param reqWidth resulting image width
          * @param reqHeight resulting image height
          * @return
          */

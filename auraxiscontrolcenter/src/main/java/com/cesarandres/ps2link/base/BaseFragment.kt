@@ -3,7 +3,6 @@ package com.cesarandres.ps2link.base
 import android.app.Activity
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,18 +10,15 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.ToggleButton
-
 import androidx.fragment.app.Fragment
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
-
 import com.cesarandres.ps2link.ActivityContainer
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.metrics.MetricsInterface
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance

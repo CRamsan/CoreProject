@@ -25,5 +25,4 @@ class Vehicle : IContainDrawable {
 
     override val imagePath: String?
         get() = image_path
-
 }

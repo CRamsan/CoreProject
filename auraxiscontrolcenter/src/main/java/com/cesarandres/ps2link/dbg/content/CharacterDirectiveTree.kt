@@ -1,6 +1,5 @@
 package com.cesarandres.ps2link.dbg.content
 
-
 class CharacterDirectiveTree : Comparable<CharacterDirectiveTree> {
 
     var directive_tree_id_join_directive_tree: DirectiveTree? = null

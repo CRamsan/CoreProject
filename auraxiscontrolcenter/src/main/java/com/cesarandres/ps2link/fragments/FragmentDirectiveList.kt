@@ -5,14 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
-
-import com.android.volley.Response
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
-import com.android.volley.VolleyError
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.DBGCensus.Verb
 import com.cesarandres.ps2link.dbg.content.CharacterDirective
 import com.cesarandres.ps2link.dbg.content.CharacterDirectiveObjective
@@ -34,7 +30,6 @@ import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
 import com.cesarandres.ps2link.dbg.view.DirectiveTreeCategoryListAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -100,7 +95,7 @@ class FragmentDirectiveList : BaseFragment() {
      */
     fun downloadDirectivesList(profileId: String?) {
         this.setProgressButton(true)
-        //TODO Fix this language use
+        // TODO Fix this language use
         val url = dbgCensus.generateGameDataRequest(
             Verb.GET, PS2Collection.CHARACTERS_DIRECTIVE, null,
             QueryString.generateQeuryString().AddComparison(
@@ -136,7 +131,6 @@ class FragmentDirectiveList : BaseFragment() {
         val url = "http://census.soe.com/get/ps2:v2/" +
                 "characters_directive_objective?character_id=" + profileId +
                 "&c:lang=en&c:limit=5000&c:join=objective"
-
 
         val success = Listener<Characters_directive_objective_list> { response ->
             charactersDirectiveObjective = response.characters_directive_objective_list
@@ -256,7 +250,7 @@ class FragmentDirectiveList : BaseFragment() {
     }
 
     fun generateDirectiveMap(): Boolean {
-        //TODO Completely refactor this method
+        // TODO Completely refactor this method
         this.charactersDirectiveTreeCategories = ArrayList()
 
         val treeMap = HashMap<String, CharacterDirectiveTree>()
@@ -265,7 +259,7 @@ class FragmentDirectiveList : BaseFragment() {
         val directiveMap = HashMap<String, Directive>()
         val categoryMap = HashMap<String, DirectiveTreeCategory>()
 
-        //Generate TreeMap
+        // Generate TreeMap
         for (directiveTree in charactersDirectiveTrees!!) {
             val newCategoryId =
                 directiveTree.directive_tree_id_join_directive_tree!!.directiveTreeCategoryId

@@ -2,9 +2,7 @@ package com.cesarandres.ps2link.dbg.content
 
 import java.util.ArrayList
 
-
 class CharacterDirectiveTier {
-
 
     var charactersDirective: ArrayList<CharacterDirective>? = null
     var character_id: String? = null
@@ -19,5 +17,4 @@ class CharacterDirectiveTier {
         }
         charactersDirective!!.add(newDirective)
     }
-
 }

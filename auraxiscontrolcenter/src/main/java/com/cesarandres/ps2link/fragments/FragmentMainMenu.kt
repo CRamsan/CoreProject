@@ -21,7 +21,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import android.widget.Toast
-
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.android.vending.billing.IInAppBillingService
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
@@ -29,18 +31,9 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.module.BitmapWorkerTask
-
+import java.util.ArrayList
 import org.json.JSONException
 import org.json.JSONObject
-
-import java.util.ArrayList
-import android.*
-import android.content.pm.*
-
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
-
 
 /**
  * This fragment is very static, it has all the buttons for most of the main
@@ -225,7 +218,6 @@ class FragmentMainMenu : BaseFragment() {
         val serviceIntent = Intent("com.android.vending.billing.InAppBillingService.BIND")
         serviceIntent.setPackage("com.android.vending")
         activity!!.bindService(serviceIntent, mServiceConn as ServiceConnection, Context.BIND_AUTO_CREATE)
-
     }
 
     /*
@@ -290,7 +282,6 @@ class FragmentMainMenu : BaseFragment() {
         } else {
             buttonPreferedOutfit.visibility = View.GONE
         }
-
     }
 
     /* (non-Javadoc)
@@ -354,7 +345,6 @@ class FragmentMainMenu : BaseFragment() {
                         e.printStackTrace()
                         return null
                     }
-
                 }
             }
 
@@ -378,7 +368,6 @@ class FragmentMainMenu : BaseFragment() {
                 e.printStackTrace()
                 return null
             }
-
         }
 
         /* (non-Javadoc)
@@ -421,7 +410,6 @@ class FragmentMainMenu : BaseFragment() {
                 ).show()
             }
         }
-
     }
 
     class DonationsDialogFragment : DialogFragment() {
@@ -479,7 +467,6 @@ class FragmentMainMenu : BaseFragment() {
                     e.printStackTrace()
                     return false
                 }
-
             }
             this.responseList = responseList
             return true
