@@ -1,15 +1,15 @@
 package com.cramsan.awslib.eventsystem.triggers
 
-import com.cramsan.awslib.entitymanager.implementation.EntityManager
-import com.cramsan.awslib.utils.map.MapGenerator
-import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.dsl.scene
+import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
+import com.cramsan.awslib.scene.Scene
+import com.cramsan.awslib.utils.map.MapGenerator
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

@@ -8,7 +8,6 @@ import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.nio.charset.Charset
 
-
 actual class MapLoader {
     actual fun loadCSVMap(resourceName: String): Array<Array<Cell>> {
         val encoding = Charset.defaultCharset()

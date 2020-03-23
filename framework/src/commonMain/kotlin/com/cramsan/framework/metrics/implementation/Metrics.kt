@@ -2,7 +2,7 @@ package com.cramsan.framework.metrics.implementation
 
 import com.cramsan.framework.metrics.MetricsInterface
 
-class Metrics(initializer: MetricsInitializer): MetricsInterface {
+class Metrics(initializer: MetricsInitializer) : MetricsInterface {
 
     private val platformMetrics = initializer.platformInitializer.platformMetrics
 

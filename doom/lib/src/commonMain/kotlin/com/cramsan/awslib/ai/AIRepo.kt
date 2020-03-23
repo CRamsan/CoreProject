@@ -1,8 +1,8 @@
 package com.cramsan.awslib.ai.`interface`
 
-import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.entitymanager.TurnActionInterface
+import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
 
 /**

@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.factory
@@ -20,7 +19,7 @@ abstract class BaseActivity : AppCompatActivity(),
 
     override val kodein by kodein()
     protected val eventLogger: EventLoggerInterface by instance()
-    private val vmFactory: (ViewModelStoreOwner)-> ViewModelProvider by factory()
+    private val vmFactory: (ViewModelStoreOwner) -> ViewModelProvider by factory()
 
     lateinit var viewModelProvider: ViewModelProvider
     abstract val contentViewLayout: Int

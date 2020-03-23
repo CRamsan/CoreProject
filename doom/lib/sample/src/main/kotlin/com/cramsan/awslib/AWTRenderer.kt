@@ -1,9 +1,9 @@
 package com.cramsan.awslib
 
 import com.cramsan.awslib.entity.GameEntityInterface
-import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
+import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.EntityType
@@ -16,20 +16,19 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.scene.SceneEventsCallback
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
-
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import kotlin.system.exitProcess
 import javax.swing.JFrame
 import javax.swing.JOptionPane
 import javax.swing.JOptionPane.showInputDialog
 import javax.swing.JPanel
+import kotlin.system.exitProcess
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class AWTRenderer : JFrame(), EntityManagerEventListener {
 
@@ -57,7 +56,6 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
                 override fun onSceneEnded(completed: Boolean) {
                     exitProcess(0)
                 }
-
             })
 
             this@AWTRenderer.addKeyListener(object : KeyAdapter() {
@@ -92,10 +90,8 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
     }
 
     override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {
-
     }
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
-
     }
     override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
         System.out.println("Options: ")
@@ -139,8 +135,10 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
         }
     }
 
-    internal inner class RendererCanvas(val manager: EntityManager,
-                                        val map: GameMap) : JPanel() {
+    internal inner class RendererCanvas(
+        val manager: EntityManager,
+        val map: GameMap
+    ) : JPanel() {
 
         override fun paint(graphics: Graphics?) {
             super.paint(graphics)

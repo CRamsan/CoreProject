@@ -8,10 +8,10 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
-import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
@@ -19,16 +19,15 @@ import com.cramsan.framework.halt.implementation.HaltUtilAndroidInitializer
 import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.logging.implementation.LoggerAndroidInitializer
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.AppCenterMetrics
 import com.cramsan.framework.metrics.implementation.AppCenterMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsInitializer
-import com.cramsan.framework.metrics.implementation.AppCenterMetrics
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
@@ -120,9 +119,9 @@ class PetProjectApplication : Application(), KodeinAware {
             modelProvider
         }
         bind<FeedbackManagerInterface>() with singleton {
-            class DummyDAO: FeedbackManagerDAO {
+            class DummyDAO : FeedbackManagerDAO {
                 override fun submitFeedback(feedback: Feedback) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
                 }
             }
             val initializer = FeedbackManagerInitializer(FeedbackManagerPlatformInitializer(DummyDAO()))

@@ -26,7 +26,7 @@ enum class Direction(val direction: com.cramsan.awslib.enums.Direction) {
     abstract fun angle(): Double
 
     fun turnRight(): Direction {
-        return when(direction) {
+        return when (direction) {
             com.cramsan.awslib.enums.Direction.NORTH -> EAST
             com.cramsan.awslib.enums.Direction.SOUTH -> WEST
             com.cramsan.awslib.enums.Direction.WEST -> NORTH
@@ -36,7 +36,7 @@ enum class Direction(val direction: com.cramsan.awslib.enums.Direction) {
     }
 
     fun turnLeft(): Direction {
-        return when(direction) {
+        return when (direction) {
             com.cramsan.awslib.enums.Direction.NORTH -> WEST
             com.cramsan.awslib.enums.Direction.SOUTH -> EAST
             com.cramsan.awslib.enums.Direction.WEST -> SOUTH
@@ -46,7 +46,7 @@ enum class Direction(val direction: com.cramsan.awslib.enums.Direction) {
     }
 
     fun turnAround(): Direction {
-        return when(direction) {
+        return when (direction) {
             com.cramsan.awslib.enums.Direction.NORTH -> SOUTH
             com.cramsan.awslib.enums.Direction.SOUTH -> NORTH
             com.cramsan.awslib.enums.Direction.WEST -> EAST

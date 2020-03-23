@@ -2,7 +2,6 @@ package com.cramsan.awsgame
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.cramsan.awsgame.GameInput
 
 /**
  * This class should be called once a frame to update the state. It is the ownership of this class to handle user inputs

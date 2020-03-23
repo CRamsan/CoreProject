@@ -1,10 +1,10 @@
 package com.cramsan.framework.halt.implementation
 
+import kotlin.test.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.test.assertTrue
 
 class HaltUtilCommonTest {
 

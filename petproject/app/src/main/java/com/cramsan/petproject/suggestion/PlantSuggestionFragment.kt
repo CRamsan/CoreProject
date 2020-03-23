@@ -2,12 +2,17 @@ package com.cramsan.petproject.suggestion
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_plant_suggestion.*
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_cancel
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_cat_safe
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_cat_unsafe
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_dog_safe
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_dog_unsafe
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_save
+import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_scientific_name
 
 class PlantSuggestionFragment : BaseFragment() {
 

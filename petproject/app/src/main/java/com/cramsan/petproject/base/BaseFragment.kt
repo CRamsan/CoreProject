@@ -12,19 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.petproject.PetProjectApplication
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.factory
 import org.kodein.di.erased.instance
-import org.kodein.di.erased.on
-import org.kodein.di.newInstance
 
 abstract class BaseFragment : Fragment(), KodeinAware {
 
     override val kodein by lazy { (requireActivity().application as PetProjectApplication).kodein }
     protected val eventLogger: EventLoggerInterface by instance()
-    private val vmFactory: (ViewModelStoreOwner)-> ViewModelProvider by factory()
+    private val vmFactory: (ViewModelStoreOwner) -> ViewModelProvider by factory()
 
     abstract val contentViewLayout: Int
 

@@ -1,15 +1,14 @@
 package com.cramsan.awslib.ai
 
 import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
-import com.cramsan.awslib.entitymanager.implementation.EntityManager
-import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entity.implementation.GameEntity
 import com.cramsan.awslib.entity.implementation.Player
+import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
-
+import com.cramsan.awslib.utils.map.MapGenerator
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

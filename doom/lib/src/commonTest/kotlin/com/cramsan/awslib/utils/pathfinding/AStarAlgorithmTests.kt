@@ -1,9 +1,9 @@
 package com.cramsan.awslib
 
-import com.cramsan.awslib.utils.pathfinding.AStarAlgorithm
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.map.GameMapAStarFunctionProvider
 import com.cramsan.awslib.utils.map.MapGenerator
+import com.cramsan.awslib.utils.pathfinding.AStarAlgorithm
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

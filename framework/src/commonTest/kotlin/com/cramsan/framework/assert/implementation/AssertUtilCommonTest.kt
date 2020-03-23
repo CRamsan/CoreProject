@@ -2,14 +2,18 @@ package com.cramsan.framework.assert.implementation
 
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.logging.implementation.EventLogger
-import io.mockk.*
+import io.mockk.Called
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockkClass
+import io.mockk.verify
 
 class AssertUtilCommonTest {
 
     fun assertTrueWithHaltEnabled() {
-       val initializer = AssertUtilInitializer(true)
+        val initializer = AssertUtilInitializer(true)
         val eventLogger = mockkClass(EventLogger::class)
         val haltUtil = mockkClass(HaltUtil::class)
         val assertUtil = AssertUtil(initializer, eventLogger, haltUtil)

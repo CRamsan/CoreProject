@@ -21,9 +21,11 @@ buildscript {
         globalConstraintLayoutVersion = "1.1.3"
         globalDetektVersion = initDetektVersion
         globalEspressoVersion = "3.2.0"
-        globalFirebaseVersion = "18.2.0"
+        globalFirebaseVersion = "17.2.3"
+        globalFirebaseCrashlyticsVersion = "2.0.0-beta02"
         globalGlideVersion = "4.10.0"
         globalGsonVerion = "2.8.5"
+        globalGMSServices = "4.3.3"
         globalHamcrestVersion = "1.3"
         globalJUnitVersion = "4.12"
         globalKodeinVersion = "6.5.0"
@@ -51,6 +53,8 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
+        classpath "com.google.gms:google-services:$globalGMSServices"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$globalFirebaseCrashlyticsVersion"
     }
 }
 

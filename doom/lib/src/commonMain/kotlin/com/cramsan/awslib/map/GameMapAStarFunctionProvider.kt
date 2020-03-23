@@ -1,7 +1,7 @@
 package com.cramsan.awslib.map
 
-import com.cramsan.awslib.utils.pathfinding.Node
 import com.cramsan.awslib.utils.pathfinding.AStarFunctionProvider
+import com.cramsan.awslib.utils.pathfinding.Node
 
 class GameMapAStarFunctionProvider : AStarFunctionProvider {
 

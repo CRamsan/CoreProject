@@ -3,7 +3,6 @@ package com.cramsan.awsgame.subsystems
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
-import java.util.*
 
 /**
  * Class that provides a simple API to handle sound and music

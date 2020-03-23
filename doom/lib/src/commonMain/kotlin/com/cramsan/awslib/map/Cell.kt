@@ -1,7 +1,7 @@
 package com.cramsan.awslib.map
 
-import com.cramsan.awslib.utils.pathfinding.Node
 import com.cramsan.awslib.enums.TerrainType
+import com.cramsan.awslib.utils.pathfinding.Node
 
 abstract class Cell(var terrain: TerrainType) : Node, GridPositionableInterface {
 

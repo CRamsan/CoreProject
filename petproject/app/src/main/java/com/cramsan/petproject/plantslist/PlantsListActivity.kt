@@ -6,7 +6,6 @@ import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity

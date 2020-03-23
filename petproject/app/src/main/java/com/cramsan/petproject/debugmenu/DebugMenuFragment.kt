@@ -5,7 +5,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface

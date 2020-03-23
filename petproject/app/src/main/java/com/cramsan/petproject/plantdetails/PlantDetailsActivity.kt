@@ -2,7 +2,6 @@ package com.cramsan.petproject.plantdetails
 
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata

@@ -1,17 +1,15 @@
 package com.cramsan.awslib.entitymanager.implementation
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
-import com.cramsan.awslib.scene.SceneEventsCallback
 import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.EntityManagerInterface
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TerrainType
-import com.cramsan.awslib.eventsystem.triggers.CellTrigger
+import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.GameEntityTrigger
 import com.cramsan.awslib.eventsystem.events.BaseEvent
 import com.cramsan.awslib.eventsystem.events.ChangeTriggerEvent
@@ -20,15 +18,14 @@ import com.cramsan.awslib.eventsystem.events.InteractiveEvent
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.eventsystem.events.NoopEvent
 import com.cramsan.awslib.eventsystem.events.SwapEntityEvent
+import com.cramsan.awslib.eventsystem.triggers.CellTrigger
 import com.cramsan.awslib.eventsystem.triggers.Trigger
 import com.cramsan.awslib.map.GameMap
+import com.cramsan.awslib.scene.SceneEventsCallback
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.logging.Logger
 import com.cramsan.awslib.utils.logging.Severity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
 
 class EntityManager(
     private val map: GameMap,

@@ -3,7 +3,7 @@ package com.cramsan.framework.preferences
 import com.cramsan.framework.base.BaseModuleInterface
 import com.cramsan.framework.preferences.implementation.PreferencesManifest
 
-interface PreferencesInterface : BaseModuleInterface<PreferencesManifest>{
+interface PreferencesInterface : BaseModuleInterface<PreferencesManifest> {
 
     fun saveString(key: String, value: String)
 

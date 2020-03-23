@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 
-
 class SplashScreen(private val minLoadTime: Float, private val onComplete: IResourcesLoaded) : Screen {
     var isLoadCompleted = false
     private var counter = 0f
@@ -40,7 +39,7 @@ class SplashScreen(private val minLoadTime: Float, private val onComplete: IReso
             onComplete.onResourcesLoaded()
         } else {
             counter += delta
-            Gdx.gl.glClearColor(0F, 0F, 0F, 0F);
+            Gdx.gl.glClearColor(0F, 0F, 0F, 0F)
             Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT)
             viewport.apply()
             batch.projectionMatrix = viewport.camera.combined
@@ -53,11 +52,10 @@ class SplashScreen(private val minLoadTime: Float, private val onComplete: IReso
     }
 
     override fun resize(width: Int, height: Int) {
-        viewport.update(width, height);
+        viewport.update(width, height)
     }
     override fun pause() {}
     override fun resume() {}
     override fun hide() {}
     override fun dispose() {}
-
 }

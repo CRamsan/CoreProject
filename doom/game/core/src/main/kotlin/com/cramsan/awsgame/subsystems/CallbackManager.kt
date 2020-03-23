@@ -1,6 +1,6 @@
 package com.cramsan.awsgame.subsystems
 
-import java.util.*
+import java.util.PriorityQueue
 
 class CallbackManager : IGameSubsystem {
     private var time = 0f
@@ -48,7 +48,6 @@ class CallbackManager : IGameSubsystem {
             }
             throw RuntimeException("Other object is not of type " + this.javaClass)
         }
-
     }
 
     interface ExecutionBlockInterface {

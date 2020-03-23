@@ -13,8 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.cramsan.awsgame.GameParameterManager
 import com.cramsan.awsgame.SceneManager
-import com.cramsan.awsgame.subsystems.ui.UIToolKit
-
 
 /**
  * Class to manage the main menu screen. It will initialize the UI components and any objects needed or the background.
@@ -71,7 +69,7 @@ class MainMenuScreen : BaseScreen(), Screen {
         batch!!.end()
 
         stage!!.viewport.apply()
-        stage?.act();
+        stage?.act()
         stage!!.draw()
     }
 
@@ -86,5 +84,4 @@ class MainMenuScreen : BaseScreen(), Screen {
     override fun levelId(): Int {
         return 0
     }
-
 }

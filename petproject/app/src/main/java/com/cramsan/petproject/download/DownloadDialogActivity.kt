@@ -3,7 +3,6 @@ package com.cramsan.petproject.download
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.mainmenu.DownloadCatalogViewModel

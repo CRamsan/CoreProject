@@ -2,8 +2,7 @@ package com.cramsan.framework.crashehandler.implementation
 
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.CrashHandlerPlatformInitializerInterface
-import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.crashes.Crashes
 
-class AppCenterCrashHandlerInitializer(override val platformDelegate: CrashHandlerInterface
+class AppCenterCrashHandlerInitializer(
+    override val platformDelegate: CrashHandlerInterface
 ) : CrashHandlerPlatformInitializerInterface

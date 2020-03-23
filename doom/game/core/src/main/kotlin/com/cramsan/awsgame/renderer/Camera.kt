@@ -7,7 +7,11 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.viewport.Viewport
-import kotlin.math.*
+import kotlin.math.ceil
+import kotlin.math.cos
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.sin
 
 class Camera(private val camera: OrthographicCamera, private var resolution: Double, private var fov: Double, private val viewport: Viewport) {
     private var width: Double = 0.toDouble()

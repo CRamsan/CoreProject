@@ -3,7 +3,6 @@ package com.cramsan.framework.logging.implementation
 import com.cramsan.framework.logging.EventLoggerPlatformInitializerInterface
 import com.cramsan.framework.logging.Severity
 
-
 class EventLoggerCommonTest {
 
     fun logWithVerboseSeverity(platformInitializer: EventLoggerPlatformInitializerInterface) {

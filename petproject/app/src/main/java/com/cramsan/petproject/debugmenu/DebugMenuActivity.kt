@@ -3,7 +3,7 @@ package com.cramsan.petproject.debugmenu
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_debug_menu.*
+import kotlinx.android.synthetic.main.activity_debug_menu.debug_menu_toolbar
 
 class DebugMenuActivity : BaseActivity() {
     override val contentViewLayout: Int

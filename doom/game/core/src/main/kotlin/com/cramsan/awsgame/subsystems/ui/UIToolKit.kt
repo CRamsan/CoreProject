@@ -2,12 +2,15 @@ package com.cramsan.awsgame.subsystems.ui
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.ui.Value
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.swing.JOptionPane
 
 /**
  * This class provides helped methods to create UI elements. Here is where the UI layout is defined.
@@ -40,10 +43,12 @@ object UIToolKit {
         return mainPane
     }
 
-    fun createTextPane(skin: Skin,
-                       text: String,
-                       options: List<InteractiveEventOption>,
-                       eventReceiver: EntityManagerInteractionReceiver): Actor {
+    fun createTextPane(
+        skin: Skin,
+        text: String,
+        options: List<InteractiveEventOption>,
+        eventReceiver: EntityManagerInteractionReceiver
+    ): Actor {
         val mainPane = Table(skin)
         mainPane.setFillParent(true)
 

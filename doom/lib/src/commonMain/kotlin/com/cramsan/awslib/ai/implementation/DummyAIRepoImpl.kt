@@ -1,13 +1,13 @@
 package com.cramsan.awslib.ai.implementation
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
-import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.entitymanager.TurnActionInterface
+import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.enums.EntityType
+import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.Cell
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.map.GameMapAStarFunctionProvider

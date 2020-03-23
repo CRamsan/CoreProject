@@ -6,18 +6,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
-import com.cramsan.petproject.suggestion.PlantSuggestionActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
+import com.cramsan.petproject.suggestion.PlantSuggestionActivity
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_add_plant
 import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
 import kotlinx.android.synthetic.main.fragment_plants_list.plants_list_loading

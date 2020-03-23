@@ -2,7 +2,6 @@ package com.cramsan.petproject.appcore.storage.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.storage.Description

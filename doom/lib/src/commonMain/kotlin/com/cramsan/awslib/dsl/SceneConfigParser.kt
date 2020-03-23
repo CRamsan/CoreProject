@@ -1,18 +1,18 @@
 package com.cramsan.awslib.dsl
 
-import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.entity.implementation.Doctor
 import com.cramsan.awslib.entity.implementation.Dog
 import com.cramsan.awslib.entity.implementation.GameEntity
 import com.cramsan.awslib.entity.implementation.Player
-import com.cramsan.awslib.eventsystem.triggers.CellTrigger
 import com.cramsan.awslib.eventsystem.GameEntityTrigger
 import com.cramsan.awslib.eventsystem.events.BaseEvent
 import com.cramsan.awslib.eventsystem.events.ChangeTriggerEvent
 import com.cramsan.awslib.eventsystem.events.InteractiveEvent
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.eventsystem.events.SwapEntityEvent
+import com.cramsan.awslib.eventsystem.triggers.CellTrigger
 import com.cramsan.awslib.eventsystem.triggers.Trigger
+import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.utils.constants.InitialValues
 
 /**

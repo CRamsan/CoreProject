@@ -2,10 +2,9 @@ package com.cramsan.awsgame.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.cramsan.awsgame.Controls
@@ -89,7 +88,6 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
                     eventId = 912
                     targetId = 1
                     enabled = true
-
                 }
             }
             events {
@@ -102,7 +100,6 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
                     disableEntityId = 1
                 }
             }
-
         }
         val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, this)
         scene = Scene(entityManager, sceneConfig)
@@ -116,7 +113,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
         mySkin = Skin(Gdx.files.internal("skin/star-soldier-ui.json"))
 
-        val mainPane = UIToolKit.createNavigationMenu(mySkin!!);
+        val mainPane = UIToolKit.createNavigationMenu(mySkin!!)
 
         stage!!.addActor(mainPane)
         stage!!.isDebugAll = true
@@ -126,7 +123,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         super.resize(width, height)
         gameViewport!!.update(width, height / 2)
         (gameViewport as StretchViewport).setScreenPosition(0, Gdx.graphics.height / 2)
-        stage!!.viewport.update(width, height / 2, true);
+        stage!!.viewport.update(width, height / 2, true)
     }
 
     override fun performRender() {
@@ -148,22 +145,22 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
                 scene!!.runTurn(TurnAction(TurnActionType.MOVE, it))
             }
         }
-        if(player!!.isAttacking) {
+        if (player!!.isAttacking) {
             GlobalScope.launch {
                 scene!!.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
             }
         }
         camera!!.render(player!!, map)
 
-        //render the UI
+        // render the UI
         uiCamera!!.update()
         stage!!.viewport.apply()
-        stage?.act();
+        stage?.act()
         stage!!.draw()
     }
 
     override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onInteractionRequired(
@@ -176,10 +173,10 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
     }
 
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun levelId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 }

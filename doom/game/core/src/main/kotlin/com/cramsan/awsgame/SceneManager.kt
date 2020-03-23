@@ -38,7 +38,7 @@ object SceneManager {
         } else if (newParameterHolder != null) {
             throw RuntimeException("GameParameterManager already set and cannot be overridden")
         }
-        val screen: GameScreen = FPSGame();
+        val screen: GameScreen = FPSGame()
         game!!.setScreen(screen)
     }
 

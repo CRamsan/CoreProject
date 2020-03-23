@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link.fragments
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.PendingIntent
@@ -9,6 +10,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.ServiceConnection
+import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.IBinder

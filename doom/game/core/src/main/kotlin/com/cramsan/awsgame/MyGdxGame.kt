@@ -10,7 +10,6 @@ import com.cramsan.awsgame.screen.SplashScreen.IResourcesLoaded
 import com.cramsan.awsgame.subsystems.AudioManager
 import com.cramsan.awsgame.subsystems.CallbackManager
 import com.cramsan.awsgame.subsystems.IGameSubsystem
-import java.util.*
 
 class MyGdxGame : Game() {
     var isUseFixedStep = true
@@ -31,7 +30,7 @@ class MyGdxGame : Game() {
             splashScreen = SplashScreen(1f, object : IResourcesLoaded {
                 override fun onResourcesLoaded() {
                     SceneManager.startGameScreen(GameParameterManager())
-                    //startMainMenuScreen(true)
+                    // startMainMenuScreen(true)
                 }
             })
             this.setScreen(splashScreen)

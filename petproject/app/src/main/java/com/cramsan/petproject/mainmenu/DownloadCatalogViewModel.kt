@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.Dispatchers

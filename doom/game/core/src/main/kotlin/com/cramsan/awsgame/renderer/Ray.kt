@@ -5,11 +5,13 @@ import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.sqrt
 
-class Ray(var map: Map,
-          origin: Step,
-          var sin: Double,
-          var cos: Double,
-          range: Double) {
+class Ray(
+    var map: Map,
+    origin: Step,
+    var sin: Double,
+    var cos: Double,
+    range: Double
+) {
 
     var steps: MutableList<Step> = mutableListOf()
 

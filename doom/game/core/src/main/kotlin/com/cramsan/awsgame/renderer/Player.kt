@@ -82,7 +82,7 @@ class Player(private val player: Player) {
             return
         }
 
-        when(gameInput) {
+        when (gameInput) {
             GameInput.LEFT -> {
                 startingAngle = direction().angle()
                 this.player.heading = direction().turnLeft().direction

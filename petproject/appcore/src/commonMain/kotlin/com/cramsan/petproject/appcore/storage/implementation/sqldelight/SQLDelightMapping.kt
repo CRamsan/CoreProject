@@ -88,7 +88,7 @@ class Toxicity(
         get() = toxicity.source
 }
 
-class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId{
+class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId {
     private val getAllPlantsWithAnimalId: GetAllPlantsWithAnimalId
 
     constructor(getAllPlantsWithAnimalId: GetAllPlantsWithAnimalId) {

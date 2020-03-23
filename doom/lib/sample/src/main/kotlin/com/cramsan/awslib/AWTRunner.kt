@@ -4,8 +4,7 @@ import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.map.MapLoader
-
-import java.awt.*
+import java.awt.EventQueue
 
 class AWTRunner {
 
@@ -47,7 +46,6 @@ class AWTRunner {
                         eventId = 912
                         targetId = 1
                         enabled = true
-
                     }
                 }
                 events {
@@ -60,7 +58,6 @@ class AWTRunner {
                         disableEntityId = 1
                     }
                 }
-
             } ?: return
             val renderer = AWTRenderer()
             val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, renderer)
