@@ -276,6 +276,6 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
     }
 
     companion object {
-        private const val TAG = "FragmentAddOutfit"
+        const val TAG = "FragmentAddOutfit"
     }
 }

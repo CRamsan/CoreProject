@@ -46,7 +46,6 @@
         <ToggleButton
             android:id="@+id/toggleButtonFragmentStar"
             style="@style/ActionBarButtonStyle"
-            android:drawableRight="@drawable/ps2_button_action_star"
             android:drawableEnd="@drawable/ps2_button_action_star"
             android:textOff="@string/text_empty"
             android:textOn="@string/text_empty" />
@@ -54,7 +53,6 @@
         <ToggleButton
             android:id="@+id/toggleButtonFragmentAppend"
             style="@style/ActionBarButtonStyle"
-            android:drawableRight="@drawable/ps2_button_action_append"
             android:drawableEnd="@drawable/ps2_button_action_append"
             android:textOff="@string/text_empty"
             android:textOn="@string/text_empty" />

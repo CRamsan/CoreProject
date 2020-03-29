@@ -345,6 +345,6 @@ class FragmentDirectiveList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentDirectiveList"
+        const val TAG = "FragmentDirectiveList"
     }
 }

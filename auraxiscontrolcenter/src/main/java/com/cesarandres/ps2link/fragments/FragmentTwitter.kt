@@ -260,6 +260,6 @@ class FragmentTwitter : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentTwitter"
+        const val TAG = "FragmentTwitter"
     }
 }

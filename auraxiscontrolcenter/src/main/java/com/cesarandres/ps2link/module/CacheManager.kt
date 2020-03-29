@@ -62,6 +62,6 @@ class CacheManager(val context: Context) : KodeinAware {
 
     companion object {
         const val MAX_CACHE_SIZE = 5000000 // 5 MB
-        private const val TAG = "CacheManager"
+        const val TAG = "CacheManager"
     }
 }

@@ -108,6 +108,6 @@ class FragmentStatList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentStatList"
+        const val TAG = "FragmentStatList"
     }
 }

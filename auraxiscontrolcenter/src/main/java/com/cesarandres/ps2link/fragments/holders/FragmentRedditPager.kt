@@ -242,7 +242,7 @@ class FragmentRedditPager : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentRedditPager"
+        const val TAG = "FragmentRedditPager"
         val PS2_PC = "Planetside"
         val PS2_PS4 = "PS4Planetside2"
         private val PC = 0

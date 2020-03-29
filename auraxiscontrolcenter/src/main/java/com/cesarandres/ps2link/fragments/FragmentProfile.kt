@@ -2,6 +2,7 @@ package com.cesarandres.ps2link.fragments
 
 import android.graphics.Color
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.test.espresso.IdlingResource
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
@@ -26,8 +30,8 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-import java.util.Date
 import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
 
 /**
  * This fragment will read a profile from the database and display it to the
@@ -74,6 +78,8 @@ class FragmentProfile : BaseFragment() {
      * @param character Character that contains all the data to populate the UI
      */
     private fun updateUI(character: CharacterProfile) {
+        idlingResource.increment()
+        eventLogger.log(Severity.INFO, TAG, "Updating UI")
         this.fragmentTitle.text = character.name!!.first
         try {
             if (this.view != null) {
@@ -209,12 +215,16 @@ class FragmentProfile : BaseFragment() {
             metrics.log(TAG, "NPE when updating the UI")
             eventLogger.log(Severity.ERROR, TAG, "Null Pointer while trying to set character data on UI")
         }
+        eventLogger.log(Severity.INFO, TAG, "UI was updated")
+        idlingResource.decrement()
     }
 
     /**
      * @param character_id Character id of the character that wants to be download
      */
     fun downloadProfiles(character_id: String?) {
+        idlingResource.increment()
+        eventLogger.log(Severity.INFO, TAG, "Downloading Profile")
         this.setProgressButton(true)
         val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
@@ -230,6 +240,7 @@ class FragmentProfile : BaseFragment() {
         val success = Listener<Character_list_response> { response ->
             setProgressButton(false)
             try {
+                eventLogger.log(Severity.INFO, TAG, "Profile Downloaded")
                 profile = response.character_list!![0]
                 profile!!.namespace = this.namespace!!
                 profile!!.isCached = isCached
@@ -243,6 +254,7 @@ class FragmentProfile : BaseFragment() {
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
+            idlingResource.decrement()
         }
 
         val error = ErrorListener {
@@ -251,6 +263,7 @@ class FragmentProfile : BaseFragment() {
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
+            idlingResource.decrement()
         }
 
         dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
@@ -269,6 +282,8 @@ class FragmentProfile : BaseFragment() {
          * @see android.os.AsyncTask#onPreExecute()
          */
         override fun onPreExecute() {
+            idlingResource.increment()
+            eventLogger.log(Severity.INFO, TAG, "UpdateProfileFromTable PreExecute")
             setProgressButton(true)
         }
 
@@ -296,6 +311,7 @@ class FragmentProfile : BaseFragment() {
          */
         override fun onPostExecute(result: CharacterProfile?) {
             setProgressButton(false)
+            eventLogger.log(Severity.INFO, TAG, "UpdateProfileFromTable PostExecute")
             if (result == null) {
                 downloadProfiles(profile_id)
             } else {
@@ -303,6 +319,7 @@ class FragmentProfile : BaseFragment() {
                 updateUI(result)
                 downloadProfiles(result.character_id)
             }
+            idlingResource.decrement()
         }
     }
 
@@ -318,6 +335,8 @@ class FragmentProfile : BaseFragment() {
          * @see android.os.AsyncTask#onPreExecute()
          */
         override fun onPreExecute() {
+            idlingResource.increment()
+            eventLogger.log(Severity.INFO, TAG, "UpdateProfileToTable PreExecute")
             setProgressButton(true)
         }
 
@@ -357,6 +376,8 @@ class FragmentProfile : BaseFragment() {
          */
         override fun onPostExecute(result: CharacterProfile) {
             setProgressButton(false)
+            idlingResource.decrement()
+            eventLogger.log(Severity.INFO, TAG, "UpdateProfileToTable PostExecute")
         }
     }
 
@@ -371,6 +392,8 @@ class FragmentProfile : BaseFragment() {
          * @see android.os.AsyncTask#onPreExecute()
          */
         override fun onPreExecute() {
+            idlingResource.increment()
+            eventLogger.log(Severity.INFO, TAG, "CacheProfile PreExecute")
             setProgressButton(true)
         }
 
@@ -400,9 +423,11 @@ class FragmentProfile : BaseFragment() {
          * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
          */
         override fun onPostExecute(result: CharacterProfile) {
+            eventLogger.log(Severity.INFO, TAG, "CacheProfile PostExecute")
             profile = result
             updateUI(result)
             setProgressButton(false)
+            idlingResource.decrement()
         }
     }
 
@@ -417,6 +442,8 @@ class FragmentProfile : BaseFragment() {
          * @see android.os.AsyncTask#onPreExecute()
          */
         override fun onPreExecute() {
+            idlingResource.increment()
+            eventLogger.log(Severity.INFO, TAG, "UnCacheProfile PreExecute")
             setProgressButton(true)
         }
 
@@ -446,10 +473,12 @@ class FragmentProfile : BaseFragment() {
             profile = result
             updateUI(result)
             setProgressButton(false)
+            eventLogger.log(Severity.INFO, TAG, "UnCacheProfile PostExecute")
+            idlingResource.decrement()
         }
     }
 
     companion object {
-        private const val TAG = "FragmentProfile"
+        const val TAG = "FragmentProfile"
     }
 }

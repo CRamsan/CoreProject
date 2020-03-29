@@ -141,6 +141,6 @@ class FragmentKillList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentKillList"
+        const val TAG = "FragmentKillList"
     }
 }

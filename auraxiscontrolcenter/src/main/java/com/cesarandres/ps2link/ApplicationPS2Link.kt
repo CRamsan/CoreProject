@@ -2,6 +2,9 @@ package com.cesarandres.ps2link
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
@@ -53,6 +56,7 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.singleton
 import org.kodein.di.newInstance
+import java.util.Optional
 
 class ApplicationPS2Link : Application(), KodeinAware {
 
@@ -61,6 +65,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
     private val cacheManager: CacheManager by instance()
     private val metrics: MetricsInterface by instance()
     private val dbgCensus: DBGCensus by instance()
+    val idlingResource: CountingIdlingResource by instance()
 
     override val kodein = Kodein.lazy {
         import(androidXModule(this@ApplicationPS2Link))
@@ -120,6 +125,9 @@ class ApplicationPS2Link : Application(), KodeinAware {
         }
         bind<DBGCensus>() with singleton {
             DBGCensus(this@ApplicationPS2Link)
+        }
+        bind<CountingIdlingResource>() with singleton {
+            CountingIdlingResource(TAG)
         }
     }
 
@@ -197,6 +205,6 @@ class ApplicationPS2Link : Application(), KodeinAware {
          */
         var wallpaperMode = WallPaperMode.PS2
 
-        private const val TAG = "ApplicationPS2Link"
+        const val TAG = "ApplicationPS2Link"
     }
 }

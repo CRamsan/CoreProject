@@ -1,11 +1,13 @@
 package com.cesarandres.ps2link.fragments.holders
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -281,7 +283,7 @@ class FragmentProfilePager : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentProfilePager"
+        const val TAG = "FragmentProfilePager"
         private val PROFILE = 0
         private val FRIENDS = 1
         private val STATS = 2

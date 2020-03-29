@@ -179,6 +179,6 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
     }
 
     companion object {
-        private const val TAG = "FragmentAddProfile"
+        const val TAG = "FragmentAddProfile"
     }
 }

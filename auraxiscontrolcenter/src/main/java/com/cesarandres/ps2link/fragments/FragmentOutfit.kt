@@ -340,6 +340,6 @@ class FragmentOutfit : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentOutfit"
+        const val TAG = "FragmentOutfit"
     }
 }

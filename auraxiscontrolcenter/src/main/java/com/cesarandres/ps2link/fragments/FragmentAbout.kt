@@ -50,6 +50,6 @@ class FragmentAbout : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentAbout"
+        const val TAG = "FragmentAbout"
     }
 }

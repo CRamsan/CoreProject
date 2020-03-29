@@ -225,7 +225,7 @@ class FragmentOutfitPager : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentOutfitPager"
+        const val TAG = "FragmentOutfitPager"
         private val OUTFIT = 0
         private val ONLINE = 1
         private val MEMBERS = 2

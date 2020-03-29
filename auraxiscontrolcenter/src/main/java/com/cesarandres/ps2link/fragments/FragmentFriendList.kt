@@ -131,6 +131,6 @@ class FragmentFriendList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentFriendList"
+        const val TAG = "FragmentFriendList"
     }
 }

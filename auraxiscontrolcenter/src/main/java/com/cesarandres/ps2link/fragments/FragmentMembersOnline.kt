@@ -138,6 +138,6 @@ class FragmentMembersOnline : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentMembersOnline"
+        const val TAG = "FragmentMembersOnline"
     }
 }

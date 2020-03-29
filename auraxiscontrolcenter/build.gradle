@@ -14,7 +14,7 @@ android {
         targetSdkVersion globalTargetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode 73
-        versionName "5.0.0"
+        versionName "5.1.0"
     }
     buildTypes {
         release {
@@ -46,6 +46,7 @@ dependencies {
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     implementation 'org.twitter4j:twitter4j-core:4.0.7'
     implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.test.espresso:espresso-idling-resource:$globalEspressoVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
@@ -55,4 +56,18 @@ dependencies {
     implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
 
     implementation "com.microsoft.appcenter:appcenter:$globalAppCenterSdkVersion"
+
+    testImplementation "junit:junit:$globalJUnitVersion"
+
+    androidTestImplementation "androidx.test.ext:junit:$globalAndroidXJUnitVersion"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
+    androidTestImplementation "androidx.test:core:$globalAndroidXTestVersion"
+    androidTestImplementation "androidx.test:rules:$globalAndroidXTestVersion"
+    androidTestImplementation "androidx.test:runner:$globalAndroidXTestVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
+    androidTestImplementation "org.hamcrest:hamcrest-library:$globalHamcrestVersion"
+    androidTestImplementation "io.mockk:mockk:$globalMockkVersion"
+    androidTestImplementation "io.mockk:mockk-android:$globalMockkVersion"
 }

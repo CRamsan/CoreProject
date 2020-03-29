@@ -104,6 +104,6 @@ class ButtonSelectSource(
     }
 
     companion object {
-        private const val TAG = "ButtonSelectSource"
+        const val TAG = "ButtonSelectSource"
     }
 }

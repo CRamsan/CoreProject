@@ -128,6 +128,6 @@ class FragmentProfileList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentProfileList"
+        const val TAG = "FragmentProfileList"
     }
 }

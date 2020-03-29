@@ -340,6 +340,6 @@ class FragmentWeaponList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentWeaponList"
+        const val TAG = "FragmentWeaponList"
     }
 }

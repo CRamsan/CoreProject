@@ -16,8 +16,8 @@ import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.base.BaseFragment.FragmentCallbacks
 import com.cesarandres.ps2link.fragments.FragmentAbout
 import com.cesarandres.ps2link.fragments.FragmentAddOutfit
-import com.cesarandres.ps2link.fragments.FragmentAddProfile
 import com.cesarandres.ps2link.fragments.FragmentMainMenu
+import com.cesarandres.ps2link.fragments.FragmentAddProfile
 import com.cesarandres.ps2link.fragments.FragmentOutfitList
 import com.cesarandres.ps2link.fragments.FragmentProfileList
 import com.cesarandres.ps2link.fragments.FragmentServerList
@@ -147,7 +147,9 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
             }
         }
 
-        this.fragmentTitle.setOnClickListener { upNavigation() }
+        this.fragmentTitle.setOnClickListener {
+            upNavigation()
+        }
 
         this.supportFragmentManager.addOnBackStackChangedListener {
             if (isTablet && supportFragmentManager.backStackEntryCount == 0) {
@@ -337,6 +339,6 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
     }
 
     companion object {
-        private const val TAG = "ActivityContainer"
+        const val TAG = "ActivityContainer"
     }
 }

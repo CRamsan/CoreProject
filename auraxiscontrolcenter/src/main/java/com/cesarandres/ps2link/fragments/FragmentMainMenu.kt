@@ -476,7 +476,7 @@ class FragmentMainMenu : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentMainMenu"
+        const val TAG = "FragmentMainMenu"
 
         private var mService: IInAppBillingService? = null
     }

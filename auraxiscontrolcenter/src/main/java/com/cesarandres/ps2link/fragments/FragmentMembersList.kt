@@ -224,6 +224,6 @@ class FragmentMembersList : BaseFragment() {
     }
 
     companion object {
-        private const val TAG = "FragmentMembersList"
+        const val TAG = "FragmentMembersList"
     }
 }

@@ -221,6 +221,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
     }
 
     companion object {
-        private const val TAG = "FragmentServerList"
+        const val TAG = "FragmentServerList"
     }
 }
