@@ -89,7 +89,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
      * (non-Javadoc)
      *
      * @see
-     * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+     * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflat  er,
      * android.view.ViewGroup, android.os.Bundle)
      */
     override fun onCreateView(

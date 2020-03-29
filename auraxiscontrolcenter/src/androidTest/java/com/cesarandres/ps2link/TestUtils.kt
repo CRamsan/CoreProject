@@ -19,7 +19,7 @@ import androidx.test.uiautomator.UiSelector
 
 
 private const val PERMISSIONS_DIALOG_DELAY = 3000
-private const val GRANT_BUTTON_INDEX = 1
+private const val GRANT_BUTTON_INDEX = 0
 
 fun allowPermissionsIfNeeded(permissionNeeded: String) {
     try {

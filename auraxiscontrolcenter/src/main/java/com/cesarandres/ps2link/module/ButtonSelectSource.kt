@@ -29,9 +29,7 @@ class ButtonSelectSource(
 ) {
     var namespace = Namespace.PS2PC
 
-    private val pcNamespaceButton: ImageButton
-    private val ps4euNamespaceButton: ImageButton
-    private val ps4usNamespaceButton: ImageButton
+    private val namespaceButton: ImageButton
 
     var listener: SourceSelectionChangedListener? = null
 
@@ -41,19 +39,7 @@ class ButtonSelectSource(
         val currentNamespace = Namespace.valueOf(lastNamespace!!)
         namespace = currentNamespace
 
-        pcNamespaceButton = View.inflate(context, R.layout.layout_title_button, null) as ImageButton
-        pcNamespaceButton.setImageResource(R.drawable.namespace_pc)
-        pcNamespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PS4US) }
-
-        ps4euNamespaceButton =
-            View.inflate(context, R.layout.layout_title_button, null) as ImageButton
-        ps4euNamespaceButton.setImageResource(R.drawable.namespace_ps4eu)
-        ps4euNamespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PC) }
-
-        ps4usNamespaceButton =
-            View.inflate(context, R.layout.layout_title_button, null) as ImageButton
-        ps4usNamespaceButton.setImageResource(R.drawable.namespace_ps4us)
-        ps4usNamespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PS4EU) }
+        namespaceButton = View.inflate(context, R.layout.layout_title_button, null) as ImageButton
 
         val params = LinearLayout.LayoutParams(
             LayoutParams.WRAP_CONTENT,
@@ -69,9 +55,7 @@ class ButtonSelectSource(
 
         params.setMargins(px, px, px, px)
 
-        root.addView(pcNamespaceButton, params)
-        root.addView(ps4euNamespaceButton, params)
-        root.addView(ps4usNamespaceButton, params)
+        root.addView(namespaceButton, params)
         updateButtonState(currentNamespace)
     }
 
@@ -79,13 +63,24 @@ class ButtonSelectSource(
         val settings = this.context.getSharedPreferences("PREFERENCES", 0)
         val editor = settings.edit()
         editor.putString("lastNamespace", namespace.name)
-        editor.commit()
+        editor.apply()
         this.namespace = namespace
-        pcNamespaceButton.visibility = if (namespace == Namespace.PS2PC) View.VISIBLE else View.GONE
-        ps4euNamespaceButton.visibility =
-            if (namespace == Namespace.PS2PS4EU) View.VISIBLE else View.GONE
-        ps4usNamespaceButton.visibility =
-            if (namespace == Namespace.PS2PS4US) View.VISIBLE else View.GONE
+
+        when(namespace) {
+            Namespace.PS2PC -> {
+                namespaceButton.setImageResource(R.drawable.namespace_pc)
+                namespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PS4US) }
+            }
+            Namespace.PS2PS4US -> {
+                namespaceButton.setImageResource(R.drawable.namespace_ps4us)
+                namespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PS4EU) }
+            }
+            Namespace.PS2PS4EU -> {
+                namespaceButton.setImageResource(R.drawable.namespace_ps4eu)
+                namespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PC) }
+            }
+        }
+        namespaceButton.visibility = View.VISIBLE
         metrics.log(TAG, "OnNamespaceButtonClicked", mapOf("Namespace" to namespace.name))
 
         if (listener != null) {
@@ -94,9 +89,7 @@ class ButtonSelectSource(
     }
 
     fun removeButtons(context: Context, root: ViewGroup) {
-        root.removeView(pcNamespaceButton)
-        root.removeView(ps4euNamespaceButton)
-        root.removeView(ps4usNamespaceButton)
+        root.removeView(namespaceButton)
     }
 
     interface SourceSelectionChangedListener {

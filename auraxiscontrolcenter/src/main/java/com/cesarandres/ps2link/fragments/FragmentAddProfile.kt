@@ -158,6 +158,7 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
+            idlingResource.decrement()
         }
 
         val error = ErrorListener {
@@ -169,8 +170,10 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
+            idlingResource.decrement()
         }
 
+        idlingResource.increment()
         dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
     }
 

@@ -118,6 +118,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
 
             setProgressButton(false)
             downloadServerPopulation()
+            idlingResource.decrement()
         }
 
         val error = ErrorListener {
@@ -126,7 +127,9 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
             eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServers")
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
+            idlingResource.decrement()
         }
+        idlingResource.increment()
         dbgCensus.sendGsonRequest(url, Server_response::class.java, success, error, this)
     }
 
@@ -152,6 +155,7 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
+            idlingResource.decrement()
         }
 
         val error = ErrorListener {
@@ -160,8 +164,10 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
             eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerPopulation")
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
+            idlingResource.decrement()
         }
 
+        idlingResource.increment()
         dbgCensus.sendGsonRequest(url, Server_Status_response::class.java, success, error, this)
     }
 
@@ -204,14 +210,17 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
+            idlingResource.decrement()
         }
 
         val error = ErrorListener {
             metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
             eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
             setProgressButton(false)
+            idlingResource.decrement()
         }
 
+        idlingResource.increment()
         dbgCensus.sendGsonRequest(url, World_event_list_response::class.java, success, error, this)
     }
 
