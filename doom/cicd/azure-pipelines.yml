@@ -3,11 +3,20 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+# specific path build
 trigger:
-- master
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - doom/*
+    - build.gradle
+    - gradle.properties
+    - settings.gradle
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: Gradle@2
@@ -18,6 +27,7 @@ steps:
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
+    publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'build'
+    checkStyleRunAnalysis: true
+    tasks: 'doom:game:android:build'
