@@ -1,15 +1,15 @@
 buildscript {
     ext {
         globalAndroidBuildToolsVersion = "29.0.2"
-        globalCompileSdkVersion = 28
+        globalCompileSdkVersion = 29
         globalMinSdkVersion = 22
-        globalTargetSdkVersion = 28
+        globalTargetSdkVersion = 29
         globalVersionCode = 1
         globalVersionName = "1.0"
 
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
-        globalAndroidGradlePluginVersion = '3.6.1'
+        globalAndroidGradlePluginVersion = '3.5.3'
         globalAndroidMaterialVersion = "1.1.0"
         globalAndroidXJUnitVersion = "1.1.1"
         globalAndroidXTestVersion = "1.2.0"
