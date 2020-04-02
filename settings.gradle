@@ -1,6 +1,7 @@
 pluginManagement {
     plugins {
         id "io.gitlab.arturbosch.detekt" version initDetektVersion
+        id "com.github.ben-manes.versions" version initVersionVersion
         id "org.jetbrains.kotlin.multiplatform" version initKotlinVersion
         id "org.jetbrains.kotlin.jvm" version initKotlinVersion
         id "org.jetbrains.kotlin.android" version initKotlinVersion
