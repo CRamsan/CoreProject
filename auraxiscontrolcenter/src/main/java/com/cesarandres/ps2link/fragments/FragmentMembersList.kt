@@ -73,7 +73,7 @@ class FragmentMembersList : BaseFragment() {
             this.outfitName = savedInstanceState.getString("outfitName")
             this.shownOffline = savedInstanceState.getBoolean("showOffline")
         }
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
 
         this.fragmentShowOffline.setOnCheckedChangeListener { buttonView, isChecked ->
             shownOffline = isChecked

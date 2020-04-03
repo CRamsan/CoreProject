@@ -56,7 +56,7 @@ class FragmentProfile : BaseFragment() {
         val task = UpdateProfileFromTable()
         setCurrentTask(task)
         this.profileId = arguments!!.getString("PARAM_0")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
         task.execute(this.profileId)
     }
 

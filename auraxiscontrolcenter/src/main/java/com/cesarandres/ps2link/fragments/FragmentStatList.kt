@@ -52,7 +52,7 @@ class FragmentStatList : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         this.profileId = arguments!!.getString("PARAM_0")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
     }
 
     /*

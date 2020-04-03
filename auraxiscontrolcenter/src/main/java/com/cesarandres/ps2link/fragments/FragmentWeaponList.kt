@@ -74,7 +74,7 @@ class FragmentWeaponList : BaseFragment() {
         }
 
         this.profileId = arguments!!.getString("PARAM_0")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1"))
+        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
         this.profileFaction = ""
     }
 

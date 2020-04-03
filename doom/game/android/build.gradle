@@ -5,6 +5,9 @@ plugins {
 android {
     buildToolsVersion globalAndroidBuildToolsVersion
     compileSdkVersion globalCompileSdkVersion
+ 
+    ndkVersion = "21.0.6113669"
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
