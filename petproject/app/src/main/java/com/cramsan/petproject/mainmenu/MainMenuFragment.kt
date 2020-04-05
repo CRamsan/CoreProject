@@ -29,7 +29,7 @@ class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
 AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val contentViewLayout: Int
-        get() = R.layout.fragment_main_menu
+        get() = R.layout.fragment_new_main_menu
 
     private var listener: PlantsListFragment.OnListFragmentInteractionListener? = null
     private lateinit var viewModel: DownloadCatalogViewModel

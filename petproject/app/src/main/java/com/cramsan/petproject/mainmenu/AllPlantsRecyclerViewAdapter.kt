@@ -14,10 +14,7 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_header
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_icon
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_layout
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_sub_header
+import kotlinx.android.synthetic.main.view_plant.view.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -61,21 +58,31 @@ class AllPlantsRecyclerViewAdapter(
         val item = mValues[position]
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName
-        when {
-            item.animalType == AnimalType.CAT -> {
-                holder.mViewIcon.visibility = View.VISIBLE
-                holder.mViewIcon.setImageDrawable(ResourcesCompat.getDrawable(holder.mViewIcon.context.resources, R.drawable.ic_cat, null))
+        when (item.animalType) {
+            AnimalType.CAT -> {
+                holder.mViewIconCat.visibility = View.VISIBLE
+                holder.mViewIconDog.visibility = View.GONE
             }
-            item.animalType == AnimalType.DOG -> {
-                holder.mViewIcon.visibility = View.VISIBLE
-                holder.mViewIcon.setImageDrawable(ResourcesCompat.getDrawable(holder.mViewIcon.context.resources, R.drawable.ic_dog, null))
+            AnimalType.DOG -> {
+                holder.mViewIconCat.visibility = View.GONE
+                holder.mViewIconDog.visibility = View.VISIBLE
             }
-            else -> holder.mViewIcon.visibility = View.GONE
+            else -> {
+                holder.mViewIconCat.visibility = View.GONE
+                holder.mViewIconDog.visibility = View.GONE
+            }
         }
+
+        val targetAnimalView = when (item.animalType) {
+            AnimalType.CAT -> holder.mViewIconCat
+            AnimalType.DOG -> holder.mViewIconDog
+            else -> TODO()
+        }
+
         when (item.isToxic) {
-            ToxicityValue.TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_view_item_danger)
-            ToxicityValue.NON_TOXIC -> holder.mContainerView.setBackgroundResource(R.drawable.plant_view_item_safe)
-            ToxicityValue.UNDETERMINED -> holder.mContainerView.setBackgroundResource(R.drawable.plant_view_item_undetermined)
+            ToxicityValue.TOXIC -> targetAnimalView.setBackgroundResource(R.drawable.plant_view_item_danger)
+            ToxicityValue.NON_TOXIC -> targetAnimalView.setBackgroundResource(R.drawable.plant_view_item_safe)
+            ToxicityValue.UNDETERMINED -> targetAnimalView.setBackgroundResource(R.drawable.plant_view_item_undetermined)
         }
 
         with(holder.mView) {
@@ -89,7 +96,8 @@ class AllPlantsRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mViewHeader: TextView = mView.plant_list_view_header
         val mViewSubHeader: TextView = mView.plant_list_view_sub_header
-        val mViewIcon: ImageView = mView.plant_list_view_icon
+        val mViewIconCat: ImageView = mView.plant_list_view_icon_cat
+        val mViewIconDog: ImageView = mView.plant_list_view_icon_dog
         val mContainerView: View = mView.plant_list_view_layout
 
         override fun toString(): String {
