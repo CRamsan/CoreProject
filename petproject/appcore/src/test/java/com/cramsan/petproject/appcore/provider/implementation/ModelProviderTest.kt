@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
-import com.cramsan.framework.preferences.implementation.PreferencesAndroidInitializer
-import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
+import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroidProvider
 import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +13,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.kodein.di.erased.provider
 
 /**
  * Unit test. This will be executed in a mocked Android environment.
@@ -30,7 +29,10 @@ class ModelProviderTest {
     fun setUp() {
         modelProviderTest = ModelProviderCommonTest()
         val appContext = ApplicationProvider.getApplicationContext<Context>()
-        modelProviderTest.setUp(ModelStoragePlatformInitializer(appContext), PreferencesAndroidInitializer(PreferencesAndroid(appContext)))
+        modelProviderTest.setUp(
+            ModelStorageAndroidProvider(
+                appContext
+            ), PreferencesAndroid(appContext))
         semaphore = Semaphore(0)
     }
 

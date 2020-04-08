@@ -1,12 +1,12 @@
 package com.cramsan.framework.logging.implementation
 
-import com.cramsan.framework.logging.EventLoggerPlatformInitializerInterface
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 
 class EventLoggerCommonTest {
 
-    fun logWithVerboseSeverity(platformInitializer: EventLoggerPlatformInitializerInterface) {
-        val eventLogger = EventLogger(EventLoggerInitializer(platformInitializer, Severity.VERBOSE))
+    fun logWithVerboseSeverity(platformDelegate: EventLoggerInterface) {
+        val eventLogger = EventLogger(Severity.VERBOSE, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
         eventLogger.log(Severity.INFO, "Test", "Message-3")
@@ -14,8 +14,8 @@ class EventLoggerCommonTest {
         eventLogger.log(Severity.ERROR, "Test", "Message-5")
     }
 
-    fun logWithDebugSeverity(platformInitializer: EventLoggerPlatformInitializerInterface) {
-        val eventLogger = EventLogger(EventLoggerInitializer(platformInitializer, Severity.DEBUG))
+    fun logWithDebugSeverity(platformDelegate: EventLoggerInterface) {
+        val eventLogger = EventLogger(Severity.DEBUG, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
         eventLogger.log(Severity.INFO, "Test", "Message-3")
@@ -23,8 +23,8 @@ class EventLoggerCommonTest {
         eventLogger.log(Severity.ERROR, "Test", "Message-5")
     }
 
-    fun logWithInfoSeverity(platformInitializer: EventLoggerPlatformInitializerInterface) {
-        val eventLogger = EventLogger(EventLoggerInitializer(platformInitializer, Severity.INFO))
+    fun logWithInfoSeverity(platformDelegate: EventLoggerInterface) {
+        val eventLogger = EventLogger(Severity.INFO, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
         eventLogger.log(Severity.INFO, "Test", "Message-3")
@@ -32,8 +32,8 @@ class EventLoggerCommonTest {
         eventLogger.log(Severity.ERROR, "Test", "Message-5")
     }
 
-    fun logWithWarningSeverity(platformInitializer: EventLoggerPlatformInitializerInterface) {
-        val eventLogger = EventLogger(EventLoggerInitializer(platformInitializer, Severity.WARNING))
+    fun logWithWarningSeverity(platformDelegate: EventLoggerInterface) {
+        val eventLogger = EventLogger(Severity.WARNING, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
         eventLogger.log(Severity.INFO, "Test", "Message-3")
@@ -41,8 +41,8 @@ class EventLoggerCommonTest {
         eventLogger.log(Severity.ERROR, "Test", "Message-5")
     }
 
-    fun logWithErrorSeverity(platformInitializer: EventLoggerPlatformInitializerInterface) {
-        val eventLogger = EventLogger(EventLoggerInitializer(platformInitializer, Severity.ERROR))
+    fun logWithErrorSeverity(platformDelegate: EventLoggerInterface) {
+        val eventLogger = EventLogger(Severity.ERROR, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
         eventLogger.log(Severity.INFO, "Test", "Message-3")

@@ -6,50 +6,35 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.assert.implementation.AssertUtilInitializer
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
-import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandlerInitializer
 import com.cramsan.framework.crashehandler.implementation.CrashHandler
-import com.cramsan.framework.crashehandler.implementation.CrashHandlerInitializer
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
-import com.cramsan.framework.halt.implementation.HaltUtilAndroidInitializer
-import com.cramsan.framework.halt.implementation.HaltUtilInitializer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.logging.implementation.EventLoggerInitializer
 import com.cramsan.framework.logging.implementation.LoggerAndroid
-import com.cramsan.framework.logging.implementation.LoggerAndroidInitializer
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterMetrics
-import com.cramsan.framework.metrics.implementation.AppCenterMetricsInitializer
 import com.cramsan.framework.metrics.implementation.Metrics
-import com.cramsan.framework.metrics.implementation.MetricsInitializer
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
-import com.cramsan.framework.preferences.implementation.PreferencesAndroidInitializer
-import com.cramsan.framework.preferences.implementation.PreferencesInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
-import com.cramsan.framework.thread.implementation.ThreadUtilAndroidInitializer
-import com.cramsan.framework.thread.implementation.ThreadUtilInitializer
 import com.cramsan.petproject.appcore.feedback.FeedbackManagerDAO
 import com.cramsan.petproject.appcore.feedback.FeedbackManagerInterface
 import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManager
-import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManagerInitializer
-import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManagerPlatformInitializer
 import com.cramsan.petproject.appcore.model.feedback.Feedback
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
-import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
+import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroidProvider
 import com.microsoft.appcenter.AppCenter
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -70,43 +55,44 @@ class PetProjectApplication : Application(), KodeinAware {
         import(androidXModule(this@PetProjectApplication))
 
         bind<CrashHandlerInterface>() with singleton {
-            CrashHandler(CrashHandlerInitializer(AppCenterCrashHandlerInitializer(AppCenterCrashHandler())))
+            CrashHandler(AppCenterCrashHandler())
         }
         bind<MetricsInterface>() with singleton {
-            Metrics(MetricsInitializer(AppCenterMetricsInitializer(AppCenterMetrics())))
+            Metrics(AppCenterMetrics())
         }
         bind<EventLoggerInterface>() with singleton {
             val severity: Severity = when (BuildConfig.DEBUG) {
                 true -> Severity.DEBUG
                 false -> Severity.INFO
             }
-            EventLogger(EventLoggerInitializer(LoggerAndroidInitializer(LoggerAndroid()), severity))
+            EventLogger(severity, LoggerAndroid())
         }
         bind<HaltUtilInterface>() with singleton {
-            HaltUtil(HaltUtilInitializer(HaltUtilAndroidInitializer(HaltUtilAndroid())))
+            HaltUtil(HaltUtilAndroid())
         }
         bind<ThreadUtilInterface>() with singleton {
-            val threadUtil by kodein.newInstance { ThreadUtil(ThreadUtilInitializer(ThreadUtilAndroidInitializer(ThreadUtilAndroid(instance())))) }
+            val threadUtil by kodein.newInstance { ThreadUtil(ThreadUtilAndroid(instance())) }
             threadUtil
         }
         bind<AssertUtilInterface>() with singleton {
-            val initializer = AssertUtilInitializer(BuildConfig.DEBUG)
-            val assertUtil by kodein.newInstance { AssertUtil(initializer, instance(), instance()) }
+            val assertUtil by kodein.newInstance { AssertUtil(BuildConfig.DEBUG, instance(), instance()) }
             assertUtil
         }
         bind<ModelStorageInterface>() with singleton {
             val context: Context = this@PetProjectApplication
+            val modelStorageDAO = ModelStorageAndroidProvider(
+                context
+            ).provide()
             val modelStorage by kodein.newInstance {
-                ModelStorage(ModelStorageInitializer(ModelStoragePlatformInitializer(context)),
+                ModelStorage(modelStorageDAO,
                 instance(),
                 instance()) }
             modelStorage
         }
         bind<PreferencesInterface>() with singleton {
             val context = this@PetProjectApplication
-            val preferencesInitializer = PreferencesInitializer(PreferencesAndroidInitializer(PreferencesAndroid(context)))
             val preferences by kodein.newInstance {
-                Preferences(preferencesInitializer)
+                Preferences(PreferencesAndroid(context))
             }
             preferences
         }
@@ -124,9 +110,8 @@ class PetProjectApplication : Application(), KodeinAware {
                     TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
                 }
             }
-            val initializer = FeedbackManagerInitializer(FeedbackManagerPlatformInitializer(DummyDAO()))
             val feedbackManager by kodein.newInstance {
-                FeedbackManager(initializer,
+                FeedbackManager(DummyDAO(),
                     instance(),
                     instance())
             }

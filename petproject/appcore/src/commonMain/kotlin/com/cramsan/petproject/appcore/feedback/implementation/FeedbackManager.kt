@@ -7,14 +7,12 @@ import com.cramsan.petproject.appcore.feedback.FeedbackManagerInterface
 import com.cramsan.petproject.appcore.model.feedback.Feedback
 
 class FeedbackManager(
-    initializer: FeedbackManagerInitializer,
+    private val platformDelegate: FeedbackManagerDAO,
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface
 ) : FeedbackManagerInterface {
 
-    private var feedbackManagerDAO: FeedbackManagerDAO = initializer.platformInitializer.getFeedbackManagerDAO()
-
     override fun submitFeedback(feedback: Feedback) {
-        feedbackManagerDAO.submitFeedback(feedback)
+        platformDelegate.submitFeedback(feedback)
     }
 }

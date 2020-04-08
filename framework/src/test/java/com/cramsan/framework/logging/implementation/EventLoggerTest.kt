@@ -22,26 +22,26 @@ class EventLoggerTest {
 
     @Test
     fun logWithVerboseSeverity() {
-        eventLoggerTest.logWithVerboseSeverity(LoggerAndroidInitializer(LoggerAndroid()))
+        eventLoggerTest.logWithVerboseSeverity(LoggerAndroid())
     }
 
     @Test
     fun logWithDebugSeverity() {
-        eventLoggerTest.logWithDebugSeverity(LoggerAndroidInitializer(LoggerAndroid()))
+        eventLoggerTest.logWithDebugSeverity(LoggerAndroid())
     }
 
     @Test
     fun logWithInfoSeverity() {
-        eventLoggerTest.logWithInfoSeverity(LoggerAndroidInitializer(LoggerAndroid()))
+        eventLoggerTest.logWithInfoSeverity(LoggerAndroid())
     }
 
     @Test
     fun logWithWarningSeverity() {
-        eventLoggerTest.logWithWarningSeverity(LoggerAndroidInitializer(LoggerAndroid()))
+        eventLoggerTest.logWithWarningSeverity(LoggerAndroid())
     }
 
     @Test
     fun logWithErrorSeverity() {
-        eventLoggerTest.logWithErrorSeverity(LoggerAndroidInitializer(LoggerAndroid()))
+        eventLoggerTest.logWithErrorSeverity(LoggerAndroid())
     }
 }

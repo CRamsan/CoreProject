@@ -13,10 +13,9 @@ import io.mockk.verify
 class AssertUtilCommonTest {
 
     fun assertTrueWithHaltEnabled() {
-        val initializer = AssertUtilInitializer(true)
         val eventLogger = mockkClass(EventLogger::class)
         val haltUtil = mockkClass(HaltUtil::class)
-        val assertUtil = AssertUtil(initializer, eventLogger, haltUtil)
+        val assertUtil = AssertUtil(true, eventLogger, haltUtil)
 
         assertUtil.assert(true, "Test", "Assert-Message-1")
 
@@ -27,10 +26,9 @@ class AssertUtilCommonTest {
     }
 
     fun assertFalseWithHaltEnabled() {
-        val initializer = AssertUtilInitializer(true)
         val eventLogger = mockkClass(EventLogger::class)
         val haltUtil = mockkClass(HaltUtil::class)
-        val assertUtil = AssertUtil(initializer, eventLogger, haltUtil)
+        val assertUtil = AssertUtil(true, eventLogger, haltUtil)
         val classTag = "Test"
 
         every { eventLogger.log(Severity.ERROR, classTag, "Assert-Message-1") } just Runs
@@ -45,10 +43,9 @@ class AssertUtilCommonTest {
     }
 
     fun assertTrueWithHaltDisabled() {
-        val initializer = AssertUtilInitializer(false)
         val eventLogger = mockkClass(EventLogger::class)
         val haltUtil = mockkClass(HaltUtil::class)
-        val assertUtil = AssertUtil(initializer, eventLogger, haltUtil)
+        val assertUtil = AssertUtil(false, eventLogger, haltUtil)
 
         assertUtil.assert(true, "Test", "Assert-Message-1")
 
@@ -59,10 +56,9 @@ class AssertUtilCommonTest {
     }
 
     fun assertFalseWithHaltDisabled() {
-        val initializer = AssertUtilInitializer(false)
         val eventLogger = mockkClass(EventLogger::class)
         val haltUtil = mockkClass(HaltUtil::class)
-        val assertUtil = AssertUtil(initializer, eventLogger, haltUtil)
+        val assertUtil = AssertUtil(false, eventLogger, haltUtil)
         val classTag = "Test"
 
         every { eventLogger.log(Severity.ERROR, classTag, "Assert-Message-1") } just Runs

@@ -6,13 +6,7 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import com.cramsan.petproject.appcore.storage.Description
-import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.appcore.storage.Plant
-import com.cramsan.petproject.appcore.storage.PlantCommonName
-import com.cramsan.petproject.appcore.storage.PlantFamily
-import com.cramsan.petproject.appcore.storage.PlantMainName
-import com.cramsan.petproject.appcore.storage.Toxicity
+import com.cramsan.petproject.appcore.storage.*
 import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -32,9 +26,8 @@ internal class ModelStorageCommonTest {
 
     private lateinit var modelStorage: ModelStorageInterface
 
-    fun setUp(platformInitializer: ModelStoragePlatformInitializer) {
-        val initializer = ModelStorageInitializer(platformInitializer)
-        val newModelStorage by kodein.newInstance { ModelStorage(initializer, instance(), instance()) }
+    fun setUp(platformProvider: ModelStoragePlatformProvider) {
+        val newModelStorage by kodein.newInstance { ModelStorage(platformProvider.provide(), instance(), instance()) }
         modelStorage = newModelStorage
     }
 

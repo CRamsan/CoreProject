@@ -1,34 +1,31 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.base.implementation.BaseModule
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilInterface
 
-class ThreadUtil(initializer: ThreadUtilInitializer) : BaseModule<ThreadUtilManifest>(initializer), ThreadUtilInterface {
-
-    private val platformThreadUtil = initializer.platformInitializer.platformThreadUtil
+class ThreadUtil(private val platformDelegate: ThreadUtilInterface) : ThreadUtilInterface {
 
     override fun isUIThread(): Boolean {
-        return platformThreadUtil.isUIThread()
+        return platformDelegate.isUIThread()
     }
 
     override fun isBackgroundThread(): Boolean {
-        return platformThreadUtil.isBackgroundThread()
+        return platformDelegate.isBackgroundThread()
     }
 
     override fun dispatchToBackground(block: RunBlock) {
-        return platformThreadUtil.dispatchToBackground(block)
+        return platformDelegate.dispatchToBackground(block)
     }
 
     override fun dispatchToUI(block: RunBlock) {
-        platformThreadUtil.dispatchToUI(block)
+        platformDelegate.dispatchToUI(block)
     }
 
     override fun assertIsUIThread() {
-        platformThreadUtil.assertIsUIThread()
+        platformDelegate.assertIsUIThread()
     }
 
     override fun assertIsBackgroundThread() {
-        platformThreadUtil.assertIsBackgroundThread()
+        platformDelegate.assertIsBackgroundThread()
     }
 }

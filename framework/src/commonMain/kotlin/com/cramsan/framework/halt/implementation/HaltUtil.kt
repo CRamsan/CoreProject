@@ -1,21 +1,18 @@
 package com.cramsan.framework.halt.implementation
 
-import com.cramsan.framework.base.implementation.BaseModule
 import com.cramsan.framework.halt.HaltUtilInterface
 
-class HaltUtil(initializer: HaltUtilInitializer) : BaseModule<HaltUtilManifest>(initializer), HaltUtilInterface {
-
-    private val platformHaltUtil = initializer.platformInitializer.platformDelegate
+class HaltUtil(private val platformDelegate: HaltUtilInterface) : HaltUtilInterface {
 
     override fun resumeThread() {
-        platformHaltUtil.resumeThread()
+        platformDelegate.resumeThread()
     }
 
     override fun stopThread() {
-        platformHaltUtil.stopThread()
+        platformDelegate.stopThread()
     }
 
     override fun crashApp() {
-        platformHaltUtil.crashApp()
+        platformDelegate.crashApp()
     }
 }

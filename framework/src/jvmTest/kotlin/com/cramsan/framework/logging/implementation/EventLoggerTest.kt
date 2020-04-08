@@ -16,26 +16,26 @@ class EventLoggerTest {
 
     @Test
     fun logWithVerboseSeverity() {
-        eventLoggerTest.logWithVerboseSeverity(LoggerJVMInitializer(LoggerJVM()))
+        eventLoggerTest.logWithVerboseSeverity(LoggerJVM())
     }
 
     @Test
     fun logWithDebugSeverity() {
-        eventLoggerTest.logWithDebugSeverity(LoggerJVMInitializer(LoggerJVM()))
+        eventLoggerTest.logWithDebugSeverity(LoggerJVM())
     }
 
     @Test
     fun logWithInfoSeverity() {
-        eventLoggerTest.logWithInfoSeverity(LoggerJVMInitializer(LoggerJVM()))
+        eventLoggerTest.logWithInfoSeverity(LoggerJVM())
     }
 
     @Test
     fun logWithWarningSeverity() {
-        eventLoggerTest.logWithWarningSeverity(LoggerJVMInitializer(LoggerJVM()))
+        eventLoggerTest.logWithWarningSeverity(LoggerJVM())
     }
 
     @Test
     fun logWithErrorSeverity() {
-        eventLoggerTest.logWithErrorSeverity(LoggerJVMInitializer(LoggerJVM()))
+        eventLoggerTest.logWithErrorSeverity(LoggerJVM())
     }
 }

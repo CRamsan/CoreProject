@@ -2,9 +2,8 @@ package com.cramsan.petproject.appcore.provider.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.preferences.PreferencesPlatformInitializerInterface
+import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.Preferences
-import com.cramsan.framework.preferences.implementation.PreferencesInitializer
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -17,8 +16,7 @@ import com.cramsan.petproject.appcore.storage.PlantFamily
 import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageInitializer
-import com.cramsan.petproject.appcore.storage.implementation.ModelStoragePlatformInitializer
+import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -41,10 +39,10 @@ internal class ModelProviderCommonTest {
     private lateinit var modelProviderImpl: ModelProvider
     private lateinit var modelStorage: ModelStorage
 
-    fun setUp(storagePlatformInitializer: ModelStoragePlatformInitializer, platformPreferencesInterface: PreferencesPlatformInitializerInterface) {
-        val modelStorageImpl by kodein.newInstance { ModelStorage(ModelStorageInitializer(storagePlatformInitializer), instance(), instance()) }
+    fun setUp(storagePlatformProvider: ModelStoragePlatformProvider, platformDelegate: PreferencesInterface) {
+        val modelStorageImpl by kodein.newInstance { ModelStorage(storagePlatformProvider.provide(), instance(), instance()) }
         modelStorage = modelStorageImpl
-        val preferences by kodein.newInstance { Preferences(PreferencesInitializer(platformPreferencesInterface)) }
+        val preferences by kodein.newInstance { Preferences(platformDelegate) }
         val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), modelStorage, preferences) }
         modelProviderImpl = newModelProvider
         modelProvider = modelProviderImpl

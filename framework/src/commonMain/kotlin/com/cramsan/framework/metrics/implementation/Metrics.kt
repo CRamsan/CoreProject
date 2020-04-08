@@ -2,19 +2,17 @@ package com.cramsan.framework.metrics.implementation
 
 import com.cramsan.framework.metrics.MetricsInterface
 
-class Metrics(initializer: MetricsInitializer) : MetricsInterface {
-
-    private val platformMetrics = initializer.platformInitializer.platformMetrics
+class Metrics(private val platformDelegate: MetricsInterface) : MetricsInterface {
 
     override fun initialize() {
-        platformMetrics.initialize()
+        platformDelegate.initialize()
     }
 
     override fun log(tag: String, event: String) {
-        platformMetrics.log(tag, event)
+        platformDelegate.log(tag, event)
     }
 
     override fun log(tag: String, event: String, metadata: Map<String, String>) {
-        platformMetrics.log(tag, event, metadata)
+        platformDelegate.log(tag, event, metadata)
     }
 }

@@ -16,12 +16,10 @@ import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
 
 class ModelStorage(
-    initializer: ModelStorageInitializer,
+    private val platformDelegate: ModelStorageDAO,
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface
 ) : ModelStorageInterface {
-
-    private var modelStorageDAO: ModelStorageDAO = initializer.platformInitializer.getModelStorageDAO()
 
     override fun insertPlant(plant: Plant) {
         eventLogger.log(Severity.INFO, "ModelStorage", "insertPlant")
@@ -32,21 +30,21 @@ class ModelStorage(
         } else {
             plant.id
         }
-        modelStorageDAO.insertPlantEntry(plantId, plant.scientificName, plant.imageUrl)
+        platformDelegate.insertPlantEntry(plantId, plant.scientificName, plant.imageUrl)
     }
 
     override fun getPlants(): List<Plant> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlants")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getAllPlantEntries()
+        return platformDelegate.getAllPlantEntries()
     }
 
     override fun getPlant(scientificName: String): Plant? {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlant")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getPlantEntry(scientificName)
+        return platformDelegate.getPlantEntry(scientificName)
     }
 
     override fun insertPlantMainName(plantMainName: PlantMainName) {
@@ -58,21 +56,21 @@ class ModelStorage(
         } else {
             plantMainName.id
         }
-        modelStorageDAO.insertPlantMainNameEntry(plantMainNameId, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
+        platformDelegate.insertPlantMainNameEntry(plantMainNameId, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
     }
 
     override fun getPlantMainName(plantId: Long, locale: String): PlantMainName? {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlantMainName")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getPlantMainNameEntry(plantId, locale)
+        return platformDelegate.getPlantMainNameEntry(plantId, locale)
     }
 
     override fun getPlantsMainName(): List<PlantMainName> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlantsMainName")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getAllPlantMainNameEntries()
+        return platformDelegate.getAllPlantMainNameEntries()
     }
 
     override fun insertPlantCommonName(plantCommonName: PlantCommonName) {
@@ -84,14 +82,14 @@ class ModelStorage(
         } else {
             plantCommonName.id
         }
-        return modelStorageDAO.insertPlantCommonNameEntry(plantCommonNameId, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
+        return platformDelegate.insertPlantCommonNameEntry(plantCommonNameId, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
     }
 
     override fun getPlantsCommonNames(): List<PlantCommonName> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlantsCommonNames")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getAllPlantCommonNameEntries()
+        return platformDelegate.getAllPlantCommonNameEntries()
     }
 
     override fun insertPlantFamily(plantFamily: PlantFamily) {
@@ -103,21 +101,21 @@ class ModelStorage(
         } else {
             plantFamily.id
         }
-        return modelStorageDAO.insertPlantFamilyNameEntry(plantFamilyId, plantFamily.family, plantFamily.plantId, plantFamily.locale)
+        return platformDelegate.insertPlantFamilyNameEntry(plantFamilyId, plantFamily.family, plantFamily.plantId, plantFamily.locale)
     }
 
     override fun getPlantFamily(plantId: Long, locale: String): PlantFamily? {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlantFamily")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getPlantFamilyEntry(plantId, locale)
+        return platformDelegate.getPlantFamilyEntry(plantId, locale)
     }
 
     override fun getPlantsFamily(): List<PlantFamily> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlantsFamily")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getAllPlantFamilyEntries()
+        return platformDelegate.getAllPlantFamilyEntries()
     }
 
     override fun insertDescription(description: Description) {
@@ -129,14 +127,14 @@ class ModelStorage(
         } else {
             description.id
         }
-        return modelStorageDAO.insertDescriptionEntry(descriptionId, description.plantId, description.animalId, description.description, description.locale)
+        return platformDelegate.insertDescriptionEntry(descriptionId, description.plantId, description.animalId, description.description, description.locale)
     }
 
     override fun getDescription(): List<Description> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getDescription")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getAllDescriptionEntries()
+        return platformDelegate.getAllDescriptionEntries()
     }
 
     override fun insertToxicity(toxicity: Toxicity) {
@@ -148,21 +146,21 @@ class ModelStorage(
         } else {
             toxicity.id
         }
-        return modelStorageDAO.insertToxicityEntry(toxicityId, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
+        return platformDelegate.insertToxicityEntry(toxicityId, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
     }
 
     override fun getToxicity(plantId: Long, animalType: AnimalType): Toxicity? {
         eventLogger.log(Severity.INFO, "ModelStorage", "getToxicity")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getToxicityEntry(plantId, animalType)
+        return platformDelegate.getToxicityEntry(plantId, animalType)
     }
 
     override fun getToxicity(): List<Toxicity> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getToxicity")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getAllToxicityEntries()
+        return platformDelegate.getAllToxicityEntries()
     }
 
     override fun getCustomPlantEntry(
@@ -173,7 +171,7 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantEntry")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getCustomPlantEntry(plantId.toLong(),
+        return platformDelegate.getCustomPlantEntry(plantId.toLong(),
             animalType,
             locale)
     }
@@ -182,13 +180,13 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantsEntries")
         threadUtil.assertIsBackgroundThread()
 
-        return modelStorageDAO.getCustomPlantEntries(animalType, locale)
+        return platformDelegate.getCustomPlantEntries(animalType, locale)
     }
 
     override fun deleteAll() {
         eventLogger.log(Severity.INFO, "ModelStorage", "deleteAll")
         threadUtil.assertIsBackgroundThread()
 
-        modelStorageDAO.deleteAll()
+        platformDelegate.deleteAll()
     }
 }

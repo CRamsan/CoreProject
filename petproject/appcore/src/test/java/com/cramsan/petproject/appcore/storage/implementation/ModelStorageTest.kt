@@ -3,6 +3,7 @@ package com.cramsan.petproject.appcore.storage.implementation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,11 @@ class ModelStorageTest {
     fun setUp() {
         modelStorageTest = ModelStorageCommonTest()
         val appContext = ApplicationProvider.getApplicationContext<Context>()
-        modelStorageTest.setUp(ModelStoragePlatformInitializer(appContext))
+        modelStorageTest.setUp(
+            ModelStorageAndroidProvider(
+                appContext
+            )
+        )
         semaphore = Semaphore(0)
     }
 
