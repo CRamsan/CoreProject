@@ -20,18 +20,9 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: ':webservice:bootjar'
+    tasks: ':webservice:test :webservice:bootjar'
 - task: CopyFiles@2
   inputs:
     contents: '**/*.jar'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Connection-PetProject-Service'
-    appType: 'webAppLinux'
-    deploymentType: 'zipDeploy'
-    webAppName: 'PetProject-Test3'
-    packageForLinux: 'webservice/build/libs/webservice-0.0.1-SNAPSHOT.jar'
-    RuntimeStack: 'JAVA|8-jre8'
