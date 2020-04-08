@@ -20,7 +20,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'petproject:webservice:test :  petproject:webservice:bootjar'
+    tasks: 'petproject:webservice:test petproject:webservice:bootjar'
 - task: CopyFiles@2
   inputs:
     contents: '**/*.jar'
