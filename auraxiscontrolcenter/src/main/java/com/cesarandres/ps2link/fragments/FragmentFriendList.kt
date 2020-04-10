@@ -106,7 +106,6 @@ class FragmentFriendList : BaseFragment() {
                 listRoot.adapter =
                     FriendItemAdapter(activity!!, response.characters_friend_list!![0].friend_list!!)
             } catch (e: Exception) {
-                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
                 eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
@@ -115,7 +114,6 @@ class FragmentFriendList : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()

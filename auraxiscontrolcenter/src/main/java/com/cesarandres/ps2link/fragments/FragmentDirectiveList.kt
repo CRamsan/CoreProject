@@ -115,7 +115,6 @@ class FragmentDirectiveList : BaseFragment() {
         }
 
         val error = ErrorListener {
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             setProgressButton(false)
         }
@@ -138,7 +137,6 @@ class FragmentDirectiveList : BaseFragment() {
         }
 
         val error = ErrorListener {
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             setProgressButton(false)
         }
@@ -167,7 +165,6 @@ class FragmentDirectiveList : BaseFragment() {
         }
 
         val error = ErrorListener {
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             setProgressButton(false)
         }
@@ -191,7 +188,6 @@ class FragmentDirectiveList : BaseFragment() {
         }
 
         val error = ErrorListener {
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             setProgressButton(false)
         }
@@ -210,7 +206,6 @@ class FragmentDirectiveList : BaseFragment() {
 
         val error = ErrorListener {
             setProgressButton(false)
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
         }
 
@@ -235,7 +230,6 @@ class FragmentDirectiveList : BaseFragment() {
         }
 
         val error = ErrorListener {
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
             eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
             setProgressButton(false)
         }

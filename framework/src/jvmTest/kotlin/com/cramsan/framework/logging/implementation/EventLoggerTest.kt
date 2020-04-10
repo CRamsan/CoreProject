@@ -1,5 +1,8 @@
 package com.cramsan.framework.logging.implementation
 
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
 
@@ -16,26 +19,31 @@ class EventLoggerTest {
 
     @Test
     fun logWithVerboseSeverity() {
-        eventLoggerTest.logWithVerboseSeverity(LoggerJVM())
+        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        eventLoggerTest.logWithVerboseSeverity(LoggerJVM(), errorCallback)
     }
 
     @Test
     fun logWithDebugSeverity() {
-        eventLoggerTest.logWithDebugSeverity(LoggerJVM())
+        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        eventLoggerTest.logWithDebugSeverity(LoggerJVM(), errorCallback)
     }
 
     @Test
     fun logWithInfoSeverity() {
-        eventLoggerTest.logWithInfoSeverity(LoggerJVM())
+        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        eventLoggerTest.logWithInfoSeverity(LoggerJVM(), errorCallback)
     }
 
     @Test
     fun logWithWarningSeverity() {
-        eventLoggerTest.logWithWarningSeverity(LoggerJVM())
+        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        eventLoggerTest.logWithWarningSeverity(LoggerJVM(), errorCallback)
     }
 
     @Test
     fun logWithErrorSeverity() {
-        eventLoggerTest.logWithErrorSeverity(LoggerJVM())
+        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        eventLoggerTest.logWithErrorSeverity(LoggerJVM(), errorCallback)
     }
 }

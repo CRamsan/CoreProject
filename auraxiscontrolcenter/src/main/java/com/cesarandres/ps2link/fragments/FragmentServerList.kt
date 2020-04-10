@@ -110,7 +110,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                     downloadServerAlert(world.world_id)
                 }
             } catch (e: Exception) {
-                metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
                 eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
@@ -123,7 +122,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
 
         val error = ErrorListener {
             setProgressButton(false)
-            metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServers")
             eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServers")
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
@@ -150,7 +148,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 val servers = response.ps2
                 (listRoot.adapter as ServerItemAdapter).setServerPopulation(servers!!)
             } catch (e: Exception) {
-                metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerPopulation")
                 eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerPopulation")
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
@@ -160,7 +157,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
 
         val error = ErrorListener {
             setProgressButton(false)
-            metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerPopulation")
             eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerPopulation")
             Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                 .show()
@@ -205,7 +201,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                     (listRoot.adapter as ServerItemAdapter).setServerAlert(events[0])
                 }
             } catch (e: Exception) {
-                metrics.log(TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerAlert")
                 eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerAlert")
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
@@ -214,7 +209,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         }
 
         val error = ErrorListener {
-            metrics.log(TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
             eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
             setProgressButton(false)
             idlingResource.decrement()

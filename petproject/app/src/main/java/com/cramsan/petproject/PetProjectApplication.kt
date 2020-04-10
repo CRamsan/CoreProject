@@ -12,6 +12,7 @@ import com.cramsan.framework.crashehandler.implementation.CrashHandler
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
+import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
@@ -19,6 +20,7 @@ import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterMetrics
 import com.cramsan.framework.metrics.implementation.Metrics
+import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
@@ -57,6 +59,9 @@ class PetProjectApplication : Application(), KodeinAware {
         bind<CrashHandlerInterface>() with singleton {
             CrashHandler(AppCenterCrashHandler())
         }
+        bind<EventLoggerErrorCallbackInterface>() with singleton {
+            MetricsErrorCallback(instance())
+        }
         bind<MetricsInterface>() with singleton {
             Metrics(AppCenterMetrics())
         }
@@ -65,7 +70,7 @@ class PetProjectApplication : Application(), KodeinAware {
                 true -> Severity.DEBUG
                 false -> Severity.INFO
             }
-            EventLogger(severity, LoggerAndroid())
+            EventLogger(severity, instance(), LoggerAndroid())
         }
         bind<HaltUtilInterface>() with singleton {
             HaltUtil(HaltUtilAndroid())

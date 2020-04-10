@@ -5,10 +5,14 @@ import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
+import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.Metrics
+import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
@@ -18,13 +22,28 @@ import org.springframework.core.io.ClassPathResource
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageJdbcProvider
+import org.kodein.di.erased.instance
 
 @Configuration
 class AppConfig {
 
     @Bean
+    fun metrics(): MetricsInterface {
+        return Metrics(object : MetricsInterface {
+            override fun initialize() {}
+            override fun log(tag: String, event: String) {}
+            override fun log(tag: String, event: String, metadata: Map<String, String>) {}
+        })
+    }
+
+    @Bean
+    fun errorCallback(): EventLoggerErrorCallbackInterface {
+        return MetricsErrorCallback(metrics())
+    }
+
+    @Bean
     fun eventLogger(): EventLoggerInterface {
-        return EventLogger(Severity.INFO, LoggerJVM())
+        return EventLogger(Severity.INFO, errorCallback(), LoggerJVM())
     }
 
     @Bean
