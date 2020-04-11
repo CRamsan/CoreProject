@@ -18,18 +18,15 @@ import com.cramsan.petproject.plantdetails.PlantDetailsFragment
 import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
-import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_cats
-import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_dogs
-import kotlinx.android.synthetic.main.fragment_main_menu.plant_list_recycler
-import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_list_view
-import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_view
-import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_main_menu.*
+import java.util.*
 
 class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
 AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val contentViewLayout: Int
-        get() = R.layout.fragment_new_main_menu
+        get() = R.layout.fragment_main_menu
 
     private var listener: PlantsListFragment.OnListFragmentInteractionListener? = null
     private lateinit var viewModel: DownloadCatalogViewModel
@@ -38,6 +35,8 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     private val animalType = AnimalType.ALL
     private lateinit var layoutManager: LinearLayoutManager
     private var searchQuery: String? = null
+
+    private var downloadTime: Long = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,11 +53,19 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
         viewModel = getViewModel(DownloadCatalogViewModel::class.java)
         main_menu_cats.setOnClickListener {
+            if (!viewModel.isCatalogReady()) {
+                displayDownloadingMessage()
+                return@setOnClickListener
+            }
             val intent = Intent(requireContext(), PlantsListActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, AnimalType.CAT.ordinal)
             startActivity(intent)
         }
         main_menu_dogs.setOnClickListener {
+            if (!viewModel.isCatalogReady()) {
+                displayDownloadingMessage()
+                return@setOnClickListener
+            }
             val intent = Intent(requireContext(), PlantsListActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, AnimalType.DOG.ordinal)
             startActivity(intent)
@@ -99,8 +106,34 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     override fun onStart() {
         super.onStart()
         if (!viewModel.isCatalogReady()) {
+            metrics.log(TAG,"onStart", mapOf("FromCache" to "True"))
+            viewModel.observableLoading().observe(requireActivity(), Observer<Boolean> { isLoading ->
+                if (isLoading) {
+                    return@Observer
+                }
+                val downloadCompleteTime = Date().time
+                val downloadInSeconds = (downloadCompleteTime - downloadTime) / 1000
+                if (downloadInSeconds < 1) {
+                    metrics.log(TAG,"DownloadLatency", mapOf("Time" to "<1 second"))
+                } else if (downloadInSeconds < 3) {
+                    metrics.log(TAG,"DownloadLatency", mapOf("Time" to "<3 second"))
+                } else if (downloadInSeconds < 5) {
+                    metrics.log(TAG,"DownloadLatency", mapOf("Time" to "<5 second"))
+                } else if (downloadInSeconds < 10) {
+                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<10 second"))
+                } else if (downloadInSeconds < 20) {
+                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<20 second"))
+                } else {
+                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to ">=20 second"))
+                }
+                displayDownloadCompleteMessage()
+            })
+
             val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
             startActivity(intent)
+            downloadTime = Date().time
+        } else {
+            metrics.log(TAG,"onStart", mapOf("FromCache" to "False"))
         }
         val loadedSearchQuery = searchQuery
         if (loadedSearchQuery?.isNotBlank() == true) {
@@ -152,5 +185,19 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
             model.searchPlants(it)
         }
         return true
+    }
+
+    private fun displayDownloadingMessage() {
+        Snackbar.make(view!!, R.string.main_menu_snackbar_downloading, Snackbar.LENGTH_SHORT)
+            .show()
+    }
+
+    private fun displayDownloadCompleteMessage() {
+        Snackbar.make(view!!, R.string.main_menu_snackbar_downloaded, Snackbar.LENGTH_SHORT)
+            .show()
+    }
+
+    companion object {
+        const val TAG = "MainMenuFragment"
     }
 }

@@ -14,7 +14,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.debugmenu.DebugMenuActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
-import kotlinx.android.synthetic.main.activity_main_menu.main_menu_toolbar
+import kotlinx.android.synthetic.main.activity_main_menu.*
 
 class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentInteractionListener {
 

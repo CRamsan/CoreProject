@@ -12,10 +12,11 @@ android {
         applicationId "com.cesarandres.ps2link"
         minSdkVersion globalMinSdkVersion
         targetSdkVersion globalTargetSdkVersion
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode 73
         versionName "5.1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -26,6 +27,7 @@ android {
             versionNameSuffix "-debug"
         }
     }
+
     compileOptions {
         sourceCompatibility globalJavaCompatibility
         targetCompatibility globalJavaCompatibility

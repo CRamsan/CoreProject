@@ -38,7 +38,7 @@ abstract class BaseActivity : AppCompatActivity(),
             setSupportActionBar(this)
             supportActionBar?.setDisplayHomeAsUpEnabled(enableUp)
             titleResource?.apply {
-                supportActionBar?.setTitle(this)
+                actionBar?.setTitle(this)
             }
         }
     }

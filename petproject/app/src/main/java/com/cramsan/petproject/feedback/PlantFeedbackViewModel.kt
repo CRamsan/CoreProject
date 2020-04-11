@@ -32,7 +32,7 @@ class PlantFeedbackViewModel(application: Application) : AndroidViewModel(applic
         eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.name} - PlantId:$plantId - Photo: $photo - ScientifiName:$scientificName - Name:$name - Link:$link - Text:$text"
-            metricsClient.log("PlantFeedbackViewModel", suggestion)
+            metricsClient.log("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = true
             }

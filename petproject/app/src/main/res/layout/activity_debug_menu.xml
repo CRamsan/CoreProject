@@ -2,13 +2,14 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         style="@style/BaseCoordinatorLayout"
         tools:context=".debugmenu.DebugMenuActivity">
 
     <com.google.android.material.appbar.AppBarLayout
             style="@style/BaseAppBarLayout">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/debug_menu_toolbar"
                 style="@style/BaseToolBar"/>
 

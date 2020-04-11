@@ -3,6 +3,6 @@
         style="@style/BaseCoordinatorLayout"
         tools:context=".feedback.PlantFeedbackActivity">
 
-    <include layout="@layout/content_plant_feedback" />
+    <include layout="@layout/content_plant_feedback"/>
 
 </FrameLayout>

@@ -2,26 +2,25 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@drawable/dialog"
         android:id="@+id/plant_suggestion_view"
-        android:padding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:padding="@dimen/margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
     <ScrollView
             android:id="@+id/scrollView2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             <EditText
                     android:id="@+id/plant_suggestion_scientific_name"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -148,9 +147,10 @@
     </ScrollView>
 
     <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
+            android:layout_gravity="end"
             android:orientation="horizontal">
 
         <Button
@@ -158,13 +158,15 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
                 android:text="@string/plant_suggestion_cancel" />
 
         <Button
                 android:id="@+id/plant_suggestion_save"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/buttonBarButtonStyle"
+                android:layout_margin="@dimen/small_margin"
                 android:text="@string/plant_suggestion_send" />
 
     </LinearLayout>

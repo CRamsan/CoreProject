@@ -8,9 +8,11 @@
     <com.google.android.material.appbar.AppBarLayout
             style="@style/BaseAppBarLayout">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/plant_details_toolbar"
-                style="@style/BaseToolBar"/>
+                style="@style/BaseToolBar"
+                tools:navigationIcon="?attr/homeAsUpIndicator"
+                tools:title="@string/title_fragment_plants_dogs"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
