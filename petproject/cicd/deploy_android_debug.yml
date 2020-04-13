@@ -46,7 +46,7 @@ steps:
   inputs:
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
-- task: PublishBuildArtifadebug
+- task: PublishBuildArtifacts@1
 - task: AppCenterDistribute@3
   inputs:
     serverEndpoint: 'App Center'
