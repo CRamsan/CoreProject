@@ -9,6 +9,7 @@ LEFT JOIN
     Toxicity ON Toxicity.plant_id = Plant.id
 WHERE
     animal_id == ? AND PlantMainName.locale == ?
+LIMIT :limit OFFSET :offset
 ;
 
 getAllPlantsWithAnimalIdAll:
@@ -22,6 +23,14 @@ LEFT JOIN
     Toxicity ON Toxicity.plant_id = Plant.id
 WHERE
     PlantMainName.locale == ?
+LIMIT :limit OFFSET :offset
+;
+
+countPlants:
+SELECT
+    count(*)
+FROM
+    Plant
 ;
 
 getPlantWithPlantIdAndAnimalId:

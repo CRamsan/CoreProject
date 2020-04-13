@@ -45,7 +45,7 @@ class ModelProvider(
     }
 
     private lateinit var plantList: List<PresentablePlant>
-    private val listeners = mutableListOf<ModelProviderEventListenerInterface>()
+    private val listeners = mutableSetOf<ModelProviderEventListenerInterface>()
     private var filterJob: Job? = null
     var isCatalogReady = false
     private val mutex = Mutex()
@@ -84,18 +84,11 @@ class ModelProvider(
 
             val plants: ArrayList<com.cramsan.petproject.appcore.storage.Plant.PlantImp> =
                 http.get("https://cramsan.com/data/plant/")
+            modelStorage.insertPlantList(plants)
             val mainNames: ArrayList<PlantMainName.PlantMainNameImpl> = http.get("https://cramsan.com/data/name/")
+            modelStorage.insertPlantMainNameList(mainNames)
             val toxicities: ArrayList<Toxicity.ToxicityImpl> = http.get("https://cramsan.com/data/toxicity/")
-
-            plants.forEach {
-                modelStorage.insertPlant(it)
-            }
-            mainNames.forEach {
-                modelStorage.insertPlantMainName(it)
-            }
-            toxicities.forEach {
-                modelStorage.insertToxicity(it)
-            }
+            modelStorage.insertToxicityList(toxicities)
             isCatalogReady = true
             preferences.saveLong(LAST_UPDATE, currentTime)
             listeners.forEach {
@@ -177,6 +170,35 @@ class ModelProvider(
         return plantList
     }
 
+    override suspend fun getPlantsWithToxicityPaginated(
+        animalType: AnimalType,
+        locale: String,
+        limit: Long,
+        offset: Long
+    ): List<PresentablePlant> {
+        eventLogger.log(Severity.INFO, "ModelProvider", "getPlantsWithToxicityPaginated")
+        threadUtil.assertIsBackgroundThread()
+
+        if (!isCatalogReady) {
+            eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
+            return emptyList()
+        }
+
+        val list = modelStorage.getCustomPlantEntriesPaginated(animalType, locale, limit, offset)
+        val page = mutableListOf<PresentablePlant>()
+        list.forEach {
+            page.add(
+                PresentablePlant(
+                    it.id,
+                    it.scientificName,
+                    it.mainName,
+                    it.animalId ?: AnimalType.ALL,
+                    it.isToxic ?: ToxicityValue.UNDETERMINED
+                ))
+        }
+        return page
+    }
+
     override suspend fun getPlantsWithToxicityFiltered(
         animalType: AnimalType,
         query: String,
@@ -221,6 +243,22 @@ class ModelProvider(
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         return PlantMetadata(plantId, animalType, plantCustomEntry.isToxic, plantCustomEntry.description, plantCustomEntry.source)
+    }
+
+    override suspend fun getPresentablePlantsCount(animalType: AnimalType, locale: String): Long {
+        eventLogger.log(Severity.INFO, "ModelProvider", "getPresentablePlantsCount")
+        threadUtil.assertIsBackgroundThread()
+
+        if (!isCatalogReady) {
+            eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
+            return if (::plantList.isInitialized) {
+                plantList.size.toLong()
+            } else {
+                0
+            }
+        }
+
+        return modelStorage.getPlantCount()
     }
 
     override suspend fun deleteAll() {

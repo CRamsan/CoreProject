@@ -19,7 +19,14 @@ interface ModelProviderInterface {
 
     suspend fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata?
 
+    suspend fun getPresentablePlantsCount(animalType: AnimalType, locale: String): Long
+
     suspend fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant>
+
+    suspend fun getPlantsWithToxicityPaginated(animalType: AnimalType,
+                                               locale: String,
+                                               limit: Long,
+                                               offset: Long): List<PresentablePlant>
 
     suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType, query: String, locale: String): List<PresentablePlant>?
 

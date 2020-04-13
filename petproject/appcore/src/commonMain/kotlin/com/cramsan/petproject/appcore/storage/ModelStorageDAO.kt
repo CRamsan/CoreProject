@@ -7,19 +7,33 @@ interface ModelStorageDAO {
 
     fun insertPlantEntry(plantId: Long?, scientificName: String, imageUrl: String)
 
+    fun insertPlantEntries(list: List<Plant>)
+
     fun insertPlantCommonNameEntry(commonNameId: Long?, commonName: String, plantId: Long, locale: String)
+
+    fun insertPlantCommonNameEntries(list: List<PlantCommonName>)
 
     fun insertPlantMainNameEntry(mainNameId: Long?, mainName: String, plantId: Long, locale: String)
 
+    fun insertPlantMainNameEntries(list: List<PlantMainName>)
+
     fun insertPlantFamilyNameEntry(familyId: Long?, family: String, plantId: Long, locale: String)
+
+    fun insertPlantFamilyNameEntries(list: List<PlantFamily>)
 
     fun insertToxicityEntry(toxicityId: Long?, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String)
 
+    fun insertToxicityEntries(list: List<Toxicity>)
+
     fun insertDescriptionEntry(descriptionId: Long?, plantId: Long, animalType: AnimalType, description: String, locale: String)
+
+    fun insertDescriptionEntries(list: List<Description>)
 
     fun getPlantEntry(scientificName: String): Plant?
 
     fun getAllPlantEntries(): List<Plant>
+
+    fun getPlantEntryCount(): Long
 
     fun getAllPlantCommonNameEntries(): List<PlantCommonName>
 
@@ -45,5 +59,9 @@ interface ModelStorageDAO {
 
     fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId?
 
+    fun getCustomPlantEntriesPaginated(animalType: AnimalType,
+                                       locale: String,
+                                       limit: Long,
+                                       offset: Long): List<GetAllPlantsWithAnimalId>
     fun deleteAll()
 }

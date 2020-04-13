@@ -33,11 +33,25 @@ class ModelStorage(
         platformDelegate.insertPlantEntry(plantId, plant.scientificName, plant.imageUrl)
     }
 
+    override fun insertPlantList(list: List<Plant>) {
+        eventLogger.log(Severity.INFO, "ModelStorage", "insertPlantList")
+        threadUtil.assertIsBackgroundThread()
+
+        platformDelegate.insertPlantEntries(list)
+    }
+
     override fun getPlants(): List<Plant> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlants")
         threadUtil.assertIsBackgroundThread()
 
         return platformDelegate.getAllPlantEntries()
+    }
+
+    override fun getPlantCount(): Long {
+        eventLogger.log(Severity.INFO, "ModelStorage", "getPlantCount")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.getPlantEntryCount()
     }
 
     override fun getPlant(scientificName: String): Plant? {
@@ -57,6 +71,13 @@ class ModelStorage(
             plantMainName.id
         }
         platformDelegate.insertPlantMainNameEntry(plantMainNameId, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
+    }
+
+    override fun insertPlantMainNameList(list: List<PlantMainName>) {
+        eventLogger.log(Severity.INFO, "ModelStorage", "insertPlantMainNameList")
+        threadUtil.assertIsBackgroundThread()
+
+        platformDelegate.insertPlantMainNameEntries(list)
     }
 
     override fun getPlantMainName(plantId: Long, locale: String): PlantMainName? {
@@ -85,6 +106,13 @@ class ModelStorage(
         return platformDelegate.insertPlantCommonNameEntry(plantCommonNameId, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
     }
 
+    override fun insertPlantCommonNameList(list: List<PlantCommonName>) {
+        eventLogger.log(Severity.INFO, "ModelStorage", "insertPlantCommonNameList")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.insertPlantCommonNameEntries(list)
+    }
+
     override fun getPlantsCommonNames(): List<PlantCommonName> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getPlantsCommonNames")
         threadUtil.assertIsBackgroundThread()
@@ -102,6 +130,13 @@ class ModelStorage(
             plantFamily.id
         }
         return platformDelegate.insertPlantFamilyNameEntry(plantFamilyId, plantFamily.family, plantFamily.plantId, plantFamily.locale)
+    }
+
+    override fun insertPlantFamilyList(list: List<PlantFamily>) {
+        eventLogger.log(Severity.INFO, "ModelStorage", "insertPlantFamilyList")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.insertPlantFamilyNameEntries(list)
     }
 
     override fun getPlantFamily(plantId: Long, locale: String): PlantFamily? {
@@ -130,6 +165,13 @@ class ModelStorage(
         return platformDelegate.insertDescriptionEntry(descriptionId, description.plantId, description.animalId, description.description, description.locale)
     }
 
+    override fun insertDescriptionList(list: List<Description>) {
+        eventLogger.log(Severity.INFO, "ModelStorage", "insertDescriptionList")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.insertDescriptionEntries(list)
+    }
+
     override fun getDescription(): List<Description> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getDescription")
         threadUtil.assertIsBackgroundThread()
@@ -147,6 +189,13 @@ class ModelStorage(
             toxicity.id
         }
         return platformDelegate.insertToxicityEntry(toxicityId, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
+    }
+
+    override fun insertToxicityList(list: List<Toxicity>) {
+        eventLogger.log(Severity.INFO, "ModelStorage", "insertToxicityList")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.insertToxicityEntries(list)
     }
 
     override fun getToxicity(plantId: Long, animalType: AnimalType): Toxicity? {
@@ -181,6 +230,18 @@ class ModelStorage(
         threadUtil.assertIsBackgroundThread()
 
         return platformDelegate.getCustomPlantEntries(animalType, locale)
+    }
+
+    override fun getCustomPlantEntriesPaginated(
+        animalType: AnimalType,
+        locale: String,
+        limit: Long,
+        offset: Long
+    ): List<GetAllPlantsWithAnimalId> {
+        eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantsEntries")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.getCustomPlantEntriesPaginated(animalType, locale, offset, limit)
     }
 
     override fun deleteAll() {

@@ -21,11 +21,23 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         }
     }
 
+    override fun insertPlantEntries(list: List<com.cramsan.petproject.appcore.storage.Plant>) {
+        database.plantQueries.transaction {
+            list.forEach { insertPlantEntry(it.id, it.scientificName, it.imageUrl) }
+        }
+    }
+
     override fun insertPlantCommonNameEntry(commonNameId: Long?, commonName: String, plantId: Long, locale: String) {
         if (commonNameId != null) {
             database.plantCommonNameQueries.insert(commonNameId, commonName, plantId, locale)
         } else {
             database.plantCommonNameQueries.insertNew(commonName, plantId, locale)
+        }
+    }
+
+    override fun insertPlantCommonNameEntries(list: List<com.cramsan.petproject.appcore.storage.PlantCommonName>) {
+        database.plantCommonNameQueries.transaction {
+            list.forEach { insertPlantCommonNameEntry(it.id, it.commonName, it.plantId, it.locale) }
         }
     }
 
@@ -37,11 +49,23 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         }
     }
 
+    override fun insertPlantMainNameEntries(list: List<com.cramsan.petproject.appcore.storage.PlantMainName>) {
+        database.plantMainNameQueries.transaction {
+            list.forEach { insertPlantMainNameEntry(it.id, it.mainName, it.plantId, it.locale) }
+        }
+    }
+
     override fun insertPlantFamilyNameEntry(familyId: Long?, family: String, plantId: Long, locale: String) {
         if (familyId != null) {
             database.plantFamilyQueries.insert(familyId, plantId, family, locale)
         } else {
             database.plantFamilyQueries.insertNew(plantId, family, locale)
+        }
+    }
+
+    override fun insertPlantFamilyNameEntries(list: List<com.cramsan.petproject.appcore.storage.PlantFamily>) {
+        database.plantFamilyQueries.transaction {
+            list.forEach { insertPlantFamilyNameEntry(it.id, it.family, it.plantId, it.locale) }
         }
     }
 
@@ -53,8 +77,20 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         }
     }
 
+    override fun insertToxicityEntries(list: List<com.cramsan.petproject.appcore.storage.Toxicity>) {
+        database.toxicityQueries.transaction {
+            list.forEach { insertToxicityEntry(it.id, it.isToxic, it.plantId, it.animalId, it.source) }
+        }
+    }
+
     override fun insertDescriptionEntry(descriptionId: Long?, plantId: Long, animalType: AnimalType, description: String, locale: String) {
         return database.descriptionQueries.insert(descriptionId, plantId, animalType, description, locale)
+    }
+
+    override fun insertDescriptionEntries(list: List<com.cramsan.petproject.appcore.storage.Description>) {
+        database.descriptionQueries.transaction {
+            list.forEach { insertDescriptionEntry(it.id, it.plantId, it.animalId, it.description, it.locale) }
+        }
     }
 
     override fun getPlantEntry(scientificName: String): Plant? {
@@ -65,6 +101,10 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
     override fun getAllPlantEntries(): List<Plant> {
         val result = database.plantQueries.getAll().executeAsList()
         return result.map { Plant(it) }
+    }
+
+    override fun getPlantEntryCount(): Long {
+        return database.customProjectionsQueries.countPlants().executeAsOne()
     }
 
     override fun getPlantCommonNameEntries(plantId: Long, locale: String): List<PlantCommonName> {
@@ -118,18 +158,27 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
     }
 
     override fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {
-        return if (animalType == AnimalType.ALL) {
-            val result = database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(locale).executeAsList()
-            result.map { GetAllPlantsWithAnimalId(it) }
-        } else {
-            val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale).executeAsList()
-            result.map { GetAllPlantsWithAnimalId(it) }
-        }
+        return getCustomPlantEntriesPaginated(animalType, locale, Long.MAX_VALUE, 0)
     }
 
     override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {
         val result = database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOneOrNull() ?: return null
         return GetPlantWithPlantIdAndAnimalId(result)
+    }
+
+    override fun getCustomPlantEntriesPaginated(
+        animalType: AnimalType,
+        locale: String,
+        limit: Long,
+        offset: Long
+    ): List<GetAllPlantsWithAnimalId> {
+        return if (animalType == AnimalType.ALL) {
+            val result = database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(locale, limit, offset).executeAsList()
+            result.map { GetAllPlantsWithAnimalId(it) }
+        } else {
+            val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale, limit, offset).executeAsList()
+            result.map { GetAllPlantsWithAnimalId(it) }
+        }
     }
 
     override fun deleteAll() {
