@@ -253,7 +253,7 @@ class FragmentProfilePager : BaseFragment() {
          * @see android.support.v4.view.PagerAdapter#getCount()
          */
         override fun getCount(): Int {
-            return 4
+            return 5
         }
 
         /*
