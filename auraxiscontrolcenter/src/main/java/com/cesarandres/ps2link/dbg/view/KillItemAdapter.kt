@@ -30,7 +30,7 @@ import java.util.Date
 import java.util.Hashtable
 import java.util.Locale
 
-class KillItemAdapter(
+class   KillItemAdapter(
     private val context: Context,
     private val events: ArrayList<CharacterEvent>,
     private val characterId: String,
@@ -133,8 +133,6 @@ class KillItemAdapter(
                 holder.weaponImage!!.setImageUrl("", null)
             }
         }
-        holder.weaponImage!!.visibility = View.GONE
-        holder.weaponName!!.visibility = View.GONE
 
         val date = Date(java.lang.Long.parseLong(getItem(position).timestamp!! + "000"))
         val format = SimpleDateFormat("MMM dd hh:mm:ss a", Locale.getDefault())
