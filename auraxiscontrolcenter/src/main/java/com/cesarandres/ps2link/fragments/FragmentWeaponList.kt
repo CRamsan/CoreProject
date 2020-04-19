@@ -66,7 +66,7 @@ class FragmentWeaponList : BaseFragment() {
 
         this.fragmentMyWeapons.setOnCheckedChangeListener { buttonView, isChecked ->
             val listRoot = activity!!.findViewById<View>(R.id.listViewWeaponList) as ListView
-            val weaponAdapter = listRoot.adapter as WeaponItemAdapter
+            val weaponAdapter = listRoot.adapter as WeaponItemAdapter?
             if (weaponAdapter != null) {
                 weaponAdapter.isMyWeapons = isChecked
                 listRoot.adapter = weaponAdapter
