@@ -57,6 +57,7 @@ class FragmentProfile : BaseFragment() {
         setCurrentTask(task)
         this.profileId = arguments!!.getString("PARAM_0")
         this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        metrics.log(TAG, "Loading Profile", mapOf("PROFILE" to this.profileId!!, "NAMESPACE" to this.namespace!!.name))
         task.execute(this.profileId)
     }
 
