@@ -1,20 +1,25 @@
 buildscript {
     repositories {
         google()
+        jcenter()
         mavenCentral()
     }
     dependencies {
+        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$globalKotlinVersion"
         classpath "com.squareup.sqldelight:gradle-plugin:$globalSqlDelightVersion"
     }
 }
 
-plugins {
-    id "com.android.library"
-    id "org.jetbrains.kotlin.multiplatform"
-    id "org.jetbrains.kotlin.kapt"
-    id "org.jetbrains.kotlin.android.extensions"
+repositories {
+    google()
+    jcenter()
 }
 
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.multiplatform"
+apply plugin: "kotlin-kapt"
+apply plugin: "kotlin-android-extensions"
 apply plugin: "com.squareup.sqldelight"
 
 repositories {

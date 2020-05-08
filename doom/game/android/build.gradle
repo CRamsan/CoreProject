@@ -1,6 +1,19 @@
-plugins {
-    id "com.android.application"
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
+    }
 }
+
+repositories {
+    google()
+    jcenter()
+}
+
+apply plugin: "com.android.application"
 
 android {
     buildToolsVersion globalAndroidBuildToolsVersion

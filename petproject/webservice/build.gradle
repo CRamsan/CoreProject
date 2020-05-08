@@ -10,6 +10,7 @@ plugins {
 group = 'com.cramsan.petproject.webservice'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = globalJavaCompatibility
+targetCompatibility = globalJavaCompatibility
 
 repositories {
     mavenCentral()
@@ -20,7 +21,6 @@ dependencies {
     implementation project(":framework")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
-    implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
 
     implementation "org.springframework.boot:spring-boot-devtools"
     implementation "org.springframework.boot:spring-boot-starter"

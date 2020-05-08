@@ -22,7 +22,6 @@ import org.springframework.core.io.ClassPathResource
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageJdbcProvider
-import org.kodein.di.erased.instance
 
 @Configuration
 class AppConfig {
@@ -37,13 +36,13 @@ class AppConfig {
     }
 
     @Bean
-    fun errorCallback(): EventLoggerErrorCallbackInterface {
-        return MetricsErrorCallback(metrics())
+    fun errorCallback(metrics: MetricsInterface): EventLoggerErrorCallbackInterface {
+        return MetricsErrorCallback(metrics)
     }
 
     @Bean
-    fun eventLogger(): EventLoggerInterface {
-        return EventLogger(Severity.INFO, errorCallback(), LoggerJVM())
+    fun eventLogger(errorCallback: EventLoggerErrorCallbackInterface): EventLoggerInterface {
+        return EventLogger(Severity.INFO, errorCallback, LoggerJVM())
     }
 
     @Bean
@@ -52,17 +51,20 @@ class AppConfig {
     }
 
     @Bean
-    fun assertUtil(): AssertUtilInterface {
-        return AssertUtil(false, eventLogger(), haltUtil())
+    fun assertUtil(eventLogger: EventLoggerInterface,
+                   haltUtil: HaltUtilInterface): AssertUtilInterface {
+        return AssertUtil(false, eventLogger, haltUtil)
     }
 
     @Bean
-    fun threadUtil(): ThreadUtilInterface {
-        return ThreadUtil(ThreadUtilJVM(eventLogger(), assertUtil()))
+    fun threadUtil(eventLogger: EventLoggerInterface,
+                   assertUtil: AssertUtilInterface): ThreadUtilInterface {
+        return ThreadUtil(ThreadUtilJVM(eventLogger, assertUtil))
     }
 
     @Bean
-    fun modelStorage(): ModelStorageInterface {
+    fun modelStorage(eventLogger: EventLoggerInterface,
+                     threadUtil: ThreadUtilInterface): ModelStorageInterface {
         val resource = ClassPathResource("PetProject.sql")
         if (!resource.isFile || !resource.exists()) {
             throw UnsupportedOperationException("File not found")
@@ -75,7 +77,7 @@ class AppConfig {
             dbPath
         ).provide()
         return ModelStorage(modelStorageDAO,
-            eventLogger(),
-            threadUtil())
+            eventLogger,
+            threadUtil)
     }
 }

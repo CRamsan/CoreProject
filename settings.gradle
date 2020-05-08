@@ -17,6 +17,7 @@ include 'framework'
 include 'petproject:app'
 include 'petproject:appcore'
 include 'petproject:webservice'
+include 'petproject:azurefunction'
 
 include 'doom:lib'
 include 'doom:lib:sample'

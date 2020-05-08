@@ -2,6 +2,10 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
+repositories {
+    mavenCentral()
+}
+
 sourceCompatibility = globalJavaCompatibility
 
 compileKotlin {

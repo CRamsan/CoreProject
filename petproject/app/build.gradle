@@ -1,9 +1,23 @@
-plugins {
-    id "com.android.application"
-    id "org.jetbrains.kotlin.android"
-    id "org.jetbrains.kotlin.kapt"
-    id "org.jetbrains.kotlin.android.extensions"
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$globalKotlinVersion"
+    }
 }
+
+repositories {
+    google()
+    jcenter()
+}
+
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     buildToolsVersion globalAndroidBuildToolsVersion

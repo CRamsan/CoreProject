@@ -1,0 +1,39 @@
+plugins {
+  id "com.microsoft.azure.azurefunctions" version "$globalAzureFunctionGradlePlugin"
+  id "org.jetbrains.kotlin.jvm"
+}
+
+group = 'com.cramsan.petproject.azurefunction'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = globalJavaCompatibility
+targetCompatibility = globalJavaCompatibility
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation project(":petproject:appcore")
+    implementation project(":framework")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
+    implementation "com.microsoft.azure.functions:azure-functions-java-library:$globalAzureFunctionsJavaLibrary"
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = globalJavaCompatibility
+    }
+}
+
+azurefunctions {
+    resourceGroup = 'PetProject'
+    appName = 'petproject-api'
+    pricingTier = 'Consumption'
+    region = 'centralus'
+    runtime {
+      os = 'windows'
+    }    
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}

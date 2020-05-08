@@ -7,7 +7,7 @@ buildscript {
 
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
-        globalAndroidGradlePluginVersion = '3.6.2'
+        globalAndroidGradlePluginVersion = "3.6.0"
         globalAndroidMaterialVersion = "1.1.0"
         globalAndroidXJUnitVersion = "1.1.1"
         globalAndroidXTestVersion = "1.2.0"
@@ -16,6 +16,8 @@ buildscript {
         globalAndroidXPagingVersion = "2.1.2"
         globalAndroidXPreferencesVersion = "1.1.0"
         globalAppCenterSdkVersion = "3.1.0"
+        globalAzureFunctionGradlePlugin = "1.2.0"
+        globalAzureFunctionsJavaLibrary = "1.3.1"
         globalCoroutinesVersion = "1.3.5"
         globalConstraintLayoutVersion = "1.1.3"
         globalDetektVersion = initDetektVersion
@@ -45,21 +47,10 @@ buildscript {
         globalAshleyVersion = '1.7.0'
         globalAiVersion = '1.8.0'
     }
-
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
-        classpath "com.google.gms:google-services:$globalGMSServices"
-        classpath "com.google.firebase:firebase-crashlytics-gradle:$globalFirebaseCrashlyticsVersion"
-    }
 }
 
 plugins {
     id "com.github.ben-manes.versions"
-    id "io.gitlab.arturbosch.detekt"
 }
 
 subprojects {
@@ -70,12 +61,6 @@ subprojects {
 
     dependencies {
         ktlint "com.pinterest:ktlint:${globalKtlintVerion}"
-    }
-
-    repositories {
-        google()
-        jcenter()
-        mavenCentral()
     }
 
     task("ktlint", type: JavaExec, group: "verification") {
@@ -90,13 +75,6 @@ subprojects {
         classpath = configurations.ktlint
         main = "com.pinterest.ktlint.Main"
         args "-F", "${project.projectDir}/src/**/*.kt"
-    }
-
-    detekt {
-        toolVersion = "${globalDetektVersion}"
-        input = files("${project.projectDir}/src/")
-
-        config = files("detekt-config.yml", "${project.projectDir}/detekt-config.yml")
     }
 }
 

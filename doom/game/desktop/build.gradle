@@ -2,6 +2,10 @@ plugins {
     id 'java'
 }
 
+repositories {
+    jcenter()
+}
+
 sourceCompatibility = globalJavaCompatibility
 sourceSets.main.java.srcDirs = [ "src/" ]
 
