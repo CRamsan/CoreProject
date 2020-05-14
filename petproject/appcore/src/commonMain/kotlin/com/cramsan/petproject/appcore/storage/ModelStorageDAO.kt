@@ -59,9 +59,11 @@ interface ModelStorageDAO {
 
     fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId?
 
-    fun getCustomPlantEntriesPaginated(animalType: AnimalType,
-                                       locale: String,
-                                       limit: Long,
-                                       offset: Long): List<GetAllPlantsWithAnimalId>
+    fun getCustomPlantEntriesPaginated(
+        animalType: AnimalType,
+        locale: String,
+        limit: Long,
+        offset: Long
+    ): List<GetAllPlantsWithAnimalId>
     fun deleteAll()
 }

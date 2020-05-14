@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Build
-import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
@@ -16,7 +15,6 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObjectNotFoundException
 import androidx.test.uiautomator.UiSelector
-
 
 private const val PERMISSIONS_DIALOG_DELAY = 3000
 private const val GRANT_BUTTON_INDEX = 0

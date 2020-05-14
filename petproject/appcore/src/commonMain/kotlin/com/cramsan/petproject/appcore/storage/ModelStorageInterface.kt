@@ -54,10 +54,12 @@ interface ModelStorageInterface {
 
     fun getCustomPlantsEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId>
 
-    fun getCustomPlantEntriesPaginated(animalType: AnimalType,
-                                       locale: String,
-                                       limit: Long,
-                                       offset: Long): List<GetAllPlantsWithAnimalId>
+    fun getCustomPlantEntriesPaginated(
+        animalType: AnimalType,
+        locale: String,
+        limit: Long,
+        offset: Long
+    ): List<GetAllPlantsWithAnimalId>
 
     fun deleteAll()
 }

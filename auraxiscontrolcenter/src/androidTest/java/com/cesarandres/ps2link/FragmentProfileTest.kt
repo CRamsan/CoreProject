@@ -1,6 +1,5 @@
 package com.cesarandres.ps2link
 
-import android.widget.ImageButton
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -19,10 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
-import com.cesarandres.ps2link.module.ButtonSelectSource
-import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
-import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -30,7 +26,6 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -82,7 +77,7 @@ class FragmentProfileTest {
         onView(withId(R.id.buttonFragmentAdd)).perform(click())
         onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.toLowerCase()), closeSoftKeyboard())
         onView(withId(R.id.imageButtonSearchProfile)).perform(click())
-        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
         onView(withId(R.id.toggleButtonFragmentStar)).check(matches(isNotChecked())).perform(
@@ -108,7 +103,7 @@ class FragmentProfileTest {
         onView(withId(R.id.buttonFragmentAdd)).perform(click())
         onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.toLowerCase()), closeSoftKeyboard())
         onView(withId(R.id.imageButtonSearchProfile)).perform(click())
-        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
         onView(withId(R.id.fragmentTitleLoading)).perform(ViewActions.swipeLeft())
@@ -119,7 +114,7 @@ class FragmentProfileTest {
         onView(withId(R.id.buttonFragmentTitle)).perform(click())
 
         onView(withId(R.id.buttonCharacters)).perform(click())
-        onData(anything()).inAdapterView(withId(R.id.listViewProfileList)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listViewProfileList)).atPosition(0).perform(click())
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
     }
 
@@ -137,7 +132,7 @@ class FragmentProfileTest {
         onView(withId(R.id.buttonFragmentAdd)).perform(click())
         onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.toLowerCase()), closeSoftKeyboard())
         onView(withId(R.id.imageButtonSearchProfile)).perform(click())
-        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
         onView(withId(R.id.fragmentTitleLoading)).perform(ViewActions.swipeLeft())
@@ -146,7 +141,7 @@ class FragmentProfileTest {
 
         onView(withId(R.id.buttonFragmentTitle)).perform(click())
         onView(withId(R.id.buttonTitle)).perform(click())
-        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
         onView(withId(R.id.fragmentTitleLoading)).perform(ViewActions.swipeLeft())
@@ -158,7 +153,7 @@ class FragmentProfileTest {
         onView(withId(R.id.buttonFragmentTitle)).perform(click())
 
         onView(withId(R.id.buttonCharacters)).perform(click())
-        onData(anything()).inAdapterView(withId(R.id.listViewProfileList)).atPosition(1).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listViewProfileList)).atPosition(1).perform(click())
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
     }
 }

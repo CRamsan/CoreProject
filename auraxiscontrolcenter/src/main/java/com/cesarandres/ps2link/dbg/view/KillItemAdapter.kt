@@ -30,7 +30,7 @@ import java.util.Date
 import java.util.Hashtable
 import java.util.Locale
 
-class   KillItemAdapter(
+class KillItemAdapter(
     private val context: Context,
     private val events: ArrayList<CharacterEvent>,
     private val characterId: String,

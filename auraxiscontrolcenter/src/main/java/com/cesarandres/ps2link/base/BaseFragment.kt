@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.base
 
 import android.app.Activity
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.ToggleButton
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.test.espresso.idling.CountingIdlingResource
 import com.android.volley.RequestQueue
@@ -25,7 +23,6 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
-import java.util.Optional
 
 /**
  * This class extends fragment to add the support for a callback. All the

@@ -16,12 +16,12 @@ import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
+import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
+import com.cramsan.petproject.appcore.storage.implementation.ModelStorageJdbcProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
-import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageJdbcProvider
 
 @Configuration
 class AppConfig {
@@ -51,20 +51,26 @@ class AppConfig {
     }
 
     @Bean
-    fun assertUtil(eventLogger: EventLoggerInterface,
-                   haltUtil: HaltUtilInterface): AssertUtilInterface {
+    fun assertUtil(
+        eventLogger: EventLoggerInterface,
+        haltUtil: HaltUtilInterface
+    ): AssertUtilInterface {
         return AssertUtil(false, eventLogger, haltUtil)
     }
 
     @Bean
-    fun threadUtil(eventLogger: EventLoggerInterface,
-                   assertUtil: AssertUtilInterface): ThreadUtilInterface {
+    fun threadUtil(
+        eventLogger: EventLoggerInterface,
+        assertUtil: AssertUtilInterface
+    ): ThreadUtilInterface {
         return ThreadUtil(ThreadUtilJVM(eventLogger, assertUtil))
     }
 
     @Bean
-    fun modelStorage(eventLogger: EventLoggerInterface,
-                     threadUtil: ThreadUtilInterface): ModelStorageInterface {
+    fun modelStorage(
+        eventLogger: EventLoggerInterface,
+        threadUtil: ThreadUtilInterface
+    ): ModelStorageInterface {
         val resource = ClassPathResource("PetProject.sql")
         if (!resource.isFile || !resource.exists()) {
             throw UnsupportedOperationException("File not found")

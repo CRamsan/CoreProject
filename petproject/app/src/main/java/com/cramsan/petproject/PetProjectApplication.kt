@@ -35,7 +35,6 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
-import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroidProvider
 import com.microsoft.appcenter.AppCenter
 import org.kodein.di.Kodein

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
@@ -14,7 +13,11 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import kotlinx.android.synthetic.main.view_plant.view.*
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_header
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_icon_cat
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_icon_dog
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_layout
+import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_sub_header
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 

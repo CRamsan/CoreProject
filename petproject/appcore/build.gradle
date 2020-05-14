@@ -166,3 +166,5 @@ tasks {
         }
     }
 }
+
+build.finalizedBy ktlint

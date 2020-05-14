@@ -3,7 +3,6 @@ package com.cramsan.petproject.azurefunction
 import com.microsoft.azure.functions.HttpResponseMessage
 import com.microsoft.azure.functions.HttpStatus
 import com.microsoft.azure.functions.HttpStatusType
-import java.util.*
 
 class HttpResponseMessageMock(
     private val httpStatus: HttpStatusType,

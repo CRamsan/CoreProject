@@ -6,7 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_about.about_toolbar
-import kotlinx.android.synthetic.main.content_about.*
+import kotlinx.android.synthetic.main.content_about.reference_freepik
 
 class AboutActivity : BaseActivity() {
     override val contentViewLayout: Int
@@ -19,6 +19,6 @@ class AboutActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reference_freepik.movementMethod = LinkMovementMethod.getInstance();
+        reference_freepik.movementMethod = LinkMovementMethod.getInstance()
     }
 }

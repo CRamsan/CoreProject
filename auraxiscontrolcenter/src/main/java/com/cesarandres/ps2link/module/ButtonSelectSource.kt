@@ -66,7 +66,7 @@ class ButtonSelectSource(
         editor.apply()
         this.namespace = namespace
 
-        when(namespace) {
+        when (namespace) {
             Namespace.PS2PC -> {
                 namespaceButton.setImageResource(R.drawable.namespace_pc)
                 namespaceButton.setOnClickListener { updateButtonState(Namespace.PS2PS4US) }

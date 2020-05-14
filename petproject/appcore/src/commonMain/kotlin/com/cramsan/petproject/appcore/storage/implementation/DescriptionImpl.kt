@@ -9,4 +9,4 @@ data class DescriptionImpl(
     override val animalId: AnimalType,
     override val locale: String,
     override val description: String
-    ) : Description
+) : Description

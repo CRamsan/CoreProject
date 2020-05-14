@@ -19,8 +19,13 @@ import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_main_menu.*
-import java.util.*
+import java.util.Date
+import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_cats
+import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_dogs
+import kotlinx.android.synthetic.main.fragment_main_menu.plant_list_recycler
+import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_list_view
+import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_view
+import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
 
 class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
 AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
@@ -106,7 +111,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     override fun onStart() {
         super.onStart()
         if (!viewModel.isCatalogReady()) {
-            metrics.log(TAG,"onStart", mapOf("FromCache" to "True"))
+            metrics.log(TAG, "onStart", mapOf("FromCache" to "True"))
             viewModel.observableLoading().observe(requireActivity(), Observer<Boolean> { isLoading ->
                 if (isLoading) {
                     return@Observer
@@ -114,11 +119,11 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
                 val downloadCompleteTime = Date().time
                 val downloadInSeconds = (downloadCompleteTime - downloadTime) / 1000
                 if (downloadInSeconds < 1) {
-                    metrics.log(TAG,"DownloadLatency", mapOf("Time" to "<1 second"))
+                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<1 second"))
                 } else if (downloadInSeconds < 3) {
-                    metrics.log(TAG,"DownloadLatency", mapOf("Time" to "<3 second"))
+                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<3 second"))
                 } else if (downloadInSeconds < 5) {
-                    metrics.log(TAG,"DownloadLatency", mapOf("Time" to "<5 second"))
+                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<5 second"))
                 } else if (downloadInSeconds < 10) {
                     metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<10 second"))
                 } else if (downloadInSeconds < 20) {
@@ -133,7 +138,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
             startActivity(intent)
             downloadTime = Date().time
         } else {
-            metrics.log(TAG,"onStart", mapOf("FromCache" to "False"))
+            metrics.log(TAG, "onStart", mapOf("FromCache" to "False"))
         }
         val loadedSearchQuery = searchQuery
         if (loadedSearchQuery?.isNotBlank() == true) {

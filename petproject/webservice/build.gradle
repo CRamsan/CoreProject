@@ -42,3 +42,5 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         jvmTarget = globalJavaCompatibility
     }
 }
+
+build.finalizedBy ktlint

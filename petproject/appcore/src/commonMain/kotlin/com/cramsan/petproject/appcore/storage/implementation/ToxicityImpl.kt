@@ -10,4 +10,4 @@ data class ToxicityImpl(
     override val animalId: AnimalType,
     override val isToxic: ToxicityValue,
     override val source: String
-    ) : Toxicity
+) : Toxicity

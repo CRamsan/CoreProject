@@ -13,14 +13,12 @@ import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageJdbcProvider
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 
-class  DependenciesConfig {
+class DependenciesConfig {
     val metrics by lazy {
         Metrics(object : MetricsInterface {
             override fun initialize() {}

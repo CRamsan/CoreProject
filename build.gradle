@@ -62,6 +62,10 @@ subprojects {
         ktlint "com.pinterest:ktlint:${globalKtlintVerion}"
     }
 
+    repositories {
+        jcenter()
+    }
+
     task("ktlint", type: JavaExec, group: "verification") {
         description = "Check Kotlin code style."
         classpath = configurations.ktlint

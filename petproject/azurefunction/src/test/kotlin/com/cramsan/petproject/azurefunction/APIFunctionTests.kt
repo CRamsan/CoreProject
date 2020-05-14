@@ -1,7 +1,12 @@
 package com.cramsan.petproject.azurefunction
 
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.storage.implementation.*
+import com.cramsan.petproject.appcore.storage.implementation.DescriptionImpl
+import com.cramsan.petproject.appcore.storage.implementation.PlantCommonNameImpl
+import com.cramsan.petproject.appcore.storage.implementation.PlantFamilyImpl
+import com.cramsan.petproject.appcore.storage.implementation.PlantImp
+import com.cramsan.petproject.appcore.storage.implementation.PlantMainNameImpl
+import com.cramsan.petproject.appcore.storage.implementation.ToxicityImpl
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.microsoft.azure.functions.ExecutionContext
@@ -10,12 +15,12 @@ import com.microsoft.azure.functions.HttpResponseMessage
 import com.microsoft.azure.functions.HttpStatus
 import io.mockk.every
 import io.mockk.mockk
+import java.lang.reflect.Type
+import java.util.logging.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
-import java.lang.reflect.Type
-import java.util.logging.Logger
 
 class APIFunctionTests {
 
@@ -50,7 +55,6 @@ class APIFunctionTests {
         // Verify
         assertEquals(ret.status, HttpStatus.OK)
     }
-
 
     @Test
     fun testPlants() {

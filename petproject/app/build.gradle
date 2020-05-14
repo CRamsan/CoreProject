@@ -97,3 +97,5 @@ dependencies {
     androidTestImplementation "io.mockk:mockk:$globalMockkVersion"
     androidTestImplementation "io.mockk:mockk-android:$globalMockkVersion"
 }
+
+build.finalizedBy ktlint

@@ -7,4 +7,4 @@ data class PlantFamilyImpl(
     override val family: String,
     override val plantId: Long,
     override val locale: String
-    ) : PlantFamily
+) : PlantFamily

@@ -6,7 +6,8 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import com.cramsan.petproject.appcore.storage.*
+import com.cramsan.petproject.appcore.storage.ModelStorageInterface
+import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

@@ -16,8 +16,8 @@ import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.base.BaseFragment.FragmentCallbacks
 import com.cesarandres.ps2link.fragments.FragmentAbout
 import com.cesarandres.ps2link.fragments.FragmentAddOutfit
-import com.cesarandres.ps2link.fragments.FragmentMainMenu
 import com.cesarandres.ps2link.fragments.FragmentAddProfile
+import com.cesarandres.ps2link.fragments.FragmentMainMenu
 import com.cesarandres.ps2link.fragments.FragmentOutfitList
 import com.cesarandres.ps2link.fragments.FragmentProfileList
 import com.cesarandres.ps2link.fragments.FragmentServerList

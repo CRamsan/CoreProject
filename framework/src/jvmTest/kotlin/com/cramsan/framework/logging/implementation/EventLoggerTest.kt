@@ -1,6 +1,5 @@
 package com.cramsan.framework.logging.implementation
 
-import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import io.mockk.mockk
 import org.junit.Before

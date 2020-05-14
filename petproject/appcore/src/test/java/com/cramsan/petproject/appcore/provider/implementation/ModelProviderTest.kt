@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
-import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroidProvider
 import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers

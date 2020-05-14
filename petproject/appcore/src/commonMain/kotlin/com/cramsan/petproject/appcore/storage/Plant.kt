@@ -10,5 +10,4 @@ interface Plant {
     val scientificName: String
 
     val imageUrl: String
-
 }

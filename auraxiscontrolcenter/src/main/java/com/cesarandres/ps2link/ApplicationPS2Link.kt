@@ -43,7 +43,6 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.singleton
 import org.kodein.di.newInstance
-import java.util.Optional
 
 class ApplicationPS2Link : Application(), KodeinAware {
 
