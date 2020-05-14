@@ -12,14 +12,4 @@ interface PlantFamily {
     val plantId: Long
 
     val locale: String
-
-    data class PlantFamilyImpl(
-        override val id: Long,
-        override val family: String,
-        val plant_id: Long,
-        override val locale: String
-    ) : PlantFamily {
-        override val plantId: Long
-            get() = plant_id
-    }
 }

@@ -11,12 +11,9 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
-import com.cramsan.petproject.appcore.storage.Description
+import com.cramsan.petproject.appcore.provider.ProviderConfig
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.appcore.storage.PlantCommonName
-import com.cramsan.petproject.appcore.storage.PlantFamily
-import com.cramsan.petproject.appcore.storage.PlantMainName
-import com.cramsan.petproject.appcore.storage.Toxicity
+import com.cramsan.petproject.appcore.storage.implementation.*
 import io.ktor.client.HttpClient
 import io.ktor.client.features.ClientRequestException
 import io.ktor.client.features.json.JsonFeature
@@ -37,6 +34,8 @@ class ModelProvider(
     private val modelStorage: ModelStorageInterface,
     private val preferences: PreferencesInterface
 ) : ModelProviderInterface {
+
+    val config: ProviderConfig? = null
 
     private val http: HttpClient = HttpClient {
         install(JsonFeature) {
@@ -82,12 +81,11 @@ class ModelProvider(
                 it.onCatalogUpdate(false)
             }
 
-            val plants: ArrayList<com.cramsan.petproject.appcore.storage.Plant.PlantImp> =
-                http.get("https://cramsan.com/data/plant/")
+            val plants: ArrayList<PlantImp> = http.get("https://petproject-api.azurewebsites.net/api/plants?code=YPRgK2Aw13tryQgemoSJFVSrHVgSajAhYZ3y2bKYgKb2uzmDZYo2bA==")
             modelStorage.insertPlantList(plants)
-            val mainNames: ArrayList<PlantMainName.PlantMainNameImpl> = http.get("https://cramsan.com/data/name/")
+            val mainNames: ArrayList<PlantMainNameImpl> = http.get("https://petproject-api.azurewebsites.net/api/mainnames?code=MrCJgPbvCsHo9VDa856Y9sOo/Gc0Rq80tbucVt2u6c2hJbuIzy/0Fg==")
             modelStorage.insertPlantMainNameList(mainNames)
-            val toxicities: ArrayList<Toxicity.ToxicityImpl> = http.get("https://cramsan.com/data/toxicity/")
+            val toxicities: ArrayList<ToxicityImpl> = http.get("https://petproject-api.azurewebsites.net/api/toxicities?code=9DkhZP7t7X8NmgPrafGQcqkWJ5S57wpeZnPu2EjAugS7hB2AgfKpgQ==")
             modelStorage.insertToxicityList(toxicities)
             isCatalogReady = true
             preferences.saveLong(LAST_UPDATE, currentTime)
@@ -119,7 +117,7 @@ class ModelProvider(
 
         if (plantEntry == null) {
             try {
-                val commonName: ArrayList<PlantCommonName.PlantCommonNameImpl> = http.get("https://cramsan.com/data/common_name/$plantId/")
+                val commonName: ArrayList<PlantCommonNameImpl> = http.get("https://cramsan.com/data/common_name/$plantId/")
                 commonName.forEach {
                     modelStorage.insertPlantCommonName(it)
                 }
@@ -127,8 +125,8 @@ class ModelProvider(
                 eventLogger.log(Severity.WARNING, "ModelProvider", cause.toString())
             }
 
-            val family: PlantFamily.PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
-            val description: Description.DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
+            val family: PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
+            val description: DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
             modelStorage.insertPlantFamily(family)
             modelStorage.insertDescription(description)
             plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null

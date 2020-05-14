@@ -1,11 +1,14 @@
 package com.cramsan.petproject.azurefunction
 
+import com.cramsan.petproject.appcore.storage.Plant
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.microsoft.azure.functions.*
 import com.microsoft.azure.functions.annotation.AuthorizationLevel
 import com.microsoft.azure.functions.annotation.FunctionName
 import com.microsoft.azure.functions.annotation.HttpTrigger
 
 class APIFunction {
+
 
     @FunctionName("plants")
     fun plants(
@@ -16,8 +19,12 @@ class APIFunction {
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlants()
-        return request.createResponseBuilder(HttpStatus.OK).body(body).build()
+        val body: List<Plant> = modelStorage.getPlants()
+        val bodyString = mapper.writeValueAsString(body)
+        return request.createResponseBuilder(HttpStatus.OK)
+            .header("Content-Type", "application/json")
+            .body(bodyString)
+            .build()
     }
 
     @FunctionName("mainnames")
@@ -29,8 +36,12 @@ class APIFunction {
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlantsFamily()
-        return request.createResponseBuilder(HttpStatus.OK).body(body).build()
+        val body = modelStorage.getPlantsMainName()
+        val bodyString = mapper.writeValueAsString(body)
+        return request.createResponseBuilder(HttpStatus.OK)
+            .header("Content-Type", "application/json")
+            .body(bodyString)
+            .build()
     }
 
     @FunctionName("commonnames")
@@ -42,8 +53,12 @@ class APIFunction {
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlantsFamily()
-        return request.createResponseBuilder(HttpStatus.OK).body(body).build()
+        val body = modelStorage.getPlantsCommonNames()
+        val bodyString = mapper.writeValueAsString(body)
+        return request.createResponseBuilder(HttpStatus.OK)
+            .header("Content-Type", "application/json")
+            .body(bodyString)
+            .build()
     }
 
     @FunctionName("families")
@@ -56,7 +71,11 @@ class APIFunction {
         context: ExecutionContext
     ): HttpResponseMessage {
         val body = modelStorage.getPlantsFamily()
-        return request.createResponseBuilder(HttpStatus.OK).body(body).build()
+        val bodyString = mapper.writeValueAsString(body)
+        return request.createResponseBuilder(HttpStatus.OK)
+            .header("Content-Type", "application/json")
+            .body(bodyString)
+            .build()
     }
 
     @FunctionName("descriptions")
@@ -68,8 +87,12 @@ class APIFunction {
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlantsFamily()
-        return request.createResponseBuilder(HttpStatus.OK).body(body).build()
+        val body = modelStorage.getDescription()
+        val bodyString = mapper.writeValueAsString(body)
+        return request.createResponseBuilder(HttpStatus.OK)
+            .header("Content-Type", "application/json")
+            .body(bodyString)
+            .build()
     }
 
     @FunctionName("toxicities")
@@ -81,12 +104,17 @@ class APIFunction {
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlantsFamily()
-        return request.createResponseBuilder(HttpStatus.OK).body(body).build()
+        val body = modelStorage.getToxicity()
+        val bodyString = mapper.writeValueAsString(body)
+        return request.createResponseBuilder(HttpStatus.OK)
+            .header("Content-Type", "application/json")
+            .body(bodyString)
+            .build()
     }
 
     companion object {
         private val dependenciesConfig = DependenciesConfig()
         val modelStorage = dependenciesConfig.modelStorage
+        val mapper = ObjectMapper()
     }
 }

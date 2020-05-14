@@ -9,14 +9,8 @@ import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
-import com.cramsan.petproject.appcore.storage.Description
-import com.cramsan.petproject.appcore.storage.Plant
-import com.cramsan.petproject.appcore.storage.PlantCommonName
-import com.cramsan.petproject.appcore.storage.PlantFamily
-import com.cramsan.petproject.appcore.storage.PlantMainName
-import com.cramsan.petproject.appcore.storage.Toxicity
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
+import com.cramsan.petproject.appcore.storage.implementation.*
 import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -75,15 +69,16 @@ internal class ModelProviderCommonTest {
         for (i in 1..100) {
             val plantId: Long = i.toLong()
             modelStorage.insertPlant(
-                Plant.PlantImp(plantId,
+                PlantImp(plantId,
                     "$i",
-                    "https://www.aspca.org"))
-            modelStorage.insertDescription(Description.DescriptionImpl(descriptionId++, plantId, AnimalType.CAT.ordinal, "en", "desc"))
-            modelStorage.insertPlantFamily(PlantFamily.PlantFamilyImpl(familyId++, "Some Family $i", plantId, "en"))
-            modelStorage.insertPlantCommonName(PlantCommonName.PlantCommonNameImpl(commonNameId++, "Name $i", plantId, "en"))
-            modelStorage.insertPlantMainName(PlantMainName.PlantMainNameImpl(mainNameId++, "$i $i", plantId, "en"))
-            modelStorage.insertToxicity(Toxicity.ToxicityImpl(toxicityId++, plantId, AnimalType.CAT.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
-            modelStorage.insertToxicity(Toxicity.ToxicityImpl(toxicityId++, plantId, AnimalType.DOG.ordinal, ToxicityValue.NON_TOXIC.ordinal, ""))
+                    "https://www.aspca.org")
+            )
+            modelStorage.insertDescription(DescriptionImpl(descriptionId++, plantId, AnimalType.CAT, "en", "desc"))
+            modelStorage.insertPlantFamily(PlantFamilyImpl(familyId++, "Some Family $i", plantId, "en"))
+            modelStorage.insertPlantCommonName(PlantCommonNameImpl(commonNameId++, "Name $i", plantId, "en"))
+            modelStorage.insertPlantMainName(PlantMainNameImpl(mainNameId++, "$i $i", plantId, "en"))
+            modelStorage.insertToxicity(ToxicityImpl(toxicityId++, plantId, AnimalType.CAT, ToxicityValue.NON_TOXIC, ""))
+            modelStorage.insertToxicity(ToxicityImpl(toxicityId++, plantId, AnimalType.DOG, ToxicityValue.NON_TOXIC, ""))
         }
     }
 }

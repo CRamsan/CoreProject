@@ -12,16 +12,4 @@ interface PlantCommonName {
     val plantId: Long
 
     val locale: String
-
-    data class PlantCommonNameImpl(
-        override val id: Long,
-        val common_name: String,
-        val plant_id: Long,
-        override val locale: String
-    ) : PlantCommonName {
-        override val commonName: String
-            get() = common_name
-        override val plantId: Long
-            get() = plant_id
-    }
 }
