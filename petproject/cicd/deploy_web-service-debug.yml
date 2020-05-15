@@ -19,16 +19,20 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'petproject:azurefunction:test petproject:azurefunction:build'
+    tasks: 'petproject:azurefunction:test petproject:azurefunction:build petproject:azurefunction:azureFunctionsPackageZip'
 - task: CopyFiles@2
   inputs:
-    contents: '**/*.jar'
-    targetFolder: '$(build.artifactStagingDirectory)'
+    SourceFolder: $(system.defaultworkingdirectory)/petproject/azurefunction/build/azure-functions/
+    Contents: '**'
+    targetFolder: $(build.artifactStagingDirectory)
 - task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)
 - task: AzureFunctionApp@1
   inputs:
     azureSubscription: 'Pay-As-You-Go(7b2a465a-dd34-46f3-acb4-13737ce32fd4)'
     appType: 'functionApp'
     appName: 'petproject-api'
-    package: 'petproject/azurefunction/build/libs/azurefunction-0.0.1-SNAPSHOT.jar'    
+    package: $(build.artifactstagingdirectory)
     deploymentMethod: 'auto'
