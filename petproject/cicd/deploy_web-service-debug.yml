@@ -22,7 +22,7 @@ steps:
     tasks: 'petproject:azurefunction:test petproject:azurefunction:build petproject:azurefunction:azureFunctionsPackageZip'
 - task: CopyFiles@2
   inputs:
-    SourceFolder: $(system.defaultworkingdirectory)/petproject/azurefunction/build/azure-functions/
+    SourceFolder: $(system.defaultworkingdirectory)/petproject/azurefunction/build/azure-functions/petproject-api/
     Contents: '**'
     targetFolder: $(build.artifactStagingDirectory)
 - task: PublishBuildArtifacts@1
