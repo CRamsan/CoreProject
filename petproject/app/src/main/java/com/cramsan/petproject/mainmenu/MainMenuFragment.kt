@@ -193,12 +193,12 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     }
 
     private fun displayDownloadingMessage() {
-        Snackbar.make(view!!, R.string.main_menu_snackbar_downloading, Snackbar.LENGTH_SHORT)
+        Snackbar.make(requireView(), R.string.main_menu_snackbar_downloading, Snackbar.LENGTH_SHORT)
             .show()
     }
 
     private fun displayDownloadCompleteMessage() {
-        Snackbar.make(view!!, R.string.main_menu_snackbar_downloaded, Snackbar.LENGTH_SHORT)
+        Snackbar.make(requireView(), R.string.main_menu_snackbar_downloaded, Snackbar.LENGTH_SHORT)
             .show()
     }
 
