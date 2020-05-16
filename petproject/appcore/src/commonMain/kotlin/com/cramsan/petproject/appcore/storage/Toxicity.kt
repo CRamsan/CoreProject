@@ -5,7 +5,6 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import kotlin.Long
 import kotlin.String
 
-@Suppress("VariableNaming", "ConstructorParameterNaming")
 interface Toxicity {
     val id: Long
 
@@ -13,7 +12,7 @@ interface Toxicity {
 
     val animalId: AnimalType
 
-    val isToxic: ToxicityValue
+    val toxic: ToxicityValue
 
     val source: String
 }

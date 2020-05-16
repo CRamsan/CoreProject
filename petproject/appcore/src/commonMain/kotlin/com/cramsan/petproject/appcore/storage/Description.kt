@@ -4,7 +4,6 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import kotlin.Long
 import kotlin.String
 
-@Suppress("VariableNaming", "ConstructorParameterNaming")
 interface Description {
     val id: Long
 

@@ -1,6 +1,7 @@
 package com.cramsan.petproject.azurefunction
 
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.implementation.DescriptionImpl
 import com.cramsan.petproject.appcore.storage.implementation.PlantCommonNameImpl
 import com.cramsan.petproject.appcore.storage.implementation.PlantFamilyImpl
@@ -197,7 +198,6 @@ class APIFunctionTests {
         assertEquals(toxicity.id, 1)
         assertEquals(toxicity.plantId, 1)
         assertEquals(toxicity.animalId, AnimalType.DOG)
-        assertEquals(toxicity.isToxic, null)
-        assertEquals(toxicity.isToxic, null)
+        assertEquals(toxicity.toxic, ToxicityValue.NON_TOXIC)
     }
 }

@@ -188,7 +188,7 @@ class ModelStorage(
         } else {
             toxicity.id
         }
-        return platformDelegate.insertToxicityEntry(toxicityId, toxicity.isToxic, toxicity.plantId, toxicity.animalId, toxicity.source)
+        return platformDelegate.insertToxicityEntry(toxicityId, toxicity.toxic, toxicity.plantId, toxicity.animalId, toxicity.source)
     }
 
     override fun insertToxicityList(list: List<Toxicity>) {

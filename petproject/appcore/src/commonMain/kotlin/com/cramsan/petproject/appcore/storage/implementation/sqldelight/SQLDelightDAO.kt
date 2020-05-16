@@ -79,7 +79,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
     override fun insertToxicityEntries(list: List<com.cramsan.petproject.appcore.storage.Toxicity>) {
         database.toxicityQueries.transaction {
-            list.forEach { insertToxicityEntry(it.id, it.isToxic, it.plantId, it.animalId, it.source) }
+            list.forEach { insertToxicityEntry(it.id, it.toxic, it.plantId, it.animalId, it.source) }
         }
     }
 

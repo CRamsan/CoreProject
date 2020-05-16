@@ -82,10 +82,10 @@ class Toxicity(
         get() = toxicity.plant_id
     override val animalId: AnimalType
         get() = toxicity.animal_id
-    override val isToxic: ToxicityValue
-        get() = toxicity.is_toxic
     override val source: String
         get() = toxicity.source
+    override val toxic: ToxicityValue
+        get() = toxicity.is_toxic
 }
 
 class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId {
