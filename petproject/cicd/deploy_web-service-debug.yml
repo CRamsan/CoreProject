@@ -1,9 +1,20 @@
+# Gradle
 # Build your Java project and run tests with Gradle using a Gradle wrapper script.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+# specific path build
 trigger:
-- master
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - petproject/*
+    - framework/*
+    - build.gradle
+    - gradle.properties
+    - settings.gradle
 
 pool:
   vmImage: 'ubuntu-latest'
