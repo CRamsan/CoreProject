@@ -88,9 +88,9 @@ class ModelProvider(
 
             val plants: ArrayList<PlantImp> = http.get("https://petproject-api.azurewebsites.net/api/plants?code=YPRgK2Aw13tryQgemoSJFVSrHVgSajAhYZ3y2bKYgKb2uzmDZYo2bA==")
             modelStorage.insertPlantList(plants)
-            val mainNames: ArrayList<PlantMainNameImpl> = http.get("https://petproject-api.azurewebsites.net/api/mainnames?code=MrCJgPbvCsHo9VDa856Y9sOo/Gc0Rq80tbucVt2u6c2hJbuIzy/0Fg==")
+            val mainNames: ArrayList<PlantMainNameImpl> = http.get("https://petproject-api.azurewebsites.net/api/name/main?code=MrCJgPbvCsHo9VDa856Y9sOo/Gc0Rq80tbucVt2u6c2hJbuIzy/0Fg==")
             modelStorage.insertPlantMainNameList(mainNames)
-            val toxicities: ArrayList<ToxicityImpl> = http.get("https://petproject-api.azurewebsites.net/api/toxicities?code=9DkhZP7t7X8NmgPrafGQcqkWJ5S57wpeZnPu2EjAugS7hB2AgfKpgQ==")
+            val toxicities: ArrayList<ToxicityImpl> = http.get("https://petproject-api.azurewebsites.net/api/toxicity?code=9DkhZP7t7X8NmgPrafGQcqkWJ5S57wpeZnPu2EjAugS7hB2AgfKpgQ==")
             modelStorage.insertToxicityList(toxicities)
             isCatalogReady = true
             preferences.saveLong(LAST_UPDATE, currentTime)
@@ -122,7 +122,7 @@ class ModelProvider(
 
         if (plantEntry == null) {
             try {
-                val commonName: ArrayList<PlantCommonNameImpl> = http.get("https://cramsan.com/data/common_name/$plantId/")
+                val commonName: ArrayList<PlantCommonNameImpl> = http.get("https://petproject-api.azurewebsites.net/api/name/common/$plantId?code=rl0wZmFlhUBtv2xuCg4ClCgJ3PJk291dQJadO0TO9P5V83fWn3ZV3g==")
                 commonName.forEach {
                     modelStorage.insertPlantCommonName(it)
                 }
@@ -130,8 +130,8 @@ class ModelProvider(
                 eventLogger.log(Severity.WARNING, "ModelProvider", cause.toString())
             }
 
-            val family: PlantFamilyImpl = http.get("https://cramsan.com/data/family/$plantId/")
-            val description: DescriptionImpl = http.get("https://cramsan.com/data/description/$plantId/${animalType.ordinal}")
+            val family: PlantFamilyImpl = http.get("https://petproject-api.azurewebsites.net/api/family/$plantId?code=5ojL7jdhEAO9Z7TLO6mJspal894Zi05iICKlDxixeKB60OsnBLH6Lw==")
+            val description: DescriptionImpl = http.get("https://petproject-api.azurewebsites.net/api/description/${plantId}/${animalType.ordinal}?code=jFXlsMaMH2cAJ6SV7t8caftgURa7rLOEvXnxsamRZVCq4QYj3Xgi6g==")
             modelStorage.insertPlantFamily(family)
             modelStorage.insertDescription(description)
             plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null

@@ -114,22 +114,22 @@ class APIFunctionTests {
         }
         val context: ExecutionContext = mockk()
         // Invoke
-        val ret: HttpResponseMessage = APIFunction().commonNames(req, context)
+        val ret: HttpResponseMessage = APIFunction().commonNames(req, 90L, context)
         val bodyString: String = ret.body as String
         val listType: Type = object : TypeToken<ArrayList<PlantCommonNameImpl>>() {}.type
         val result: ArrayList<PlantCommonNameImpl> = gson.fromJson(bodyString, listType)
 
         // Verify
         assertFalse(result.isEmpty())
-        val commonName = result[0]
-        assertEquals(commonName.id, 1)
-        assertEquals(commonName.plantId, 1)
-        assertEquals(commonName.commonName, "Kentia palm")
+        val commonName = result[5]
+        assertEquals(commonName.id, 619)
+        assertEquals(commonName.plantId, 90)
+        assertEquals(commonName.commonName, "Devil's Vine")
         assertEquals(commonName.locale, "en")
     }
 
     @Test
-    fun testDescriptions() {
+    fun testDescription() {
         // Setup
         val req: HttpRequestMessage<String?> = mockk()
         every { req.createResponseBuilder(any()) } answers {
@@ -138,23 +138,20 @@ class APIFunctionTests {
         }
         val context: ExecutionContext = mockk()
         // Invoke
-        val ret: HttpResponseMessage = APIFunction().descriptions(req, context)
+        val ret: HttpResponseMessage = APIFunction().description(req,100L, 1, context)
         val bodyString: String = ret.body as String
-        val listType: Type = object : TypeToken<ArrayList<DescriptionImpl>>() {}.type
-        val result: ArrayList<DescriptionImpl> = gson.fromJson(bodyString, listType)
+        val result: DescriptionImpl = gson.fromJson(bodyString, DescriptionImpl::class.java)
 
         // Verify
-        assertFalse(result.isEmpty())
-        val description = result[0]
-        assertEquals(description.id, 1)
-        assertEquals(description.plantId, 1)
-        assertEquals(description.animalId, AnimalType.DOG)
-        assertEquals(description.description, "")
-        assertEquals(description.locale, "en")
+        assertEquals(result.id, 664)
+        assertEquals(result.plantId, 100)
+        assertEquals(result.animalId, AnimalType.DOG)
+        assertEquals(result.description, "")
+        assertEquals(result.locale, "en")
     }
 
     @Test
-    fun testFamilies() {
+    fun testFamily() {
         // Setup
         val req: HttpRequestMessage<String?> = mockk()
         every { req.createResponseBuilder(any()) } answers {
@@ -163,18 +160,15 @@ class APIFunctionTests {
         }
         val context: ExecutionContext = mockk()
         // Invoke
-        val ret: HttpResponseMessage = APIFunction().families(req, context)
+        val ret: HttpResponseMessage = APIFunction().familiy(req, 100L, context)
         val bodyString: String = ret.body as String
-        val listType: Type = object : TypeToken<ArrayList<PlantFamilyImpl>>() {}.type
-        val result: ArrayList<PlantFamilyImpl> = gson.fromJson(bodyString, listType)
+        val result: PlantFamilyImpl = gson.fromJson(bodyString, PlantFamilyImpl::class.java)
 
         // Verify
-        assertFalse(result.isEmpty())
-        val family = result[0]
-        assertEquals(family.id, 1)
-        assertEquals(family.plantId, 1)
-        assertEquals(family.family, "Palmea")
-        assertEquals(family.locale, "en")
+        assertEquals(result.id, 100)
+        assertEquals(result.plantId, 100)
+        assertEquals(result.family, "Begoniaceae")
+        assertEquals(result.locale, "en")
     }
 
     @Test

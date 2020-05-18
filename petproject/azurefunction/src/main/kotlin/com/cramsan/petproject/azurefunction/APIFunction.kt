@@ -8,6 +8,7 @@ import com.microsoft.azure.functions.HttpRequestMessage
 import com.microsoft.azure.functions.HttpResponseMessage
 import com.microsoft.azure.functions.HttpStatus
 import com.microsoft.azure.functions.annotation.AuthorizationLevel
+import com.microsoft.azure.functions.annotation.BindingName
 import com.microsoft.azure.functions.annotation.FunctionName
 import com.microsoft.azure.functions.annotation.HttpTrigger
 
@@ -18,7 +19,8 @@ class APIFunction {
         @HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],
-            authLevel = AuthorizationLevel.FUNCTION
+            authLevel = AuthorizationLevel.FUNCTION,
+            route = "plants"
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
@@ -35,7 +37,8 @@ class APIFunction {
         @HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],
-            authLevel = AuthorizationLevel.FUNCTION
+            authLevel = AuthorizationLevel.FUNCTION,
+            route = "name/main"
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
@@ -47,16 +50,19 @@ class APIFunction {
             .build()
     }
 
-    @FunctionName("commonnames")
+    @FunctionName("commonNames")
     fun commonNames(
         @HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],
-            authLevel = AuthorizationLevel.FUNCTION
+            authLevel = AuthorizationLevel.FUNCTION,
+            route = "name/common/{plantId}"
         ) request: HttpRequestMessage<String?>,
+        @BindingName("plantId") plantId: Long,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlantsCommonNames()
+        val list = modelStorage.getPlantsCommonNames()
+        val body = list.filter { it.plantId == plantId }
         val bodyString = mapper.writeValueAsString(body)
         return request.createResponseBuilder(HttpStatus.OK)
             .header("Content-Type", "application/json")
@@ -64,16 +70,19 @@ class APIFunction {
             .build()
     }
 
-    @FunctionName("families")
-    fun families(
+    @FunctionName("familiy")
+    fun familiy(
         @HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],
-            authLevel = AuthorizationLevel.FUNCTION
+            authLevel = AuthorizationLevel.FUNCTION,
+            route = "family/{plantId}"
         ) request: HttpRequestMessage<String?>,
+        @BindingName("plantId") plantId: Long,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getPlantsFamily()
+        val list = modelStorage.getPlantsFamily()
+        val body = list.first { it.plantId == plantId }
         val bodyString = mapper.writeValueAsString(body)
         return request.createResponseBuilder(HttpStatus.OK)
             .header("Content-Type", "application/json")
@@ -81,16 +90,20 @@ class APIFunction {
             .build()
     }
 
-    @FunctionName("descriptions")
-    fun descriptions(
+    @FunctionName("description")
+    fun description(
         @HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],
-            authLevel = AuthorizationLevel.FUNCTION
+            authLevel = AuthorizationLevel.FUNCTION,
+            route = "description/{plantId}/{animalType}"
         ) request: HttpRequestMessage<String?>,
+        @BindingName("plantId") plantId: Long,
+        @BindingName("animalType") animalType: Int,
         context: ExecutionContext
     ): HttpResponseMessage {
-        val body = modelStorage.getDescription()
+        val list = modelStorage.getDescription()
+        val body = list.first { it.plantId == plantId && it.animalId.ordinal == animalType }
         val bodyString = mapper.writeValueAsString(body)
         return request.createResponseBuilder(HttpStatus.OK)
             .header("Content-Type", "application/json")
@@ -103,7 +116,8 @@ class APIFunction {
         @HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],
-            authLevel = AuthorizationLevel.FUNCTION
+            authLevel = AuthorizationLevel.FUNCTION,
+            route = "toxicity"
         ) request: HttpRequestMessage<String?>,
         context: ExecutionContext
     ): HttpResponseMessage {
