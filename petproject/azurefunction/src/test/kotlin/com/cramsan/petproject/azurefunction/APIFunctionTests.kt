@@ -138,7 +138,7 @@ class APIFunctionTests {
         }
         val context: ExecutionContext = mockk()
         // Invoke
-        val ret: HttpResponseMessage = APIFunction().description(req,100L, 1, context)
+        val ret: HttpResponseMessage = APIFunction().description(req, 100L, 1, context)
         val bodyString: String = ret.body as String
         val result: DescriptionImpl = gson.fromJson(bodyString, DescriptionImpl::class.java)
 
