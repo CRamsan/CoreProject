@@ -130,10 +130,17 @@ class ModelProvider(
                 eventLogger.log(Severity.WARNING, "ModelProvider", cause.toString())
             }
 
-            val family: PlantFamilyImpl = http.get("https://petproject-api.azurewebsites.net/api/family/$plantId?code=5ojL7jdhEAO9Z7TLO6mJspal894Zi05iICKlDxixeKB60OsnBLH6Lw==")
-            val description: DescriptionImpl = http.get("https://petproject-api.azurewebsites.net/api/description/${plantId}/${animalType.ordinal}?code=jFXlsMaMH2cAJ6SV7t8caftgURa7rLOEvXnxsamRZVCq4QYj3Xgi6g==")
-            modelStorage.insertPlantFamily(family)
-            modelStorage.insertDescription(description)
+            try {
+                val family: PlantFamilyImpl =
+                    http.get("https://petproject-api.azurewebsites.net/api/family/$plantId?code=CFZ4cBbpDYJjsgBlWSUQxgqO7fqE3Itjr00eJmkKQOnsXdxdJ9J7Iw==")
+                val description: DescriptionImpl =
+                    http.get("https://petproject-api.azurewebsites.net/api/description/$plantId/${animalType.ordinal}?code=jFXlsMaMH2cAJ6SV7t8caftgURa7rLOEvXnxsamRZVCq4QYj3Xgi6g==")
+                modelStorage.insertPlantFamily(family)
+                modelStorage.insertDescription(description)
+            } catch (cause: ClientRequestException) {
+                eventLogger.log(Severity.ERROR, "ModelProvider", cause.toString())
+                return null
+            }
             plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
         }
 
