@@ -33,7 +33,7 @@ steps:
     tasks: 'petproject:azurefunction:test petproject:azurefunction:build petproject:azurefunction:azureFunctionsPackageZip'
 - task: CopyFiles@2
   inputs:
-    SourceFolder: $(system.defaultworkingdirectory)/petproject/azurefunction/build/azure-functions/petproject-api/
+    SourceFolder: $(system.defaultworkingdirectory)/petproject/azurefunction/build/azure-functions/
     Contents: '**'
     targetFolder: $(build.artifactStagingDirectory)
 - task: PublishBuildArtifacts@1
@@ -45,5 +45,5 @@ steps:
     azureSubscription: 'Pay-As-You-Go(7b2a465a-dd34-46f3-acb4-13737ce32fd4)'
     appType: 'functionApp'
     appName: 'petproject-api'
-    package: $(build.artifactstagingdirectory)
+    package: $(build.artifactstagingdirectory)/petproject-api/
     deploymentMethod: 'auto'
