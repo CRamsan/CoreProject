@@ -1,0 +1,522 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "petproject-api",
+        "version": "1.0",
+        "description": "PetProject API",
+        "contact": {
+
+        }
+    },
+    "servers": [
+        {
+            "url": "https://{domain}-petproject.azure-api.net/petproject-api",
+            "description": "",
+            "variables": {
+                "domain": {
+                    "default": "prod"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/description": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/DescriptionList"
+                    }
+                }
+            }
+        },
+        "/family": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/FamilyList"
+                    }
+                }
+            }
+        },
+        "/plant": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/PlantList"
+                    }
+                }
+            }
+        },
+        "/toxicity": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ToxicityList"
+                    }
+                }
+            }
+        },
+        "/name/common": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/CommonNamesList"
+                    }
+                }
+            }
+        },
+        "/name/main/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MainNameList"
+                    }
+                }
+            }
+        },
+        "/description/{plantId}/{animalId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Description"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "plantId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                },
+                {
+                    "name": "animalId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/family/{plantId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Family"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "plantId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/name/common/{plantId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/CommonNamesList"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "plantId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/name/main/{plantId}/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MainName"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "plantId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/plant/{plantId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Plant"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "plantId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/toxicity/{plantId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Toxicity"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "plantId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "Toxicity": {
+                "title": "Root Type for Toxicity",
+                "description": "Toxicity value",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "plantId": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "animalId": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "toxic": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": 1,
+                    "plantId": 1,
+                    "animalId": "DOG",
+                    "source": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/forster-sentry-palm",
+                    "toxic": "NON_TOXIC"
+                }
+            },
+            "Plant": {
+                "title": "Root Type for Plant",
+                "description": "A single plant entity",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "scientificName": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": 1,
+                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Howea_forsteriana_Lord_Howe_Island.jpg/1200px-Howea_forsteriana_Lord_Howe_Island.jpg",
+                    "scientificName": "Howea forsteriana"
+                }
+            },
+            "Description": {
+                "title": "Root Type for Description",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "locale": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "animalId": {
+                        "type": "string"
+                    },
+                    "plantId": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                },
+                "example": {
+                    "id": 1,
+                    "locale": "en",
+                    "description": "",
+                    "animalId": "DOG",
+                    "plantId": 1
+                }
+            },
+            "Family": {
+                "title": "Root Type for Family",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "locale": {
+                        "type": "string"
+                    },
+                    "family": {
+                        "type": "string"
+                    },
+                    "plantId": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                },
+                "example": {
+                    "id": 199,
+                    "locale": "en",
+                    "family": "Oleaceae",
+                    "plantId": 199
+                }
+            },
+            "CommonName": {
+                "title": "Root Type for CommonName",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "plantId": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "locale": {
+                        "type": "string"
+                    },
+                    "commonName": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": 574,
+                    "plantId": 200,
+                    "locale": "en",
+                    "commonName": "White Heads"
+                }
+            },
+            "MainName": {
+                "title": "Root Type for MainName",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "plantId": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "locale": {
+                        "type": "string"
+                    },
+                    "mainName": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": 1,
+                    "plantId": 1,
+                    "locale": "en",
+                    "mainName": "Forster Sentry Palm"
+                }
+            }
+        },
+        "responses": {
+            "PlantList": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Plant"
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "Plant": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Plant"
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "CommonNamesList": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/CommonName"
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "CommonName": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/CommonName"
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "DescriptionList": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Description"
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "Description": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Description"
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "FamilyList": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Description"
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "Family": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Family"
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "MainNameList": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/MainName"
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "MainName": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/MainName"
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "Toxicity": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Toxicity"
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "ToxicityList": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Toxicity"
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            }
+        },
+        "securitySchemes": {
+            "apiKeyHeader": {
+                "type": "apiKey",
+                "name": "Ocp-Apim-Subscription-Key",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "apiKeyHeader": [
+            ]
+        }
+    ]
+}
