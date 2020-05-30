@@ -9,6 +9,7 @@ import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.appcore.provider.ProviderConfig
 import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import com.cramsan.petproject.appcore.storage.implementation.DescriptionImpl
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
@@ -33,6 +34,7 @@ internal class ModelProviderCommonTest {
     private val kodein = Kodein {
         bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
         bind<ThreadUtilInterface>() with provider { mockk<ThreadUtil>(relaxUnitFun = true) }
+        bind<ProviderConfig>() with provider { mockk<ProviderConfig>(relaxUnitFun = true) }
     }
 
     private lateinit var modelProvider: ModelProviderInterface
@@ -43,7 +45,7 @@ internal class ModelProviderCommonTest {
         val modelStorageImpl by kodein.newInstance { ModelStorage(storagePlatformProvider.provide(), instance(), instance()) }
         modelStorage = modelStorageImpl
         val preferences by kodein.newInstance { Preferences(platformDelegate) }
-        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), modelStorage, preferences) }
+        val newModelProvider by kodein.newInstance { ModelProvider(instance(), instance(), modelStorage, preferences, instance()) }
         modelProviderImpl = newModelProvider
         modelProvider = modelProviderImpl
     }

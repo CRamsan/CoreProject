@@ -32,6 +32,7 @@ import com.cramsan.petproject.appcore.feedback.FeedbackManagerInterface
 import com.cramsan.petproject.appcore.feedback.implementation.FeedbackManager
 import com.cramsan.petproject.appcore.model.feedback.Feedback
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.appcore.provider.ProviderConfig
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
@@ -100,9 +101,18 @@ class PetProjectApplication : Application(), KodeinAware {
             }
             preferences
         }
+        bind<ProviderConfig>() with singleton {
+            ProviderConfig(getString(R.string.provider_config_plants_url),
+                getString(R.string.provider_config_mainname_url),
+                getString(R.string.provider_config_commonname_url),
+                getString(R.string.provider_config_description_url),
+                getString(R.string.provider_config_family_url),
+                getString(R.string.provider_config_toxicities_url))
+        }
         bind<ModelProviderInterface>() with singleton {
             val modelProvider by kodein.newInstance {
                 ModelProvider(instance(),
+                    instance(),
                     instance(),
                     instance(),
                     instance()) }

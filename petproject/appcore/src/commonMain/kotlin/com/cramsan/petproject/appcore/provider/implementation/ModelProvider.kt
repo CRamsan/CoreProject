@@ -4,6 +4,7 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.utils.format.StringFormatter
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
@@ -37,10 +38,9 @@ class ModelProvider(
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface,
     private val modelStorage: ModelStorageInterface,
-    private val preferences: PreferencesInterface
+    private val preferences: PreferencesInterface,
+    private val config: ProviderConfig
 ) : ModelProviderInterface {
-
-    val config: ProviderConfig? = null
 
     private val http: HttpClient = HttpClient {
         install(JsonFeature) {
@@ -86,11 +86,11 @@ class ModelProvider(
                 it.onCatalogUpdate(false)
             }
 
-            val plants: ArrayList<PlantImp> = http.get("https://petproject-api.azurewebsites.net/api/plants?code=YPRgK2Aw13tryQgemoSJFVSrHVgSajAhYZ3y2bKYgKb2uzmDZYo2bA==")
+            val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint)
             modelStorage.insertPlantList(plants)
-            val mainNames: ArrayList<PlantMainNameImpl> = http.get("https://petproject-api.azurewebsites.net/api/name/main?code=MrCJgPbvCsHo9VDa856Y9sOo/Gc0Rq80tbucVt2u6c2hJbuIzy/0Fg==")
+            val mainNames: ArrayList<PlantMainNameImpl> = http.get(config.mainNameEndpoint)
             modelStorage.insertPlantMainNameList(mainNames)
-            val toxicities: ArrayList<ToxicityImpl> = http.get("https://petproject-api.azurewebsites.net/api/toxicity?code=9DkhZP7t7X8NmgPrafGQcqkWJ5S57wpeZnPu2EjAugS7hB2AgfKpgQ==")
+            val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint)
             modelStorage.insertToxicityList(toxicities)
             isCatalogReady = true
             preferences.saveLong(LAST_UPDATE, currentTime)
@@ -120,9 +120,12 @@ class ModelProvider(
 
         var plantEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale)
 
+        val formatter = StringFormatter()
         if (plantEntry == null) {
             try {
-                val commonName: ArrayList<PlantCommonNameImpl> = http.get("https://petproject-api.azurewebsites.net/api/name/common/$plantId?code=rl0wZmFlhUBtv2xuCg4ClCgJ3PJk291dQJadO0TO9P5V83fWn3ZV3g==")
+
+                val commonNameEndpoint = formatter.format(config.commonNamesEndpoint, plantId)
+                val commonName: ArrayList<PlantCommonNameImpl> = http.get(commonNameEndpoint)
                 commonName.forEach {
                     modelStorage.insertPlantCommonName(it)
                 }
@@ -131,10 +134,10 @@ class ModelProvider(
             }
 
             try {
-                val family: PlantFamilyImpl =
-                    http.get("https://petproject-api.azurewebsites.net/api/family/$plantId?code=CFZ4cBbpDYJjsgBlWSUQxgqO7fqE3Itjr00eJmkKQOnsXdxdJ9J7Iw==")
-                val description: DescriptionImpl =
-                    http.get("https://petproject-api.azurewebsites.net/api/description/$plantId/${animalType.ordinal}?code=jFXlsMaMH2cAJ6SV7t8caftgURa7rLOEvXnxsamRZVCq4QYj3Xgi6g==")
+                val familyEndpoint = formatter.format(config.familyEndpoint, plantId)
+                val family: PlantFamilyImpl = http.get(familyEndpoint)
+                val descriptionEndpoint = formatter.format(config.descriptionsEndpoint, plantId, animalType.ordinal)
+                val description: DescriptionImpl = http.get(descriptionEndpoint)
                 modelStorage.insertPlantFamily(family)
                 modelStorage.insertDescription(description)
             } catch (cause: ClientRequestException) {

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">(DEBUG)Safe for my Pets</string>
+
+    <string name="provider_config_plants_url">https://petproject-api.azurewebsites.net/api/plants?code=YPRgK2Aw13tryQgemoSJFVSrHVgSajAhYZ3y2bKYgKb2uzmDZYo2bA==</string>
+    <string name="provider_config_mainname_url">https://petproject-api.azurewebsites.net/api/name/main?code=MrCJgPbvCsHo9VDa856Y9sOo/Gc0Rq80tbucVt2u6c2hJbuIzy/0Fg==</string>
+    <string name="provider_config_toxicities_url">https://petproject-api.azurewebsites.net/api/toxicity?code=9DkhZP7t7X8NmgPrafGQcqkWJ5S57wpeZnPu2EjAugS7hB2AgfKpgQ==</string>
+    <string name="provider_config_commonname_url">https://petproject-api.azurewebsites.net/api/name/common/%s?code=rl0wZmFlhUBtv2xuCg4ClCgJ3PJk291dQJadO0TO9P5V83fWn3ZV3g==</string>
+    <string name="provider_config_family_url">https://petproject-api.azurewebsites.net/api/family/%s?code=CFZ4cBbpDYJjsgBlWSUQxgqO7fqE3Itjr00eJmkKQOnsXdxdJ9J7Iw==</string>
+    <string name="provider_config_description_url">https://petproject-api.azurewebsites.net/api/description/%s/%s?code=jFXlsMaMH2cAJ6SV7t8caftgURa7rLOEvXnxsamRZVCq4QYj3Xgi6g==</string>
 </resources>

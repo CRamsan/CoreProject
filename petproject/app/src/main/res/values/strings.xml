@@ -52,4 +52,11 @@
     <string name="plant_suggestion_send">Send</string>
     <string name="plant_suggestion_cancel">Cancel</string>
     <string name="leave_some_feedback">Report a problem</string>
+
+    <string name="provider_config_plants_url">https://petproject-api-prod.azurewebsites.net/api/plants?code=zcwy2bKTjaUcF7FaYvqh7xUfgLi68DHm5K5gCrdenudyayWlLypiqg==</string>
+    <string name="provider_config_mainname_url">https://petproject-api-prod.azurewebsites.net/api/name/main?code=ujaT/7OpCQ1W1kX069Sh3wWtNTdjWdJusHprnSD/Sj04FqLGFqFO9Q==</string>
+    <string name="provider_config_toxicities_url">https://petproject-api-prod.azurewebsites.net/api/toxicity?code=LXdXm2I/3sYtPLnYuq2kRsrIfhdMmQy2087Hg7jji18q87hSzvTNOw==</string>
+    <string name="provider_config_commonname_url">https://petproject-api-prod.azurewebsites.net/api/name/common/%s?code=h4/YT0eIa7H7M4yuOkZIEyiZd1LN4brUsfwiKHbW7TEz90DngFwTIg==</string>
+    <string name="provider_config_family_url">https://petproject-api-prod.azurewebsites.net/api/family/%s?code=ZvlpHItoIJWtAH7JAI0vUAJhaHHF10zEy4dPFjnEMumEl7aIaLIXIg==</string>
+    <string name="provider_config_description_url">https://petproject-api-prod.azurewebsites.net/api/description/%s/%s?code=25xBDLjicaqLIM9jusKdZHvs8C5lMaZPY8jPIRW5SFVQnyp/6ChKsA==</string>
 </resources>
