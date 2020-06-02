@@ -18,6 +18,7 @@ apply plugin: "com.android.application"
 android {
     buildToolsVersion globalAndroidBuildToolsVersion
     compileSdkVersion globalCompileSdkVersion
+    ndkVersion = "21.1.6352462"
  
     sourceSets {
         main {
