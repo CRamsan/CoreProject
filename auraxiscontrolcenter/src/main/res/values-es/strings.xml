@@ -117,6 +117,7 @@
 	<string name="toast_error_error_sending">Error enviando el pedido de donacion</string>    
 	<string name="toast_error_retrieving_data">Error recibiendo información</string>    
 	<string name="toast_error_loading_image">Error cargando la imagen</string>
+    <string name="toast_error_unknown_profile">Personaje no identificado</string>
 
     <string name="text_leader">LÍDER</string>
     <string name="text_created">CREADO</string>

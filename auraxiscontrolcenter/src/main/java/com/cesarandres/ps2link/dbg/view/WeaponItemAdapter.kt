@@ -22,8 +22,8 @@ import java.util.Hashtable
 
 class WeaponItemAdapter(
     private val context: Context,
-    private val weaponKills: ArrayList<WeaponStat>,
-    private val weaponKilledBy: ArrayList<WeaponStat>,
+    private val weaponKills: List<WeaponStat>,
+    private val weaponKilledBy: List<WeaponStat>,
     private val characterFaction: String,
     var isMyWeapons: Boolean,
     val imageLoader: ImageLoader

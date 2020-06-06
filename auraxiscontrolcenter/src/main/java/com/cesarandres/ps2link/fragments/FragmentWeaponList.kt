@@ -31,8 +31,8 @@ class FragmentWeaponList : BaseFragment() {
     private var profileId: String? = null
     private var profileFaction: String? = null
 
-    private var weaponKills: ArrayList<WeaponStat>? = null
-    private var weaponKilledBy: ArrayList<WeaponStat>? = null
+    private var weaponKills: List<WeaponStat>? = null
+    private var weaponKilledBy: List<WeaponStat>? = null
     private var namespace: DBGCensus.Namespace? = null
 
     /*
@@ -123,15 +123,9 @@ class FragmentWeaponList : BaseFragment() {
 
         val success = Listener<Weapon_list_response> { response ->
             setProgressButton(false)
-            try {
-                val currentTask = GenerateWeaponStats()
-                setCurrentTask(currentTask)
-                currentTask.execute(response)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
+            val currentTask = GenerateWeaponStats()
+            setCurrentTask(currentTask)
+            currentTask.execute(response)
         }
 
         val error = ErrorListener {
@@ -174,100 +168,115 @@ class FragmentWeaponList : BaseFragment() {
             var statA = 0
             var statB = 0
             var weaponName: String?
-            for (weapon in response.getcharacters_weapon_stat_by_faction_list()!!) {
-                val stat: WeaponStat
-                val statMap: HashMap<String, WeaponStat>
-                if (weapon.item_id_join_item == null && weapon.vehicle_id_join_vehicle == null) {
-                    continue
-                } else {
-                    try {
-                        if (weapon.item_id_join_item != null) {
-                            weaponName = weapon.item_id_join_item!!.name!!.localizedName(dbgCensus.currentLang)
-                        } else {
+
+            try {
+
+                val responseList = response.getcharacters_weapon_stat_by_faction_list()
+                if (responseList == null) {
+                    weaponKills = emptyList()
+                    weaponKilledBy = emptyList()
+                    return 0
+                }
+
+                for (weapon in responseList) {
+                    val stat: WeaponStat
+                    val statMap: HashMap<String, WeaponStat>
+                    if (weapon.item_id_join_item == null && weapon.vehicle_id_join_vehicle == null) {
+                        continue
+                    } else {
+                        try {
+                            if (weapon.item_id_join_item != null) {
+                                weaponName = weapon.item_id_join_item!!.name!!.localizedName(dbgCensus.currentLang)
+                            } else {
+                                continue
+                            }
+                        } catch (e: Exception) {
                             continue
                         }
-                    } catch (e: Exception) {
+                    }
+
+                    if (weapon.stat_name == "weapon_vehicle_kills" ||
+                        weapon.stat_name == "weapon_headshots" ||
+                        weapon.stat_name == "weapon_kills"
+                    ) {
+                        statMap = weaponMap
+                    } else if (weapon.stat_name == "weapon_killed_by") {
+                        statMap = weaponKilledMap
+                    } else {
                         continue
                     }
-                }
 
-                if (weapon.stat_name == "weapon_vehicle_kills" ||
-                    weapon.stat_name == "weapon_headshots" ||
-                    weapon.stat_name == "weapon_kills"
-                ) {
-                    statMap = weaponMap
-                } else if (weapon.stat_name == "weapon_killed_by") {
-                    statMap = weaponKilledMap
-                } else {
-                    continue
-                }
+                    if (!statMap.containsKey(weaponName)) {
+                        stat = WeaponStat()
 
-                if (!statMap.containsKey(weaponName)) {
-                    stat = WeaponStat()
+                        if (weapon.item_id_join_item != null) {
+                            stat.imagePath = weapon.item_id_join_item!!.image_path
+                        } else if (weapon.vehicle_id_join_vehicle != null) {
+                            stat.imagePath = weapon.vehicle_id_join_vehicle!!.image_path
+                        }
 
-                    if (weapon.item_id_join_item != null) {
-                        stat.imagePath = weapon.item_id_join_item!!.image_path
-                    } else if (weapon.vehicle_id_join_vehicle != null) {
-                        stat.imagePath = weapon.vehicle_id_join_vehicle!!.image_path
-                    }
+                        if (weapon.vehicle_id_join_vehicle != null) {
+                            stat.name = weaponName
+                            stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName(dbgCensus.currentLang)
+                        } else {
+                            stat.name = weaponName
+                        }
 
-                    if (weapon.vehicle_id_join_vehicle != null) {
-                        stat.name = weaponName
-                        stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName(dbgCensus.currentLang)
+                        statMap[weaponName!!] = stat
                     } else {
-                        stat.name = weaponName
+                        stat = statMap[weaponName]!!
                     }
 
-                    statMap[weaponName!!] = stat
-                } else {
-                    stat = statMap[weaponName]!!
-                }
+                    if (statMap === weaponKilledMap) {
+                        stat.kills = weapon.value_nc +
+                                weapon.value_tr +
+                                weapon.value_vs
+                    } else {
+                        if (profileFaction == Faction.VS) {
+                            statA = weapon.value_tr
+                            statB = weapon.value_nc
+                        } else if (profileFaction == Faction.NC) {
+                            statA = weapon.value_tr
+                            statB = weapon.value_vs
+                        } else if (profileFaction == Faction.TR) {
+                            statA = weapon.value_vs
+                            statB = weapon.value_nc
+                        }
 
-                if (statMap === weaponKilledMap) {
-                    stat.kills = weapon.value_nc +
-                            weapon.value_tr +
-                            weapon.value_vs
-                } else {
-                    if (profileFaction == Faction.VS) {
-                        statA = weapon.value_tr
-                        statB = weapon.value_nc
-                    } else if (profileFaction == Faction.NC) {
-                        statA = weapon.value_tr
-                        statB = weapon.value_vs
-                    } else if (profileFaction == Faction.TR) {
-                        statA = weapon.value_vs
-                        statB = weapon.value_nc
-                    }
-
-                    if (weapon.stat_name == "weapon_vehicle_kills") {
-                        stat.vehicleKills = statA + statB
-                    } else if (weapon.stat_name == "weapon_headshots") {
-                        stat.headshots = statA + statB
-                    } else if (weapon.stat_name == "weapon_kills") {
-                        stat.kills = statA + statB
-                        stat.vs = weapon.value_vs
-                        stat.tr = weapon.value_tr
-                        stat.nc = weapon.value_nc
+                        if (weapon.stat_name == "weapon_vehicle_kills") {
+                            stat.vehicleKills = statA + statB
+                        } else if (weapon.stat_name == "weapon_headshots") {
+                            stat.headshots = statA + statB
+                        } else if (weapon.stat_name == "weapon_kills") {
+                            stat.kills = statA + statB
+                            stat.vs = weapon.value_vs
+                            stat.tr = weapon.value_tr
+                            stat.nc = weapon.value_nc
+                        }
                     }
                 }
+                weaponKillStats = ArrayList(weaponMap.values)
+                weaponKilledByStats = ArrayList(weaponKilledMap.values)
+
+                java.util.Collections.sort(weaponKillStats)
+                java.util.Collections.sort(weaponKilledByStats)
+
+                for (i in weaponKillStats.indices.reversed()) {
+                    if (weaponKillStats[i].kills <= 0) {
+                        weaponKillStats.removeAt(i)
+                    } else if (weaponKillStats[i].kills > 0) {
+                        break
+                    }
+                }
+
+                weaponKills = weaponKillStats
+                weaponKilledBy = weaponKilledByStats
+
+            } catch (e: Exception) {
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
+                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
+                    .show()
             }
-            weaponKillStats = ArrayList(weaponMap.values)
-            weaponKilledByStats = ArrayList(weaponKilledMap.values)
-
-            java.util.Collections.sort(weaponKillStats)
-            java.util.Collections.sort(weaponKilledByStats)
-
-            for (i in weaponKillStats.indices.reversed()) {
-                if (weaponKillStats[i].kills <= 0) {
-                    weaponKillStats.removeAt(i)
-                } else if (weaponKillStats[i].kills > 0) {
-                    break
-                }
-            }
-
-            weaponKills = weaponKillStats
-            weaponKilledBy = weaponKilledByStats
-
             return weaponKilledByStats.size + weaponKilledByStats.size
         }
 

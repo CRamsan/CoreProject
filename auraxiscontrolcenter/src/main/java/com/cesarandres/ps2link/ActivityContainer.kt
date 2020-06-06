@@ -5,28 +5,19 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.ToggleButton
+import android.widget.*
 import androidx.fragment.app.FragmentTransaction
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.base.BaseActivity
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.base.BaseFragment.FragmentCallbacks
-import com.cesarandres.ps2link.fragments.FragmentAbout
-import com.cesarandres.ps2link.fragments.FragmentAddOutfit
-import com.cesarandres.ps2link.fragments.FragmentAddProfile
-import com.cesarandres.ps2link.fragments.FragmentMainMenu
-import com.cesarandres.ps2link.fragments.FragmentOutfitList
-import com.cesarandres.ps2link.fragments.FragmentProfileList
-import com.cesarandres.ps2link.fragments.FragmentServerList
-import com.cesarandres.ps2link.fragments.FragmentSettings
-import com.cesarandres.ps2link.fragments.FragmentTwitter
+import com.cesarandres.ps2link.fragments.*
 import com.cesarandres.ps2link.fragments.holders.FragmentOutfitPager
 import com.cesarandres.ps2link.fragments.holders.FragmentProfilePager
 import com.cesarandres.ps2link.fragments.holders.FragmentRedditPager
+import com.cesarandres.ps2link.module.Constants
 import com.cesarandres.ps2link.module.ObjectDataSource
+import com.cramsan.framework.logging.Severity
 
 /**
  * Class that will hold the current fragments. It behaves differently if it is
@@ -202,6 +193,15 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
         metrics.log(TAG, "OnItemSelected", mapOf("Mode" to id))
         // Reset the database, this will also force some tasks to end
         val mode = ActivityMode.valueOf(id)
+
+        // Perform input validation
+        if (mode == ActivityMode.ACTIVITY_PROFILE) {
+            eventLogger.log(Severity.WARNING, TAG, Constants.ERROR_INVALID_FRAGMENT_INPUT)
+            Toast.makeText(this, R.string.toast_error_unknown_profile, Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
         // Seen as we can't have embedded fragments, we will create a new
         // activity if we want to open a profile or outfit pager. With all other
         // not nested fragments, we can just push a new fragment on top of the

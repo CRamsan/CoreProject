@@ -37,7 +37,7 @@ class FragmentProfile : BaseFragment() {
 
     private var isCached: Boolean = false
     private var profile: CharacterProfile? = null
-    private var profileId: String? = null
+    private var profileId: String = ""
     private var namespace: DBGCensus.Namespace? = null
 
     /*
@@ -51,9 +51,9 @@ class FragmentProfile : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         val task = UpdateProfileFromTable()
         setCurrentTask(task)
-        this.profileId = arguments!!.getString("PARAM_0")
+        this.profileId = arguments!!.getString("PARAM_0", "")
         this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
-        metrics.log(TAG, "Loading Profile", mapOf("PROFILE" to this.profileId!!, "NAMESPACE" to this.namespace!!.name))
+        metrics.log(TAG, "Loading Profile", mapOf("PROFILE" to this.profileId, "NAMESPACE" to this.namespace!!.name))
         task.execute(this.profileId)
     }
 
@@ -345,7 +345,7 @@ class FragmentProfile : BaseFragment() {
             val data = activityContainer.data
             try {
                 profile = args[0]
-                if (data!!.getCharacter(profileId!!) != null) {
+                if (data!!.getCharacter(profileId) != null) {
                     data.updateCharacter(profile, !profile.isCached)
                 } else {
                     data.insertCharacter(profile, !profile.isCached)
