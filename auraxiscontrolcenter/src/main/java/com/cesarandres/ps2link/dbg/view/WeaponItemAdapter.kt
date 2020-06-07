@@ -17,7 +17,6 @@ import com.cesarandres.ps2link.dbg.content.Faction
 import com.cesarandres.ps2link.dbg.content.item.WeaponStat
 import com.cesarandres.ps2link.dbg.content.response.Item_list_response
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
-import java.util.ArrayList
 import java.util.Hashtable
 
 class WeaponItemAdapter(

@@ -271,7 +271,6 @@ class FragmentWeaponList : BaseFragment() {
 
                 weaponKills = weaponKillStats
                 weaponKilledBy = weaponKilledByStats
-
             } catch (e: Exception) {
                 eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)

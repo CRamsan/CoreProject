@@ -28,6 +28,7 @@ import io.ktor.client.request.get
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -86,12 +87,21 @@ class ModelProvider(
                 it.onCatalogUpdate(false)
             }
 
-            val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint)
-            modelStorage.insertPlantList(plants)
-            val mainNames: ArrayList<PlantMainNameImpl> = http.get(config.mainNameEndpoint)
-            modelStorage.insertPlantMainNameList(mainNames)
-            val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint)
-            modelStorage.insertToxicityList(toxicities)
+            coroutineScope {
+                launch {
+                    val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint)
+                    modelStorage.insertPlantList(plants)
+                }
+                launch {
+                    val mainNames: ArrayList<PlantMainNameImpl> = http.get(config.mainNameEndpoint)
+                    modelStorage.insertPlantMainNameList(mainNames)
+                }
+                launch {
+                    val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint)
+                    modelStorage.insertToxicityList(toxicities)
+                }
+            }
+
             isCatalogReady = true
             preferences.saveLong(LAST_UPDATE, currentTime)
             listeners.forEach {
