@@ -163,6 +163,7 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
     interface OnListFragmentInteractionListener {
         fun onNewSearchable(listener: SearchView.OnQueryTextListener)
         fun onAnimalTypeReady(animalType: AnimalType)
+        fun onLoadingStatusChange(isLoading: Boolean)
     }
 
     class InvalidContextException(message: String?) : RuntimeException(message)

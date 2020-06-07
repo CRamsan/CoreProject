@@ -28,6 +28,7 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
         get() = false
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
+    private var enableSearchView = false
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         eventLogger.log(Severity.INFO, "MainMenuActivity", "onCreateOptionsMenu")
@@ -76,11 +77,22 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val searchView = menu.findItem(R.id.action_search) as MenuItem
+        searchView.isVisible = enableSearchView
+        return true
+    }
+
     override fun onNewSearchable(listener: SearchView.OnQueryTextListener) {
         eventLogger.log(Severity.INFO, "MainMenuActivity", "onNewSearchable")
         queryTextListener = listener
     }
 
     override fun onAnimalTypeReady(animalType: AnimalType) {
+    }
+
+    override fun onLoadingStatusChange(isLoading: Boolean) {
+        enableSearchView = !isLoading
+        invalidateOptionsMenu()
     }
 }

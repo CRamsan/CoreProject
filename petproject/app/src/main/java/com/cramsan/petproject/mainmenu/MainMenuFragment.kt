@@ -1,8 +1,11 @@
 package com.cramsan.petproject.mainmenu
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -34,13 +37,12 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         get() = R.layout.fragment_main_menu
 
     private var listener: PlantsListFragment.OnListFragmentInteractionListener? = null
-    private lateinit var viewModel: DownloadCatalogViewModel
+    private lateinit var downloadCatalogViewModel: DownloadCatalogViewModel
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
-    private lateinit var model: AllPlantListViewModel
+    private lateinit var allPlantsViewModel: AllPlantListViewModel
     private val animalType = AnimalType.ALL
     private lateinit var layoutManager: LinearLayoutManager
     private var searchQuery: String? = null
-
     private var downloadTime: Long = 0
 
     override fun onAttach(context: Context) {
@@ -56,9 +58,9 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = getViewModel(DownloadCatalogViewModel::class.java)
+        downloadCatalogViewModel = getViewModel(DownloadCatalogViewModel::class.java)
         main_menu_cats.setOnClickListener {
-            if (!viewModel.isCatalogReady()) {
+            if (!downloadCatalogViewModel.isCatalogReady()) {
                 displayDownloadingMessage()
                 return@setOnClickListener
             }
@@ -67,7 +69,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
             startActivity(intent)
         }
         main_menu_dogs.setOnClickListener {
-            if (!viewModel.isCatalogReady()) {
+            if (!downloadCatalogViewModel.isCatalogReady()) {
                 displayDownloadingMessage()
                 return@setOnClickListener
             }
@@ -89,12 +91,12 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         plant_list_recycler.layoutManager = layoutManager
         plant_list_recycler.adapter = plantsAdapter
 
-        model = getViewModel(AllPlantListViewModel::class.java)
-        model.animalType = animalType
-        model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
+        allPlantsViewModel = getViewModel(AllPlantListViewModel::class.java)
+        allPlantsViewModel.animalType = animalType
+        allPlantsViewModel.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
-        model.observableLoading().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
+        allPlantsViewModel.observableLoading().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
             if (isLoading) {
                 plants_list_loading.visibility = View.VISIBLE
                 plant_list_recycler.visibility = View.GONE
@@ -110,10 +112,11 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override fun onStart() {
         super.onStart()
-        if (!viewModel.isCatalogReady()) {
-            metrics.log(TAG, "onStart", mapOf("FromCache" to "True"))
-            viewModel.observableLoading().observe(requireActivity(), Observer<Boolean> { isLoading ->
+        if (!downloadCatalogViewModel.isCatalogReady()) {
+            metrics.log(TAG, "onStart", mapOf("FromCache" to "False"))
+            downloadCatalogViewModel.observableLoading().observe(requireActivity(), Observer<Boolean> { isLoading ->
                 if (isLoading) {
+                    listener?.onLoadingStatusChange(isLoading)
                     return@Observer
                 }
                 val downloadCompleteTime = Date().time
@@ -132,21 +135,23 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
                     metrics.log(TAG, "DownloadLatency", mapOf("Time" to ">=20 second"))
                 }
                 displayDownloadCompleteMessage()
+                listener?.onLoadingStatusChange(isLoading)
             })
 
             val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
             startActivity(intent)
             downloadTime = Date().time
         } else {
-            metrics.log(TAG, "onStart", mapOf("FromCache" to "False"))
+            metrics.log(TAG, "onStart", mapOf("FromCache" to "True"))
+            listener?.onLoadingStatusChange(false)
         }
         val loadedSearchQuery = searchQuery
         if (loadedSearchQuery?.isNotBlank() == true) {
             plant_main_menu_view.visibility = View.GONE
             plant_main_menu_list_view.visibility = View.VISIBLE
-            model.searchPlants(loadedSearchQuery)
+            allPlantsViewModel.searchPlants(loadedSearchQuery)
         } else {
-            model.reloadPlants()
+            allPlantsViewModel.reloadPlants()
         }
     }
 
@@ -187,7 +192,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
                 plant_main_menu_view.visibility = View.VISIBLE
                 plant_main_menu_list_view.visibility = View.GONE
             }
-            model.searchPlants(it)
+            allPlantsViewModel.searchPlants(it)
         }
         return true
     }

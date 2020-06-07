@@ -11,7 +11,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/main_menu_toolbar"
-                app:menu="@menu/main_menu"
+
                 style="@style/BaseToolBar"
                 tools:title="@string/app_name"/>
 

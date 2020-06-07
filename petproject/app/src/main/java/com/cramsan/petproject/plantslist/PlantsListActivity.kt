@@ -59,4 +59,7 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
             else -> TODO()
         }
     }
+
+    override fun onLoadingStatusChange(isLoading: Boolean) {
+    }
 }
