@@ -33,8 +33,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        stage {
+            initWith release
+            applicationIdSuffix ".stage"
+            matchingFallbacks = ['release']
         }
         debug {
             applicationIdSuffix ".debug"
