@@ -52,7 +52,7 @@ steps:
   inputs:
     serverEndpoint: 'App Center'
     appSlug: 'cramsan/AuraxisControlCenter'
-    appFile: 'auraxiscontrolcenter/build/outputs/apk/release/auraxiscontrolcenter-stage-unsigned.apk'
+    appFile: 'auraxiscontrolcenter/build/outputs/apk/stage/auraxiscontrolcenter-stage-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: 'Release Notes: TBD'
