@@ -16,6 +16,7 @@ buildscript {
         globalAndroidXPagingVersion = "2.1.2"
         globalAndroidXPreferencesVersion = "1.1.1"
         globalAppCenterSdkVersion = "3.2.1"
+        globalAppCenterEspressoTestExt = "1.4"
         globalAzureFunctionGradlePlugin = "1.2.0"
         globalAzureFunctionsJavaLibrary = "1.3.1"
         globalCoroutinesVersion = "1.3.5"

@@ -11,6 +11,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
+import com.microsoft.appcenter.espresso.Factory
+import com.microsoft.appcenter.espresso.ReportHelper
 import org.hamcrest.CoreMatchers.anything
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
@@ -31,6 +33,9 @@ class FragmentServersTest {
 
     @get:Rule
     val activityScenarioRule = ActivityTestRule(ActivityContainer::class.java, false, false)
+
+    @Rule
+    var reportHelper: ReportHelper = Factory.getReportHelper()
 
     val defaultProfile = "CRamsan"
 
@@ -54,6 +59,7 @@ class FragmentServersTest {
     fun after() {
         val application = activityScenarioRule.activity.application as ApplicationPS2Link
         IdlingRegistry.getInstance().unregister(application.idlingResource)
+        reportHelper.label("Stopping App");
     }
 
     @Test

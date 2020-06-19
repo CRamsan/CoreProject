@@ -10,11 +10,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import com.microsoft.appcenter.espresso.Factory
+import com.microsoft.appcenter.espresso.ReportHelper
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -28,12 +31,16 @@ class MainMenuInstrumentedTest {
     @get:Rule
     val activityScenarioRule = ActivityTestRule(ActivityContainer::class.java)
 
+    @Rule
+    var reportHelper: ReportHelper = Factory.getReportHelper()
+
     @Before
     fun before() {
     }
 
     @After
     fun after() {
+        reportHelper.label("Stopping App");
     }
 
     @Test
