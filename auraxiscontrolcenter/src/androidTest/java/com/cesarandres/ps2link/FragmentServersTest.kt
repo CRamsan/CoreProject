@@ -34,7 +34,7 @@ class FragmentServersTest {
     @get:Rule
     val activityScenarioRule = ActivityTestRule(ActivityContainer::class.java, false, false)
 
-    @Rule
+    @get:Rule
     var reportHelper: ReportHelper = Factory.getReportHelper()
 
     val defaultProfile = "CRamsan"

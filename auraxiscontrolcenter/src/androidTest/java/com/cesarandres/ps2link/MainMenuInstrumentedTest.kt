@@ -31,7 +31,7 @@ class MainMenuInstrumentedTest {
     @get:Rule
     val activityScenarioRule = ActivityTestRule(ActivityContainer::class.java)
 
-    @Rule
+    @get:Rule
     var reportHelper: ReportHelper = Factory.getReportHelper()
 
     @Before

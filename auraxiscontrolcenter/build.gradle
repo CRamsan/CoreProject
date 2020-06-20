@@ -88,7 +88,4 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
     androidTestImplementation "com.microsoft.appcenter:espresso-test-extension:$globalAppCenterEspressoTestExt"
-    androidTestImplementation "org.hamcrest:hamcrest-library:$globalHamcrestVersion"
-    androidTestImplementation "io.mockk:mockk:$globalMockkVersion"
-    androidTestImplementation "io.mockk:mockk-android:$globalMockkVersion"
 }
