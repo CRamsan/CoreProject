@@ -31,7 +31,7 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     checkStyleRunAnalysis: true
-    tasks: 'auraxiscontrolcenter:build' 'auraxiscontrolcenter:assembleAndroidTest'
+    tasks: 'auraxiscontrolcenter:build auraxiscontrolcenter:assembleAndroidTest'
 
 - task: CopyFiles@2
   inputs:
