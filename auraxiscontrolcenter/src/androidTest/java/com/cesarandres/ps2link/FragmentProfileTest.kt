@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -88,9 +89,10 @@ class FragmentProfileTest {
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
         onView(withId(R.id.toggleButtonFragmentStar)).check(matches(isNotChecked())).perform(
             scrollTo(), click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
+        Espresso.pressBack()
+        Espresso.pressBack()
+        Espresso.pressBack()
+
         onView(withId(R.id.buttonPreferedProfile)).perform(click())
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
     }
@@ -115,9 +117,9 @@ class FragmentProfileTest {
         onView(withId(R.id.fragmentTitleLoading)).perform(ViewActions.swipeLeft())
         onView(withId(R.id.toggleButtonFragmentAppend)).check(matches(isCompletelyDisplayed()))
         onView(withId(R.id.toggleButtonFragmentAppend)).check(matches(isNotChecked())).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
+        Espresso.pressBack()
+        Espresso.pressBack()
+        Espresso.pressBack()
 
         onView(withId(R.id.buttonCharacters)).perform(click())
         onData(anything()).inAdapterView(withId(R.id.listViewProfileList)).atPosition(0).perform(click())
@@ -145,7 +147,7 @@ class FragmentProfileTest {
         onView(withId(R.id.toggleButtonFragmentAppend)).check(matches(isCompletelyDisplayed()))
         onView(withId(R.id.toggleButtonFragmentAppend)).check(matches(isNotChecked())).perform(click())
 
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
+        Espresso.pressBack()
         onView(withId(R.id.buttonTitle)).perform(click())
         onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
@@ -154,9 +156,9 @@ class FragmentProfileTest {
         onView(withId(R.id.toggleButtonFragmentAppend)).check(matches(isCompletelyDisplayed()))
         onView(withId(R.id.toggleButtonFragmentAppend)).check(matches(isNotChecked())).perform(click())
 
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
-        onView(withId(R.id.buttonFragmentTitle)).perform(click())
+        Espresso.pressBack()
+        Espresso.pressBack()
+        Espresso.pressBack()
 
         onView(withId(R.id.buttonCharacters)).perform(click())
         onData(anything()).inAdapterView(withId(R.id.listViewProfileList)).atPosition(1).perform(click())
