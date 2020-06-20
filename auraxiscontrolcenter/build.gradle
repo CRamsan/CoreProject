@@ -26,8 +26,8 @@ android {
         applicationId "com.cesarandres.ps2link"
         minSdkVersion globalMinSdkVersion
         targetSdkVersion globalTargetSdkVersion
-        versionCode 77
-        versionName "5.2.0"
+        versionCode 78
+        versionName "5.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
