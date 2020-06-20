@@ -206,8 +206,9 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
         // Reset the database, this will also force some tasks to end
         val mode = ActivityMode.valueOf(id)
 
-        // Perform input validation
-        if (mode == ActivityMode.ACTIVITY_PROFILE) {
+        // Perform input validation. Ensure that the characterId is set when requesting to start an
+        // ACTIVITY_PROFILE fragment
+        if (mode == ActivityMode.ACTIVITY_PROFILE && args.size == 2 && args[0].isNullOrEmpty()) {
             eventLogger.log(Severity.WARNING, TAG, Constants.ERROR_INVALID_FRAGMENT_INPUT)
             Toast.makeText(this, R.string.toast_error_unknown_profile, Toast.LENGTH_SHORT)
                 .show()
