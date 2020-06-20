@@ -33,6 +33,16 @@ steps:
     checkStyleRunAnalysis: true
     tasks: 'auraxiscontrolcenter:build auraxiscontrolcenter:assembleAndroidTest'
 
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*-unsigned.apk'
+    apksign: true
+    zipalign: false
+    apksignerKeystoreFile: $(KeyStoreFile)
+    apksignerKeystorePassword: $(KeyStorePassword)
+    apksignerKeystoreAlias: $(KeyStoreAlias)
+    apksignerKeyPassword: $(KeyPassword)
+
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(system.defaultworkingdirectory)/auraxiscontrolcenter/build/outputs/apk/
