@@ -16,7 +16,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class DownloadCatalogViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
+open class DownloadCatalogViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
     ModelProviderEventListenerInterface {
 
     override val kodein by kodein(application)

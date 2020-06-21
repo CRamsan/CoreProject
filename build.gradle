@@ -15,6 +15,8 @@ buildscript {
         globalAndroidXRecyclerViewVersion = "1.1.0"
         globalAndroidXPagingVersion = "2.1.2"
         globalAndroidXPreferencesVersion = "1.1.1"
+        globalAndroidxActivityKtxVersion = "1.1.0"
+        globalAndroidxFragmentKtxVersion = "1.2.5"
         globalAppCenterSdkVersion = "3.2.1"
         globalAppCenterEspressoTestExt = "1.4"
         globalAzureFunctionGradlePlugin = "1.2.0"
@@ -28,6 +30,7 @@ buildscript {
         globalGsonVerion = "2.8.6"
         globalGMSServices = "4.3.3"
         globalHamcrestVersion = "2.2"
+        globalMockitoVersion = "2.28.2"
         globalJUnitVersion = "4.13"
         globalKodeinVersion = "6.5.4"
         globalKotlinVersion = initKotlinVersion

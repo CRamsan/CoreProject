@@ -12,8 +12,6 @@ import androidx.test.rule.ActivityTestRule
 import com.cramsan.petproject.mainmenu.AllPlantListViewModel
 import com.cramsan.petproject.mainmenu.DownloadCatalogViewModel
 import com.cramsan.petproject.mainmenu.MainMenuActivity
-import io.mockk.every
-import io.mockk.mockkClass
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -22,6 +20,8 @@ import org.junit.runner.RunWith
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.factory
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -48,12 +48,12 @@ class MainMenuInstrumentedTest {
 
     @Test
     fun loadingScreenOnFirstLoad() {
-        val viewModelProvider = mockkClass(ViewModelProvider::class)
-        val downloadCatalogViewModel = mockkClass(DownloadCatalogViewModel::class)
-        val allPlantListViewModel = mockkClass(AllPlantListViewModel::class)
+        val viewModelProvider = mock(ViewModelProvider::class.java)
+        val downloadCatalogViewModel = mock(DownloadCatalogViewModel::class.java)
+        val allPlantListViewModel = mock(AllPlantListViewModel::class.java)
 
-        every { viewModelProvider.get(DownloadCatalogViewModel::class.java) } returns downloadCatalogViewModel
-        every { viewModelProvider.get(AllPlantListViewModel::class.java) } returns allPlantListViewModel
+        `when`(viewModelProvider.get(DownloadCatalogViewModel::class.java)).thenReturn(downloadCatalogViewModel)
+        `when`(viewModelProvider.get(AllPlantListViewModel::class.java)).thenReturn(allPlantListViewModel)
 
         Kodein.lazy {
             bind<ViewModelProvider>() with factory {

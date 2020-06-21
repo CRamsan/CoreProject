@@ -19,7 +19,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class AllPlantListViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
+open class AllPlantListViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
     ModelProviderEventListenerInterface {
 
     override val kodein by kodein(application)

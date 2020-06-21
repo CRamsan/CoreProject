@@ -36,6 +36,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+		stage {
+            initWith release
+            applicationIdSuffix ".stage"
+            matchingFallbacks = ['release']
+        }
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
@@ -62,6 +67,8 @@ dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")
     implementation "androidx.constraintlayout:constraintlayout:$globalConstraintLayoutVersion"
+    implementation "androidx.activity:activity-ktx:$globalAndroidxActivityKtxVersion"
+    implementation "androidx.fragment:fragment-ktx:$globalAndroidxFragmentKtxVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$globalAndroidXLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$globalAndroidXLifecycleVersion"
     implementation "androidx.paging:paging-runtime-ktx:$globalAndroidXPagingVersion"
@@ -93,9 +100,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
-    androidTestImplementation "org.hamcrest:hamcrest-library:$globalHamcrestVersion"
-    androidTestImplementation "io.mockk:mockk:$globalMockkVersion"
-    androidTestImplementation "io.mockk:mockk-android:$globalMockkVersion"
+    androidTestImplementation "org.mockito:mockito-android:$globalMockitoVersion"
 }
 
 build.finalizedBy ktlint
