@@ -32,9 +32,10 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     checkStyleRunAnalysis: true
     tasks: 'petproject:app:build petproject:app:assembleAndroidTest'
+
 - task: AndroidSigning@3
   inputs:
-    apkFiles: '**/*-unsigned.apk'
+    apkFiles: '**/app-release-unsigned.apk'
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
@@ -42,9 +43,30 @@ steps:
     apksignerKeystoreAlias: $(KeyStoreAlias)
     apksignerKeyPassword: $(KeyPassword)
 
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/app-stage-unsigned.apk'
+    apksign: true
+    zipalign: false
+    apksignerKeystoreFile: $(StageKeyStoreFile)
+    apksignerKeystorePassword: $(StageKeyStorePassword)
+    apksignerKeystoreAlias: $(StageKeyStoreAlias)
+    apksignerKeyPassword: $(StageKeyPassword)
+
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(system.defaultworkingdirectory)/petproject/app/build/outputs/apk/
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
+
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'App Center'
+    appSlug: 'cramsan/Pet-Project-1'
+    appFile: 'stage/app-stage-unsigned.apk'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'Release Notes: TBD'
+    destinationType: 'groups'
+    distributionGroupId: 'acb71603-515c-4870-86e7-625460eecc4d'
