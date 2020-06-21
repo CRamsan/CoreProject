@@ -69,4 +69,4 @@ steps:
     releaseNotesOption: 'input'
     releaseNotesInput: 'Release Notes: TBD'
     destinationType: 'groups'
-    distributionGroupId: 'acb71603-515c-4870-86e7-625460eecc4d'
+    distributionGroupId: 'acb71603-515c-4870-86e7-625460eecc4d, 00000000-0000-0000-0000-000000000000'
