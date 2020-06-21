@@ -64,7 +64,7 @@ steps:
   inputs:
     serverEndpoint: 'App Center'
     appSlug: 'cramsan/Pet-Project-1'
-    appFile: 'stage/app-stage-unsigned.apk'
+    appFile: 'petproject/app/build/outputs/apk/stage/app-stage-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: 'Release Notes: TBD'
