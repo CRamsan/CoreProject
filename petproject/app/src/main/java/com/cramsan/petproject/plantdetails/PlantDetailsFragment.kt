@@ -42,6 +42,8 @@ class PlantDetailsFragment : BaseFragment() {
 
     override val contentViewLayout: Int
         get() = R.layout.fragment_plant_details
+    override val logTag: String
+        get() = "PlantDetailsFragment"
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

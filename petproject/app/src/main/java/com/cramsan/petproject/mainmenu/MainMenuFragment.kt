@@ -30,6 +30,8 @@ import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
 class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
 AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
+    override val logTag: String
+        get() = "MainMenuFragment"
     override val contentViewLayout: Int
         get() = R.layout.fragment_main_menu
 

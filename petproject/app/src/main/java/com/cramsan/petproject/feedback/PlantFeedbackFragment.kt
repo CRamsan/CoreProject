@@ -19,6 +19,8 @@ class PlantFeedbackFragment : BaseFragment() {
     private lateinit var animalType: AnimalType
     private var plantId: Int = -1
 
+    override val logTag: String
+        get() = "PlantFeedbackFragment"
     override val contentViewLayout: Int
         get() = R.layout.fragment_plant_feedback
 

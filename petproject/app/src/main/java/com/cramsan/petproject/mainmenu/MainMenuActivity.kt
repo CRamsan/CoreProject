@@ -26,6 +26,8 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
         get() = main_menu_toolbar
     override val enableUp: Boolean
         get() = false
+    override val tag: String
+        get() = "MainMenuActivity"
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private var enableSearchView = false

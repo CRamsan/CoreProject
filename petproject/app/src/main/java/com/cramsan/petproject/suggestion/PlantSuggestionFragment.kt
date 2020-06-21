@@ -21,6 +21,8 @@ class PlantSuggestionFragment : BaseFragment() {
 
     override val contentViewLayout: Int
         get() = R.layout.fragment_plant_suggestion
+    override val logTag: String
+        get() = "PlantSuggestionFragment"
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

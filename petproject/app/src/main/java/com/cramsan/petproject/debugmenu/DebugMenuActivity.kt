@@ -12,4 +12,6 @@ class DebugMenuActivity : BaseActivity() {
         get() = R.string.title_activity_debug
     override val toolbar: Toolbar
         get() = debug_menu_toolbar
+    override val tag: String
+        get() = "DebugMenuActivity"
 }

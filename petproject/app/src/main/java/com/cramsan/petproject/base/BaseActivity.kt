@@ -25,12 +25,13 @@ abstract class BaseActivity : AppCompatActivity(),
     abstract val contentViewLayout: Int
     abstract val titleResource: Int?
     abstract val toolbar: Toolbar?
+    abstract val tag: String
     open val enableUp: Boolean = true
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, "BaseActivity", "onCreate")
+        eventLogger.log(Severity.INFO, tag, "onCreate")
 
         setContentView(contentViewLayout)
 
@@ -46,37 +47,37 @@ abstract class BaseActivity : AppCompatActivity(),
     @CallSuper
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, "BaseActivity", "onStart")
+        eventLogger.log(Severity.INFO, tag, "onStart")
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, "BaseActivity", "onResume")
+        eventLogger.log(Severity.INFO, tag, "onResume")
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, "BaseActivity", "onPause")
+        eventLogger.log(Severity.INFO, tag, "onPause")
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, "BaseActivity", "onStop")
+        eventLogger.log(Severity.INFO, tag, "onStop")
     }
 
     @CallSuper
     override fun onRestart() {
         super.onRestart()
-        eventLogger.log(Severity.INFO, "BaseActivity", "onRestart")
+        eventLogger.log(Severity.INFO, tag, "onRestart")
     }
 
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, "BaseActivity", "onDestroy")
+        eventLogger.log(Severity.INFO, tag, "onDestroy")
     }
 
     protected fun <T : ViewModel> getViewModel(modelClass: Class<T>): T {

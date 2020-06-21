@@ -15,6 +15,8 @@ class AboutActivity : BaseActivity() {
         get() = R.string.title_activity_about
     override val toolbar: Toolbar
         get() = about_toolbar
+    override val tag: String
+        get() = "AboutActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

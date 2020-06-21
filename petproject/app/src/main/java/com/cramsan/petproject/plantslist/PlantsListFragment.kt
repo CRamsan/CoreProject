@@ -33,6 +33,8 @@ class PlantsListFragment : BaseFragment(), SearchView.OnQueryTextListener,
 
     override val contentViewLayout: Int
         get() = R.layout.fragment_plants_list
+    override val logTag: String
+        get() = "PlantsListFragment"
 
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var plantsAdapter: PlantsRecyclerViewAdapter

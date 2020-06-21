@@ -24,19 +24,20 @@ abstract class BaseFragment : Fragment(), KodeinAware {
     protected val eventLogger: EventLoggerInterface by instance()
     protected val metrics: MetricsInterface by instance()
     private val vmFactory: (ViewModelStoreOwner) -> ViewModelProvider by factory()
+    abstract val logTag: String
 
     abstract val contentViewLayout: Int
 
     @CallSuper
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        eventLogger.log(Severity.INFO, "BaseFragment", "onAttach")
+        eventLogger.log(Severity.INFO, logTag, "onAttach")
     }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, "BaseFragment", "onCreate")
+        eventLogger.log(Severity.INFO, logTag, "onCreate")
     }
 
     @CallSuper
@@ -46,62 +47,62 @@ abstract class BaseFragment : Fragment(), KodeinAware {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        eventLogger.log(Severity.INFO, "BaseFragment", "onCreateView")
+        eventLogger.log(Severity.INFO, logTag, "onCreateView")
         return inflater.inflate(contentViewLayout, container, false)
     }
 
     @CallSuper
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        eventLogger.log(Severity.INFO, "BaseFragment", "onActivityCreated")
+        eventLogger.log(Severity.INFO, logTag, "onActivityCreated")
     }
 
     @CallSuper
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onStart")
+        eventLogger.log(Severity.INFO, logTag, "onStart")
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onResume")
+        eventLogger.log(Severity.INFO, logTag, "onResume")
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onPause")
+        eventLogger.log(Severity.INFO, logTag, "onPause")
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onStop")
+        eventLogger.log(Severity.INFO, logTag, "onStop")
     }
 
     @CallSuper
     override fun onDestroyView() {
         super.onDestroyView()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onDestroyView")
+        eventLogger.log(Severity.INFO, logTag, "onDestroyView")
     }
 
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onDestroy")
+        eventLogger.log(Severity.INFO, logTag, "onDestroy")
     }
 
     @CallSuper
     override fun onDetach() {
         super.onDetach()
-        eventLogger.log(Severity.INFO, "BaseFragment", "onDetach")
+        eventLogger.log(Severity.INFO, logTag, "onDetach")
     }
 
     @CallSuper
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        eventLogger.log(Severity.INFO, "BaseFragment", "onSaveInstanceState")
+        eventLogger.log(Severity.INFO, logTag, "onSaveInstanceState")
     }
 
     protected fun <T : ViewModel> getViewModel(modelClass: Class<T>): T {

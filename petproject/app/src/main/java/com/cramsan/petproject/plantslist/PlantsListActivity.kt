@@ -18,6 +18,8 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
         get() = null
     override val toolbar: Toolbar?
         get() = plant_list_toolbar
+    override val tag: String
+        get() = "PlantsListActivity"
 
     private var queryTextListener: SearchView.OnQueryTextListener? = null
 

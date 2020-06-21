@@ -14,6 +14,8 @@ class DownloadDialogActivity : BaseActivity() {
         get() = null
     override val toolbar: Toolbar?
         get() = null
+    override val tag: String
+        get() = "DownloadDialogActivity"
 
     private lateinit var viewModel: DownloadCatalogViewModel
 

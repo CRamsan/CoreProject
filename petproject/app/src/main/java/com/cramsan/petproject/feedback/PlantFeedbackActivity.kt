@@ -11,4 +11,6 @@ class PlantFeedbackActivity : BaseActivity() {
         get() = null
     override val toolbar: Toolbar?
         get() = null
+    override val tag: String
+        get() = "PlantFeedbackActivity"
 }

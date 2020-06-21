@@ -15,6 +15,8 @@ class PlantDetailsActivity : BaseActivity(), PlantDetailsFragment.OnDetailsFragm
         get() = null
     override val toolbar: Toolbar?
         get() = plant_details_toolbar
+    override val tag: String
+        get() = "PlantDetailsActivity"
 
     override fun onPlantReady(plant: Plant) {
         supportActionBar?.title = plant.mainCommonName
