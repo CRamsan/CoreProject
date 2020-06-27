@@ -1,10 +1,7 @@
 package com.cramsan.petproject.plantslist
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.ThreadUtilInterface
@@ -29,7 +26,12 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
     private val observableLoading = MutableLiveData<Boolean>()
-    var animalType: AnimalType = AnimalType.CAT
+    private val observableAnimalType = MutableLiveData<AnimalType>()
+    fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
+    fun observableLoading(): LiveData<Boolean> = observableLoading
+    fun observableAnimalType(): LiveData<AnimalType> = observableAnimalType
+
+    var searchQuery: String? = null
 
     init {
         modelProvider.registerForCatalogEvents(this)
@@ -42,16 +44,14 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
     override fun onCatalogUpdate(isReady: Boolean) {
         viewModelScope.launch {
             if (isReady) {
-                reloadPlants()
-            } else {
-                observableLoading.value = true
+                loadPlants()
             }
+            observableLoading.value = isReady
         }
     }
 
-    fun reloadPlants() {
-        eventLogger.log(Severity.INFO, "PlantListViewModel", "reloadPlants")
-        observableLoading.value = true
+    fun setAnimalType(animalType: AnimalType) {
+        observableAnimalType.value = animalType
         viewModelScope.launch {
             loadPlants()
         }
@@ -59,6 +59,7 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun searchPlants(query: String) {
         eventLogger.log(Severity.INFO, "PlantListViewModel", "searchPlants")
+        searchQuery = query
         viewModelScope.launch {
             if (query.isEmpty()) {
                 loadPlants()
@@ -68,15 +69,13 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun observablePlants(): LiveData<List<PresentablePlant>> {
-        return observablePlants
-    }
-
-    fun observableLoading(): LiveData<Boolean> {
-        return observableLoading
-    }
-
     private suspend fun loadPlants() = withContext(Dispatchers.IO) {
+        val animalType = observableAnimalType.value
+        if (animalType == null) {
+            eventLogger.log(Severity.WARNING, "PlantListViewModel", "Unable to loadPlants. AnimalType is null")
+            return@withContext
+        }
+
         val plants = modelProvider.getPlantsWithToxicity(animalType, "en")
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
@@ -86,6 +85,12 @@ class PlantListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
+        val animalType = observableAnimalType.value
+        if (animalType == null) {
+            eventLogger.log(Severity.WARNING, "PlantListViewModel", "Unable to filterPlants. AnimalType is null")
+            return@withContext
+        }
+
         val plants = modelProvider.getPlantsWithToxicityFiltered(animalType, query, "en") ?: return@withContext
         viewModelScope.launch {
             threadUtil.assertIsUIThread()

@@ -1,12 +1,12 @@
 package com.cramsan.petproject.plantdetails
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -16,8 +16,6 @@ import com.bumptech.glide.request.target.Target
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
-import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.feedback.PlantFeedbackActivity
@@ -33,26 +31,14 @@ import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_scien
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_source
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_feedback_save
 
-class PlantDetailsFragment : BaseFragment() {
+class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel>() {
 
-    private var listener: OnDetailsFragmentInteractionListener? = null
-
-    private lateinit var viewModel: PlantDetailsViewModel
     private lateinit var animalType: AnimalType
 
     override val contentViewLayout: Int
         get() = R.layout.fragment_plant_details
     override val logTag: String
         get() = "PlantDetailsFragment"
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnDetailsFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw InvalidContextException("$context must implement OnListFragmentInteractionListener")
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -63,14 +49,14 @@ class PlantDetailsFragment : BaseFragment() {
 
         plant_details_image.visibility = View.INVISIBLE
         plant_details_image_loading.visibility = View.VISIBLE
-        viewModel = getViewModel(PlantDetailsViewModel::class.java)
-        viewModel.getPlant().observe(viewLifecycleOwner, Observer {
+
+        val model: PlantDetailsViewModel by viewModels()
+        model.getPlant().observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 eventLogger.log(Severity.WARNING, "PlantDetailsFragment", "Plant is null")
                 return@Observer
             }
 
-            listener?.onPlantReady(it)
             plant_details_scientific_name.text = getString(R.string.plant_details_scientific_name, it.exactName)
             plant_details_family.text = getString(R.string.plant_details_family, it.family)
             plant_details_image_source.text = getString(R.string.plant_details_source, it.imageUrl)
@@ -116,13 +102,12 @@ class PlantDetailsFragment : BaseFragment() {
                 .override(plant_details_image.width, plant_details_image.height)
                 .into(plant_details_image)
         })
-        viewModel.getPlantMetadata().observe(viewLifecycleOwner, Observer { metadata ->
+        model.getPlantMetadata().observe(viewLifecycleOwner, Observer { metadata ->
             if (metadata == null) {
                 eventLogger.log(Severity.WARNING, "PlantDetailsFragment", "Metadata is null")
                 return@Observer
             }
 
-            listener?.onPlantMetadataReady(metadata)
             when (metadata.isToxic) {
                 ToxicityValue.TOXIC -> {
                     plant_details_danger.text = when (animalType) {
@@ -169,14 +154,8 @@ class PlantDetailsFragment : BaseFragment() {
             startActivity(plantIntent)
         }
 
-        viewModel.reloadPlant(animalType, plantId)
-    }
-
-    class InvalidContextException(message: String?) : RuntimeException(message)
-
-    interface OnDetailsFragmentInteractionListener {
-        fun onPlantReady(plant: Plant)
-        fun onPlantMetadataReady(plantMetadata: PlantMetadata)
+        model.reloadPlant(animalType, plantId)
+        viewModel = model
     }
 
     companion object {

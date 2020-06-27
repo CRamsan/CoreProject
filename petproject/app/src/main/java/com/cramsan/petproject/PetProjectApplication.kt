@@ -2,8 +2,6 @@ package com.cramsan.petproject
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
@@ -42,7 +40,6 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.erased.bind
-import org.kodein.di.erased.factory
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.singleton
 import org.kodein.di.newInstance
@@ -130,9 +127,6 @@ class PetProjectApplication : Application(), KodeinAware {
                     instance())
             }
             feedbackManager
-        }
-        bind<ViewModelProvider>() with factory {
-            owner: ViewModelStoreOwner -> ViewModelProvider(owner)
         }
     }
 

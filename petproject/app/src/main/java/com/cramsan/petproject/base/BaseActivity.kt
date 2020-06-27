@@ -5,28 +5,25 @@ import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
-import org.kodein.di.erased.factory
 import org.kodein.di.erased.instance
 
-abstract class BaseActivity : AppCompatActivity(),
+abstract class BaseActivity<T : ViewModel> : AppCompatActivity(),
     KodeinAware {
 
     override val kodein by kodein()
     protected val eventLogger: EventLoggerInterface by instance()
-    private val vmFactory: (ViewModelStoreOwner) -> ViewModelProvider by factory()
+    protected var viewModel: T? = null
 
-    lateinit var viewModelProvider: ViewModelProvider
     abstract val contentViewLayout: Int
-    abstract val titleResource: Int?
-    abstract val toolbar: Toolbar?
     abstract val tag: String
+
+    open val toolbar: Toolbar? = null
     open val enableUp: Boolean = true
+    open val titleResource: Int? = null
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +36,7 @@ abstract class BaseActivity : AppCompatActivity(),
             setSupportActionBar(this)
             supportActionBar?.setDisplayHomeAsUpEnabled(enableUp)
             titleResource?.apply {
-                actionBar?.setTitle(this)
+                supportActionBar?.setTitle(this)
             }
         }
     }
@@ -78,9 +75,5 @@ abstract class BaseActivity : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         eventLogger.log(Severity.INFO, tag, "onDestroy")
-    }
-
-    protected fun <T : ViewModel> getViewModel(modelClass: Class<T>): T {
-        return vmFactory.invoke(this).get(modelClass)
     }
 }

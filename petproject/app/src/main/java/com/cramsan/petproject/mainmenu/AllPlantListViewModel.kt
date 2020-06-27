@@ -1,6 +1,7 @@
 package com.cramsan.petproject.mainmenu
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import kotlinx.android.synthetic.main.fragment_main_menu.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,9 +29,15 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
     private val eventLogger: EventLoggerInterface by instance()
     private val threadUtil: ThreadUtilInterface by instance()
 
+    private val observableInSearchMode = MutableLiveData<Boolean>()
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
     private val observableLoading = MutableLiveData<Boolean>()
-    var animalType: AnimalType = AnimalType.CAT
+    private val observableDownloading = MutableLiveData<Boolean>()
+
+    fun observablePlants(): LiveData<List<PresentablePlant>> =  observablePlants
+    fun observableLoading(): LiveData<Boolean> = observableLoading
+    fun observableInSearchMode(): LiveData<Boolean> = observableInSearchMode
+    fun observableDownloading(): LiveData<Boolean> = observableDownloading
 
     init {
         modelProvider.registerForCatalogEvents(this)
@@ -41,10 +49,9 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
 
     override fun onCatalogUpdate(isReady: Boolean) {
         viewModelScope.launch {
+            observableLoading.value = !isReady
             if (isReady) {
                 reloadPlants()
-            } else {
-                observableLoading.value = true
             }
         }
     }
@@ -59,6 +66,13 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
 
     fun searchPlants(query: String) {
         eventLogger.log(Severity.INFO, "AllPlantListViewModel", "searchPlants")
+
+        if (query.isEmpty()) {
+            observableInSearchMode.value = false
+            return
+        }
+
+        observableInSearchMode.value = true
         viewModelScope.launch {
             if (query.isEmpty()) {
                 loadPlants()
@@ -68,16 +82,8 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    fun observablePlants(): LiveData<List<PresentablePlant>> {
-        return observablePlants
-    }
-
-    fun observableLoading(): LiveData<Boolean> {
-        return observableLoading
-    }
-
     private suspend fun loadPlants() = withContext(Dispatchers.IO) {
-        val plants = modelProvider.getPlantsWithToxicity(animalType, "en")
+        val plants = modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
             observableLoading.value = false
@@ -86,10 +92,37 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
-        val plants = modelProvider.getPlantsWithToxicityFiltered(animalType, query, "en") ?: return@withContext
+        val plants = modelProvider.getPlantsWithToxicityFiltered(AnimalType.ALL, query, "en") ?: return@withContext
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
             observablePlants.value = plants
+        }
+    }
+
+    fun isCatalogReady(): Boolean {
+        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "isCatalogReady")
+        val unixTime = System.currentTimeMillis() / 1000L
+        return modelProvider.isCatalogAvailable(unixTime)
+    }
+
+    fun downloadCatalog() {
+        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "reloadPlants")
+        val unixTime = System.currentTimeMillis() / 1000L
+        if (modelProvider.isCatalogAvailable(unixTime)) {
+            observableDownloading.value = false
+            return
+        }
+        observableDownloading.value = true
+        viewModelScope.launch {
+            downloadCatalogOnBackground()
+        }
+    }
+
+    private suspend fun downloadCatalogOnBackground() = withContext(Dispatchers.IO) {
+        val unixTime = System.currentTimeMillis() / 1000L
+        modelProvider.downloadCatalog(unixTime)
+        viewModelScope.launch {
+            observableDownloading.value = false
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.cramsan.petproject.suggestion
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -14,9 +15,8 @@ import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion
 import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_save
 import kotlinx.android.synthetic.main.fragment_plant_suggestion.plant_suggestion_scientific_name
 
-class PlantSuggestionFragment : BaseFragment() {
+class PlantSuggestionFragment : BaseFragment<PlantSuggestionViewModel>() {
 
-    private lateinit var viewModel: PlantSuggestionViewModel
     private lateinit var animalType: AnimalType
 
     override val contentViewLayout: Int
@@ -29,8 +29,8 @@ class PlantSuggestionFragment : BaseFragment() {
         val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
 
         animalType = AnimalType.values()[animalTypeId]
-        viewModel = getViewModel(PlantSuggestionViewModel::class.java)
-        viewModel.isComplete().observe(viewLifecycleOwner, Observer {
+        val model: PlantSuggestionViewModel by viewModels()
+        model.isComplete().observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().finish()
             }
@@ -54,8 +54,9 @@ class PlantSuggestionFragment : BaseFragment() {
             } else if (plant_suggestion_dog_unsafe.isChecked) {
                 toxicityForDogs = ToxicityValue.TOXIC
             }
-            viewModel.savePlant(plantName, toxicityForCats, toxicityForDogs)
+            model.savePlant(plantName, toxicityForCats, toxicityForDogs)
         }
+        viewModel = model
     }
 
     companion object {

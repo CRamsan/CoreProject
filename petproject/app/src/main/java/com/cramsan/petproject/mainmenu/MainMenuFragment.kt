@@ -1,10 +1,10 @@
 package com.cramsan.petproject.mainmenu
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
@@ -27,39 +27,23 @@ import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_list_vi
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_view
 import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
 
-class MainMenuFragment : BaseFragment(), SearchView.OnQueryTextListener,
-AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
+class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val logTag: String
         get() = "MainMenuFragment"
     override val contentViewLayout: Int
         get() = R.layout.fragment_main_menu
 
-    private var listener: PlantsListFragment.OnListFragmentInteractionListener? = null
-    private lateinit var downloadCatalogViewModel: DownloadCatalogViewModel
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
-    private lateinit var allPlantsViewModel: AllPlantListViewModel
-    private val animalType = AnimalType.ALL
     private lateinit var layoutManager: LinearLayoutManager
-    private var searchQuery: String? = null
     private var downloadTime: Long = 0
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is PlantsListFragment.OnListFragmentInteractionListener) {
-            listener = context
-            context.onNewSearchable(this)
-        } else {
-            throw PlantsListFragment.InvalidContextException("$context must implement OnListFragmentInteractionListener")
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        downloadCatalogViewModel = getViewModel(DownloadCatalogViewModel::class.java)
+        val model: AllPlantListViewModel by activityViewModels()
         main_menu_cats.setOnClickListener {
-            if (!downloadCatalogViewModel.isCatalogReady()) {
+            if (!model.isCatalogReady()) {
                 displayDownloadingMessage()
                 return@setOnClickListener
             }
@@ -68,7 +52,7 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
             startActivity(intent)
         }
         main_menu_dogs.setOnClickListener {
-            if (!downloadCatalogViewModel.isCatalogReady()) {
+            if (!model.isCatalogReady()) {
                 displayDownloadingMessage()
                 return@setOnClickListener
             }
@@ -80,22 +64,17 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         var startingOffset: Int? = null
         if (savedInstanceState != null) {
             startingOffset = savedInstanceState.getInt(PlantsListFragment.SCROLL_POS, 0)
-            searchQuery = savedInstanceState.getString(PlantsListFragment.SEARCH_QUERY)
         }
 
-        listener?.onAnimalTypeReady(AnimalType.ALL)
-
         layoutManager = LinearLayoutManager(context)
-        plantsAdapter = AllPlantsRecyclerViewAdapter(this, animalType, requireContext())
+        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())
         plant_list_recycler.layoutManager = layoutManager
         plant_list_recycler.adapter = plantsAdapter
 
-        allPlantsViewModel = getViewModel(AllPlantListViewModel::class.java)
-        allPlantsViewModel.animalType = animalType
-        allPlantsViewModel.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
+        model.observablePlants().observe(viewLifecycleOwner, Observer { plants ->
             plantsAdapter.updateValues(plants)
         })
-        allPlantsViewModel.observableLoading().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
+        model.observableLoading().observe(viewLifecycleOwner, Observer { isLoading ->
             if (isLoading) {
                 plants_list_loading.visibility = View.VISIBLE
                 plant_list_recycler.visibility = View.GONE
@@ -104,18 +83,27 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
                 plant_list_recycler.visibility = View.VISIBLE
             }
         })
+        model.observableInSearchMode().observe(viewLifecycleOwner, Observer {
+            if (it) {
+                plant_main_menu_view.visibility = View.GONE
+                plant_main_menu_list_view.visibility = View.VISIBLE
+            } else {
+                plant_main_menu_view.visibility = View.VISIBLE
+                plant_main_menu_list_view.visibility = View.GONE
+            }
+        })
         startingOffset?.let {
             layoutManager.scrollToPosition(startingOffset)
         }
+        viewModel = model
     }
 
     override fun onStart() {
         super.onStart()
-        if (!downloadCatalogViewModel.isCatalogReady()) {
+        if (viewModel?.isCatalogReady() != true) {
             metrics.log(TAG, "onStart", mapOf("FromCache" to "False"))
-            downloadCatalogViewModel.observableLoading().observe(requireActivity(), Observer<Boolean> { isLoading ->
+            viewModel?.observableDownloading()?.observe(requireActivity(), Observer<Boolean> { isLoading ->
                 if (isLoading) {
-                    listener?.onLoadingStatusChange(isLoading)
                     return@Observer
                 }
                 val downloadCompleteTime = Date().time
@@ -134,7 +122,6 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
                     metrics.log(TAG, "DownloadLatency", mapOf("Time" to ">=20 second"))
                 }
                 displayDownloadCompleteMessage()
-                listener?.onLoadingStatusChange(isLoading)
             })
 
             val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
@@ -142,29 +129,12 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
             downloadTime = Date().time
         } else {
             metrics.log(TAG, "onStart", mapOf("FromCache" to "True"))
-            listener?.onLoadingStatusChange(false)
-        }
-        val loadedSearchQuery = searchQuery
-        if (loadedSearchQuery?.isNotBlank() == true) {
-            plant_main_menu_view.visibility = View.GONE
-            plant_main_menu_list_view.visibility = View.VISIBLE
-            allPlantsViewModel.searchPlants(loadedSearchQuery)
-        } else {
-            allPlantsViewModel.reloadPlants()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(ANIMAL_TYPE, animalType.ordinal)
         outState.putInt(PlantsListFragment.SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
-        outState.putString(PlantsListFragment.SEARCH_QUERY, searchQuery)
-
         super.onSaveInstanceState(outState)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
     }
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
@@ -173,27 +143,6 @@ AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
         plantIntent.putExtra(PlantDetailsFragment.PLANT_ID, plantId)
         plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
         startActivity(plantIntent)
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        eventLogger.log(Severity.DEBUG, "MainMenuFragment", "onQueryTextSubmit")
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        eventLogger.log(Severity.DEBUG, "MainMenuFragment", "onQueryTextChange")
-        newText?.let {
-            if (!newText.isEmpty()) {
-                searchQuery = newText
-                plant_main_menu_view.visibility = View.GONE
-                plant_main_menu_list_view.visibility = View.VISIBLE
-            } else {
-                plant_main_menu_view.visibility = View.VISIBLE
-                plant_main_menu_list_view.visibility = View.GONE
-            }
-            allPlantsViewModel.searchPlants(it)
-        }
-        return true
     }
 
     private fun displayDownloadingMessage() {

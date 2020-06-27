@@ -2,16 +2,24 @@ package com.cramsan.petproject.plantslist
 
 import android.app.SearchManager
 import android.content.Context
+import android.os.Bundle
 import android.view.Menu
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_plants_list.plant_list_toolbar
+import org.kodein.di.erased.instance
 
-class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInteractionListener {
+class PlantsListActivity : BaseActivity<PlantListViewModel>() {
+
+    private val preferences: PreferencesInterface by instance()
+
     override val contentViewLayout: Int
         get() = R.layout.activity_plants_list
     override val titleResource: Int?
@@ -21,11 +29,19 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
     override val tag: String
         get() = "PlantsListActivity"
 
-    private var queryTextListener: SearchView.OnQueryTextListener? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onNewSearchable(listener: SearchView.OnQueryTextListener) {
-        eventLogger.log(Severity.INFO, "PlantsListActivity", "onNewSearchable")
-        queryTextListener = listener
+        val model: PlantListViewModel by viewModels()
+        model.observableAnimalType().observe(this, Observer {
+            when (it) {
+                AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
+                AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
+                else -> TODO()
+            }
+        })
+
+        viewModel = model
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -41,27 +57,16 @@ class PlantsListActivity : BaseActivity(), PlantsListFragment.OnListFragmentInte
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    queryTextListener?.onQueryTextChange(query)
+                    viewModel?.searchPlants(query)
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    queryTextListener?.onQueryTextChange(newText)
+                    viewModel?.searchPlants(newText)
                     return true
                 }
             })
         }
         return true
-    }
-
-    override fun onAnimalTypeReady(animalType: AnimalType) {
-        when (animalType) {
-            AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
-            AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
-            else -> TODO()
-        }
-    }
-
-    override fun onLoadingStatusChange(isLoading: Boolean) {
     }
 }

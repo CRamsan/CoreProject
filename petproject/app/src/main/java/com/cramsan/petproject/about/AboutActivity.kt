@@ -5,10 +5,11 @@ import android.text.method.LinkMovementMethod
 import androidx.appcompat.widget.Toolbar
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_about.about_toolbar
-import kotlinx.android.synthetic.main.content_about.reference_freepik
+import com.cramsan.petproject.base.NoopViewModel
+import kotlinx.android.synthetic.main.activity_about.*
+import kotlinx.android.synthetic.main.content_about.*
 
-class AboutActivity : BaseActivity() {
+class AboutActivity : BaseActivity<NoopViewModel>() {
     override val contentViewLayout: Int
         get() = R.layout.activity_about
     override val titleResource: Int

@@ -1,6 +1,7 @@
 package com.cramsan.petproject.feedback
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -13,9 +14,8 @@ import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackText
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plant_feedback_cancel
 import kotlinx.android.synthetic.main.fragment_plant_feedback.plant_feedback_save
 
-class PlantFeedbackFragment : BaseFragment() {
+class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel>() {
 
-    private lateinit var viewModel: PlantFeedbackViewModel
     private lateinit var animalType: AnimalType
     private var plantId: Int = -1
 
@@ -26,12 +26,13 @@ class PlantFeedbackFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
-        val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
+        plantId = requireActivity().intent?.getIntExtra(PLANT_ID, -1) ?: return
+        val animalTypeId = requireActivity().intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
         animalType = AnimalType.values()[animalTypeId]
-        viewModel = getViewModel(PlantFeedbackViewModel::class.java)
-        viewModel.isComplete().observe(viewLifecycleOwner, Observer {
-            if (it) {
+
+        val model: PlantFeedbackViewModel by viewModels()
+        model.isComplete().observe(viewLifecycleOwner, Observer { isComplete ->
+            if (isComplete) {
                 requireActivity().finish()
             }
         })
@@ -46,8 +47,9 @@ class PlantFeedbackFragment : BaseFragment() {
             val name = plantFeedbackNameCheckBox.isChecked
             val brokenLikn = plantFeedbackBrokenLinkCheckBox.isChecked
             val text = plantFeedbackText.text.toString()
-            viewModel.sendFeedback(animalType, plantId.toLong(), photo, scientificName, name, brokenLikn, text)
+            model.sendFeedback(animalType, plantId.toLong(), photo, scientificName, name, brokenLikn, text)
         }
+        viewModel = model
     }
 
     companion object {

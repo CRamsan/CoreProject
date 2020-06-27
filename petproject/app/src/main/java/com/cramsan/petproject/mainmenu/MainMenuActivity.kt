@@ -3,20 +3,21 @@ package com.cramsan.petproject.mainmenu
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.about.AboutActivity
-import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.debugmenu.DebugMenuActivity
-import com.cramsan.petproject.plantslist.PlantsListFragment
 import kotlinx.android.synthetic.main.activity_main_menu.main_menu_toolbar
 
-class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentInteractionListener {
+class MainMenuActivity : BaseActivity<AllPlantListViewModel>() {
 
     override val contentViewLayout: Int
         get() = R.layout.activity_main_menu
@@ -29,8 +30,18 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
     override val tag: String
         get() = "MainMenuActivity"
 
-    private var queryTextListener: SearchView.OnQueryTextListener? = null
     private var enableSearchView = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val model: AllPlantListViewModel by viewModels()
+        model.observableLoading().observe(this, Observer { isLoading ->
+            enableSearchView = !isLoading
+            invalidateOptionsMenu()
+        })
+        viewModel = model
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         eventLogger.log(Severity.INFO, "MainMenuActivity", "onCreateOptionsMenu")
@@ -45,12 +56,12 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    queryTextListener?.onQueryTextChange(query)
+                    viewModel?.searchPlants(query)
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    queryTextListener?.onQueryTextChange(newText)
+                    viewModel?.searchPlants(newText)
                     return true
                 }
             })
@@ -83,18 +94,5 @@ class MainMenuActivity : BaseActivity(), PlantsListFragment.OnListFragmentIntera
         val searchView = menu.findItem(R.id.action_search) as MenuItem
         searchView.isVisible = enableSearchView
         return true
-    }
-
-    override fun onNewSearchable(listener: SearchView.OnQueryTextListener) {
-        eventLogger.log(Severity.INFO, "MainMenuActivity", "onNewSearchable")
-        queryTextListener = listener
-    }
-
-    override fun onAnimalTypeReady(animalType: AnimalType) {
-    }
-
-    override fun onLoadingStatusChange(isLoading: Boolean) {
-        enableSearchView = !isLoading
-        invalidateOptionsMenu()
     }
 }

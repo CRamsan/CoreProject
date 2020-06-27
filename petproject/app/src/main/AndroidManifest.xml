@@ -26,6 +26,7 @@
         <activity
                 android:name=".plantslist.PlantsListActivity"
                 android:theme="@style/AppTheme.NoActionBar"
+                android:launchMode="singleTop"
                 android:parentActivityName=".mainmenu.MainMenuActivity">
         </activity>
         <activity

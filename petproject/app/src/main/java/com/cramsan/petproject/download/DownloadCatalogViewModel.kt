@@ -1,4 +1,4 @@
-package com.cramsan.petproject.mainmenu
+package com.cramsan.petproject.download
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
