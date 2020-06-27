@@ -1,7 +1,6 @@
 package com.cramsan.petproject.mainmenu
 
 import android.app.Application
-import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,7 +33,7 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
     private val observableLoading = MutableLiveData<Boolean>()
     private val observableDownloading = MutableLiveData<Boolean>()
 
-    fun observablePlants(): LiveData<List<PresentablePlant>> =  observablePlants
+    fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
     fun observableLoading(): LiveData<Boolean> = observableLoading
     fun observableInSearchMode(): LiveData<Boolean> = observableInSearchMode
     fun observableDownloading(): LiveData<Boolean> = observableDownloading
