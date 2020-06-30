@@ -36,11 +36,21 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel>() {
         super.onCreate(savedInstanceState)
 
         val model: AllPlantListViewModel by viewModels()
-        model.observableLoading().observe(this, Observer { isLoading ->
-            enableSearchView = !isLoading
+        model.observableIsCatalogReady().observe(this, Observer { isReady ->
+            eventLogger.log(Severity.INFO, "MainMenuActivity", "observableDownloadingChanged: $isReady")
+            enableSearchView = isReady
             invalidateOptionsMenu()
         })
         viewModel = model
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (viewModel?.isCatalogReady() == true) {
+            enableSearchView = true
+            invalidateOptionsMenu()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

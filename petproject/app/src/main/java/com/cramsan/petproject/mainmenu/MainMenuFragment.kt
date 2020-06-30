@@ -35,6 +35,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecycle
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var downloadTime: Long = 0
+    private var isDownloading: Boolean = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -72,15 +73,6 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecycle
         model.observablePlants().observe(viewLifecycleOwner, Observer { plants ->
             plantsAdapter.updateValues(plants)
         })
-        model.observableLoading().observe(viewLifecycleOwner, Observer { isLoading ->
-            if (isLoading) {
-                plants_list_loading.visibility = View.VISIBLE
-                plant_list_recycler.visibility = View.GONE
-            } else {
-                plants_list_loading.visibility = View.GONE
-                plant_list_recycler.visibility = View.VISIBLE
-            }
-        })
         model.observableInSearchMode().observe(viewLifecycleOwner, Observer {
             if (it) {
                 plant_main_menu_view.visibility = View.GONE
@@ -90,6 +82,28 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecycle
                 plant_main_menu_list_view.visibility = View.GONE
             }
         })
+        model.observableIsCatalogReady().observe(viewLifecycleOwner, Observer { isReady ->
+            if (!isReady || !isDownloading) {
+                return@Observer
+            }
+            val downloadCompleteTime = Date().time
+            val downloadInSeconds = (downloadCompleteTime - downloadTime) / 1000
+            if (downloadInSeconds < 1) {
+                metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<1 second"))
+            } else if (downloadInSeconds < 3) {
+                metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<3 second"))
+            } else if (downloadInSeconds < 5) {
+                metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<5 second"))
+            } else if (downloadInSeconds < 10) {
+                metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<10 second"))
+            } else if (downloadInSeconds < 20) {
+                metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<20 second"))
+            } else {
+                metrics.log(TAG, "DownloadLatency", mapOf("Time" to ">=20 second"))
+            }
+            displayDownloadCompleteMessage()
+        })
+
         startingOffset?.let {
             layoutManager.scrollToPosition(startingOffset)
         }
@@ -100,31 +114,10 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecycle
         super.onStart()
         if (viewModel?.isCatalogReady() != true) {
             metrics.log(TAG, "onStart", mapOf("FromCache" to "False"))
-            viewModel?.observableDownloading()?.observe(requireActivity(), Observer<Boolean> { isLoading ->
-                if (isLoading) {
-                    return@Observer
-                }
-                val downloadCompleteTime = Date().time
-                val downloadInSeconds = (downloadCompleteTime - downloadTime) / 1000
-                if (downloadInSeconds < 1) {
-                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<1 second"))
-                } else if (downloadInSeconds < 3) {
-                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<3 second"))
-                } else if (downloadInSeconds < 5) {
-                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<5 second"))
-                } else if (downloadInSeconds < 10) {
-                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<10 second"))
-                } else if (downloadInSeconds < 20) {
-                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to "<20 second"))
-                } else {
-                    metrics.log(TAG, "DownloadLatency", mapOf("Time" to ">=20 second"))
-                }
-                displayDownloadCompleteMessage()
-            })
-
             val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
             startActivity(intent)
             downloadTime = Date().time
+            isDownloading = true
         } else {
             metrics.log(TAG, "onStart", mapOf("FromCache" to "True"))
         }

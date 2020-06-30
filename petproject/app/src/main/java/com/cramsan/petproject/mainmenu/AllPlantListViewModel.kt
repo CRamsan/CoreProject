@@ -20,7 +20,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-open class AllPlantListViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
+class AllPlantListViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
     ModelProviderEventListenerInterface {
 
     override val kodein by kodein(application)
@@ -30,16 +30,15 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
 
     private val observableInSearchMode = MutableLiveData<Boolean>()
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
-    private val observableLoading = MutableLiveData<Boolean>()
-    private val observableDownloading = MutableLiveData<Boolean>()
+    private val observableIsCatalogReady = MutableLiveData<Boolean>()
 
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
-    fun observableLoading(): LiveData<Boolean> = observableLoading
     fun observableInSearchMode(): LiveData<Boolean> = observableInSearchMode
-    fun observableDownloading(): LiveData<Boolean> = observableDownloading
+    fun observableIsCatalogReady(): LiveData<Boolean> = observableIsCatalogReady
 
     init {
         modelProvider.registerForCatalogEvents(this)
+        observablePlants.value = emptyList()
     }
 
     override fun onCleared() {
@@ -48,18 +47,10 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
 
     override fun onCatalogUpdate(isReady: Boolean) {
         viewModelScope.launch {
-            observableLoading.value = !isReady
+            observableIsCatalogReady.value = isReady
             if (isReady) {
-                reloadPlants()
+                loadPlants()
             }
-        }
-    }
-
-    fun reloadPlants() {
-        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "reloadPlants")
-        observableLoading.value = true
-        viewModelScope.launch {
-            loadPlants()
         }
     }
 
@@ -68,16 +59,15 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
 
         if (query.isEmpty()) {
             observableInSearchMode.value = false
+            viewModelScope.launch {
+                loadPlants()
+            }
             return
         }
 
         observableInSearchMode.value = true
         viewModelScope.launch {
-            if (query.isEmpty()) {
-                loadPlants()
-            } else {
-                filterPlants(query)
-            }
+            filterPlants(query)
         }
     }
 
@@ -85,7 +75,6 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
         val plants = modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
-            observableLoading.value = false
             observablePlants.value = plants
         }
     }
@@ -102,26 +91,5 @@ open class AllPlantListViewModel(application: Application) : AndroidViewModel(ap
         eventLogger.log(Severity.INFO, "AllPlantListViewModel", "isCatalogReady")
         val unixTime = System.currentTimeMillis() / 1000L
         return modelProvider.isCatalogAvailable(unixTime)
-    }
-
-    fun downloadCatalog() {
-        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "reloadPlants")
-        val unixTime = System.currentTimeMillis() / 1000L
-        if (modelProvider.isCatalogAvailable(unixTime)) {
-            observableDownloading.value = false
-            return
-        }
-        observableDownloading.value = true
-        viewModelScope.launch {
-            downloadCatalogOnBackground()
-        }
-    }
-
-    private suspend fun downloadCatalogOnBackground() = withContext(Dispatchers.IO) {
-        val unixTime = System.currentTimeMillis() / 1000L
-        modelProvider.downloadCatalog(unixTime)
-        viewModelScope.launch {
-            observableDownloading.value = false
-        }
     }
 }

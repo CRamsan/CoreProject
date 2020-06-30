@@ -9,14 +9,12 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-open class DownloadCatalogViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
+class DownloadCatalogViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
     ModelProviderEventListenerInterface {
 
     override val kodein by kodein(application)
@@ -41,14 +39,14 @@ open class DownloadCatalogViewModel(application: Application) : AndroidViewModel
     }
 
     fun downloadCatalog() {
-        eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "reloadPlants")
+        eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "downloadCatalog")
         val unixTime = System.currentTimeMillis() / 1000L
         if (modelProvider.isCatalogAvailable(unixTime)) {
             observableLoading.value = false
             return
         }
         observableLoading.value = true
-        viewModelScope.launch {
+        GlobalScope.launch {
             downloadCatalogOnBackground()
         }
     }

@@ -10,6 +10,6 @@
             android:title="@string/drawer_menu_about"
             app:showAsAction="withText" />
     <item android:id="@+id/action_debug"
-            android:visible="@bool/isDebug"
+            android:visible="@bool/showDebugMenu"
             android:title="@string/menu_debug" />
 </menu>
