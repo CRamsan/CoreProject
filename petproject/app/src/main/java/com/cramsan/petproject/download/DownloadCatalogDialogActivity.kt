@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
 
-class DownloadDialogActivity : BaseActivity<DownloadCatalogViewModel>() {
+class DownloadCatalogDialogActivity : BaseActivity<DownloadCatalogViewModel>() {
     override val contentViewLayout: Int
         get() = R.layout.activity_download_dialog
     override val tag: String
@@ -16,8 +16,8 @@ class DownloadDialogActivity : BaseActivity<DownloadCatalogViewModel>() {
         super.onCreate(savedInstanceState)
 
         val model: DownloadCatalogViewModel by viewModels()
-        model.observableLoading().observe(this, Observer<Boolean> { isLoading ->
-            if (!isLoading) {
+        model.observableIsDownloadComplete.observe(this, Observer<Boolean> { isDownloadComplete ->
+            if (isDownloadComplete) {
                 finish()
             }
         })

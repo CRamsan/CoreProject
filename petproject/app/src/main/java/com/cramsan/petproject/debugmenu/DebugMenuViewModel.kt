@@ -18,17 +18,17 @@ class DebugMenuViewModel(application: Application) : AndroidViewModel(applicatio
     override val kodein by kodein(application)
     private val eventLogger: EventLoggerInterface by instance()
     private val modelProvider: ModelProviderInterface by instance()
-    private val TAG = "DebugMenuViewModel"
+    private val tag = "DebugMenuViewModel"
 
     fun cleanCache() {
-        eventLogger.log(Severity.INFO, TAG, "ClearCache")
+        eventLogger.log(Severity.INFO, tag, "ClearCache")
         GlobalScope.launch(Dispatchers.IO) {
             modelProvider.deleteAll()
         }
     }
 
     fun killApp(activity: Activity) {
-        eventLogger.log(Severity.INFO, TAG, "KillApp")
+        eventLogger.log(Severity.INFO, tag, "KillApp")
         activity.finishAffinity()
     }
 }

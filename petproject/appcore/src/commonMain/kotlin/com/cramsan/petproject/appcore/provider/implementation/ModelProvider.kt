@@ -74,42 +74,36 @@ class ModelProvider(
         eventLogger.log(Severity.INFO, "ModelProvider", "downloadCatalog")
         threadUtil.assertIsBackgroundThread()
 
-        try {
-            mutex.withLock {
-                val lastSave = preferences.loadLong(LAST_UPDATE)
-                if (lastSave != null && currentTime - lastSave < 86400) {
-                    eventLogger.log(Severity.INFO, "ModelProvider", "Using cached data")
-                    setIsCatalogReady(true)
-                    return false
-                }
-
-                eventLogger.log(Severity.INFO, "ModelProvider", "Downloading data")
-                setIsCatalogReady(false)
-
-                coroutineScope {
-                    launch {
-                        val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint)
-                        modelStorage.insertPlantList(plants)
-                    }
-                    launch {
-                        val mainNames: ArrayList<PlantMainNameImpl> =
-                            http.get(config.mainNameEndpoint)
-                        modelStorage.insertPlantMainNameList(mainNames)
-                    }
-                    launch {
-                        val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint)
-                        modelStorage.insertToxicityList(toxicities)
-                    }
-                }
-
+        mutex.withLock {
+            val lastSave = preferences.loadLong(LAST_UPDATE)
+            if (lastSave != null && currentTime - lastSave < 86400) {
+                eventLogger.log(Severity.INFO, "ModelProvider", "Using cached data")
                 setIsCatalogReady(true)
-                eventLogger.log(Severity.INFO, "ModelProvider", "Data downloaded")
-                preferences.saveLong(LAST_UPDATE, currentTime)
+                return false
             }
-        } catch (e: Exception) {
-            eventLogger.log(Severity.ERROR, "ModelProvider", "Exception")
-        } finally {
-            eventLogger.log(Severity.ERROR, "ModelProvider", "Exception->Finally")
+
+            eventLogger.log(Severity.INFO, "ModelProvider", "Downloading data")
+            setIsCatalogReady(false)
+
+            coroutineScope {
+                launch {
+                    val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint)
+                    modelStorage.insertPlantList(plants)
+                }
+                launch {
+                    val mainNames: ArrayList<PlantMainNameImpl> =
+                        http.get(config.mainNameEndpoint)
+                    modelStorage.insertPlantMainNameList(mainNames)
+                }
+                launch {
+                    val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint)
+                    modelStorage.insertToxicityList(toxicities)
+                }
+            }
+
+            setIsCatalogReady(true)
+            eventLogger.log(Severity.INFO, "ModelProvider", "Data downloaded")
+            preferences.saveLong(LAST_UPDATE, currentTime)
         }
         return true
     }

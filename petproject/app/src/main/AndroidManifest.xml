@@ -37,7 +37,7 @@
                 android:name=".feedback.PlantFeedbackActivity"
                 android:theme="@style/AppTheme.Transparent">
         </activity>
-        <activity android:name=".download.DownloadDialogActivity"
+        <activity android:name=".download.DownloadCatalogDialogActivity"
                   android:theme="@style/AppTheme.Transparent">
         </activity>
         <activity

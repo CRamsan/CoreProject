@@ -19,7 +19,6 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.feedback.PlantFeedbackActivity
-import com.cramsan.petproject.feedback.PlantFeedbackFragment
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_common_names
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_danger
 import kotlinx.android.synthetic.main.fragment_plant_details.plant_details_description
@@ -149,8 +148,8 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel>() {
         plant_feedback_save.setOnClickListener {
             eventLogger.log(Severity.INFO, "PlantDetailsFragment", "onClick")
             val plantIntent = Intent(requireContext(), PlantFeedbackActivity::class.java)
-            plantIntent.putExtra(PlantFeedbackFragment.PLANT_ID, plantId)
-            plantIntent.putExtra(PlantFeedbackFragment.ANIMAL_TYPE, animalType.ordinal)
+            plantIntent.putExtra(PLANT_ID, plantId)
+            plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
             startActivity(plantIntent)
         }
 

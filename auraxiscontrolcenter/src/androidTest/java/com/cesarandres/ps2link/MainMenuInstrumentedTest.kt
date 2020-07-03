@@ -18,7 +18,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -40,7 +39,7 @@ class MainMenuInstrumentedTest {
 
     @After
     fun after() {
-        reportHelper.label("Stopping App");
+        reportHelper.label("Stopping App")
     }
 
     @Test

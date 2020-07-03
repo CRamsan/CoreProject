@@ -50,7 +50,6 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel>() {
             enableSearchView = true
             invalidateOptionsMenu()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -10,7 +10,7 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
-import com.cramsan.petproject.download.DownloadDialogActivity
+import com.cramsan.petproject.download.DownloadCatalogDialogActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment
 import com.cramsan.petproject.plantslist.PlantsListActivity
@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_main_menu.main_menu_dogs
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_list_recycler
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_list_view
 import kotlinx.android.synthetic.main.fragment_main_menu.plant_main_menu_view
-import kotlinx.android.synthetic.main.fragment_main_menu.plants_list_loading
 
 class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
@@ -114,7 +113,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel>(), AllPlantsRecycle
         super.onStart()
         if (viewModel?.isCatalogReady() != true) {
             metrics.log(TAG, "onStart", mapOf("FromCache" to "False"))
-            val intent = Intent(requireContext(), DownloadDialogActivity::class.java)
+            val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
             startActivity(intent)
             downloadTime = Date().time
             isDownloading = true

@@ -59,7 +59,7 @@ class FragmentServersTest {
     fun after() {
         val application = activityScenarioRule.activity.application as ApplicationPS2Link
         IdlingRegistry.getInstance().unregister(application.idlingResource)
-        reportHelper.label("Stopping App");
+        reportHelper.label("Stopping App")
     }
 
     @Test
