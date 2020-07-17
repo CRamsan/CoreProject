@@ -1,28 +1,25 @@
 package com.cramsan.petproject.download
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class DownloadCatalogViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
+class DownloadCatalogViewModel(application: Application) : BaseViewModel(application),
     ModelProviderEventListenerInterface {
 
-    override val kodein by kodein(application)
     private val modelProvider: ModelProviderInterface by instance()
-    private val eventLogger: EventLoggerInterface by instance()
+    override val logTag: String
+        get() = "DownloadCatalogViewModel"
 
     private val mutableIsDownloadComplete = MutableLiveData<Boolean>()
     val observableIsDownloadComplete: LiveData<Boolean> = mutableIsDownloadComplete

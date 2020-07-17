@@ -8,47 +8,67 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.about.AboutActivity
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.debugmenu.DebugMenuActivity
-import kotlinx.android.synthetic.main.activity_main_menu.main_menu_toolbar
 
-class MainMenuActivity : BaseActivity<AllPlantListViewModel>() {
+class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() {
 
     override val contentViewLayout: Int
         get() = R.layout.activity_main_menu
     override val titleResource: Int?
         get() = R.string.app_name
-    override val toolbar: Toolbar?
-        get() = main_menu_toolbar
+    override val toolbarViewId: Int?
+        get() = R.id.main_menu_toolbar
     override val enableUp: Boolean
         get() = false
-    override val tag: String
+    override val logTag: String
         get() = "MainMenuActivity"
 
+    // Override the default behaviour to disable databinding
+    override var enableDataBinding: Boolean = false
+
+    // Only enable the searchView if data is available
     private var enableSearchView = false
+
+    // This flag will track if we need to handle the first click on the SearchView. This will
+    // allow us to inject the query that retrieved from the savedBundle.
+    private var shouldWaitForFirstSearchClick = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val model: AllPlantListViewModel by viewModels()
-        model.observableIsCatalogReady().observe(this, Observer { isReady ->
-            eventLogger.log(Severity.INFO, "MainMenuActivity", "observableDownloadingChanged: $isReady")
-            enableSearchView = isReady
+        viewModel = model
+        viewModel.observableShowDataDownloaded().observe(this, Observer {
+            eventLogger.log(Severity.INFO, "MainMenuActivity", "Data is downloaded")
+            enableSearchView = true
             invalidateOptionsMenu()
         })
-        viewModel = model
     }
 
     override fun onStart() {
         super.onStart()
-        if (viewModel?.isCatalogReady() == true) {
+        if (viewModel.isCatalogReady()) {
             enableSearchView = true
             invalidateOptionsMenu()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(SEARCH_QUERY, viewModel.queryString)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString(SEARCH_QUERY)?.let {
+            viewModel.queryString = it
         }
     }
 
@@ -60,21 +80,42 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel>() {
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
-            // Assumes current activity is the searchable activity
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    viewModel?.searchPlants(query)
+                    viewModel.queryString = query
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    viewModel?.searchPlants(newText)
+                    if (shouldWaitForFirstSearchClick) {
+                        return true
+                    }
+                    viewModel.queryString = newText
                     return true
                 }
             })
         }
+
+        searchView.setOnSearchClickListener {
+            if (!shouldWaitForFirstSearchClick) {
+                return@setOnSearchClickListener
+            }
+
+            // Populate the SearchView with the previous query
+            shouldWaitForFirstSearchClick = false
+            searchView.setQuery(viewModel.queryString, true)
+        }
+        shouldWaitForFirstSearchClick = !viewModel.queryString.isBlank()
+
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.isVisible = enableSearchView
         return true
     }
 
@@ -99,9 +140,7 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel>() {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val searchView = menu.findItem(R.id.action_search) as MenuItem
-        searchView.isVisible = enableSearchView
-        return true
+    companion object {
+        const val SEARCH_QUERY = "searchQuery"
     }
 }

@@ -1,113 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/BaseContentLayout"
-        android:id="@+id/main_menu_container_view"
-        android:orientation="vertical">
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.cramsan.petproject.mainmenu.AllPlantListViewModel"/>
+    </data>
 
     <LinearLayout
-            android:id="@+id/plant_main_menu_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/BaseContentLayout"
+            android:id="@+id/main_menu_container_view"
             android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-                android:id="@+id/main_menu_cats"
+        <LinearLayout
+                android:id="@+id/plant_main_menu_view"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:observableVisibility="@{viewModel.observableMenuVisibility()}">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/main_menu_cats"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{viewModel::goToCats}">
 
-                <!-- Media -->
-                <ImageView
+                <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="3"
-                        android:padding="0dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/main_cat" />
-
-                <!-- Title, secondary and supporting text -->
-                <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/main_menu_cats_description"
-                        android:padding="16dp"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                        android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-                android:id="@+id/main_menu_dogs"
+                    <!-- Media -->
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3"
+                            android:padding="0dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/main_cat" />
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_menu_cats_description"
+                            android:padding="16dp"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/main_menu_dogs"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{viewModel::goToDogs}">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <!-- Media -->
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3"
+                            android:padding="0dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/main_dog" />
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_menu_dogs_description"
+                            android:padding="16dp"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/plant_main_menu_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                app:observableVisibility="@{viewModel.observablePlantListVisibility()}">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+            <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <!-- Media -->
-                <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="3"
-                        android:padding="0dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/main_dog" />
-
-                <!-- Title, secondary and supporting text -->
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_menu_dogs_description"
-                        android:padding="16dp"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/plant_list_recycler"
+                        style="@style/BaseContentLayout"
+                        app:fastScrollEnabled="true"
+                        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+                        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+                        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+                        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+                        app:layoutManager="LinearLayoutManager"
+                        tools:context=".plantslist.PlantsListFragment"
+                        tools:listitem="@layout/view_plant" />
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/plant_main_menu_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            <ProgressBar
-                    android:id="@+id/plants_list_loading"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/plant_list_recycler"
-                    style="@style/BaseContentLayout"
-                    app:fastScrollEnabled="true"
-                    app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-                    app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-                    app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-                    app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
-                    app:layoutManager="LinearLayoutManager"
-                    tools:context=".plantslist.PlantsListFragment"
-                    tools:listitem="@layout/view_plant" />
-        </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</layout>

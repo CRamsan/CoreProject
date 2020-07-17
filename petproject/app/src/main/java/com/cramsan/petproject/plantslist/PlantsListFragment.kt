@@ -11,17 +11,15 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
+import com.cramsan.petproject.databinding.FragmentPlantsListBinding
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.suggestion.PlantSuggestionActivity
-import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_add_plant
-import kotlinx.android.synthetic.main.fragment_plants_list.plant_list_recycler
-import kotlinx.android.synthetic.main.fragment_plants_list.plants_list_loading
 
 /**
  * A fragment representing a list of Items.
  */
-class PlantsListFragment : BaseFragment<PlantListViewModel>(), PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
+class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBinding>(), PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val contentViewLayout: Int
         get() = R.layout.fragment_plants_list
@@ -56,22 +54,22 @@ class PlantsListFragment : BaseFragment<PlantListViewModel>(), PlantsRecyclerVie
 
         layoutManager = LinearLayoutManager(context)
         plantsAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
-        plant_list_recycler.layoutManager = layoutManager
-        plant_list_recycler.adapter = plantsAdapter
+        dataBinding.plantListRecycler.layoutManager = layoutManager
+        dataBinding.plantListRecycler.adapter = plantsAdapter
 
         model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
         model.observableLoading().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
             if (isLoading) {
-                plants_list_loading.visibility = View.VISIBLE
-                plant_list_recycler.visibility = View.GONE
+                dataBinding.plantsListLoading.visibility = View.VISIBLE
+                dataBinding.plantListRecycler.visibility = View.GONE
             } else {
-                plants_list_loading.visibility = View.GONE
-                plant_list_recycler.visibility = View.VISIBLE
+                dataBinding.plantsListLoading.visibility = View.GONE
+                dataBinding.plantListRecycler.visibility = View.VISIBLE
             }
         })
-        plant_list_add_plant.setOnClickListener {
+        dataBinding.plantListAddPlant.setOnClickListener {
             val intent = Intent(requireContext(), PlantSuggestionActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, animalType.ordinal)
             startActivity(intent)

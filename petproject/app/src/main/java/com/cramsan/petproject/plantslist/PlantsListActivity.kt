@@ -6,17 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_plants_list.plant_list_toolbar
+import com.cramsan.petproject.databinding.ActivityPlantsListBinding
 import org.kodein.di.erased.instance
 
-class PlantsListActivity : BaseActivity<PlantListViewModel>() {
+class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBinding>() {
 
     private val preferences: PreferencesInterface by instance()
 
@@ -24,9 +23,13 @@ class PlantsListActivity : BaseActivity<PlantListViewModel>() {
         get() = R.layout.activity_plants_list
     override val titleResource: Int?
         get() = null
-    override val toolbar: Toolbar?
-        get() = plant_list_toolbar
-    override val tag: String
+    override val toolbarViewId: Int?
+        get() = R.id.plant_list_toolbar
+    override val enableDataBinding: Boolean
+        get() = true
+    override val enableUp: Boolean
+        get() = true
+    override val logTag: String
         get() = "PlantsListActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {

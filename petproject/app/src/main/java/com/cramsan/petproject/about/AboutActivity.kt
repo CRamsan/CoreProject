@@ -2,26 +2,28 @@ package com.cramsan.petproject.about
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import androidx.appcompat.widget.Toolbar
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.base.NoopViewModel
-import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.content_about.*
+import com.cramsan.petproject.databinding.ActivityAboutBinding
 
-class AboutActivity : BaseActivity<NoopViewModel>() {
+class AboutActivity : BaseActivity<NoopViewModel, ActivityAboutBinding>() {
     override val contentViewLayout: Int
         get() = R.layout.activity_about
+    override val toolbarViewId: Int?
+        get() = R.id.about_toolbar
+    override val enableDataBinding: Boolean
+        get() = true
     override val titleResource: Int
         get() = R.string.title_activity_about
-    override val toolbar: Toolbar
-        get() = about_toolbar
-    override val tag: String
+    override val enableUp: Boolean
+        get() = true
+    override val logTag: String
         get() = "AboutActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reference_freepik.movementMethod = LinkMovementMethod.getInstance()
+        dataBinding.referenceFreepik.movementMethod = LinkMovementMethod.getInstance()
     }
 }

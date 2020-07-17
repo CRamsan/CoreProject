@@ -2,31 +2,31 @@ package com.cramsan.petproject.plantdetails
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_plant_details.plant_details_toolbar
+import com.cramsan.petproject.databinding.ActivityPlantDetailsBinding
 
-class PlantDetailsActivity : BaseActivity<PlantDetailsViewModel>() {
+class PlantDetailsActivity : BaseActivity<PlantDetailsViewModel, ActivityPlantDetailsBinding>() {
     override val contentViewLayout: Int
         get() = R.layout.activity_plant_details
-    override val toolbar: Toolbar?
-        get() = plant_details_toolbar
-    override val tag: String
+    override val toolbarViewId: Int?
+        get() = R.id.plant_details_toolbar
+    override val enableUp: Boolean
+        get() = true
+    override val enableDataBinding: Boolean
+        get() = true
+    override val titleResource: Int?
+        get() = null
+    override val logTag: String
         get() = "PlantDetailsActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val model: PlantDetailsViewModel by viewModels()
-        model.getPlant().observe(this, Observer {
-            if (it == null) {
-                eventLogger.log(Severity.WARNING, tag, "Plant is null")
-                return@Observer
-            }
-            supportActionBar?.title = it.mainCommonName
+        model.observablePlantName.observe(this, Observer {
+            supportActionBar?.title = it
         })
         viewModel = model
     }

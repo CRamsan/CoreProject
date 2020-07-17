@@ -1,26 +1,28 @@
 package com.cramsan.petproject.feedback
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.petproject.appcore.model.AnimalType
+import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.erased.instance
 
-class PlantFeedbackViewModel(application: Application) : AndroidViewModel(application),
-    KodeinAware {
+class PlantFeedbackViewModel(application: Application) : BaseViewModel(application) {
 
-    override val kodein by kodein(application)
-    private val eventLogger: EventLoggerInterface by instance()
-    private val metricsClient: MetricsInterface by instance()
+    override val logTag: String
+        get() = "PlantFeedbackViewModel"
+
+    val animal = MutableLiveData<AnimalType>()
+    val plantId = MutableLiveData<Long>()
+    val photo = MutableLiveData<Boolean>()
+    val scientificName = MutableLiveData<Boolean>()
+    val name = MutableLiveData<Boolean>()
+    val link = MutableLiveData<Boolean>()
+    val text = MutableLiveData<String>()
 
     private val observableIsComplete = MutableLiveData<Boolean>()
 
@@ -28,10 +30,21 @@ class PlantFeedbackViewModel(application: Application) : AndroidViewModel(applic
         return observableIsComplete
     }
 
-    fun sendFeedback(animal: AnimalType, plantId: Long, photo: Boolean, scientificName: Boolean, name: Boolean, link: Boolean, text: String) {
+    fun cancel(view: View) {
+        eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "cancel")
+        observableIsComplete.value = true
+    }
+
+    fun sendFeedback(view: View) {
         eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
-            val suggestion = "Animal:${animal.name} - PlantId:$plantId - Photo: $photo - ScientifiName:$scientificName - Name:$name - Link:$link - Text:$text"
+            val suggestion = "Animal:${animal.value?.name} - " +
+                    "PlantId:${plantId.value} - " +
+                    "Photo: ${photo.value} - " +
+                    "ScientifiName:${scientificName.value} - " +
+                    "Name:${name.value} - " +
+                    "Link:${link.value} - " +
+                    "Text:${text.value}"
             metricsClient.log("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = true

@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
@@ -15,13 +16,15 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.erased.instance
 
-abstract class BaseFragment<T : ViewModel> : Fragment(), KodeinAware {
+abstract class BaseFragment<T : BaseViewModel, U : ViewDataBinding> : Fragment(), KodeinAware {
 
     override val kodein by kodein()
     protected val eventLogger: EventLoggerInterface by instance()
     protected val metrics: MetricsInterface by instance()
+
     abstract val logTag: String
-    protected var viewModel: T? = null
+    protected lateinit var viewModel: T
+    protected lateinit var dataBinding: U
     abstract val contentViewLayout: Int
 
     @CallSuper
@@ -44,7 +47,8 @@ abstract class BaseFragment<T : ViewModel> : Fragment(), KodeinAware {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreateView")
-        return inflater.inflate(contentViewLayout, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater, contentViewLayout, container, false)
+        return dataBinding.root
     }
 
     @CallSuper

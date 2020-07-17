@@ -5,12 +5,22 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
+import com.cramsan.petproject.databinding.ActivityDownloadDialogBinding
 
-class DownloadCatalogDialogActivity : BaseActivity<DownloadCatalogViewModel>() {
+class DownloadCatalogDialogActivity : BaseActivity<DownloadCatalogViewModel, ActivityDownloadDialogBinding>() {
     override val contentViewLayout: Int
         get() = R.layout.activity_download_dialog
-    override val tag: String
+    override val logTag: String
         get() = "DownloadDialogActivity"
+    override val enableDataBinding: Boolean
+        get() = true
+    override val toolbarViewId: Int?
+        get() = null
+    override val enableUp: Boolean
+        get() = false
+    override val titleResource: Int?
+        get() = null
+    override fun onBackPressed() = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +37,4 @@ class DownloadCatalogDialogActivity : BaseActivity<DownloadCatalogViewModel>() {
         model.downloadCatalog()
         viewModel = model
     }
-
-    override fun onBackPressed() = Unit
 }

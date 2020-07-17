@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:tools="http://schemas.android.com/tools"
-        style="@style/BaseCoordinatorLayout"
-        tools:context=".suggestion.PlantSuggestionActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/content_plant_suggestion" />
+    <data/>
 
-</FrameLayout>
+    <FrameLayout
+            style="@style/BaseCoordinatorLayout"
+            tools:context=".suggestion.PlantSuggestionActivity">
+
+        <include layout="@layout/content_plant_suggestion" />
+
+    </FrameLayout>
+
+</layout>

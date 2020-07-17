@@ -1,31 +1,26 @@
 package com.cramsan.petproject.plantslist
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class PlantListViewModel(application: Application) : AndroidViewModel(application), KodeinAware,
+class PlantListViewModel(application: Application) : BaseViewModel(application),
     ModelProviderEventListenerInterface {
 
-    override val kodein by kodein(application)
     private val modelProvider: ModelProviderInterface by instance()
-    private val eventLogger: EventLoggerInterface by instance()
-    private val threadUtil: ThreadUtilInterface by instance()
+    override val logTag: String
+        get() = "PlantListViewModel"
 
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
     private val observableLoading = MutableLiveData<Boolean>()

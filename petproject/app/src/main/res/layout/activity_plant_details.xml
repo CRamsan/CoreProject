@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/BaseCoordinatorLayout"
-        tools:context=".plantdetails.PlantDetailsActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-            style="@style/BaseAppBarLayout">
+    <data/>
 
-        <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/plant_details_toolbar"
-                style="@style/BaseToolBar"
-                tools:navigationIcon="?attr/homeAsUpIndicator"
-                tools:title="@string/title_fragment_plants_dogs"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            style="@style/BaseCoordinatorLayout"
+            tools:context=".plantdetails.PlantDetailsActivity">
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.appbar.AppBarLayout
+                style="@style/BaseAppBarLayout">
 
-    <include layout="@layout/content_plant_details"/>
+            <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/plant_details_toolbar"
+                    style="@style/BaseToolBar"
+                    tools:navigationIcon="?attr/homeAsUpIndicator"
+                    tools:title="@string/title_fragment_plants_dogs"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/content_plant_details"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

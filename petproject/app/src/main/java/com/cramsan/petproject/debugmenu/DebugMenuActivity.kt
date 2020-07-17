@@ -1,18 +1,21 @@
 package com.cramsan.petproject.debugmenu
 
-import androidx.appcompat.widget.Toolbar
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.base.NoopViewModel
-import kotlinx.android.synthetic.main.activity_debug_menu.debug_menu_toolbar
+import com.cramsan.petproject.databinding.ActivityDebugMenuBinding
 
-class DebugMenuActivity : BaseActivity<NoopViewModel>() {
+class DebugMenuActivity : BaseActivity<NoopViewModel, ActivityDebugMenuBinding>() {
     override val contentViewLayout: Int
         get() = R.layout.activity_debug_menu
     override val titleResource: Int
         get() = R.string.title_activity_debug
-    override val toolbar: Toolbar
-        get() = debug_menu_toolbar
-    override val tag: String
+    override val enableDataBinding: Boolean
+        get() = true
+    override val toolbarViewId: Int?
+        get() = R.id.debug_menu_toolbar
+    override val logTag: String
         get() = "DebugMenuActivity"
+    override val enableUp: Boolean
+        get() = true
 }

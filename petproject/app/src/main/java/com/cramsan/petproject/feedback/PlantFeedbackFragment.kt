@@ -6,15 +6,9 @@ import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackBrokenLinkCheckBox
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackNameCheckBox
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackPhotoCheckBox
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackScientificNameCheckBox
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plantFeedbackText
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plant_feedback_cancel
-import kotlinx.android.synthetic.main.fragment_plant_feedback.plant_feedback_save
+import com.cramsan.petproject.databinding.FragmentPlantFeedbackBinding
 
-class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel>() {
+class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel, FragmentPlantFeedbackBinding>() {
 
     private lateinit var animalType: AnimalType
     private var plantId: Int = -1
@@ -36,19 +30,6 @@ class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel>() {
                 requireActivity().finish()
             }
         })
-
-        plant_feedback_cancel.setOnClickListener {
-            requireActivity().finish()
-        }
-
-        plant_feedback_save.setOnClickListener {
-            val photo = plantFeedbackPhotoCheckBox.isChecked
-            val scientificName = plantFeedbackScientificNameCheckBox.isChecked
-            val name = plantFeedbackNameCheckBox.isChecked
-            val brokenLikn = plantFeedbackBrokenLinkCheckBox.isChecked
-            val text = plantFeedbackText.text.toString()
-            model.sendFeedback(animalType, plantId.toLong(), photo, scientificName, name, brokenLikn, text)
-        }
         viewModel = model
     }
 

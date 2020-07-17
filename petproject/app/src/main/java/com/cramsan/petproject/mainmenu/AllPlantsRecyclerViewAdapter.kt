@@ -13,11 +13,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_header
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_icon_cat
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_icon_dog
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_layout
-import kotlinx.android.synthetic.main.view_plant.view.plant_list_view_sub_header
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
@@ -97,11 +92,11 @@ class AllPlantsRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mViewHeader: TextView = mView.plant_list_view_header
-        val mViewSubHeader: TextView = mView.plant_list_view_sub_header
-        val mViewIconCat: ImageView = mView.plant_list_view_icon_cat
-        val mViewIconDog: ImageView = mView.plant_list_view_icon_dog
-        val mContainerView: View = mView.plant_list_view_layout
+        val mViewHeader: TextView = mView.findViewById(R.id.plant_list_view_header)
+        val mViewSubHeader: TextView = mView.findViewById(R.id.plant_list_view_sub_header)
+        val mViewIconCat: ImageView = mView.findViewById(R.id.plant_list_view_icon_cat)
+        val mViewIconDog: ImageView = mView.findViewById(R.id.plant_list_view_icon_dog)
+        val mContainerView: View = mView.findViewById(R.id.plant_list_view_layout)
 
         override fun toString(): String {
             return super.toString() + " '" + mViewHeader.text + "'"

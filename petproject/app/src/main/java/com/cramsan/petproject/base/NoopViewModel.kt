@@ -1,5 +1,8 @@
 package com.cramsan.petproject.base
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
 
-open class NoopViewModel : ViewModel()
+open class NoopViewModel(application: Application) : BaseViewModel(application) {
+    override val logTag: String
+        get() = "NoopViewModel"
+}

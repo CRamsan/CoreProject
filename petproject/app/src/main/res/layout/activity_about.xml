@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
         style="@style/BaseCoordinatorLayout"
-        tools:context=".about.AboutActivity">
+            tools:context=".about.AboutActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-            style="@style/BaseAppBarLayout">
+        <com.google.android.material.appbar.AppBarLayout
+                style="@style/BaseAppBarLayout">
 
-        <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/about_toolbar"
-                style="@style/BaseToolBar"
-                tools:navigationIcon="?attr/homeAsUpIndicator"
-                tools:title="@string/title_activity_about"/>
+            <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/about_toolbar"
+                    style="@style/BaseToolBar"
+                    tools:navigationIcon="?attr/homeAsUpIndicator"
+                    tools:title="@string/title_activity_about"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_about"/>
+        <LinearLayout
+            style="@style/BaseContentLayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:orientation="vertical">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <TextView
+                android:id="@+id/reference_freepik"
+                android:text="@string/about_licence_flaticon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                tools:text="Icon made by Freepik from www.flaticon.com"/>
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

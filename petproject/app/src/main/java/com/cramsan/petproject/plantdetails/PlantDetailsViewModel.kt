@@ -1,31 +1,43 @@
 package com.cramsan.petproject.plantdetails
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.Plant
-import com.cramsan.petproject.appcore.model.PlantMetadata
+import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class PlantDetailsViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
+class PlantDetailsViewModel(application: Application) : BaseViewModel(application) {
 
-    override val kodein by kodein(application)
     private val modelProvider: ModelProviderInterface by instance()
-    private val eventLogger: EventLoggerInterface by instance()
+    override val logTag: String
+        get() = "PlantDetailsViewModel"
 
-    private val observablePlant = MutableLiveData<Plant?>()
-    private val observablePlantMetadata = MutableLiveData<PlantMetadata?>()
+    val observablePlantName = MutableLiveData<String>()
+    val observablePlantScientificName = MutableLiveData<String>()
+    val observablePlantFamily = MutableLiveData<String>()
+    val observablePlantImageSource = MutableLiveData<String>()
+    val observablePlantCommonNames = MutableLiveData<String>()
+    val observablePlantDescription = MutableLiveData<String>()
+    val observableSource = MutableLiveData<String>()
+    val observableDangerousText = MutableLiveData<Int>()
+    val observableDangerousColor = MutableLiveData<Int>()
+    val observablePlantCommonNamesVisibility = Transformations.map(observablePlantCommonNames) {
+            commonName -> if (commonName.isEmpty()) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+    }
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
         eventLogger.log(Severity.INFO, "PlantDetailsViewModel", "reloadPlant")
@@ -34,20 +46,48 @@ class PlantDetailsViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun getPlant(): LiveData<Plant?> {
-        return observablePlant
-    }
-
-    fun getPlantMetadata(): LiveData<PlantMetadata?> {
-        return observablePlantMetadata
-    }
-
     private suspend fun loadPlant(animalType: AnimalType, plantId: Int) = withContext(Dispatchers.IO) {
         val plant = modelProvider.getPlant(animalType, plantId, "en")
         val plantMetadata = modelProvider.getPlantMetadata(animalType, plantId, "en")
+        if (plant == null || plantMetadata == null) {
+            // TODO: Show error message
+            TODO()
+        }
         viewModelScope.launch {
-            observablePlant.value = plant
-            observablePlantMetadata.value = plantMetadata
+            observablePlantName.postValue(plant.mainCommonName)
+            observablePlantScientificName.postValue(plant.exactName)
+            observablePlantFamily.postValue(plant.family)
+            observablePlantImageSource.postValue(plant.imageUrl)
+            observablePlantCommonNames.postValue(plant.commonNames)
+            observablePlantDescription.postValue(plantMetadata.description)
+            observableSource.postValue(plantMetadata.source)
+            when (plantMetadata.isToxic) {
+                ToxicityValue.TOXIC -> {
+                    observableDangerousText.value = when (animalType) {
+                        AnimalType.CAT -> R.string.plant_details_cat_dangerous
+                        AnimalType.DOG -> R.string.plant_details_dog_dangerous
+                        AnimalType.ALL -> TODO()
+                    }
+
+                    observableDangerousColor.value = R.color.colorDanger
+                }
+                ToxicityValue.NON_TOXIC -> {
+                    observableDangerousText.value = when (animalType) {
+                        AnimalType.CAT -> R.string.plant_details_cat_safe
+                        AnimalType.DOG -> R.string.plant_details_dog_safe
+                        AnimalType.ALL -> TODO()
+                    }
+                    observableDangerousColor.value = R.color.colorSafe
+                }
+                ToxicityValue.UNDETERMINED -> {
+                    observableDangerousText.value = when (animalType) {
+                        AnimalType.CAT -> R.string.plant_details_cat_unknown
+                        AnimalType.DOG -> R.string.plant_details_dog_unknown
+                        AnimalType.ALL -> TODO()
+                    }
+                    observableDangerousColor.value = R.color.colorUndetermined
+                }
+            }
         }
     }
 }

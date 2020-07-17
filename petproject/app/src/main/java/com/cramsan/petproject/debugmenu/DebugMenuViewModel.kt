@@ -2,33 +2,29 @@ package com.cramsan.petproject.debugmenu
 
 import android.app.Activity
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class DebugMenuViewModel(application: Application) : AndroidViewModel(application), KodeinAware {
+class DebugMenuViewModel(application: Application) : BaseViewModel(application) {
 
-    override val kodein by kodein(application)
-    private val eventLogger: EventLoggerInterface by instance()
     private val modelProvider: ModelProviderInterface by instance()
-    private val tag = "DebugMenuViewModel"
+    override val logTag: String
+        get() = "DebugMenuViewModel"
 
     fun cleanCache() {
-        eventLogger.log(Severity.INFO, tag, "ClearCache")
+        eventLogger.log(Severity.INFO, logTag, "ClearCache")
         GlobalScope.launch(Dispatchers.IO) {
             modelProvider.deleteAll()
         }
     }
 
     fun killApp(activity: Activity) {
-        eventLogger.log(Severity.INFO, tag, "KillApp")
+        eventLogger.log(Severity.INFO, logTag, "KillApp")
         activity.finishAffinity()
     }
 }
