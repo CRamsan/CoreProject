@@ -29,7 +29,6 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
     private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var animalType: AnimalType
-    private var searchQuery: String? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -39,7 +38,6 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
         if (savedInstanceState != null) {
             startingOffset = savedInstanceState.getInt(SCROLL_POS, 0)
-            searchQuery = savedInstanceState.getString(SEARCH_QUERY)
             val animalTypeId = savedInstanceState.getInt(ANIMAL_TYPE, -1)
             animalType = AnimalType.values()[animalTypeId]
         } else {
@@ -57,6 +55,9 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsAdapter
 
+        model.observableLoadingVisibility().observe(viewLifecycleOwner, Observer<Int> { visibility ->
+            dataBinding.plantsListLoading.visibility = visibility
+        })
         model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
@@ -81,18 +82,9 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val loadedSearchQuery = searchQuery
-        if (loadedSearchQuery?.isNotBlank() == true) {
-            viewModel?.searchPlants(loadedSearchQuery)
-        }
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(ANIMAL_TYPE, animalType.ordinal)
         outState.putInt(SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
-        outState.putString(SEARCH_QUERY, searchQuery)
 
         super.onSaveInstanceState(outState)
     }
@@ -107,7 +99,6 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
     companion object {
         const val ANIMAL_TYPE = "animalType"
-        const val SEARCH_QUERY = "searchQuery"
         const val SCROLL_POS = "scrollPosition"
     }
 }

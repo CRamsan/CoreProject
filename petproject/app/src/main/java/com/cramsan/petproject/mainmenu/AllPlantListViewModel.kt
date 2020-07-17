@@ -29,6 +29,7 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
     private val observablePlantListVisibility = MutableLiveData<Int>(View.VISIBLE)
     private val observableMenuVisibility = MutableLiveData<Int>(View.VISIBLE)
+    private val observableLoadingVisibility = MutableLiveData<Int>(View.GONE)
 
     // Events
     private val observableNextActivityCat = LiveEvent<Any>()
@@ -39,12 +40,14 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
 
     fun observablePlantListVisibility(): LiveData<Int> = observablePlantListVisibility
     fun observableMenuVisibility(): LiveData<Int> = observableMenuVisibility
+    fun observableLoadingVisibility(): LiveData<Int> = observableLoadingVisibility
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
     fun observableNextActivityCat(): LiveData<Any> = observableNextActivityCat
     fun observableNextActivityDog(): LiveData<Any> = observableNextActivityDog
     fun observableShowDataDownloaded(): LiveData<Any> = observableShowDataDownloaded
     fun observableShowIsDownloadedData(): LiveData<Any> = observableShowIsDownloadedData
     fun observableStartDownload(): LiveData<Any> = observableStartDownload
+
 
     private var inDownloadMode = false
     private var hasStarted = false
@@ -85,7 +88,9 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
             if (inDownloadMode) {
                 observableShowDataDownloaded.postValue(1)
             }
-            loadPlants()
+            launch(Dispatchers.IO) {
+                modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
+            }
         }
     }
 
@@ -117,9 +122,11 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
 
     private fun searchPlants(query: String) {
         eventLogger.log(Severity.INFO, "AllPlantListViewModel", "searchPlants")
+        observableLoadingVisibility.value = View.VISIBLE
 
         if (query.isEmpty()) {
             setInSearchMode(false)
+            observableLoadingVisibility.value = View.GONE
             return
         }
 
@@ -135,18 +142,11 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
         return modelProvider.isCatalogAvailable(unixTime)
     }
 
-    private suspend fun loadPlants() = withContext(Dispatchers.IO) {
-        val plants = modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
-        viewModelScope.launch {
-            threadUtil.assertIsUIThread()
-            observablePlants.value = plants
-        }
-    }
-
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
         val plants = modelProvider.getPlantsWithToxicityFiltered(AnimalType.ALL, query, "en") ?: return@withContext
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
+            observableLoadingVisibility.value = View.GONE
             observablePlants.value = plants
         }
     }

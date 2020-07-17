@@ -48,6 +48,7 @@ abstract class BaseFragment<T : BaseViewModel, U : ViewDataBinding> : Fragment()
         super.onCreateView(inflater, container, savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreateView")
         dataBinding = DataBindingUtil.inflate(inflater, contentViewLayout, container, false)
+        dataBinding.lifecycleOwner = this
         return dataBinding.root
     }
 

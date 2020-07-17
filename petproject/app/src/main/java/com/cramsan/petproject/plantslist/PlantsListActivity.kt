@@ -13,11 +13,10 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.databinding.ActivityPlantsListBinding
+import com.cramsan.petproject.mainmenu.MainMenuActivity
 import org.kodein.di.erased.instance
 
 class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBinding>() {
-
-    private val preferences: PreferencesInterface by instance()
 
     override val contentViewLayout: Int
         get() = R.layout.activity_plants_list
@@ -31,6 +30,10 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
         get() = true
     override val logTag: String
         get() = "PlantsListActivity"
+
+    // This flag will track if we need to handle the first click on the SearchView. This will
+    // allow us to inject the query that retrieved from the savedBundle.
+    private var shouldWaitForFirstSearchClick = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,18 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
         viewModel = model
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(MainMenuActivity.SEARCH_QUERY, viewModel.queryString)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString(MainMenuActivity.SEARCH_QUERY)?.let {
+            viewModel.queryString = it
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         eventLogger.log(Severity.INFO, "PlantsListActivity", "onCreateOptionsMenu")
 
@@ -55,21 +70,41 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.apply {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    viewModel?.searchPlants(query)
+                    viewModel?.queryString = query
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    viewModel?.searchPlants(newText)
+                    if (shouldWaitForFirstSearchClick) {
+                        return true
+                    }
+                    viewModel?.queryString = newText
                     return true
                 }
             })
         }
+
+        searchView.setOnSearchClickListener {
+            if (!shouldWaitForFirstSearchClick) {
+                return@setOnSearchClickListener
+            }
+
+            // Populate the SearchView with the previous query
+            shouldWaitForFirstSearchClick = false
+            searchView.setQuery(viewModel.queryString, true)
+        }
+        shouldWaitForFirstSearchClick = !viewModel.queryString.isBlank()
+
         return true
+    }
+
+    companion object {
+        const val SEARCH_QUERY = "searchQuery"
     }
 }

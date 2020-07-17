@@ -34,6 +34,7 @@ abstract class BaseActivity<T : BaseViewModel, U : ViewDataBinding> : AppCompatA
 
         if (enableDataBinding) {
             dataBinding = DataBindingUtil.setContentView(this, contentViewLayout)
+            dataBinding.lifecycleOwner = this
         } else {
             setContentView(contentViewLayout)
         }

@@ -125,7 +125,6 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() 
             startActivity(intent)
             true
         }
-
         R.id.action_search -> {
             super.onOptionsItemSelected(item)
         }
