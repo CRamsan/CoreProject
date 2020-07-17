@@ -23,6 +23,7 @@ class PlantSuggestionFragment : BaseFragment<PlantSuggestionViewModel, FragmentP
 
         animalType = AnimalType.values()[animalTypeId]
         val model: PlantSuggestionViewModel by viewModels()
+        dataBinding.viewModel = model
         model.observableIsComplete.observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().finish()

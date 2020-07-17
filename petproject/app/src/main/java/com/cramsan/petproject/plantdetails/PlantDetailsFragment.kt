@@ -4,7 +4,8 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -37,7 +38,12 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
         dataBinding.plantDetailsImage.visibility = View.INVISIBLE
         dataBinding.plantDetailsImageLoading.visibility = View.VISIBLE
 
-        val model: PlantDetailsViewModel by viewModels()
+        val model: PlantDetailsViewModel by activityViewModels()
+        dataBinding.viewModel = model
+        model.observableDangerousColor.observe(viewLifecycleOwner, Observer {
+            val color = ContextCompat.getColor(requireContext(), it)
+            dataBinding.plantDetailsDanger.setTextColor(color)
+        })
         model.observablePlantImageSource.observe(viewLifecycleOwner, Observer {
             Glide.with(this)
                 .load(it)
@@ -61,6 +67,8 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
                     ): Boolean {
                         eventLogger.log(Severity.VERBOSE, "PlantDetailsFragment",
                             "Resource loaded successfully")
+                        dataBinding.plantDetailsImageLoading.visibility = View.GONE
+                        dataBinding.plantDetailsImage.visibility = View.VISIBLE
                         return false
                     }
                 })

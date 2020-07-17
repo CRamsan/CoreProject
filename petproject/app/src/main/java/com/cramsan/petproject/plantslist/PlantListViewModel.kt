@@ -11,11 +11,11 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
+import kotlin.properties.Delegates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.erased.instance
-import kotlin.properties.Delegates
 
 class PlantListViewModel(application: Application) : BaseViewModel(application),
     ModelProviderEventListenerInterface {

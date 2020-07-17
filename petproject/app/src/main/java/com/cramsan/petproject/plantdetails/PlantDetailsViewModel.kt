@@ -29,15 +29,14 @@ class PlantDetailsViewModel(application: Application) : BaseViewModel(applicatio
     val observablePlantCommonNames = MutableLiveData<String>()
     val observablePlantDescription = MutableLiveData<String>()
     val observableSource = MutableLiveData<String>()
-    val observableDangerousText = MutableLiveData<Int>()
-    val observableDangerousColor = MutableLiveData<Int>()
+    val observableDangerousText = MutableLiveData<Int>(R.string.string_empty)
+    val observableDangerousColor = MutableLiveData<Int>(R.color.colorUndetermined)
     val observablePlantCommonNamesVisibility = Transformations.map(observablePlantCommonNames) {
             commonName -> if (commonName.isEmpty()) {
         View.GONE
     } else {
         View.VISIBLE
-    }
-    }
+    } }
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
         eventLogger.log(Severity.INFO, "PlantDetailsViewModel", "reloadPlant")
@@ -63,29 +62,29 @@ class PlantDetailsViewModel(application: Application) : BaseViewModel(applicatio
             observableSource.postValue(plantMetadata.source)
             when (plantMetadata.isToxic) {
                 ToxicityValue.TOXIC -> {
-                    observableDangerousText.value = when (animalType) {
+                    observableDangerousText.postValue(when (animalType) {
                         AnimalType.CAT -> R.string.plant_details_cat_dangerous
                         AnimalType.DOG -> R.string.plant_details_dog_dangerous
                         AnimalType.ALL -> TODO()
-                    }
+                    })
 
-                    observableDangerousColor.value = R.color.colorDanger
+                    observableDangerousColor.postValue(R.color.colorDanger)
                 }
                 ToxicityValue.NON_TOXIC -> {
-                    observableDangerousText.value = when (animalType) {
+                    observableDangerousText.postValue(when (animalType) {
                         AnimalType.CAT -> R.string.plant_details_cat_safe
                         AnimalType.DOG -> R.string.plant_details_dog_safe
                         AnimalType.ALL -> TODO()
-                    }
-                    observableDangerousColor.value = R.color.colorSafe
+                    })
+                    observableDangerousColor.postValue(R.color.colorSafe)
                 }
                 ToxicityValue.UNDETERMINED -> {
-                    observableDangerousText.value = when (animalType) {
+                    observableDangerousText.postValue(when (animalType) {
                         AnimalType.CAT -> R.string.plant_details_cat_unknown
                         AnimalType.DOG -> R.string.plant_details_dog_unknown
                         AnimalType.ALL -> TODO()
-                    }
-                    observableDangerousColor.value = R.color.colorUndetermined
+                    })
+                    observableDangerousColor.postValue(R.color.colorUndetermined)
                 }
             }
         }

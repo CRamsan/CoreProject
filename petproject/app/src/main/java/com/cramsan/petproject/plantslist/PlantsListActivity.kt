@@ -8,13 +8,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.preferences.PreferencesInterface
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.databinding.ActivityPlantsListBinding
 import com.cramsan.petproject.mainmenu.MainMenuActivity
-import org.kodein.di.erased.instance
 
 class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBinding>() {
 

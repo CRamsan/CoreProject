@@ -21,6 +21,7 @@ class PlantSuggestionViewModel(application: Application) : BaseViewModel(applica
     val observableIsComplete = MutableLiveData<Boolean>()
     val observableSelectedCatToxicityRes = MutableLiveData<Int>()
     val observableSelectedDogToxicityRes = MutableLiveData<Int>()
+
     private val observableSelectedCatToxicity: LiveData<ToxicityValue> = Transformations.map(observableSelectedCatToxicityRes) {
             res -> when (res) {
             R.id.plant_suggestion_cat_safe -> ToxicityValue.NON_TOXIC

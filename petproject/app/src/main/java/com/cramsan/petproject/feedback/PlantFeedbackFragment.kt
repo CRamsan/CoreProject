@@ -25,6 +25,7 @@ class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel, FragmentPlant
         animalType = AnimalType.values()[animalTypeId]
 
         val model: PlantFeedbackViewModel by viewModels()
+        dataBinding.viewModel = model
         model.isComplete().observe(viewLifecycleOwner, Observer { isComplete ->
             if (isComplete) {
                 requireActivity().finish()

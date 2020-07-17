@@ -48,7 +48,6 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
     fun observableShowIsDownloadedData(): LiveData<Any> = observableShowIsDownloadedData
     fun observableStartDownload(): LiveData<Any> = observableStartDownload
 
-
     private var inDownloadMode = false
     private var hasStarted = false
     var queryString: String by Delegates.observable("") {
