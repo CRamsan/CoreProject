@@ -36,10 +36,6 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() 
     // Only enable the searchView if data is available
     private var enableSearchView = false
 
-    // This flag will track if we need to handle the first click on the SearchView. This will
-    // allow us to inject the query that retrieved from the savedBundle.
-    private var shouldWaitForFirstSearchClick = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,6 +46,7 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() 
             enableSearchView = true
             invalidateOptionsMenu()
         })
+        viewModel.queryString = ""
     }
 
     override fun onStart() {
@@ -57,18 +54,6 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() 
         if (viewModel.isCatalogReady()) {
             enableSearchView = true
             invalidateOptionsMenu()
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(SEARCH_QUERY, viewModel.queryString)
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState.getString(SEARCH_QUERY)?.let {
-            viewModel.queryString = it
         }
     }
 
@@ -90,25 +75,11 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() 
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    if (shouldWaitForFirstSearchClick) {
-                        return true
-                    }
                     viewModel.queryString = newText
                     return true
                 }
             })
         }
-
-        searchView.setOnSearchClickListener {
-            if (!shouldWaitForFirstSearchClick) {
-                return@setOnSearchClickListener
-            }
-
-            // Populate the SearchView with the previous query
-            shouldWaitForFirstSearchClick = false
-            searchView.setQuery(viewModel.queryString, true)
-        }
-        shouldWaitForFirstSearchClick = !viewModel.queryString.isBlank()
 
         return true
     }

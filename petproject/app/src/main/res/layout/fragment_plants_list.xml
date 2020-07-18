@@ -19,7 +19,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/plants_list_loading"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    app:observableVisibility="@{viewModel.observableLoadingVisibility()}"/>
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/plant_list_recycler"
@@ -29,6 +30,7 @@
                     app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
                     app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
                     app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+                    app:observableVisibility="@{viewModel.observablePlantListVisibility()}"
                     style="@style/BaseContentLayout"
                     tools:listitem="@layout/view_plant"
                     tools:context=".plantslist.PlantsListFragment">

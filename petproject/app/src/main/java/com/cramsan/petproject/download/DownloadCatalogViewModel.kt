@@ -38,7 +38,7 @@ class DownloadCatalogViewModel(application: Application) : BaseViewModel(applica
         eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "isCatalogReady")
         val unixTime = System.currentTimeMillis() / 1000L
         val isReady = modelProvider.isCatalogAvailable(unixTime)
-        mutableIsDownloadComplete.postValue(isReady)
+        mutableIsDownloadComplete.value = isReady
         return isReady
     }
 

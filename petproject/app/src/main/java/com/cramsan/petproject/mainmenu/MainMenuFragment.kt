@@ -59,23 +59,10 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
             startActivity(intent)
         })
 
-        viewModel.observableMenuVisibility().observe(viewLifecycleOwner, Observer { visibility ->
-            dataBinding.plantMainMenuView.visibility = visibility
-        })
-
-        var startingOffset: Int? = null
-        if (savedInstanceState != null) {
-            startingOffset = savedInstanceState.getInt(PlantsListFragment.SCROLL_POS, 0)
-        }
-
         layoutManager = LinearLayoutManager(context)
         plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsAdapter
-
-        startingOffset?.let {
-            layoutManager.scrollToPosition(startingOffset)
-        }
     }
 
     override fun onStart() {

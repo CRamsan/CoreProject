@@ -12,6 +12,7 @@ import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterfa
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
 import com.cramsan.petproject.base.LiveEvent
+import com.cramsan.petproject.base.SimpleEvent
 import kotlin.properties.Delegates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,21 +33,21 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
     private val observableLoadingVisibility = MutableLiveData<Int>(View.GONE)
 
     // Events
-    private val observableNextActivityCat = LiveEvent<Any>()
-    private val observableNextActivityDog = LiveEvent<Any>()
-    private val observableShowDataDownloaded = LiveEvent<Any>()
-    private val observableShowIsDownloadedData = LiveEvent<Any>()
-    private val observableStartDownload = LiveEvent<Any>()
+    private val observableNextActivityCat = LiveEvent<SimpleEvent>()
+    private val observableNextActivityDog = LiveEvent<SimpleEvent>()
+    private val observableShowDataDownloaded = LiveEvent<SimpleEvent>()
+    private val observableShowIsDownloadedData = LiveEvent<SimpleEvent>()
+    private val observableStartDownload = LiveEvent<SimpleEvent>()
 
     fun observablePlantListVisibility(): LiveData<Int> = observablePlantListVisibility
     fun observableMenuVisibility(): LiveData<Int> = observableMenuVisibility
     fun observableLoadingVisibility(): LiveData<Int> = observableLoadingVisibility
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
-    fun observableNextActivityCat(): LiveData<Any> = observableNextActivityCat
-    fun observableNextActivityDog(): LiveData<Any> = observableNextActivityDog
-    fun observableShowDataDownloaded(): LiveData<Any> = observableShowDataDownloaded
-    fun observableShowIsDownloadedData(): LiveData<Any> = observableShowIsDownloadedData
-    fun observableStartDownload(): LiveData<Any> = observableStartDownload
+    fun observableNextActivityCat(): LiveData<SimpleEvent> = observableNextActivityCat
+    fun observableNextActivityDog(): LiveData<SimpleEvent> = observableNextActivityDog
+    fun observableShowDataDownloaded(): LiveData<SimpleEvent> = observableShowDataDownloaded
+    fun observableShowIsDownloadedData(): LiveData<SimpleEvent> = observableShowIsDownloadedData
+    fun observableStartDownload(): LiveData<SimpleEvent> = observableStartDownload
 
     private var inDownloadMode = false
     private var hasStarted = false
@@ -68,7 +69,7 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
             metricsClient.log(logTag, "start", mapOf("FromCache" to "True"))
         } else {
             metricsClient.log(logTag, "start", mapOf("FromCache" to "False"))
-            observableStartDownload.value = 1
+            observableStartDownload.value = SimpleEvent()
             inDownloadMode = true
         }
     }
@@ -85,7 +86,7 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
             }
 
             if (inDownloadMode) {
-                observableShowDataDownloaded.postValue(1)
+                observableShowDataDownloaded.value = SimpleEvent()
             }
             launch(Dispatchers.IO) {
                 modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
@@ -103,19 +104,19 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
 
     private fun goToNextActivity(animalType: AnimalType) {
         if (!isCatalogReady()) {
-            observableShowIsDownloadedData.postValue(1)
+            observableShowIsDownloadedData.value = SimpleEvent()
             return
         }
-        observableNextActivityCat.postValue(1)
+        observableNextActivityCat.value = SimpleEvent()
     }
 
     private fun setInSearchMode(isSearchMode: Boolean) {
         if (isSearchMode) {
-            observableMenuVisibility.postValue(View.GONE)
-            observablePlantListVisibility.postValue(View.VISIBLE)
+            observableMenuVisibility.value = View.GONE
+            observablePlantListVisibility.value = View.VISIBLE
         } else {
-            observableMenuVisibility.postValue(View.VISIBLE)
-            observablePlantListVisibility.postValue(View.GONE)
+            observableMenuVisibility.value = View.VISIBLE
+            observablePlantListVisibility.value = View.GONE
         }
     }
 

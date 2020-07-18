@@ -12,7 +12,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseActivity
 import com.cramsan.petproject.databinding.ActivityPlantsListBinding
-import com.cramsan.petproject.mainmenu.MainMenuActivity
 
 class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBinding>() {
 
@@ -29,10 +28,6 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
     override val logTag: String
         get() = "PlantsListActivity"
 
-    // This flag will track if we need to handle the first click on the SearchView. This will
-    // allow us to inject the query that retrieved from the savedBundle.
-    private var shouldWaitForFirstSearchClick = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,18 +39,19 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
                 else -> TODO()
             }
         })
+        model.queryString = ""
 
         viewModel = model
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(MainMenuActivity.SEARCH_QUERY, viewModel.queryString)
+        outState.putString(SEARCH_QUERY, viewModel.queryString)
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState.getString(MainMenuActivity.SEARCH_QUERY)?.let {
+        savedInstanceState.getString(SEARCH_QUERY)?.let {
             viewModel.queryString = it
         }
     }
@@ -74,30 +70,16 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    viewModel?.queryString = query
+                    viewModel.queryString = query
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    if (shouldWaitForFirstSearchClick) {
-                        return true
-                    }
-                    viewModel?.queryString = newText
+                    viewModel.queryString = newText
                     return true
                 }
             })
         }
-
-        searchView.setOnSearchClickListener {
-            if (!shouldWaitForFirstSearchClick) {
-                return@setOnSearchClickListener
-            }
-
-            // Populate the SearchView with the previous query
-            shouldWaitForFirstSearchClick = false
-            searchView.setQuery(viewModel.queryString, true)
-        }
-        shouldWaitForFirstSearchClick = !viewModel.queryString.isBlank()
 
         return true
     }

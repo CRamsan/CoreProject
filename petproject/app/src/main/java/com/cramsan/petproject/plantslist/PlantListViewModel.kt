@@ -25,17 +25,17 @@ class PlantListViewModel(application: Application) : BaseViewModel(application),
         get() = "PlantListViewModel"
 
     private val observablePlants = MutableLiveData<List<PresentablePlant>>()
-    private val observableLoading = MutableLiveData<Boolean>()
     private val observableAnimalType = MutableLiveData<AnimalType>()
-    private val observableLoadingVisibility = MutableLiveData<Int>(View.VISIBLE)
+    private val observableLoadingVisibility = MutableLiveData<Int>(View.GONE)
+    private val observablePlantListVisibility = MutableLiveData<Int>(View.GONE)
 
     fun observableLoadingVisibility(): LiveData<Int> = observableLoadingVisibility
+    fun observablePlantListVisibility(): LiveData<Int> = observablePlantListVisibility
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
-    fun observableLoading(): LiveData<Boolean> = observableLoading
     fun observableAnimalType(): LiveData<AnimalType> = observableAnimalType
 
     var queryString: String by Delegates.observable("") {
-            _, _, new -> searchPlants(new)
+        _, _, new -> searchPlants(new)
     }
 
     init {
@@ -48,7 +48,7 @@ class PlantListViewModel(application: Application) : BaseViewModel(application),
 
     override fun onCatalogUpdate(isReady: Boolean) {
         viewModelScope.launch {
-            observableLoading.value = isReady
+            setSearchMode(!isReady)
         }
     }
 
@@ -59,9 +59,18 @@ class PlantListViewModel(application: Application) : BaseViewModel(application),
         }
     }
 
+    private fun setSearchMode(isSearchMode: Boolean) {
+        if (isSearchMode) {
+            observableLoadingVisibility.value = View.VISIBLE
+            observablePlantListVisibility.postValue(View.GONE)
+        } else {
+            observableLoadingVisibility.value = View.GONE
+            observablePlantListVisibility.postValue(View.VISIBLE)
+        }
+    }
+
     private fun searchPlants(query: String) {
         eventLogger.log(Severity.INFO, "PlantListViewModel", "searchPlants")
-        observableLoadingVisibility.postValue(View.VISIBLE)
         viewModelScope.launch {
             filterPlants(query)
         }
@@ -69,8 +78,15 @@ class PlantListViewModel(application: Application) : BaseViewModel(application),
 
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
         val animalType = observableAnimalType.value
+        viewModelScope.launch {
+            setSearchMode(true)
+        }
+
         if (animalType == null) {
             eventLogger.log(Severity.WARNING, "PlantListViewModel", "Unable to filterPlants. AnimalType is null")
+            viewModelScope.launch {
+                setSearchMode(true)
+            }
             return@withContext
         }
 
@@ -81,8 +97,8 @@ class PlantListViewModel(application: Application) : BaseViewModel(application),
         }
 
         viewModelScope.launch {
-            observableLoadingVisibility.postValue(View.GONE)
             threadUtil.assertIsUIThread()
+            setSearchMode(false)
             observablePlants.value = plants
         }
     }

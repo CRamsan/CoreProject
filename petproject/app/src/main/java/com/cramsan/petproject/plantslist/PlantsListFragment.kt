@@ -54,22 +54,12 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         plantsAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsAdapter
+        dataBinding.viewModel = model
 
-        model.observableLoadingVisibility().observe(viewLifecycleOwner, Observer<Int> { visibility ->
-            dataBinding.plantsListLoading.visibility = visibility
-        })
         model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
             plantsAdapter.updateValues(plants)
         })
-        model.observableLoading().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
-            if (isLoading) {
-                dataBinding.plantsListLoading.visibility = View.VISIBLE
-                dataBinding.plantListRecycler.visibility = View.GONE
-            } else {
-                dataBinding.plantsListLoading.visibility = View.GONE
-                dataBinding.plantListRecycler.visibility = View.VISIBLE
-            }
-        })
+
         dataBinding.plantListAddPlant.setOnClickListener {
             val intent = Intent(requireContext(), PlantSuggestionActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, animalType.ordinal)
@@ -84,7 +74,9 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(ANIMAL_TYPE, animalType.ordinal)
-        outState.putInt(SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
+        if (viewModel.queryString.isNotBlank()) {
+            outState.putInt(SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
+        }
 
         super.onSaveInstanceState(outState)
     }
