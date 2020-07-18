@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -40,10 +39,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
 
         val model: PlantDetailsViewModel by activityViewModels()
         dataBinding.viewModel = model
-        model.observableDangerousColor.observe(viewLifecycleOwner, Observer {
-            val color = ContextCompat.getColor(requireContext(), it)
-            dataBinding.plantDetailsDanger.setTextColor(color)
-        })
+
         model.observablePlantImageSource.observe(viewLifecycleOwner, Observer {
             Glide.with(this)
                 .load(it)

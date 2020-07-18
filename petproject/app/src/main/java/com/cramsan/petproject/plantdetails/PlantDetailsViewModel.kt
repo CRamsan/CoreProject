@@ -60,6 +60,7 @@ class PlantDetailsViewModel(application: Application) : BaseViewModel(applicatio
             observablePlantCommonNames.value = plant.commonNames
             observablePlantDescription.value = plantMetadata.description
             observableSource.value = plantMetadata.source
+
             when (plantMetadata.isToxic) {
                 ToxicityValue.TOXIC -> {
                     observableDangerousText.value = when (animalType) {

@@ -2,7 +2,6 @@ package com.cramsan.petproject.plantslist
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager

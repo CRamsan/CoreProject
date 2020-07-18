@@ -132,9 +132,15 @@ class PetProjectApplication : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        internalInstance = this
         eventLogger.log(Severity.INFO, "PetProjectApplication", "onCreate called")
         AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
         crashHandler.initialize()
         metrics.initialize()
+    }
+
+    companion object {
+        private lateinit var internalInstance: PetProjectApplication
+        fun getInstance(): PetProjectApplication = internalInstance
     }
 }
