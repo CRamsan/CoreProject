@@ -53,6 +53,8 @@
     <string name="plant_suggestion_send">Send</string>
     <string name="plant_suggestion_cancel">Cancel</string>
     <string name="leave_some_feedback">Report a problem</string>
+    <string name="thanks_feedback">Thank\'s for your feedback</string>
+    <string name="thanks_suggestion">Thank\'s for your suggestion</string>
 
     <string name="provider_config_plants_url">https://petproject-api-prod.azurewebsites.net/api/plants?code=zcwy2bKTjaUcF7FaYvqh7xUfgLi68DHm5K5gCrdenudyayWlLypiqg==</string>
     <string name="provider_config_mainname_url">https://petproject-api-prod.azurewebsites.net/api/name/main?code=ujaT/7OpCQ1W1kX069Sh3wWtNTdjWdJusHprnSD/Sj04FqLGFqFO9Q==</string>

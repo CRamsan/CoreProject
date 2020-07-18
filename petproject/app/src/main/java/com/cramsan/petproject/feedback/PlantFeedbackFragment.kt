@@ -1,6 +1,7 @@
 package com.cramsan.petproject.feedback
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
@@ -26,10 +27,11 @@ class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel, FragmentPlant
 
         val model: PlantFeedbackViewModel by viewModels()
         dataBinding.viewModel = model
-        model.isComplete().observe(viewLifecycleOwner, Observer { isComplete ->
-            if (isComplete) {
-                requireActivity().finish()
+        model.isComplete().observe(viewLifecycleOwner, Observer {
+            if (it.feedbackSubmitted) {
+                Toast.makeText(context, R.string.thanks_feedback, Toast.LENGTH_LONG).show()
             }
+            requireActivity().finish()
         })
         viewModel = model
     }

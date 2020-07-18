@@ -2,6 +2,7 @@ package com.cramsan.petproject.plantdetails
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -34,12 +35,13 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
 
         animalType = AnimalType.values()[animalTypeId]
 
-        dataBinding.plantDetailsImage.visibility = View.INVISIBLE
-        dataBinding.plantDetailsImageLoading.visibility = View.VISIBLE
-
         val model: PlantDetailsViewModel by activityViewModels()
         dataBinding.viewModel = model
 
+        model.observableOpenSourceLink().observe(viewLifecycleOwner, Observer {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.value))
+            startActivity(browserIntent)
+        })
         model.observablePlantImageSource.observe(viewLifecycleOwner, Observer {
             Glide.with(this)
                 .load(it)

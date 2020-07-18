@@ -11,6 +11,8 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
+import com.cramsan.petproject.base.LiveEvent
+import com.cramsan.petproject.base.StringEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,6 +24,7 @@ class PlantDetailsViewModel(application: Application) : BaseViewModel(applicatio
     override val logTag: String
         get() = "PlantDetailsViewModel"
 
+    // State
     val observablePlantName = MutableLiveData<String>()
     val observablePlantScientificName = MutableLiveData<String>()
     val observablePlantFamily = MutableLiveData<String>()
@@ -37,6 +40,17 @@ class PlantDetailsViewModel(application: Application) : BaseViewModel(applicatio
     } else {
         View.VISIBLE
     } }
+
+    // Events
+    private val observableOpenSourceLink = LiveEvent<StringEvent>()
+
+    fun observableOpenSourceLink() = observableOpenSourceLink
+
+    fun openSourceLink(view: View) {
+        observableSource.value?.let {
+            observableOpenSourceLink.value = StringEvent(it)
+        }
+    }
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
         eventLogger.log(Severity.INFO, "PlantDetailsViewModel", "reloadPlant")

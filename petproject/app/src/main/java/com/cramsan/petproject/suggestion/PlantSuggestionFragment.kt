@@ -1,6 +1,7 @@
 package com.cramsan.petproject.suggestion
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.cramsan.petproject.R
@@ -25,9 +26,10 @@ class PlantSuggestionFragment : BaseFragment<PlantSuggestionViewModel, FragmentP
         val model: PlantSuggestionViewModel by viewModels()
         dataBinding.viewModel = model
         model.observableIsComplete.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                requireActivity().finish()
+            if (it.suggestionSubmitted) {
+                Toast.makeText(context, R.string.thanks_suggestion, Toast.LENGTH_LONG).show()
             }
+            requireActivity().finish()
         })
 
         viewModel = model

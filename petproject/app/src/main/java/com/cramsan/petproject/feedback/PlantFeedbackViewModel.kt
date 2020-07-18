@@ -2,12 +2,12 @@ package com.cramsan.petproject.feedback
 
 import android.app.Application
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseViewModel
+import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,15 +24,13 @@ class PlantFeedbackViewModel(application: Application) : BaseViewModel(applicati
     val link = MutableLiveData<Boolean>()
     val text = MutableLiveData<String>()
 
-    private val observableIsComplete = MutableLiveData<Boolean>()
+    private val observableIsComplete = LiveEvent<CompletedEvent>()
 
-    fun isComplete(): LiveData<Boolean> {
-        return observableIsComplete
-    }
+    fun isComplete() = observableIsComplete
 
     fun cancel(view: View) {
         eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "cancel")
-        observableIsComplete.value = true
+        observableIsComplete.value = CompletedEvent(false)
     }
 
     fun sendFeedback(view: View) {
@@ -47,7 +45,7 @@ class PlantFeedbackViewModel(application: Application) : BaseViewModel(applicati
                     "Text:${text.value}"
             metricsClient.log("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
-                observableIsComplete.value = true
+                observableIsComplete.value = CompletedEvent(true)
             }
         }
     }

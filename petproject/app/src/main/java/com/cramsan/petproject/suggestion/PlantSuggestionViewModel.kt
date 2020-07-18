@@ -12,13 +12,14 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.model.feedback.Feedback
 import com.cramsan.petproject.appcore.model.feedback.FeedbackType
 import com.cramsan.petproject.base.BaseViewModel
+import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PlantSuggestionViewModel(application: Application) : BaseViewModel(application) {
 
     val observableText = MutableLiveData<String>()
-    val observableIsComplete = MutableLiveData<Boolean>()
+    val observableIsComplete = LiveEvent<CompletedEvent>()
     val observableSelectedCatToxicityRes = MutableLiveData<Int>()
     val observableSelectedDogToxicityRes = MutableLiveData<Int>()
 
@@ -41,7 +42,7 @@ class PlantSuggestionViewModel(application: Application) : BaseViewModel(applica
         get() = "PlantSuggestionViewModel"
 
     fun cancel(view: View) {
-        observableIsComplete.value = true
+        observableIsComplete.value = CompletedEvent(false)
     }
 
     fun save(view: View) {
@@ -51,7 +52,7 @@ class PlantSuggestionViewModel(application: Application) : BaseViewModel(applica
             val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
             metricsClient.log("PlantSuggestionViewModel", "suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
-                observableIsComplete.value = true
+                observableIsComplete.value = CompletedEvent(true)
             }
         }
     }
