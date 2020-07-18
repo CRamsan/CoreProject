@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/LayoutFrameStyle"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/fieldSearchProfile"
@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:hint="@string/text_profile"
-            android:singleLine="true" >
+            android:singleLine="true">
 
             <requestFocus />
         </EditText>
@@ -34,7 +34,6 @@
         android:id="@+id/listFoundProfiles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:cacheColorHint="#00000000" >
-    </ListView>
+        android:cacheColorHint="#00000000"></ListView>
 
 </LinearLayout>

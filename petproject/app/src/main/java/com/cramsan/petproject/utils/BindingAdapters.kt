@@ -29,12 +29,4 @@ object BindingAdapters : KodeinAware {
         }
         textView.text = formatString.format(formatArg)
     }
-
-    /*
-    @BindingAdapter("app:fromResColorToColor")
-    @JvmStatic
-    fun setTextColorResource(view: TextView, colorRes: Int) {
-        view.setTextColor(ContextCompat.getColor(context, colorRes))
-    }
-     */
 }

@@ -4,119 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="androidx.core.content.ContextCompat" />
-        <variable name="viewModel" type="com.cramsan.petproject.plantdetails.PlantDetailsViewModel"/>
+
+        <variable
+            name="viewModel"
+            type="com.cramsan.petproject.plantdetails.PlantDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/plant_details_view"
-            style="@style/BaseContentLayout">
+        android:id="@+id/plant_details_view"
+        style="@style/BaseContentLayout">
+
         <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <ProgressBar
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/plant_details_image_loading"
-                        app:layout_constraintTop_toTopOf="@+id/plant_details_image"
-                        app:layout_constraintBottom_toBottomOf="@+id/plant_details_image"
-                        app:layout_constraintStart_toStartOf="@+id/plant_details_image"
-                        app:layout_constraintEnd_toEndOf="@+id/plant_details_image"/>
+                    android:id="@+id/plant_details_image_loading"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/plant_details_image"
+                    app:layout_constraintEnd_toEndOf="@+id/plant_details_image"
+                    app:layout_constraintStart_toStartOf="@+id/plant_details_image"
+                    app:layout_constraintTop_toTopOf="@+id/plant_details_image" />
+
                 <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="256dp"
-                        tools:src="@tools:sample/avatars"
-                        android:id="@+id/plant_details_image"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" android:scaleType="centerCrop"
-                        android:contentDescription="@string/plant_details_empty_image_description"/>
+                    android:id="@+id/plant_details_image"
+                    android:layout_width="0dp"
+                    android:layout_height="256dp"
+                    android:contentDescription="@string/plant_details_empty_image_description"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
                 <TextView
-                        android:id="@+id/plant_details_image_source"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.observablePlantImageSource}"
-                        android:background="@color/colorAccent" android:ellipsize="end"
-                        android:maxLines="1" android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:textAlignment="textEnd"
-                        app:layout_constraintBottom_toTopOf="@+id/plant_details_divider_1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" tools:text="Source: https://......."/>
+                    android:id="@+id/plant_details_image_source"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@{viewModel.observablePlantImageSource}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintBottom_toTopOf="@+id/plant_details_divider_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Source: https://......." />
+
                 <View
-                        android:id="@+id/plant_details_divider_1"
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_details_image"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                />
+                    android:id="@+id/plant_details_divider_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_image" />
+
                 <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/plant_details_scientific_name"
-                        app:formatString="@{@string/plant_details_scientific_name}"
-                        app:formatArg="@{viewModel.observablePlantScientificName}"
-                        tools:text="Africanus Violetus"
-                        android:textSize="@dimen/text_size_h1"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_details_divider_1"
-                        android:layout_marginTop="8dp" android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                    android:id="@+id/plant_details_scientific_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/text_size_h1"
+                    app:formatArg="@{viewModel.observablePlantScientificName}"
+                    app:formatString="@{@string/plant_details_scientific_name}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_divider_1"
+                    tools:text="Africanus Violetus" />
+
                 <TextView
-                        tools:text="Purple Flower Family"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        app:formatString="@{@string/plant_details_family}"
-                        app:formatArg="@{viewModel.observablePlantFamily}"
-                        android:textSize="@dimen/text_size_h2"
-                        android:id="@+id/plant_details_family"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_details_scientific_name"
-                        android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"/>
+                    android:id="@+id/plant_details_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/text_size_h2"
+                    app:formatArg="@{viewModel.observablePlantFamily}"
+                    app:formatString="@{@string/plant_details_family}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_scientific_name"
+                    tools:text="Purple Flower Family" />
+
                 <TextView
-                        tools:text="Common names: Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/plant_details_common_names"
-                        app:formatString="@{@string/plant_details_common_names}"
-                        app:formatArg="@{viewModel.observablePlantCommonNames}"
-                        android:visibility="@{viewModel.observablePlantCommonNamesVisibility}"
-                        android:layout_margin="8dp"
-                        android:textSize="@dimen/text_size_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/plant_details_family"
-                        android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"/>
+                    android:id="@+id/plant_details_common_names"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/text_size_content"
+                    android:visibility="@{viewModel.observablePlantCommonNamesVisibility}"
+                    app:formatArg="@{viewModel.observablePlantCommonNames}"
+                    app:formatString="@{@string/plant_details_common_names}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_family"
+                    tools:text="Common names: Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados" />
+
                 <View
-                        android:id="@+id/plant_details_divider_2"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_details_common_names"
-                        android:layout_marginTop="8dp" android:layout_width="match_parent"/>
+                    android:id="@+id/plant_details_divider_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_common_names" />
+
                 <TextView
-                        tools:text="Dangerous!"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/plant_details_danger"
-                        android:text="@{viewModel.observableDangerousText}"
-                        android:textColor="@{ContextCompat.getColor(context, viewModel.observableDangerousColor)}"
-                        android:layout_margin="8dp"
-                        android:textSize="24sp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_details_divider_2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                    android:id="@+id/plant_details_danger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{viewModel.observableDangerousText}"
+                    android:textColor="@{ContextCompat.getColor(context, viewModel.observableDangerousColor)}"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_divider_2"
+                    tools:text="Dangerous!" />
 
                 <TextView
                     android:id="@+id/plant_details_description"
@@ -132,33 +155,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plant_details_danger"
                     tools:text="Other stuff Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados Other stuff Peacock Flower, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados, Barbados Pride, Poinciana, Pride of Barbados" />
+
                 <TextView
-                        tools:text="Source: https://thisiosanexample.com/longurl/withsome?randomText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/plant_details_source" app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="8dp"
-                        app:formatString="@{@string/plant_details_source}"
-                        app:formatArg="@{viewModel.observableSource}"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_details_description"
-                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="8dp" android:textAlignment="textStart"
-                        android:ellipsize="end" android:textStyle="bold"/>
+                    android:id="@+id/plant_details_source"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="end"
+                    android:textAlignment="textStart"
+                    android:textStyle="bold"
+                    app:formatArg="@{viewModel.observableSource}"
+                    app:formatString="@{@string/plant_details_source}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_details_description"
+                    tools:text="Source: https://thisiosanexample.com/longurl/withsome?randomText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/plant_feedback_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="16dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" app:srcCompat="@drawable/ic_info"/>
+            android:id="@+id/plant_feedback_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_info" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

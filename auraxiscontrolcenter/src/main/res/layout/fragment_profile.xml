@@ -3,7 +3,7 @@
     android:id="@+id/scrollViewLayoutProfile"
     style="@style/LayoutFrameStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linearLayoutProfile"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:paddingRight="5dp">
 
         <ImageView
             android:id="@+id/imageViewProfileFaction"
@@ -26,7 +26,7 @@
             style="@style/LayoutFrameStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" >
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/textViewCurrentRank"
@@ -67,7 +67,7 @@
             style="@style/LayoutFrameStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" >
+            android:layout_marginBottom="10dp">
 
             <ProgressBar
                 android:id="@+id/progressBarProfileCertsProgress"
@@ -107,14 +107,14 @@
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp" >
+            android:paddingTop="15dp">
 
             <LinearLayout
                 style="@style/LayoutFrameStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/TextViewProfileLoginStatus"
@@ -140,7 +140,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewLastLogin"
@@ -166,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewOutfit"
@@ -191,7 +191,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewServer"
@@ -218,7 +218,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewMinutesPlayed"

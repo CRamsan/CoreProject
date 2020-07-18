@@ -3,9 +3,10 @@
     android:id="@+id/linearLayoutServerList"
     android:orientation="vertical"
     android:padding="10dp"
-    style="@style/LayoutFrameStyle" >
+    style="@style/LayoutFrameStyle">
 
-    <LinearLayout android:orientation="vertical"
+    <LinearLayout
+        android:orientation="vertical"
         style="@style/LayoutFrameStyle"
         android:layout_height="wrap_content">
 
@@ -35,7 +36,7 @@
                 android:ems="10"
                 android:id="@+id/editTextSettingsFrom"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 

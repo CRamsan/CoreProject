@@ -1,63 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.cramsan.petproject">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cramsan.petproject">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-            android:name=".PetProjectApplication"
-            android:allowBackup="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mainmenu.MainMenuActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+        android:name=".PetProjectApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".mainmenu.MainMenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-                android:name=".plantslist.PlantsListActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:launchMode="singleTop"
-                android:parentActivityName=".mainmenu.MainMenuActivity">
-        </activity>
+            android:name=".plantslist.PlantsListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"
+            android:parentActivityName=".mainmenu.MainMenuActivity"></activity>
         <activity
-                android:name=".suggestion.PlantSuggestionActivity"
-                android:theme="@style/AppTheme.Transparent">
-        </activity>
+            android:name=".suggestion.PlantSuggestionActivity"
+            android:theme="@style/AppTheme.Transparent"></activity>
         <activity
-                android:name=".feedback.PlantFeedbackActivity"
-                android:theme="@style/AppTheme.Transparent">
-        </activity>
-        <activity android:name=".download.DownloadCatalogDialogActivity"
-                  android:theme="@style/AppTheme.Transparent">
-        </activity>
+            android:name=".feedback.PlantFeedbackActivity"
+            android:theme="@style/AppTheme.Transparent"></activity>
         <activity
-                android:name=".plantdetails.PlantDetailsActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:parentActivityName=".plantslist.PlantsListActivity">
-        </activity>
+            android:name=".download.DownloadCatalogDialogActivity"
+            android:theme="@style/AppTheme.Transparent"></activity>
         <activity
-                android:name=".about.AboutActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:parentActivityName=".mainmenu.MainMenuActivity">
-        </activity>
+            android:name=".plantdetails.PlantDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".plantslist.PlantsListActivity"></activity>
         <activity
-                android:name=".debugmenu.DebugMenuActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:parentActivityName=".mainmenu.MainMenuActivity">
-        </activity>
+            android:name=".about.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".mainmenu.MainMenuActivity"></activity>
+        <activity
+            android:name=".debugmenu.DebugMenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".mainmenu.MainMenuActivity"></activity>
+
         <meta-data
-                android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-1144760940024029~7209899318"/>
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1144760940024029~7209899318" />
     </application>
 
 </manifest>

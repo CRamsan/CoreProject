@@ -3,7 +3,7 @@
     style="@style/LayoutFrameStyle"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/networkImageViewDirectoryTreeTier"
@@ -33,6 +33,6 @@
         android:id="@+id/imageViewDirectiveLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/text_kills"/>
+        android:contentDescription="@string/text_kills" />
 
 </LinearLayout>

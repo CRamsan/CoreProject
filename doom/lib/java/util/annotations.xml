@@ -1,5 +1,5 @@
 <root>
     <item name='java.util.Comparator'>
-        <annotation name='java.lang.Deprecated'/>
+        <annotation name='java.lang.Deprecated' />
     </item>
 </root>

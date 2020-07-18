@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data/>
+    <data />
 
     <FrameLayout
         style="@style/BaseCoordinatorLayout"
         tools:context=".feedback.PlantFeedbackActivity">
 
-        <include layout="@layout/content_plant_feedback"/>
+        <include layout="@layout/content_plant_feedback" />
 
     </FrameLayout>
 

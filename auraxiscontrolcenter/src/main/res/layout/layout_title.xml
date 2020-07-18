@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragmentTitleLoading"
-    style="@style/ActionBarTitleBarStyle" >
+    style="@style/ActionBarTitleBarStyle">
 
     <LinearLayout
         android:id="@+id/linearLayoutTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/buttonFragmentTitle"
@@ -18,12 +18,12 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="visible" />
 
-     	<ProgressBar
+        <ProgressBar
             android:id="@+id/progressBarFragmentTitleLoading"
             style="@style/ActionBarButtonStyle"
             android:indeterminateDrawable="@drawable/loading"
             android:visibility="gone" />
-                    
+
         <ImageButton
             android:id="@+id/buttonFragmentUpdate"
             style="@style/ActionBarButtonStyle"
@@ -56,14 +56,14 @@
             android:drawableEnd="@drawable/ps2_button_action_append"
             android:textOff="@string/text_empty"
             android:textOn="@string/text_empty" />
-        	
-		<ToggleButton
-		    android:id="@+id/toggleButtonWeapons"
-		    style="@style/ActionBarButtonStyle"
-		    android:checked="true"
-		    android:textAppearance="?android:attr/textAppearanceSmall"
-		    android:textOff="@string/text_killed_by"
-		    android:textOn="@string/text_my_kills" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonWeapons"
+            style="@style/ActionBarButtonStyle"
+            android:checked="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textOff="@string/text_killed_by"
+            android:textOn="@string/text_my_kills" />
 
     </LinearLayout>
 

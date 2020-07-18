@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="?android:colorControlHighlight">
+    android:color="?android:colorControlHighlight">
     <item>
         <selector>
-            <item android:drawable="@drawable/plant_view_item_disabled_selected"
-                  android:state_enabled="false"
-                  android:state_focused="true"/>
-            <item android:drawable="@drawable/plant_view_item_normal_disabled"
-                  android:state_enabled="false"/>
-            <item android:drawable="@drawable/plant_view_item_clicked"
-                  android:state_enabled="true"
-                  android:state_pressed="true"/>
-            <item android:drawable="@drawable/plant_view_item_normal_selected"
-                  android:state_enabled="true"
-                  android:state_focused="true"/>
-            <item android:drawable="@drawable/plant_view_item_normal"
-                  android:state_enabled="true"/>
+            <item
+                android:drawable="@drawable/plant_view_item_disabled_selected"
+                android:state_enabled="false"
+                android:state_focused="true" />
+            <item
+                android:drawable="@drawable/plant_view_item_normal_disabled"
+                android:state_enabled="false" />
+            <item
+                android:drawable="@drawable/plant_view_item_clicked"
+                android:state_enabled="true"
+                android:state_pressed="true" />
+            <item
+                android:drawable="@drawable/plant_view_item_normal_selected"
+                android:state_enabled="true"
+                android:state_focused="true" />
+            <item
+                android:drawable="@drawable/plant_view_item_normal"
+                android:state_enabled="true" />
         </selector>
     </item>
 </ripple>

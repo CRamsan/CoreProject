@@ -4,13 +4,12 @@
     style="@style/LayoutFrameStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/listViewMemberList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="#00000000" >
-    </ListView>
+        android:cacheColorHint="#00000000"></ListView>
 
 </LinearLayout>

@@ -7,9 +7,10 @@
         android:id="@+id/download_dialog_activity"
         tools:context=".download.DownloadCatalogDialogActivity">
 
-        <include layout="@layout/view_download_catalog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <include
+            layout="@layout/view_download_catalog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </FrameLayout>
 </layout>

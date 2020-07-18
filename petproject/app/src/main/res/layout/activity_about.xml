@@ -2,19 +2,19 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
 
         style="@style/BaseCoordinatorLayout"
-            tools:context=".about.AboutActivity">
+        tools:context=".about.AboutActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
-                style="@style/BaseAppBarLayout">
+        <com.google.android.material.appbar.AppBarLayout style="@style/BaseAppBarLayout">
 
             <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/about_toolbar"
-                    style="@style/BaseToolBar"
-                    tools:navigationIcon="?attr/homeAsUpIndicator"
-                    tools:title="@string/title_activity_about"/>
+                android:id="@+id/about_toolbar"
+                style="@style/BaseToolBar"
+                tools:navigationIcon="?attr/homeAsUpIndicator"
+                tools:title="@string/title_activity_about" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,7 +31,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                tools:text="Icon made by Freepik from www.flaticon.com"/>
+                tools:text="Icon made by Freepik from www.flaticon.com" />
 
         </LinearLayout>
 

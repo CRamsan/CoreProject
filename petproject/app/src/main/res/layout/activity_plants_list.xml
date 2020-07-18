@@ -2,25 +2,24 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data/>
+    <data />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-            style="@style/BaseCoordinatorLayout"
-            tools:context=".plantslist.PlantsListActivity">
+        style="@style/BaseCoordinatorLayout"
+        tools:context=".plantslist.PlantsListActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
-                style="@style/BaseAppBarLayout">
+        <com.google.android.material.appbar.AppBarLayout style="@style/BaseAppBarLayout">
 
             <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/plant_list_toolbar"
-                    style="@style/BaseToolBar"
-                    tools:navigationIcon="?attr/homeAsUpIndicator"
-                    tools:menu="@menu/plant_list"
-                    tools:title="@string/title_fragment_plants_cats"/>
+                android:id="@+id/plant_list_toolbar"
+                style="@style/BaseToolBar"
+                tools:navigationIcon="?attr/homeAsUpIndicator"
+                tools:menu="@menu/plant_list"
+                tools:title="@string/title_fragment_plants_cats" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/content_plants_list"/>
+        <include layout="@layout/content_plants_list" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

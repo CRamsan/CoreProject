@@ -3,7 +3,7 @@
     android:id="@+id/scrollViewLayoutProfile"
     style="@style/LayoutFrameStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linearLayoutProfile"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:paddingRight="5dp">
 
         <ImageView
             android:id="@+id/imageViewOutfitFaction"
@@ -22,17 +22,17 @@
             android:layout_marginTop="2dp"
             android:contentDescription="@string/text_faction_icon" />
 
-		<TextView
-		    android:id="@+id/textViewFragmentOutfitName"
-		    style="@style/LayoutFrameStyle"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_marginBottom="10dp"
-		    android:ellipsize="end"
-		    android:gravity="center"
-		    android:lines="1"
-		    android:textAppearance="?android:attr/textAppearanceLarge" />
-        
+        <TextView
+            android:id="@+id/textViewFragmentOutfitName"
+            style="@style/LayoutFrameStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <LinearLayout
             style="@style/LayoutFrameStyle"
             android:layout_width="fill_parent"
@@ -41,14 +41,14 @@
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp" >
+            android:paddingTop="15dp">
 
             <LinearLayout
                 style="@style/LayoutFrameStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/TextViewOutfitLeader"
@@ -73,7 +73,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewMembers"
@@ -99,7 +99,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/TextViewOutfitCreation"
@@ -119,8 +119,8 @@
                     android:layout_marginStart="5dp"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
-            
-            
+
+
         </LinearLayout>
     </LinearLayout>
 

@@ -3,180 +3,183 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.cramsan.petproject.suggestion.PlantSuggestionViewModel"/>
+
+        <variable
+            name="viewModel"
+            type="com.cramsan.petproject.suggestion.PlantSuggestionViewModel" />
     </data>
 
     <LinearLayout
-            android:id="@+id/plant_suggestion_view"
-            android:padding="@dimen/margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:id="@+id/plant_suggestion_view"
+        android:padding="@dimen/margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ScrollView
-                android:id="@+id/scrollView2"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+            android:id="@+id/scrollView2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <EditText
-                        android:id="@+id/plant_suggestion_scientific_name"
+                    android:id="@+id/plant_suggestion_scientific_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:checkedButton="@{viewModel.observableSelectedCatToxicityRes}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+                    <RadioButton
+                        android:id="@+id/plant_suggestion_cat_safe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:ems="10"
-                        android:importantForAutofill="no"
-                        android:inputType="textPersonName"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+                        android:layout_weight="1"
+                        android:text="@string/plant_suggestion_safe" />
 
-                <RadioGroup
-                        android:id="@+id/radioGroup"
-                        android:layout_width="0dp"
+                    <RadioButton
+                        android:id="@+id/plant_suggestion_cat_undetermined"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:checkedButton="@{viewModel.observableSelectedCatToxicityRes}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView5">
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/plant_suggestion_unknown" />
 
                     <RadioButton
-                            android:id="@+id/plant_suggestion_cat_safe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/plant_suggestion_safe" />
-
-                    <RadioButton
-                            android:id="@+id/plant_suggestion_cat_undetermined"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:text="@string/plant_suggestion_unknown" />
-
-                    <RadioButton
-                            android:id="@+id/plant_suggestion_cat_unsafe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/plant_suggestion_dangerous" />
+                        android:id="@+id/plant_suggestion_cat_unsafe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/plant_suggestion_dangerous" />
                 </RadioGroup>
 
                 <RadioGroup
-                        android:id="@+id/radioGroup2"
-                        android:layout_width="0dp"
+                    android:id="@+id/radioGroup2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:checkedButton="@{viewModel.observableSelectedDogToxicityRes}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+                    <RadioButton
+                        android:id="@+id/plant_suggestion_dog_safe"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:checkedButton="@{viewModel.observableSelectedDogToxicityRes}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView6">
+                        android:layout_weight="1"
+                        android:text="@string/plant_suggestion_safe" />
 
                     <RadioButton
-                            android:id="@+id/plant_suggestion_dog_safe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/plant_suggestion_safe" />
+                        android:id="@+id/plant_suggestion_dog_undetermined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/plant_suggestion_unknown" />
 
                     <RadioButton
-                            android:id="@+id/plant_suggestion_dog_undetermined"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:text="@string/plant_suggestion_unknown" />
-
-                    <RadioButton
-                            android:id="@+id/plant_suggestion_dog_unsafe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/plant_suggestion_dangerous" />
+                        android:id="@+id/plant_suggestion_dog_unsafe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/plant_suggestion_dangerous" />
 
                 </RadioGroup>
 
                 <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/plant_suggestion_main_name"
-                        android:textSize="@dimen/text_size_h1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/plant_suggestion_main_name"
+                    android:textSize="@dimen/text_size_h1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/plant_suggestion_dangerous_cat"
-                        android:textSize="@dimen/text_size_h2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/plant_suggestion_scientific_name" />
+                    android:id="@+id/textView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/plant_suggestion_dangerous_cat"
+                    android:textSize="@dimen/text_size_h2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plant_suggestion_scientific_name" />
 
                 <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/plant_suggestion_dangerous_dog"
-                        android:textSize="@dimen/text_size_h2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+                    android:id="@+id/textView6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/plant_suggestion_dangerous_dog"
+                    android:textSize="@dimen/text_size_h2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/plant_suggestion_cancel"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_gravity="end"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/small_margin"
+                android:onClick="@{viewModel::cancel}"
+                android:text="@string/plant_suggestion_cancel" />
 
             <Button
-                    android:id="@+id/plant_suggestion_cancel"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin"
-                    android:onClick="@{viewModel::cancel}"
-                    android:text="@string/plant_suggestion_cancel" />
-
-            <Button
-                    android:id="@+id/plant_suggestion_save"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin"
-                    android:onClick="@{viewModel::save}"
-                    android:text="@string/plant_suggestion_send" />
+                android:id="@+id/plant_suggestion_save"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:onClick="@{viewModel::save}"
+                android:text="@string/plant_suggestion_send" />
 
         </LinearLayout>
 

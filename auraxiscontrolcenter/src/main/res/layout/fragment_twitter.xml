@@ -2,26 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayoutTwitter"
     style="@style/LayoutFrameStyle"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <HorizontalScrollView
         style="@style/LayoutFrameStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/linearLayoutTwitterHolder"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal" >
-       	</LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
     </HorizontalScrollView>
 
     <ListView
         android:id="@+id/listViewTweetList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:cacheColorHint="#00000000" >
-    </ListView>
+        android:cacheColorHint="#00000000"></ListView>
 
 </LinearLayout>

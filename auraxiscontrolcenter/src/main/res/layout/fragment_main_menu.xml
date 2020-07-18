@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="25dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="25dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
 
             <Button
-                    android:id="@+id/buttonPreferedProfile"
-                    style="@style/ButtonStyle"
-                    android:drawableStart="@drawable/icon_star_selected"
-                    android:drawableLeft="@drawable/icon_star_selected"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    tools:text="CRamsan"
-                    tools:visibility="visible" />
+                android:id="@+id/buttonPreferedProfile"
+                style="@style/ButtonStyle"
+                android:drawableStart="@drawable/icon_star_selected"
+                android:drawableLeft="@drawable/icon_star_selected"
+                android:gravity="center"
+                android:visibility="gone"
+                tools:text="CRamsan"
+                tools:visibility="visible" />
 
             <Button
-                    android:id="@+id/buttonPreferedOutfit"
-                    style="@style/ButtonStyle"
-                    android:drawableStart="@drawable/icon_star_selected"
-                    android:drawableLeft="@drawable/icon_star_selected"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    tools:text="Derp Company"
-                    tools:visibility="visible" />
+                android:id="@+id/buttonPreferedOutfit"
+                style="@style/ButtonStyle"
+                android:drawableStart="@drawable/icon_star_selected"
+                android:drawableLeft="@drawable/icon_star_selected"
+                android:gravity="center"
+                android:visibility="gone"
+                tools:text="Derp Company"
+                tools:visibility="visible" />
 
             <Button
-                    android:id="@+id/buttonPreferedServer"
-                    style="@style/ButtonStyle"
-                    android:gravity="center"
-                    android:visibility="gone" />
+                android:id="@+id/buttonPreferedServer"
+                style="@style/ButtonStyle"
+                android:gravity="center"
+                android:visibility="gone" />
 
             <Button
-                    android:id="@+id/buttonCharacters"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_profiles" />
+                android:id="@+id/buttonCharacters"
+                style="@style/ButtonStyle"
+                android:text="@string/title_profiles" />
 
             <Button
-                    android:id="@+id/buttonServers"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_servers" />
+                android:id="@+id/buttonServers"
+                style="@style/ButtonStyle"
+                android:text="@string/title_servers" />
 
             <Button
-                    android:id="@+id/buttonOutfit"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_outfits" />
+                android:id="@+id/buttonOutfit"
+                style="@style/ButtonStyle"
+                android:text="@string/title_outfits" />
 
             <Button
-                    android:id="@+id/buttonTwitter"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_twitter" />
+                android:id="@+id/buttonTwitter"
+                style="@style/ButtonStyle"
+                android:text="@string/title_twitter" />
 
             <Button
-                    android:id="@+id/buttonRedditFragment"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_reddit" />
+                android:id="@+id/buttonRedditFragment"
+                style="@style/ButtonStyle"
+                android:text="@string/title_reddit" />
 
             <Button
-                    android:id="@+id/buttonNews"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_links"
-                    android:visibility="gone" />
+                android:id="@+id/buttonNews"
+                style="@style/ButtonStyle"
+                android:text="@string/title_links"
+                android:visibility="gone" />
 
             <Button
-                    android:id="@+id/buttonAbout"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_about" />
+                android:id="@+id/buttonAbout"
+                style="@style/ButtonStyle"
+                android:text="@string/title_about" />
 
             <Button
-                    android:id="@+id/buttonDonate"
-                    style="@style/ButtonStyle"
-                    android:text="@string/title_donate"
-                    android:visibility="gone" />
+                android:id="@+id/buttonDonate"
+                style="@style/ButtonStyle"
+                android:text="@string/title_donate"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -104,12 +104,12 @@
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp">
 
                 <ImageButton
                     android:id="@+id/buttonPS2"

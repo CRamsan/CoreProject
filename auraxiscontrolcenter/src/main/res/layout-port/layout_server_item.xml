@@ -3,11 +3,11 @@
     style="@style/LayoutFrameStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textViewServerListRegion"
@@ -17,7 +17,7 @@
             android:layout_marginRight="5dp"
             android:gravity="end"
             android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/textViewServerListName"
@@ -59,14 +59,14 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:clickable="false"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textViewServerStatus"
@@ -87,7 +87,7 @@
             android:layout_marginStart="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
 

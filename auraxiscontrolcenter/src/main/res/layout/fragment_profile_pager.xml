@@ -2,7 +2,7 @@
 <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/profilePager"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <androidx.viewpager.widget.PagerTitleStrip
         style="@style/LayoutFrameStyle"

@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/BaseCoordinatorLayout"
-        tools:context=".mainmenu.MainMenuActivity">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BaseCoordinatorLayout"
+    tools:context=".mainmenu.MainMenuActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-            style="@style/BaseAppBarLayout">
+    <com.google.android.material.appbar.AppBarLayout style="@style/BaseAppBarLayout">
 
         <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/main_menu_toolbar"
-                style="@style/BaseToolBar"
-                tools:title="@string/app_name"/>
+            android:id="@+id/main_menu_toolbar"
+            style="@style/BaseToolBar"
+            tools:title="@string/app_name" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main_menu"/>
+    <include layout="@layout/content_main_menu" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
