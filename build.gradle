@@ -17,6 +17,7 @@ buildscript {
         globalAndroidXPreferencesVersion = "1.1.1"
         globalAndroidxActivityKtxVersion = "1.1.0"
         globalAndroidxFragmentKtxVersion = "1.2.5"
+        globalAndroidXWorkManager = "2.3.4"
         globalAppCenterSdkVersion = "3.2.1"
         globalAppCenterEspressoTestExt = "1.4"
         globalAzureFunctionGradlePlugin = "1.2.0"

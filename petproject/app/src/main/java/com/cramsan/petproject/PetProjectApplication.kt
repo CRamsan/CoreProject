@@ -35,6 +35,8 @@ import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroidProvider
+import com.cramsan.petproject.work.DailySyncManager
+import com.cramsan.petproject.work.ScheduledSyncManager
 import com.microsoft.appcenter.AppCenter
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -49,6 +51,7 @@ class PetProjectApplication : Application(), KodeinAware {
     private val eventLogger: EventLoggerInterface by instance()
     private val crashHandler: CrashHandlerInterface by instance()
     private val metrics: MetricsInterface by instance()
+    private val syncManager: ScheduledSyncManager by instance()
 
     override val kodein = Kodein.lazy {
         import(androidXModule(this@PetProjectApplication))
@@ -128,6 +131,9 @@ class PetProjectApplication : Application(), KodeinAware {
             }
             feedbackManager
         }
+        bind<ScheduledSyncManager>() with singleton {
+            DailySyncManager()
+        }
     }
 
     override fun onCreate() {
@@ -137,6 +143,7 @@ class PetProjectApplication : Application(), KodeinAware {
         AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
         crashHandler.initialize()
         metrics.initialize()
+        syncManager.startWork()
     }
 
     companion object {
