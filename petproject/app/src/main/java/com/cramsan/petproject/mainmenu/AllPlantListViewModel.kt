@@ -61,6 +61,10 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
     }
 
     fun tryStartDownload() {
+        // Restore the state of the plant list back to all.
+        viewModelScope.launch(Dispatchers.IO) {
+            modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
+        }
         if (hasStarted) {
             return
         }
