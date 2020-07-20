@@ -18,9 +18,10 @@ class DailySyncManager : ScheduledSyncManager, KodeinAware {
     override fun startWork() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresCharging(true)
             .build()
 
-        val saveRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.HOURS)
+        val saveRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(context).enqueue(saveRequest)
