@@ -288,7 +288,14 @@ class FragmentWeaponList : BaseFragment() {
             if (this.isCancelled) {
                 return
             }
-            val listRoot = activity!!.findViewById<View>(R.id.listViewWeaponList) as ListView
+            if (activity!!.isFinishing || activity!!.isDestroyed) {
+                return
+            }
+
+            val listRoot = activity!!.findViewById<ListView>(R.id.listViewWeaponList)
+            if (listRoot == null) {
+                return
+            }
             listRoot.adapter = WeaponItemAdapter(
                 activity!!,
                 weaponKills!!,
