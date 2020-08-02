@@ -70,13 +70,13 @@ class ModelProvider(
         return false
     }
 
-    override suspend fun downloadCatalog(currentTime: Long): Boolean {
+    override suspend fun downloadCatalog(currentTime: Long, force: Boolean): Boolean {
         eventLogger.log(Severity.INFO, "ModelProvider", "downloadCatalog")
         threadUtil.assertIsBackgroundThread()
 
         mutex.withLock {
             val lastSave = preferences.loadLong(LAST_UPDATE)
-            if (lastSave != null && currentTime - lastSave < 86400) {
+            if (!force && lastSave != null && currentTime - lastSave < 86400) {
                 eventLogger.log(Severity.INFO, "ModelProvider", "Using cached data")
                 setIsCatalogReady(true)
                 return false

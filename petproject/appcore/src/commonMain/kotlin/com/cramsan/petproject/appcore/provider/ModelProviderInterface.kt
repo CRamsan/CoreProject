@@ -9,7 +9,7 @@ interface ModelProviderInterface {
 
     fun isCatalogAvailable(currentTime: Long): Boolean
 
-    suspend fun downloadCatalog(currentTime: Long): Boolean
+    suspend fun downloadCatalog(currentTime: Long, force: Boolean = false): Boolean
 
     fun registerForCatalogEvents(listener: ModelProviderEventListenerInterface)
 

@@ -105,6 +105,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
+    androidTestImplementation "androidx.work:work-testing:$globalAndroidXWorkManager"
     androidTestImplementation "org.mockito:mockito-android:$globalMockitoVersion"
 }
 
