@@ -20,6 +20,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
+- task: android-manifest-version@1
+  inputs:
+    sourcePath: '$(system.defaultworkingdirectory)/petproject/app/src/main/AndroidManifest.xml'
+    versionCodeOption: 'buildid'
+    versionCode: '$(Build.BuildId)'
+    versionCodeOffset: '10'
+    versionName: 
+    printFile: true
+
 - task: Gradle@2
   inputs:
     workingDirectory: ''
