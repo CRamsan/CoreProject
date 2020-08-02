@@ -25,7 +25,6 @@ android {
         applicationId "com.cramsan.petproject"
         minSdkVersion globalMinSdkVersion
         targetSdkVersion globalTargetSdkVersion
-        versionCode 10
         versionName "0.12"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
