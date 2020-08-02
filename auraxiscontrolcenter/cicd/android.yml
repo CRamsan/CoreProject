@@ -19,7 +19,18 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+
+
 steps:
+- task: android-manifest-version@1
+  inputs:
+    sourcePath: '$(system.defaultworkingdirectory)/auraxiscontrolcenter/src/main/AndroidManifest.xml'
+    versionCodeOption: 'buildid'
+    versionCode: '$(Build.BuildId)'
+    versionCodeOffset: '38'
+    versionName: 
+    printFile: true
+    
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -45,7 +56,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(system.defaultworkingdirectory)/auraxiscontrolcenter/build/outputs/apk/
+    sourceFolder: 
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
