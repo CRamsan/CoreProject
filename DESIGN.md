@@ -1,6 +1,6 @@
 # Design & Architecture
 
-From the beggining, this project aims to use a scalable design and good software patterns. A lot of the code that is written for this project should be reusable on future projects. I am also targetting to develop software that can run natively on as many platforms as possible without inpacting the end-user experiene. I will not favor writting cross-platform code if it will negatively impact the development process or the resulting product.
+This project aims to use a scalable design and good software patterns. A lot of the code that is written for this project should be reusable on future projects. I am also targetting to develop software that can run natively on as many platforms as possible without inpacting the end-user experiene. I will not favor writting cross-platform code if it will negatively impact the development process or the resulting product.
 
 ## Target Platforms
 - For the mobile app I am targetting Android first with a possible iOS app in the future.

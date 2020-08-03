@@ -1,3 +1,4 @@
+//Define the version variables to be used across the entire project
 buildscript {
     ext {
         globalAndroidBuildToolsVersion = "29.0.2"
@@ -53,12 +54,15 @@ buildscript {
     }
 }
 
+// Apply the versions plugin at the root project as it is capable 
+// to traverse the submodules 
 plugins {
     id "com.github.ben-manes.versions"
 }
 
 subprojects {
 
+    // Configure the ktlint tasks for each individual subproject
     configurations {
         ktlint
     }

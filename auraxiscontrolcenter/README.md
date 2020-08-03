@@ -22,8 +22,6 @@ This is the source code for the Auraxis Control Center
 # Distribution
 [Internal](https://install.appcenter.ms/users/cramsan/apps/auraxiscontrolcenter/distribution_groups/development)
 
-[Alpha Enrollment](https://play.google.com/apps/internaltest/4697302943673836843)
-
 [Play Store](https://play.google.com/store/apps/details?id=com.cesarandres.ps2link)
 
 # Feedback

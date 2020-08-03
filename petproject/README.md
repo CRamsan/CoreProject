@@ -1,17 +1,33 @@
-# PetProject
+# Auraxis Control Center
+This is the source code for the Auraxis Control Center
 
-## Objective
-This project is to offer a mobile application to quickly know is a plant is poisonous to your cat or dog. There will also be other components such as a webservice to provide an API or a GUI to edit and manage the databases.
+# Build Status
 
-## Status
-The project is currently in active development.
+Android: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/build/status/PetProject-Android?branchName=master)](https://dev.azure.com/CRamsan/PetProject/_build/latest?definitionId=3&branchName=master)
 
-## Table of Contents
+Webservice: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/build/status/PetProject-Webservice?branchName=master)](https://dev.azure.com/CRamsan/PetProject/_build/latest?definitionId=8&branchName=master)
 
-1. [Design & Architecture](/petproject/DESIGN.md)
-2. Components
-	1. [Framework](/framework/)
-	2. [AppCore](/petproject/appcore/)
-	3. Front-End
-		1. [Android](/petproject/app/)
-		2. [WebService](/petproject/webservice/)
+# Analytics
+
+[Engagement](https://appcenter.ms/users/cramsan/apps/Pet-Project-1/analytics/overview)
+
+[Issues](https://appcenter.ms/users/cramsan/apps/Pet-Project-1/crashes/errors?version=&appBuild=&period=last30Days&status=&errorType=all&sortCol=lastError&sortDir=desc)
+
+[Events](https://appcenter.ms/users/cramsan/apps/Pet-Project-1/analytics/events)
+
+[Play Stores](https://play.google.com/apps/publish/?account=6214892269219109827#StatisticsPlace:p=com.cramsan.petproject&statms=ALL_ACTIVE_DEVICE_EVENTS_INTERVAL&statgs=DAILY&statd=OS_VERSION&statc=true&dvals=@OVERALL@&dvals=28&dvals=29&dvals=26&dvals=24&cask=false&statdr=20200704-20200802&statcdr=20200405-20200504&grdk=@OVERALL@&bpk=3:3ef4c27cc69b19f5)
+
+# Bug Tracker
+
+[Github Issues](https://github.com/CRamsan/PetProject/labels/petproject)
+
+# Distribution
+[Internal](https://install.appcenter.ms/users/cramsan/apps/Pet-Project-1/distribution_groups/development)
+
+[Play Store](https://play.google.com/store/apps/details?id=com.cramsan.petproject)
+
+# Feedback
+
+[Reviews](https://play.google.com/apps/publish/?account=6214892269219109827#ReviewsPlace:p=com.cramsan.petproject&appid=4973759825635320328)
+
+[Ratings](https://play.google.com/apps/publish/?account=6214892269219109827#RatingsPlace:p=com.cramsan.petproject&appid=4973759825635320328)
