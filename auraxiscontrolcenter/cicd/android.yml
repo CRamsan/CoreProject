@@ -52,6 +52,16 @@ steps:
     apksignerKeystoreAlias: $(KeyStoreAlias)
     apksignerKeyPassword: $(KeyPassword)
 
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/auraxiscontrolcenter-stage-unsigned.apk'
+    apksign: true
+    zipalign: false
+    apksignerKeystoreFile: $(StageKeyStoreFile)
+    apksignerKeystorePassword: $(StageKeyStorePassword)
+    apksignerKeystoreAlias: $(StageKeyStoreAlias)
+    apksignerKeyPassword: $(StageKeyPassword)
+
 - task: CopyFiles@2
   inputs:
     sourceFolder: 
