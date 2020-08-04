@@ -3,9 +3,6 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-variables:
-- group: 'Signing Keys'
-
 # specific path build
 trigger:
   branches:
