@@ -108,4 +108,12 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$globalMockitoVersion"
 }
 
-build.finalizedBy ktlint
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'build'
+    dependsOn 'test'
+    dependsOn 'assembleAndroidTest'
+}

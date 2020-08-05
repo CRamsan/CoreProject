@@ -88,3 +88,14 @@ dependencies {
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
     androidTestImplementation "com.microsoft.appcenter:espresso-test-extension:$globalAppCenterEspressoTestExt"
 }
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn ':framework:release'
+    dependsOn 'ktlint'
+    dependsOn 'build'
+    dependsOn 'test'
+    dependsOn 'assembleAndroidTest'
+}

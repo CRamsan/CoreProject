@@ -166,4 +166,12 @@ tasks {
     }
 }
 
-build.finalizedBy ktlint
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn ':framework:release'
+    dependsOn 'ktlint'
+    dependsOn 'build'
+    dependsOn 'test'
+}
