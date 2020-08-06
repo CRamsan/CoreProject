@@ -112,6 +112,7 @@ tasks.register("release") {
     group = 'build'
     description = 'Run all the steps to build a release artifact'
 
+    dependsOn ':petproject:appcore:release'
     dependsOn 'ktlint'
     dependsOn 'build'
     dependsOn 'test'

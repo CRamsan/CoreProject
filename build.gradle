@@ -93,3 +93,14 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build all release artifact'
+
+    // List all build targets
+    dependsOn ':petproject:app:release'
+    dependsOn ':petproject:webservice:release'
+    dependsOn ':petproject:azurefunction:release'
+    dependsOn ':auraxiscontrolcenter:release'
+}
