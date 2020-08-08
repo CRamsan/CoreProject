@@ -8,10 +8,6 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = globalJavaCompatibility
 targetCompatibility = globalJavaCompatibility
 
-repositories {
-    jcenter()
-}
-
 dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")

@@ -21,9 +21,6 @@ apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "kotlin-kapt"
 apply plugin: "com.squareup.sqldelight"
 
-repositories {
-    mavenCentral()
-}
 sqldelight {
     PetProjectDB {
         packageName = "com.cramsan.petproject.db"

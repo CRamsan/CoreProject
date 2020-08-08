@@ -52,6 +52,14 @@ buildscript {
         globalAshleyVersion = '1.7.0'
         globalAiVersion = '1.8.0'
     }
+
+    buildscript {
+        repositories {
+            google()
+            jcenter()
+            mavenCentral()
+        }
+    }
 }
 
 // Apply the versions plugin at the root project as it is capable 
@@ -72,7 +80,9 @@ subprojects {
     }
 
     repositories {
+        google()
         jcenter()
+        mavenCentral()
     }
 
     task("ktlint", type: JavaExec, group: "verification") {

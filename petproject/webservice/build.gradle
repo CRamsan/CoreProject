@@ -12,10 +12,6 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = globalJavaCompatibility
 targetCompatibility = globalJavaCompatibility
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")

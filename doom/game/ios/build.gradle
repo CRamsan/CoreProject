@@ -1,8 +1,4 @@
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-
     dependencies {
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.9'
     }
@@ -13,11 +9,6 @@ plugins {
 }
 
 apply plugin: "robovm"
-
-
-repositories {
-    jcenter()
-}
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
