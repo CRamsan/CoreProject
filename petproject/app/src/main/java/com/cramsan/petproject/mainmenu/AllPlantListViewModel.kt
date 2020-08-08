@@ -16,7 +16,7 @@ import com.cramsan.petproject.base.SimpleEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.erased.instance
+import org.kodein.di.instance
 import kotlin.properties.Delegates
 
 class AllPlantListViewModel(application: Application) :

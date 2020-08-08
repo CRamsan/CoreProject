@@ -19,15 +19,15 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import org.json.JSONException
 import org.json.JSONObject
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
 /**
  * This fragment handles setting the background for all activities.
  */
-abstract class BaseActivity : FragmentActivity(), KodeinAware {
+abstract class BaseActivity : FragmentActivity(), DIAware {
 
-    override val kodein by lazy { (application as ApplicationPS2Link).kodein }
+    override val di by lazy { (application as ApplicationPS2Link).di }
     protected val eventLogger: EventLoggerInterface by instance()
     protected val metrics: MetricsInterface by instance()
     protected val volley: RequestQueue by instance()

@@ -38,22 +38,22 @@ import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroid
 import com.cramsan.petproject.work.DailySyncManager
 import com.cramsan.petproject.work.ScheduledSyncManager
 import com.microsoft.appcenter.AppCenter
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.kodein.di.bind
+import org.kodein.di.instance
 import org.kodein.di.newInstance
+import org.kodein.di.singleton
 
-class PetProjectApplication : Application(), KodeinAware {
+class PetProjectApplication : Application(), DIAware {
 
     private val eventLogger: EventLoggerInterface by instance()
     private val crashHandler: CrashHandlerInterface by instance()
     private val metrics: MetricsInterface by instance()
     private val syncManager: ScheduledSyncManager by instance()
 
-    override val kodein = Kodein.lazy {
+    override val di = DI.lazy {
         import(androidXModule(this@PetProjectApplication))
 
         bind<CrashHandlerInterface>() with singleton {
@@ -76,11 +76,11 @@ class PetProjectApplication : Application(), KodeinAware {
             HaltUtil(HaltUtilAndroid())
         }
         bind<ThreadUtilInterface>() with singleton {
-            val threadUtil by kodein.newInstance { ThreadUtil(ThreadUtilAndroid(instance())) }
+            val threadUtil by di.newInstance { ThreadUtil(ThreadUtilAndroid(instance())) }
             threadUtil
         }
         bind<AssertUtilInterface>() with singleton {
-            val assertUtil by kodein.newInstance { AssertUtil(BuildConfig.DEBUG, instance(), instance()) }
+            val assertUtil by di.newInstance { AssertUtil(BuildConfig.DEBUG, instance(), instance()) }
             assertUtil
         }
         bind<ModelStorageInterface>() with singleton {
@@ -88,7 +88,7 @@ class PetProjectApplication : Application(), KodeinAware {
             val modelStorageDAO = ModelStorageAndroidProvider(
                 context
             ).provide()
-            val modelStorage by kodein.newInstance {
+            val modelStorage by di.newInstance {
                 ModelStorage(
                     modelStorageDAO,
                     instance(),
@@ -99,7 +99,7 @@ class PetProjectApplication : Application(), KodeinAware {
         }
         bind<PreferencesInterface>() with singleton {
             val context = this@PetProjectApplication
-            val preferences by kodein.newInstance {
+            val preferences by di.newInstance {
                 Preferences(PreferencesAndroid(context))
             }
             preferences
@@ -115,7 +115,7 @@ class PetProjectApplication : Application(), KodeinAware {
             )
         }
         bind<ModelProviderInterface>() with singleton {
-            val modelProvider by kodein.newInstance {
+            val modelProvider by di.newInstance {
                 ModelProvider(
                     instance(),
                     instance(),
@@ -132,7 +132,7 @@ class PetProjectApplication : Application(), KodeinAware {
                     TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
                 }
             }
-            val feedbackManager by kodein.newInstance {
+            val feedbackManager by di.newInstance {
                 FeedbackManager(
                     DummyDAO(),
                     instance(),

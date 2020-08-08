@@ -5,12 +5,12 @@ import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.cramsan.petproject.R
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.di
 
-class DebugMenuFragment : PreferenceFragmentCompat(), KodeinAware {
+class DebugMenuFragment : PreferenceFragmentCompat(), DIAware {
 
-    override val kodein by kodein()
+    override val di by di()
 
     private lateinit var viewModel: DebugMenuViewModel
 

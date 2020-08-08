@@ -11,9 +11,9 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -32,9 +32,9 @@ import java.net.URL
  * http://census.daybreakgames.com/.
  */
 
-class DBGCensus(context: Context) : KodeinAware {
+class DBGCensus(context: Context) : DIAware {
 
-    override val kodein by kodein(context)
+    override val di by di(context)
     private val eventLogger: EventLoggerInterface by instance()
     private val threadUtil: ThreadUtilInterface by instance()
     private val volley: RequestQueue by instance()

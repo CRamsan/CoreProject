@@ -14,7 +14,7 @@ import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.erased.instance
+import org.kodein.di.instance
 import kotlin.properties.Delegates
 
 class PlantListViewModel(application: Application) :

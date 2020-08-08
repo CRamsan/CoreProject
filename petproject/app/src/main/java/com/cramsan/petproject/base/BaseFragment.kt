@@ -12,13 +12,13 @@ import androidx.fragment.app.Fragment
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.di
+import org.kodein.di.instance
 
-abstract class BaseFragment<T : BaseViewModel, U : ViewDataBinding> : Fragment(), KodeinAware {
+abstract class BaseFragment<T : BaseViewModel, U : ViewDataBinding> : Fragment(), DIAware {
 
-    override val kodein by kodein()
+    override val di by di()
     protected val eventLogger: EventLoggerInterface by instance()
     protected val metrics: MetricsInterface by instance()
 

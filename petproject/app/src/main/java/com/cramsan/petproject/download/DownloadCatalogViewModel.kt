@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.erased.instance
+import org.kodein.di.instance
 
 class DownloadCatalogViewModel(application: Application) :
     BaseViewModel(application),

@@ -71,7 +71,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
 
-    implementation "org.kodein.di:kodein-di-erased-jvm:$globalKodeinVersion"
+    implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
     implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
 
     implementation "com.microsoft.appcenter:appcenter:$globalAppCenterSdkVersion"

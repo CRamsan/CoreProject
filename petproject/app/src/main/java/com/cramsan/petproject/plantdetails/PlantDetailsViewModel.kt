@@ -16,7 +16,7 @@ import com.cramsan.petproject.base.StringEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.erased.instance
+import org.kodein.di.instance
 
 class PlantDetailsViewModel(application: Application) : BaseViewModel(application) {
 

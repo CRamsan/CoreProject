@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.cramsan.petproject.PetProjectApplication
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
-object BindingAdapters : KodeinAware {
+object BindingAdapters : DIAware {
 
-    override val kodein by lazy { PetProjectApplication.getInstance().kodein }
+    override val di by lazy { PetProjectApplication.getInstance().di }
 
     val context: Context by instance()
 

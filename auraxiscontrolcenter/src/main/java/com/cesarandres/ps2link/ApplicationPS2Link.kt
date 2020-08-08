@@ -35,16 +35,16 @@ import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.microsoft.appcenter.AppCenter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.singleton
+import org.kodein.di.bind
+import org.kodein.di.instance
 import org.kodein.di.newInstance
+import org.kodein.di.singleton
 import java.util.Locale
 
-class ApplicationPS2Link : Application(), KodeinAware {
+class ApplicationPS2Link : Application(), DIAware {
 
     private val eventLogger: EventLoggerInterface by instance()
     private val crashHandler: CrashHandlerInterface by instance()
@@ -54,7 +54,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
     private val dbgCensus: DBGCensus by instance()
     val idlingResource: CountingIdlingResource by instance()
 
-    override val kodein = Kodein.lazy {
+    override val di = DI.lazy {
         import(androidXModule(this@ApplicationPS2Link))
 
         bind<CrashHandlerInterface>() with singleton {
@@ -77,16 +77,16 @@ class ApplicationPS2Link : Application(), KodeinAware {
             HaltUtil(HaltUtilAndroid())
         }
         bind<ThreadUtilInterface>() with singleton {
-            val threadUtil by kodein.newInstance { ThreadUtil(ThreadUtilAndroid(instance())) }
+            val threadUtil by di.newInstance { ThreadUtil(ThreadUtilAndroid(instance())) }
             threadUtil
         }
         bind<AssertUtilInterface>() with singleton {
-            val assertUtil by kodein.newInstance { AssertUtil(BuildConfig.DEBUG, instance(), instance()) }
+            val assertUtil by di.newInstance { AssertUtil(BuildConfig.DEBUG, instance(), instance()) }
             assertUtil
         }
         bind<PreferencesInterface>() with singleton {
             val context = this@ApplicationPS2Link
-            val preferences by kodein.newInstance {
+            val preferences by di.newInstance {
                 Preferences(PreferencesAndroid(context))
             }
             preferences
@@ -95,7 +95,7 @@ class ApplicationPS2Link : Application(), KodeinAware {
             Volley.newRequestQueue(this@ApplicationPS2Link)
         }
         bind<ImageLoader>() with singleton {
-            val loader by kodein.newInstance {
+            val loader by di.newInstance {
                 ImageLoader(instance(), BitmapLruCache())
             }
             loader

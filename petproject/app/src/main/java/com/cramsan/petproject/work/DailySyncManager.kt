@@ -6,13 +6,13 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.cramsan.petproject.PetProjectApplication
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 import java.util.concurrent.TimeUnit
 
-class DailySyncManager : ScheduledSyncManager, KodeinAware {
+class DailySyncManager : ScheduledSyncManager, DIAware {
 
-    override val kodein by lazy { PetProjectApplication.getInstance().kodein }
+    override val di by lazy { PetProjectApplication.getInstance().di }
     val context: Context by instance()
 
     override fun startWork() {

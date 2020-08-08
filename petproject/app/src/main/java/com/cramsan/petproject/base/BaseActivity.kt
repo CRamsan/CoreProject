@@ -8,15 +8,15 @@ import androidx.databinding.ViewDataBinding
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.google.android.material.appbar.MaterialToolbar
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 
 abstract class BaseActivity<T : BaseViewModel, U : ViewDataBinding> :
     AppCompatActivity(),
-    KodeinAware {
+    DIAware {
 
-    override val kodein by kodein()
+    override val di by di()
     protected val eventLogger: EventLoggerInterface by instance()
     protected lateinit var viewModel: T
     protected lateinit var dataBinding: U

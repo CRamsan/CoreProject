@@ -21,8 +21,8 @@ import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
 /**
  * This class extends fragment to add the support for a callback. All the
@@ -34,7 +34,7 @@ import org.kodein.di.erased.instance
 /**
  * @author cramsan
  */
-abstract class BaseFragment : Fragment(), KodeinAware {
+abstract class BaseFragment : Fragment(), DIAware {
     protected var mCallbacks: FragmentCallbacks? = null
     protected lateinit var fragmentTitle: Button
     protected lateinit var fragmentProgress: ProgressBar
@@ -46,7 +46,7 @@ abstract class BaseFragment : Fragment(), KodeinAware {
     protected lateinit var fragmentMyWeapons: ToggleButton
     private var currentTask: AsyncTask<*, *, *>? = null
 
-    override val kodein by lazy { (requireActivity().application as ApplicationPS2Link).kodein }
+    override val di by lazy { (requireActivity().application as ApplicationPS2Link).di }
     protected val eventLogger: EventLoggerInterface by instance()
     protected val volley: RequestQueue by instance()
     protected val dbgCensus: DBGCensus by instance()

@@ -8,7 +8,7 @@ import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.erased.instance
+import org.kodein.di.instance
 
 class DebugMenuViewModel(application: Application) : BaseViewModel(application) {
 

@@ -6,15 +6,15 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.ThreadUtilInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 import java.io.File
 import java.util.Arrays
 
-class CacheManager(val context: Context) : KodeinAware {
+class CacheManager(val context: Context) : DIAware {
 
-    override val kodein by kodein(context)
+    override val di by di(context)
     private val eventLogger: EventLoggerInterface by instance()
     private val threadUtil: ThreadUtilInterface by instance()
 

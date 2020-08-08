@@ -13,17 +13,18 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import org.kodein.di.KodeinAware
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 
 class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentAdapterListener?,
     private val animalType: AnimalType,
     context: Context
 ) :
-    RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>(), KodeinAware {
+    RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>(), DIAware {
 
-    override val kodein by org.kodein.di.android.kodein(context)
+    override val di by di(context)
     private val eventLogger: EventLoggerInterface by instance()
 
     private var mValues: List<PresentablePlant> = listOf()

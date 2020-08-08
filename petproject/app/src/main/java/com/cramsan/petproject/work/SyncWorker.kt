@@ -8,15 +8,15 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.coroutineScope
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.erased.instance
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 
 class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams),
-    KodeinAware {
+    DIAware {
 
-    override val kodein by kodein(appContext)
+    override val di by di(appContext)
 
     private val modelProvider: ModelProviderInterface by instance()
     private val eventLogger: EventLoggerInterface by instance()
