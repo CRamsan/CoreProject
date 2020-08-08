@@ -8,4 +8,4 @@ class GameEntityTrigger(
     enabled: Boolean,
     val targetId: Int
 ) :
-        Trigger(id, eventId, enabled)
+    Trigger(id, eventId, enabled)

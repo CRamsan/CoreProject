@@ -82,8 +82,10 @@ class AppConfig {
         val modelStorageDAO = ModelStorageJdbcProvider(
             dbPath
         ).provide()
-        return ModelStorage(modelStorageDAO,
+        return ModelStorage(
+            modelStorageDAO,
             eventLogger,
-            threadUtil)
+            threadUtil
+        )
     }
 }

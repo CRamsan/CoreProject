@@ -11,8 +11,8 @@ import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.module.ObjectDataSource
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
-import java.util.Date
 import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
 
 class TwitterItemAdapter(
     context: Context,

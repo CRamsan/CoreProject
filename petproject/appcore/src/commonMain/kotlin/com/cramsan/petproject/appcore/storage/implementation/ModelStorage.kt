@@ -220,9 +220,11 @@ class ModelStorage(
         eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantEntry")
         threadUtil.assertIsBackgroundThread()
 
-        return platformDelegate.getCustomPlantEntry(plantId.toLong(),
+        return platformDelegate.getCustomPlantEntry(
+            plantId.toLong(),
             animalType,
-            locale)
+            locale
+        )
     }
 
     override fun getCustomPlantsEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {

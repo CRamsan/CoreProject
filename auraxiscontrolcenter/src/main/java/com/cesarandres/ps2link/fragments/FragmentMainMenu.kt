@@ -33,9 +33,9 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.module.BitmapWorkerTask
-import java.util.ArrayList
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.ArrayList
 
 /**
  * This fragment is very static, it has all the buttons for most of the main
@@ -298,9 +298,9 @@ class FragmentMainMenu : BaseFragment() {
 
     fun promptForPermissions() {
         if (ContextCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
+            activity!!,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 activity!!,
@@ -422,37 +422,40 @@ class FragmentMainMenu : BaseFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(R.string.text_choose_donation)
-                .setItems(displayData, DialogInterface.OnClickListener { dialog, index ->
-                    val thisResponse = responseList!![index]
-                    val `object`: JSONObject
-                    try {
-                        `object` = JSONObject(thisResponse)
-                        val sku = `object`.getString("productId")
-                        val buyIntentBundle =
-                            mService!!.getBuyIntent(3, activity!!.packageName, sku, "inapp", "")
-                        val pendingIntent =
-                            buyIntentBundle.getParcelable<PendingIntent>("BUY_INTENT")
-                        activity!!.startIntentSenderForResult(
-                            pendingIntent!!.intentSender,
-                            1001, Intent(), Integer.valueOf(0)!!, Integer.valueOf(0)!!,
-                            Integer.valueOf(0)!!
-                        )
-                        return@OnClickListener
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    } catch (e: RemoteException) {
-                        e.printStackTrace()
-                    } catch (e: SendIntentException) {
-                        e.printStackTrace()
-                    }
+                .setItems(
+                    displayData,
+                    DialogInterface.OnClickListener { dialog, index ->
+                        val thisResponse = responseList!![index]
+                        val `object`: JSONObject
+                        try {
+                            `object` = JSONObject(thisResponse)
+                            val sku = `object`.getString("productId")
+                            val buyIntentBundle =
+                                mService!!.getBuyIntent(3, activity!!.packageName, sku, "inapp", "")
+                            val pendingIntent =
+                                buyIntentBundle.getParcelable<PendingIntent>("BUY_INTENT")
+                            activity!!.startIntentSenderForResult(
+                                pendingIntent!!.intentSender,
+                                1001, Intent(), Integer.valueOf(0)!!, Integer.valueOf(0)!!,
+                                Integer.valueOf(0)!!
+                            )
+                            return@OnClickListener
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        } catch (e: RemoteException) {
+                            e.printStackTrace()
+                        } catch (e: SendIntentException) {
+                            e.printStackTrace()
+                        }
 
-                    Toast.makeText(
-                        activity,
-                        activity!!.resources.getString(R.string.toast_error_error_sending),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return@OnClickListener
-                })
+                        Toast.makeText(
+                            activity,
+                            activity!!.resources.getString(R.string.toast_error_error_sending),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@OnClickListener
+                    }
+                )
             retainInstance = true
             return builder.create()
         }

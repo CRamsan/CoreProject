@@ -8,8 +8,9 @@ buildscript {
 
         globalJavaCompatibility = JavaVersion.VERSION_1_8
 
-        globalAndroidGradlePluginVersion = "4.0.0"
-        globalAndroidMaterialVersion = "1.1.0"
+        globalAndroidGradlePluginVersion = "4.0.1"
+        globalAndroidMaterialVersion = "1.2.0"
+        globalAndroidXAppCompatersion = "1.2.0"
         globalAndroidXJUnitVersion = "1.1.1"
         globalAndroidXTestVersion = "1.2.0"
         globalAndroidXLifecycleVersion = "2.2.0"
@@ -18,12 +19,12 @@ buildscript {
         globalAndroidXPreferencesVersion = "1.1.1"
         globalAndroidxActivityKtxVersion = "1.1.0"
         globalAndroidxFragmentKtxVersion = "1.2.5"
-        globalAndroidXWorkManager = "2.3.4"
-        globalAppCenterSdkVersion = "3.2.1"
+        globalAndroidXWorkManager = "2.4.0"
+        globalAppCenterSdkVersion = "3.3.0"
         globalAppCenterEspressoTestExt = "1.4"
-        globalAzureFunctionGradlePlugin = "1.2.0"
+        globalAzureFunctionGradlePlugin = "1.4.0"
         globalAzureFunctionsJavaLibrary = "1.3.1"
-        globalCoroutinesVersion = "1.3.5"
+        globalCoroutinesVersion = "1.3.8"
         globalConstraintLayoutVersion = "1.1.3"
         globalEspressoVersion = "3.2.0"
         globalFirebaseVersion = "17.2.3"
@@ -33,20 +34,24 @@ buildscript {
         globalGMSServices = "4.3.3"
         globalHamcrestVersion = "2.2"
         globalMockitoVersion = "2.28.2"
+        globalJacksonDatabinding = "2.11.2"
         globalJUnitVersion = "4.13"
         globalKodeinVersion = "6.5.4"
         globalKotlinVersion = initKotlinVersion
-        globalKtlintVerion = "0.36.0"
+        globalKtlintVerion = "0.37.2"
         globalKtorVersion = "1.3.1"
         globalMockkVersion = "1.10.0"
-        globalOkhttpVersion = "4.6.0"
+        globalOkhttpVersion = "4.8.1"
+        globalPrettyTimeVersion = "4.0.5.Final"
         globalRobolectricVersion = "4.3.1"
-        globalSpringFrameworkVersion = "2.1.7.RELEASE"
-        globalSpringDependencyManagement = "1.0.7.RELEASE"
+        globalSpringFrameworkVersion = "2.3.2.RELEASE"
+        globalSpringDependencyManagement = "1.0.9.RELEASE"
         globalSqlDelightVersion = "1.3.0"
+        globalTwitter4JVersion = "4.0.7"
         globalUIAutomatorVersion = "2.2.0"
+        globalVolleyVersion = "1.1.1"
 
-        globalGdxVersion = '1.9.10'
+        globalGdxVersion = '1.9.11'
         globalRoboVMVersion = '2.3.9'
         globalBox2DLightsVersion = '1.4'
         globalAshleyVersion = '1.7.0'
@@ -66,6 +71,19 @@ buildscript {
 // to traverse the submodules 
 plugins {
     id "com.github.ben-manes.versions"
+}
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    // Example 1: reject all non stable versions
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
+    }
 }
 
 subprojects {

@@ -26,7 +26,7 @@ class BitmapWorkerTask
  * @param imageView View where to where the image will be set after resizing
  * @param context Activity that requested this task
  */
-    (imageView: ImageView, private val context: Activity) : AsyncTask<String, Void, Bitmap>() {
+(imageView: ImageView, private val context: Activity) : AsyncTask<String, Void, Bitmap>() {
     private val imageViewReference: WeakReference<ImageView>?
     private var data: String? = null
 

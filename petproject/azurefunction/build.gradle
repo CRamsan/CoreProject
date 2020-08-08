@@ -15,7 +15,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "com.microsoft.azure.functions:azure-functions-java-library:$globalAzureFunctionsJavaLibrary"
     implementation "com.google.code.gson:gson:$globalGsonVerion"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.11.0"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$globalJacksonDatabinding"
 
     testImplementation "io.mockk:mockk:$globalMockkVersion"
     testImplementation "junit:junit:$globalJUnitVersion"

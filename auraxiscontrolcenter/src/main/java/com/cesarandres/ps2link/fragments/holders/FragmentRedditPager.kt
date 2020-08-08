@@ -119,16 +119,18 @@ class FragmentRedditPager : BaseFragment() {
         }
 
         this.fragmentUpdate.visibility = View.VISIBLE
-        this.fragmentUpdate.setOnClickListener(View.OnClickListener {
-            metrics.log(TAG, "Update")
-            val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
-                ?: return@OnClickListener
-            when (mViewPager!!.currentItem) {
-                PC, PS4 -> (selectedFragment as FragmentReddit).updatePosts()
-                else -> {
+        this.fragmentUpdate.setOnClickListener(
+            View.OnClickListener {
+                metrics.log(TAG, "Update")
+                val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
+                    ?: return@OnClickListener
+                when (mViewPager!!.currentItem) {
+                    PC, PS4 -> (selectedFragment as FragmentReddit).updatePosts()
+                    else -> {
+                    }
                 }
             }
-        })
+        )
 
         mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(arg0: Int) {

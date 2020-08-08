@@ -19,50 +19,50 @@ class SceneCellTests {
      */
     @Test
     fun basicSceneTest() = runTest {
-            val map = GameMap(MapGenerator.createMap100x100())
+        val map = GameMap(MapGenerator.createMap100x100())
 
-            val sceneConfig = scene {
-                player {
-                    posX = 25
-                    posY = 25
-                }
+        val sceneConfig = scene {
+            player {
+                posX = 25
+                posY = 25
             }
-            assertNotNull(sceneConfig)
-            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
-            val player = sceneConfig.player
+        }
+        assertNotNull(sceneConfig)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
+        val player = sceneConfig.player
 
-            val actionListSouth = Array(20) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }
-            val actionListNorth = Array(20) { TurnAction(TurnActionType.MOVE, Direction.NORTH) }
-            val actionListWest = Array(20) { TurnAction(TurnActionType.MOVE, Direction.WEST) }
-            val actionListEast = Array(20) { TurnAction(TurnActionType.MOVE, Direction.EAST) }
+        val actionListSouth = Array(20) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }
+        val actionListNorth = Array(20) { TurnAction(TurnActionType.MOVE, Direction.NORTH) }
+        val actionListWest = Array(20) { TurnAction(TurnActionType.MOVE, Direction.WEST) }
+        val actionListEast = Array(20) { TurnAction(TurnActionType.MOVE, Direction.EAST) }
 
-            val scene = Scene(entityManager, sceneConfig)
-            scene.loadScene()
+        val scene = Scene(entityManager, sceneConfig)
+        scene.loadScene()
 
-            actionListSouth.forEach {
-                scene.runTurn(it)
-            }
-            assertEquals(25, player.posX)
-            assertEquals(45, player.posY)
+        actionListSouth.forEach {
+            scene.runTurn(it)
+        }
+        assertEquals(25, player.posX)
+        assertEquals(45, player.posY)
 
-            actionListEast.forEach {
-                scene.runTurn(it)
-            }
-            assertEquals(45, player.posX)
-            assertEquals(45, player.posY)
+        actionListEast.forEach {
+            scene.runTurn(it)
+        }
+        assertEquals(45, player.posX)
+        assertEquals(45, player.posY)
 
-            actionListNorth.forEach {
-                scene.runTurn(it)
-            }
-            assertEquals(45, player.posX)
-            assertEquals(25, player.posY)
+        actionListNorth.forEach {
+            scene.runTurn(it)
+        }
+        assertEquals(45, player.posX)
+        assertEquals(25, player.posY)
 
-            actionListWest.forEach {
-                scene.runTurn(it)
-            }
+        actionListWest.forEach {
+            scene.runTurn(it)
+        }
 
-            assertEquals(25, player.posX)
-            assertEquals(25, player.posY)
+        assertEquals(25, player.posX)
+        assertEquals(25, player.posY)
     }
 
     /**

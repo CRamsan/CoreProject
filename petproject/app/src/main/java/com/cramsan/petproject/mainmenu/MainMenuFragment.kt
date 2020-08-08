@@ -35,29 +35,47 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         viewModel = model
         dataBinding.viewModel = viewModel
 
-        viewModel.observableNextActivityCat().observe(requireActivity(), Observer {
-            val intent = Intent(requireContext(), PlantsListActivity::class.java)
-            intent.putExtra(ANIMAL_TYPE, AnimalType.CAT.ordinal)
-            startActivity(intent)
-        })
-        viewModel.observableNextActivityDog().observe(requireActivity(), Observer {
-            val intent = Intent(requireContext(), PlantsListActivity::class.java)
-            intent.putExtra(ANIMAL_TYPE, AnimalType.DOG.ordinal)
-            startActivity(intent)
-        })
-        viewModel.observableShowIsDownloadedData().observe(requireActivity(), Observer {
-            displayDownloadingMessage()
-        })
-        viewModel.observableShowDataDownloaded().observe(requireActivity(), Observer {
-            displayDownloadCompleteMessage()
-        })
-        viewModel.observablePlants().observe(viewLifecycleOwner, Observer { plants ->
-            plantsAdapter.updateValues(plants)
-        })
-        viewModel.observableStartDownload().observe(viewLifecycleOwner, Observer {
-            val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
-            startActivity(intent)
-        })
+        viewModel.observableNextActivityCat().observe(
+            requireActivity(),
+            Observer {
+                val intent = Intent(requireContext(), PlantsListActivity::class.java)
+                intent.putExtra(ANIMAL_TYPE, AnimalType.CAT.ordinal)
+                startActivity(intent)
+            }
+        )
+        viewModel.observableNextActivityDog().observe(
+            requireActivity(),
+            Observer {
+                val intent = Intent(requireContext(), PlantsListActivity::class.java)
+                intent.putExtra(ANIMAL_TYPE, AnimalType.DOG.ordinal)
+                startActivity(intent)
+            }
+        )
+        viewModel.observableShowIsDownloadedData().observe(
+            requireActivity(),
+            Observer {
+                displayDownloadingMessage()
+            }
+        )
+        viewModel.observableShowDataDownloaded().observe(
+            requireActivity(),
+            Observer {
+                displayDownloadCompleteMessage()
+            }
+        )
+        viewModel.observablePlants().observe(
+            viewLifecycleOwner,
+            Observer { plants ->
+                plantsAdapter.updateValues(plants)
+            }
+        )
+        viewModel.observableStartDownload().observe(
+            viewLifecycleOwner,
+            Observer {
+                val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
+                startActivity(intent)
+            }
+        )
 
         layoutManager = LinearLayoutManager(context)
         plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())

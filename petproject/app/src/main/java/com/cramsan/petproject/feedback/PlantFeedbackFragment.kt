@@ -27,12 +27,15 @@ class PlantFeedbackFragment : BaseFragment<PlantFeedbackViewModel, FragmentPlant
 
         val model: PlantFeedbackViewModel by viewModels()
         dataBinding.viewModel = model
-        model.isComplete().observe(viewLifecycleOwner, Observer {
-            if (it.feedbackSubmitted) {
-                Toast.makeText(context, R.string.thanks_feedback, Toast.LENGTH_LONG).show()
+        model.isComplete().observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it.feedbackSubmitted) {
+                    Toast.makeText(context, R.string.thanks_feedback, Toast.LENGTH_LONG).show()
+                }
+                requireActivity().finish()
             }
-            requireActivity().finish()
-        })
+        )
         viewModel = model
     }
 

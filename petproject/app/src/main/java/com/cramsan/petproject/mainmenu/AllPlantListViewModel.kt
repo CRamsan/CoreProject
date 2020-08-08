@@ -13,13 +13,14 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
 import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.SimpleEvent
-import kotlin.properties.Delegates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.erased.instance
+import kotlin.properties.Delegates
 
-class AllPlantListViewModel(application: Application) : BaseViewModel(application),
+class AllPlantListViewModel(application: Application) :
+    BaseViewModel(application),
     ModelProviderEventListenerInterface {
 
     private val modelProvider: ModelProviderInterface by instance()
@@ -52,7 +53,8 @@ class AllPlantListViewModel(application: Application) : BaseViewModel(applicatio
     private var inDownloadMode = false
     private var hasStarted = false
     var queryString: String by Delegates.observable("") {
-        _, _, new -> searchPlants(new)
+        _, _, new ->
+        searchPlants(new)
     }
 
     init {

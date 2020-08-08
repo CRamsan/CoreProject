@@ -112,7 +112,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
     fun onItemSelected(index: Int, context: Context) {
         val world = this.serverList[index]
         var channel = namespace.toString() + "-" +
-                this.serverList[index].world_id
+            this.serverList[index].world_id
         channel = channel.replace(":v2", "")
         if (world.isRegistered) {
             // ParsePush.unsubscribeInBackground(channel);
@@ -192,20 +192,20 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                 holder.serverPopulation!!.setTextColor(Color.rgb(250, 140, 0))
                 holder.serverPopulation!!.text =
                     context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(
-                        R.string.text_low
-                    ).toUpperCase()
+                    R.string.text_low
+                ).toUpperCase()
             } else if (serverPopulation.equals("medium", ignoreCase = true)) {
                 holder.serverPopulation!!.setTextColor(Color.YELLOW)
                 holder.serverPopulation!!.text =
                     context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(
-                        R.string.text_medium
-                    ).toUpperCase()
+                    R.string.text_medium
+                ).toUpperCase()
             } else if (serverPopulation.equals("high", ignoreCase = true)) {
                 holder.serverPopulation!!.setTextColor(Color.GREEN)
                 holder.serverPopulation!!.text =
                     context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(
-                        R.string.text_high
-                    ).toUpperCase()
+                    R.string.text_high
+                ).toUpperCase()
             } else {
                 holder.serverPopulation!!.setTextColor(Color.RED)
                 holder.serverPopulation!!.text =
@@ -273,28 +273,36 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                     lastAlert.metagame_event_state == "139"
                 ) {
                     holder.serverAlert!!.text =
-                        (context.resources.getString(R.string.text_server_alert_current) +
-                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
+                        (
+                            context.resources.getString(R.string.text_server_alert_current) +
+                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang)
+                            )
 
                     holder.serverAlert!!.setTextColor(Color.argb(255, 120, 235, 235))
                     holder.serverAlert!!.setTypeface(null, Typeface.BOLD)
                 } else {
                     holder.serverAlert!!.text =
-                        (context.resources.getString(R.string.text_server_alert_recently) +
-                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang))
+                        (
+                            context.resources.getString(R.string.text_server_alert_recently) +
+                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang)
+                            )
                     holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
                     holder.serverAlert!!.setTextColor(Color.GRAY)
                 }
             } catch (e: NullPointerException) {
                 holder.serverAlert!!.text =
-                    (context.resources.getString(R.string.text_server_alert_recently) +
-                            " " + context.resources.getString(R.string.text_unknown).toUpperCase())
+                    (
+                        context.resources.getString(R.string.text_server_alert_recently) +
+                            " " + context.resources.getString(R.string.text_unknown).toUpperCase()
+                        )
                 holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
             }
         } else {
             holder.serverAlert!!.text =
-                (context.resources.getString(R.string.text_server_alert_recently) +
-                        " " + context.resources.getString(R.string.text_none))
+                (
+                    context.resources.getString(R.string.text_server_alert_recently) +
+                        " " + context.resources.getString(R.string.text_none)
+                    )
             holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
         }
         holder.serverAlert!!.visibility = View.GONE

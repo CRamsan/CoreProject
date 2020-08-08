@@ -16,6 +16,9 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.scene.SceneEventsCallback
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -26,9 +29,6 @@ import javax.swing.JOptionPane
 import javax.swing.JOptionPane.showInputDialog
 import javax.swing.JPanel
 import kotlin.system.exitProcess
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class AWTRenderer : JFrame(), EntityManagerEventListener {
 
@@ -103,13 +103,14 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
 
         if (possibilities.size > 0) {
             val resultOption = showInputDialog(
-                    this@AWTRenderer,
-                    text,
-                    "Sample interactive event",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    possibilities,
-                    possibilities.first()) as String
+                this@AWTRenderer,
+                text,
+                "Sample interactive event",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                possibilities,
+                possibilities.first()
+            ) as String
 
             var selection = -1
             var selectedOption: InteractiveEventOption?

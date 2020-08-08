@@ -22,8 +22,8 @@ private const val GRANT_BUTTON_INDEX = 0
 fun allowPermissionsIfNeeded(permissionNeeded: String) {
     try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !hasNeededPermission(
-                permissionNeeded
-            )
+            permissionNeeded
+        )
         ) {
             sleep(PERMISSIONS_DIALOG_DELAY.toLong())
             val device = UiDevice.getInstance(getInstrumentation())
@@ -112,10 +112,10 @@ private fun getScreenWithoutStatusBarActionBar(view: View): Rect {
     // Get action bar height
     val tv = TypedValue()
     val actionBarHeight = if (view.context.theme.resolveAttribute(
-            R.attr.actionBarSize,
-            tv,
-            true
-        )
+        R.attr.actionBarSize,
+        tv,
+        true
+    )
     ) TypedValue.complexToDimensionPixelSize(
         tv.data, view.context.resources.displayMetrics
     ) else 0

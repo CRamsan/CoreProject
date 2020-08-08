@@ -55,9 +55,12 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         dataBinding.plantListRecycler.adapter = plantsAdapter
         dataBinding.viewModel = model
 
-        model.observablePlants().observe(viewLifecycleOwner, Observer<List<PresentablePlant>> { plants ->
-            plantsAdapter.updateValues(plants)
-        })
+        model.observablePlants().observe(
+            viewLifecycleOwner,
+            Observer<List<PresentablePlant>> { plants ->
+                plantsAdapter.updateValues(plants)
+            }
+        )
 
         dataBinding.plantListAddPlant.setOnClickListener {
             val intent = Intent(requireContext(), PlantSuggestionActivity::class.java)

@@ -13,11 +13,11 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.map.MapGenerator
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class GameEntityTriggerTests {
     /**
@@ -139,18 +139,21 @@ class GameEntityTriggerTests {
 
         assertNotNull(sceneConfig)
         var targetIndex = 1
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, object : EntityManagerEventListener {
-            override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
-            override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
-            override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
-                GlobalScope.launch {
-                    options.forEach {
-                        println("EcentID: ${it.eventId} - ${it.id} - ${it.label}")
+        val entityManager = EntityManager(
+            map, sceneConfig.triggerList, sceneConfig.eventList,
+            object : EntityManagerEventListener {
+                override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
+                override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
+                override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+                    GlobalScope.launch {
+                        options.forEach {
+                            println("EcentID: ${it.eventId} - ${it.id} - ${it.label}")
+                        }
+                        eventReceiver.selectOption(options[targetIndex])
                     }
-                    eventReceiver.selectOption(options[targetIndex])
                 }
             }
-        })
+        )
         val player = sceneConfig.player
         val scene = Scene(entityManager, sceneConfig)
 
@@ -209,16 +212,19 @@ class GameEntityTriggerTests {
         }
 
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, object : EntityManagerEventListener {
-            override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
-            override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
-            override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
-                runTest {
-                    assertEquals(0, options.size)
-                    eventReceiver.selectOption(null)
+        val entityManager = EntityManager(
+            map, sceneConfig.triggerList, sceneConfig.eventList,
+            object : EntityManagerEventListener {
+                override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
+                override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
+                override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+                    runTest {
+                        assertEquals(0, options.size)
+                        eventReceiver.selectOption(null)
+                    }
                 }
             }
-        })
+        )
         val player = sceneConfig.player
         val scene = Scene(entityManager, sceneConfig)
 

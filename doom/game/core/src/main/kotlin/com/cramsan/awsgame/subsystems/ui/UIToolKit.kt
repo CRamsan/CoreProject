@@ -61,25 +61,29 @@ object UIToolKit {
             var selectedOption: InteractiveEventOption?
             options.forEachIndexed { index, _ ->
                 val button = TextButton(text, skin)
-                button.addListener(EventListener {
-                    selectedOption = options[index]
-                    GlobalScope.launch {
-                        eventReceiver.selectOption(selectedOption)
+                button.addListener(
+                    EventListener {
+                        selectedOption = options[index]
+                        GlobalScope.launch {
+                            eventReceiver.selectOption(selectedOption)
+                        }
+                        mainPane.removeActor(mainPane)
+                        true
                     }
-                    mainPane.removeActor(mainPane)
-                    true
-                })
+                )
                 mainPane.add(button).pad(5F)
             }
         } else {
             val continueButton = TextButton("Continue", skin)
-            continueButton.addListener(EventListener {
-                GlobalScope.launch {
-                    eventReceiver.selectOption(null)
+            continueButton.addListener(
+                EventListener {
+                    GlobalScope.launch {
+                        eventReceiver.selectOption(null)
+                    }
+                    mainPane.removeActor(mainPane)
+                    true
                 }
-                mainPane.removeActor(mainPane)
-                true
-            })
+            )
             mainPane.add(continueButton)
         }
 

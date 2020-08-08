@@ -3,12 +3,12 @@ package com.cramsan.framework.thread.implementation
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import io.mockk.mockk
-import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.Semaphore
 
 /**
  */
@@ -34,10 +34,12 @@ class ThreadUtilTest {
     fun testIsBackgroundThreadInJavaThread() {
         val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
-        Thread { run {
-            threadUtilTest.testIsBackgroundThread(ThreadUtilJVM(eventLogger, haltUtil))
-            semaphore.release()
-        } }.start()
+        Thread {
+            run {
+                threadUtilTest.testIsBackgroundThread(ThreadUtilJVM(eventLogger, haltUtil))
+                semaphore.release()
+            }
+        }.start()
         semaphore.acquire()
     }
 
@@ -45,10 +47,12 @@ class ThreadUtilTest {
     fun testIsNotUIThreadInJavaThread() {
         val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
-        Thread { run {
-            threadUtilTest.testIsNotUIThread(ThreadUtilJVM(eventLogger, haltUtil))
-            semaphore.release()
-        } }.start()
+        Thread {
+            run {
+                threadUtilTest.testIsNotUIThread(ThreadUtilJVM(eventLogger, haltUtil))
+                semaphore.release()
+            }
+        }.start()
         semaphore.acquire()
     }
 
@@ -82,11 +86,13 @@ class ThreadUtilTest {
     fun testDispatchToBackground() {
         val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
-        Thread { run {
-            threadUtilTest.testDispatchToBackground(ThreadUtilJVM(eventLogger, haltUtil)) {
-                semaphore.release()
+        Thread {
+            run {
+                threadUtilTest.testDispatchToBackground(ThreadUtilJVM(eventLogger, haltUtil)) {
+                    semaphore.release()
+                }
             }
-        } }.start()
+        }.start()
         semaphore.acquire()
     }
 }

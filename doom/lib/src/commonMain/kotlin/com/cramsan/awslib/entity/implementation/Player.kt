@@ -13,12 +13,15 @@ class Player(
     posY: Int,
     speed: Int
 ) :
-    Character(InitialValues.PLAYER_ID,
-            InitialValues.HEALTH_PLAYER,
-            InitialValues.GROUP_PLAYER,
-            posX,
-            posY,
-            EntityType.PLAYER,
-            speed,
-            true,
-            true), GameEntityInterface
+    Character(
+        InitialValues.PLAYER_ID,
+        InitialValues.HEALTH_PLAYER,
+        InitialValues.GROUP_PLAYER,
+        posX,
+        posY,
+        EntityType.PLAYER,
+        speed,
+        true,
+        true
+    ),
+    GameEntityInterface

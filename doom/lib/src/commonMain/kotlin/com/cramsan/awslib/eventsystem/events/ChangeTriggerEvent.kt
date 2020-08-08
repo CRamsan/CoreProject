@@ -6,8 +6,10 @@ class ChangeTriggerEvent(
     enableEventId: Int,
     disableEventId: Int
 ) :
-        NonInteractiveEvent(id,
-                EventType.CHANGETRIGGER,
-                nextEventId,
-                disableEventId,
-                enableEventId)
+    NonInteractiveEvent(
+        id,
+        EventType.CHANGETRIGGER,
+        nextEventId,
+        disableEventId,
+        enableEventId
+    )

@@ -30,10 +30,10 @@ import java.util.ArrayList
  */
 class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
 /**
- * Constructor that requires a reference to the current context.
- *
- * @param context reference to the calling activity.
- */
+     * Constructor that requires a reference to the current context.
+     *
+     * @param context reference to the calling activity.
+     */
 
     private var database: SQLiteDatabase? = null
     private val dbHelper: SQLiteManager
@@ -760,7 +760,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                 null,
                 null,
                 "LIMIT " +
-                        count + " OFFSET " + index
+                    count + " OFFSET " + index
             )
 
             cursor.moveToFirst()
@@ -807,7 +807,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                     target,
                     allColumnsMembers,
                     SQLiteManager.MEMBERS_COLUMN_OUTFIT_ID + " = ? AND " +
-                            SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
+                        SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
                     whereArgs,
                     null,
                     null,
@@ -905,7 +905,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                     target,
                     allColumnsMembers,
                     SQLiteManager.MEMBERS_COLUMN_OUTFIT_ID + " = ? AND " +
-                            SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
+                        SQLiteManager.MEMBERS_COLUMN_ONLINE_STATUS + " != ?",
                     whereArgs,
                     null,
                     null,
@@ -1427,7 +1427,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
                     SQLiteManager.TABLE_TWEETS_NAME,
                     allColumnsTweet,
                     SQLiteManager.TWEETS_COLUMN_OWNER + " = " + users[i] +
-                            SQLiteManager.TWEETS_COLUMN_DATE + " BETWEEN ? AND ?",
+                        SQLiteManager.TWEETS_COLUMN_DATE + " BETWEEN ? AND ?",
                     betweenArgs,
                     null,
                     null,

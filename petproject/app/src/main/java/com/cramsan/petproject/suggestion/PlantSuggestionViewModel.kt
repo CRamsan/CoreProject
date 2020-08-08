@@ -24,14 +24,16 @@ class PlantSuggestionViewModel(application: Application) : BaseViewModel(applica
     val observableSelectedDogToxicityRes = MutableLiveData<Int>()
 
     private val observableSelectedCatToxicity: LiveData<ToxicityValue> = Transformations.map(observableSelectedCatToxicityRes) {
-            res -> when (res) {
+        res ->
+        when (res) {
             R.id.plant_suggestion_cat_safe -> ToxicityValue.NON_TOXIC
             R.id.plant_suggestion_cat_unsafe -> ToxicityValue.TOXIC
             else -> ToxicityValue.UNDETERMINED
         }
     }
     private val observableSelectedDogToxicity: LiveData<ToxicityValue> = Transformations.map(observableSelectedDogToxicityRes) {
-            res -> when (res) {
+        res ->
+        when (res) {
             R.id.plant_suggestion_cat_safe -> ToxicityValue.TOXIC
             R.id.plant_suggestion_cat_unsafe -> ToxicityValue.NON_TOXIC
             else -> ToxicityValue.UNDETERMINED

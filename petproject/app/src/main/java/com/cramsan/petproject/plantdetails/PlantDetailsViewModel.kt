@@ -35,11 +35,13 @@ class PlantDetailsViewModel(application: Application) : BaseViewModel(applicatio
     val observableDangerousText = MutableLiveData<Int>(R.string.string_empty)
     val observableDangerousColor = MutableLiveData<Int>(R.color.colorUndetermined)
     val observablePlantCommonNamesVisibility = Transformations.map(observablePlantCommonNames) {
-            commonName -> if (commonName.isEmpty()) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    } }
+        commonName ->
+        if (commonName.isEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
 
     // Events
     private val observableOpenSourceLink = LiveEvent<StringEvent>()

@@ -107,7 +107,8 @@ class FragmentDirectiveList : BaseFragment() {
                 SearchModifier.EQUALS,
                 "5000"
             ),
-        null!!)!!.toString()
+            null!!
+        )!!.toString()
 
         val success = Listener<Characters_directive_list> { response ->
             charactersDirective = response.characters_directive_list
@@ -128,8 +129,8 @@ class FragmentDirectiveList : BaseFragment() {
     fun downloadDirectivesObjectives(profileId: String?) {
         this.setProgressButton(true)
         val url = "http://census.soe.com/get/ps2:v2/" +
-                "characters_directive_objective?character_id=" + profileId +
-                "&c:lang=en&c:limit=5000&c:join=objective"
+            "characters_directive_objective?character_id=" + profileId +
+            "&c:lang=en&c:limit=5000&c:join=objective"
 
         val success = Listener<Characters_directive_objective_list> { response ->
             charactersDirectiveObjective = response.characters_directive_objective_list
@@ -156,8 +157,8 @@ class FragmentDirectiveList : BaseFragment() {
     fun downloadDirectiveTrees(profileId: String?) {
         this.setProgressButton(true)
         val url = "http://census.soe.com/get/ps2:v2/" +
-                "characters_directive_tree?character_id=" + profileId +
-                "&c:lang=en&c:limit=5000&c:join=directive_tree"
+            "characters_directive_tree?character_id=" + profileId +
+            "&c:lang=en&c:limit=5000&c:join=directive_tree"
 
         val success = Listener<Characters_directive_tree_list> { response ->
             charactersDirectiveTrees = response.characters_directive_tree_list
@@ -218,8 +219,8 @@ class FragmentDirectiveList : BaseFragment() {
     fun downloadDirectiveTiers(profileId: String?) {
         this.setProgressButton(true)
         val url = "http://census.soe.com/get/ps2:v2/" +
-                "characters_directive_tier?character_id=" + profileId +
-                "&c:lang=en&c:limit=5000"
+            "characters_directive_tier?character_id=" + profileId +
+            "&c:lang=en&c:limit=5000"
 
         val success = Listener<Characters_directive_tier_list> { response ->
             charactersDirectiveTiers = response.characters_directive_tier_list
@@ -313,9 +314,9 @@ class FragmentDirectiveList : BaseFragment() {
             directive.directive_id_join_directive = dis
             for (i in charactersDirectiveObjective!!.indices) {
                 if (charactersDirectiveObjective!![i].directive_id!!.equals(
-                        directive.directive_id!!,
-                        ignoreCase = true
-                    )
+                    directive.directive_id!!,
+                    ignoreCase = true
+                )
                 ) {
                     directive.directiveObjective = charactersDirectiveObjective!![i]
                     charactersDirectiveObjective!!.removeAt(i)

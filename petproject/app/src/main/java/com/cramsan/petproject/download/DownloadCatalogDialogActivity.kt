@@ -26,11 +26,14 @@ class DownloadCatalogDialogActivity : BaseActivity<DownloadCatalogViewModel, Act
         super.onCreate(savedInstanceState)
 
         val model: DownloadCatalogViewModel by viewModels()
-        model.observableIsDownloadComplete.observe(this, Observer<Boolean> { isDownloadComplete ->
-            if (isDownloadComplete) {
-                finish()
+        model.observableIsDownloadComplete.observe(
+            this,
+            Observer<Boolean> { isDownloadComplete ->
+                if (isDownloadComplete) {
+                    finish()
+                }
             }
-        })
+        )
         if (model.isCatalogReady()) {
             finish()
         }

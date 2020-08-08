@@ -32,13 +32,16 @@ class PlantsListActivity : BaseActivity<PlantListViewModel, ActivityPlantsListBi
         super.onCreate(savedInstanceState)
 
         val model: PlantListViewModel by viewModels()
-        model.observableAnimalType().observe(this, Observer {
-            when (it) {
-                AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
-                AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
-                else -> TODO()
+        model.observableAnimalType().observe(
+            this,
+            Observer {
+                when (it) {
+                    AnimalType.CAT -> supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
+                    AnimalType.DOG -> supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
+                    else -> TODO()
+                }
             }
-        })
+        )
         model.queryString = ""
 
         viewModel = model

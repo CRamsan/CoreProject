@@ -3,13 +3,13 @@ package com.cramsan.framework.thread.implementation
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.assert.implementation.AssertUtil
 import io.mockk.mockk
-import java.util.concurrent.Semaphore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.Semaphore
 
 /**
  * Unit test. This will be executed in a mocked Android environment.
@@ -43,20 +43,24 @@ class ThreadUtilTest {
     @Test
     fun testIsBackgroundThreadInJavaThread() {
         val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
-        Thread { run {
-            threadUtilTest.testIsBackgroundThread(ThreadUtilAndroid(haltUtil))
-            semaphore.release()
-        } }.start()
+        Thread {
+            run {
+                threadUtilTest.testIsBackgroundThread(ThreadUtilAndroid(haltUtil))
+                semaphore.release()
+            }
+        }.start()
         semaphore.acquire()
     }
 
     @Test
     fun testIsNotUIThreadInJavaThread() {
         val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
-        Thread { run {
-            threadUtilTest.testIsNotUIThread(ThreadUtilAndroid(haltUtil))
-            semaphore.release()
-        } }.start()
+        Thread {
+            run {
+                threadUtilTest.testIsNotUIThread(ThreadUtilAndroid(haltUtil))
+                semaphore.release()
+            }
+        }.start()
         semaphore.acquire()
     }
 
@@ -96,11 +100,13 @@ class ThreadUtilTest {
     @Test
     fun testDispatchToBackground() {
         val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
-        Thread { run {
-            threadUtilTest.testDispatchToBackground(ThreadUtilAndroid(haltUtil)) {
-                semaphore.release()
+        Thread {
+            run {
+                threadUtilTest.testDispatchToBackground(ThreadUtilAndroid(haltUtil)) {
+                    semaphore.release()
+                }
             }
-        } }.start()
+        }.start()
         semaphore.acquire()
     }
 

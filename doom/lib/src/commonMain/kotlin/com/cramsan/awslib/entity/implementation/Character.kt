@@ -17,13 +17,15 @@ abstract class Character(
     enabled: Boolean,
     shouldMove: Boolean
 ) :
-    GameEntity(id,
-            posX,
-            posY,
-            type,
-            speed,
-            enabled,
-            shouldMove) {
+    GameEntity(
+        id,
+        posX,
+        posY,
+        type,
+        speed,
+        enabled,
+        shouldMove
+    ) {
     private var _attack = InitialValues.CHARACTER_ATTACK
     override var attack: Int
         get() = _attack

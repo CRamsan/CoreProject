@@ -81,8 +81,10 @@ class DependenciesConfig {
         val modelStorageDAO = ModelStorageJdbcProvider(
             dbPath
         ).provide()
-        ModelStorage(modelStorageDAO,
+        ModelStorage(
+            modelStorageDAO,
             eventLogger,
-            threadUtil)
+            threadUtil
+        )
     }
 }

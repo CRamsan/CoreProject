@@ -5,4 +5,4 @@ class InteractiveEvent(
     val text: String,
     val options: List<InteractiveEventOption>
 ) :
-        BaseEvent(id, EventType.INTERACTION)
+    BaseEvent(id, EventType.INTERACTION)

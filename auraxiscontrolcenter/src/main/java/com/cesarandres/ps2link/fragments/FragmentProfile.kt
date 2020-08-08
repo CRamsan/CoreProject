@@ -26,8 +26,8 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
-import java.util.Date
 import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
 
 /**
  * This fragment will read a profile from the database and display it to the

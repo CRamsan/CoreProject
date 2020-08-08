@@ -116,8 +116,8 @@ class FragmentWeaponList : BaseFragment() {
         setProgressButton(true)
         val url = dbgCensus.generateGameDataRequest(
             "characters_weapon_stat_by_faction/?" +
-                    "character_id=" + character_id + "&c:join=item^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() +
-                    "&c:join=vehicle^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() + "&c:limit=10000",
+                "character_id=" + character_id + "&c:join=item^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() +
+                "&c:join=vehicle^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() + "&c:limit=10000",
             namespace!!
         )!!.toString()
 
@@ -229,8 +229,8 @@ class FragmentWeaponList : BaseFragment() {
 
                     if (statMap === weaponKilledMap) {
                         stat.kills = weapon.value_nc +
-                                weapon.value_tr +
-                                weapon.value_vs
+                            weapon.value_tr +
+                            weapon.value_vs
                     } else {
                         if (profileFaction == Faction.VS) {
                             statA = weapon.value_tr

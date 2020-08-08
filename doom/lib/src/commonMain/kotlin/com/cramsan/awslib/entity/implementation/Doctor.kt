@@ -15,15 +15,17 @@ open class Doctor(
     priority: Int,
     enabled: Boolean
 ) :
-    Character(id,
-            InitialValues.HEALTH_DOCTOR,
-            group,
-            posX,
-            posY,
-            EntityType.SCIENTIST,
-            priority,
-            enabled,
-            false) {
+    Character(
+        id,
+        InitialValues.HEALTH_DOCTOR,
+        group,
+        posX,
+        posY,
+        EntityType.SCIENTIST,
+        priority,
+        enabled,
+        false
+    ) {
 
     override var attack = InitialValues.ATTACK_DOCTOR
 }

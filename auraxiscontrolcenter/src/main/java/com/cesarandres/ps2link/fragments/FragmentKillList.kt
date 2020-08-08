@@ -109,7 +109,8 @@ class FragmentKillList : BaseFragment() {
                 }
                 val listRoot = activity!!.findViewById<View>(R.id.listViewKillList) as ListView
                 listRoot.adapter =
-                    KillItemAdapter(activity!!, response.characters_event_list!!,
+                    KillItemAdapter(
+                        activity!!, response.characters_event_list!!,
                         this!!.profileId!!,
                         this.namespace!!,
                         volley,

@@ -8,7 +8,8 @@ import com.squareup.sqldelight.db.SqlDriver
 
 class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
-    private var database: PetProjectDB = PetProjectDB(sqlDriver,
+    private var database: PetProjectDB = PetProjectDB(
+        sqlDriver,
         DescriptionAdapter = com.cramsan.petproject.db.Description.Adapter(AnimalTypeAdapter()),
         ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
     )

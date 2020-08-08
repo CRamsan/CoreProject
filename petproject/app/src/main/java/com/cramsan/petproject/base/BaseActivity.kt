@@ -12,7 +12,8 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-abstract class BaseActivity<T : BaseViewModel, U : ViewDataBinding> : AppCompatActivity(),
+abstract class BaseActivity<T : BaseViewModel, U : ViewDataBinding> :
+    AppCompatActivity(),
     KodeinAware {
 
     override val kodein by kodein()

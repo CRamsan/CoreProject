@@ -7,4 +7,4 @@ class CellTrigger(
     val posX: Int,
     val posY: Int
 ) :
-        Trigger(id, eventId, enabled)
+    Trigger(id, eventId, enabled)

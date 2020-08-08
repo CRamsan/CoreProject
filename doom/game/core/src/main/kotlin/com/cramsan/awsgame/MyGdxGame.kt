@@ -27,12 +27,15 @@ class MyGdxGame : Game() {
     private val subsystemList: ArrayList<IGameSubsystem?>
     override fun create() {
         if (!isSkipSplashScreen) {
-            splashScreen = SplashScreen(1f, object : IResourcesLoaded {
-                override fun onResourcesLoaded() {
-                    SceneManager.startGameScreen(GameParameterManager())
-                    // startMainMenuScreen(true)
+            splashScreen = SplashScreen(
+                1f,
+                object : IResourcesLoaded {
+                    override fun onResourcesLoaded() {
+                        SceneManager.startGameScreen(GameParameterManager())
+                        // startMainMenuScreen(true)
+                    }
                 }
-            })
+            )
             this.setScreen(splashScreen)
         }
         SceneManager.setGame(this)

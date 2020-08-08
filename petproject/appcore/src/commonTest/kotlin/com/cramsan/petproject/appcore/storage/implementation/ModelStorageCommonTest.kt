@@ -9,13 +9,13 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import io.mockk.mockk
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.newInstance
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 @Suppress("MagicNumber")
 internal class ModelStorageCommonTest {
@@ -42,9 +42,13 @@ internal class ModelStorageCommonTest {
         assertEquals(10, allPlants.size)
 
         val plantId: Long = 25432
-        modelStorage.insertPlant(PlantImp(plantId,
-            "Arum maculatum TEST",
-            "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"))
+        modelStorage.insertPlant(
+            PlantImp(
+                plantId,
+                "Arum maculatum TEST",
+                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
+            )
+        )
         modelStorage.insertDescription(DescriptionImpl(2349, plantId, AnimalType.CAT, "en", "desc"))
         modelStorage.insertPlantFamily(PlantFamilyImpl(342, "Some Family", plantId, "en"))
         modelStorage.insertPlantCommonName(PlantCommonNameImpl(435, "Name 5", plantId, "en"))
@@ -58,9 +62,13 @@ internal class ModelStorageCommonTest {
 
     fun getPlant() {
         val plantId: Long = 25432
-        modelStorage.insertPlant(PlantImp(plantId,
-            "Arum maculatum TEST",
-            "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"))
+        modelStorage.insertPlant(
+            PlantImp(
+                plantId,
+                "Arum maculatum TEST",
+                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
+            )
+        )
         modelStorage.insertDescription(DescriptionImpl(2349, plantId, AnimalType.CAT, "en", "desc"))
         modelStorage.insertPlantFamily(PlantFamilyImpl(342, "Some Family", plantId, "en"))
         modelStorage.insertPlantCommonName(PlantCommonNameImpl(435, "Name 5", plantId, "en"))
@@ -99,9 +107,13 @@ internal class ModelStorageCommonTest {
         var toxicityId = 0L
         for (i in 1..10) {
             val plantId: Long = i.toLong()
-            modelStorage.insertPlant(PlantImp(plantId,
-                "Arum maculatum TEST $i",
-                "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"))
+            modelStorage.insertPlant(
+                PlantImp(
+                    plantId,
+                    "Arum maculatum TEST $i",
+                    "https://www.aspca.org/sites/default/files/styles/medium_image_300x200/public/field/image/plants/arum-r.jpg?itok=206UUxCJ"
+                )
+            )
             modelStorage.insertDescription(DescriptionImpl(descriptionId++, plantId, AnimalType.CAT, "en", "desc"))
             modelStorage.insertPlantFamily(PlantFamilyImpl(familyId++, "Some Family $i", plantId, "en"))
             modelStorage.insertPlantCommonName(PlantCommonNameImpl(commonNameId++, "Name $i", plantId, "en"))

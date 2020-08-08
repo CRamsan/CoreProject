@@ -194,7 +194,8 @@ class ModelProvider(
                     it.mainName,
                     it.animalId ?: AnimalType.ALL,
                     it.isToxic ?: ToxicityValue.UNDETERMINED
-                ))
+                )
+            )
         }
         plantList = mutableList.sortedBy { it.mainCommonName }
         return plantList
@@ -224,7 +225,8 @@ class ModelProvider(
                     it.mainName,
                     it.animalId ?: AnimalType.ALL,
                     it.isToxic ?: ToxicityValue.UNDETERMINED
-                ))
+                )
+            )
         }
         return page
     }

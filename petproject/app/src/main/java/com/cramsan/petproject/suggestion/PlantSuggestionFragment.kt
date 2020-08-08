@@ -25,12 +25,15 @@ class PlantSuggestionFragment : BaseFragment<PlantSuggestionViewModel, FragmentP
         animalType = AnimalType.values()[animalTypeId]
         val model: PlantSuggestionViewModel by viewModels()
         dataBinding.viewModel = model
-        model.observableIsComplete.observe(viewLifecycleOwner, Observer {
-            if (it.suggestionSubmitted) {
-                Toast.makeText(context, R.string.thanks_suggestion, Toast.LENGTH_LONG).show()
+        model.observableIsComplete.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it.suggestionSubmitted) {
+                    Toast.makeText(context, R.string.thanks_suggestion, Toast.LENGTH_LONG).show()
+                }
+                requireActivity().finish()
             }
-            requireActivity().finish()
-        })
+        )
 
         viewModel = model
     }

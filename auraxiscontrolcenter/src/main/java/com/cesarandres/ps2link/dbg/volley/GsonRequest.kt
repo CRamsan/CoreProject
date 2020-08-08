@@ -17,21 +17,21 @@ import java.io.UnsupportedEncodingException
 /**
  * Volley adapter for JSON requests that will be parsed into Java objects by
  * Gson.
- */
-class GsonRequest<T>
-/**
+
  * Make a GET request and return a parsed object from JSON.
  *
  * @param url URL of the request to make
  * @param clazz Relevant class object, for Gson's reflection
  * @param headers Map of request headers
- */(
-     url: String,
-     private val clazz: Class<T>,
-     private val headers: Map<String, String>?,
-     private val listener: Listener<T>,
-     errorListener: ErrorListener
- ) : Request<T>(Request.Method.GET, url, errorListener) {
+ */
+
+class GsonRequest<T> (
+    url: String,
+    private val clazz: Class<T>,
+    private val headers: Map<String, String>?,
+    private val listener: Listener<T>,
+    errorListener: ErrorListener
+) : Request<T>(Request.Method.GET, url, errorListener) {
     private val gson = Gson()
 
     /*

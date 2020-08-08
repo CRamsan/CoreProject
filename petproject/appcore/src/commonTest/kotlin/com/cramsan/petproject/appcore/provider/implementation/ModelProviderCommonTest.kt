@@ -19,8 +19,6 @@ import com.cramsan.petproject.appcore.storage.implementation.PlantImp
 import com.cramsan.petproject.appcore.storage.implementation.PlantMainNameImpl
 import com.cramsan.petproject.appcore.storage.implementation.ToxicityImpl
 import io.mockk.mockk
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
@@ -28,6 +26,8 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.newInstance
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 internal class ModelProviderCommonTest {
 
@@ -59,7 +59,7 @@ internal class ModelProviderCommonTest {
         assertEquals(result.size, 1)
         val job = launch {
             for (i in 0..99) {
-                    modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "100", "en")
+                modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "100", "en")
             }
             result = modelProvider.getPlantsWithToxicityFiltered(AnimalType.CAT, "65", "en")
         }
@@ -77,9 +77,11 @@ internal class ModelProviderCommonTest {
         for (i in 1..100) {
             val plantId: Long = i.toLong()
             modelStorage.insertPlant(
-                PlantImp(plantId,
+                PlantImp(
+                    plantId,
                     "$i",
-                    "https://www.aspca.org")
+                    "https://www.aspca.org"
+                )
             )
             modelStorage.insertDescription(DescriptionImpl(descriptionId++, plantId, AnimalType.CAT, "en", "desc"))
             modelStorage.insertPlantFamily(PlantFamilyImpl(familyId++, "Some Family $i", plantId, "en"))

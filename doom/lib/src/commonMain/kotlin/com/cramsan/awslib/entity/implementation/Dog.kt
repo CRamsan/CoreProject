@@ -14,15 +14,17 @@ open class Dog(
     priority: Int,
     enabled: Boolean
 ) :
-    Character(id,
-            InitialValues.HEALTH_DOG,
-            InitialValues.ENEMY_GROUP,
-            posX,
-            posY,
-            EntityType.DOG,
-            priority,
-            enabled,
-            true) {
+    Character(
+        id,
+        InitialValues.HEALTH_DOG,
+        InitialValues.ENEMY_GROUP,
+        posX,
+        posY,
+        EntityType.DOG,
+        priority,
+        enabled,
+        true
+    ) {
 
     override var attack = InitialValues.ATTACK_DOG
 }

@@ -7,4 +7,4 @@ abstract class NonInteractiveEvent(
     val enableId: Int,
     val disableId: Int
 ) :
-        BaseEvent(id, type)
+    BaseEvent(id, type)

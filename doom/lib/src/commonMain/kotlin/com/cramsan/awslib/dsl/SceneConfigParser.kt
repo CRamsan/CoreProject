@@ -24,9 +24,11 @@ class PlayerBuilder {
     var posY = InitialValues.POS_Y_ENTITY
     var speed = InitialValues.SPEED_PLAYER
 
-    internal fun build() = Player(posX,
-            posY,
-            speed)
+    internal fun build() = Player(
+        posX,
+        posY,
+        speed
+    )
 }
 
 class DogBuilder {
@@ -36,11 +38,13 @@ class DogBuilder {
     var priority = InitialValues.PRIORITY_ENTITY
     var enabled = InitialValues.ENABLED_ENTITY
 
-    internal fun build() = Dog(id,
-            posX,
-            posY,
-            priority,
-            enabled)
+    internal fun build() = Dog(
+        id,
+        posX,
+        posY,
+        priority,
+        enabled
+    )
 }
 
 class ScientistBuilder {
@@ -51,12 +55,14 @@ class ScientistBuilder {
     var group = InitialValues.INVALID_ID
     var enabled = InitialValues.ENABLED_ENTITY
 
-    internal fun build() = Doctor(id,
-            group,
-            posX,
-            posY,
-            priority,
-            enabled)
+    internal fun build() = Doctor(
+        id,
+        group,
+        posX,
+        posY,
+        priority,
+        enabled
+    )
 }
 
 class EntityListBuilder {
@@ -80,11 +86,13 @@ class CellTriggerBuilder {
     var posX = InitialValues.POS_X_TRIGGER
     var posY = InitialValues.POS_Y_TRIGGER
 
-    internal fun build() = CellTrigger(id,
-            eventId,
-            enabled,
-            posX,
-            posY)
+    internal fun build() = CellTrigger(
+        id,
+        eventId,
+        enabled,
+        posX,
+        posY
+    )
 }
 
 class GameEntityTriggerBuilder {
@@ -93,10 +101,12 @@ class GameEntityTriggerBuilder {
     var enabled = InitialValues.ENABLED_TRIGGER
     var targetId = InitialValues.INVALID_ID
 
-    internal fun build() = GameEntityTrigger(id,
-            eventId,
-            enabled,
-            targetId)
+    internal fun build() = GameEntityTrigger(
+        id,
+        eventId,
+        enabled,
+        targetId
+    )
 }
 
 class TriggerListBuilder {
@@ -118,9 +128,11 @@ class InteractiveEventOptionBuilder {
     var eventId = InitialValues.INVALID_ID
     var label = InitialValues.INVALID_LABEL_OPTION
 
-    internal fun build() = InteractiveEventOption(id,
-            eventId,
-            label)
+    internal fun build() = InteractiveEventOption(
+        id,
+        eventId,
+        label
+    )
 }
 
 class InteractiveEventBuilder {
@@ -142,10 +154,12 @@ class ChangeTriggerEventBuilder {
     var enableEventId = InitialValues.INVALID_ID
     var disableEventId = InitialValues.INVALID_ID
 
-    internal fun build() = ChangeTriggerEvent(id,
-            nextEventId,
-            enableEventId,
-            disableEventId)
+    internal fun build() = ChangeTriggerEvent(
+        id,
+        nextEventId,
+        enableEventId,
+        disableEventId
+    )
 }
 
 class SwapEntityInteractiveEventBuilder {
@@ -154,10 +168,12 @@ class SwapEntityInteractiveEventBuilder {
     var enableEntityId = InitialValues.INVALID_ID
     var disableEntityId = InitialValues.INVALID_ID
 
-    internal fun build() = SwapEntityEvent(id,
-            nextEventId,
-            enableEntityId,
-            disableEntityId)
+    internal fun build() = SwapEntityEvent(
+        id,
+        nextEventId,
+        enableEntityId,
+        disableEntityId
+    )
 }
 
 class EventListBuilder {

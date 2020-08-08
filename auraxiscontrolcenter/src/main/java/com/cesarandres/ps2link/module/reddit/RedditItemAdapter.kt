@@ -9,8 +9,8 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
-import java.util.Date
 import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
 
 class RedditItemAdapter(
     private val context: Context,

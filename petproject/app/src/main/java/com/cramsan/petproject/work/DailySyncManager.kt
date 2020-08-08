@@ -6,9 +6,9 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.cramsan.petproject.PetProjectApplication
-import java.util.concurrent.TimeUnit
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
+import java.util.concurrent.TimeUnit
 
 class DailySyncManager : ScheduledSyncManager, KodeinAware {
 

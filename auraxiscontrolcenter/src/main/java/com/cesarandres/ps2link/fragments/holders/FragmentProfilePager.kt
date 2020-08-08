@@ -95,23 +95,25 @@ class FragmentProfilePager : BaseFragment() {
         this.namespace = extras.getString("PARAM_1")
 
         this.fragmentUpdate.visibility = View.VISIBLE
-        this.fragmentUpdate.setOnClickListener(View.OnClickListener {
-            metrics.log(TAG, "Update")
-            val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
-                ?: return@OnClickListener
-            when (mViewPager!!.currentItem) {
-                PROFILE -> (selectedFragment as FragmentProfile).downloadProfiles(profileId)
-                FRIENDS -> (selectedFragment as FragmentFriendList).downloadFriendsList(profileId)
-                STATS -> (selectedFragment as FragmentStatList).downloadStatList(profileId)
-                KILLBOARD -> (selectedFragment as FragmentKillList).downloadKillList(profileId)
-                WEAPONS -> (selectedFragment as FragmentWeaponList).downloadWeaponList(profileId)
-                DIRECTIVES -> (selectedFragment as FragmentDirectiveList).downloadDirectivesList(
-                    profileId
-                )
-                else -> {
+        this.fragmentUpdate.setOnClickListener(
+            View.OnClickListener {
+                metrics.log(TAG, "Update")
+                val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
+                    ?: return@OnClickListener
+                when (mViewPager!!.currentItem) {
+                    PROFILE -> (selectedFragment as FragmentProfile).downloadProfiles(profileId)
+                    FRIENDS -> (selectedFragment as FragmentFriendList).downloadFriendsList(profileId)
+                    STATS -> (selectedFragment as FragmentStatList).downloadStatList(profileId)
+                    KILLBOARD -> (selectedFragment as FragmentKillList).downloadKillList(profileId)
+                    WEAPONS -> (selectedFragment as FragmentWeaponList).downloadWeaponList(profileId)
+                    DIRECTIVES -> (selectedFragment as FragmentDirectiveList).downloadDirectivesList(
+                        profileId
+                    )
+                    else -> {
+                    }
                 }
             }
-        })
+        )
 
         if ("" != profileName && profileName != null) {
             this.fragmentTitle.text = profileName

@@ -25,9 +25,12 @@ class PlantDetailsActivity : BaseActivity<PlantDetailsViewModel, ActivityPlantDe
         super.onCreate(savedInstanceState)
 
         val model: PlantDetailsViewModel by viewModels()
-        model.observablePlantName.observe(this, Observer {
-            supportActionBar?.title = it
-        })
+        model.observablePlantName.observe(
+            this,
+            Observer {
+                supportActionBar?.title = it
+            }
+        )
         viewModel = model
     }
 }

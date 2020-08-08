@@ -96,11 +96,13 @@ class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPl
     }
 
     constructor(getAllPlantsWithAnimalIdAll: GetAllPlantsWithAnimalIdAll) {
-        this.getAllPlantsWithAnimalId = GetAllPlantsWithAnimalId.Impl(getAllPlantsWithAnimalIdAll.id,
+        this.getAllPlantsWithAnimalId = GetAllPlantsWithAnimalId.Impl(
+            getAllPlantsWithAnimalIdAll.id,
             getAllPlantsWithAnimalIdAll.scientific_name,
             getAllPlantsWithAnimalIdAll.main_name,
             getAllPlantsWithAnimalIdAll.animal_id,
-            getAllPlantsWithAnimalIdAll.is_toxic)
+            getAllPlantsWithAnimalIdAll.is_toxic
+        )
     }
 
     override val id: Long

@@ -1,10 +1,10 @@
 package com.cesarandres.ps2link.module.twitter
 
-import java.util.ArrayList
 import twitter4j.Twitter
 import twitter4j.TwitterException
 import twitter4j.TwitterFactory
 import twitter4j.conf.ConfigurationBuilder
+import java.util.ArrayList
 
 /**
  * This class is used to retrieve tweets from the requested users. The public

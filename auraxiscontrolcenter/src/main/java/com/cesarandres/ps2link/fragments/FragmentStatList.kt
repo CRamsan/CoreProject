@@ -85,7 +85,8 @@ class FragmentStatList : BaseFragment() {
                 val listRoot = activity!!.findViewById<View>(R.id.listViewStatList) as ListView
                 val profile = response.character_list!![0]
                 val stats = profile.stats
-                listRoot.adapter = StatItemAdapter(activity!!, stats!!.stat_history!!,
+                listRoot.adapter = StatItemAdapter(
+                    activity!!, stats!!.stat_history!!,
                     this!!.profileId!!
                 )
             } catch (e: Exception) {

@@ -16,12 +16,12 @@ import com.microsoft.azure.functions.HttpResponseMessage
 import com.microsoft.azure.functions.HttpStatus
 import io.mockk.every
 import io.mockk.mockk
-import java.lang.reflect.Type
-import java.util.logging.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
+import java.lang.reflect.Type
+import java.util.logging.Logger
 
 class APIFunctionTests {
 

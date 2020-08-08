@@ -8,7 +8,9 @@ class Plant(
     imageUrl: String,
     val family: String
 ) :
-    Item(id,
+    Item(
+        id,
         scientificName,
         commonNames,
-        imageUrl)
+        imageUrl
+    )

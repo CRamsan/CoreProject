@@ -290,16 +290,21 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
         var newFragment: BaseFragment? = null
         when (activityMode) {
             ApplicationPS2Link.ActivityMode.ACTIVITY_ADD_OUTFIT -> newFragment = FragmentAddOutfit()
-            ApplicationPS2Link.ActivityMode.ACTIVITY_ADD_PROFILE -> newFragment =
-                FragmentAddProfile()
-            ApplicationPS2Link.ActivityMode.ACTIVITY_MEMBER_LIST -> newFragment =
-                FragmentOutfitPager()
-            ApplicationPS2Link.ActivityMode.ACTIVITY_OUTFIT_LIST -> newFragment =
-                FragmentOutfitList()
-            ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE_LIST -> newFragment =
-                FragmentProfileList()
-            ApplicationPS2Link.ActivityMode.ACTIVITY_SERVER_LIST -> newFragment =
-                FragmentServerList()
+            ApplicationPS2Link.ActivityMode.ACTIVITY_ADD_PROFILE ->
+                newFragment =
+                    FragmentAddProfile()
+            ApplicationPS2Link.ActivityMode.ACTIVITY_MEMBER_LIST ->
+                newFragment =
+                    FragmentOutfitPager()
+            ApplicationPS2Link.ActivityMode.ACTIVITY_OUTFIT_LIST ->
+                newFragment =
+                    FragmentOutfitList()
+            ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE_LIST ->
+                newFragment =
+                    FragmentProfileList()
+            ApplicationPS2Link.ActivityMode.ACTIVITY_SERVER_LIST ->
+                newFragment =
+                    FragmentServerList()
             ApplicationPS2Link.ActivityMode.ACTIVITY_TWITTER -> newFragment = FragmentTwitter()
             ApplicationPS2Link.ActivityMode.ACTIVITY_MAIN_MENU -> newFragment = FragmentMainMenu()
             ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE -> newFragment = FragmentProfilePager()

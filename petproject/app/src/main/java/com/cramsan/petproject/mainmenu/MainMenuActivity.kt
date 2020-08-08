@@ -41,11 +41,14 @@ class MainMenuActivity : BaseActivity<AllPlantListViewModel, ViewDataBinding>() 
 
         val model: AllPlantListViewModel by viewModels()
         viewModel = model
-        viewModel.observableShowDataDownloaded().observe(this, Observer {
-            eventLogger.log(Severity.INFO, "MainMenuActivity", "Data is downloaded")
-            enableSearchView = true
-            invalidateOptionsMenu()
-        })
+        viewModel.observableShowDataDownloaded().observe(
+            this,
+            Observer {
+                eventLogger.log(Severity.INFO, "MainMenuActivity", "Data is downloaded")
+                enableSearchView = true
+                invalidateOptionsMenu()
+            }
+        )
         viewModel.queryString = ""
     }
 

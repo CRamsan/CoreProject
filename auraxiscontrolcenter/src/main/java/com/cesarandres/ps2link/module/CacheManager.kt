@@ -4,13 +4,13 @@ import android.content.Context
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.ThreadUtilInterface
-import java.io.File
-import java.util.Arrays
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
+import java.io.File
+import java.util.Arrays
 
 class CacheManager(val context: Context) : KodeinAware {
 

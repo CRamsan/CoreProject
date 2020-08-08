@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.erased.instance
 
-class DownloadCatalogViewModel(application: Application) : BaseViewModel(application),
+class DownloadCatalogViewModel(application: Application) :
+    BaseViewModel(application),
     ModelProviderEventListenerInterface {
 
     private val modelProvider: ModelProviderInterface by instance()

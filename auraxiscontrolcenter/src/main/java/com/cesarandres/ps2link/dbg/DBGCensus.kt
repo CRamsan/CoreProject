@@ -11,11 +11,11 @@ import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
-import java.net.MalformedURLException
-import java.net.URL
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
+import java.net.MalformedURLException
+import java.net.URL
 
 /**
  * This class will be in charge of formatting requests for DBG Census API and
@@ -67,7 +67,7 @@ class DBGCensus(context: Context) : KodeinAware {
         try {
             requestDataURL = URL(
                 ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/" +
-                        identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
+                    identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
             )
         } catch (e: MalformedURLException) {
             Logger.log(Log.ERROR, "DBGCensus", "There was a problem creating the URL")

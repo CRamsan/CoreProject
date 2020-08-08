@@ -15,7 +15,7 @@ class SQLiteManager
 /**
  * @param context reference to the activity that is accessing the database.
  */
-    (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     /*
      * (non-Javadoc)
@@ -120,38 +120,50 @@ class SQLiteManager
         val DATABASE_VERSION = 33
 
         private val CREATE_WORLDS_TABLE =
-            ("create table " + TABLE_WORLDS_NAME + " ( " + WORLDS_COLUMN_ID + " Int, " + WORLDS_COLUMN_STATE +
-                    " Int, " + WORLDS_COLUMN_NAME + " varchar(-1), " + "PRIMARY KEY (" + WORLDS_COLUMN_ID + "));")
+            (
+                "create table " + TABLE_WORLDS_NAME + " ( " + WORLDS_COLUMN_ID + " Int, " + WORLDS_COLUMN_STATE +
+                    " Int, " + WORLDS_COLUMN_NAME + " varchar(-1), " + "PRIMARY KEY (" + WORLDS_COLUMN_ID + "));"
+                )
 
         private val CREATE_FACTIONS_TABLE =
-            ("create table " + TABLE_FACTIONS_NAME + " ( " + FACTIONS_COLUMN_ID + " Int, " + FACTIONS_COLUMN_NAME +
-                    " varchar(-1), " + FACTIONS_COLUMN_CODE + " varchar(-1), " + FACTIONS_COLUMN_ICON + " Int, " + "PRIMARY KEY (" + FACTIONS_COLUMN_ID + "));")
+            (
+                "create table " + TABLE_FACTIONS_NAME + " ( " + FACTIONS_COLUMN_ID + " Int, " + FACTIONS_COLUMN_NAME +
+                    " varchar(-1), " + FACTIONS_COLUMN_CODE + " varchar(-1), " + FACTIONS_COLUMN_ICON + " Int, " + "PRIMARY KEY (" + FACTIONS_COLUMN_ID + "));"
+                )
 
         private val CREATE_CHARACTERS_TABLE =
-            ("create table " + TABLE_CHARACTERS_NAME + " ( " + CHARACTERS_COLUMN_ID + " varchar(-1), " +
+            (
+                "create table " + TABLE_CHARACTERS_NAME + " ( " + CHARACTERS_COLUMN_ID + " varchar(-1), " +
                     CHARACTERS_COLUMN_NAME_FIRST + " varchar(-1), " + CHARACTERS_COLUMN_NAME_FIRST_LOWER + " varchar(-1), " + CHARACTERS_COLUMN_ACTIVE_PROFILE_ID +
                     " Int, " + CHARACTERS_COLUMN_CURRENT_POINTS + " Int, " + CHARACTERS_COLUMN_PERCENTAGE_TO_NEXT_CERT + " Int, " +
                     CHARACTERS_COLUMN_PERCENTAGE_TO_NEXT_RANK + " Int, " + CHARACTERS_COLUMN_RANK_VALUE + " Int, " + CHARACTERS_COLUMN_LAST_LOGIN + " Int, " +
                     CHARACTERS_COLUMN_MINUTES_PLAYED + " Int, " + CHARACTERS_COLUMN_FACTION_ID + " varchar(-1), " + CHARACTERS_COLUMN_WORLD_ID + " varchar(-1), " +
                     CHARACTERS_COLUMN_OUTFIT_NAME + " varchar(-1), " + CACHE_COLUMN_SAVES + " Int, " + CHARACTERS_COLUMN_WORLD_NAME + " varchar(-1), " + CHARACTERS_COLUMN_NAMESPACE + " varchar(-1), " + "PRIMARY KEY (" + CHARACTERS_COLUMN_ID + "), " +
-                    "FOREIGN KEY(" + CHARACTERS_COLUMN_FACTION_ID + ") REFERENCES " + TABLE_FACTIONS_NAME + "(" + FACTIONS_COLUMN_ID + "));")
+                    "FOREIGN KEY(" + CHARACTERS_COLUMN_FACTION_ID + ") REFERENCES " + TABLE_FACTIONS_NAME + "(" + FACTIONS_COLUMN_ID + "));"
+                )
 
         private val CREATE_MEMBERS_TABLE =
-            ("create table " + TABLE_MEMBERS_NAME + " ( " + MEMBERS_COLUMN_ID + " varchar(-1), " +
+            (
+                "create table " + TABLE_MEMBERS_NAME + " ( " + MEMBERS_COLUMN_ID + " varchar(-1), " +
                     MEMBERS_COLUMN_RANK + " varchar(-1), " + MEMBERS_COLUMN_OUTFIT_ID + " Int, " + MEMBERS_COLUMN_ONLINE_STATUS + " varchar(-1), " +
-                    MEMBERS_COLUMN_NAME + " varchar(-1), " + CACHE_COLUMN_SAVES + " Int, " + "PRIMARY KEY (" + MEMBERS_COLUMN_ID + "));")
+                    MEMBERS_COLUMN_NAME + " varchar(-1), " + CACHE_COLUMN_SAVES + " Int, " + "PRIMARY KEY (" + MEMBERS_COLUMN_ID + "));"
+                )
 
         private val CREATE_OUTFITS_TABLE =
-            ("create table " + TABLE_OUTFITS_NAME + " ( " + OUTFIT_COLUMN_ID + " varchar(-1), " + OUTFIT_COLUMN_NAME +
+            (
+                "create table " + TABLE_OUTFITS_NAME + " ( " + OUTFIT_COLUMN_ID + " varchar(-1), " + OUTFIT_COLUMN_NAME +
                     " varchar(-1), " + OUTFIT_COLUMN_ALIAS + " varchar(-1), " + OUTFIT_COLUMN_LEADER_CHARACTER_ID + " varchar(-1), " + OUTFIT_COLUMN_MEMBER_COUNT +
                     " Int, " + OUTFIT_COLUMN_TIME_CREATED + " Int, " + OUTFIT_COLUMN_WORDL_ID + " Int, " + OUTFIT_COLUMN_FACTION_ID + " varchar(-1), " +
                     CACHE_COLUMN_SAVES + " Int, " + OUTFIT_COLUMN_NAMESPACE + " varchar(-1), " + "FOREIGN KEY(" + OUTFIT_COLUMN_FACTION_ID + ") REFERENCES " + TABLE_FACTIONS_NAME + "(" + FACTIONS_COLUMN_ID +
                     "), " + "FOREIGN KEY(" + OUTFIT_COLUMN_WORDL_ID + ") REFERENCES " + TABLE_WORLDS_NAME + "(" + WORLDS_COLUMN_ID + "), " + "PRIMARY KEY (" +
-                    OUTFIT_COLUMN_ID + "));")
+                    OUTFIT_COLUMN_ID + "));"
+                )
 
         private val CREATE_TWEETS_TABLE =
-            ("create table " + TABLE_TWEETS_NAME + " ( " + TWEETS_COLUMN_ID + " varchar(-1), " + TWEETS_COLUMN_DATE +
+            (
+                "create table " + TABLE_TWEETS_NAME + " ( " + TWEETS_COLUMN_ID + " varchar(-1), " + TWEETS_COLUMN_DATE +
                     " Int, " + TWEETS_COLUMN_USER + " varchar(-1), " + TWEETS_COLUMN_TAG + " varchar(-1), " + TWEETS_COLUMN_CONTENT + " varchar(-1), " +
-                    TWEETS_COLUMN_PICTURE + " varchar(-1), " + TWEETS_COLUMN_OWNER + " varchar(-1), " + "PRIMARY KEY (" + TWEETS_COLUMN_ID + "));")
+                    TWEETS_COLUMN_PICTURE + " varchar(-1), " + TWEETS_COLUMN_OWNER + " varchar(-1), " + "PRIMARY KEY (" + TWEETS_COLUMN_ID + "));"
+                )
     }
 }

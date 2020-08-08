@@ -33,7 +33,6 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.microsoft.appcenter.AppCenter
-import java.util.Locale
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
@@ -43,6 +42,7 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.singleton
 import org.kodein.di.newInstance
+import java.util.Locale
 
 class ApplicationPS2Link : Application(), KodeinAware {
 

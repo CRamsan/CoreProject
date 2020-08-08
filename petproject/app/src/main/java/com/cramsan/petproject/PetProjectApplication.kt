@@ -89,9 +89,12 @@ class PetProjectApplication : Application(), KodeinAware {
                 context
             ).provide()
             val modelStorage by kodein.newInstance {
-                ModelStorage(modelStorageDAO,
-                instance(),
-                instance()) }
+                ModelStorage(
+                    modelStorageDAO,
+                    instance(),
+                    instance()
+                )
+            }
             modelStorage
         }
         bind<PreferencesInterface>() with singleton {
@@ -102,20 +105,25 @@ class PetProjectApplication : Application(), KodeinAware {
             preferences
         }
         bind<ProviderConfig>() with singleton {
-            ProviderConfig(getString(R.string.provider_config_plants_url),
+            ProviderConfig(
+                getString(R.string.provider_config_plants_url),
                 getString(R.string.provider_config_mainname_url),
                 getString(R.string.provider_config_commonname_url),
                 getString(R.string.provider_config_description_url),
                 getString(R.string.provider_config_family_url),
-                getString(R.string.provider_config_toxicities_url))
+                getString(R.string.provider_config_toxicities_url)
+            )
         }
         bind<ModelProviderInterface>() with singleton {
             val modelProvider by kodein.newInstance {
-                ModelProvider(instance(),
+                ModelProvider(
                     instance(),
                     instance(),
                     instance(),
-                    instance()) }
+                    instance(),
+                    instance()
+                )
+            }
             modelProvider
         }
         bind<FeedbackManagerInterface>() with singleton {
@@ -125,9 +133,11 @@ class PetProjectApplication : Application(), KodeinAware {
                 }
             }
             val feedbackManager by kodein.newInstance {
-                FeedbackManager(DummyDAO(),
+                FeedbackManager(
+                    DummyDAO(),
                     instance(),
-                    instance())
+                    instance()
+                )
             }
             feedbackManager
         }

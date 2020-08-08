@@ -19,9 +19,9 @@ import com.cesarandres.ps2link.dbg.view.TwitterItemAdapter
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
 import com.cesarandres.ps2link.module.twitter.TwitterUtil
 import com.cramsan.framework.logging.Severity
+import twitter4j.TwitterException
 import java.util.ArrayList
 import java.util.Arrays
-import twitter4j.TwitterException
 
 /**
  * Fragment that retrieves the Twitter feed for several users planetside 2
@@ -190,8 +190,10 @@ class FragmentTwitter : BaseFragment() {
         val listRoot = activity!!.findViewById<View>(R.id.listViewTweetList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             val url =
-                ("https://twitter.com/#!/" + (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).tag + "/status/" +
-                        (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).id)
+                (
+                    "https://twitter.com/#!/" + (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).tag + "/status/" +
+                        (myAdapter.getItemAtPosition(myItemInt) as PS2Tweet).id
+                    )
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
