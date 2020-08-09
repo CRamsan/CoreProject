@@ -1,9 +1,9 @@
 package com.cramsan.framework.preferences.implementation
 
 import android.content.Context
-import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.preferences.PreferencesDelegate
 
-class PreferencesAndroid(private val applicationContext: Context) : PreferencesInterface {
+class PreferencesAndroid(private val applicationContext: Context) : PreferencesDelegate {
 
     override fun saveString(key: String, value: String) {
         val sharedPref = applicationContext.getSharedPreferences("global", Context.MODE_PRIVATE)

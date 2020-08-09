@@ -1,8 +1,8 @@
 package com.cramsan.framework.halt.implementation
 
-import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.halt.HaltUtilDelegate
 
-class HaltUtilAndroid : HaltUtilInterface {
+class HaltUtilAndroid : HaltUtilDelegate {
 
     private var shouldStop = true
 

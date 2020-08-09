@@ -1,9 +1,10 @@
 package com.cramsan.framework.thread.implementation
 
 import com.cramsan.framework.thread.RunBlock
+import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 
-class ThreadUtil(private val platformDelegate: ThreadUtilInterface) : ThreadUtilInterface {
+class ThreadUtil(override val platformDelegate: ThreadUtilDelegate) : ThreadUtilInterface {
 
     override fun isUIThread(): Boolean {
         return platformDelegate.isUIThread()

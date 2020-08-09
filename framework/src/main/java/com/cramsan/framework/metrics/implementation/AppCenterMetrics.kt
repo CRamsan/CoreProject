@@ -1,10 +1,10 @@
 package com.cramsan.framework.metrics.implementation
 
-import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.MetricsDelegate
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 
-class AppCenterMetrics : MetricsInterface {
+class AppCenterMetrics : MetricsDelegate {
 
     override fun initialize() {
         AppCenter.start(Analytics::class.java)

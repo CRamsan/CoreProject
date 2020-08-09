@@ -1,11 +1,9 @@
 package com.cramsan.framework.preferences
 
 /**
- * This module has a simple API to easily persist data in local storage. It was designed to be used for simple operations that do not require high performance.
+ * Platform delegate that implements the logic to store the values
  */
-interface PreferencesInterface {
-
-    val platformDelegate: PreferencesDelegate
+interface PreferencesDelegate {
 
     /**
      * Save [value] of type [String] as the specified [key]

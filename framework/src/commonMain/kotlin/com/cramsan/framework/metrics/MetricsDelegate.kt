@@ -1,12 +1,9 @@
 package com.cramsan.framework.metrics
 
 /**
- * Module to record events around user engagement.
+ * Delegate that will implement the metric collection and reporting
  */
-interface MetricsInterface {
-
-    val platformDelegate: MetricsDelegate
-
+interface MetricsDelegate {
     /**
      * Initialize the module
      */

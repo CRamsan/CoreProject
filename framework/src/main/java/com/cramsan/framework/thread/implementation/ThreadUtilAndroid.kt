@@ -4,12 +4,12 @@ import android.os.Handler
 import android.os.Looper
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.thread.RunBlock
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.thread.ThreadUtilDelegate
 import java.util.concurrent.Executors
 
 class ThreadUtilAndroid constructor(
     private val assertUtil: AssertUtilInterface
-) : ThreadUtilInterface {
+) : ThreadUtilDelegate {
 
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
     private val pool = Executors.newFixedThreadPool(THREAD_POOL_SIZE)

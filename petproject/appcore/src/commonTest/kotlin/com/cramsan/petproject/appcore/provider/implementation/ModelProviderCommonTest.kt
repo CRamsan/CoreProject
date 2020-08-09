@@ -2,7 +2,7 @@ package com.cramsan.petproject.appcore.provider.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
@@ -41,7 +41,7 @@ internal class ModelProviderCommonTest {
     private lateinit var modelProviderImpl: ModelProvider
     private lateinit var modelStorage: ModelStorage
 
-    fun setUp(storagePlatformProvider: ModelStoragePlatformProvider, platformDelegate: PreferencesInterface) {
+    fun setUp(storagePlatformProvider: ModelStoragePlatformProvider, platformDelegate: PreferencesDelegate) {
         val modelStorageImpl by kodein.newInstance { ModelStorage(storagePlatformProvider.provide(), instance(), instance()) }
         modelStorage = modelStorageImpl
         val preferences by kodein.newInstance { Preferences(platformDelegate) }

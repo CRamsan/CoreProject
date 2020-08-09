@@ -1,14 +1,6 @@
 package com.cramsan.framework.thread
 
-typealias RunBlock = () -> Unit
-
-/**
- * Module with utility functions around threads and dispatching blocks
- */
-interface ThreadUtilInterface {
-
-    val platformDelegate: ThreadUtilDelegate
-
+interface ThreadUtilDelegate {
     /**
      * Return true is the current thread is the UI thread
      */

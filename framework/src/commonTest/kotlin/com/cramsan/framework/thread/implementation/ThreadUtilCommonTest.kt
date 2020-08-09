@@ -1,28 +1,28 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.thread.ThreadUtilDelegate
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ThreadUtilCommonTest {
 
-    fun testIsUIThread(threadUtil: ThreadUtilInterface) {
+    fun testIsUIThread(threadUtil: ThreadUtilDelegate) {
         assertTrue(threadUtil.isUIThread())
     }
 
-    fun testIsNotUIThread(threadUtil: ThreadUtilInterface) {
+    fun testIsNotUIThread(threadUtil: ThreadUtilDelegate) {
         assertFalse(threadUtil.isUIThread())
     }
 
-    fun testIsBackgroundThread(threadUtil: ThreadUtilInterface) {
+    fun testIsBackgroundThread(threadUtil: ThreadUtilDelegate) {
         assertTrue(threadUtil.isBackgroundThread())
     }
 
-    fun testIsNotBackgroundThread(threadUtil: ThreadUtilInterface) {
+    fun testIsNotBackgroundThread(threadUtil: ThreadUtilDelegate) {
         assertFalse(threadUtil.isBackgroundThread())
     }
 
-    fun testIsUIThreadInDispatchToUI(threadUtil: ThreadUtilInterface, completion: () -> Unit) {
+    fun testIsUIThreadInDispatchToUI(threadUtil: ThreadUtilDelegate, completion: () -> Unit) {
         assertTrue(threadUtil.isUIThread())
         threadUtil.dispatchToUI {
             assertTrue(threadUtil.isUIThread())
@@ -30,7 +30,7 @@ class ThreadUtilCommonTest {
         }
     }
 
-    fun testDispatchToBackground(threadUtil: ThreadUtilInterface, completion: () -> Unit) {
+    fun testDispatchToBackground(threadUtil: ThreadUtilDelegate, completion: () -> Unit) {
         assertTrue(threadUtil.isBackgroundThread())
         threadUtil.dispatchToBackground {
             assertTrue(threadUtil.isBackgroundThread())
@@ -39,7 +39,7 @@ class ThreadUtilCommonTest {
         assertTrue(threadUtil.isBackgroundThread())
     }
 
-    fun testDispatchToBackgroundFromUIThread(threadUtil: ThreadUtilInterface, completion: () -> Unit) {
+    fun testDispatchToBackgroundFromUIThread(threadUtil: ThreadUtilDelegate, completion: () -> Unit) {
         assertTrue(threadUtil.isUIThread())
         threadUtil.dispatchToBackground {
             assertTrue(threadUtil.isBackgroundThread())

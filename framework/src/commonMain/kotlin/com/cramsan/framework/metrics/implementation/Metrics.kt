@@ -1,8 +1,9 @@
 package com.cramsan.framework.metrics.implementation
 
+import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
 
-class Metrics(private val platformDelegate: MetricsInterface) : MetricsInterface {
+class Metrics(override val platformDelegate: MetricsDelegate) : MetricsInterface {
 
     override fun initialize() {
         platformDelegate.initialize()

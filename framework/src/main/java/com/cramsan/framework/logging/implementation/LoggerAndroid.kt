@@ -1,10 +1,10 @@
 package com.cramsan.framework.logging.implementation
 
 import android.util.Log
-import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.Severity
 
-class LoggerAndroid : EventLoggerInterface {
+class LoggerAndroid : EventLoggerDelegate {
     override fun log(severity: Severity, tag: String, message: String) {
         when (severity) {
             Severity.VERBOSE -> Log.v(tag, message)

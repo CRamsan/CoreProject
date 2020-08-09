@@ -5,19 +5,31 @@ import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 
+/**
+ * Standard implementation of [AssertUtilInterface].
+ */
 class AssertUtil(
-    private val haltOnFailure: Boolean,
-    private val eventLogger: EventLoggerInterface,
-    private val haltUtil: HaltUtilInterface
+    override val haltOnFailure: Boolean,
+    override val eventLogger: EventLoggerInterface?,
+    override val haltUtil: HaltUtilInterface?
 ) : AssertUtilInterface {
+
+    /**
+     * Ensure that [haltOnFailure] is not true while [haltUtil] is null
+     */
+    init {
+        if (haltOnFailure && haltUtil == null) {
+            throw RuntimeException("haltUtil cannot be null if haltOnFailure is set to true")
+        }
+    }
 
     override fun assert(condition: Boolean, tag: String, message: String) {
         if (condition) {
             return
         }
-        eventLogger.log(Severity.ERROR, tag, message)
+        eventLogger?.log(Severity.ERROR, tag, message)
         if (haltOnFailure) {
-            haltUtil.stopThread()
+            haltUtil?.stopThread()
         }
     }
 }

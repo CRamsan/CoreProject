@@ -1,6 +1,6 @@
 package com.cramsan.framework.halt.implementation
 
-import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.halt.HaltUtilDelegate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
 
 class HaltUtilCommonTest {
 
-    suspend fun testStopThread(platformDelegate: HaltUtilInterface) = coroutineScope {
+    suspend fun testStopThread(platformDelegate: HaltUtilDelegate) = coroutineScope {
         val haltUtil = HaltUtil(platformDelegate)
 
         launch(Dispatchers.Default) {
@@ -19,7 +19,7 @@ class HaltUtilCommonTest {
         haltUtil.stopThread()
     }
 
-    suspend fun testStopResumeStopThread(platformDelegate: HaltUtilInterface) = coroutineScope {
+    suspend fun testStopResumeStopThread(platformDelegate: HaltUtilDelegate) = coroutineScope {
         val haltUtil = HaltUtil(platformDelegate)
 
         launch(Dispatchers.Default) {

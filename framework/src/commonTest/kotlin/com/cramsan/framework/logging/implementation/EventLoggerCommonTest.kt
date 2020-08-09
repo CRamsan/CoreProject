@@ -1,13 +1,13 @@
 package com.cramsan.framework.logging.implementation
 
+import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 
 class EventLoggerCommonTest {
 
     fun logWithVerboseSeverity(
-        platformDelegate: EventLoggerInterface,
+        platformDelegate: EventLoggerDelegate,
         errorCallbackInterface: EventLoggerErrorCallbackInterface
     ) {
         val eventLogger = EventLogger(Severity.VERBOSE, errorCallbackInterface, platformDelegate)
@@ -19,7 +19,7 @@ class EventLoggerCommonTest {
     }
 
     fun logWithDebugSeverity(
-        platformDelegate: EventLoggerInterface,
+        platformDelegate: EventLoggerDelegate,
         errorCallbackInterface: EventLoggerErrorCallbackInterface
     ) {
         val eventLogger = EventLogger(Severity.DEBUG, errorCallbackInterface, platformDelegate)
@@ -31,7 +31,7 @@ class EventLoggerCommonTest {
     }
 
     fun logWithInfoSeverity(
-        platformDelegate: EventLoggerInterface,
+        platformDelegate: EventLoggerDelegate,
         errorCallbackInterface: EventLoggerErrorCallbackInterface
     ) {
         val eventLogger = EventLogger(Severity.INFO, errorCallbackInterface, platformDelegate)
@@ -43,7 +43,7 @@ class EventLoggerCommonTest {
     }
 
     fun logWithWarningSeverity(
-        platformDelegate: EventLoggerInterface,
+        platformDelegate: EventLoggerDelegate,
         errorCallbackInterface: EventLoggerErrorCallbackInterface
     ) {
         val eventLogger = EventLogger(Severity.WARNING, errorCallbackInterface, platformDelegate)
@@ -55,7 +55,7 @@ class EventLoggerCommonTest {
     }
 
     fun logWithErrorSeverity(
-        platformDelegate: EventLoggerInterface,
+        platformDelegate: EventLoggerDelegate,
         errorCallbackInterface: EventLoggerErrorCallbackInterface
     ) {
         val eventLogger = EventLogger(Severity.ERROR, errorCallbackInterface, platformDelegate)

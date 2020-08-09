@@ -1,8 +1,9 @@
 package com.cramsan.framework.preferences.implementation
 
+import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.PreferencesInterface
 
-class Preferences(private val platformDelegate: PreferencesInterface) : PreferencesInterface {
+class Preferences(override val platformDelegate: PreferencesDelegate) : PreferencesInterface {
 
     override fun saveString(key: String, value: String) {
         platformDelegate.saveString(key, value)

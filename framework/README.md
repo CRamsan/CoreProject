@@ -21,7 +21,7 @@ This module exposes a single API to log events. This module can be configured so
 This module provides an API to track metrics regarding to user engagements.
 
 #### [Preferences](src/preferences/)
-This module has a simple API to easily perfist data in local storage. It was designed to be used for simple operations that do not require high performance.
+This module has a simple API to easily persist data in local storage. It was designed to be used for simple operations that do not require high performance.
 
 #### [Thread](src/thread/)
 This module provides some utility methods around Threads, like determining if the current thread is the UI or background thread.

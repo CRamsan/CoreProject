@@ -4,12 +4,12 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.RunBlock
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.thread.ThreadUtilDelegate
 
 class ThreadUtilJVM constructor(
     private val eventLogger: EventLoggerInterface,
     private val assertUtil: AssertUtilInterface
-) : ThreadUtilInterface {
+) : ThreadUtilDelegate {
 
     override fun isUIThread(): Boolean {
         return false
