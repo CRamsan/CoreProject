@@ -9,18 +9,15 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import com.cramsan.petproject.appcore.provider.ModelProviderInterface
-import com.cramsan.petproject.base.BaseViewModel
+import com.cramsan.petproject.base.CatalogDownloadViewModel
 import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.StringEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.instance
 
-class PlantDetailsViewModel(application: Application) : BaseViewModel(application) {
+class PlantDetailsViewModel(application: Application) : CatalogDownloadViewModel(application) {
 
-    private val modelProvider: ModelProviderInterface by instance()
     override val logTag: String
         get() = "PlantDetailsViewModel"
 

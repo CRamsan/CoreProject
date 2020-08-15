@@ -51,7 +51,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
                 startActivity(intent)
             }
         )
-        viewModel.observableShowIsDownloadedData().observe(
+        viewModel.observableShowIsDownloadingData().observe(
             requireActivity(),
             Observer {
                 displayDownloadingMessage()

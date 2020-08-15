@@ -17,6 +17,7 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
+import com.cramsan.petproject.download.DownloadCatalogDialogActivity
 import com.cramsan.petproject.feedback.PlantFeedbackActivity
 
 class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDetailsBinding>() {
@@ -37,6 +38,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
 
         val model: PlantDetailsViewModel by activityViewModels()
         dataBinding.viewModel = model
+        viewModel = model
 
         model.observableOpenSourceLink().observe(
             viewLifecycleOwner,
@@ -82,6 +84,14 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
             }
         )
 
+        viewModel.observableStartDownload().observe(
+            viewLifecycleOwner,
+            Observer {
+                val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
+                startActivity(intent)
+            }
+        )
+
         dataBinding.plantFeedbackSave.setOnClickListener {
             eventLogger.log(Severity.INFO, "PlantDetailsFragment", "onClick")
             val plantIntent = Intent(requireContext(), PlantFeedbackActivity::class.java)
@@ -91,7 +101,6 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
         }
 
         model.reloadPlant(animalType, plantId)
-        viewModel = model
     }
 
     companion object {

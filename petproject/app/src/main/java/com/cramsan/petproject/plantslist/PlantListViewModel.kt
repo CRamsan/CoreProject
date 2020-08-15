@@ -8,20 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
-import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
-import com.cramsan.petproject.appcore.provider.ModelProviderInterface
-import com.cramsan.petproject.base.BaseViewModel
+import com.cramsan.petproject.base.CatalogDownloadViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.instance
 import kotlin.properties.Delegates
 
 class PlantListViewModel(application: Application) :
-    BaseViewModel(application),
-    ModelProviderEventListenerInterface {
+    CatalogDownloadViewModel(application) {
 
-    private val modelProvider: ModelProviderInterface by instance()
     override val logTag: String
         get() = "PlantListViewModel"
 
@@ -40,17 +35,9 @@ class PlantListViewModel(application: Application) :
         searchPlants(new)
     }
 
-    init {
-        modelProvider.registerForCatalogEvents(this)
-    }
-
-    override fun onCleared() {
-        modelProvider.deregisterForCatalogEvents(this)
-    }
-
     override fun onCatalogUpdate(isReady: Boolean) {
         viewModelScope.launch {
-            setSearchMode(!isReady)
+            setLoadingMode(!isReady)
         }
     }
 
@@ -61,7 +48,7 @@ class PlantListViewModel(application: Application) :
         }
     }
 
-    private fun setSearchMode(isSearchMode: Boolean) {
+    fun setLoadingMode(isSearchMode: Boolean) {
         if (isSearchMode) {
             observableLoadingVisibility.value = View.VISIBLE
             observablePlantListVisibility.postValue(View.GONE)
@@ -81,13 +68,13 @@ class PlantListViewModel(application: Application) :
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
         val animalType = observableAnimalType.value
         viewModelScope.launch {
-            setSearchMode(true)
+            setLoadingMode(true)
         }
 
         if (animalType == null) {
             eventLogger.log(Severity.WARNING, "PlantListViewModel", "Unable to filterPlants. AnimalType is null")
             viewModelScope.launch {
-                setSearchMode(true)
+                setLoadingMode(true)
             }
             return@withContext
         }
@@ -100,7 +87,7 @@ class PlantListViewModel(application: Application) :
 
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
-            setSearchMode(false)
+            setLoadingMode(false)
             observablePlants.value = plants
         }
     }

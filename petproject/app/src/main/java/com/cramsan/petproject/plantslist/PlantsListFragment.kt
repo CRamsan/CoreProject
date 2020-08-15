@@ -2,6 +2,7 @@ package com.cramsan.petproject.plantslist
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantsListBinding
+import com.cramsan.petproject.download.DownloadCatalogDialogActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsActivity
 import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
 import com.cramsan.petproject.suggestion.PlantSuggestionActivity
@@ -34,6 +36,7 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
         var startingOffset: Int? = null
         val model: PlantListViewModel by activityViewModels()
+        viewModel = model
 
         if (savedInstanceState != null) {
             startingOffset = savedInstanceState.getInt(SCROLL_POS, 0)
@@ -61,13 +64,42 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
                 plantsAdapter.updateValues(plants)
             }
         )
+        viewModel.observableStartDownload().observe(
+            viewLifecycleOwner,
+            Observer {
+                val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
+                startActivity(intent)
+            }
+        )
+        viewModel.observableShowIsDownloadingData().observe(
+            requireActivity(),
+            Observer {
+                // TODO: Implement some UI to let the user know that data is being downloaded
+            }
+        )
+        viewModel.observableShowDataDownloaded().observe(
+            requireActivity(),
+            Observer {
+                // TODO: Implement some UI to let the user know that the data was downloaded
+            }
+        )
+        viewModel.observableDownloadingVisibility().observe(
+            requireActivity(),
+            Observer {
+                // TODO: Update visibility to use boolean states instead of ints.
+                if (it == View.VISIBLE) {
+                    viewModel.setLoadingMode(true)
+                } else {
+                    viewModel.setLoadingMode(false)
+                }
+            }
+        )
 
         dataBinding.plantListAddPlant.setOnClickListener {
             val intent = Intent(requireContext(), PlantSuggestionActivity::class.java)
             intent.putExtra(ANIMAL_TYPE, animalType.ordinal)
             startActivity(intent)
         }
-        viewModel = model
 
         startingOffset?.let {
             layoutManager.scrollToPosition(startingOffset)
