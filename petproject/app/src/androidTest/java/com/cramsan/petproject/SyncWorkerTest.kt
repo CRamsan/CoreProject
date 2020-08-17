@@ -1,4 +1,4 @@
-package com.cramsan.petproject.work
+package com.cramsan.petproject
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.work.ListenableWorker.Result
 import androidx.work.testing.TestListenableWorkerBuilder
+import com.cramsan.petproject.work.SyncWorker
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
