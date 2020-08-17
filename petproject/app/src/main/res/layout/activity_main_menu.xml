@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BaseCoordinatorLayout"
-    tools:context=".mainmenu.MainMenuActivity">
+    tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout style="@style/BaseAppBarLayout">
 
@@ -13,5 +15,12 @@
             tools:title="@string/app_name" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main_menu" />
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        style="@style/BaseContentLayout"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout="@layout/fragment_main_menu" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

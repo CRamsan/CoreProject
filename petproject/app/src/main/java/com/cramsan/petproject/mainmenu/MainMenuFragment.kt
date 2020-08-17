@@ -1,21 +1,23 @@
 package com.cramsan.petproject.mainmenu
 
-import android.content.Intent
+import android.app.SearchManager
 import android.os.Bundle
-import androidx.fragment.app.activityViewModels
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentMainMenuBinding
-import com.cramsan.petproject.download.DownloadCatalogDialogActivity
-import com.cramsan.petproject.plantdetails.PlantDetailsActivity
-import com.cramsan.petproject.plantdetails.PlantDetailsFragment
-import com.cramsan.petproject.plantslist.PlantsListActivity
 import com.cramsan.petproject.plantslist.PlantsListFragment
-import com.cramsan.petproject.plantslist.PlantsListFragment.Companion.ANIMAL_TYPE
 import com.google.android.material.snackbar.Snackbar
 
 class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBinding>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
@@ -26,39 +28,45 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         get() = R.layout.fragment_main_menu
 
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
-    private lateinit var layoutManager: LinearLayoutManager
+    private var layoutManager: LinearLayoutManager? = null
+
+    // Only enable the searchView if data is available
+    private var enableSearchView = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val model: AllPlantListViewModel by activityViewModels()
+        val model: AllPlantListViewModel by viewModels()
         viewModel = model
         dataBinding.viewModel = viewModel
 
         viewModel.observableNextActivityCat().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
-                val intent = Intent(requireContext(), PlantsListActivity::class.java)
-                intent.putExtra(ANIMAL_TYPE, AnimalType.CAT.ordinal)
-                startActivity(intent)
+                val action = MainMenuFragmentDirections.actionMainMenuFragmentToPlantsListFragment(AnimalType.CAT)
+                findNavController().navigate(action)
             }
         )
         viewModel.observableNextActivityDog().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
-                val intent = Intent(requireContext(), PlantsListActivity::class.java)
-                intent.putExtra(ANIMAL_TYPE, AnimalType.DOG.ordinal)
-                startActivity(intent)
+                val action = MainMenuFragmentDirections.actionMainMenuFragmentToPlantsListFragment(AnimalType.DOG)
+                findNavController().navigate(action)
             }
         )
         viewModel.observableShowIsDownloadingData().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
                 displayDownloadingMessage()
             }
         )
         viewModel.observableShowDataDownloaded().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
                 displayDownloadCompleteMessage()
             }
@@ -72,8 +80,8 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         viewModel.observableStartDownload().observe(
             viewLifecycleOwner,
             Observer {
-                val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
-                startActivity(intent)
+                val action = MainMenuFragmentDirections.actionMainMenuFragmentToDownloadCatalogDialogFragment()
+                findNavController().navigate(action)
             }
         )
 
@@ -89,16 +97,16 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(PlantsListFragment.SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
+        layoutManager?.let {
+            outState.putInt(PlantsListFragment.SCROLL_POS, it.findFirstVisibleItemPosition())
+        }
         super.onSaveInstanceState(outState)
     }
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
         eventLogger.log(Severity.INFO, "MainMenuFragment", "onNewItemSelected")
-        val plantIntent = Intent(requireContext(), PlantDetailsActivity::class.java)
-        plantIntent.putExtra(PlantDetailsFragment.PLANT_ID, plantId)
-        plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
-        startActivity(plantIntent)
+        val action = MainMenuFragmentDirections.actionMainMenuFragmentToPlantDetailsFragment(plantId, animalType)
+        findNavController().navigate(action)
     }
 
     private fun displayDownloadingMessage() {
@@ -109,5 +117,57 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
     private fun displayDownloadCompleteMessage() {
         Snackbar.make(requireView(), R.string.main_menu_snackbar_downloaded, Snackbar.LENGTH_SHORT)
             .show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        eventLogger.log(Severity.INFO, "MainMenuActivity", "onCreateOptionsMenu")
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.main_menu, menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = ContextCompat.getSystemService(requireContext(), SearchManager::class.java) ?: return
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.apply {
+            // Assumes current activity is the searchable activity
+            setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    viewModel.queryString = query
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    viewModel.queryString = newText
+                    return true
+                }
+            })
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        // TODO: FIX visibility
+        searchView.isVisible = true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_debug -> {
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToDebugMenuFragment()
+            findNavController().navigate(action)
+            true
+        }
+        R.id.action_search -> {
+            super.onOptionsItemSelected(item)
+        }
+        R.id.action_about -> {
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToAboutFragment()
+            findNavController().navigate(action)
+            true
+        }
+        else -> {
+            eventLogger.log(Severity.DEBUG, "MainMenuActivity", "Action item not handled")
+            super.onOptionsItemSelected(item)
+        }
     }
 }

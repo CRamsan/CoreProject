@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$globalKotlinVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$globalAndroidXNavigationVersion"
     }
 }
 
@@ -17,6 +18,7 @@ repositories {
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     buildToolsVersion globalAndroidBuildToolsVersion
@@ -77,11 +79,14 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$globalAndroidXRecyclerViewVersion"
     implementation "androidx.preference:preference:$globalAndroidXPreferencesVersion"
     implementation "androidx.preference:preference-ktx:$globalAndroidXPreferencesVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$globalAndroidXNavigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$globalAndroidXNavigationVersion"
     implementation "androidx.work:work-runtime:$globalAndroidXWorkManager"
     implementation "androidx.work:work-runtime-ktx:$globalAndroidXWorkManager"
     implementation "com.google.android.material:material:$globalAndroidMaterialVersion"
 
     implementation "com.github.bumptech.glide:glide:$globalGlideVersion"
+    implementation "io.ktor:ktor-client-android:$globalKtorVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
@@ -95,7 +100,6 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$globalGlideVersion"
 
     testImplementation "junit:junit:$globalJUnitVersion"
-
     androidTestImplementation "androidx.test.ext:junit:$globalAndroidXJUnitVersion"
     androidTestImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
     androidTestImplementation "androidx.test:core:$globalAndroidXTestVersion"
@@ -104,6 +108,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$globalAndroidXNavigationVersion"
     androidTestImplementation "androidx.work:work-testing:$globalAndroidXWorkManager"
     androidTestImplementation "org.mockito:mockito-android:$globalMockitoVersion"
 }

@@ -5,8 +5,11 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -17,8 +20,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
-import com.cramsan.petproject.download.DownloadCatalogDialogActivity
-import com.cramsan.petproject.feedback.PlantFeedbackActivity
 
 class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDetailsBinding>() {
 
@@ -29,14 +30,14 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
     override val logTag: String
         get() = "PlantDetailsFragment"
 
+    val args: PlantDetailsFragmentArgs by navArgs()
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val plantId = activity?.intent?.getIntExtra(PLANT_ID, -1) ?: return
-        val animalTypeId = activity?.intent?.getIntExtra(ANIMAL_TYPE, -1) ?: return
+        val plantId = args.PlantId
+        animalType = args.AnimalType
 
-        animalType = AnimalType.values()[animalTypeId]
-
-        val model: PlantDetailsViewModel by activityViewModels()
+        val model: PlantDetailsViewModel by viewModels()
         dataBinding.viewModel = model
         viewModel = model
 
@@ -47,6 +48,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
                 startActivity(browserIntent)
             }
         )
+
         model.observablePlantImageSource.observe(
             viewLifecycleOwner,
             Observer {
@@ -87,17 +89,23 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
         viewModel.observableStartDownload().observe(
             viewLifecycleOwner,
             Observer {
-                val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
-                startActivity(intent)
+                val action = PlantDetailsFragmentDirections.actionPlantDetailsFragmentToDownloadCatalogDialogFragment()
+                findNavController().navigate(action)
+            }
+        )
+
+        viewModel.observablePlantName.observe(
+            viewLifecycleOwner,
+            Observer {
+                val activity = requireActivity() as AppCompatActivity
+                activity.supportActionBar?.title = it
             }
         )
 
         dataBinding.plantFeedbackSave.setOnClickListener {
             eventLogger.log(Severity.INFO, "PlantDetailsFragment", "onClick")
-            val plantIntent = Intent(requireContext(), PlantFeedbackActivity::class.java)
-            plantIntent.putExtra(PLANT_ID, plantId)
-            plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
-            startActivity(plantIntent)
+            val action = PlantDetailsFragmentDirections.actionPlantDetailsFragmentToPlantFeedbackFragment(animalType, plantId)
+            findNavController().navigate(action)
         }
 
         model.reloadPlant(animalType, plantId)

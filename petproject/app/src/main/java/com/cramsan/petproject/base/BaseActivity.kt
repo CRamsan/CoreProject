@@ -3,50 +3,43 @@ package com.cramsan.petproject.base
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.petproject.R
 import com.google.android.material.appbar.MaterialToolbar
 import org.kodein.di.DIAware
 import org.kodein.di.android.di
 import org.kodein.di.instance
 
-abstract class BaseActivity<T : BaseViewModel, U : ViewDataBinding> :
+abstract class BaseActivity<T : BaseViewModel> :
     AppCompatActivity(),
     DIAware {
 
     override val di by di()
     protected val eventLogger: EventLoggerInterface by instance()
     protected lateinit var viewModel: T
-    protected lateinit var dataBinding: U
 
     abstract val contentViewLayout: Int
     abstract val toolbarViewId: Int?
     abstract val logTag: String
-    abstract val enableUp: Boolean?
-    abstract val enableDataBinding: Boolean
-    abstract val titleResource: Int?
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreate")
 
-        if (enableDataBinding) {
-            dataBinding = DataBindingUtil.setContentView(this, contentViewLayout)
-            dataBinding.lifecycleOwner = this
-        } else {
-            setContentView(contentViewLayout)
-        }
-
+        setContentView(contentViewLayout)
         val toolbar = toolbarViewId?.let { findViewById<MaterialToolbar>(it) }
         toolbar?.apply {
+            val navController = findNavController(R.id.nav_host_fragment)
+            val appBarConfiguration = AppBarConfiguration(navController.graph)
             setSupportActionBar(this)
-            enableUp?.let { supportActionBar?.setDisplayHomeAsUpEnabled(it) }
-            titleResource?.apply {
-                supportActionBar?.setTitle(this)
-            }
+            findViewById<Toolbar>(R.id.main_menu_toolbar)
+                .setupWithNavController(navController, appBarConfiguration)
         }
     }
 

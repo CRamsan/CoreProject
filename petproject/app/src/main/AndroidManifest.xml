@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".mainmenu.MainMenuActivity"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,36 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".plantslist.PlantsListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop"
-            android:parentActivityName=".mainmenu.MainMenuActivity" />
-        <activity
-            android:name=".suggestion.PlantSuggestionActivity"
-            android:theme="@style/AppTheme.Transparent" />
-        <activity
-            android:name=".feedback.PlantFeedbackActivity"
-            android:theme="@style/AppTheme.Transparent" />
-        <activity
-            android:name=".download.DownloadCatalogDialogActivity"
-            android:theme="@style/AppTheme.Transparent" />
-        <activity
-            android:name=".plantdetails.PlantDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".plantslist.PlantsListActivity" />
-        <activity
-            android:name=".about.AboutActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".mainmenu.MainMenuActivity" />
-        <activity
-            android:name=".debugmenu.DebugMenuActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".mainmenu.MainMenuActivity" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1144760940024029~7209899318" />
     </application>
-
 </manifest>

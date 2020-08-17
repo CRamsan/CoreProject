@@ -1,10 +1,16 @@
 package com.cramsan.petproject.plantslist
 
-import android.content.Intent
+import android.app.SearchManager
 import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.activityViewModels
+import android.view.Menu
+import android.view.MenuInflater
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
@@ -12,10 +18,6 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantsListBinding
-import com.cramsan.petproject.download.DownloadCatalogDialogActivity
-import com.cramsan.petproject.plantdetails.PlantDetailsActivity
-import com.cramsan.petproject.plantdetails.PlantDetailsFragment.Companion.PLANT_ID
-import com.cramsan.petproject.suggestion.PlantSuggestionActivity
 
 /**
  * A fragment representing a list of Items.
@@ -26,65 +28,78 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         get() = R.layout.fragment_plants_list
     override val logTag: String
         get() = "PlantsListFragment"
+    val args: PlantsListFragmentArgs by navArgs()
 
-    private lateinit var plantsAdapter: PlantsRecyclerViewAdapter
-    private lateinit var layoutManager: LinearLayoutManager
+    private var plantsAdapter: PlantsRecyclerViewAdapter? = null
+    private var layoutManager: LinearLayoutManager? = null
     private lateinit var animalType: AnimalType
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+        val animalTypeArg = if (savedInstanceState != null) {
+            val animalTypeId = savedInstanceState.getInt(ANIMAL_TYPE, -1)
+            AnimalType.values()[animalTypeId]
+        } else {
+            args.AnimalType
+        }
+        animalType = animalTypeArg
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         var startingOffset: Int? = null
-        val model: PlantListViewModel by activityViewModels()
+        val model: PlantListViewModel by viewModels()
         viewModel = model
+        viewModel.setAnimalType(animalType)
 
         if (savedInstanceState != null) {
             startingOffset = savedInstanceState.getInt(SCROLL_POS, 0)
-            val animalTypeId = savedInstanceState.getInt(ANIMAL_TYPE, -1)
-            animalType = AnimalType.values()[animalTypeId]
-        } else {
-            val animalTypeId = requireActivity().intent?.getIntExtra(ANIMAL_TYPE, -1)
-            animalType = if (animalTypeId == null || animalTypeId == -1) {
-                model.observableAnimalType().value!!
-            } else {
-                AnimalType.values()[animalTypeId]
-            }
         }
-        model.setAnimalType(animalType)
 
-        layoutManager = LinearLayoutManager(context)
-        plantsAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
+        val activity = requireActivity() as AppCompatActivity
+        when (animalType) {
+            AnimalType.CAT -> activity.supportActionBar?.setTitle(R.string.title_fragment_plants_cats)
+            AnimalType.DOG -> activity.supportActionBar?.setTitle(R.string.title_fragment_plants_dogs)
+            else -> TODO()
+        }
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        layoutManager = linearLayoutManager
+        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
+        plantsAdapter = plantsRecyclerAdapter
         dataBinding.plantListRecycler.layoutManager = layoutManager
-        dataBinding.plantListRecycler.adapter = plantsAdapter
+        dataBinding.plantListRecycler.adapter = plantsRecyclerAdapter
         dataBinding.viewModel = model
 
         model.observablePlants().observe(
             viewLifecycleOwner,
             Observer<List<PresentablePlant>> { plants ->
-                plantsAdapter.updateValues(plants)
+                plantsRecyclerAdapter.updateValues(plants)
             }
         )
         viewModel.observableStartDownload().observe(
             viewLifecycleOwner,
             Observer {
-                val intent = Intent(requireContext(), DownloadCatalogDialogActivity::class.java)
-                startActivity(intent)
+                val action = PlantsListFragmentDirections.actionPlantsListFragmentToDownloadCatalogDialogFragment()
+                findNavController().navigate(action)
             }
         )
         viewModel.observableShowIsDownloadingData().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
                 // TODO: Implement some UI to let the user know that data is being downloaded
             }
         )
         viewModel.observableShowDataDownloaded().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
                 // TODO: Implement some UI to let the user know that the data was downloaded
             }
         )
         viewModel.observableDownloadingVisibility().observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer {
                 // TODO: Update visibility to use boolean states instead of ints.
                 if (it == View.VISIBLE) {
@@ -96,20 +111,21 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         )
 
         dataBinding.plantListAddPlant.setOnClickListener {
-            val intent = Intent(requireContext(), PlantSuggestionActivity::class.java)
-            intent.putExtra(ANIMAL_TYPE, animalType.ordinal)
-            startActivity(intent)
+            val action = PlantsListFragmentDirections.actionPlantsListFragmentToPlantSuggestionFragment()
+            findNavController().navigate(action)
         }
 
         startingOffset?.let {
-            layoutManager.scrollToPosition(startingOffset)
+            linearLayoutManager.scrollToPosition(startingOffset)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(ANIMAL_TYPE, animalType.ordinal)
-        if (viewModel.queryString.isNotBlank()) {
-            outState.putInt(SCROLL_POS, layoutManager.findFirstVisibleItemPosition())
+        layoutManager?.let {
+            if (viewModel.queryString.isNotBlank()) {
+                outState.putInt(SCROLL_POS, it.findFirstVisibleItemPosition())
+            }
         }
 
         super.onSaveInstanceState(outState)
@@ -117,10 +133,34 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
         eventLogger.log(Severity.INFO, "PlantsListFragment", "onNewItemSelected")
-        val plantIntent = Intent(requireContext(), PlantDetailsActivity::class.java)
-        plantIntent.putExtra(PLANT_ID, plantId)
-        plantIntent.putExtra(ANIMAL_TYPE, animalType.ordinal)
-        startActivity(plantIntent)
+        val action = PlantsListFragmentDirections.actionPlantsListFragmentToPlantDetailsFragment(plantId, animalType)
+        findNavController().navigate(action)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        eventLogger.log(Severity.INFO, "PlantsListActivity", "onCreateOptionsMenu")
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.plant_list, menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = ContextCompat.getSystemService(requireContext(), SearchManager::class.java) ?: return
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.apply {
+            // Assumes current activity is the searchable activity
+            setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    viewModel.queryString = query
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    viewModel.queryString = newText
+                    return true
+                }
+            })
+        }
     }
 
     companion object {

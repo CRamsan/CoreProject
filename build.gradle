@@ -19,6 +19,7 @@ buildscript {
         globalAndroidXPreferencesVersion = "1.1.1"
         globalAndroidxActivityKtxVersion = "1.1.0"
         globalAndroidxFragmentKtxVersion = "1.2.5"
+        globalAndroidXNavigationVersion = "2.3.0"
         globalAndroidXWorkManager = "2.4.0"
         globalAppCenterSdkVersion = "3.3.0"
         globalAppCenterEspressoTestExt = "1.4"

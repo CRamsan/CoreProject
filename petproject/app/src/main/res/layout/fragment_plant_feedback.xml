@@ -20,7 +20,9 @@
             android:id="@+id/scrollView2"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -59,8 +61,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Photo"
                     android:checked="@{viewModel.photo}"
+                    android:text="Photo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -69,8 +71,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Scientific Name"
                     android:checked="@{viewModel.scientificName}"
+                    android:text="Scientific Name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plantFeedbackPhotoCheckBox" />
 
@@ -79,8 +81,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Name"
                     android:checked="@{viewModel.name}"
+                    android:text="Name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plantFeedbackScientificNameCheckBox" />
 
@@ -89,8 +91,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Broken link"
                     android:checked="@{viewModel.link}"
+                    android:text="Broken link"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plantFeedbackNameCheckBox" />
 

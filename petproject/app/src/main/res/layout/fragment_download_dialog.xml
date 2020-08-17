@@ -5,7 +5,7 @@
     <FrameLayout
         style="@style/BaseCoordinatorLayout"
         android:id="@+id/download_dialog_activity"
-        tools:context=".download.DownloadCatalogDialogActivity">
+        tools:context=".download.DownloadCatalogDialogFragment">
 
         <include
             layout="@layout/view_download_catalog"

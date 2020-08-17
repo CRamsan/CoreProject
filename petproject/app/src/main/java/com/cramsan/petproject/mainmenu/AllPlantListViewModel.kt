@@ -11,6 +11,7 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.CatalogDownloadViewModel
 import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.SimpleEvent
+import io.ktor.client.features.ServerResponseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,10 +49,6 @@ class AllPlantListViewModel(application: Application) :
         observablePlants.value = emptyList()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
-
     fun goToCats(view: View) {
         goToNextActivity(AnimalType.CAT)
     }
@@ -82,6 +79,14 @@ class AllPlantListViewModel(application: Application) :
         // Restore the state of the plant list back to all.
         viewModelScope.launch(Dispatchers.IO) {
             modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            // Hit the plant API to warm up the endpoint
+            try {
+                modelProvider.getPlant(AnimalType.CAT, 0, "en")
+            } catch (e: ServerResponseException) {
+                // This failure is expected. We can safely ignore it.
+            }
         }
         super.tryStartDownload()
     }
