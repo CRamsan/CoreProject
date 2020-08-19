@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_mainMenuFragment_to_plantsListFragment"
-            app:destination="@id/plantsListFragment" />
+            app:destination="@id/plantsListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_mainMenuFragment_to_debugMenuFragment"
-            app:destination="@id/debugMenuFragment" />
+            app:destination="@id/debugMenuFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_mainMenuFragment_to_downloadCatalogDialogFragment"
             app:destination="@id/downloadCatalogDialogFragment"
@@ -25,10 +33,18 @@
             app:popExitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_mainMenuFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment" />
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_mainMenuFragment_to_plantDetailsFragment"
-            app:destination="@id/plantDetailsFragment" />
+            app:destination="@id/plantDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/plantsListFragment"
@@ -36,7 +52,11 @@
         tools:layout="@layout/fragment_plants_list">
         <action
             android:id="@+id/action_plantsListFragment_to_plantDetailsFragment"
-            app:destination="@id/plantDetailsFragment" />
+            app:destination="@id/plantDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_plantsListFragment_to_downloadCatalogDialogFragment"
             app:destination="@id/downloadCatalogDialogFragment"

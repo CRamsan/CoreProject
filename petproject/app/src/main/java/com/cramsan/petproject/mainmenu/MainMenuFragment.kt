@@ -6,7 +6,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -84,7 +86,14 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
                 findNavController().navigate(action)
             }
         )
-
+        viewModel.observableShowDataDownloaded().observe(
+            viewLifecycleOwner,
+            Observer {
+                eventLogger.log(Severity.INFO, "MainMenuActivity", "Data is downloaded")
+                enableSearchView = true
+                requireActivity().invalidateOptionsMenu()
+            }
+        )
         layoutManager = LinearLayoutManager(context)
         plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())
         dataBinding.plantListRecycler.layoutManager = layoutManager
@@ -93,6 +102,10 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
 
     override fun onStart() {
         super.onStart()
+        if (viewModel.isCatalogReady()) {
+            enableSearchView = true
+            requireActivity().invalidateOptionsMenu()
+        }
         viewModel.tryStartDownload()
     }
 
@@ -146,9 +159,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        // TODO: FIX visibility
-        searchView.isVisible = true
+        menu.children.find { it.itemId == R.id.action_search }!!.isVisible = enableSearchView
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

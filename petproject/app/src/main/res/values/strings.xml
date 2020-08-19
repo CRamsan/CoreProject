@@ -8,9 +8,9 @@
     <string name="drawer_group_plants">Toxicity of plants</string>
     <string name="drawer_group_more">More</string>
     <string name="main_menu_cats">Cats</string>
-    <string name="main_menu_cats_description">PLACEHOLDER: Some witty description about cats and how adorable they are.</string>
+    <string name="main_menu_cats_description">Toxic and Non-Toxic Plants For Your Cat</string>
     <string name="main_menu_dogs">Dogs</string>
-    <string name="main_menu_dogs_description">PLACEHOLDER: Some text about dogs</string>
+    <string name="main_menu_dogs_description">Toxic and Non-Toxic Plants For Your Dog</string>
     <string name="main_menu_snackbar_downloading">Downloading data. A few more seconds…</string>
     <string name="main_menu_snackbar_downloaded">Data downloaded!</string>
     <string name="drawer_menu_about">About</string>
@@ -21,8 +21,8 @@
     <string name="menu_debug_clear_cache">Clear Cache</string>
     <string name="menu_debug_kill_app">Kill Application</string>
 
-    <string name="title_fragment_plants_cats">Dangerous Plants for Cats</string>
-    <string name="title_fragment_plants_dogs">Dangerous Plants for Dogs</string>
+    <string name="title_fragment_plants_cats">Plants for Cats</string>
+    <string name="title_fragment_plants_dogs">Plants for Dogs</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_debug">Debug</string>
 
