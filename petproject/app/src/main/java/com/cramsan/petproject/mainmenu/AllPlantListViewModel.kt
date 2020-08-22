@@ -62,7 +62,11 @@ class AllPlantListViewModel(application: Application) :
             observableShowIsDownloadingData.value = SimpleEvent()
             return
         }
-        observableNextActivityCat.value = SimpleEvent()
+        when(animalType) {
+            AnimalType.CAT -> observableNextActivityCat.value = SimpleEvent()
+            AnimalType.DOG -> observableNextActivityDog.value = SimpleEvent()
+            AnimalType.ALL -> TODO()
+        }
     }
 
     private fun setInSearchMode(isSearchMode: Boolean) {
