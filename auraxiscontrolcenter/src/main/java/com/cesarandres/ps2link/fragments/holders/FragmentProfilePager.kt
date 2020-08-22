@@ -119,54 +119,56 @@ class FragmentProfilePager : BaseFragment() {
             this.fragmentTitle.text = profileName
         }
 
-        mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(arg0: Int) {
-                metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Profile", "Fragment" to arg0.toString()))
-                when (arg0) {
-                    PROFILE -> {
-                        fragmentStar.visibility = View.VISIBLE
-                        fragmentAppend.visibility = View.VISIBLE
-                        fragmentMyWeapons.visibility = View.GONE
-                    }
-                    FRIENDS -> {
-                        fragmentStar.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentMyWeapons.visibility = View.GONE
-                    }
-                    STATS -> {
-                        fragmentStar.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentMyWeapons.visibility = View.GONE
-                    }
-                    KILLBOARD -> {
-                        fragmentStar.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentMyWeapons.visibility = View.GONE
-                    }
-                    WEAPONS -> {
-                        fragmentStar.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentMyWeapons.visibility = View.VISIBLE
-                    }
-                    DIRECTIVES -> {
-                        fragmentStar.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentMyWeapons.visibility = View.GONE
-                    }
-                    else -> {
-                        fragmentStar.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentMyWeapons.visibility = View.GONE
+        mViewPager!!.setOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+                override fun onPageSelected(arg0: Int) {
+                    metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Profile", "Fragment" to arg0.toString()))
+                    when (arg0) {
+                        PROFILE -> {
+                            fragmentStar.visibility = View.VISIBLE
+                            fragmentAppend.visibility = View.VISIBLE
+                            fragmentMyWeapons.visibility = View.GONE
+                        }
+                        FRIENDS -> {
+                            fragmentStar.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentMyWeapons.visibility = View.GONE
+                        }
+                        STATS -> {
+                            fragmentStar.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentMyWeapons.visibility = View.GONE
+                        }
+                        KILLBOARD -> {
+                            fragmentStar.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentMyWeapons.visibility = View.GONE
+                        }
+                        WEAPONS -> {
+                            fragmentStar.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentMyWeapons.visibility = View.VISIBLE
+                        }
+                        DIRECTIVES -> {
+                            fragmentStar.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentMyWeapons.visibility = View.GONE
+                        }
+                        else -> {
+                            fragmentStar.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentMyWeapons.visibility = View.GONE
+                        }
                     }
                 }
-            }
 
-            override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-            }
+                override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
+                }
 
-            override fun onPageScrollStateChanged(arg0: Int) {
+                override fun onPageScrollStateChanged(arg0: Int) {
+                }
             }
-        })
+        )
 
         this.fragmentAppend.visibility = View.VISIBLE
         this.fragmentStar.visibility = View.VISIBLE

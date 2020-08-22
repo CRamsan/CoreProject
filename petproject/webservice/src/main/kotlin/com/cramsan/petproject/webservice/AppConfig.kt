@@ -29,11 +29,13 @@ class AppConfig {
 
     @Bean
     fun metrics(): MetricsInterface {
-        return Metrics(object : MetricsDelegate {
-            override fun initialize() {}
-            override fun log(tag: String, event: String) {}
-            override fun log(tag: String, event: String, metadata: Map<String, String>) {}
-        })
+        return Metrics(
+            object : MetricsDelegate {
+                override fun initialize() {}
+                override fun log(tag: String, event: String) {}
+                override fun log(tag: String, event: String, metadata: Map<String, String>) {}
+            }
+        )
     }
 
     @Bean

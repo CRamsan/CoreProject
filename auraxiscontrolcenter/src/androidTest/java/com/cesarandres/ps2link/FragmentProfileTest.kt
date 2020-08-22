@@ -88,7 +88,8 @@ class FragmentProfileTest {
 
         onView(withId(R.id.buttonFragmentTitle)).check(matches(withText(defaultProfile)))
         onView(withId(R.id.toggleButtonFragmentStar)).check(matches(isNotChecked())).perform(
-            scrollTo(), click()
+            scrollTo(),
+            click()
         )
         Espresso.pressBack()
         Espresso.pressBack()

@@ -86,39 +86,41 @@ class FragmentOutfitPager : BaseFragment() {
             }
         }
 
-        mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(arg0: Int) {
-                metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Outfit", "Fragment" to arg0.toString()))
-                when (arg0) {
-                    OUTFIT -> {
-                        fragmentShowOffline.visibility = View.GONE
-                        fragmentAppend.visibility = View.VISIBLE
-                        fragmentStar.visibility = View.VISIBLE
-                    }
-                    ONLINE -> {
-                        fragmentShowOffline.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentStar.visibility = View.GONE
-                    }
-                    MEMBERS -> {
-                        fragmentShowOffline.visibility = View.VISIBLE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentStar.visibility = View.GONE
-                    }
-                    else -> {
-                        fragmentShowOffline.visibility = View.GONE
-                        fragmentAppend.visibility = View.GONE
-                        fragmentStar.visibility = View.GONE
+        mViewPager!!.setOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+                override fun onPageSelected(arg0: Int) {
+                    metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Outfit", "Fragment" to arg0.toString()))
+                    when (arg0) {
+                        OUTFIT -> {
+                            fragmentShowOffline.visibility = View.GONE
+                            fragmentAppend.visibility = View.VISIBLE
+                            fragmentStar.visibility = View.VISIBLE
+                        }
+                        ONLINE -> {
+                            fragmentShowOffline.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentStar.visibility = View.GONE
+                        }
+                        MEMBERS -> {
+                            fragmentShowOffline.visibility = View.VISIBLE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentStar.visibility = View.GONE
+                        }
+                        else -> {
+                            fragmentShowOffline.visibility = View.GONE
+                            fragmentAppend.visibility = View.GONE
+                            fragmentStar.visibility = View.GONE
+                        }
                     }
                 }
-            }
 
-            override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-            }
+                override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
+                }
 
-            override fun onPageScrollStateChanged(arg0: Int) {
+                override fun onPageScrollStateChanged(arg0: Int) {
+                }
             }
-        })
+        )
 
         this.fragmentAppend.visibility = View.VISIBLE
         this.fragmentStar.visibility = View.VISIBLE

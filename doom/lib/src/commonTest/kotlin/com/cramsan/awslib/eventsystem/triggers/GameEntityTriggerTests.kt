@@ -140,7 +140,9 @@ class GameEntityTriggerTests {
         assertNotNull(sceneConfig)
         var targetIndex = 1
         val entityManager = EntityManager(
-            map, sceneConfig.triggerList, sceneConfig.eventList,
+            map,
+            sceneConfig.triggerList,
+            sceneConfig.eventList,
             object : EntityManagerEventListener {
                 override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
                 override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
@@ -213,7 +215,9 @@ class GameEntityTriggerTests {
 
         assertNotNull(sceneConfig)
         val entityManager = EntityManager(
-            map, sceneConfig.triggerList, sceneConfig.eventList,
+            map,
+            sceneConfig.triggerList,
+            sceneConfig.eventList,
             object : EntityManagerEventListener {
                 override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
                 override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}

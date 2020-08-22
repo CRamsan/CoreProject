@@ -44,47 +44,51 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
         val mainPlayer = sceneConfig.player
         runBlocking {
             val scene = Scene(manager, sceneConfig)
-            scene.setListener(object : SceneEventsCallback {
-                override fun onEntityChanged(entity: GameEntityInterface) {
-                    repaint()
-                }
-
-                override fun onCellChanged(cell: Cell) {
-                    repaint()
-                }
-
-                override fun onSceneEnded(completed: Boolean) {
-                    exitProcess(0)
-                }
-            })
-
-            this@AWTRenderer.addKeyListener(object : KeyAdapter() {
-                override fun keyTyped(e: KeyEvent?) {
-                    val action = when (e?.keyChar) {
-                        'w' -> {
-                            mainPlayer.heading = Direction.NORTH
-                            TurnAction(TurnActionType.MOVE, Direction.NORTH)
-                        }
-                        's' -> {
-                            mainPlayer.heading = Direction.SOUTH
-                            TurnAction(TurnActionType.MOVE, Direction.SOUTH)
-                        }
-                        'a' -> {
-                            mainPlayer.heading = Direction.WEST
-                            TurnAction(TurnActionType.MOVE, Direction.WEST)
-                        }
-                        'd' -> {
-                            mainPlayer.heading = Direction.EAST
-                            TurnAction(TurnActionType.MOVE, Direction.EAST)
-                        }
-                        ' ' -> TurnAction(TurnActionType.ATTACK, Direction.KEEP)
-                        else -> TurnAction(TurnActionType.NONE, Direction.KEEP)
+            scene.setListener(
+                object : SceneEventsCallback {
+                    override fun onEntityChanged(entity: GameEntityInterface) {
+                        repaint()
                     }
-                    GlobalScope.launch {
-                        scene.runTurn(action)
+
+                    override fun onCellChanged(cell: Cell) {
+                        repaint()
+                    }
+
+                    override fun onSceneEnded(completed: Boolean) {
+                        exitProcess(0)
                     }
                 }
-            })
+            )
+
+            this@AWTRenderer.addKeyListener(
+                object : KeyAdapter() {
+                    override fun keyTyped(e: KeyEvent?) {
+                        val action = when (e?.keyChar) {
+                            'w' -> {
+                                mainPlayer.heading = Direction.NORTH
+                                TurnAction(TurnActionType.MOVE, Direction.NORTH)
+                            }
+                            's' -> {
+                                mainPlayer.heading = Direction.SOUTH
+                                TurnAction(TurnActionType.MOVE, Direction.SOUTH)
+                            }
+                            'a' -> {
+                                mainPlayer.heading = Direction.WEST
+                                TurnAction(TurnActionType.MOVE, Direction.WEST)
+                            }
+                            'd' -> {
+                                mainPlayer.heading = Direction.EAST
+                                TurnAction(TurnActionType.MOVE, Direction.EAST)
+                            }
+                            ' ' -> TurnAction(TurnActionType.ATTACK, Direction.KEEP)
+                            else -> TurnAction(TurnActionType.NONE, Direction.KEEP)
+                        }
+                        GlobalScope.launch {
+                            scene.runTurn(action)
+                        }
+                    }
+                }
+            )
             scene.loadScene()
         }
     }

@@ -115,7 +115,8 @@ class DirectiveTreeListAdapter(
         val resID = this.fragment.activity!!.resources.getIdentifier(
             "objective_progress_" + tree.current_directive_tier_id +
                 "_0",
-            "drawable", "com.cesarandres.ps2link"
+            "drawable",
+            "com.cesarandres.ps2link"
         )
         holder.treeLevel!!.setImageResource(resID)
         return convertView

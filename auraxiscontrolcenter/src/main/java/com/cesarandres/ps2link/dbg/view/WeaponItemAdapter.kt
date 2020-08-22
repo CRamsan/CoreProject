@@ -127,21 +127,15 @@ class WeaponItemAdapter(
             if (this.characterFaction == Faction.VS) {
                 holder.ratios!!.text =
                     this.context.resources.getString(R.string.text_nc_) + " " + Math.round(100 * stat.nc / stat.kills.toFloat()) +
-                    "% " + this.context.resources.getString(R.string.text_tr_) + " " + Math.round(
-                    100 * stat.tr / stat.kills.toFloat()
-                ) + "%"
+                    "% " + this.context.resources.getString(R.string.text_tr_) + " " + Math.round(100 * stat.tr / stat.kills.toFloat()) + "%"
             } else if (this.characterFaction == Faction.NC) {
                 holder.ratios!!.text =
                     this.context.resources.getString(R.string.text_tr_) + " " + Math.round(100 * stat.tr / stat.kills.toFloat()) +
-                    "% " + this.context.resources.getString(R.string.text_vs_) + " " + Math.round(
-                    100 * stat.vs / stat.kills.toFloat()
-                ) + "%"
+                    "% " + this.context.resources.getString(R.string.text_vs_) + " " + Math.round(100 * stat.vs / stat.kills.toFloat()) + "%"
             } else if (this.characterFaction == Faction.TR) {
                 holder.ratios!!.text =
                     this.context.resources.getString(R.string.text_nc_) + " " + Math.round(100 * stat.nc / stat.kills.toFloat()) +
-                    "% " + this.context.resources.getString(R.string.text_vs_) + " " + Math.round(
-                    100 * stat.vs / stat.kills.toFloat()
-                ) + "%"
+                    "% " + this.context.resources.getString(R.string.text_vs_) + " " + Math.round(100 * stat.vs / stat.kills.toFloat()) + "%"
             }
 
             holder.headshots!!.visibility = View.VISIBLE
@@ -158,10 +152,7 @@ class WeaponItemAdapter(
         } else {
             holder.medal!!.visibility = View.GONE
             holder.ratios!!.visibility = View.GONE
-            holder.kills!!.text =
-                this.context.resources.getString(R.string.text_wia_killed_by) + " " + stat.kills + " " + this.context.resources.getString(
-                R.string.text_wia_times
-            )
+            holder.kills!!.text = this.context.resources.getString(R.string.text_wia_killed_by) + " " + stat.kills + " " + this.context.resources.getString(R.string.text_wia_times)
             holder.headshots!!.visibility = View.GONE
             holder.vehiclekills!!.visibility = View.GONE
         }

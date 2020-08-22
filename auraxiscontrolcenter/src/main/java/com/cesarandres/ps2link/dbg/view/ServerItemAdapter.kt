@@ -190,22 +190,15 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
             if (serverPopulation.equals("low", ignoreCase = true)) {
                 // Orange color
                 holder.serverPopulation!!.setTextColor(Color.rgb(250, 140, 0))
-                holder.serverPopulation!!.text =
-                    context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(
-                    R.string.text_low
-                ).toUpperCase()
+                holder.serverPopulation!!.text = context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(R.string.text_low).toUpperCase()
             } else if (serverPopulation.equals("medium", ignoreCase = true)) {
                 holder.serverPopulation!!.setTextColor(Color.YELLOW)
                 holder.serverPopulation!!.text =
-                    context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(
-                    R.string.text_medium
-                ).toUpperCase()
+                    context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(R.string.text_medium).toUpperCase()
             } else if (serverPopulation.equals("high", ignoreCase = true)) {
                 holder.serverPopulation!!.setTextColor(Color.GREEN)
                 holder.serverPopulation!!.text =
-                    context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(
-                    R.string.text_high
-                ).toUpperCase()
+                    context.resources.getString(R.string.text_server_population) + " " + context.resources.getString(R.string.text_high).toUpperCase()
             } else {
                 holder.serverPopulation!!.setTextColor(Color.RED)
                 holder.serverPopulation!!.text =

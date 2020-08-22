@@ -86,7 +86,7 @@ kotlin {
                 implementation kotlin("test-annotations-common")
 
                 implementation "io.mockk:mockk-common:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
         }
         jvmMain {

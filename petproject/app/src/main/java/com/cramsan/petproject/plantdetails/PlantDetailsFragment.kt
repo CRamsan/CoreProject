@@ -54,33 +54,36 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
             Observer {
                 Glide.with(this)
                     .load(it)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            eventLogger.log(Severity.ERROR, "PlantDetailsFragment", e.toString())
-                            return false
-                        }
+                    .listener(
+                        object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                eventLogger.log(Severity.ERROR, "PlantDetailsFragment", e.toString())
+                                return false
+                            }
 
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            eventLogger.log(
-                                Severity.VERBOSE, "PlantDetailsFragment",
-                                "Resource loaded successfully"
-                            )
-                            dataBinding.plantDetailsImageLoading.visibility = View.GONE
-                            dataBinding.plantDetailsImage.visibility = View.VISIBLE
-                            return false
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                eventLogger.log(
+                                    Severity.VERBOSE,
+                                    "PlantDetailsFragment",
+                                    "Resource loaded successfully"
+                                )
+                                dataBinding.plantDetailsImageLoading.visibility = View.GONE
+                                dataBinding.plantDetailsImage.visibility = View.VISIBLE
+                                return false
+                            }
                         }
-                    })
+                    )
                     .override(dataBinding.plantDetailsImage.width, dataBinding.plantDetailsImage.height)
                     .into(dataBinding.plantDetailsImage)
             }

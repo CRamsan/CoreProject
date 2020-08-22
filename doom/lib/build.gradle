@@ -18,7 +18,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$globalKotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
         }
         commonTest {

@@ -123,21 +123,13 @@ class StatItemAdapter(
             holder.name!!.setText(R.string.text_time_played_caps)
             val hours = context.resources.getString(R.string.text_hours)
             holder.total!!.text =
-                context.resources.getString(R.string.text_stat_all) + " " + java.lang.Float.valueOf(
-                stat.all_time!!
-            ).toInt() / 3600 + " " + hours
+                context.resources.getString(R.string.text_stat_all) + " " + java.lang.Float.valueOf(stat.all_time!!).toInt() / 3600 + " " + hours
             holder.today!!.text =
-                context.resources.getString(R.string.text_stat_today) + " " + java.lang.Float.valueOf(
-                stat.day!!.d01!!
-            ).toInt() / 3600 + " " + hours
+                context.resources.getString(R.string.text_stat_today) + " " + java.lang.Float.valueOf(stat.day!!.d01!!).toInt() / 3600 + " " + hours
             holder.week!!.text =
-                context.resources.getString(R.string.text_stat_week) + " " + java.lang.Float.valueOf(
-                stat.week!!.w01!!
-            ).toInt() / 3600 + " " + hours
+                context.resources.getString(R.string.text_stat_week) + " " + java.lang.Float.valueOf(stat.week!!.w01!!).toInt() / 3600 + " " + hours
             holder.month!!.text =
-                context.resources.getString(R.string.text_stat_month) + " " + java.lang.Float.valueOf(
-                stat.month!!.m01!!
-            ).toInt() / 3600 + " " + hours
+                context.resources.getString(R.string.text_stat_month) + " " + java.lang.Float.valueOf(stat.month!!.m01!!).toInt() / 3600 + " " + hours
         } else {
             var statName = ""
 

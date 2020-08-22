@@ -40,14 +40,16 @@ class MainMenuScreen : BaseScreen(), Screen {
         mainPane.add(parentTable)
 
         val startGameButton = TextButton("Start", mySkin)
-        startGameButton.addListener(object : ChangeListener() {
-            override fun changed(
-                event: ChangeEvent,
-                actor: Actor
-            ) {
-                SceneManager.startGameScreen(GameParameterManager())
+        startGameButton.addListener(
+            object : ChangeListener() {
+                override fun changed(
+                    event: ChangeEvent,
+                    actor: Actor
+                ) {
+                    SceneManager.startGameScreen(GameParameterManager())
+                }
             }
-        })
+        )
         parentTable.add(startGameButton).row()
 
         stage!!.addActor(mainPane)

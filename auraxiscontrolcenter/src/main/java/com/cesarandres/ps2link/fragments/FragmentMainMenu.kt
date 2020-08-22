@@ -297,10 +297,7 @@ class FragmentMainMenu : BaseFragment() {
     }
 
     fun promptForPermissions() {
-        if (ContextCompat.checkSelfPermission(
-            activity!!,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 activity!!,
@@ -436,7 +433,10 @@ class FragmentMainMenu : BaseFragment() {
                                 buyIntentBundle.getParcelable<PendingIntent>("BUY_INTENT")
                             activity!!.startIntentSenderForResult(
                                 pendingIntent!!.intentSender,
-                                1001, Intent(), Integer.valueOf(0)!!, Integer.valueOf(0)!!,
+                                1001,
+                                Intent(),
+                                Integer.valueOf(0)!!,
+                                Integer.valueOf(0)!!,
                                 Integer.valueOf(0)!!
                             )
                             return@OnClickListener

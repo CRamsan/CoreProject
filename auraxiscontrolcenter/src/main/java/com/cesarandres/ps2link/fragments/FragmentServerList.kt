@@ -96,7 +96,9 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
     fun downloadServers() {
         setProgressButton(true)
         val url = dbgCensus.generateGameDataRequest(
-            Verb.GET, PS2Collection.WORLD, "",
+            Verb.GET,
+            PS2Collection.WORLD,
+            "",
             QueryString.generateQeuryString().AddCommand(QueryCommand.LIMIT, "10"),
             selectionButton!!.namespace
         )!!.toString()
@@ -176,7 +178,9 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
         // http://census.daybreakgames.com/get/ps2:v2/world_event?
         // world_id=17&c:limit=1&type=METAGAME&c:join=metagame_event&c:lang=en
         val url = dbgCensus.generateGameDataRequest(
-            Verb.GET, PS2Collection.WORLD_EVENT, "",
+            Verb.GET,
+            PS2Collection.WORLD_EVENT,
+            "",
             QueryString.generateQeuryString().AddCommand(
                 QueryCommand.LIMIT,
                 "1"
@@ -185,7 +189,8 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
                 QueryString.SearchModifier.EQUALS,
                 "METAGAME"
             ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId!!).AddComparison(
-                "after", QueryString.SearchModifier.EQUALS,
+                "after",
+                QueryString.SearchModifier.EQUALS,
                 // Get metagame events that are newer than  minutes
                 java.lang.Long.toString(System.currentTimeMillis() / 1000L - 7200)
             ).AddCommand(QueryCommand.JOIN, "metagame_event"),

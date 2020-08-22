@@ -97,7 +97,9 @@ class FragmentDirectiveList : BaseFragment() {
         this.setProgressButton(true)
         // TODO Fix this language use
         val url = dbgCensus.generateGameDataRequest(
-            Verb.GET, PS2Collection.CHARACTERS_DIRECTIVE, null,
+            Verb.GET,
+            PS2Collection.CHARACTERS_DIRECTIVE,
+            null,
             QueryString.generateQeuryString().AddComparison(
                 "character_id",
                 SearchModifier.EQUALS,
@@ -313,10 +315,7 @@ class FragmentDirectiveList : BaseFragment() {
             val dis = directiveMap[directive.directive_id]
             directive.directive_id_join_directive = dis
             for (i in charactersDirectiveObjective!!.indices) {
-                if (charactersDirectiveObjective!![i].directive_id!!.equals(
-                    directive.directive_id!!,
-                    ignoreCase = true
-                )
+                if (charactersDirectiveObjective!![i].directive_id!!.equals(directive.directive_id!!, ignoreCase = true)
                 ) {
                     directive.directiveObjective = charactersDirectiveObjective!![i]
                     charactersDirectiveObjective!!.removeAt(i)

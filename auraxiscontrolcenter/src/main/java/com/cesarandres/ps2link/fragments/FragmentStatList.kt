@@ -86,7 +86,8 @@ class FragmentStatList : BaseFragment() {
                 val profile = response.character_list!![0]
                 val stats = profile.stats
                 listRoot.adapter = StatItemAdapter(
-                    activity!!, stats!!.stat_history!!,
+                    activity!!,
+                    stats!!.stat_history!!,
                     this!!.profileId!!
                 )
             } catch (e: Exception) {

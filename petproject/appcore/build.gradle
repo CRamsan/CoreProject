@@ -92,7 +92,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin("stdlib-common")
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
                 implementation "io.ktor:ktor-client-core:$globalKtorVersion"
                 implementation "io.ktor:ktor-client-json:$globalKtorVersion"
                 implementation project(":framework")
@@ -103,7 +103,7 @@ kotlin {
                 implementation kotlin("test-common")
                 implementation kotlin("test-annotations-common")
                 implementation "io.mockk:mockk-common:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$globalCoroutinesVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
                 implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
                 implementation project(":framework")
             }

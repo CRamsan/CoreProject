@@ -88,7 +88,8 @@ class FragmentKillList : BaseFragment() {
         setProgressButton(true)
         val url = dbgCensus.generateGameDataRequest(
             Verb.GET,
-            PS2Collection.CHARACTERS_EVENT, null,
+            PS2Collection.CHARACTERS_EVENT,
+            null,
             QueryString.generateQeuryString().AddComparison(
                 "character_id",
                 SearchModifier.EQUALS,
@@ -110,7 +111,8 @@ class FragmentKillList : BaseFragment() {
                 val listRoot = activity!!.findViewById<View>(R.id.listViewKillList) as ListView
                 listRoot.adapter =
                     KillItemAdapter(
-                        activity!!, response.characters_event_list!!,
+                        activity!!,
+                        response.characters_event_list!!,
                         this!!.profileId!!,
                         this.namespace!!,
                         volley,

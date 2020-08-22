@@ -132,17 +132,19 @@ class FragmentRedditPager : BaseFragment() {
             }
         )
 
-        mViewPager!!.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(arg0: Int) {
-                metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
-            }
+        mViewPager!!.setOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+                override fun onPageSelected(arg0: Int) {
+                    metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
+                }
 
-            override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-            }
+                override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
+                }
 
-            override fun onPageScrollStateChanged(arg0: Int) {
+                override fun onPageScrollStateChanged(arg0: Int) {
+                }
             }
-        })
+        )
     }
 
     override fun onStop() {

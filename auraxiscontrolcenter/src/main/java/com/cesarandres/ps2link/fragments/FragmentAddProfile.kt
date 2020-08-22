@@ -142,7 +142,8 @@ class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
                 val listRoot = view!!.findViewById<View>(R.id.listFoundProfiles) as ListView
                 listRoot.adapter = ProfileItemAdapter(
                     this!!.activity!!,
-                    response.character_name_list!!, false
+                    response.character_name_list!!,
+                    false
                 )
                 listRoot.onItemClickListener =
                     OnItemClickListener { myAdapter, myView, myItemInt, mylng ->

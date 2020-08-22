@@ -150,17 +150,19 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         searchView.apply {
             // Assumes current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    viewModel.queryString = query
-                    return true
-                }
+            setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        viewModel.queryString = query
+                        return true
+                    }
 
-                override fun onQueryTextChange(newText: String): Boolean {
-                    viewModel.queryString = newText
-                    return true
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        viewModel.queryString = newText
+                        return true
+                    }
                 }
-            })
+            )
         }
     }
 

@@ -35,7 +35,8 @@ class Map(private var size: Int) {
 
     fun cast(point: Point, angle: Double, range: Double): Ray {
         return Ray(
-            this, Step(point.x, point.y, 0.0, 0.0, 0.0, 0.0, 0.0),
+            this,
+            Step(point.x, point.y, 0.0, 0.0, 0.0, 0.0, 0.0),
             sin(angle),
             cos(angle),
             range
