@@ -62,7 +62,7 @@ class AllPlantListViewModel(application: Application) :
             observableShowIsDownloadingData.value = SimpleEvent()
             return
         }
-        when(animalType) {
+        when (animalType) {
             AnimalType.CAT -> observableNextActivityCat.value = SimpleEvent()
             AnimalType.DOG -> observableNextActivityDog.value = SimpleEvent()
             AnimalType.ALL -> TODO()
