@@ -21,8 +21,18 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.scene.Scene
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.halt.implementation.HaltUtilJVM
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.LoggerJVM
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
 /**
  * This code is based on the raycaster demo from https://github.com/walle/raycaster
@@ -101,8 +111,15 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
                 }
             }
         }
-        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, this)
-        scene = Scene(entityManager, sceneConfig)
+
+        val kodein = DI {
+            bind() from singleton { EventLogger(Severity.INFO, null, LoggerJVM()) }
+            bind() from singleton { HaltUtil(HaltUtilJVM()) }
+            bind() from singleton { AssertUtil(true, instance(), instance()) }
+        }
+
+        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, this, kodein)
+        scene = Scene(entityManager, sceneConfig, kodein)
 
         this.player = Player(sceneConfig.player)
         scene!!.loadScene()

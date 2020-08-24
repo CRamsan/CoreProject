@@ -123,3 +123,12 @@ task run(type: Exec) {
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.cramsan.awsgame/com.cramsan.awsgame.AndroidLauncher'
 }
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn ':doom:game:core:release'
+    dependsOn 'build'
+    dependsOn 'test'
+}

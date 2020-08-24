@@ -41,7 +41,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    checkStyleRunAnalysis: true
     // Configure all the required steps
     tasks: 'petproject:app:build petproject:app:assembleAndroidTest'
 

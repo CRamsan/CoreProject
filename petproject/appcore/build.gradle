@@ -169,5 +169,5 @@ tasks.register("release") {
     dependsOn ':framework:release'
     dependsOn 'ktlint'
     dependsOn 'build'
-    dependsOn 'test'
+    dependsOn 'allTests'
 }

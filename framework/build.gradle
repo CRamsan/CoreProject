@@ -139,5 +139,5 @@ tasks.register("release") {
 
     dependsOn 'ktlint'
     dependsOn 'build'
-    dependsOn 'test'
+    dependsOn 'allTests'
 }

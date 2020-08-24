@@ -19,6 +19,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -29,4 +30,15 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'doom:game:desktop:build'
+    tasks: 'doom:game:desktop:release'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(system.defaultworkingdirectory)/petproject/azurefunction/build/azure-functions/
+    Contents: '**'
+    targetFolder: $(build.artifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)

@@ -43,3 +43,12 @@ task dist(type: Jar) {
 }
 
 dist.dependsOn classes
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn ':doom:game:core:release'
+    dependsOn 'build'
+    dependsOn 'test'
+}

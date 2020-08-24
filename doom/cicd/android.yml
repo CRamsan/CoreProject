@@ -19,6 +19,15 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
+- task: android-manifest-version@1
+  inputs:
+    sourcePath: '$(system.defaultworkingdirectory)/doom/game/android/AndroidManifest.xml'
+    versionCodeOption: 'buildid'
+    versionCode: '$(Build.BuildId)'
+    versionName:
+    printFile: true
+
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -29,5 +38,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    checkStyleRunAnalysis: true
-    tasks: 'doom:game:android:build'
+    tasks: 'doom:game:android:release'
