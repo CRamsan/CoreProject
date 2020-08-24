@@ -19,6 +19,7 @@ import com.cramsan.awslib.scene.SceneEventsCallback
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.kodein.di.DI
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -30,7 +31,7 @@ import javax.swing.JOptionPane.showInputDialog
 import javax.swing.JPanel
 import kotlin.system.exitProcess
 
-class AWTRenderer : JFrame(), EntityManagerEventListener {
+class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
 
     init {
         setSize(400, 400)
@@ -43,7 +44,7 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
         add(RendererCanvas(manager, map))
         val mainPlayer = sceneConfig.player
         runBlocking {
-            val scene = Scene(manager, sceneConfig)
+            val scene = Scene(manager, sceneConfig, di)
             scene.setListener(
                 object : SceneEventsCallback {
                     override fun onEntityChanged(entity: GameEntityInterface) {
@@ -62,6 +63,27 @@ class AWTRenderer : JFrame(), EntityManagerEventListener {
 
             this@AWTRenderer.addKeyListener(
                 object : KeyAdapter() {
+                    override fun keyReleased(e: KeyEvent?) {
+                        when (e?.keyCode) {
+                            KeyEvent.VK_UP -> {
+                                mainPlayer.heading = Direction.NORTH
+                                return
+                            }
+                            KeyEvent.VK_DOWN -> {
+                                mainPlayer.heading = Direction.SOUTH
+                                return
+                            }
+                            KeyEvent.VK_LEFT -> {
+                                mainPlayer.heading = Direction.WEST
+                                return
+                            }
+                            KeyEvent.VK_RIGHT -> {
+                                mainPlayer.heading = Direction.EAST
+                                return
+                            }
+                            else -> return
+                        }
+                    }
                     override fun keyTyped(e: KeyEvent?) {
                         val action = when (e?.keyChar) {
                             'w' -> {

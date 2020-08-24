@@ -13,15 +13,20 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.map.GameMapAStarFunctionProvider
 import com.cramsan.awslib.map.GridPositionableInterface
 import com.cramsan.awslib.utils.constants.GameEntityRange
-import com.cramsan.awslib.utils.logging.Logger
-import com.cramsan.awslib.utils.logging.Severity
 import com.cramsan.awslib.utils.pathfinding.AStarAlgorithm
+import com.cramsan.framework.logging.EventLoggerInterface
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 import kotlin.math.pow
 
 /**
  * Simple implementation of [AIRepo]
  */
-class DummyAIRepoImpl : AIRepo {
+class DummyAIRepoImpl(override val di: DI) : AIRepo, DIAware {
+
+    private val log: EventLoggerInterface by instance()
+    private val tag = "DummyAIRepoImpl"
 
     override fun getNextTurnAction(entity: GameEntityInterface, entityManager: EntityManager, map: GameMap): TurnActionInterface {
         val target = getEntityTarget(entity, entityManager)
@@ -63,7 +68,7 @@ class DummyAIRepoImpl : AIRepo {
      */
     private fun cellToHeading(fromCell: Cell, neighborCell: Cell): Direction {
         if (distance(fromCell, neighborCell) != 1f) {
-            Logger.log(Severity.ERROR, "Cells are not neighbors")
+            log.e(tag, "Cells are not neighbors")
             return Direction.KEEP
         }
         return when (neighborCell) {

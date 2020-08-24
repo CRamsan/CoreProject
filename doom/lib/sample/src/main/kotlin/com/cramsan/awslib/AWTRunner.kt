@@ -4,6 +4,16 @@ import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.map.MapLoader
+import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.halt.implementation.HaltUtilJVM
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.LoggerJVM
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import java.awt.EventQueue
 
 class AWTRunner {
@@ -59,8 +69,15 @@ class AWTRunner {
                     }
                 }
             } ?: return
-            val renderer = AWTRenderer()
-            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, renderer)
+
+            val kodein = DI {
+                bind() from singleton { EventLogger(Severity.INFO, null, LoggerJVM()) }
+                bind() from singleton { HaltUtil(HaltUtilJVM()) }
+                bind() from singleton { AssertUtil(true, instance(), instance()) }
+            }
+
+            val renderer = AWTRenderer(kodein)
+            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, renderer, kodein)
             renderer.startScene(entityManager, sceneConfig, map)
         }
     }

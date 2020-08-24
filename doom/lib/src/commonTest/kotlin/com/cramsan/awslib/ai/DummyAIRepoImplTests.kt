@@ -9,6 +9,13 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.map.MapGenerator
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.logging.EventLoggerInterface
+import io.mockk.mockk
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -24,6 +31,15 @@ class DummyAIRepoImplTests {
 
     @BeforeTest
     fun prepareTest() {
+        val log = mockk<EventLoggerInterface>(relaxed = true)
+        val assert = mockk<AssertUtilInterface>(relaxed = true)
+        val halt = mockk<HaltUtilInterface>(relaxed = true)
+        val kodein = DI {
+            bind() from singleton { log }
+            bind() from singleton { assert }
+            bind() from singleton { halt }
+        }
+
         map = GameMap(MapGenerator.createMapWithWalls())
         val sceneConfig = scene {
             player {
@@ -39,10 +55,10 @@ class DummyAIRepoImplTests {
             }
         }
         assertNotNull(sceneConfig)
-        entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
+        entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
         enemy = sceneConfig.entityList.first()
         player = sceneConfig.player
-        dummyAIRepoImpl = DummyAIRepoImpl()
+        dummyAIRepoImpl = DummyAIRepoImpl(kodein)
         entityManager.register(enemy)
         entityManager.register(player)
     }

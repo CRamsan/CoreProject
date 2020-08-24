@@ -23,17 +23,22 @@ import com.cramsan.awslib.eventsystem.triggers.Trigger
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.scene.SceneEventsCallback
 import com.cramsan.awslib.utils.constants.InitialValues
-import com.cramsan.awslib.utils.logging.Logger
-import com.cramsan.awslib.utils.logging.Severity
+import com.cramsan.framework.logging.EventLoggerInterface
 import kotlinx.coroutines.channels.Channel
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
 class EntityManager(
     private val map: GameMap,
     private val triggerList: List<Trigger>,
     private val eventList: List<BaseEvent>,
     private var eventListener: EntityManagerEventListener?,
-    private val aiRepo: AIRepo = DummyAIRepoImpl()
-) : EntityManagerInterface, EntityManagerInteractionReceiver {
+    override val di: DI,
+    private val aiRepo: AIRepo = DummyAIRepoImpl(di)
+) : EntityManagerInterface, EntityManagerInteractionReceiver, DIAware {
+
+    private val log: EventLoggerInterface by instance()
 
     val entityTriggerMap: HashMap<Int, GameEntityTrigger> = HashMap()
 
@@ -43,6 +48,7 @@ class EntityManager(
     val eventMap: HashMap<Int, BaseEvent> = HashMap()
     var nextEvent: BaseEvent? = null
     val channel = Channel<BaseEvent>()
+    private val tag = "EntityManager"
 
     init {
         triggerList.forEach {
@@ -129,9 +135,9 @@ class EntityManager(
             } else if (it.nextTurnAction.turnActionType == TurnActionType.ATTACK) {
                 act(it, callback)
             } else if (it.nextTurnAction.turnActionType == TurnActionType.NONE) {
-                Logger.log(Severity.VERBOSE, "Noop action")
+                log.i(tag, "Noop action")
             } else {
-                Logger.log(Severity.ERROR, "Unhandled action!")
+                log.e(tag, "Unhandled action!")
             }
         }
     }
@@ -289,11 +295,11 @@ class EntityManager(
     }
 
     private suspend fun handleInteractiveEntityEvent(event: InteractiveEvent): BaseEvent? {
-        println("About to send callback")
+        log.i(tag, "About to send callback")
         eventListener?.onInteractionRequired(event.text, event.options, this@EntityManager)
-        println("Sent callback")
+        log.i(tag, "Sent callback")
         val testEvent = channel.receive()
-        println("Got callback")
+        log.i(tag, "Got callback")
         return if (testEvent.type == EventType.NOOP) {
             null
         } else {
@@ -313,7 +319,7 @@ class EntityManager(
 
     private suspend fun executeTrigger(trigger: Trigger, callback: SceneEventsCallback?) {
         if (nextEvent != null) {
-            Logger.log(Severity.ERROR, "Cannot overwrite event")
+            throw RuntimeException("Cannot overwrite event")
         }
 
         nextEvent = eventMap[trigger.eventId]
@@ -335,24 +341,24 @@ class EntityManager(
         }
     }
     override suspend fun selectOption(option: InteractiveEventOption?) {
-        println("SelectIotuin")
+        log.i(tag, "SelectIotuin")
         if (option == null) {
-            println("SelectIotuin null")
+            log.i(tag, "SelectIotuin null")
             channel.send(NoopEvent())
             return
         }
 
-        println("SelectIotuin Test")
+        log.i(tag, "SelectIotuin Test")
         if (option.eventId == InitialValues.INVALID_ID) {
-            println("SelectIotuin INVALID")
+            log.i(tag, "SelectIotuin INVALID")
             channel.send(NoopEvent())
             return
         }
 
-        println("SelectIotuin TEST 2")
+        log.i(tag, "SelectIotuin TEST 2")
         val eEvent = eventMap.getValue(option.eventId)
         channel.send(eEvent)
-        println("SelectIotuin TEST 3")
+        log.i(tag, "SelectIotuin TEST 3")
     }
 
     override fun processGameEntityState() {

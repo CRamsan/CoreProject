@@ -8,11 +8,33 @@ import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.utils.map.MapGenerator
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.logging.EventLoggerInterface
+import io.mockk.mockk
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class SceneTests {
+
+    lateinit var kodein: DI
+
+    @BeforeTest
+    fun prepareTest() {
+        val log = mockk<EventLoggerInterface>(relaxed = true)
+        val assert = mockk<AssertUtilInterface>(relaxed = true)
+        val halt = mockk<HaltUtilInterface>(relaxed = true)
+        kodein = DI {
+            bind() from singleton { log }
+            bind() from singleton { assert }
+            bind() from singleton { halt }
+        }
+    }
 
     /**
      * Test Basic Scene
@@ -54,7 +76,7 @@ class SceneTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
 
         val player = sceneConfig.player
 
@@ -63,7 +85,7 @@ class SceneTests {
         val actionListWest = Array(20) { TurnAction(TurnActionType.MOVE, Direction.WEST) }
         val actionListEast = Array(20) { TurnAction(TurnActionType.MOVE, Direction.EAST) }
 
-        val scene = Scene(entityManager, sceneConfig)
+        val scene = Scene(entityManager, sceneConfig, kodein)
         scene.loadScene()
 
         actionListSouth.forEach {
@@ -106,7 +128,7 @@ class SceneTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
 
         val player = sceneConfig.player
         val actionListSouth = Array(15) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }
@@ -114,7 +136,7 @@ class SceneTests {
         val actionListWest = Array(7) { TurnAction(TurnActionType.MOVE, Direction.WEST) }
         val actionListEast = Array(7) { TurnAction(TurnActionType.MOVE, Direction.EAST) }
 
-        val scene = Scene(entityManager, sceneConfig)
+        val scene = Scene(entityManager, sceneConfig, kodein)
         scene.loadScene()
 
         actionListSouth.forEach {
@@ -165,9 +187,9 @@ class SceneTests {
         }
         assertNotNull(sceneConfig)
 
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
 
-        val scene = Scene(entityManager, sceneConfig)
+        val scene = Scene(entityManager, sceneConfig, kodein)
         try {
             scene.loadScene()
         } catch (e: Exception) {

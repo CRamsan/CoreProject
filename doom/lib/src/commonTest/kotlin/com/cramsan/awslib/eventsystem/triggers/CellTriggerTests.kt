@@ -10,11 +10,33 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.map.MapGenerator
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.logging.EventLoggerInterface
+import io.mockk.mockk
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class CellTriggerTests {
+
+    lateinit var kodein: DI
+
+    @BeforeTest
+    fun prepareTest() {
+        val log = mockk<EventLoggerInterface>(relaxed = true)
+        val assert = mockk<AssertUtilInterface>(relaxed = true)
+        val halt = mockk<HaltUtilInterface>(relaxed = true)
+        kodein = DI {
+            bind() from singleton { log }
+            bind() from singleton { assert }
+            bind() from singleton { halt }
+        }
+    }
 
     /**
      * Test GameEntityTrigger
@@ -61,10 +83,10 @@ class CellTriggerTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
         val player = sceneConfig.player
 
-        val scene = Scene(entityManager, sceneConfig)
+        val scene = Scene(entityManager, sceneConfig, kodein)
         scene.loadScene()
 
         scene.runTurn(TurnAction(TurnActionType.MOVE, Direction.NORTH))

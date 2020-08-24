@@ -17,12 +17,15 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation project(":framework")
+                implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$globalKotlinVersion"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
             }
         }
         commonTest {
             dependencies {
+                implementation "io.mockk:mockk:$globalMockkVersion"
                 implementation "org.jetbrains.kotlin:kotlin-test-common:$globalKotlinVersion"
                 implementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$globalKotlinVersion"
 

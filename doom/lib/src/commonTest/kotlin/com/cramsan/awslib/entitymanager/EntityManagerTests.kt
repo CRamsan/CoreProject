@@ -12,6 +12,13 @@ import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.utils.map.MapGenerator
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.logging.EventLoggerInterface
+import io.mockk.mockk
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,11 +33,13 @@ class EntityManagerTests {
     private lateinit var map: GameMap
     private lateinit var entityManager: EntityManager
 
+    lateinit var kodein: DI
+
     companion object {
+
         fun createPlayer(posX: Int, posY: Int): Player {
             return Player(posX, posY, 50)
         }
-
         fun createCharacter(id: Int, posX: Int, posY: Int): Character {
             return Dog(id, posX, posY, 100, true)
         }
@@ -38,8 +47,16 @@ class EntityManagerTests {
 
     @BeforeTest
     fun prepareTest() {
+        val log = mockk<EventLoggerInterface>(relaxed = true)
+        val assert = mockk<AssertUtilInterface>(relaxed = true)
+        val halt = mockk<HaltUtilInterface>(relaxed = true)
+        kodein = DI {
+            bind() from singleton { log }
+            bind() from singleton { assert }
+            bind() from singleton { halt }
+        }
         map = GameMap(MapGenerator.createMap100x100())
-        entityManager = EntityManager(map, emptyList(), emptyList(), null)
+        entityManager = EntityManager(map, emptyList(), emptyList(), null, kodein)
     }
 
     /**
