@@ -27,6 +27,7 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 class EntityManagerTests {
 
@@ -87,7 +88,11 @@ class EntityManagerTests {
         for (i in 0 until 50) {
             val enemy1 = createCharacter(1 * 100, i, i)
             assertNotNull(entityManager.getEntity(i, i), "Expected location $i-$i is not already occupied")
-            assertFalse(entityManager.register(enemy1), "Entity was registered when it shouldn't have")
+            try {
+                entityManager.register(enemy1)
+                fail("Trying to reregister should throw exception")
+            } catch (e: Exception) {
+            }
             assertNotEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
         }
     }
@@ -116,7 +121,11 @@ class EntityManagerTests {
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
             assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
-            assertFalse(entityManager.register(enemy1), "Entity should not have been registered")
+            try {
+                entityManager.register(enemy1)
+                fail("Trying to reregister should throw exception")
+            } catch (e: Exception) {
+            }
             entityList.add(enemy1)
         }
 
@@ -124,7 +133,11 @@ class EntityManagerTests {
         val posY = 1
         for (entity in entityList) {
             assertNull(entityManager.getEntity(posX, posY), "Expected location is already occupied")
-            assertFalse(entityManager.register(entity), "Failed to register dog")
+            try {
+                entityManager.register(entity)
+                fail("Trying to reregister should throw exception")
+            } catch (e: Exception) {
+            }
             assertNull(entityManager.getEntity(posX, posY), "Entity at location is not the expected one")
         }
     }

@@ -85,15 +85,15 @@ class EntityManager(
         }
 
         if (isBlocked(entity.posX, entity.posY)) {
-            return false
+            throw RuntimeException("Location blocked. Cannot register")
         }
 
         if (entitySet.contains(entity)) {
-            return false
+            throw RuntimeException("Entity already registered")
         }
 
         if (entityIdMap.containsKey(entity.id)) {
-            return false
+            throw RuntimeException("Entity with Id already registered")
         }
 
         entitySet.add(entity)
@@ -293,18 +293,18 @@ class EntityManager(
         executeTrigger(trigger, callback)
     }
 
-    override fun handleSwapEntityEvent(event: SwapEntityEvent, callback: SceneEventsCallback?): BaseEvent? {
+    override fun handleSwapEntityEvent(event: SwapEntityEvent, callback: SceneEventsCallback?): BaseEvent {
         val disableId = event.disableId
         val enableId = event.enableId
 
         val toDisableEntity = entityIdMap[disableId]
         var toEnableEntity: GameEntityInterface? = null
-        toDisableEntity?.let { setEntityState(it, false) }
-        disabledEntitySet.forEach {
-            if (it.id == enableId) {
-                setEntityState(it, true)
-                toEnableEntity = it
-            }
+        toDisableEntity?.let {
+            setEntityState(it, false)
+        }
+        disabledEntitySet.find { it.id == enableId }?.let {
+            setEntityState(it, true)
+            toEnableEntity = it
         }
         if (toEnableEntity != null && toDisableEntity != null) {
             toEnableEntity!!.posX = toDisableEntity.posX
@@ -312,10 +312,14 @@ class EntityManager(
         }
         toDisableEntity?.let { callback?.onEntityChanged(it) }
         toEnableEntity?.let { callback?.onEntityChanged(it) }
-        return eventMap[event.nextEventId]
+        return if (event.nextEventId == InitialValues.NOOP_ID) {
+            NoopEvent()
+        } else {
+            eventMap.getValue(event.nextEventId)
+        }
     }
 
-    private suspend fun handleInteractiveEntityEvent(event: InteractiveEvent): BaseEvent? {
+    private suspend fun handleInteractiveEntityEvent(event: InteractiveEvent): BaseEvent {
         log.i(tag, "Handling Interactive Event: $event")
         log.d(tag, "Text: ${event.text}")
         event.options.forEach {
@@ -331,20 +335,24 @@ class EntityManager(
         log.d(tag, "Got response from Event: $event")
         log.i(tag, "Received Event: $receivedEvent")
         return if (receivedEvent.type == EventType.NOOP) {
-            null
+            NoopEvent()
         } else {
             receivedEvent
         }
     }
 
-    override fun handleChangeTriggerEvent(event: ChangeTriggerEvent): BaseEvent? {
+    override fun handleChangeTriggerEvent(event: ChangeTriggerEvent): BaseEvent {
         val disableId = event.disableId
         val enableId = event.enableId
 
         triggerIdMap[enableId]?.enabled = true
         triggerIdMap[disableId]?.enabled = false
 
-        return eventMap[event.nextEventId]
+        return if (event.nextEventId == InitialValues.NOOP_ID) {
+            NoopEvent()
+        } else {
+            eventMap.getValue(event.nextEventId)
+        }
     }
 
     private suspend fun executeTrigger(trigger: Trigger, callback: SceneEventsCallback?) {
@@ -368,6 +376,10 @@ class EntityManager(
                 is ChangeTriggerEvent -> {
                     log.d(tag, "Change trigger event")
                     nextEvent = handleChangeTriggerEvent(localNextEvent)
+                }
+                is NoopEvent -> {
+                    log.i(tag, "Noop event")
+                    nextEvent = null
                 }
                 else -> {
                     TODO("Unexpected Event type")

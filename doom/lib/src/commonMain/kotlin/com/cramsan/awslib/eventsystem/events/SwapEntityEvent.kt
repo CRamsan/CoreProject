@@ -8,7 +8,7 @@ class SwapEntityEvent(
 ) :
     NonInteractiveEvent(
         id,
-        EventType.CHANGETRIGGER,
+        EventType.SWAPIDENTITY,
         nextEventId,
         enableEntityId,
         disableEntityId

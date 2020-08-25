@@ -10,11 +10,13 @@ import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
+import kotlinx.coroutines.runBlocking
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import java.awt.EventQueue
+import com.cramsan.awslib.utils.constants.InitialValues
 
 class AWTRunner {
 
@@ -48,6 +50,12 @@ class AWTRunner {
                         posX = 2
                         posY = 23
                     }
+                    scientist {
+                        id = 2
+                        group = 0
+                        posX = 4
+                        posY = 23
+                    }
                 }
 
                 triggers {
@@ -55,6 +63,12 @@ class AWTRunner {
                         id = 523
                         eventId = 912
                         targetId = 1
+                        enabled = true
+                    }
+                    entity {
+                        id = 525
+                        eventId = 482
+                        targetId = 2
                         enabled = true
                     }
                 }
@@ -65,7 +79,9 @@ class AWTRunner {
                     }
                     swapEntity {
                         id = 482
-                        disableEntityId = 1
+                        enableEntityId = 5
+                        disableEntityId = 2
+                        nextEventId = InitialValues.NOOP_ID
                     }
                 }
             } ?: return
@@ -78,7 +94,10 @@ class AWTRunner {
 
             val renderer = AWTRenderer(kodein)
             val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, renderer, kodein)
-            renderer.startScene(entityManager, sceneConfig, map)
+
+            runBlocking {
+                renderer.startScene(entityManager, sceneConfig, map)
+            }
         }
     }
 }

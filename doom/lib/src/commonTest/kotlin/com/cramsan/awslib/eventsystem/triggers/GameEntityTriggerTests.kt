@@ -83,7 +83,7 @@ class GameEntityTriggerTests {
                     id = 352
                     enableEntityId = 2
                     disableEntityId = 1
-                    nextEventId = 0
+                    nextEventId = InitialValues.NOOP_ID
                 }
             }
         }
@@ -157,7 +157,7 @@ class GameEntityTriggerTests {
                     id = 352
                     enableEntityId = 2
                     disableEntityId = 1
-                    nextEventId = 0
+                    nextEventId = InitialValues.NOOP_ID
                 }
             }
         }

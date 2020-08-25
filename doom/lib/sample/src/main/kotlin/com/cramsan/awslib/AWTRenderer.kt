@@ -17,6 +17,7 @@ import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.scene.SceneEventsCallback
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.DI
@@ -33,6 +34,8 @@ import kotlin.system.exitProcess
 
 class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
 
+    var isGameRunning = true
+
     init {
         setSize(400, 400)
         defaultCloseOperation = EXIT_ON_CLOSE
@@ -40,14 +43,20 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
         isAlwaysOnTop = true
     }
 
-    fun startScene(manager: EntityManager, sceneConfig: SceneConfig, map: GameMap) {
+    suspend fun startScene(manager: EntityManager, sceneConfig: SceneConfig, map: GameMap) {
         add(RendererCanvas(manager, map))
         val mainPlayer = sceneConfig.player
-        runBlocking {
+        val gameLoop = GlobalScope.async {
             val scene = Scene(manager, sceneConfig, di)
             scene.setListener(
                 object : SceneEventsCallback {
                     override fun onEntityChanged(entity: GameEntityInterface) {
+                        if (entity == mainPlayer) {
+                            if (!entity.enabled) {
+                                println("Player is dead")
+                                isGameRunning = false
+                            }
+                        }
                         repaint()
                     }
 
@@ -64,6 +73,10 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
             this@AWTRenderer.addKeyListener(
                 object : KeyAdapter() {
                     override fun keyReleased(e: KeyEvent?) {
+                        if (!isGameRunning) {
+                            return
+                        }
+
                         when (e?.keyCode) {
                             KeyEvent.VK_UP -> {
                                 mainPlayer.heading = Direction.NORTH
@@ -85,6 +98,10 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
                         }
                     }
                     override fun keyTyped(e: KeyEvent?) {
+                        if (!isGameRunning) {
+                            return
+                        }
+
                         val action = when (e?.keyChar) {
                             'w' -> {
                                 mainPlayer.heading = Direction.NORTH
@@ -107,12 +124,14 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
                         }
                         GlobalScope.launch {
                             scene.runTurn(action)
+                            repaint()
                         }
                     }
                 }
             )
             scene.loadScene()
         }
+        gameLoop.await()
     }
 
     override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {

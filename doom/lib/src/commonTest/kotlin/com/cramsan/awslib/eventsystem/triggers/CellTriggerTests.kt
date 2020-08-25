@@ -9,6 +9,7 @@ import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
+import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
@@ -78,7 +79,7 @@ class CellTriggerTests {
                     id = 352
                     enableEntityId = 2
                     disableEntityId = 1
-                    nextEventId = 0
+                    nextEventId = InitialValues.NOOP_ID
                 }
             }
         }

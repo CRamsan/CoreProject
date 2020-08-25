@@ -1,5 +1,8 @@
 package com.cramsan.awslib.eventsystem.events
 
+/**
+ *
+ */
 class ChangeTriggerEvent(
     id: Int,
     nextEventId: Int,
