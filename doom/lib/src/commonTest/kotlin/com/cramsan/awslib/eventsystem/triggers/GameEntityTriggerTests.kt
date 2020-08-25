@@ -12,6 +12,7 @@ import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
+import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
@@ -148,6 +149,7 @@ class GameEntityTriggerTests {
                     }
                     option {
                         id = 1
+                        eventId = InitialValues.NOOP_ID
                         label = "No"
                     }
                 }
@@ -172,7 +174,7 @@ class GameEntityTriggerTests {
                 override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
                     GlobalScope.launch {
                         options.forEach {
-                            println("EcentID: ${it.eventId} - ${it.id} - ${it.label}")
+                            println("EventID: ${it.eventId} - ${it.id} - ${it.label}")
                         }
                         eventReceiver.selectOption(options[targetIndex])
                     }

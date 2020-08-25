@@ -34,4 +34,8 @@ abstract class Cell(var terrain: TerrainType) : Node, GridPositionableInterface 
     abstract fun onActionTaken()
 
     abstract fun blocksMovement(): Boolean
+
+    override fun toString(): String {
+        return "x:$posX, y:$posY, terrain:$terrain"
+    }
 }

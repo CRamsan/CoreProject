@@ -71,7 +71,7 @@ class AWTRunner {
             } ?: return
 
             val kodein = DI {
-                bind() from singleton { EventLogger(Severity.INFO, null, LoggerJVM()) }
+                bind() from singleton { EventLogger(Severity.VERBOSE, null, LoggerJVM()) }
                 bind() from singleton { HaltUtil(HaltUtilJVM()) }
                 bind() from singleton { AssertUtil(true, instance(), instance()) }
             }

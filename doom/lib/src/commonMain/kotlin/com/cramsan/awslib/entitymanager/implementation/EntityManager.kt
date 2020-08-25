@@ -52,6 +52,8 @@ class EntityManager(
 
     init {
         triggerList.forEach {
+            log.d(tag, "Trigger: $it")
+
             triggerIdMap.put(it.id, it)
             if (it is GameEntityTrigger) {
                 entityTriggerMap.put(it.targetId, it)
@@ -60,6 +62,7 @@ class EntityManager(
             }
         }
         eventList.forEach {
+            log.d(tag, "Event: $it")
             eventMap.put(it.id, it)
         }
     }
@@ -123,6 +126,7 @@ class EntityManager(
 
     override suspend fun runTurns(callback: SceneEventsCallback?) {
         queue.forEach {
+            log.i(tag, "Entity: $it")
             if (it.type != EntityType.PLAYER) {
                 if (it.shouldMove) {
                     it.nextTurnAction = aiRepo.getNextTurnAction(it, this@EntityManager, map)
@@ -137,12 +141,13 @@ class EntityManager(
             } else if (it.nextTurnAction.turnActionType == TurnActionType.NONE) {
                 log.i(tag, "Noop action")
             } else {
-                log.e(tag, "Unhandled action!")
+                TODO("Unexpected TUrnActionType")
             }
         }
     }
 
     private suspend fun move(entity: GameEntityInterface, callback: SceneEventsCallback?): Boolean {
+        log.i(tag, "Moving")
         var x = entity.posX
         var y = entity.posY
 
@@ -164,18 +169,25 @@ class EntityManager(
                 }
             }
         }
+        log.d(tag, "Trying to move from x:${entity.posX},y:${entity.posY} -> x:$x,y:$y")
 
-        if (map.isBlocked(x, y))
+        if (map.isBlocked(x, y)) {
+            log.d(tag, "Map location is blocked with ${map.cellAt(x, y)}")
             return false
+        }
 
-        if (isBlocked(x, y))
+        if (isBlocked(x, y)) {
+            log.d(tag, "Map location is blocked with ${getEntity(x, y)}")
             return false
+        }
 
         setPosition(entity, x, y)
         doTileAction(x, y, callback)
         entity.nextTurnAction = TurnAction.NOOP
 
         callback?.onEntityChanged(entity)
+
+        // TODO: Game end should be done as a trigger
         if (map.cellAt(x, y).terrain == TerrainType.END) {
             callback?.onSceneEnded(true)
         }
@@ -184,6 +196,7 @@ class EntityManager(
     }
 
     private suspend fun act(entity: GameEntityInterface, callback: SceneEventsCallback?): Boolean {
+        log.i(tag, "Performing action")
         var x = entity.posX
         var y = entity.posY
 
@@ -203,9 +216,11 @@ class EntityManager(
             Direction.KEEP -> {
             }
         }
+        log.d(tag, "Trying to target from x:${entity.posX},y:${entity.posY} -> x:$x,y:$y")
 
         val targetEntity = getEntity(x, y)
         if (targetEntity != null) {
+            log.d(tag, "Target entity: $targetEntity")
             if (targetEntity.group != entity.group) {
                 doDamage(entity, targetEntity, callback)
             } else {
@@ -213,6 +228,7 @@ class EntityManager(
             }
         } else {
             val cell = map.cellAt(x, y)
+            log.d(tag, "Target cell: $cell")
             cell.onActionTaken()
             callback?.onCellChanged(cell)
         }
@@ -246,8 +262,10 @@ class EntityManager(
     }
 
     override fun doDamage(attacker: GameEntityInterface, defender: GameEntityInterface, callback: SceneEventsCallback?) {
+        log.i(tag, "Performing damage")
         defender.health -= attacker.health
         if (defender.health <= 0) {
+            log.i(tag, "Entity is dead: $defender")
             defender.health = -1
             prepareForRemove(defender)
             callback?.onEntityChanged(defender)
@@ -256,7 +274,9 @@ class EntityManager(
 
     private suspend fun doAction(receiver: GameEntityInterface, callback: SceneEventsCallback?) {
         val trigger = entityTriggerMap.getValue(receiver.id)
+        log.i(tag, "Performing action to trigger: $trigger")
         if (!trigger.enabled) {
+            log.i(tag, "Trigger disabled")
             return
         }
 
@@ -269,6 +289,7 @@ class EntityManager(
             return
         }
 
+        log.i(tag, "Executing trigger: $trigger")
         executeTrigger(trigger, callback)
     }
 
@@ -295,15 +316,24 @@ class EntityManager(
     }
 
     private suspend fun handleInteractiveEntityEvent(event: InteractiveEvent): BaseEvent? {
-        log.i(tag, "About to send callback")
+        log.i(tag, "Handling Interactive Event: $event")
+        log.d(tag, "Text: ${event.text}")
+        event.options.forEach {
+            log.d(tag, "Option: $it")
+        }
+
+        // TODO: Shouldn't this be a non-nullable?
+        log.i(tag, "Calling Callback: $eventListener")
         eventListener?.onInteractionRequired(event.text, event.options, this@EntityManager)
-        log.i(tag, "Sent callback")
-        val testEvent = channel.receive()
-        log.i(tag, "Got callback")
-        return if (testEvent.type == EventType.NOOP) {
+
+        log.d(tag, "Waiting for response from Event: $event")
+        val receivedEvent = channel.receive()
+        log.d(tag, "Got response from Event: $event")
+        log.i(tag, "Received Event: $receivedEvent")
+        return if (receivedEvent.type == EventType.NOOP) {
             null
         } else {
-            testEvent
+            receivedEvent
         }
     }
 
@@ -325,40 +355,46 @@ class EntityManager(
         nextEvent = eventMap[trigger.eventId]
         while (nextEvent != null) {
             var localNextEvent = nextEvent
+            log.i(tag, "Event: $localNextEvent")
             when (localNextEvent) {
                 is SwapEntityEvent -> {
+                    log.d(tag, "Swap event")
                     nextEvent = handleSwapEntityEvent(localNextEvent, callback)
                 }
                 is InteractiveEvent -> {
+                    log.d(tag, "Interactive event")
                     nextEvent = handleInteractiveEntityEvent(localNextEvent)
                 }
                 is ChangeTriggerEvent -> {
+                    log.d(tag, "Change trigger event")
                     nextEvent = handleChangeTriggerEvent(localNextEvent)
                 }
                 else -> {
+                    TODO("Unexpected Event type")
                 }
             }
         }
     }
     override suspend fun selectOption(option: InteractiveEventOption?) {
-        log.i(tag, "SelectIotuin")
+        log.i(tag, "Selection: $option")
         if (option == null) {
-            log.i(tag, "SelectIotuin null")
             channel.send(NoopEvent())
             return
         }
 
-        log.i(tag, "SelectIotuin Test")
         if (option.eventId == InitialValues.INVALID_ID) {
+            TODO()
+        }
+
+        if (option.eventId == InitialValues.NOOP_ID) {
             log.i(tag, "SelectIotuin INVALID")
             channel.send(NoopEvent())
             return
         }
 
-        log.i(tag, "SelectIotuin TEST 2")
         val eEvent = eventMap.getValue(option.eventId)
+        log.i(tag, "Event: $eEvent")
         channel.send(eEvent)
-        log.i(tag, "SelectIotuin TEST 3")
     }
 
     override fun processGameEntityState() {

@@ -9,6 +9,10 @@ class TurnAction(
     override val direction: Direction
 ) : TurnActionInterface {
 
+    override fun toString(): String {
+        return "Type: $turnActionType, Direction: $direction"
+    }
+
     companion object {
         val NOOP: TurnActionInterface = TurnAction(TurnActionType.NONE, Direction.KEEP)
     }

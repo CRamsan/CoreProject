@@ -3,6 +3,7 @@ package com.cramsan.awslib.utils.constants
 object InitialValues {
 
     const val INVALID_ID = Int.MIN_VALUE
+    const val NOOP_ID = Int.MAX_VALUE
     const val PLAYER_ID = 0
 
     const val ENEMY_GROUP = 1

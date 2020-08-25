@@ -20,4 +20,8 @@ abstract class GameEntity(
 ) : GameEntityInterface {
     override var heading = Direction.NORTH
     override var nextTurnAction = TurnAction.NOOP
+
+    override fun toString(): String {
+        return "Id: $id, X: $posX, Y: $posY, Type: $type"
+    }
 }
