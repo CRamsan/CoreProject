@@ -200,7 +200,13 @@ class EntityManager(
         var x = entity.posX
         var y = entity.posY
 
-        when (entity.heading) {
+        val direction = if (entity.nextTurnAction.direction == Direction.KEEP) {
+            entity.heading
+        } else {
+            entity.nextTurnAction.direction
+        }
+
+        when (direction) {
             Direction.NORTH -> {
                 y--
             }
@@ -213,7 +219,8 @@ class EntityManager(
             Direction.EAST -> {
                 x++
             }
-            Direction.KEEP -> {
+            else -> {
+                TODO()
             }
         }
         log.d(tag, "Trying to target from x:${entity.posX},y:${entity.posY} -> x:$x,y:$y")
@@ -234,6 +241,7 @@ class EntityManager(
         }
 
         entity.nextTurnAction = TurnAction.NOOP
+        entity.heading = direction
         return true
     }
 
@@ -263,7 +271,7 @@ class EntityManager(
 
     override fun doDamage(attacker: GameEntityInterface, defender: GameEntityInterface, callback: SceneEventsCallback?) {
         log.i(tag, "Performing damage")
-        defender.health -= attacker.health
+        defender.health -= attacker.attack
         if (defender.health <= 0) {
             log.i(tag, "Entity is dead: $defender")
             defender.health = -1
