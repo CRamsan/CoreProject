@@ -4,6 +4,7 @@ import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entity.GameItemInterface
 import com.cramsan.awslib.entity.implementation.Character
 import com.cramsan.awslib.entity.implementation.ConsumableItem
+import com.cramsan.awslib.entity.implementation.ConsumableType
 import com.cramsan.awslib.entity.implementation.Dog
 import com.cramsan.awslib.entity.implementation.GameEntity
 import com.cramsan.awslib.entity.implementation.Player
@@ -14,7 +15,6 @@ import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
-import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
@@ -49,7 +49,7 @@ class EntityManagerTests {
             return Dog(id, posX, posY, 100, true)
         }
         fun createItem(id: Int, posX: Int, posY: Int): GameItemInterface {
-            return ConsumableItem(id, posX, posY, InitialValues.NOOP_ID)
+            return ConsumableItem(id, posX, posY, ConsumableType.HEALTH, 10)
         }
     }
 

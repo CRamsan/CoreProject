@@ -2,6 +2,7 @@ package com.cramsan.awslib.dsl
 
 import com.cramsan.awslib.entity.GameItemInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
+import com.cramsan.awslib.entity.implementation.ConsumableType
 import com.cramsan.awslib.entity.implementation.Doctor
 import com.cramsan.awslib.entity.implementation.Dog
 import com.cramsan.awslib.entity.implementation.EquippableItem
@@ -79,6 +80,7 @@ class HealthBuilder {
         id,
         posX,
         posY,
+        ConsumableType.HEALTH,
         eventId
     )
 }

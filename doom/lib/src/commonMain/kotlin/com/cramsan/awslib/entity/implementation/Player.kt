@@ -25,6 +25,6 @@ class Player(
         true
     ),
     GameEntityInterface {
-    val equipableItemList = emptyList<EquippableItem>()
-    val keyItemList = emptyList<KeyItem>()
+    val equipableItemList = mutableListOf<EquippableItem>()
+    val keyItemList = mutableListOf<KeyItem>()
 }

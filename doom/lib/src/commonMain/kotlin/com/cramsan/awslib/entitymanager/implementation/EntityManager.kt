@@ -5,8 +5,10 @@ import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.entity.GameItemInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
+import com.cramsan.awslib.entity.implementation.ConsumableType
 import com.cramsan.awslib.entity.implementation.EquippableItem
 import com.cramsan.awslib.entity.implementation.KeyItem
+import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.EntityManagerInterface
@@ -204,8 +206,10 @@ class EntityManager(
         }
 
         setPosition(entity, x, y)
-        pickUpItem(x, y)
-        doTileAction(x, y, callback)
+        if (entity is Player) {
+            pickUpItem(entity, x, y)
+            doTileAction(x, y, callback)
+        }
         entity.nextTurnAction = TurnAction.NOOP
 
         callback?.onEntityChanged(entity)
@@ -314,16 +318,23 @@ class EntityManager(
         executeTrigger(trigger, callback)
     }
 
-    private fun pickUpItem(posX: Int, posY: Int) {
+    private fun pickUpItem(player: Player, posX: Int, posY: Int) {
         val item = getItem(posX, posY) ?: return
 
         // TODO: Perform logic when getting item
         when (item) {
             is ConsumableItem -> {
-            }
-            is EquippableItem -> {
+                when (item.type) {
+                    ConsumableType.HEALTH -> player.health += item.ammount
+                    ConsumableType.ARMOR -> TODO()
+                    ConsumableType.CREDIT -> TODO()
+                }
             }
             is KeyItem -> {
+                player.keyItemList.add(item)
+            }
+            is EquippableItem -> {
+                player.equipableItemList.add(item)
             }
             else -> {
                 TODO("Invalid item")
