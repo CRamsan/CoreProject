@@ -24,4 +24,7 @@ class Player(
         true,
         true
     ),
-    GameEntityInterface
+    GameEntityInterface {
+    val equipableItemList = emptyList<EquippableItem>()
+    val keyItemList = emptyList<KeyItem>()
+}

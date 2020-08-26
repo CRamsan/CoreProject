@@ -50,7 +50,7 @@ class SceneCellTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
         val player = sceneConfig.player
 
         val actionListSouth = Array(20) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }
@@ -101,7 +101,7 @@ class SceneCellTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
         val player = sceneConfig.player
 
         val actionListSouth = Array(15) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }

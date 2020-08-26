@@ -1,7 +1,9 @@
 package com.cramsan.awslib.entitymanager
 
 import com.cramsan.awslib.dsl.scene
+import com.cramsan.awslib.entity.GameItemInterface
 import com.cramsan.awslib.entity.implementation.Character
+import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.Dog
 import com.cramsan.awslib.entity.implementation.GameEntity
 import com.cramsan.awslib.entity.implementation.Player
@@ -11,6 +13,8 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
+import com.cramsan.awslib.scene.Scene
+import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
@@ -44,6 +48,9 @@ class EntityManagerTests {
         fun createCharacter(id: Int, posX: Int, posY: Int): Character {
             return Dog(id, posX, posY, 100, true)
         }
+        fun createItem(id: Int, posX: Int, posY: Int): GameItemInterface {
+            return ConsumableItem(id, posX, posY, InitialValues.NOOP_ID)
+        }
     }
 
     @BeforeTest
@@ -57,7 +64,7 @@ class EntityManagerTests {
             bind() from singleton { halt }
         }
         map = GameMap(MapGenerator.createMap100x100())
-        entityManager = EntityManager(map, emptyList(), emptyList(), null, kodein)
+        entityManager = EntityManager(map, emptyList(), emptyList(), emptyList(), null, kodein)
     }
 
     /**
@@ -170,6 +177,43 @@ class EntityManagerTests {
     }
 
     /**
+     * Test registering multiple entities without overlapping
+     */
+    @Test
+    fun registerItemTest() {
+        for (i in 0 until 50) {
+            val enemy1 = createCharacter(i, i, i)
+            assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
+            assertTrue(entityManager.register(enemy1), "Failed to register dog")
+            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+        }
+    }
+
+    /**
+     * Test registering entities to locations that are already occupied
+     */
+    @Test
+    fun registerItemWithCollisionTest() {
+        for (i in 0 until 50) {
+            val enemy1 = createCharacter(i, i, i)
+            assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
+            assertTrue(entityManager.register(enemy1), "Failed to register dog")
+            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+        }
+
+        for (i in 0 until 50) {
+            val enemy1 = createCharacter(1 * 100, i, i)
+            assertNotNull(entityManager.getEntity(i, i), "Expected location $i-$i is not already occupied")
+            try {
+                entityManager.register(enemy1)
+                fail("Trying to reregister should throw exception")
+            } catch (e: Exception) {
+            }
+            assertNotEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+        }
+    }
+
+    /**
      * Test running turns and verify properties are updated
      */
     @Test
@@ -259,5 +303,38 @@ class EntityManagerTests {
         assertTrue(entityManager.setPosition(entity, newPosX, newPosY))
         assertFalse(entityManager.isBlocked(posX, posY))
         assertTrue(entityManager.isBlocked(newPosX, newPosY))
+    }
+
+    /**
+     * Test picking up items
+     */
+    @Test
+    fun playerPicksUpItemTest() = runTest {
+        val map = GameMap(MapGenerator.createMap100x100())
+
+        val sceneConfig = scene {
+            player {
+                posX = 5
+                posY = 5
+            }
+            items {
+                health {
+                    posX = 5
+                    posY = 6
+                }
+            }
+        }
+        assertNotNull(sceneConfig)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
+        val player = sceneConfig.player
+
+        val scene = Scene(entityManager, sceneConfig, kodein)
+        scene.loadScene()
+
+        scene.runTurn(TurnAction(TurnActionType.MOVE, Direction.SOUTH))
+        assertEquals(5, player.posX)
+        assertEquals(6, player.posY)
+
+        assertNull(entityManager.getItem(5, 6), "Item should disappear when touched")
     }
 }

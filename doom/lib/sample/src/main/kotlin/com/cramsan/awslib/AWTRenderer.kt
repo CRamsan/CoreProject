@@ -1,6 +1,9 @@
 package com.cramsan.awslib
 
 import com.cramsan.awslib.entity.GameEntityInterface
+import com.cramsan.awslib.entity.implementation.ConsumableItem
+import com.cramsan.awslib.entity.implementation.EquippableItem
+import com.cramsan.awslib.entity.implementation.KeyItem
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
@@ -19,7 +22,6 @@ import com.cramsan.awslib.scene.SceneEventsCallback
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.kodein.di.DI
 import java.awt.Color
 import java.awt.Graphics
@@ -228,6 +230,29 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
                     entity.posY * cellHeight,
                     cellWidth,
                     cellHeight
+                )
+            }
+
+            manager.itemSet.forEach {
+                when (it) {
+                    is ConsumableItem -> {
+                        g.color = Color.YELLOW
+                    }
+                    is EquippableItem -> {
+                        g.color = Color.ORANGE
+                    }
+                    is KeyItem -> {
+                        g.color = Color.PINK
+                    }
+                    else -> {
+                        TODO("Invalid item")
+                    }
+                }
+                g.fillOval(
+                    it.posX * cellWidth,
+                    it.posY * cellHeight,
+                    cellWidth / 2,
+                    cellHeight / 2
                 )
             }
         }

@@ -84,7 +84,7 @@ class CellTriggerTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
         val player = sceneConfig.player
 
         val scene = Scene(entityManager, sceneConfig, kodein)

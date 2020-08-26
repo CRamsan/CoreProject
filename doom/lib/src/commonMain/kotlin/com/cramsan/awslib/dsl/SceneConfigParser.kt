@@ -1,8 +1,12 @@
 package com.cramsan.awslib.dsl
 
+import com.cramsan.awslib.entity.GameItemInterface
+import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.Doctor
 import com.cramsan.awslib.entity.implementation.Dog
+import com.cramsan.awslib.entity.implementation.EquippableItem
 import com.cramsan.awslib.entity.implementation.GameEntity
+import com.cramsan.awslib.entity.implementation.KeyItem
 import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.eventsystem.GameEntityTrigger
 import com.cramsan.awslib.eventsystem.events.BaseEvent
@@ -65,6 +69,44 @@ class ScientistBuilder {
     )
 }
 
+class HealthBuilder {
+    var id = InitialValues.INVALID_ID
+    var posX = InitialValues.POS_X_ENTITY
+    var posY = InitialValues.POS_Y_ENTITY
+    var eventId = InitialValues.NOOP_ID
+
+    internal fun build() = ConsumableItem(
+        id,
+        posX,
+        posY,
+        eventId
+    )
+}
+
+class KeyCardBuilder {
+    var id = InitialValues.INVALID_ID
+    var posX = InitialValues.POS_X_ENTITY
+    var posY = InitialValues.POS_Y_ENTITY
+
+    internal fun build() = KeyItem(
+        id,
+        posX,
+        posY
+    )
+}
+
+class GunBuilder {
+    var id = InitialValues.INVALID_ID
+    var posX = InitialValues.POS_X_ENTITY
+    var posY = InitialValues.POS_Y_ENTITY
+
+    internal fun build() = EquippableItem(
+        id,
+        posX,
+        posY
+    )
+}
+
 class EntityListBuilder {
     private val entityList = mutableListOf<GameEntity>()
 
@@ -77,6 +119,24 @@ class EntityListBuilder {
     }
 
     internal fun build() = entityList
+}
+
+class ItemListBuilder {
+    private val itemList = mutableListOf<GameItemInterface>()
+
+    fun health(block: HealthBuilder.() -> Unit) {
+        itemList.add(HealthBuilder().apply(block).build())
+    }
+
+    fun keycard(block: KeyCardBuilder.() -> Unit) {
+        itemList.add(KeyCardBuilder().apply(block).build())
+    }
+
+    fun gun(block: GunBuilder.() -> Unit) {
+        itemList.add(GunBuilder().apply(block).build())
+    }
+
+    internal fun build() = itemList
 }
 
 class CellTriggerBuilder {
@@ -197,6 +257,7 @@ class EventListBuilder {
 class SceneConfigBuilder {
     private var player: Player? = null
     private val entityList = mutableListOf<GameEntity>()
+    private val itemList = mutableListOf<GameItemInterface>()
     private val triggerList = mutableListOf<Trigger>()
     private val eventList = mutableListOf<BaseEvent>()
 
@@ -208,6 +269,10 @@ class SceneConfigBuilder {
         entityList.addAll(EntityListBuilder().apply(block).build())
     }
 
+    fun items(block: ItemListBuilder.() -> Unit) {
+        itemList.addAll(ItemListBuilder().apply(block).build())
+    }
+
     fun triggers(block: TriggerListBuilder.() -> Unit) {
         triggerList.addAll(TriggerListBuilder().apply(block).build())
     }
@@ -216,7 +281,7 @@ class SceneConfigBuilder {
         eventList.addAll(EventListBuilder().apply(block).build())
     }
 
-    internal fun build() = player?.let { SceneConfig(it, entityList, triggerList, eventList) }
+    internal fun build() = player?.let { SceneConfig(it, entityList, itemList, triggerList, eventList) }
 }
 
 /**

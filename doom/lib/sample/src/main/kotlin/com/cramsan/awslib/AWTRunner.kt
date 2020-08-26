@@ -3,6 +3,7 @@ package com.cramsan.awslib
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
+import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapLoader
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.halt.implementation.HaltUtil
@@ -16,7 +17,6 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import java.awt.EventQueue
-import com.cramsan.awslib.utils.constants.InitialValues
 
 class AWTRunner {
 
@@ -84,6 +84,12 @@ class AWTRunner {
                         nextEventId = InitialValues.NOOP_ID
                     }
                 }
+                items {
+                    health {
+                        posX = 4
+                        posY = 20
+                    }
+                }
             } ?: return
 
             val kodein = DI {
@@ -93,7 +99,7 @@ class AWTRunner {
             }
 
             val renderer = AWTRenderer(kodein)
-            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, renderer, kodein)
+            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, renderer, kodein)
 
             runBlocking {
                 renderer.startScene(entityManager, sceneConfig, map)

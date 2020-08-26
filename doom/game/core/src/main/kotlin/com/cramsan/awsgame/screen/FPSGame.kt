@@ -118,7 +118,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
             bind() from singleton { AssertUtil(true, instance(), instance()) }
         }
 
-        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, this, kodein)
+        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, sceneConfig.itemList, this, kodein)
         scene = Scene(entityManager, sceneConfig, kodein)
 
         this.player = Player(sceneConfig.player)

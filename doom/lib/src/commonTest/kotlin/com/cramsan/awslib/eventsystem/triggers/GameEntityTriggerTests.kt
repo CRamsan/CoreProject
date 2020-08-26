@@ -88,7 +88,7 @@ class GameEntityTriggerTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
         val player = sceneConfig.player
 
         val scene = Scene(entityManager, sceneConfig, kodein)
@@ -168,6 +168,7 @@ class GameEntityTriggerTests {
             map,
             sceneConfig.triggerList,
             sceneConfig.eventList,
+            sceneConfig.itemList,
             object : EntityManagerEventListener {
                 override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
                 override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
@@ -244,6 +245,7 @@ class GameEntityTriggerTests {
             map,
             sceneConfig.triggerList,
             sceneConfig.eventList,
+            sceneConfig.itemList,
             object : EntityManagerEventListener {
                 override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
                 override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}

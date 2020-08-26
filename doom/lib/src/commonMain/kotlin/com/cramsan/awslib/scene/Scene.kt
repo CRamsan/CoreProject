@@ -29,6 +29,7 @@ class Scene(
                 log.e(tag, "Could not register: $it")
             }
         }
+
         isLoaded = true
     }
 

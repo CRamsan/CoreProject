@@ -55,7 +55,7 @@ class DummyAIRepoImplTests {
             }
         }
         assertNotNull(sceneConfig)
-        entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, null, kodein)
+        entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
         enemy = sceneConfig.entityList.first()
         player = sceneConfig.player
         dummyAIRepoImpl = DummyAIRepoImpl(kodein)
