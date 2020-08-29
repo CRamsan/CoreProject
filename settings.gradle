@@ -19,6 +19,7 @@ include 'petproject:webservice'
 include 'petproject:azurefunction'
 
 include 'doom:lib'
+include 'doom:lib:leveleditor'
 include 'doom:lib:sample'
 
 include 'doom:game'
