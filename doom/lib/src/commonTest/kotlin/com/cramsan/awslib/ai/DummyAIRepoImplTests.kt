@@ -2,7 +2,7 @@ package com.cramsan.awslib.ai
 
 import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.dsl.scene
-import com.cramsan.awslib.entity.implementation.GameEntity
+import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.enums.Direction
@@ -25,7 +25,7 @@ class DummyAIRepoImplTests {
 
     private lateinit var map: GameMap
     private lateinit var entityManager: EntityManager
-    private lateinit var enemy: GameEntity
+    private lateinit var enemy: CharacterInterface
     private lateinit var player: Player
     private lateinit var dummyAIRepoImpl: DummyAIRepoImpl
 
@@ -46,7 +46,7 @@ class DummyAIRepoImplTests {
                 posX = 2
                 posY = 1
             }
-            entities {
+            characters {
                 dog {
                     id = 1
                     posX = 1
@@ -56,7 +56,7 @@ class DummyAIRepoImplTests {
         }
         assertNotNull(sceneConfig)
         entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
-        enemy = sceneConfig.entityList.first()
+        enemy = sceneConfig.characterList.first()
         player = sceneConfig.player
         dummyAIRepoImpl = DummyAIRepoImpl(kodein)
         entityManager.register(enemy)

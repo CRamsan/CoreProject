@@ -36,7 +36,7 @@ class AWTRunner {
                     speed = 20
                 }
 
-                entities {
+                characters {
                     dog {
                         id = 5
                         posX = 15
@@ -59,13 +59,13 @@ class AWTRunner {
                 }
 
                 triggers {
-                    entity {
+                    character {
                         id = 523
                         eventId = 912
                         targetId = 1
                         enabled = true
                     }
-                    entity {
+                    character {
                         id = 525
                         eventId = 482
                         targetId = 2
@@ -77,10 +77,10 @@ class AWTRunner {
                         id = 912
                         text = "Welcome to this new game"
                     }
-                    swapEntity {
+                    swapCharacter {
                         id = 482
-                        enableEntityId = 5
-                        disableEntityId = 2
+                        enableCharacterId = 5
+                        disableCharacterId = 2
                         nextEventId = InitialValues.NOOP_ID
                     }
                 }

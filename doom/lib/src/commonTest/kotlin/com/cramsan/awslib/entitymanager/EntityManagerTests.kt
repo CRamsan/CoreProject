@@ -1,12 +1,12 @@
 package com.cramsan.awslib.entitymanager
 
 import com.cramsan.awslib.dsl.scene
-import com.cramsan.awslib.entity.GameItemInterface
+import com.cramsan.awslib.entity.CharacterInterface
+import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.entity.implementation.Character
 import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.ConsumableType
 import com.cramsan.awslib.entity.implementation.Dog
-import com.cramsan.awslib.entity.implementation.GameEntity
 import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
@@ -48,7 +48,7 @@ class EntityManagerTests {
         fun createCharacter(id: Int, posX: Int, posY: Int): Character {
             return Dog(id, posX, posY, 100, true)
         }
-        fun createItem(id: Int, posX: Int, posY: Int): GameItemInterface {
+        fun createItem(id: Int, posX: Int, posY: Int): ItemInterface {
             return ConsumableItem(id, posX, posY, ConsumableType.HEALTH, 10)
         }
     }
@@ -109,13 +109,13 @@ class EntityManagerTests {
      */
     @Test
     fun reregisterTest() {
-        var entityList = arrayListOf<GameEntity>()
+        var entityList = arrayListOf<CharacterInterface>()
 
         for (i in 0 until 50) {
             val scene = scene {
                 player {
                 }
-                entities {
+                characters {
                     dog {
                         id = i
                         posX = i
@@ -123,7 +123,7 @@ class EntityManagerTests {
                     }
                 }
             }
-            val enemy1 = scene?.entityList?.first()
+            val enemy1 = scene?.characterList?.first()
             assertNotNull(enemy1)
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")

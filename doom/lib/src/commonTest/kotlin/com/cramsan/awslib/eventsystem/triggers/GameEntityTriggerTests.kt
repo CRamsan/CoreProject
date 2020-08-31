@@ -56,7 +56,7 @@ class GameEntityTriggerTests {
                 posX = 5
                 posY = 5
             }
-            entities {
+            characters {
                 scientist {
                     id = 1
                     group = 0
@@ -71,7 +71,7 @@ class GameEntityTriggerTests {
                 }
             }
             triggers {
-                entity {
+                character {
                     id = 523
                     eventId = 352
                     targetId = 1
@@ -79,10 +79,10 @@ class GameEntityTriggerTests {
                 }
             }
             events {
-                swapEntity {
+                swapCharacter {
                     id = 352
-                    enableEntityId = 2
-                    disableEntityId = 1
+                    enableCharacterId = 2
+                    disableCharacterId = 1
                     nextEventId = InitialValues.NOOP_ID
                 }
             }
@@ -116,7 +116,7 @@ class GameEntityTriggerTests {
                 posX = 5
                 posY = 5
             }
-            entities {
+            characters {
                 scientist {
                     id = 1
                     group = 0
@@ -131,7 +131,7 @@ class GameEntityTriggerTests {
                 }
             }
             triggers {
-                entity {
+                character {
                     id = 523
                     eventId = 912
                     targetId = 1
@@ -153,10 +153,10 @@ class GameEntityTriggerTests {
                         label = "No"
                     }
                 }
-                swapEntity {
+                swapCharacter {
                     id = 352
-                    enableEntityId = 2
-                    disableEntityId = 1
+                    enableCharacterId = 2
+                    disableCharacterId = 1
                     nextEventId = InitialValues.NOOP_ID
                 }
             }
@@ -216,7 +216,7 @@ class GameEntityTriggerTests {
                 posX = 5
                 posY = 5
             }
-            entities {
+            characters {
                 scientist {
                     id = 1
                     group = 0
@@ -225,7 +225,7 @@ class GameEntityTriggerTests {
                 }
             }
             triggers {
-                entity {
+                character {
                     id = 523
                     eventId = 912
                     targetId = 1

@@ -1,7 +1,7 @@
 package com.cramsan.awslib.ai.implementation
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
-import com.cramsan.awslib.entity.GameEntityInterface
+import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entitymanager.TurnActionInterface
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
@@ -28,17 +28,17 @@ class DummyAIRepoImpl(override val di: DI) : AIRepo, DIAware {
     private val log: EventLoggerInterface by instance()
     private val tag = "DummyAIRepoImpl"
 
-    override fun getNextTurnAction(entity: GameEntityInterface, entityManager: EntityManager, map: GameMap): TurnActionInterface {
-        val target = getEntityTarget(entity, entityManager)
+    override fun getNextTurnAction(character: CharacterInterface, entityManager: EntityManager, map: GameMap): TurnActionInterface {
+        val target = getCharacterTarget(character, entityManager)
 
         if (target == null) {
             return TurnAction.NOOP
         }
 
         val functionProvider = GameMapAStarFunctionProvider()
-        val startingCell = map.cellAt(entity.posX, entity.posY)
+        val startingCell = map.cellAt(character.posX, character.posY)
         val targetCell = map.cellAt(target.posX, target.posY)
-        val path = AStarAlgorithm.findPath(startingCell, targetCell, getEntityRange(entity), functionProvider)
+        val path = AStarAlgorithm.findPath(startingCell, targetCell, getEntityRange(character), functionProvider)
 
         if (path.size <= 1) {
             return TurnAction.NOOP
@@ -81,20 +81,20 @@ class DummyAIRepoImpl(override val di: DI) : AIRepo, DIAware {
     }
 
     /**
-     * Retrieve the most suitable target for [entity]. Pass the [entityManager] to get the state of all the
+     * Retrieve the most suitable target for [character]. Pass the [entityManager] to get the state of all the
      * other entities in the game.
      */
-    private fun getEntityTarget(entity: GameEntityInterface, entityManager: EntityManager): GameEntityInterface? {
-        var target: GameEntityInterface? = null
-        entityManager.entitySet.forEach {
-            val range = getEntityRange(entity)
-            if (entity == it)
+    private fun getCharacterTarget(character: CharacterInterface, entityManager: EntityManager): CharacterInterface? {
+        var target: CharacterInterface? = null
+        entityManager.characterSet.forEach {
+            val range = getEntityRange(character)
+            if (character == it)
                 return@forEach
 
-            if (entity.type == it.type)
+            if (character.type == it.type)
                 return@forEach
 
-            if (distance(entity, it) <= range) {
+            if (distance(character, it) <= range) {
                 return it
             }
         }
@@ -102,10 +102,10 @@ class DummyAIRepoImpl(override val di: DI) : AIRepo, DIAware {
     }
 
     /**
-     * Retrieve the vision range for the [entity].
+     * Retrieve the vision range for the [character].
      */
-    private fun getEntityRange(entity: GameEntityInterface): Int {
-        return when (entity.type) {
+    private fun getEntityRange(character: CharacterInterface): Int {
+        return when (character.type) {
             EntityType.SCIENTIST -> GameEntityRange.SCIENTIST
             EntityType.PLAYER -> GameEntityRange.PLAYER
             EntityType.DOG -> GameEntityRange.DOG

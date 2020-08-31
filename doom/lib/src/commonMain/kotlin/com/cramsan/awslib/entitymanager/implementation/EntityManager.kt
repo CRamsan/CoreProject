@@ -2,8 +2,8 @@ package com.cramsan.awslib.entitymanager.implementation
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
 import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
-import com.cramsan.awslib.entity.GameEntityInterface
-import com.cramsan.awslib.entity.GameItemInterface
+import com.cramsan.awslib.entity.CharacterInterface
+import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.ConsumableType
 import com.cramsan.awslib.entity.implementation.EquippableItem
@@ -16,14 +16,14 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TerrainType
 import com.cramsan.awslib.enums.TurnActionType
-import com.cramsan.awslib.eventsystem.GameEntityTrigger
+import com.cramsan.awslib.eventsystem.CharacterTrigger
 import com.cramsan.awslib.eventsystem.events.BaseEvent
 import com.cramsan.awslib.eventsystem.events.ChangeTriggerEvent
 import com.cramsan.awslib.eventsystem.events.EventType
 import com.cramsan.awslib.eventsystem.events.InteractiveEvent
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.eventsystem.events.NoopEvent
-import com.cramsan.awslib.eventsystem.events.SwapEntityEvent
+import com.cramsan.awslib.eventsystem.events.SwapCharacterEvent
 import com.cramsan.awslib.eventsystem.triggers.CellTrigger
 import com.cramsan.awslib.eventsystem.triggers.Trigger
 import com.cramsan.awslib.map.GameMap
@@ -39,7 +39,7 @@ class EntityManager(
     private val map: GameMap,
     private val triggerList: List<Trigger>,
     private val eventList: List<BaseEvent>,
-    private val itemList: List<GameItemInterface>,
+    private val itemList: List<ItemInterface>,
     private var eventListener: EntityManagerEventListener?,
     override val di: DI,
     private val aiRepo: AIRepo = DummyAIRepoImpl(di)
@@ -47,10 +47,10 @@ class EntityManager(
 
     private val log: EventLoggerInterface by instance()
 
-    val entityTriggerMap: HashMap<Int, GameEntityTrigger> = HashMap()
+    val entityTriggerMap: HashMap<Int, CharacterTrigger> = HashMap()
 
-    var itemMap: Array<Array<GameItemInterface?>> = Array(map.width) { arrayOfNulls<GameItemInterface?>(map.height) }
-    val itemSet = mutableSetOf<GameItemInterface>()
+    var itemMap: Array<Array<ItemInterface?>> = Array(map.width) { arrayOfNulls<ItemInterface?>(map.height) }
+    val itemSet = mutableSetOf<ItemInterface>()
 
     var triggerMap: Array<Array<CellTrigger?>> = Array(map.width) { arrayOfNulls<CellTrigger?>(map.height) }
     val triggerIdMap: HashMap<Int, Trigger> = HashMap()
@@ -65,7 +65,7 @@ class EntityManager(
             log.d(tag, "Trigger: $it")
 
             triggerIdMap.put(it.id, it)
-            if (it is GameEntityTrigger) {
+            if (it is CharacterTrigger) {
                 entityTriggerMap.put(it.targetId, it)
             } else if (it is CellTrigger) {
                 triggerMap[it.posX][it.posY] = it
@@ -81,18 +81,18 @@ class EntityManager(
         }
     }
 
-    val entitySet = mutableSetOf<GameEntityInterface>()
-    val disabledEntitySet = mutableSetOf<GameEntityInterface>()
+    val characterSet = mutableSetOf<CharacterInterface>()
+    val disabledEntitySet = mutableSetOf<CharacterInterface>()
 
-    val queue = mutableListOf<GameEntityInterface>()
+    val queue = mutableListOf<CharacterInterface>()
 
-    val removeSet = mutableSetOf<GameEntityInterface>()
-    val addSet = mutableSetOf<GameEntityInterface>()
+    val removeSet = mutableSetOf<CharacterInterface>()
+    val addSet = mutableSetOf<CharacterInterface>()
 
-    var entityMap: Array<Array<GameEntityInterface?>> = Array(map.width) { arrayOfNulls<GameEntityInterface?>(map.height) }
-    var entityIdMap: MutableMap<Int, GameEntityInterface> = mutableMapOf()
+    var entityMap: Array<Array<CharacterInterface?>> = Array(map.width) { arrayOfNulls<CharacterInterface?>(map.height) }
+    var entityIdMap: MutableMap<Int, CharacterInterface> = mutableMapOf()
 
-    internal fun register(entity: GameEntityInterface): Boolean {
+    internal fun register(entity: CharacterInterface): Boolean {
         if (!entity.enabled) {
             disabledEntitySet.add(entity)
             return true
@@ -102,7 +102,7 @@ class EntityManager(
             throw RuntimeException("Location blocked. Cannot register")
         }
 
-        if (entitySet.contains(entity)) {
+        if (characterSet.contains(entity)) {
             throw RuntimeException("Entity already registered")
         }
 
@@ -110,27 +110,27 @@ class EntityManager(
             throw RuntimeException("Entity with Id already registered")
         }
 
-        entitySet.add(entity)
+        characterSet.add(entity)
         entityIdMap[entity.id] = entity
         queue.add(entity)
         setPosition(entity, entity.posX, entity.posY)
         return true
     }
 
-    internal fun deregister(entity: GameEntityInterface): Boolean {
-        if (!entitySet.contains(entity)) {
+    internal fun deregister(entity: CharacterInterface): Boolean {
+        if (!characterSet.contains(entity)) {
             return false
         }
         entityIdMap.remove(entity.id)
         queue.remove(entity)
         entityMap[entity.posX][entity.posY] = null
-        entitySet.remove(entity)
+        characterSet.remove(entity)
         disabledEntitySet.add(entity)
         entity.enabled = false
         return true
     }
 
-    internal fun setEntityState(entity: GameEntityInterface, enabled: Boolean) {
+    internal fun setEntityState(entity: CharacterInterface, enabled: Boolean) {
         if (enabled) {
             prepareForAdd(entity)
         } else {
@@ -138,7 +138,7 @@ class EntityManager(
         }
     }
 
-    internal fun registerItem(item: GameItemInterface) {
+    internal fun registerItem(item: ItemInterface) {
         val overlappingItem = getItem(item.posX, item.posY)
 
         if (overlappingItem != null) {
@@ -170,7 +170,7 @@ class EntityManager(
         }
     }
 
-    private suspend fun move(entity: GameEntityInterface, callback: SceneEventsCallback?): Boolean {
+    private suspend fun move(entity: CharacterInterface, callback: SceneEventsCallback?): Boolean {
         log.i(tag, "Moving")
         var x = entity.posX
         var y = entity.posY
@@ -222,7 +222,7 @@ class EntityManager(
         return true
     }
 
-    private suspend fun act(entity: GameEntityInterface, callback: SceneEventsCallback?): Boolean {
+    private suspend fun act(entity: CharacterInterface, callback: SceneEventsCallback?): Boolean {
         log.i(tag, "Performing action")
         var x = entity.posX
         var y = entity.posY
@@ -272,7 +272,7 @@ class EntityManager(
         return true
     }
 
-    internal fun setPosition(entity: GameEntityInterface, poxX: Int, posY: Int): Boolean {
+    internal fun setPosition(entity: CharacterInterface, poxX: Int, posY: Int): Boolean {
         if (isBlocked(poxX, posY)) {
             return false
         }
@@ -283,20 +283,20 @@ class EntityManager(
         return true
     }
 
-    internal fun prepareForAdd(entity: GameEntityInterface) {
+    internal fun prepareForAdd(entity: CharacterInterface) {
         entity.enabled = true
         addSet.add(entity)
     }
 
-    internal fun prepareForRemove(entity: GameEntityInterface) {
+    internal fun prepareForRemove(entity: CharacterInterface) {
         entity.enabled = false
         removeSet.add(entity)
         entityIdMap.remove(entity.id)
         entityMap[entity.posX][entity.posY] = null
-        entitySet.remove(entity)
+        characterSet.remove(entity)
     }
 
-    internal fun doDamage(attacker: GameEntityInterface, defender: GameEntityInterface, callback: SceneEventsCallback?) {
+    internal fun doDamage(attacker: CharacterInterface, defender: CharacterInterface, callback: SceneEventsCallback?) {
         log.i(tag, "Performing damage")
         defender.health -= attacker.attack
         if (defender.health <= 0) {
@@ -307,7 +307,7 @@ class EntityManager(
         }
     }
 
-    private suspend fun doAction(receiver: GameEntityInterface, callback: SceneEventsCallback?) {
+    private suspend fun doAction(receiver: CharacterInterface, callback: SceneEventsCallback?) {
         val trigger = entityTriggerMap.getValue(receiver.id)
         log.i(tag, "Performing action to trigger: $trigger")
         if (!trigger.enabled) {
@@ -353,12 +353,12 @@ class EntityManager(
         executeTrigger(trigger, callback)
     }
 
-    internal fun handleSwapEntityEvent(event: SwapEntityEvent, callback: SceneEventsCallback?): BaseEvent {
+    internal fun handleSwapEntityEvent(event: SwapCharacterEvent, callback: SceneEventsCallback?): BaseEvent {
         val disableId = event.disableId
         val enableId = event.enableId
 
         val toDisableEntity = entityIdMap[disableId]
-        var toEnableEntity: GameEntityInterface? = null
+        var toEnableEntity: CharacterInterface? = null
         toDisableEntity?.let {
             setEntityState(it, false)
         }
@@ -425,7 +425,7 @@ class EntityManager(
             var localNextEvent = nextEvent
             log.i(tag, "Event: $localNextEvent")
             when (localNextEvent) {
-                is SwapEntityEvent -> {
+                is SwapCharacterEvent -> {
                     log.d(tag, "Swap event")
                     nextEvent = handleSwapEntityEvent(localNextEvent, callback)
                 }
@@ -481,11 +481,11 @@ class EntityManager(
         addSet.clear()
     }
 
-    internal fun getEntity(posX: Int, posY: Int): GameEntityInterface? {
+    internal fun getEntity(posX: Int, posY: Int): CharacterInterface? {
         return entityMap[posX][posY]
     }
 
-    internal fun clearItem(item: GameItemInterface) {
+    internal fun clearItem(item: ItemInterface) {
         if (getEntity(item.posX, item.posY) == null) {
             TODO("Trying to clear an already empty item")
         }
@@ -493,7 +493,7 @@ class EntityManager(
         itemMap[item.posX][item.posY] = null
     }
 
-    internal fun setItem(item: GameItemInterface) {
+    internal fun setItem(item: ItemInterface) {
         if (getItem(item.posX, item.posY) != null) {
             TODO("Trying to overwrite an existing item")
         }
@@ -501,7 +501,7 @@ class EntityManager(
         itemMap[item.posX][item.posY] = item
     }
 
-    internal fun getItem(posX: Int, posY: Int): GameItemInterface? {
+    internal fun getItem(posX: Int, posY: Int): ItemInterface? {
         return itemMap[posX][posY]
     }
 

@@ -1,6 +1,6 @@
 package com.cramsan.awslib.entity.implementation
 
-import com.cramsan.awslib.entity.GameItemInterface
+import com.cramsan.awslib.entity.ItemInterface
 
 /**
  * Class that represents an item that is used instantly on contact
@@ -11,4 +11,4 @@ open class ConsumableItem(
     override var posY: Int,
     val type: ConsumableType,
     val ammount: Int
-) : GameItemInterface
+) : ItemInterface

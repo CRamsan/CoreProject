@@ -6,6 +6,7 @@ plugins {
 }
 
 sourceCompatibility = globalJavaCompatibility
+targetCompatibility = globalJavaCompatibility
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$globalKotlinVersion"

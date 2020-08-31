@@ -1,5 +1,6 @@
 package com.cramsan.awslib.entity.implementation
 
+import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.utils.constants.InitialValues
 
@@ -25,7 +26,8 @@ abstract class Character(
         speed,
         enabled,
         shouldMove
-    ) {
+    ),
+    CharacterInterface {
     private var _attack = InitialValues.CHARACTER_ATTACK
     override var attack: Int
         get() = _attack

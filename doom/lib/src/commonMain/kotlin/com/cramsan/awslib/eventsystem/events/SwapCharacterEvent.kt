@@ -1,6 +1,6 @@
 package com.cramsan.awslib.eventsystem.events
 
-class SwapEntityEvent(
+class SwapCharacterEvent(
     id: Int,
     nextEventId: Int,
     enableEntityId: Int,

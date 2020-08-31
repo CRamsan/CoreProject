@@ -1,5 +1,6 @@
 package com.cramsan.awslib
 
+import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.EquippableItem
@@ -53,10 +54,14 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
             scene.setListener(
                 object : SceneEventsCallback {
                     override fun onEntityChanged(entity: GameEntityInterface) {
-                        if (entity == mainPlayer) {
-                            if (!entity.enabled) {
-                                println("Player is dead")
-                                isGameRunning = false
+                        when (entity) {
+                            is CharacterInterface -> {
+                                if (entity == mainPlayer) {
+                                    if (!entity.enabled) {
+                                        println("Player is dead")
+                                        isGameRunning = false
+                                    }
+                                }
                             }
                         }
                         repaint()
@@ -219,7 +224,7 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
                 }
             }
 
-            for (entity in manager.entitySet) {
+            for (entity in manager.characterSet) {
                 when (entity.type) {
                     EntityType.PLAYER -> g.color = Color.BLUE
                     EntityType.DOG -> g.color = Color.RED

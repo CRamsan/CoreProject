@@ -76,7 +76,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
                 speed = 20
             }
 
-            entities {
+            characters {
                 dog {
                     id = 5
                     posX = 15
@@ -93,7 +93,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
             }
 
             triggers {
-                entity {
+                character {
                     id = 523
                     eventId = 912
                     targetId = 1
@@ -105,9 +105,9 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
                     id = 912
                     text = "Welcome to this new game"
                 }
-                swapEntity {
+                swapCharacter {
                     id = 482
-                    disableEntityId = 1
+                    disableCharacterId = 1
                 }
             }
         }

@@ -47,7 +47,7 @@ class SceneTests {
                 posX = 25
                 posY = 25
             }
-            entities {
+            characters {
                 dog {
                     id = 1
                     posX = 2
@@ -177,7 +177,7 @@ class SceneTests {
                 posX = 0
                 posY = 25
             }
-            entities {
+            characters {
                 dog {
                     id = 1
                     posX = 2

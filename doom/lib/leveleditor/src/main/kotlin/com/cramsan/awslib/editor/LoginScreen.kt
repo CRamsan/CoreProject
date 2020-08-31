@@ -1,6 +1,5 @@
 package com.cramsan.awslib.editor
 
-import com.cramsan.awslib.editor.Styles.Companion.loginScreen
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
 import javafx.beans.property.SimpleBooleanProperty
@@ -10,17 +9,8 @@ import javafx.util.Duration
 import tornadofx.FX
 import tornadofx.View
 import tornadofx.ViewModel
-import tornadofx.action
-import tornadofx.addClass
-import tornadofx.button
-import tornadofx.checkbox
-import tornadofx.field
-import tornadofx.fieldset
-import tornadofx.form
-import tornadofx.passwordfield
-import tornadofx.required
-import tornadofx.textfield
-import tornadofx.whenDocked
+import tornadofx.tab
+import tornadofx.tabpane
 
 class LoginScreen : View("Please log in") {
     val loginController: LoginController by inject()
@@ -31,6 +21,18 @@ class LoginScreen : View("Please log in") {
         val remember = bind { SimpleBooleanProperty() }
     }
 
+    override val root = tabpane {
+        tab("Entities") {
+        }
+        tab("Dialog") {
+        }
+        tab("Triggers/Events") {
+        }
+        tab("Map") {
+        }
+    }
+
+    /*
     override val root = form {
         addClass(loginScreen)
         fieldset {
@@ -62,6 +64,7 @@ class LoginScreen : View("Please log in") {
             }
         }
     }
+     */
 
     override fun onDock() {
         model.validate(decorateErrors = false)

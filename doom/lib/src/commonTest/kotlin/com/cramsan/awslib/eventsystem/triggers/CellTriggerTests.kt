@@ -51,7 +51,7 @@ class CellTriggerTests {
                 posX = 5
                 posY = 5
             }
-            entities {
+            characters {
                 scientist {
                     id = 1
                     group = 0
@@ -75,10 +75,10 @@ class CellTriggerTests {
                 }
             }
             events {
-                swapEntity {
+                swapCharacter {
                     id = 352
-                    enableEntityId = 2
-                    disableEntityId = 1
+                    enableCharacterId = 2
+                    disableCharacterId = 1
                     nextEventId = InitialValues.NOOP_ID
                 }
             }

@@ -1,6 +1,6 @@
 package com.cramsan.awslib.entity.implementation
 
-import com.cramsan.awslib.entity.GameEntityInterface
+import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.EntityType
@@ -17,7 +17,7 @@ abstract class GameEntity(
     var speed: Int,
     override var enabled: Boolean,
     override var shouldMove: Boolean
-) : GameEntityInterface {
+) : CharacterInterface {
     override var heading = Direction.NORTH
     override var nextTurnAction = TurnAction.NOOP
 

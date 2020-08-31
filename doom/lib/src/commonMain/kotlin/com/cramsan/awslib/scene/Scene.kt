@@ -23,7 +23,7 @@ class Scene(
     fun loadScene() {
         log.i(tag, "Loading mainPlayer: $mainPlayer")
         entityManager.register(mainPlayer)
-        sceneConfig.entityList.forEach {
+        sceneConfig.characterList.forEach {
             log.i(tag, "Registering entity: $it")
             if (!entityManager.register(it)) {
                 log.e(tag, "Could not register: $it")

@@ -15,7 +15,7 @@ class DSLParserTests {
                 speed = 20
             }
 
-            entities {
+            characters {
                 dog {
                     id = 1
                     posX = 10
@@ -27,21 +27,21 @@ class DSLParserTests {
             triggers {
                 cell {
                 }
-                entity {
+                character {
                 }
             }
 
             events {
                 interactive {
                 }
-                swapEntity {
+                swapCharacter {
                 }
                 changeTrigger {
                 }
             }
         }
         assertNotNull(scene)
-        assertEquals(20, scene.entityList.first().posY)
+        assertEquals(20, scene.characterList.first().posY)
         assertEquals(2, scene.triggerList.size)
     }
 }
