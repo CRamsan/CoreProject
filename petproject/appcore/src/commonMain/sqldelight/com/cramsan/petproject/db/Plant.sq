@@ -4,8 +4,6 @@ CREATE TABLE Plant (
 	image_url	TEXT NOT NULL
 );
 
-CREATE VIRTUAL TABLE PlantSearch USING fts4(content="Plant", id, scientific_name);
-
 getPlant:
 SELECT * FROM Plant WHERE scientific_name == ?;
 

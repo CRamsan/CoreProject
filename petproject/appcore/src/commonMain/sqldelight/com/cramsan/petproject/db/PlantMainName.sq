@@ -6,8 +6,6 @@ CREATE TABLE PlantMainName (
     FOREIGN KEY(plant_id) REFERENCES Plant(id)
 );
 
-CREATE VIRTUAL TABLE PlantMainNameSearch USING fts4(content="PlantMainName", id, main_name, plant_id, locale);
-
 getPlantMainName:
 SELECT * FROM PlantMainName WHERE plant_id == ? AND locale == ?;
 

@@ -96,7 +96,7 @@ class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPl
     }
 
     constructor(getAllPlantsWithAnimalIdAll: GetAllPlantsWithAnimalIdAll) {
-        this.getAllPlantsWithAnimalId = GetAllPlantsWithAnimalId.Impl(
+        this.getAllPlantsWithAnimalId = GetAllPlantsWithAnimalId(
             getAllPlantsWithAnimalIdAll.id,
             getAllPlantsWithAnimalIdAll.scientific_name,
             getAllPlantsWithAnimalIdAll.main_name,
