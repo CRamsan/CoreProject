@@ -6,5 +6,6 @@ package com.cramsan.awslib.entity.implementation
 enum class ConsumableType {
     HEALTH,
     ARMOR,
-    CREDIT
+    CREDIT,
+    INVALID
 }

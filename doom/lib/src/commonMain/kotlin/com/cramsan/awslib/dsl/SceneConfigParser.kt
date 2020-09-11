@@ -2,13 +2,7 @@ package com.cramsan.awslib.dsl
 
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.ItemInterface
-import com.cramsan.awslib.entity.implementation.ConsumableItem
-import com.cramsan.awslib.entity.implementation.ConsumableType
-import com.cramsan.awslib.entity.implementation.Doctor
-import com.cramsan.awslib.entity.implementation.Dog
-import com.cramsan.awslib.entity.implementation.EquippableItem
-import com.cramsan.awslib.entity.implementation.KeyItem
-import com.cramsan.awslib.entity.implementation.Player
+import com.cramsan.awslib.entity.implementation.*
 import com.cramsan.awslib.eventsystem.CharacterTrigger
 import com.cramsan.awslib.eventsystem.events.BaseEvent
 import com.cramsan.awslib.eventsystem.events.ChangeTriggerEvent
@@ -36,106 +30,176 @@ class PlayerBuilder {
     )
 }
 
-class DogBuilder {
-    var id = InitialValues.INVALID_ID
-    var posX = InitialValues.POS_X_ENTITY
-    var posY = InitialValues.POS_Y_ENTITY
-    var priority = InitialValues.PRIORITY_ENTITY
-    var enabled = InitialValues.ENABLED_ENTITY
+class ConsumableItemBuilderBuilder {
+    var id = InitialValues.INVALID_NAME
+    var name = InitialValues.INVALID_NAME
+    var type = ConsumableType.INVALID
+    var ammount = InitialValues.INVALID_AMMOUNT
 
-    internal fun build() = Dog(
+    internal fun build() = mapOf(name to ConsumableItemBuilder(
         id,
-        posX,
-        posY,
-        priority,
-        enabled
-    )
+        name,
+        type,
+        ammount
+    ))
 }
 
-class ScientistBuilder {
+class EquippableItemBuilderBuilder {
+    var id = InitialValues.INVALID_NAME
+    var name = InitialValues.INVALID_NAME
+    var range = InitialValues.INVALID_AMMOUNT
+    var accuracy: Double = InitialValues.INVALID_AMMOUNT.toDouble()
+    var damage: Double = InitialValues.INVALID_AMMOUNT.toDouble()
+
+    internal fun build() = mapOf(name to EquippableItemBuilder(
+        id,
+        name,
+        range,
+        accuracy,
+        damage
+    ))
+}
+
+class KeyItemBuilderBuilder {
+    var id = InitialValues.INVALID_NAME
+    var name = InitialValues.INVALID_NAME
+
+    internal fun build() = mapOf(name to KeyItemBuilder(
+        id,
+        name
+    ))
+}
+
+class EnemyBuilderBuilder {
+    var id = InitialValues.INVALID_NAME
+    var name = InitialValues.INVALID_NAME
+    var type = EnemyType.INVALID
+    var range = InitialValues.INVALID_AMMOUNT
+    var damage: Double = InitialValues.INVALID_AMMOUNT.toDouble()
+    var accuracy: Double = InitialValues.INVALID_AMMOUNT.toDouble()
+    var move = InitialValues.INVALID_AMMOUNT
+
+    internal fun build() = mapOf(name to EnemyBuilder(
+        id,
+        name,
+        type,
+        range,
+        damage,
+        accuracy,
+        move
+    ))
+}
+
+class AllyBuilderBuilder {
+    var id = InitialValues.INVALID_NAME
+    var name = InitialValues.INVALID_NAME
+    var type = AllyType.INVALID
+
+    internal fun build() = mapOf(name to AllyBuilder(
+        id,
+        name,
+        type
+    ))
+}
+
+class PlaceableBuilderBuilder {
+    var id = InitialValues.INVALID_NAME
+    var name = InitialValues.INVALID_NAME
+
+    internal fun build() = mapOf(name to PlaceableBuilder(
+        id,
+        name,
+    ))
+}
+
+class EntityInstanceBuilder(val entityBuilders: Map<String, EntityBuilder>) {
     var id = InitialValues.INVALID_ID
+    var template = InitialValues.INVALID_NAME
     var posX = InitialValues.POS_X_ENTITY
     var posY = InitialValues.POS_Y_ENTITY
     var priority = InitialValues.PRIORITY_ENTITY
     var group = InitialValues.INVALID_ID
     var enabled = InitialValues.ENABLED_ENTITY
 
-    internal fun build() = Doctor(
-        id,
-        group,
-        posX,
-        posY,
-        priority,
-        enabled
-    )
+    internal fun build(): CharacterInterface {
+        val builder = entityBuilders[template]
+        return when (builder) {
+            is AllyBuilder -> builder.build(id, posX, posY, priority, enabled)
+            is EnemyBuilder -> builder.build(id, posX, posY, priority, enabled)
+            is PlaceableBuilder -> builder.build(id, posX, posY, priority, enabled)
+            else -> TODO()
+        }
+    }
 }
 
-class HealthBuilder {
+class ItemInstanceBuilder(val itemBuilders: Map<String, EntityBuilder>) {
     var id = InitialValues.INVALID_ID
-    var posX = InitialValues.POS_X_ENTITY
-    var posY = InitialValues.POS_Y_ENTITY
-    var eventId = InitialValues.NOOP_ID
-
-    internal fun build() = ConsumableItem(
-        id,
-        posX,
-        posY,
-        ConsumableType.HEALTH,
-        eventId
-    )
-}
-
-class KeyCardBuilder {
-    var id = InitialValues.INVALID_ID
+    var template = InitialValues.INVALID_NAME
     var posX = InitialValues.POS_X_ENTITY
     var posY = InitialValues.POS_Y_ENTITY
 
-    internal fun build() = KeyItem(
-        id,
-        posX,
-        posY
-    )
+    internal fun build(): ItemInterface {
+        val builder = itemBuilders[template]
+        return when (builder) {
+            is ConsumableItemBuilder -> builder.build(id, posX, posY)
+            is EquippableItemBuilder -> builder.build(id, posX, posY)
+            is KeyItemBuilder -> builder.build(id, posX, posY)
+            else -> TODO()
+        }
+    }
 }
 
-class GunBuilder {
-    var id = InitialValues.INVALID_ID
-    var posX = InitialValues.POS_X_ENTITY
-    var posY = InitialValues.POS_Y_ENTITY
+class ItemBuildersBuilder {
+    private val itemBuilderList = mutableMapOf<String, EntityBuilder>()
 
-    internal fun build() = EquippableItem(
-        id,
-        posX,
-        posY
-    )
-}
-
-class CharacterListBuilder {
-    private val characterList = mutableListOf<CharacterInterface>()
-
-    fun dog(block: DogBuilder.() -> Unit) {
-        characterList.add(DogBuilder().apply(block).build())
+    fun consumable(block: ConsumableItemBuilderBuilder.() -> Unit) {
+        itemBuilderList.putAll(ConsumableItemBuilderBuilder().apply(block).build())
     }
 
-    fun scientist(block: ScientistBuilder.() -> Unit) {
-        characterList.add(ScientistBuilder().apply(block).build())
+    fun equippable(block: EquippableItemBuilderBuilder.() -> Unit) {
+        itemBuilderList.putAll(EquippableItemBuilderBuilder().apply(block).build())
     }
 
-    internal fun build() = characterList
+    fun keyItem(block: KeyItemBuilderBuilder.() -> Unit) {
+        itemBuilderList.putAll(KeyItemBuilderBuilder().apply(block).build())
+    }
+
+    internal fun build() = itemBuilderList
 }
 
-class ItemListBuilder {
+class EntityBuildersBuilder {
+    private val entityBuilderList = mutableMapOf<String, EntityBuilder>()
+
+    fun enemy(block: EnemyBuilderBuilder.() -> Unit) {
+        entityBuilderList.putAll(EnemyBuilderBuilder().apply(block).build())
+    }
+
+    fun ally(block: AllyBuilderBuilder.() -> Unit) {
+        entityBuilderList.putAll(AllyBuilderBuilder().apply(block).build())
+    }
+
+    fun placeable(block: PlaceableBuilderBuilder.() -> Unit) {
+        entityBuilderList.putAll(PlaceableBuilderBuilder().apply(block).build())
+    }
+
+    internal fun build() = entityBuilderList
+}
+
+class EntityListBuilder(val entityBuilders: Map<String, EntityBuilder>) {
+    private val entityList = mutableListOf<CharacterInterface>()
+
+    fun entity(block: EntityInstanceBuilder.() -> Unit) {
+        entityList.add(EntityInstanceBuilder(entityBuilders).apply(block).build())
+    }
+
+    internal fun build() = entityList
+}
+
+class ItemListBuilder(val itemBuilders: Map<String, EntityBuilder>) {
     private val itemList = mutableListOf<ItemInterface>()
 
-    fun health(block: HealthBuilder.() -> Unit) {
-        itemList.add(HealthBuilder().apply(block).build())
-    }
-
-    fun keycard(block: KeyCardBuilder.() -> Unit) {
-        itemList.add(KeyCardBuilder().apply(block).build())
-    }
-
-    fun gun(block: GunBuilder.() -> Unit) {
-        itemList.add(GunBuilder().apply(block).build())
+    fun item(block: ItemInstanceBuilder.() -> Unit) {
+        itemList.add(ItemInstanceBuilder(itemBuilders).apply(block).build())
     }
 
     internal fun build() = itemList
@@ -258,6 +322,8 @@ class EventListBuilder {
 
 class SceneConfigBuilder {
     private var player: Player? = null
+    private val itemBuilders = mutableMapOf<String, EntityBuilder>()
+    private val entityBuilders = mutableMapOf<String, EntityBuilder>()
     private val characterList = mutableListOf<CharacterInterface>()
     private val itemList = mutableListOf<ItemInterface>()
     private val triggerList = mutableListOf<Trigger>()
@@ -267,12 +333,20 @@ class SceneConfigBuilder {
         player = PlayerBuilder().apply(block).build()
     }
 
-    fun characters(block: CharacterListBuilder.() -> Unit) {
-        characterList.addAll(CharacterListBuilder().apply(block).build())
+    fun itemBuilders(block: ItemBuildersBuilder.() -> Unit) {
+        itemBuilders.putAll(ItemBuildersBuilder().apply(block).build())
+    }
+
+    fun entityBuilders(block: EntityBuildersBuilder.() -> Unit) {
+        entityBuilders.putAll(EntityBuildersBuilder().apply(block).build())
     }
 
     fun items(block: ItemListBuilder.() -> Unit) {
-        itemList.addAll(ItemListBuilder().apply(block).build())
+        itemList.addAll(ItemListBuilder(itemBuilders).apply(block).build())
+    }
+
+    fun entity(block: EntityListBuilder.() -> Unit) {
+        characterList.addAll(EntityListBuilder(entityBuilders).apply(block).build())
     }
 
     fun triggers(block: TriggerListBuilder.() -> Unit) {
