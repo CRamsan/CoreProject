@@ -1,10 +1,6 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.preferences.implementation.PreferencesAndroid
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorageAndroidProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

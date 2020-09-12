@@ -1,26 +1,14 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.PreferencesInterface
-import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.ProviderConfig
 import com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
-import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
-import com.cramsan.petproject.appcore.storage.implementation.DescriptionImpl
-import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
-import com.cramsan.petproject.appcore.storage.implementation.PlantCommonNameImpl
-import com.cramsan.petproject.appcore.storage.implementation.PlantFamilyImpl
-import com.cramsan.petproject.appcore.storage.implementation.PlantImp
-import com.cramsan.petproject.appcore.storage.implementation.PlantMainNameImpl
-import com.cramsan.petproject.appcore.storage.implementation.ToxicityImpl
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.coroutineScope
@@ -29,10 +17,6 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.instance
-import org.kodein.di.newInstance
 import org.kodein.di.provider
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -99,13 +83,15 @@ internal class ModelProviderCommonTest {
     }
 
     private fun createEntries() = (1..100).map { i ->
-        val plant = com.cramsan.petproject.appcore.storage.implementation.sqldelight.GetAllPlantsWithAnimalId(com.cramsan.petproject.db.GetAllPlantsWithAnimalId(
-            i.toLong(),
-            "$i",
-            "https://www.aspca.org",
-            AnimalType.CAT,
-            ToxicityValue.TOXIC
-        ))
+        val plant = com.cramsan.petproject.appcore.storage.implementation.sqldelight.GetAllPlantsWithAnimalId(
+            com.cramsan.petproject.db.GetAllPlantsWithAnimalId(
+                i.toLong(),
+                "$i",
+                "https://www.aspca.org",
+                AnimalType.CAT,
+                ToxicityValue.TOXIC
+            )
+        )
         plant
     }.toList()
 }
