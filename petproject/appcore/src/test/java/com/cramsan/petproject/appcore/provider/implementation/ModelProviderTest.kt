@@ -27,14 +27,13 @@ class ModelProviderTest {
     @Before
     fun setUp() {
         modelProviderTest = ModelProviderCommonTest()
-        val appContext = ApplicationProvider.getApplicationContext<Context>()
-        modelProviderTest.setUp(
-            ModelStorageAndroidProvider(
-                appContext
-            ),
-            PreferencesAndroid(appContext)
-        )
+        modelProviderTest.setUp()
         semaphore = Semaphore(0)
+    }
+
+    @Test
+    fun testIsCatalogAvailable() = runBlocking {
+        modelProviderTest.testIsCatalogAvailable()
     }
 
     @Test

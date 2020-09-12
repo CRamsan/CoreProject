@@ -14,6 +14,7 @@ buildscript {
 repositories {
     google()
     jcenter()
+    maven {url "https://kotlin.bintray.com/kotlinx/"}
 }
 
 apply plugin: "com.android.library"
@@ -95,6 +96,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
                 implementation "io.ktor:ktor-client-core:$globalKtorVersion"
                 implementation "io.ktor:ktor-client-json:$globalKtorVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-datetime:$globalKotlinxDatetimeVersion"
                 implementation project(":framework")
             }
         }

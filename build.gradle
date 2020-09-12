@@ -39,6 +39,7 @@ buildscript {
         globalJUnitVersion = "4.13"
         globalKodeinVersion = "7.0.0"
         globalKotlinVersion = initKotlinVersion
+        globalKotlinxDatetimeVersion = "0.1.0"
         globalKtlintVerion = "0.38.1"
         globalKtorVersion = "1.4.0"
         globalMockkVersion = "1.10.0"
