@@ -14,7 +14,9 @@ buildscript {
 repositories {
     google()
     jcenter()
-    maven {url "https://kotlin.bintray.com/kotlinx/"}
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
 }
 
 apply plugin: "com.android.library"
@@ -55,15 +57,15 @@ android {
 }
 
 dependencies {
-    implementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
-    implementation "io.ktor:ktor-client-android:$globalKtorVersion"
-    implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
+    implementation packages.SqlDelightAndroidDriver
+    implementation packages.KtorAndroid
+    implementation packages.KtorGson
 
-    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
-    testImplementation "com.squareup.sqldelight:android-driver:$globalSqlDelightVersion"
-    testImplementation "io.mockk:mockk:$globalMockkVersion"
-    testImplementation "junit:junit:$globalJUnitVersion"
-    testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
+    testImplementation packages.AndroidXJUnitKtx
+    testImplementation packages.SqlDelightAndroidDriver
+    testImplementation packages.Mockk
+    testImplementation packages.JUnit
+    testImplementation packages.Robolectric
 }
 
 kotlin {
@@ -92,54 +94,54 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation kotlin("stdlib-common")
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
-                implementation "io.ktor:ktor-client-core:$globalKtorVersion"
-                implementation "io.ktor:ktor-client-json:$globalKtorVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-datetime:$globalKotlinxDatetimeVersion"
                 implementation project(":framework")
+                implementation packages.KotlinStdCommon
+                implementation packages.CoroutinesCore
+                implementation packages.KtorCore
+                implementation packages.KtorJson
+                implementation packages.KotlinxDatetime
             }
         }
         commonTest {
             dependencies {
-                implementation kotlin("test-common")
-                implementation kotlin("test-annotations-common")
-                implementation "io.mockk:mockk-common:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
-                implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
                 implementation project(":framework")
+                implementation packages.KotlinTestCommon
+                implementation packages.KotlinTestAnnotations
+                implementation packages.MockkCommon
+                implementation packages.CoroutinesCore
+                implementation packages.Kodein
             }
         }
         jvmMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
-                implementation "io.ktor:ktor-client-apache:$globalKtorVersion"
-                implementation "io.ktor:ktor-client-gson:$globalKtorVersion"
-                implementation "com.squareup.sqldelight:sqlite-driver:$globalSqlDelightVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation packages.KotlinStdJdk8
+                implementation packages.KtorApache
+                implementation packages.KtorGson
+                implementation packages.SqlDelightDriver
+                implementation packages.CoroutinesCore
             }
         }
 
         jvmTest {
             dependencies {
-                implementation kotlin("test")
-                implementation kotlin("test-junit")
-                implementation "io.mockk:mockk:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
-                implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.Mockk
+                implementation packages.CoroutinesCore
+                implementation packages.Kodein
             }
         }
         androidMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
+                implementation packages.KotlinStdJdk8
+                implementation packages.CoroutinesAndroid
             }
         }
         androidTest {
             dependencies {
-                implementation kotlin("test")
-                implementation kotlin("test-junit")
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.CoroutinesAndroid
             }
         }
         iosMain {

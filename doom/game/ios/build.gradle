@@ -17,10 +17,10 @@ sourceCompatibility = globalJavaCompatibility
 
 dependencies {
     implementation project(":doom:game:core")
-    implementation "com.mobidevelop.robovm:robovm-rt:$globalRoboVMVersion"
-    implementation "com.mobidevelop.robovm:robovm-cocoatouch:$globalRoboVMVersion"
-    implementation "com.badlogicgames.gdx:gdx-backend-robovm:$globalGdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-ios"
+    implementation packages.RoboVMRt
+    implementation packages.RoboVMCocoatouch
+    implementation packages.GdxRobovm
+    implementation packages.GdxIos
 }
 
 ext {

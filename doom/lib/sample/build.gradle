@@ -7,10 +7,10 @@ plugins {
 sourceCompatibility = globalJavaCompatibility
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$globalCoroutinesVersion"
-    implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
     implementation project(":framework")
     implementation project(":doom:lib")
+    implementation packages.CoroutinesSwing
+    implementation packages.Kodein
 }
 
 jar {

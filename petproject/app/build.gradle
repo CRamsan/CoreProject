@@ -13,6 +13,9 @@ buildscript {
 repositories {
     google()
     jcenter()
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
 }
 
 apply plugin: "com.android.application"
@@ -70,47 +73,47 @@ android {
 dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")
-    implementation "androidx.constraintlayout:constraintlayout:$globalConstraintLayoutVersion"
-    implementation "androidx.activity:activity-ktx:$globalAndroidxActivityKtxVersion"
-    implementation "androidx.fragment:fragment-ktx:$globalAndroidxFragmentKtxVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:$globalAndroidXLifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$globalAndroidXLifecycleVersion"
-    implementation "androidx.paging:paging-runtime-ktx:$globalAndroidXPagingVersion"
-    implementation "androidx.recyclerview:recyclerview:$globalAndroidXRecyclerViewVersion"
-    implementation "androidx.preference:preference:$globalAndroidXPreferencesVersion"
-    implementation "androidx.preference:preference-ktx:$globalAndroidXPreferencesVersion"
-    implementation "androidx.navigation:navigation-fragment-ktx:$globalAndroidXNavigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$globalAndroidXNavigationVersion"
-    implementation "androidx.work:work-runtime:$globalAndroidXWorkManager"
-    implementation "androidx.work:work-runtime-ktx:$globalAndroidXWorkManager"
-    implementation "com.google.android.material:material:$globalAndroidMaterialVersion"
 
-    implementation "com.github.bumptech.glide:glide:$globalGlideVersion"
-    implementation "io.ktor:ktor-client-android:$globalKtorVersion"
+    implementation packages.ConstraintLayout
+    implementation packages.AndroidxActivityKtx
+    implementation packages.AndroidxFragmentKtx
+    implementation packages.AndroidXLifecycleExt
+    implementation packages.AndroidXLifecycleViewModelKtx
+    implementation packages.AndroidXPagingRuntimeKtx
+    implementation packages.AndroidXRecyclerView
+    implementation packages.AndroidXPreferences
+    implementation packages.AndroidXPreferencesKtx
+    implementation packages.AndroidXNavigationFragmentKtx
+    implementation packages.AndroidXNavigationUIKtx
+    implementation packages.AndroidXWorkManagerRuntimeKtx
+    implementation packages.AndroidXWorkManagerRuntime
+    implementation packages.AndroidMaterial
+    implementation packages.Glide
+    implementation packages.KtorAndroid
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
+    implementation packages.KotlinStdJdk8
+    implementation packages.CoroutinesCore
+    implementation packages.CoroutinesAndroid
 
-    implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
-    implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
+    implementation packages.Kodein
+    implementation packages.KodeinAndroid
 
-    implementation "com.microsoft.appcenter:appcenter:$globalAppCenterSdkVersion"
+    implementation packages.AppCenterSdk
 
-    kapt "com.github.bumptech.glide:compiler:$globalGlideVersion"
+    kapt packages.GlideCompiler
 
-    testImplementation "junit:junit:$globalJUnitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$globalAndroidXJUnitVersion"
-    androidTestImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
-    androidTestImplementation "androidx.test:core:$globalAndroidXTestVersion"
-    androidTestImplementation "androidx.test:rules:$globalAndroidXTestVersion"
-    androidTestImplementation "androidx.test:runner:$globalAndroidXTestVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
-    androidTestImplementation "androidx.navigation:navigation-testing:$globalAndroidXNavigationVersion"
-    androidTestImplementation "androidx.work:work-testing:$globalAndroidXWorkManager"
-    androidTestImplementation "org.mockito:mockito-android:$globalMockitoVersion"
+    testImplementation packages.JUnit
+    androidTestImplementation packages.AndroidXJUnit
+    androidTestImplementation packages.AndroidXJUnitKtx
+    androidTestImplementation packages.AndroidXTest
+    androidTestImplementation packages.AndroidXTestRules
+    androidTestImplementation packages.AndroidXTestRunner
+    androidTestImplementation packages.EspressoIntents
+    androidTestImplementation packages.Espresso
+    androidTestImplementation packages.UIAutomator
+    androidTestImplementation packages.AndroidXNavigationTesting
+    androidTestImplementation packages.AndroidXWorkManagerTesting
+    androidTestImplementation packages.Mockito
 }
 
 tasks.register("release") {

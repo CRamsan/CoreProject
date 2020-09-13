@@ -17,10 +17,10 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 dependencies {
-    implementation "com.badlogicgames.gdx:gdx:$globalGdxVersion"
-    implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+    implementation packages.Gdx
+    implementation packages.Kodein
+    implementation packages.KotlinStdJdk8
+    implementation packages.CoroutinesCore
 
     implementation project(":doom:lib")
     implementation project(":framework")

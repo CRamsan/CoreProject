@@ -62,11 +62,11 @@ configurations { natives }
 
 dependencies {
     implementation project(":doom:game:core")
-    implementation "com.badlogicgames.gdx:gdx-backend-android:$globalGdxVersion"
-    natives "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-armeabi-v7a"
-    natives "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-arm64-v8a"
-    natives "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-x86"
-    natives "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-x86_64"
+    implementation packages.GdxAndroid
+    natives packages.GdxNativesArmv7a
+    natives packages.GdxNativesArm64
+    natives packages.GdxNativesX86
+    natives packages.GdxNativesX64
 }
 
 // called every time gradle gets executed, takes the native dependencies of

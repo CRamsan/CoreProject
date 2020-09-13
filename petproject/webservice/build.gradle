@@ -12,20 +12,26 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = globalJavaCompatibility
 targetCompatibility = globalJavaCompatibility
 
+repositories {
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
+}
+
 dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
+    implementation packages.KotlinStdJdk8
 
-    implementation "org.springframework.boot:spring-boot-devtools"
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
-    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation packages.SpringDevtools
+    implementation packages.SpringStarter
+    implementation packages.SpringThymeleaf
+    implementation packages.SpringWeb
 
-    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+    providedRuntime packages.SpringTomcat
 
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation packages.SpringTest
 }
 
 bootWar {

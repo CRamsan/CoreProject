@@ -10,8 +10,8 @@ project.ext.assetsDir = new File("../android/assets")
 
 dependencies {
     implementation project(":doom:game:core")
-    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$globalGdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-platform:$globalGdxVersion:natives-desktop"
+    implementation packages.GdxLwjgl3
+    implementation packages.GdxDesktop
 }
 
 task run(dependsOn: classes, type: JavaExec) {

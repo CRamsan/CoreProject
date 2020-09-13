@@ -60,33 +60,33 @@ android {
 dependencies {
     implementation project(":framework")
 
-    implementation "com.android.volley:volley:$globalVolleyVersion"
-    implementation "com.google.code.gson:gson:$globalGsonVerion"
-    implementation "org.ocpsoft.prettytime:prettytime:$globalPrettyTimeVersion"
-    implementation "org.twitter4j:twitter4j-core:$globalTwitter4JVersion"
-    implementation "androidx.appcompat:appcompat:$globalAndroidXAppCompatersion"
-    implementation "androidx.test.espresso:espresso-idling-resource:$globalEspressoVersion"
+    implementation packages.Volley
+    implementation packages.Gson
+    implementation packages.PrettyTime
+    implementation packages.Twitter4J
+    implementation packages.AndroidXAppCompat
+    implementation packages.EspressoIdlingResource
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
+    implementation packages.KotlinStdJdk8
+    implementation packages.CoroutinesCore
+    implementation packages.CoroutinesAndroid
 
-    implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
-    implementation "org.kodein.di:kodein-di-framework-android-x:$globalKodeinVersion"
+    implementation packages.Kodein
+    implementation packages.KodeinAndroid
 
-    implementation "com.microsoft.appcenter:appcenter:$globalAppCenterSdkVersion"
+    implementation packages.AppCenterSdk
 
-    testImplementation "junit:junit:$globalJUnitVersion"
+    testImplementation packages.JUnit
 
-    androidTestImplementation "androidx.test.ext:junit:$globalAndroidXJUnitVersion"
-    androidTestImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
-    androidTestImplementation "androidx.test:core:$globalAndroidXTestVersion"
-    androidTestImplementation "androidx.test:rules:$globalAndroidXTestVersion"
-    androidTestImplementation "androidx.test:runner:$globalAndroidXTestVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:$globalEspressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$globalEspressoVersion"
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:$globalUIAutomatorVersion"
-    androidTestImplementation "com.microsoft.appcenter:espresso-test-extension:$globalAppCenterEspressoTestExt"
+    androidTestImplementation packages.AndroidXJUnit
+    androidTestImplementation packages.AndroidXJUnitKtx
+    androidTestImplementation packages.AndroidXTest
+    androidTestImplementation packages.AndroidXTestRules
+    androidTestImplementation packages.AndroidXTestRunner
+    androidTestImplementation packages.EspressoIntents
+    androidTestImplementation packages.Espresso
+    androidTestImplementation packages.UIAutomator
+    androidTestImplementation packages.AppCenterEspressoTestExt
 }
 
 tasks.register("release") {

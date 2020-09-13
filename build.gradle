@@ -1,5 +1,8 @@
 //Define the version variables to be used across the entire project
 buildscript {
+
+    apply from: "gradle/versions.gradle"
+
     ext {
         globalAndroidBuildToolsVersion = "29.0.2"
         globalCompileSdkVersion = 29
@@ -68,6 +71,15 @@ buildscript {
         }
     }
 }
+
+/*
+apply from: "gradle/gradle-versions.gradle"
+
+subprojects {
+    apply from: "$rootDir/gradle/ktlint.gradle"
+}
+ */
+
 
 // Apply the versions plugin at the root project as it is capable 
 // to traverse the submodules 

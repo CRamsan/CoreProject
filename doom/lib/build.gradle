@@ -18,30 +18,29 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework")
-                implementation "org.kodein.di:kodein-di:$globalKodeinVersion"
-                implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$globalKotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation packages.Kodein
+                implementation packages.KotlinStdCommon
+                implementation packages.CoroutinesCore
             }
         }
         commonTest {
             dependencies {
-                implementation "io.mockk:mockk:$globalMockkVersion"
-                implementation "org.jetbrains.kotlin:kotlin-test-common:$globalKotlinVersion"
-                implementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$globalKotlinVersion"
-
+                implementation packages.Mockk
+                implementation packages.KotlinTestCommon
+                implementation packages.KotlinTestAnnotations
             }
         }
         jvmMain {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$globalKotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation packages.KotlinStdJdk8
+                implementation packages.CoroutinesCore
             }
         }
         jvmTest {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-test:$globalKotlinVersion"
-                implementation "org.jetbrains.kotlin:kotlin-test-junit:$globalKotlinVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$globalCoroutinesVersion"
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.CoroutinesSwing
             }
         }
     }

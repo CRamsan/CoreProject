@@ -40,16 +40,16 @@ android {
 }
 
 dependencies {
-    implementation "com.squareup.okhttp3:okhttp:$globalOkhttpVersion"
-    implementation "com.google.code.gson:gson:$globalGsonVerion"
-    implementation "com.microsoft.appcenter:appcenter-analytics:$globalAppCenterSdkVersion"
-    implementation "com.microsoft.appcenter:appcenter-crashes:$globalAppCenterSdkVersion"
+    implementation packages.Okhttp
+    implementation packages.Gson
+    implementation packages.AppCenterSdkAnalytics
+    implementation packages.AppCenterSdkCrashes
 
-    testImplementation "androidx.test.ext:junit-ktx:$globalAndroidXJUnitVersion"
-    testImplementation "io.mockk:mockk:$globalMockkVersion"
-    testImplementation "io.mockk:mockk-android:$globalMockkVersion"
-    testImplementation "junit:junit:$globalJUnitVersion"
-    testImplementation "org.robolectric:robolectric:$globalRobolectricVersion"
+    testImplementation packages.AndroidXJUnitKtx
+    testImplementation packages.Mockk
+    testImplementation packages.MockkAndroid
+    testImplementation packages.JUnit
+    testImplementation packages.Robolectric
 }
 
 kotlin {
@@ -77,41 +77,41 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation kotlin("stdlib-common")
+                implementation packages.KotlinStdCommon
             }
         }
         commonTest {
             dependencies {
-                implementation kotlin("test-common")
-                implementation kotlin("test-annotations-common")
+                implementation packages.KotlinTestCommon
+                implementation packages.KotlinTestAnnotations
 
-                implementation "io.mockk:mockk-common:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation packages.MockkCommon
+                implementation packages.CoroutinesCore
             }
         }
         jvmMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
+                implementation packages.KotlinStdJdk8
             }
         }
         jvmTest {
             dependencies {
-                implementation kotlin("test")
-                implementation kotlin("test-junit")
-                implementation "io.mockk:mockk:$globalMockkVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$globalCoroutinesVersion"
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.Mockk
+                implementation packages.CoroutinesCore
             }
         }
         androidMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
+                implementation packages.KotlinStdJdk8
             }
         }
         androidTest {
             dependencies {
-                implementation kotlin("test")
-                implementation kotlin("test-junit")
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$globalCoroutinesVersion"
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.CoroutinesAndroid
             }
         }
         iosMain {
