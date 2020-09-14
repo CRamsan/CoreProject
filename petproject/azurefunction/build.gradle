@@ -2,16 +2,17 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath packages.KotlinGradle
+        classpath packages.AzureFunctionsGradle
     }
 }
 
-plugins {
-  id "com.microsoft.azure.azurefunctions" version "$globalAzureFunctionGradlePlugin"
-}
-
+apply plugin: "com.microsoft.azure.azurefunctions"
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
 repositories {

@@ -5,18 +5,23 @@ buildscript {
     }
     dependencies {
         classpath packages.KotlinGradle
+        classpath packages.SpringBootGradle
+        classpath packages.SpringDependencyManagement
+        classpath packages.KotlinNoArg
+        classpath packages.KotlinAllOpen
+
     }
 }
 
 plugins {
-    id "org.springframework.boot" version "$globalSpringFrameworkVersion"
-    id "io.spring.dependency-management" version "$globalSpringDependencyManagement"
-    id "org.jetbrains.kotlin.plugin.spring"
-    id "org.jetbrains.kotlin.plugin.jpa"
     id 'war'
 }
 
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: "org.jetbrains.kotlin.plugin.jpa"
+apply plugin: "org.jetbrains.kotlin.plugin.spring"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
 
 group = 'com.cramsan.petproject.webservice'
 version = '0.0.1-SNAPSHOT'

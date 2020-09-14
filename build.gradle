@@ -3,13 +3,6 @@ buildscript {
 
     apply from: "gradle/versions.gradle"
 
-    ext {
-        globalAzureFunctionGradlePlugin = versions.AzureFunctionGradlePlugin
-        globalAzureFunctionsJavaLibrary = "1.4.0"
-        globalSpringFrameworkVersion = "2.3.3.RELEASE"
-        globalSpringDependencyManagement = "1.0.10.RELEASE"
-    }
-
     repositories {
         google()
         jcenter()
@@ -18,9 +11,6 @@ buildscript {
 
     dependencies {
         classpath packages.GradleVersions
-        //classpath packages.AndroidBuildGradle
-        //classpath packages.KotlinGradle
-        //classpath packages.AndroidXNavigationSafeArgsGradle
     }
 }
 

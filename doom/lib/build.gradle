@@ -1,66 +1,40 @@
-plugins {
-    id "org.jetbrains.kotlin.multiplatform"
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$versions.AndroidGradlePlugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.Kotlin"
+    }
 }
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
 
 /**
  * Configure multiplatform project
  */
 kotlin {
-    jvm("jvm") {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibility
-            }
-        }
-    }
-
     sourceSets {
         commonMain {
             dependencies {
                 implementation project(":framework")
                 implementation packages.Kodein
-                implementation packages.KotlinStdCommon
-                implementation packages.CoroutinesCore
             }
         }
         commonTest {
             dependencies {
-                implementation packages.Mockk
-                implementation packages.KotlinTestCommon
-                implementation packages.KotlinTestAnnotations
             }
         }
         jvmMain {
             dependencies {
-                implementation packages.KotlinStdJdk8
-                implementation packages.CoroutinesCore
             }
         }
         jvmTest {
             dependencies {
-                implementation packages.KotlinTest
-                implementation packages.KotlinTestJunit
                 implementation packages.CoroutinesSwing
             }
-        }
-    }
-
-    targets.all {
-        compilations.all {
-            kotlinOptions {
-                allWarningsAsErrors = true
-            }
-        }
-    }
-}
-
-/**
- * Log test results
- */
-tasks {
-    jvmTest {
-        testLogging {
-            events "passed", "skipped", "failed"
         }
     }
 }
