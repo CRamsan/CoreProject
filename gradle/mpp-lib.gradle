@@ -1,0 +1,120 @@
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.multiplatform"
+apply plugin: "kotlin-kapt"
+
+dependencies {
+    testImplementation packages.AndroidXJUnitKtx
+    testImplementation packages.Mockk
+    testImplementation packages.MockkAndroid
+    testImplementation packages.JUnit
+    testImplementation packages.Robolectric
+}
+
+android {
+    buildToolsVersion versions_tools.AndroidBuildToolsVersion
+    compileSdkVersion versions_tools.CompileSdkVersion
+    defaultConfig {
+        minSdkVersion versions_tools.MinSdkVersion
+        targetSdkVersion versions_tools.TargetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility versions_tools.JavaCompatibility
+        targetCompatibility versions_tools.JavaCompatibility
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed"
+                }
+            }
+        }
+    }
+}
+
+kotlin {
+    android("android") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = versions_tools.JavaCompatibility
+            }
+        }
+    }
+    jvm("jvm") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = versions_tools.JavaCompatibility
+            }
+        }
+    }
+    // This is for iPhone emulator
+    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
+    iosX64("ios") {
+        binaries {
+            framework()
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation packages.KotlinStdCommon
+                implementation packages.CoroutinesCore
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation packages.KotlinTestCommon
+                implementation packages.KotlinTestAnnotations
+
+                implementation packages.MockkCommon
+                implementation packages.CoroutinesCore
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation packages.KotlinStdJdk8
+                implementation packages.CoroutinesCore
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.Mockk
+                implementation packages.CoroutinesCore
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation packages.KotlinStdJdk8
+                implementation packages.CoroutinesAndroid
+            }
+        }
+        androidTest {
+            dependencies {
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+                implementation packages.CoroutinesAndroid
+            }
+        }
+        iosMain {
+            dependencies {
+            }
+        }
+        iosTest {
+            dependencies {
+            }
+        }
+    }
+}
+
+tasks {
+    jvmTest {
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}

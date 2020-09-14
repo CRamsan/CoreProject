@@ -1,0 +1,21 @@
+apply plugin: 'kotlin'
+
+sourceCompatibility = versions_tools.JavaCompatibility
+targetCompatibility = versions_tools.JavaCompatibility
+
+dependencies {
+    implementation packages.KotlinStdJdk8
+
+    testImplementation packages.Mockk
+    testImplementation packages.JUnit
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

@@ -1,7 +1,18 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath packages.KotlinGradle
+    }
+}
+
 plugins {
   id "com.microsoft.azure.azurefunctions" version "$globalAzureFunctionGradlePlugin"
-  id "org.jetbrains.kotlin.jvm"
 }
+
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
 repositories {
     maven {
@@ -11,33 +22,14 @@ repositories {
 
 group = 'com.cramsan.petproject.azurefunction'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = versions_tools.JavaCompatibility
-targetCompatibility = versions_tools.JavaCompatibility
 
 dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")
 
-    implementation packages.KotlinStdJdk8
     implementation packages.AzureFunctionsJavaLibrary
     implementation packages.Gson
     implementation packages.JacksonDatabinding
-
-    testImplementation packages.Mockk
-    testImplementation packages.JUnit
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        freeCompilerArgs = ["-Xjsr305=strict"]
-        jvmTarget = versions_tools.JavaCompatibility
-    }
-}
-
-test {
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
 }
 
 azurefunctions {

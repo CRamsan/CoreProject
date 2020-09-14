@@ -17,9 +17,7 @@ repositories {
     }
 }
 
-apply plugin: "com.android.library"
-apply plugin: "org.jetbrains.kotlin.multiplatform"
-apply plugin: "kotlin-kapt"
+apply from: "$rootDir/gradle/mpp-lib.gradle"
 apply plugin: "com.squareup.sqldelight"
 
 sqldelight {
@@ -29,28 +27,9 @@ sqldelight {
 }
 
 android {
-    buildToolsVersion versions_tools.AndroidBuildToolsVersion
-    compileSdkVersion versions_tools.CompileSdkVersion
     defaultConfig {
-        minSdkVersion versions_tools.MinSdkVersion
-        targetSdkVersion versions_tools.TargetSdkVersion
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    compileOptions {
-        sourceCompatibility versions_tools.JavaCompatibility
-        targetCompatibility versions_tools.JavaCompatibility
-    }
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-            all {
-                testLogging {
-                    events "passed", "skipped", "failed"
-                }
-            }
-        }
     }
 }
 
@@ -59,42 +38,14 @@ dependencies {
     implementation packages.KtorAndroid
     implementation packages.KtorGson
 
-    testImplementation packages.AndroidXJUnitKtx
     testImplementation packages.SqlDelightAndroidDriver
-    testImplementation packages.Mockk
-    testImplementation packages.JUnit
-    testImplementation packages.Robolectric
 }
 
 kotlin {
-    android("android") {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibility
-            }
-        }
-    }
-
-    jvm("jvm") {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibility
-            }
-        }
-    }
-    // This is for iPhone emulator
-    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
-    iosX64("ios") {
-        binaries {
-            framework()
-        }
-    }
     sourceSets {
         commonMain {
             dependencies {
                 implementation project(":framework")
-                implementation packages.KotlinStdCommon
-                implementation packages.CoroutinesCore
                 implementation packages.KtorCore
                 implementation packages.KtorJson
                 implementation packages.KotlinxDatetime
@@ -103,63 +54,21 @@ kotlin {
         commonTest {
             dependencies {
                 implementation project(":framework")
-                implementation packages.KotlinTestCommon
-                implementation packages.KotlinTestAnnotations
-                implementation packages.MockkCommon
-                implementation packages.CoroutinesCore
                 implementation packages.Kodein
             }
         }
         jvmMain {
             dependencies {
-                implementation packages.KotlinStdJdk8
                 implementation packages.KtorApache
                 implementation packages.KtorGson
                 implementation packages.SqlDelightDriver
-                implementation packages.CoroutinesCore
             }
         }
 
         jvmTest {
             dependencies {
-                implementation packages.KotlinTest
-                implementation packages.KotlinTestJunit
-                implementation packages.Mockk
-                implementation packages.CoroutinesCore
                 implementation packages.Kodein
             }
-        }
-        androidMain {
-            dependencies {
-                implementation packages.KotlinStdJdk8
-                implementation packages.CoroutinesAndroid
-            }
-        }
-        androidTest {
-            dependencies {
-                implementation packages.KotlinTest
-                implementation packages.KotlinTestJunit
-                implementation packages.CoroutinesAndroid
-            }
-        }
-        iosMain {
-            dependencies {
-            }
-        }
-        iosTest {
-            dependencies {
-            }
-        }
-    }
-}
-
-/**
- * Log test results
- */
-tasks {
-    jvmTest {
-        testLogging {
-            events "passed", "skipped", "failed"
         }
     }
 }
