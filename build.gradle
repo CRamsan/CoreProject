@@ -4,111 +4,10 @@ buildscript {
     apply from: "gradle/versions.gradle"
 
     ext {
-        globalAndroidBuildToolsVersion = "29.0.2"
-        globalCompileSdkVersion = 29
-        globalMinSdkVersion = 22
-        globalTargetSdkVersion = 29
-
-        globalJavaCompatibility = JavaVersion.VERSION_1_8
-
-        globalAndroidGradlePluginVersion = "4.0.1"
-        globalAndroidMaterialVersion = "1.2.1"
-        globalAndroidXAppCompatersion = "1.2.0"
-        globalAndroidXJUnitVersion = "1.1.2"
-        globalAndroidXTestVersion = "1.3.0"
-        globalAndroidXLifecycleVersion = "2.2.0"
-        globalAndroidXRecyclerViewVersion = "1.1.0"
-        globalAndroidXPagingVersion = "2.1.2"
-        globalAndroidXPreferencesVersion = "1.1.1"
-        globalAndroidxActivityKtxVersion = "1.1.0"
-        globalAndroidxFragmentKtxVersion = "1.2.5"
-        globalAndroidXNavigationVersion = "2.3.0"
-        globalAndroidXWorkManager = "2.4.0"
-        globalAppCenterSdkVersion = "3.3.0"
-        globalAppCenterEspressoTestExt = "1.4"
-        globalAzureFunctionGradlePlugin = "1.4.0"
+        globalAzureFunctionGradlePlugin = versions.AzureFunctionGradlePlugin
         globalAzureFunctionsJavaLibrary = "1.4.0"
-        globalCoroutinesVersion = "1.3.9"
-        globalConstraintLayoutVersion = "2.0.1"
-        globalEspressoVersion = "3.3.0"
-        globalFirebaseVersion = "17.2.3"
-        globalFirebaseCrashlyticsVersion = "2.0.0-beta02"
-        globalGlideVersion = "4.11.0"
-        globalGsonVerion = "2.8.6"
-        globalGMSServices = "4.3.3"
-        globalHamcrestVersion = "2.2"
-        globalMockitoVersion = "3.5.10"
-        globalJacksonDatabinding = "2.11.2"
-        globalJUnitVersion = "4.13"
-        globalKodeinVersion = "7.0.0"
-        globalKotlinVersion = initKotlinVersion
-        globalKotlinxDatetimeVersion = "0.1.0"
-        globalKtlintVerion = "0.38.1"
-        globalKtorVersion = "1.4.0"
-        globalMockkVersion = "1.10.0"
-        globalOkhttpVersion = "4.8.1"
-        globalPrettyTimeVersion = "4.0.5.Final"
-        globalRobolectricVersion = "4.4"
         globalSpringFrameworkVersion = "2.3.3.RELEASE"
         globalSpringDependencyManagement = "1.0.10.RELEASE"
-        globalSqlDelightVersion = "1.4.3"
-        globalTwitter4JVersion = "4.0.7"
-        globalUIAutomatorVersion = "2.2.0"
-        globalVolleyVersion = "1.1.1"
-
-        globalGdxVersion = '1.9.11'
-        globalRoboVMVersion = '2.3.10'
-        globalBox2DLightsVersion = '1.4'
-        globalAshleyVersion = '1.7.0'
-        globalAiVersion = '1.8.0'
-    }
-
-    buildscript {
-        repositories {
-            google()
-            jcenter()
-            mavenCentral()
-        }
-    }
-}
-
-/*
-apply from: "gradle/gradle-versions.gradle"
-
-subprojects {
-    apply from: "$rootDir/gradle/ktlint.gradle"
-}
- */
-
-
-// Apply the versions plugin at the root project as it is capable 
-// to traverse the submodules 
-plugins {
-    id "com.github.ben-manes.versions"
-}
-
-def isNonStable = { String version ->
-    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
-    def regex = /^[0-9,.v-]+(-r)?$/
-    return !stableKeyword && !(version ==~ regex)
-}
-
-tasks.named("dependencyUpdates").configure {
-    // Example 1: reject all non stable versions
-    rejectVersionIf {
-        isNonStable(it.candidate.version)
-    }
-}
-
-subprojects {
-
-    // Configure the ktlint tasks for each individual subproject
-    configurations {
-        ktlint
-    }
-
-    dependencies {
-        ktlint "com.pinterest:ktlint:${globalKtlintVerion}"
     }
 
     repositories {
@@ -117,18 +16,24 @@ subprojects {
         mavenCentral()
     }
 
-    task("ktlint", type: JavaExec, group: "verification") {
-        description = "Check Kotlin code style."
-        classpath = configurations.ktlint
-        main = "com.pinterest.ktlint.Main"
-        args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/checkstyle-result.xml", "${project.projectDir}/src/**/*.kt"
+    dependencies {
+        classpath packages.GradleVersions
+        //classpath packages.AndroidBuildGradle
+        //classpath packages.KotlinGradle
+        //classpath packages.AndroidXNavigationSafeArgsGradle
     }
+}
 
-    task("ktlintFormat", type: JavaExec, group: "formatting") {
-        description = "Fix Kotlin code style deviations."
-        classpath = configurations.ktlint
-        main = "com.pinterest.ktlint.Main"
-        args "-F", "${project.projectDir}/src/**/*.kt"
+apply from: "gradle/gradle-versions.gradle"
+
+subprojects {
+
+    apply from: "$rootDir/gradle/ktlint.gradle"
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
     }
 }
 

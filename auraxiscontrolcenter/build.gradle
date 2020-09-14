@@ -4,56 +4,19 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$globalKotlinVersion"
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+        classpath packages.AndroidXNavigationSafeArgsGradle
     }
-}
-
-repositories {
-    google()
-    jcenter()
 }
 
 apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
-apply plugin: "kotlin-kapt"
+apply from: "$rootDir/gradle/app.gradle"
 
 android {
-    buildToolsVersion globalAndroidBuildToolsVersion
-    compileSdkVersion globalCompileSdkVersion
     defaultConfig {
         applicationId "com.cesarandres.ps2link"
-        minSdkVersion globalMinSdkVersion
-        targetSdkVersion globalTargetSdkVersion
         versionName "5.4.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        stage {
-            initWith release
-            applicationIdSuffix ".stage"
-            matchingFallbacks = ['release']
-        }
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility globalJavaCompatibility
-        targetCompatibility globalJavaCompatibility
-    }
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions {
-            jvmTarget = globalJavaCompatibility
-        }
     }
 }
 

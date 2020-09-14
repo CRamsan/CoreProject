@@ -5,8 +5,8 @@ plugins {
     id("org.openjfx.javafxplugin") version "0.0.9"
 }
 
-sourceCompatibility = globalJavaCompatibility
-targetCompatibility = globalJavaCompatibility
+sourceCompatibility = versions_tools.JavaCompatibility
+targetCompatibility = versions_tools.JavaCompatibility
 
 dependencies {
     implementation packages.KotlinReflect
@@ -38,7 +38,7 @@ compileKotlin {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
-        jvmTarget = globalJavaCompatibility
+        jvmTarget = versions_tools.JavaCompatibility
     }
 }
 

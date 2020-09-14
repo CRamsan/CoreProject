@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-sourceCompatibility = globalJavaCompatibility
+sourceCompatibility = versions_tools.JavaCompatibility
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "com.cramsan.awsgame.desktop.DesktopLauncher"

@@ -16,6 +16,7 @@ def versions_packages = [
     AndroidXJUnit : "1.1.2",
     AndroidXLifecycle : "2.2.0",
     AndroidXNavigation : "2.3.0",
+    AndroidXSafeArgs : "2.3.0",
     AndroidXPaging : "2.1.2",
     AndroidXPreferences : "1.1.1",
     AndroidXRecyclerView : "1.1.0",
@@ -61,6 +62,7 @@ def versions_packages = [
     Volley : "1.1.1",
 ]
 def packages = [
+        AndroidBuildGradle : "com.android.tools.build:gradle:$versions_packages.AndroidGradlePlugin",
         AndroidMaterial : "com.google.android.material:material:$versions_packages.AndroidMaterial",
         AndroidxActivityKtx : "androidx.activity:activity-ktx:$versions_packages.AndroidxActivityKtx",
         AndroidXAppCompat : "androidx.appcompat:appcompat:$versions_packages.AndroidXAppCompat",
@@ -71,6 +73,7 @@ def packages = [
         AndroidXLifecycleViewModelKtx : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions_packages.AndroidXLifecycle",
         AndroidXNavigationFragmentKtx : "androidx.navigation:navigation-fragment-ktx:$versions_packages.AndroidXNavigation",
         AndroidXNavigationTesting : "androidx.navigation:navigation-testing:$versions_packages.AndroidXNavigation",
+        AndroidXNavigationSafeArgsGradle : "androidx.navigation:navigation-safe-args-gradle-plugin:$versions_packages.AndroidXSafeArgs",
         AndroidXNavigationUIKtx : "androidx.navigation:navigation-ui-ktx:$versions_packages.AndroidXNavigation",
         AndroidXPagingRuntimeKtx : "androidx.paging:paging-runtime-ktx:$versions_packages.AndroidXPaging",
         AndroidXPreferences : "androidx.preference:preference:$versions_packages.AndroidXPreferences",
@@ -112,6 +115,7 @@ def packages = [
         JUnit : "junit:junit:$versions_packages.JUnit",
         Kodein : "org.kodein.di:kodein-di:$versions_packages.Kodein",
         KodeinAndroid : "org.kodein.di:kodein-di-framework-android-x:$versions_packages.Kodein",
+        KotlinGradle : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions_packages.Kotlin",
         KotlinReflect : "org.jetbrains.kotlin:kotlin-reflect:$versions_packages.Kotlin",
         KotlinStdCommon : "org.jetbrains.kotlin:kotlin-stdlib-common:$versions_packages.Kotlin",
         KotlinStdJdk8 : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions_packages.Kotlin",

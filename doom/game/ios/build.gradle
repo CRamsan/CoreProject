@@ -12,7 +12,7 @@ apply plugin: "robovm"
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-sourceCompatibility = globalJavaCompatibility
+sourceCompatibility = versions_tools.JavaCompatibility
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 dependencies {

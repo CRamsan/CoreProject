@@ -4,7 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-sourceCompatibility = globalJavaCompatibility
+sourceCompatibility = versions_tools.JavaCompatibility
 
 dependencies {
     implementation project(":framework")
@@ -33,7 +33,7 @@ compileKotlin {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
-        jvmTarget = globalJavaCompatibility
+        jvmTarget = versions_tools.JavaCompatibility
     }
 }
 

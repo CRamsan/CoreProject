@@ -5,15 +5,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$globalKotlinVersion"
-        classpath "com.squareup.sqldelight:gradle-plugin:$globalSqlDelightVersion"
+        classpath "com.android.tools.build:gradle:$versions.AndroidGradlePlugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.Kotlin"
+        classpath "com.squareup.sqldelight:gradle-plugin:$versions.SqlDelight"
     }
 }
 
 repositories {
-    google()
-    jcenter()
     maven {
         url "https://kotlin.bintray.com/kotlinx/"
     }
@@ -31,18 +29,18 @@ sqldelight {
 }
 
 android {
-    buildToolsVersion globalAndroidBuildToolsVersion
-    compileSdkVersion globalCompileSdkVersion
+    buildToolsVersion versions_tools.AndroidBuildToolsVersion
+    compileSdkVersion versions_tools.CompileSdkVersion
     defaultConfig {
-        minSdkVersion globalMinSdkVersion
-        targetSdkVersion globalTargetSdkVersion
+        minSdkVersion versions_tools.MinSdkVersion
+        targetSdkVersion versions_tools.TargetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility globalJavaCompatibility
-        targetCompatibility globalJavaCompatibility
+        sourceCompatibility versions_tools.JavaCompatibility
+        targetCompatibility versions_tools.JavaCompatibility
     }
     testOptions {
         unitTests {
@@ -72,7 +70,7 @@ kotlin {
     android("android") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = globalJavaCompatibility
+                jvmTarget = versions_tools.JavaCompatibility
             }
         }
     }
@@ -80,7 +78,7 @@ kotlin {
     jvm("jvm") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = globalJavaCompatibility
+                jvmTarget = versions_tools.JavaCompatibility
             }
         }
     }

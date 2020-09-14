@@ -2,71 +2,22 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$globalAndroidGradlePluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$globalKotlinVersion"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$globalAndroidXNavigationVersion"
-    }
-}
-
-repositories {
-    google()
-    jcenter()
-    maven {
-        url "https://kotlin.bintray.com/kotlinx/"
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+        classpath packages.AndroidXNavigationSafeArgsGradle
     }
 }
 
 apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-kapt"
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply from: "$rootDir/gradle/app.gradle"
 
 android {
-    buildToolsVersion globalAndroidBuildToolsVersion
-    compileSdkVersion globalCompileSdkVersion
     defaultConfig {
         applicationId "com.cramsan.petproject"
-        minSdkVersion globalMinSdkVersion
-        targetSdkVersion globalTargetSdkVersion
         versionName "0.12"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-		stage {
-            initWith release
-            applicationIdSuffix ".stage"
-            matchingFallbacks = ['release']
-        }
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
-        }
-    }
-
-    buildFeatures {
-        dataBinding true
-    }
-
-    compileOptions {
-        sourceCompatibility globalJavaCompatibility
-        targetCompatibility globalJavaCompatibility
-    }
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions {
-            jvmTarget = globalJavaCompatibility
-        }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/*'
     }
 }
 

@@ -9,8 +9,8 @@ plugins {
 
 group = 'com.cramsan.petproject.webservice'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = globalJavaCompatibility
-targetCompatibility = globalJavaCompatibility
+sourceCompatibility = versions_tools.JavaCompatibility
+targetCompatibility = versions_tools.JavaCompatibility
 
 repositories {
     maven {
@@ -41,7 +41,7 @@ bootWar {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         freeCompilerArgs = ["-Xjsr305=strict"]
-        jvmTarget = globalJavaCompatibility
+        jvmTarget = versions_tools.JavaCompatibility
     }
 }
 

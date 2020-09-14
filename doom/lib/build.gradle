@@ -9,7 +9,7 @@ kotlin {
     jvm("jvm") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = globalJavaCompatibility
+                jvmTarget = versions_tools.JavaCompatibility
             }
         }
     }

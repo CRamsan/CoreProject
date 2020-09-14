@@ -11,8 +11,8 @@ repositories {
 
 group = 'com.cramsan.petproject.azurefunction'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = globalJavaCompatibility
-targetCompatibility = globalJavaCompatibility
+sourceCompatibility = versions_tools.JavaCompatibility
+targetCompatibility = versions_tools.JavaCompatibility
 
 dependencies {
     implementation project(":petproject:appcore")
@@ -30,7 +30,7 @@ dependencies {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         freeCompilerArgs = ["-Xjsr305=strict"]
-        jvmTarget = globalJavaCompatibility
+        jvmTarget = versions_tools.JavaCompatibility
     }
 }
 

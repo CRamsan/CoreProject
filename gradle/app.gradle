@@ -1,0 +1,64 @@
+buildscript {
+    apply from: "$rootDir/gradle/versions.gradle"
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+}
+
+repositories {
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
+}
+
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    buildToolsVersion versions_tools.AndroidBuildToolsVersion
+    compileSdkVersion versions_tools.CompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion versions_tools.MinSdkVersion
+        targetSdkVersion versions_tools.TargetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+		stage {
+            initWith release
+            applicationIdSuffix ".stage"
+            matchingFallbacks = ['release']
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility versions_tools.JavaCompatibility
+        targetCompatibility versions_tools.JavaCompatibility
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
+
+    kotlinOptions {
+        jvmTarget = versions_tools.JavaCompatibility
+    }
+}
