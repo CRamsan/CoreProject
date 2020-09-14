@@ -44,7 +44,7 @@ def versions_packages = [
     JacksonDatabinding : "2.11.2",
     JUnit : "4.13",
     Kodein : "7.0.0",
-    Kotlin : "1.4.0",
+    Kotlin : "1.4.10",
     KotlinGradle: "1.4.10",
     KotlinxDatetime : "0.1.0",
     KtlintVerion : "0.38.1",
