@@ -4,15 +4,16 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$versions.AndroidGradlePlugin"
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+        classpath packages.AndroidXNavigationSafeArgsGradle
     }
 }
 
 apply plugin: "com.android.application"
+apply from: "$rootDir/gradle/app.gradle"
 
 android {
-    buildToolsVersion versions_tools.AndroidBuildToolsVersion
-    compileSdkVersion versions_tools.CompileSdkVersion
     ndkVersion = "21.3.6528147"
  
     sourceSets {
@@ -36,20 +37,8 @@ android {
     }
     defaultConfig {
         applicationId "com.cramsan.awsgame"
-        minSdkVersion versions_tools.MinSdkVersion
-        targetSdkVersion versions_tools.TargetSdkVersion
         versionCode 1
         versionName "1.0"
-    }
-    compileOptions {
-        sourceCompatibility versions_tools.JavaCompatibility
-        targetCompatibility versions_tools.JavaCompatibility
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 }
 

@@ -1,6 +1,6 @@
-//Define the version variables to be used across the entire project
 buildscript {
 
+    //Define the version variables to be used across the entire project
     apply from: "gradle/versions.gradle"
 
     repositories {
