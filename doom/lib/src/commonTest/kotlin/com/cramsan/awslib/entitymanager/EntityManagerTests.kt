@@ -1,5 +1,6 @@
 package com.cramsan.awslib.entitymanager
 
+import com.cramsan.awslib.ai.`interface`.AIRepo
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.ItemInterface
@@ -20,9 +21,6 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import io.mockk.mockk
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.singleton
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -37,8 +35,8 @@ class EntityManagerTests {
 
     private lateinit var map: GameMap
     private lateinit var entityManager: EntityManager
-
-    lateinit var kodein: DI
+    private lateinit var log: EventLoggerInterface
+    private lateinit var aiRepo: AIRepo
 
     companion object {
 
@@ -55,16 +53,10 @@ class EntityManagerTests {
 
     @BeforeTest
     fun prepareTest() {
-        val log = mockk<EventLoggerInterface>(relaxed = true)
-        val assert = mockk<AssertUtilInterface>(relaxed = true)
-        val halt = mockk<HaltUtilInterface>(relaxed = true)
-        kodein = DI {
-            bind() from singleton { log }
-            bind() from singleton { assert }
-            bind() from singleton { halt }
-        }
+        log = mockk<EventLoggerInterface>(relaxed = true)
+        aiRepo = mockk<AIRepo>()
         map = GameMap(MapGenerator.createMap100x100())
-        entityManager = EntityManager(map, emptyList(), emptyList(), emptyList(), null, kodein)
+        entityManager = EntityManager(map, emptyList(), emptyList(), emptyList(), null, log, aiRepo)
     }
 
     /**
@@ -325,10 +317,10 @@ class EntityManagerTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, log, aiRepo)
         val player = sceneConfig.player
 
-        val scene = Scene(entityManager, sceneConfig, kodein)
+        val scene = Scene(entityManager, sceneConfig, log)
         scene.loadScene()
 
         scene.runTurn(TurnAction(TurnActionType.MOVE, Direction.SOUTH))

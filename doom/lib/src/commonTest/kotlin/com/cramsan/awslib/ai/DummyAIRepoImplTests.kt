@@ -13,9 +13,6 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import io.mockk.mockk
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.singleton
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,13 +29,7 @@ class DummyAIRepoImplTests {
     @BeforeTest
     fun prepareTest() {
         val log = mockk<EventLoggerInterface>(relaxed = true)
-        val assert = mockk<AssertUtilInterface>(relaxed = true)
-        val halt = mockk<HaltUtilInterface>(relaxed = true)
-        val kodein = DI {
-            bind() from singleton { log }
-            bind() from singleton { assert }
-            bind() from singleton { halt }
-        }
+        dummyAIRepoImpl = DummyAIRepoImpl(log)
 
         map = GameMap(MapGenerator.createMapWithWalls())
         val sceneConfig = scene {
@@ -55,10 +46,10 @@ class DummyAIRepoImplTests {
             }
         }
         assertNotNull(sceneConfig)
-        entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
+        entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, log, dummyAIRepoImpl)
         enemy = sceneConfig.characterList.first()
         player = sceneConfig.player
-        dummyAIRepoImpl = DummyAIRepoImpl(kodein)
+        dummyAIRepoImpl = DummyAIRepoImpl(log)
         entityManager.register(enemy)
         entityManager.register(player)
     }

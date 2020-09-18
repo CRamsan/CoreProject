@@ -15,17 +15,13 @@ import com.cramsan.awslib.map.GridPositionableInterface
 import com.cramsan.awslib.utils.constants.GameEntityRange
 import com.cramsan.awslib.utils.pathfinding.AStarAlgorithm
 import com.cramsan.framework.logging.EventLoggerInterface
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.instance
 import kotlin.math.pow
 
 /**
  * Simple implementation of [AIRepo]
  */
-class DummyAIRepoImpl(override val di: DI) : AIRepo, DIAware {
+class DummyAIRepoImpl(private val log: EventLoggerInterface) : AIRepo {
 
-    private val log: EventLoggerInterface by instance()
     private val tag = "DummyAIRepoImpl"
 
     override fun getNextTurnAction(character: CharacterInterface, entityManager: EntityManager, map: GameMap): TurnActionInterface {

@@ -10,7 +10,6 @@ dependencies {
     implementation project(":framework")
     implementation project(":doom:lib")
     implementation packages.CoroutinesSwing
-    implementation packages.Kodein
 }
 
 jar {

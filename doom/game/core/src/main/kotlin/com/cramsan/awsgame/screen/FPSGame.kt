@@ -29,10 +29,7 @@ import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.instance
-import org.kodein.di.singleton
+import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 
 /**
  * This code is based on the raycaster demo from https://github.com/walle/raycaster
@@ -112,14 +109,13 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
             }
         }
 
-        val kodein = DI {
-            bind() from singleton { EventLogger(Severity.INFO, null, LoggerJVM()) }
-            bind() from singleton { HaltUtil(HaltUtilJVM()) }
-            bind() from singleton { AssertUtil(true, instance(), instance()) }
-        }
+        val logger = EventLogger(Severity.INFO, null, LoggerJVM())
+        // val haltUtil = HaltUtil(HaltUtilJVM())
+        // val assert = AssertUtil(true, logger, haltUtil)
+        val aiRepo = DummyAIRepoImpl(logger)
 
-        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, sceneConfig.itemList, this, kodein)
-        scene = Scene(entityManager, sceneConfig, kodein)
+        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, sceneConfig.itemList, this, logger, aiRepo)
+        scene = Scene(entityManager, sceneConfig, logger)
 
         this.player = Player(sceneConfig.player)
         scene!!.loadScene()

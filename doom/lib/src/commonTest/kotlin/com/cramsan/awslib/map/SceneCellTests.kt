@@ -1,5 +1,6 @@
 package com.cramsan.awslib.map
 
+import com.cramsan.awslib.ai.`interface`.AIRepo
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
@@ -12,9 +13,6 @@ import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import io.mockk.mockk
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.singleton
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,18 +20,17 @@ import kotlin.test.assertNotNull
 
 class SceneCellTests {
 
-    lateinit var kodein: DI
+    private lateinit var log: EventLoggerInterface
+    private lateinit var assert: AssertUtilInterface
+    private lateinit var halt: HaltUtilInterface
+    private lateinit var aiRepo: AIRepo
 
     @BeforeTest
     fun prepareTest() {
-        val log = mockk<EventLoggerInterface>(relaxed = true)
-        val assert = mockk<AssertUtilInterface>(relaxed = true)
-        val halt = mockk<HaltUtilInterface>(relaxed = true)
-        kodein = DI {
-            bind() from singleton { log }
-            bind() from singleton { assert }
-            bind() from singleton { halt }
-        }
+        log = mockk(relaxed = true)
+        assert = mockk(relaxed = true)
+        halt = mockk(relaxed = true)
+        aiRepo = mockk()
     }
 
     /**
@@ -50,7 +47,7 @@ class SceneCellTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, log, aiRepo)
         val player = sceneConfig.player
 
         val actionListSouth = Array(20) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }
@@ -58,7 +55,7 @@ class SceneCellTests {
         val actionListWest = Array(20) { TurnAction(TurnActionType.MOVE, Direction.WEST) }
         val actionListEast = Array(20) { TurnAction(TurnActionType.MOVE, Direction.EAST) }
 
-        val scene = Scene(entityManager, sceneConfig, kodein)
+        val scene = Scene(entityManager, sceneConfig, log)
         scene.loadScene()
 
         actionListSouth.forEach {
@@ -101,7 +98,7 @@ class SceneCellTests {
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, kodein)
+        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, log, aiRepo)
         val player = sceneConfig.player
 
         val actionListSouth = Array(15) { TurnAction(TurnActionType.MOVE, Direction.SOUTH) }
@@ -109,7 +106,7 @@ class SceneCellTests {
         val actionListWest = Array(7) { TurnAction(TurnActionType.MOVE, Direction.WEST) }
         val actionListEast = Array(7) { TurnAction(TurnActionType.MOVE, Direction.EAST) }
 
-        val scene = Scene(entityManager, sceneConfig, kodein)
+        val scene = Scene(entityManager, sceneConfig, log)
         scene.loadScene()
 
         actionListSouth.forEach {

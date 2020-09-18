@@ -3,17 +3,12 @@ package com.cramsan.awslib.scene
 import com.cramsan.awslib.entitymanager.TurnActionInterface
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.framework.logging.EventLoggerInterface
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.instance
 
 class Scene(
     private val entityManager: EntityManager,
     private val sceneConfig: SceneConfig,
-    override val di: DI
-) : DIAware {
-
-    private val log: EventLoggerInterface by instance()
+    private val log: EventLoggerInterface
+) {
 
     private val mainPlayer = sceneConfig.player
     private var callback: SceneEventsCallback? = null

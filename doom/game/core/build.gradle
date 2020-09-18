@@ -27,7 +27,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 dependencies {
     implementation packages.Gdx
-    implementation packages.Kodein
     implementation packages.KotlinStdJdk8
     implementation packages.CoroutinesCore
 

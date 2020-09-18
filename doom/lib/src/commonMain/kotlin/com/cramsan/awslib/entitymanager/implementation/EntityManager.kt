@@ -1,7 +1,6 @@
 package com.cramsan.awslib.entitymanager.implementation
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
-import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
@@ -31,9 +30,6 @@ import com.cramsan.awslib.scene.SceneEventsCallback
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.framework.logging.EventLoggerInterface
 import kotlinx.coroutines.channels.Channel
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.instance
 
 class EntityManager(
     private val map: GameMap,
@@ -41,11 +37,9 @@ class EntityManager(
     private val eventList: List<BaseEvent>,
     private val itemList: List<ItemInterface>,
     private var eventListener: EntityManagerEventListener?,
-    override val di: DI,
-    private val aiRepo: AIRepo = DummyAIRepoImpl(di)
-) : EntityManagerInterface, EntityManagerInteractionReceiver, DIAware {
-
-    private val log: EventLoggerInterface by instance()
+    private val log: EventLoggerInterface,
+    private val aiRepo: AIRepo
+) : EntityManagerInterface, EntityManagerInteractionReceiver {
 
     val entityTriggerMap: HashMap<Int, CharacterTrigger> = HashMap()
 
