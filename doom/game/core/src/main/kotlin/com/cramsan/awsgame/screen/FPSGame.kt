@@ -12,6 +12,7 @@ import com.cramsan.awsgame.renderer.Camera
 import com.cramsan.awsgame.renderer.Map
 import com.cramsan.awsgame.renderer.Player
 import com.cramsan.awsgame.subsystems.ui.UIToolKit
+import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
@@ -21,15 +22,11 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.scene.Scene
-import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.halt.implementation.HaltUtil
-import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 
 /**
  * This code is based on the raycaster demo from https://github.com/walle/raycaster
