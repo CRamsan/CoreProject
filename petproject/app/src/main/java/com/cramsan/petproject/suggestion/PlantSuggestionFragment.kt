@@ -8,7 +8,9 @@ import androidx.navigation.fragment.findNavController
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseDialogFragment
 import com.cramsan.petproject.databinding.FragmentPlantSuggestionBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PlantSuggestionFragment : BaseDialogFragment<PlantSuggestionViewModel, FragmentPlantSuggestionBinding>() {
 
     override val contentViewLayout: Int

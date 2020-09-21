@@ -9,26 +9,21 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import io.mockk.mockk
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.instance
-import org.kodein.di.newInstance
-import org.kodein.di.provider
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @Suppress("MagicNumber")
 internal class ModelStorageCommonTest {
 
-    private val di = DI {
-        bind<EventLoggerInterface>() with provider { mockk<EventLogger>(relaxUnitFun = true) }
-        bind<ThreadUtilInterface>() with provider { mockk<ThreadUtil>(relaxUnitFun = true) }
-    }
+    private lateinit var log: EventLoggerInterface
+    private lateinit var threadUtil: ThreadUtilInterface
 
     private lateinit var modelStorage: ModelStorageInterface
 
     fun setUp(platformProvider: ModelStoragePlatformProvider) {
-        val newModelStorage by di.newInstance { ModelStorage(platformProvider.provide(), instance(), instance()) }
+        log = mockk<EventLogger>(relaxUnitFun = true)
+        threadUtil = mockk<ThreadUtil>(relaxUnitFun = true)
+        val newModelStorage = ModelStorage(platformProvider.provide(), log, threadUtil)
         modelStorage = newModelStorage
     }
 

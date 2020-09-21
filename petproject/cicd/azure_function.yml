@@ -15,6 +15,7 @@ trigger:
     - build.gradle
     - gradle.properties
     - settings.gradle
+    - gradle/*
 
 pool:
   vmImage: 'ubuntu-latest'

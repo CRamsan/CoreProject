@@ -2,17 +2,28 @@ package com.cramsan.petproject.debugmenu
 
 import android.app.Activity
 import android.app.Application
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.instance
 
-class DebugMenuViewModel(application: Application) : BaseViewModel(application) {
+class DebugMenuViewModel @ViewModelInject constructor(
+    application: Application,
+    eventLogger: EventLoggerInterface,
+    metricsClient: MetricsInterface,
+    threadUtil: ThreadUtilInterface,
+    val modelProvider: ModelProviderInterface,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : BaseViewModel(application, eventLogger, metricsClient, threadUtil) {
 
-    private val modelProvider: ModelProviderInterface by instance()
     override val logTag: String
         get() = "DebugMenuViewModel"
 

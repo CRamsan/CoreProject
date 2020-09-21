@@ -1,5 +1,6 @@
 package com.cramsan.awslib
 
+import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
@@ -12,10 +13,6 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import kotlinx.coroutines.runBlocking
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.instance
-import org.kodein.di.singleton
 import java.awt.EventQueue
 
 class AWTRunner {
@@ -92,14 +89,13 @@ class AWTRunner {
                 }
             } ?: return
 
-            val kodein = DI {
-                bind() from singleton { EventLogger(Severity.VERBOSE, null, LoggerJVM()) }
-                bind() from singleton { HaltUtil(HaltUtilJVM()) }
-                bind() from singleton { AssertUtil(true, instance(), instance()) }
-            }
+            val eventLogger = EventLogger(Severity.VERBOSE, null, LoggerJVM())
+            val haltUtil = HaltUtil(HaltUtilJVM())
+            val assertUtil = AssertUtil(true, eventLogger, haltUtil)
+            val aiRepo = DummyAIRepoImpl(eventLogger)
 
-            val renderer = AWTRenderer(kodein)
-            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, renderer, kodein)
+            val renderer = AWTRenderer(eventLogger, haltUtil, assertUtil)
+            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, renderer, eventLogger, aiRepo)
 
             runBlocking {
                 renderer.startScene(entityManager, sceneConfig, map)

@@ -2,16 +2,28 @@ package com.cramsan.petproject.feedback
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseViewModel
 import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PlantFeedbackViewModel(application: Application) : BaseViewModel(application) {
+class PlantFeedbackViewModel @ViewModelInject constructor(
+    application: Application,
+    eventLogger: EventLoggerInterface,
+    metricsClient: MetricsInterface,
+    threadUtil: ThreadUtilInterface,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : BaseViewModel(application, eventLogger, metricsClient, threadUtil) {
 
     override val logTag: String
         get() = "PlantFeedbackViewModel"
@@ -37,12 +49,12 @@ class PlantFeedbackViewModel(application: Application) : BaseViewModel(applicati
         eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.value?.name} - " +
-                "PlantId:${plantId.value} - " +
-                "Photo: ${photo.value} - " +
-                "ScientifiName:${scientificName.value} - " +
-                "Name:${name.value} - " +
-                "Link:${link.value} - " +
-                "Text:${text.value}"
+                    "PlantId:${plantId.value} - " +
+                    "Photo: ${photo.value} - " +
+                    "ScientifiName:${scientificName.value} - " +
+                    "Name:${name.value} - " +
+                    "Link:${link.value} - " +
+                    "Text:${text.value}"
             metricsClient.log("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = CompletedEvent(true)

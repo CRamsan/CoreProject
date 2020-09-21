@@ -13,19 +13,15 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import org.kodein.di.DIAware
-import org.kodein.di.android.di
-import org.kodein.di.instance
+import javax.inject.Inject
 
 class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentAdapterListener?,
     private val animalType: AnimalType,
+    private val eventLogger: EventLoggerInterface,
     context: Context
 ) :
-    RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>(), DIAware {
-
-    override val di by di(context)
-    private val eventLogger: EventLoggerInterface by instance()
+    RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
 
     private var mValues: List<PresentablePlant> = listOf()
     private val mOnClickListener: View.OnClickListener

@@ -1,24 +1,33 @@
 package com.cramsan.petproject.download
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.kodein.di.instance
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import javax.inject.Inject
 
-class DownloadCatalogViewModel(application: Application) :
-    BaseViewModel(application),
+class DownloadCatalogViewModel @ViewModelInject constructor(
+    application: Application,
+    eventLogger: EventLoggerInterface,
+    metricsClient: MetricsInterface,
+    threadUtil: ThreadUtilInterface,
+    val modelProvider: ModelProviderInterface,
+    val IODispatcher: CoroutineDispatcher
+) :
+    BaseViewModel(application, eventLogger, metricsClient, threadUtil),
     ModelProviderEventListenerInterface {
 
-    private val modelProvider: ModelProviderInterface by instance()
     override val logTag: String
         get() = "DownloadCatalogViewModel"
 
@@ -51,17 +60,33 @@ class DownloadCatalogViewModel(application: Application) :
             return
         }
         mutableIsDownloadComplete.value = false
-        GlobalScope.launch {
-            downloadCatalogOnBackground()
+        viewModelScope.launch {
+            if (checkIfCatalogIsAvailable()) {
+                dispatchDownloadCatalogOnBackground()
+            } else {
+                downloadCatalogOnBackground()
+            }
         }
     }
 
-    private suspend fun downloadCatalogOnBackground() = withContext(Dispatchers.IO) {
+    private suspend fun checkIfCatalogIsAvailable(): Boolean = withContext(IODispatcher) {
+        return@withContext modelProvider.getPlantsWithToxicity(AnimalType.CAT, "en").isNotEmpty()
+    }
+
+    private suspend fun dispatchDownloadCatalogOnBackground() {
+        mutableIsDownloadComplete.postValue(true)
         val unixTime = System.currentTimeMillis() / 1000L
-        modelProvider.downloadCatalog(unixTime)
-        viewModelScope.launch {
-            mutableIsDownloadComplete.value = true
+        GlobalScope.launch(IODispatcher) {
+            modelProvider.downloadCatalog(unixTime)
         }
+    }
+
+    private suspend fun downloadCatalogOnBackground() = withContext(IODispatcher) {
+        val unixTime = System.currentTimeMillis() / 1000L
+        GlobalScope.launch {
+            modelProvider.downloadCatalog(unixTime)
+        }.join()
+        mutableIsDownloadComplete.postValue(true)
     }
 
     override fun onCatalogUpdate(isReady: Boolean) {

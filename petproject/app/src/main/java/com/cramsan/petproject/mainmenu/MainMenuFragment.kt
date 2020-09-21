@@ -21,7 +21,9 @@ import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentMainMenuBinding
 import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBinding>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val logTag: String
@@ -95,7 +97,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
             }
         )
         layoutManager = LinearLayoutManager(context)
-        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())
+        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, eventLogger, requireContext())
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsAdapter
     }

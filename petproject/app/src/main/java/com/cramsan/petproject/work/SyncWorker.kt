@@ -8,19 +8,19 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.coroutineScope
-import org.kodein.di.DIAware
-import org.kodein.di.android.di
-import org.kodein.di.instance
+import javax.inject.Inject
 
 class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
-    CoroutineWorker(appContext, workerParams),
-    DIAware {
+    CoroutineWorker(appContext, workerParams) {
 
-    override val di by di(appContext)
+    @Inject
+    lateinit var modelProvider: ModelProviderInterface
 
-    private val modelProvider: ModelProviderInterface by instance()
-    private val eventLogger: EventLoggerInterface by instance()
-    private val metrics: MetricsInterface by instance()
+    @Inject
+    lateinit var eventLogger: EventLoggerInterface
+
+    @Inject
+    lateinit var metrics: MetricsInterface
 
     override suspend fun doWork(): Result = coroutineScope {
         eventLogger.log(Severity.INFO, "SyncWorker", "Starting to sync")

@@ -8,6 +8,7 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: "dagger.hilt.android.plugin"
 
 android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion
@@ -55,6 +56,7 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+            returnDefaultValues = true
             all {
                 testLogging {
                     events "passed", "skipped", "failed"
@@ -62,4 +64,18 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    kapt packages.HiltCompiler
+    kapt packages.HiltAndroidXCompiler
+
+    implementation packages.Hilt
+    implementation packages.HiltAndroidXViewModel
+
+    testImplementation packages.AndroidXCoreCommon
+    testImplementation packages.AndroidXCoreRuntime
+    testImplementation packages.AndroidXCoreTest
+    testImplementation packages.CoroutinesCore
+    testImplementation packages.CoroutinesTest
 }

@@ -11,16 +11,14 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.google.android.material.appbar.MaterialToolbar
-import org.kodein.di.DIAware
-import org.kodein.di.android.di
-import org.kodein.di.instance
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 abstract class BaseActivity<T : BaseViewModel> :
-    AppCompatActivity(),
-    DIAware {
+    AppCompatActivity() {
 
-    override val di by di()
-    protected val eventLogger: EventLoggerInterface by instance()
+    @Inject
+    protected lateinit var eventLogger: EventLoggerInterface
     protected lateinit var viewModel: T
 
     abstract val contentViewLayout: Int

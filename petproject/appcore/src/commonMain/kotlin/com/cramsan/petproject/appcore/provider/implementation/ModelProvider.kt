@@ -43,6 +43,10 @@ class ModelProvider(
     private val config: ProviderConfig
 ) : ModelProviderInterface {
 
+    init {
+        eventLogger.i("asd", "asddas")
+    }
+
     private val http: HttpClient = HttpClient {
         install(JsonFeature) {
             serializer = defaultSerializer()

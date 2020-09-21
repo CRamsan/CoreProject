@@ -5,19 +5,26 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kodein.di.instance
 
-abstract class CatalogDownloadViewModel(application: Application) :
-    BaseViewModel(application),
+abstract class CatalogDownloadViewModel(
+    application: Application,
+    eventLogger: EventLoggerInterface,
+    metricsClient: MetricsInterface,
+    threadUtil: ThreadUtilInterface,
+    val modelProvider: ModelProviderInterface
+) :
+    BaseViewModel(application, eventLogger, metricsClient, threadUtil),
     ModelProviderEventListenerInterface {
 
-    protected val modelProvider: ModelProviderInterface by instance()
     override val logTag: String
         get() = "CatalogDownloadViewModel"
 

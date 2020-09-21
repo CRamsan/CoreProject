@@ -7,7 +7,9 @@ import androidx.navigation.fragment.findNavController
 import com.cramsan.petproject.R
 import com.cramsan.petproject.base.BaseDialogFragment
 import com.cramsan.petproject.databinding.FragmentDownloadDialogBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DownloadCatalogDialogFragment : BaseDialogFragment<DownloadCatalogViewModel, FragmentDownloadDialogBinding>() {
     override val contentViewLayout: Int
         get() = R.layout.fragment_download_dialog

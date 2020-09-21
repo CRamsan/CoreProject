@@ -1,18 +1,9 @@
 package com.cramsan.petproject.utils
 
-import android.content.Context
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.cramsan.petproject.PetProjectApplication
-import org.kodein.di.DIAware
-import org.kodein.di.instance
-
-object BindingAdapters : DIAware {
-
-    override val di by lazy { PetProjectApplication.getInstance().di }
-
-    val context: Context by instance()
+object BindingAdapters {
 
     @BindingAdapter("app:observableVisibility")
     @JvmStatic

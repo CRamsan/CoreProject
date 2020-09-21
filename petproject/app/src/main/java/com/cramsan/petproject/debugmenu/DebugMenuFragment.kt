@@ -5,14 +5,12 @@ import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.cramsan.petproject.R
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.di
+import dagger.hilt.android.AndroidEntryPoint
 
-class DebugMenuFragment : PreferenceFragmentCompat(), DIAware {
+@AndroidEntryPoint
+class DebugMenuFragment : PreferenceFragmentCompat() {
 
-    override val di by di()
-
-    private lateinit var viewModel: DebugMenuViewModel
+    lateinit var viewModel: DebugMenuViewModel
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val model: DebugMenuViewModel by viewModels()

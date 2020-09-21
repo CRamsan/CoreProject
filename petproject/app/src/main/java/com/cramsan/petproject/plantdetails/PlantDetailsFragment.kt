@@ -20,7 +20,9 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDetailsBinding>() {
 
     private lateinit var animalType: AnimalType

@@ -19,10 +19,12 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantsListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A fragment representing a list of Items.
  */
+@AndroidEntryPoint
 class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBinding>(), PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val contentViewLayout: Int
@@ -68,7 +70,7 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
         val linearLayoutManager = LinearLayoutManager(context)
         layoutManager = linearLayoutManager
-        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
+        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType, eventLogger, requireContext())
         plantsAdapter = plantsRecyclerAdapter
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsRecyclerAdapter

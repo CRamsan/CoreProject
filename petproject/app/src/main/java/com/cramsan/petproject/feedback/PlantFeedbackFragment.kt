@@ -10,7 +10,9 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.BaseDialogFragment
 import com.cramsan.petproject.databinding.FragmentPlantFeedbackBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PlantFeedbackFragment : BaseDialogFragment<PlantFeedbackViewModel, FragmentPlantFeedbackBinding>() {
 
     private lateinit var animalType: AnimalType

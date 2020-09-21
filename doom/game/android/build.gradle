@@ -7,6 +7,7 @@ buildscript {
         classpath packages.AndroidBuildGradle
         classpath packages.KotlinGradle
         classpath packages.AndroidXNavigationSafeArgsGradle
+        classpath packages.HiltGradle
     }
 }
 

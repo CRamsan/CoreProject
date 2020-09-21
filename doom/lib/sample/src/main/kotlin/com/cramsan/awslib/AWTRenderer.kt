@@ -20,10 +20,12 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.scene.SceneEventsCallback
+import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.logging.EventLoggerInterface
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.kodein.di.DI
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -35,7 +37,11 @@ import javax.swing.JOptionPane.showInputDialog
 import javax.swing.JPanel
 import kotlin.system.exitProcess
 
-class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
+class AWTRenderer(
+    val eventLoggerInterface: EventLoggerInterface,
+    val haltUtilInterface: HaltUtilInterface,
+    val assertUtilInterface: AssertUtilInterface
+) : JFrame(), EntityManagerEventListener {
 
     var isGameRunning = true
 
@@ -50,7 +56,7 @@ class AWTRenderer(val di: DI) : JFrame(), EntityManagerEventListener {
         add(RendererCanvas(manager, map))
         val mainPlayer = sceneConfig.player
         val gameLoop = GlobalScope.async {
-            val scene = Scene(manager, sceneConfig, di)
+            val scene = Scene(manager, sceneConfig, eventLoggerInterface)
             scene.setListener(
                 object : SceneEventsCallback {
                     override fun onEntityChanged(entity: GameEntityInterface) {

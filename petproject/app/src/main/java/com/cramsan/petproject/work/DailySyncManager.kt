@@ -5,15 +5,10 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.cramsan.petproject.PetProjectApplication
-import org.kodein.di.DIAware
-import org.kodein.di.instance
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class DailySyncManager : ScheduledSyncManager, DIAware {
-
-    override val di by lazy { PetProjectApplication.getInstance().di }
-    val context: Context by instance()
+class DailySyncManager @Inject constructor(val context: Context) : ScheduledSyncManager {
 
     override fun startWork() {
         val constraints = Constraints.Builder()

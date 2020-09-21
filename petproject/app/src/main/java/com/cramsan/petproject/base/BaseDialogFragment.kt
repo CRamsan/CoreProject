@@ -12,15 +12,15 @@ import androidx.fragment.app.DialogFragment
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.di
-import org.kodein.di.instance
+import javax.inject.Inject
 
-abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : DialogFragment(), DIAware {
+abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : DialogFragment() {
 
-    override val di by di()
-    protected val eventLogger: EventLoggerInterface by instance()
-    protected val metrics: MetricsInterface by instance()
+    @Inject
+    lateinit var eventLogger: EventLoggerInterface
+
+    @Inject
+    lateinit var metrics: MetricsInterface
 
     abstract val logTag: String
     protected lateinit var viewModel: T
