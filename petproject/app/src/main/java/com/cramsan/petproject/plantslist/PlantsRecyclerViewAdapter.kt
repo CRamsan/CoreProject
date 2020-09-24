@@ -13,7 +13,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
-import javax.inject.Inject
 
 class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentAdapterListener?,

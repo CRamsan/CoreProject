@@ -43,10 +43,6 @@ class ModelProvider(
     private val config: ProviderConfig
 ) : ModelProviderInterface {
 
-    init {
-        eventLogger.i("asd", "asddas")
-    }
-
     private val http: HttpClient = HttpClient {
         install(JsonFeature) {
             serializer = defaultSerializer()
@@ -64,7 +60,7 @@ class ModelProvider(
         if (isCatalogReady)
             return true
         val lastSave = preferences.loadLong(LAST_UPDATE)
-        if (lastSave != null && currentTime - lastSave < 86400) {
+        if (lastSave != null && currentTime - lastSave < 259200) {
             isCatalogReady = true
             listeners.forEach {
                 it.onCatalogUpdate(true)
@@ -80,7 +76,7 @@ class ModelProvider(
 
         mutex.withLock {
             val lastSave = preferences.loadLong(LAST_UPDATE)
-            if (!force && lastSave != null && currentTime - lastSave < 86400) {
+            if (!force && lastSave != null && currentTime - lastSave < 259200) {
                 eventLogger.log(Severity.INFO, "ModelProvider", "Using cached data")
                 setIsCatalogReady(true)
                 return false

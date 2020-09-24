@@ -18,7 +18,7 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
 import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.SimpleEvent
-import io.ktor.client.features.*
+import io.ktor.client.features.ServerResponseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

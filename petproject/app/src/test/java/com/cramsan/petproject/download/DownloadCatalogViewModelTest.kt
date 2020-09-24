@@ -29,7 +29,6 @@ class DownloadCatalogViewModelTest {
     lateinit var testDispatcher: CoroutineDispatcher
     lateinit var viewModel: DownloadCatalogViewModel
 
-
     @Rule
     @JvmField
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()

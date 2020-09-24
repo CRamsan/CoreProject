@@ -49,12 +49,12 @@ class PlantFeedbackViewModel @ViewModelInject constructor(
         eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.value?.name} - " +
-                    "PlantId:${plantId.value} - " +
-                    "Photo: ${photo.value} - " +
-                    "ScientifiName:${scientificName.value} - " +
-                    "Name:${name.value} - " +
-                    "Link:${link.value} - " +
-                    "Text:${text.value}"
+                "PlantId:${plantId.value} - " +
+                "Photo: ${photo.value} - " +
+                "ScientifiName:${scientificName.value} - " +
+                "Name:${name.value} - " +
+                "Link:${link.value} - " +
+                "Text:${text.value}"
             metricsClient.log("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = CompletedEvent(true)

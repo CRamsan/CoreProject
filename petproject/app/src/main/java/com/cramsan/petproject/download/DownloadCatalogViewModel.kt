@@ -13,9 +13,10 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
-import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DownloadCatalogViewModel @ViewModelInject constructor(
     application: Application,
@@ -77,7 +78,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
         mutableIsDownloadComplete.postValue(true)
         val unixTime = System.currentTimeMillis() / 1000L
         GlobalScope.launch(IODispatcher) {
-            modelProvider.downloadCatalog(unixTime)
+            modelProvider.downloadCatalog(unixTime, true)
         }
     }
 

@@ -1,7 +1,6 @@
 package com.cramsan.petproject
 
 import android.content.Context
-import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
