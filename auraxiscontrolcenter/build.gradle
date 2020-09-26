@@ -19,6 +19,9 @@ android {
         applicationId "com.cesarandres.ps2link"
         versionName "5.4.0"
     }
+    buildFeatures {
+        dataBinding false
+    }
 }
 
 dependencies {

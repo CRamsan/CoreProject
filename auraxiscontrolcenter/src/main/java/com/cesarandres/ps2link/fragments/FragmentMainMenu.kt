@@ -1,20 +1,13 @@
 package com.cesarandres.ps2link.fragments
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.Dialog
-import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.IBinder
-import android.os.RemoteException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,20 +15,14 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
-import com.android.vending.billing.IInAppBillingService
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
 import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cesarandres.ps2link.module.BitmapWorkerTask
-import org.json.JSONException
-import org.json.JSONObject
-import java.util.ArrayList
 
 /**
  * This fragment is very static, it has all the buttons for most of the main
@@ -132,11 +119,6 @@ class FragmentMainMenu : BaseFragment() {
         }
         buttonDonate.setOnClickListener {
             metrics.log(TAG, "Open Donate")
-            if (mService != null) {
-                val task = DownloadDonationsTask()
-                setCurrentTask(task)
-                task.execute()
-            }
         }
         buttonSettings.setOnClickListener {
             metrics.log(TAG, "Open Settings")
@@ -206,14 +188,12 @@ class FragmentMainMenu : BaseFragment() {
 
         mServiceConn = object : ServiceConnection {
             override fun onServiceDisconnected(name: ComponentName) {
-                mService = null
             }
 
             override fun onServiceConnected(
                 name: ComponentName,
                 service: IBinder
             ) {
-                mService = IInAppBillingService.Stub.asInterface(service)
             }
         }
 
@@ -291,9 +271,6 @@ class FragmentMainMenu : BaseFragment() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        if (mService != null) {
-            activity!!.unbindService(this!!.mServiceConn!!)
-        }
     }
 
     fun promptForPermissions() {
@@ -307,180 +284,7 @@ class FragmentMainMenu : BaseFragment() {
         }
     }
 
-    /**
-     * @author cramsan
-     */
-    private inner class DownloadDonationsTask : AsyncTask<Void, Void, ArrayList<String>>() {
-
-        /* (non-Javadoc)
-         * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
-         */
-        override fun doInBackground(vararg params: Void): ArrayList<String>? {
-            var response = -1
-            val ownedItems: Bundle
-
-            try {
-                ownedItems = mService!!.getPurchases(3, activity!!.packageName, "inapp", null)
-                response = ownedItems.getInt("RESPONSE_CODE")
-            } catch (e1: RemoteException) {
-                e1.printStackTrace()
-                return null
-            }
-
-            if (response == 0) {
-                val purchaseDataList = ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST")
-
-                for (i in purchaseDataList!!.indices) {
-                    val purchaseData = purchaseDataList[i]
-                    try {
-                        val ownedObject: JSONObject
-                        ownedObject = JSONObject(purchaseData)
-                        val token = ownedObject.getString("purchaseToken")
-                        response = mService!!.consumePurchase(3, activity!!.packageName, token)
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                        return null
-                    } catch (e: RemoteException) {
-                        e.printStackTrace()
-                        return null
-                    }
-                }
-            }
-
-            val skuList = ArrayList<String>()
-            skuList.add("item_donation_1")
-            skuList.add("item_donation_2")
-            skuList.add("item_donation_3")
-            skuList.add("item_donation_4")
-            val querySkus = Bundle()
-            querySkus.putStringArrayList("ITEM_ID_LIST", skuList)
-            val skuDetails: Bundle
-            try {
-                skuDetails = mService!!.getSkuDetails(3, activity!!.packageName, "inapp", querySkus)
-                response = skuDetails.getInt("RESPONSE_CODE")
-                return if (response == 0) {
-                    skuDetails.getStringArrayList("DETAILS_LIST")
-                } else {
-                    null
-                }
-            } catch (e: RemoteException) {
-                e.printStackTrace()
-                return null
-            }
-        }
-
-        /* (non-Javadoc)
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-         */
-        override fun onPostExecute(result: ArrayList<String>?) {
-            if (result != null) {
-                if (result.size > 0) {
-                    val newFragment = DonationsDialogFragment()
-                    if (!newFragment.setResponseList(result)) {
-                        Toast.makeText(
-                            activity,
-                            activity!!.resources.getString(R.string.toast_error_server_error),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return
-                    }
-                    val manager = activity!!.supportFragmentManager
-                    if (manager != null) {
-                        newFragment.show(manager, "donations")
-                    } else {
-                        Toast.makeText(
-                            activity,
-                            activity!!.resources.getString(R.string.toast_error_empty_response),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } else {
-                    Toast.makeText(
-                        activity,
-                        activity!!.resources.getString(R.string.toast_error_empty_response),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    activity,
-                    activity!!.resources.getString(R.string.toast_error_response_error),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
-
-    class DonationsDialogFragment : DialogFragment() {
-
-        private var responseList: ArrayList<String>? = null
-        private var displayData: Array<String?>? = null
-
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val builder = AlertDialog.Builder(activity)
-            builder.setTitle(R.string.text_choose_donation)
-                .setItems(
-                    displayData,
-                    DialogInterface.OnClickListener { dialog, index ->
-                        val thisResponse = responseList!![index]
-                        val `object`: JSONObject
-                        try {
-                            `object` = JSONObject(thisResponse)
-                            val sku = `object`.getString("productId")
-                            val buyIntentBundle =
-                                mService!!.getBuyIntent(3, activity!!.packageName, sku, "inapp", "")
-                            val pendingIntent =
-                                buyIntentBundle.getParcelable<PendingIntent>("BUY_INTENT")
-                            activity!!.startIntentSenderForResult(
-                                pendingIntent!!.intentSender,
-                                1001,
-                                Intent(),
-                                Integer.valueOf(0)!!,
-                                Integer.valueOf(0)!!,
-                                Integer.valueOf(0)!!
-                            )
-                            return@OnClickListener
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        } catch (e: RemoteException) {
-                            e.printStackTrace()
-                        } catch (e: SendIntentException) {
-                            e.printStackTrace()
-                        }
-
-                        Toast.makeText(
-                            activity,
-                            activity!!.resources.getString(R.string.toast_error_error_sending),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return@OnClickListener
-                    }
-                )
-            retainInstance = true
-            return builder.create()
-        }
-
-        fun setResponseList(responseList: ArrayList<String>): Boolean {
-            this.displayData = arrayOfNulls(responseList.size)
-            for (i in responseList.indices) {
-                val thisResponse = responseList[i]
-                try {
-                    val `object` = JSONObject(thisResponse)
-                    val sku = `object`.getString("title")
-                    displayData!![i] = sku
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                    return false
-                }
-            }
-            this.responseList = responseList
-            return true
-        }
-    }
-
     companion object {
         const val TAG = "FragmentMainMenu"
-
-        private var mService: IInAppBillingService? = null
     }
 }

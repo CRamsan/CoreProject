@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.9'
+        classpath packages.RoboVMGradle
     }
 }
 
