@@ -5,9 +5,6 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.PetProjectApplication
-import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.appcore.model.PresentablePlant
-import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import io.mockk.coEvery
 import io.mockk.every
@@ -47,30 +44,18 @@ class DownloadCatalogViewModelTest {
 
     @Test
     fun testIsCatalogReadyInitialState() {
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == false)
+        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
         Assert.assertFalse(viewModel.isCatalogReady())
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == false)
+        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
     }
 
     @Test
     fun testIsCatalogReadyOnceDownloaded() {
         every { modelProvider.isCatalogAvailable(any()) } returns true
 
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == false)
+        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
         Assert.assertTrue(viewModel.isCatalogReady())
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == true)
-    }
-
-    @Test
-    fun testDispatchDownloadCatalogOnBackground() {
-        every { modelProvider.isCatalogAvailable(any()) } returns false
-        coEvery { modelProvider.getPlantsWithToxicity(any(), any()) } returns listOf(
-            PresentablePlant(1, "", "", AnimalType.CAT, ToxicityValue.TOXIC)
-        )
-
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == false)
-        viewModel.downloadCatalog()
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == true)
+        Assert.assertEquals(true, viewModel.observableIsDownloadComplete.value)
     }
 
     @Test
@@ -78,8 +63,8 @@ class DownloadCatalogViewModelTest {
         every { modelProvider.isCatalogAvailable(any()) } returns false
         coEvery { modelProvider.getPlantsWithToxicity(any(), any()) } returns emptyList()
 
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == false)
+        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
         viewModel.downloadCatalog()
-        Assert.assertTrue(viewModel.observableIsDownloadComplete.value == true)
+        Assert.assertEquals(true, viewModel.observableIsDownloadComplete.value)
     }
 }

@@ -9,7 +9,6 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.BaseViewModel
@@ -62,23 +61,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
         }
         mutableIsDownloadComplete.value = false
         viewModelScope.launch {
-            if (checkIfCatalogIsAvailable()) {
-                dispatchDownloadCatalogOnBackground()
-            } else {
-                downloadCatalogOnBackground()
-            }
-        }
-    }
-
-    private suspend fun checkIfCatalogIsAvailable(): Boolean = withContext(IODispatcher) {
-        return@withContext modelProvider.getPlantsWithToxicity(AnimalType.CAT, "en").isNotEmpty()
-    }
-
-    private suspend fun dispatchDownloadCatalogOnBackground() {
-        mutableIsDownloadComplete.postValue(true)
-        val unixTime = System.currentTimeMillis() / 1000L
-        GlobalScope.launch(IODispatcher) {
-            modelProvider.downloadCatalog(unixTime, true)
+            downloadCatalogOnBackground()
         }
     }
 
