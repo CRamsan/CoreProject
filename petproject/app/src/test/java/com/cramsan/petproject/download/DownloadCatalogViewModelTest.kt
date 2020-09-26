@@ -1,6 +1,7 @@
 package com.cramsan.petproject.download
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
@@ -9,7 +10,9 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.Assert
 import org.junit.Before
@@ -30,6 +33,9 @@ class DownloadCatalogViewModelTest {
     @JvmField
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
+    lateinit var observer: Observer<Boolean>
+
+    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
         application = mockk(relaxed = true)
@@ -38,8 +44,10 @@ class DownloadCatalogViewModelTest {
         metrics = mockk(relaxed = true)
         thread = mockk(relaxed = true)
         testDispatcher = TestCoroutineDispatcher()
+        observer = mockk(relaxed = true)
 
         viewModel = DownloadCatalogViewModel(application, log, metrics, thread, modelProvider, testDispatcher)
+        viewModel.observableIsDownloadComplete.observeForever(observer)
     }
 
     @Test
@@ -65,6 +73,7 @@ class DownloadCatalogViewModelTest {
 
         Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
         viewModel.downloadCatalog()
+        verify { observer.onChanged(true) }
         Assert.assertEquals(true, viewModel.observableIsDownloadComplete.value)
     }
 }
