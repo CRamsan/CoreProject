@@ -38,11 +38,6 @@ kotlin {
     }
 }
 
-configurations {
-    // https://youtrack.jetbrains.com/issue/KT-27170
-    compileClasspath
-}
-
 tasks.register("release") {
     group = 'build'
     description = 'Run all the steps to build a release artifact'

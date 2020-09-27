@@ -19,8 +19,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility versions_tools.JavaCompatibility
-        targetCompatibility versions_tools.JavaCompatibility
+        sourceCompatibility versions_tools.JavaCompatibilityForAndroid
+        targetCompatibility versions_tools.JavaCompatibilityForAndroid
     }
     testOptions {
         unitTests {
@@ -38,14 +38,14 @@ kotlin {
     android("android") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibilityForKotlin
+                jvmTarget = versions_tools.JavaCompatibilityForAndroid
             }
         }
     }
     jvm("jvm") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibilityForKotlin
+                jvmTarget = versions_tools.JavaCompatibility
             }
         }
     }

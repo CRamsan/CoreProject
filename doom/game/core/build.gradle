@@ -1,29 +1,15 @@
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        google()
+        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath packages.KotlinGradle
     }
 }
 
-apply plugin: "org.jetbrains.kotlin.jvm"
-
-sourceCompatibility = versions_tools.JavaCompatibility
-
-compileKotlin {
-    kotlinOptions {
-        allWarningsAsErrors = true
-    }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = versions_tools.JavaCompatibility
-    }
-}
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
 dependencies {
     implementation packages.Gdx

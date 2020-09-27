@@ -3,10 +3,8 @@ def versions_tools = [
     CompileSdkVersion : 29,
     MinSdkVersion : 22,
     TargetSdkVersion : 29,
-    JavaCompatibility : JavaVersion.VERSION_1_8,
-    // https://kotlinlang.org/docs/reference/using-gradle.html
-    // Allowed values: "1.6", "1.8", "9", "10", "11", "12", "13", "14"
-    JavaCompatibilityForKotlin : "1.8"
+    JavaCompatibility : JavaVersion.VERSION_11,
+    JavaCompatibilityForAndroid : JavaVersion.VERSION_1_8
 ]
 
 
@@ -49,6 +47,7 @@ def versions_packages = [
     HiltAndroidX : "1.0.0-alpha01",
     JacksonDatabinding : "2.11.2",
     JUnit : "4.13",
+    OpenjfxGradle : "0.0.9",
     Kodein : "7.1.0",
     Kotlin : "1.4.10",
     KotlinGradle: "1.4.10",
@@ -129,6 +128,7 @@ def packages = [
         HiltCompiler : "com.google.dagger:hilt-android-compiler:$versions_packages.Hilt",
         HiltGradle : "com.google.dagger:hilt-android-gradle-plugin:$versions_packages.Hilt",
         JacksonDatabinding : "com.fasterxml.jackson.core:jackson-databind:$versions_packages.JacksonDatabinding",
+        OpenjfxGradle : "org.openjfx:javafx-plugin:$versions_packages.OpenjfxGradle",
         JUnit : "junit:junit:$versions_packages.JUnit",
         Kodein : "org.kodein.di:kodein-di:$versions_packages.Kodein",
         KodeinAndroid : "org.kodein.di:kodein-di-framework-android-x:$versions_packages.Kodein",

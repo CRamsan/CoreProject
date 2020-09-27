@@ -1,39 +1,26 @@
-plugins {
-    id 'java'
-    id 'application'
-    id 'org.jetbrains.kotlin.jvm'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath packages.OpenjfxGradle
+    }
 }
 
-sourceCompatibility = versions_tools.JavaCompatibility
+ext.mainClassTarget = "com.cramsan.awslib.AWTRunner"
+
+apply from: "$rootDir/gradle/kotlin-jvm-gui.gradle"
 
 dependencies {
     implementation project(":framework")
     implementation project(":doom:lib")
     implementation packages.CoroutinesSwing
-}
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class' : 'com.cramsan.awslib.AWTRunner'
-        )
-    }
-}
-
-application {
-    mainClassName = 'com.cramsan.awslib.AWTRunner'
-}
-
-compileKotlin {
-    kotlinOptions {
-        allWarningsAsErrors = true
-    }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = versions_tools.JavaCompatibility
-    }
 }
 
 tasks.register("release") {

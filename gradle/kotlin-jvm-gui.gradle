@@ -1,0 +1,38 @@
+apply plugin: "org.openjfx.javafxplugin"
+apply plugin: 'kotlin'
+apply plugin: "application"
+
+dependencies {
+    implementation packages.KotlinStdJdk8
+
+    testImplementation packages.Mockk
+    testImplementation packages.JUnit
+}
+
+javafx {
+    version versions_tools.JavaCompatibility
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class' : mainClassTarget
+        )
+    }
+}
+
+application {
+    mainClassName = mainClassTarget
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

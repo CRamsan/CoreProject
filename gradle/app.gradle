@@ -41,8 +41,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility versions_tools.JavaCompatibility
-        targetCompatibility versions_tools.JavaCompatibility
+        sourceCompatibility versions_tools.JavaCompatibilityForAndroid
+        targetCompatibility versions_tools.JavaCompatibilityForAndroid
     }
 
     packagingOptions {
@@ -50,7 +50,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = versions_tools.JavaCompatibilityForKotlin
+        jvmTarget = versions_tools.JavaCompatibilityForAndroid
     }
 
     testOptions {
