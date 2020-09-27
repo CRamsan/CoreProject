@@ -50,7 +50,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = versions_tools.JavaCompatibility
+        jvmTarget = versions_tools.JavaCompatibilityForKotlin
     }
 
     testOptions {

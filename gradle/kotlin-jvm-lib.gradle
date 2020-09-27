@@ -11,7 +11,7 @@ dependencies {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
+    kotlinOptions.jvmTarget = versions_tools.JavaCompatibilityForKotlin
 }
 
 test {

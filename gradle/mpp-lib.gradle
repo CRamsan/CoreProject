@@ -38,14 +38,14 @@ kotlin {
     android("android") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibility
+                jvmTarget = versions_tools.JavaCompatibilityForKotlin
             }
         }
     }
     jvm("jvm") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibility
+                jvmTarget = versions_tools.JavaCompatibilityForKotlin
             }
         }
     }

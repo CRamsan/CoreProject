@@ -1,9 +1,12 @@
 def versions_tools = [
-    AndroidBuildToolsVersion : "29.0.2",
+    AndroidBuildToolsVersion : "30.0.2",
     CompileSdkVersion : 29,
     MinSdkVersion : 22,
     TargetSdkVersion : 29,
-    JavaCompatibility : JavaVersion.VERSION_1_8
+    JavaCompatibility : JavaVersion.VERSION_1_8,
+    // https://kotlinlang.org/docs/reference/using-gradle.html
+    // Allowed values: "1.6", "1.8", "9", "10", "11", "12", "13", "14"
+    JavaCompatibilityForKotlin : "1.8"
 ]
 
 
