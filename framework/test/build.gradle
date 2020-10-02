@@ -26,14 +26,10 @@ dependencies {
     implementation packages.AndroidXJUnit
     implementation packages.AndroidXJUnitKtx
     implementation packages.AndroidXTest
-    implementation packages.CoroutinesAndroid
-    implementation packages.CoroutinesCore
     implementation packages.CoroutinesTest
     implementation packages.JUnit
     implementation packages.KotlinTest
     implementation packages.KotlinTestJunit
-    implementation packages.Mockk
-    implementation packages.MockkAndroid
 
     testImplementation packages.AndroidXLifecycleViewModelKtx
 }
@@ -42,8 +38,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation packages.KotlinStdCommon
-                implementation packages.CoroutinesCore
                 implementation packages.KotlinTestCommon
                 implementation packages.KotlinTestAnnotationsCommon
             }
@@ -56,7 +50,6 @@ kotlin {
             dependencies {
                 implementation packages.CoroutinesTest
                 implementation packages.JUnit
-                implementation packages.KotlinStdJdk8
                 implementation packages.KotlinTest
                 implementation packages.KotlinTestJunit
             }

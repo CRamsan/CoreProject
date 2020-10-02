@@ -42,21 +42,11 @@ dependencies {
     implementation packages.AndroidMaterial
     implementation packages.Glide
     implementation packages.KtorAndroid
-
-    implementation packages.KotlinStdJdk8
-    implementation packages.CoroutinesCore
-    implementation packages.CoroutinesAndroid
-
     implementation packages.AppCenterSdk
 
     kapt packages.GlideCompiler
 
-    testImplementation packages.JUnit
-    testImplementation packages.Mockk
-    testImplementation packages.AndroidXTest
-    testImplementation packages.AndroidXJUnit
-    testImplementation packages.AndroidXJUnitKtx
-    testImplementation packages.MockkAndroid
+    testImplementation project(":framework:test")
 
     androidTestImplementation packages.AndroidXJUnit
     androidTestImplementation packages.AndroidXJUnitKtx

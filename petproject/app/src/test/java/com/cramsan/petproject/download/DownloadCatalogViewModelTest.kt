@@ -1,9 +1,9 @@
 package com.cramsan.petproject.download
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.test.TestBase
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -14,12 +14,14 @@ import io.mockk.verify
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-class DownloadCatalogViewModelTest {
+@ExperimentalCoroutinesApi
+class DownloadCatalogViewModelTest : TestBase() {
 
     lateinit var application: PetProjectApplication
     lateinit var modelProvider: ModelProviderInterface
@@ -28,10 +30,6 @@ class DownloadCatalogViewModelTest {
     lateinit var thread: ThreadUtilInterface
     lateinit var testDispatcher: CoroutineDispatcher
     lateinit var viewModel: DownloadCatalogViewModel
-
-    @Rule
-    @JvmField
-    var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 
     lateinit var observer: Observer<Boolean>
 
@@ -51,29 +49,29 @@ class DownloadCatalogViewModelTest {
     }
 
     @Test
-    fun testIsCatalogReadyInitialState() {
-        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
-        Assert.assertFalse(viewModel.isCatalogReady())
-        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
+    fun testIsCatalogReadyInitialState() = runBlockingTest {
+        assertEquals(false, viewModel.observableIsDownloadComplete.value)
+        assertFalse(viewModel.isCatalogReady())
+        assertEquals(false, viewModel.observableIsDownloadComplete.value)
     }
 
     @Test
-    fun testIsCatalogReadyOnceDownloaded() {
+    fun testIsCatalogReadyOnceDownloaded() = runBlockingTest {
         every { modelProvider.isCatalogAvailable(any()) } returns true
 
-        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
-        Assert.assertTrue(viewModel.isCatalogReady())
-        Assert.assertEquals(true, viewModel.observableIsDownloadComplete.value)
+        assertEquals(false, viewModel.observableIsDownloadComplete.value)
+        assertTrue(viewModel.isCatalogReady())
+        assertEquals(true, viewModel.observableIsDownloadComplete.value)
     }
 
     @Test
-    fun testDownloadCatalogOnBackground() {
+    fun testDownloadCatalogOnBackground() = runBlockingTest {
         every { modelProvider.isCatalogAvailable(any()) } returns false
         coEvery { modelProvider.getPlantsWithToxicity(any(), any()) } returns emptyList()
 
-        Assert.assertEquals(false, viewModel.observableIsDownloadComplete.value)
+        assertEquals(false, viewModel.observableIsDownloadComplete.value)
         viewModel.downloadCatalog()
         verify { observer.onChanged(true) }
-        Assert.assertEquals(true, viewModel.observableIsDownloadComplete.value)
+        assertEquals(true, viewModel.observableIsDownloadComplete.value)
     }
 }

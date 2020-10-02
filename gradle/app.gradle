@@ -70,14 +70,24 @@ dependencies {
     kapt packages.HiltCompiler
     kapt packages.HiltAndroidXCompiler
 
+    implementation packages.KotlinStdJdk8
+    implementation packages.CoroutinesCore
+    implementation packages.CoroutinesAndroid
     implementation packages.Hilt
     implementation packages.HiltAndroidXViewModel
 
+    testImplementation packages.AndroidXTest
+    testImplementation packages.AndroidXJUnit
+    testImplementation packages.AndroidXJUnitKtx
     testImplementation packages.AndroidXCoreCommon
     testImplementation packages.AndroidXCoreRuntime
     testImplementation packages.AndroidXCoreTest
-    testImplementation packages.CoroutinesCore
     testImplementation packages.CoroutinesTest
+    testImplementation packages.JUnit
+    testImplementation packages.KotlinTest
+    testImplementation packages.KotlinTestJunit
+    testImplementation packages.Mockk
+    testImplementation packages.MockkAndroid
 }
 
 tasks.register("release") {

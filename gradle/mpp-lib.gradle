@@ -2,14 +2,6 @@ apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "kotlin-kapt"
 
-dependencies {
-    testImplementation packages.AndroidXJUnitKtx
-    testImplementation packages.Mockk
-    testImplementation packages.MockkAndroid
-    testImplementation packages.JUnit
-    testImplementation packages.Robolectric
-}
-
 android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion
     compileSdkVersion versions_tools.CompileSdkVersion
@@ -34,6 +26,22 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    implementation packages.KotlinStdJdk8
+    implementation packages.CoroutinesCore
+    implementation packages.CoroutinesAndroid
+
+    testImplementation packages.AndroidXJUnitKtx
+    testImplementation packages.CoroutinesTest
+    testImplementation packages.JUnit
+    testImplementation packages.KotlinTest
+    testImplementation packages.KotlinTestJunit
+    testImplementation packages.Mockk
+    testImplementation packages.MockkAndroid
+
+    testImplementation packages.Robolectric
 }
 
 kotlin {
@@ -70,9 +78,7 @@ kotlin {
             dependencies {
                 implementation packages.KotlinTestCommon
                 implementation packages.KotlinTestAnnotationsCommon
-
                 implementation packages.MockkCommon
-                implementation packages.CoroutinesCore
             }
         }
         jvmMain {
@@ -83,23 +89,18 @@ kotlin {
         }
         jvmTest {
             dependencies {
+                implementation packages.CoroutinesTest
                 implementation packages.KotlinTest
                 implementation packages.KotlinTestJunit
                 implementation packages.Mockk
-                implementation packages.CoroutinesCore
             }
         }
         androidMain {
             dependencies {
-                implementation packages.KotlinStdJdk8
-                implementation packages.CoroutinesAndroid
             }
         }
         androidTest {
             dependencies {
-                implementation packages.KotlinTest
-                implementation packages.KotlinTestJunit
-                implementation packages.CoroutinesAndroid
             }
         }
         iosMain {

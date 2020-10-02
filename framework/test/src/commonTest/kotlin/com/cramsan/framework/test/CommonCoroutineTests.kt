@@ -9,6 +9,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.time.ExperimentalTime
+import kotlin.time.hours
 
 @ExperimentalCoroutinesApi
 class CommonCoroutineTests : TestBase() {
@@ -23,7 +25,7 @@ class CommonCoroutineTests : TestBase() {
     }
 
     @Test
-    fun `Test simple assert`() {
+    fun `Test simple assert`() = runBlockingTest {
         assertTrue(true)
         assertFalse(false)
         assertEquals("word", "word")
@@ -31,8 +33,15 @@ class CommonCoroutineTests : TestBase() {
         assertNotEquals("word", null)
     }
 
+    @ExperimentalTime
     @Test
-    fun `Test for LiveData to be update in suspending function`() = runBlockingTest {
+    fun `Test delays are executed instantly`() = runBlockingTest {
+        // This method should run instantly
+        delay(1.hours)
+    }
+
+    @Test
+    fun `Test for update in suspending function`() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithCoroutine()
@@ -41,7 +50,7 @@ class CommonCoroutineTests : TestBase() {
     }
 
     @Test
-    fun `Test for LiveData to be update in suspending function and blocking wait`() = runBlockingTest {
+    fun `Test for update in suspending function and blocking wait`() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithCoroutineAndBlockingWait()
@@ -50,7 +59,7 @@ class CommonCoroutineTests : TestBase() {
     }
 
     @Test
-    fun `Test for LiveData to be updated with IO dispatch`() = runBlockingTest {
+    fun `Test for updated with IO dispatch`() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithIODispatch()
@@ -60,7 +69,7 @@ class CommonCoroutineTests : TestBase() {
     }
 
     @Test
-    fun `Test for LiveData to be updated with IO dispatch and blocking wait`() = runBlockingTest {
+    fun `Test for updated with IO dispatch and blocking wait`() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithIODispatchAndBlockingWait()
@@ -70,7 +79,7 @@ class CommonCoroutineTests : TestBase() {
     }
 
     @Test
-    fun `Test for LiveData to be update in scope launch`() = runBlockingTest {
+    fun `Test for update in scope launch`() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithScopeLaunch()
@@ -80,7 +89,7 @@ class CommonCoroutineTests : TestBase() {
     }
 
     @Test
-    fun `Test for LiveData to be update in scope launch and blocking wait`() = runBlockingTest {
+    fun `Test for update in scope launch and blocking wait`() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithScopeLaunchAndBlockingWait()
