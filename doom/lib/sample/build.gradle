@@ -23,12 +23,6 @@ dependencies {
     implementation packages.CoroutinesSwing
 }
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
+release {
     dependsOn ':doom:lib:release'
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'test'
 }

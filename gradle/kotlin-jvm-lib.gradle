@@ -16,3 +16,12 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'build'
+    dependsOn 'test'
+}

@@ -56,13 +56,6 @@ dependencies {
     androidTestImplementation packages.AppCenterEspressoTestExt
 }
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
+release {
     dependsOn ':framework:release'
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'test'
-    dependsOn 'assembleAndroidTest'
 }

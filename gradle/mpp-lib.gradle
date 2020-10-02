@@ -14,6 +14,8 @@ android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion
     compileSdkVersion versions_tools.CompileSdkVersion
     defaultConfig {
+        versionCode libraryVersionCode
+        versionName libraryVersionName
         minSdkVersion versions_tools.MinSdkVersion
         targetSdkVersion versions_tools.TargetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -67,7 +69,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation packages.KotlinTestCommon
-                implementation packages.KotlinTestAnnotations
+                implementation packages.KotlinTestAnnotationsCommon
 
                 implementation packages.MockkCommon
                 implementation packages.CoroutinesCore
@@ -117,4 +119,14 @@ tasks {
             events "passed", "skipped", "failed"
         }
     }
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'build'
+    dependsOn 'jvmTest'
+    dependsOn 'test'
 }

@@ -1,0 +1,86 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+    }
+}
+
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+
+android {
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation packages.AndroidXCoreCommon
+    implementation packages.AndroidXCoreRuntime
+    implementation packages.AndroidXCoreTest
+    implementation packages.AndroidXLifecycleLiveDataKtx
+    implementation packages.AndroidXJUnit
+    implementation packages.AndroidXJUnitKtx
+    implementation packages.AndroidXTest
+    implementation packages.CoroutinesAndroid
+    implementation packages.CoroutinesCore
+    implementation packages.CoroutinesTest
+    implementation packages.JUnit
+    implementation packages.KotlinTest
+    implementation packages.KotlinTestJunit
+    implementation packages.Mockk
+    implementation packages.MockkAndroid
+
+    testImplementation packages.AndroidXLifecycleViewModelKtx
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation packages.KotlinStdCommon
+                implementation packages.CoroutinesCore
+                implementation packages.KotlinTestCommon
+                implementation packages.KotlinTestAnnotationsCommon
+            }
+        }
+        commonTest {
+            dependencies {
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation packages.CoroutinesTest
+                implementation packages.JUnit
+                implementation packages.KotlinStdJdk8
+                implementation packages.KotlinTest
+                implementation packages.KotlinTestJunit
+            }
+        }
+        jvmTest {
+            dependencies {
+
+            }
+        }
+        androidMain {
+            dependencies {
+            }
+        }
+        androidTest {
+            dependencies {
+            }
+        }
+        iosMain {
+            dependencies {
+            }
+        }
+        iosTest {
+            dependencies {
+            }
+        }
+    }
+}

@@ -10,6 +10,9 @@ buildscript {
     }
 }
 
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
 /**
@@ -38,12 +41,6 @@ kotlin {
     }
 }
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
+release {
     dependsOn ':framework:release'
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'allTests'
 }

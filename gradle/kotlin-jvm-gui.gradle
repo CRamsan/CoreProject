@@ -1,12 +1,9 @@
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 apply plugin: "org.openjfx.javafxplugin"
-apply plugin: 'kotlin'
 apply plugin: "application"
 
 dependencies {
-    implementation packages.KotlinStdJdk8
 
-    testImplementation packages.Mockk
-    testImplementation packages.JUnit
 }
 
 javafx {
@@ -25,14 +22,4 @@ jar {
 
 application {
     mainClassName = mainClassTarget
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
-}
-
-test {
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
 }

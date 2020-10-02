@@ -29,7 +29,7 @@ dependencies {
     implementation packages.ConstraintLayout
     implementation packages.AndroidxActivityKtx
     implementation packages.AndroidxFragmentKtx
-    implementation packages.AndroidXLifecycleExt
+    implementation packages.AndroidXLifecycleLiveDataKtx
     implementation packages.AndroidXLifecycleViewModelKtx
     implementation packages.AndroidXPagingRuntimeKtx
     implementation packages.AndroidXRecyclerView
@@ -70,13 +70,6 @@ dependencies {
     androidTestImplementation packages.AndroidXWorkManagerTesting
 }
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
+release {
     dependsOn ':petproject:appcore:release'
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'test'
-    dependsOn 'assembleAndroidTest'
 }

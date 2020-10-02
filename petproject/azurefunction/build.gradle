@@ -44,13 +44,7 @@ azurefunctions {
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
 }
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
+release {
     dependsOn ':petproject:appcore:release'
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'test'
     dependsOn 'azureFunctionsPackageZip'
 }

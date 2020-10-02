@@ -17,19 +17,15 @@ repositories {
     }
 }
 
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 apply plugin: "com.squareup.sqldelight"
 
 sqldelight {
     PetProjectDB {
         packageName = "com.cramsan.petproject.db"
-    }
-}
-
-android {
-    defaultConfig {
-        versionCode 1
-        versionName "1.0"
     }
 }
 
@@ -71,12 +67,6 @@ kotlin {
     }
 }
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
+release {
     dependsOn ':framework:release'
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'allTests'
 }

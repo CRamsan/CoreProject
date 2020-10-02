@@ -67,6 +67,7 @@ def versions_packages = [
     UIAutomator : "2.2.0",
     Volley : "1.1.1",
 ]
+
 def packages = [
         AndroidBuildGradle : "com.android.tools.build:gradle:$versions_packages.AndroidGradlePlugin",
         AndroidMaterial : "com.google.android.material:material:$versions_packages.AndroidMaterial",
@@ -78,7 +79,7 @@ def packages = [
         AndroidxFragmentKtx : "androidx.fragment:fragment-ktx:$versions_packages.AndroidxFragmentKtx",
         AndroidXJUnit : "androidx.test.ext:junit:$versions_packages.AndroidXJUnit",
         AndroidXJUnitKtx : "androidx.test.ext:junit-ktx:$versions_packages.AndroidXJUnit",
-        AndroidXLifecycleExt : "androidx.lifecycle:lifecycle-extensions:$versions_packages.AndroidXLifecycle",
+        AndroidXLifecycleLiveDataKtx : "androidx.lifecycle:lifecycle-livedata-ktx:$versions_packages.AndroidXLifecycle",
         AndroidXLifecycleViewModelKtx : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions_packages.AndroidXLifecycle",
         AndroidXNavigationFragmentKtx : "androidx.navigation:navigation-fragment-ktx:$versions_packages.AndroidXNavigation",
         AndroidXNavigationTesting : "androidx.navigation:navigation-testing:$versions_packages.AndroidXNavigation",
@@ -139,7 +140,7 @@ def packages = [
         KotlinStdCommon : "org.jetbrains.kotlin:kotlin-stdlib-common:$versions_packages.Kotlin",
         KotlinStdJdk8 : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions_packages.Kotlin",
         KotlinTest : "org.jetbrains.kotlin:kotlin-test:$versions_packages.Kotlin",
-        KotlinTestAnnotations : "org.jetbrains.kotlin:kotlin-test-annotations-common:$versions_packages.Kotlin",
+        KotlinTestAnnotationsCommon : "org.jetbrains.kotlin:kotlin-test-annotations-common:$versions_packages.Kotlin",
         KotlinTestCommon : "org.jetbrains.kotlin:kotlin-test-common:$versions_packages.Kotlin",
         KotlinTestJunit : "org.jetbrains.kotlin:kotlin-test-junit:$versions_packages.Kotlin",
         KotlinxDatetime : "org.jetbrains.kotlinx:kotlinx-datetime:$versions_packages.KotlinxDatetime",
@@ -175,7 +176,6 @@ def packages = [
         UIAutomator : "androidx.test.uiautomator:uiautomator:$versions_packages.UIAutomator",
         Volley : "com.android.volley:volley:$versions_packages.Volley"
 ]
-
 ext.versions_tools = versions_tools
 ext.versions = versions_packages
 ext.packages = packages
