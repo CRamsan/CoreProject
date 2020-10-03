@@ -1,4 +1,5 @@
 apply plugin: 'kotlin'
+apply plugin: 'jacoco'
 
 dependencies {
     implementation packages.KotlinStdJdk8
@@ -24,4 +25,5 @@ tasks.register("release") {
     dependsOn 'ktlint'
     dependsOn 'build'
     dependsOn 'test'
+    dependsOn 'jacocoTestReport'
 }

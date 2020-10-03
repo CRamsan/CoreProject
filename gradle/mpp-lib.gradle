@@ -1,6 +1,12 @@
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "kotlin-kapt"
+apply from: "$rootDir/gradle/jacoco-android.gradle"
+
+ext {
+    jvmTestTaskName = "jvmTest"
+}
+apply from: "$rootDir/gradle/jacoco-mpp-jvm.gradle"
 
 android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion
@@ -129,5 +135,7 @@ tasks.register("release") {
     dependsOn 'ktlint'
     dependsOn 'build'
     dependsOn 'jvmTest'
+    dependsOn 'jacocoTestReport'
     dependsOn 'test'
+    dependsOn 'jacocoAndroidTestReport'
 }

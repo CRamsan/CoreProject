@@ -1,0 +1,27 @@
+apply plugin: 'jacoco'
+
+project.afterEvaluate {
+
+    task "jacocoTestReport" (type:JacocoReport, dependsOn: "$jvmTestTaskName") {
+        group = 'verification'
+        description = "Generate Jacoco JVM coverage report."
+
+        classDirectories.setFrom(files([
+                fileTree(dir: "${project.buildDir}/classes/kotlin/jvm/")
+        ]))
+
+        def coverageSourceDirs = [
+                "src/main/java",
+                "src/main/kotlin"
+        ]
+        sourceDirectories.setFrom(files(coverageSourceDirs))
+        additionalSourceDirs.setFrom(files(coverageSourceDirs))
+        executionData(files("${project.buildDir}/jacoco/${jvmTestTaskName}.exec"))
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+}

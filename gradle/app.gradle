@@ -9,6 +9,7 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "dagger.hilt.android.plugin"
+apply from: "$rootDir/gradle/jacoco-android.gradle"
 
 android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion
@@ -97,5 +98,6 @@ tasks.register("release") {
     dependsOn 'ktlint'
     dependsOn 'build'
     dependsOn 'test'
+    dependsOn 'jacocoAndroidTestReport'
     dependsOn 'assembleAndroidTest'
 }
