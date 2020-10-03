@@ -34,6 +34,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
 
 class ModelProvider(
     private val eventLogger: EventLoggerInterface,
@@ -56,11 +58,19 @@ class ModelProvider(
     private val mutex = Mutex()
     private val LAST_UPDATE = "LastUpdate"
 
+    @ExperimentalTime
     override fun isCatalogAvailable(currentTime: Long): Boolean {
         if (isCatalogReady)
             return true
         val lastSave = preferences.loadLong(LAST_UPDATE)
-        if (lastSave != null && currentTime - lastSave < 259200) {
+        if (lastSave != null) {
+            val now = Instant.fromEpochMilliseconds(currentTime)
+            val lastSaveTime = Instant.fromEpochMilliseconds(lastSave)
+
+            if (now.minus(lastSaveTime).inDays > 30) {
+                return false
+            }
+
             isCatalogReady = true
             listeners.forEach {
                 it.onCatalogUpdate(true)

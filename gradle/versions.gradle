@@ -9,7 +9,7 @@ def versions_tools = [
 
 
 def versions_packages = [
-    AndroidGradlePlugin : '4.2.0-alpha12',
+    AndroidGradlePlugin : '4.2.0-alpha13',
     AndroidMaterial : "1.2.1",
     AndroidxActivityKtx : "1.1.0",
     AndroidXArchCore : "2.1.0",

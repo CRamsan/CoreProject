@@ -48,11 +48,15 @@ internal class ModelProviderCommonTest {
         every { preferences.loadLong(any()) } returns null
         assertFalse(modelProvider.isCatalogAvailable(now), "Should not be available when no date was persisted")
 
-        every { preferences.loadLong(any()) } returns Clock.System.now().plus(-25, DateTimeUnit.HOUR, systemTZ).toEpochMilliseconds()
-        assertFalse(modelProvider.isCatalogAvailable(now), "Should not be available when last persisted more than 24 hours ago")
+        every { preferences.loadLong(any()) } returns Clock.System.now().plus(-31, DateTimeUnit.DAY, systemTZ).toEpochMilliseconds()
+        assertFalse(modelProvider.isCatalogAvailable(now), "Should not be available when last persisted more than 30 days ago")
 
+        every { preferences.loadLong(any()) } returns Clock.System.now().plus(-29, DateTimeUnit.HOUR, systemTZ).toEpochMilliseconds()
+        assertTrue(modelProvider.isCatalogAvailable(now), "Should be available when persisted less than 29 days")
+
+        modelProvider = ModelProvider(eventLogger, threadUtil, modelStorage, preferences, configProvider)
         every { preferences.loadLong(any()) } returns Clock.System.now().plus(-23, DateTimeUnit.HOUR, systemTZ).toEpochMilliseconds()
-        assertFalse(modelProvider.isCatalogAvailable(now), "Should be available when persisted less than a day ago")
+        assertTrue(modelProvider.isCatalogAvailable(now), "Should be available when persisted less than a day ago")
 
         modelProvider = ModelProvider(eventLogger, threadUtil, modelStorage, preferences, configProvider)
         every { preferences.loadLong(any()) } returns now

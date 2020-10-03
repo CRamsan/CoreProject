@@ -15,6 +15,6 @@ class AppCenterMetrics : MetricsDelegate {
     }
 
     override fun log(tag: String, event: String, metadata: Map<String, String>) {
-        Analytics.trackEvent("$event-$tag", metadata)
+        Analytics.trackEvent("$tag-$event", metadata)
     }
 }

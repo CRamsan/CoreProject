@@ -32,7 +32,7 @@ class PetProjectApplication : Application() {
         AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
         crashHandler.initialize()
         metrics.initialize()
-        syncManager.startWork()
+        // syncManager.startWork()
     }
 
     companion object {

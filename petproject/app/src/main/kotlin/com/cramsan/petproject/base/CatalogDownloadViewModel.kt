@@ -25,9 +25,6 @@ abstract class CatalogDownloadViewModel(
     BaseViewModel(application, eventLogger, metricsClient, threadUtil),
     ModelProviderEventListenerInterface {
 
-    override val logTag: String
-        get() = "CatalogDownloadViewModel"
-
     // State
     private val observableDownloadingLoadingVisibility = MutableLiveData<Int>(View.GONE)
 
