@@ -2,24 +2,24 @@ package com.cramsan.awslib.utils.constants
 
 object InitialValues {
 
-    const val INVALID_ID = Int.MIN_VALUE
-    const val NOOP_ID = Int.MAX_VALUE
-    const val PLAYER_ID = 0
+    const val INVALID_ID = "UNDEFINED"
+    const val INVALID_AMOUNT = Int.MIN_VALUE
+    const val NOOP_ID = "NOOP"
+    const val PLAYER_ID = "player"
 
-    const val ENEMY_GROUP = 1
+    const val ENEMY_GROUP = "1"
     const val POS_X_ENTITY = 0
     const val POS_Y_ENTITY = 0
     const val PRIORITY_ENTITY = 10
     const val ENABLED_ENTITY = true
+    const val PLACEABLE_HEALTH = 10
 
     const val HEALTH_PLAYER = 10
-    const val GROUP_PLAYER = 0
+    const val GROUP_PLAYER = "0"
     const val CHARACTER_ATTACK = 0
     const val ATTACK_DOCTOR = 1
     const val ATTACK_DOG = 5
 
-    const val HEALTH_DOCTOR = 20
-    const val HEALTH_DOG = 20
     const val SPEED_PLAYER = 10
 
     const val POS_X_TRIGGER = 0

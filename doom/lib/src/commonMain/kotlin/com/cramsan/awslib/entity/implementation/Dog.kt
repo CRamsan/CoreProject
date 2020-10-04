@@ -4,19 +4,26 @@ import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.utils.constants.InitialValues
 
 /**
- * This class implements [com.cramsan.awslib.entity.implementation.Character] with defaults that can be used as a
- * generic enemy.
+ * This class implements [com.cramsan.awslib.entity.implementation.Character] with defaults that
+ * make it an enemy.
  */
-open class Dog(
-    id: Int,
+open class Enemy(
+    id: String,
     posX: Int,
     posY: Int,
     priority: Int,
-    enabled: Boolean
+    enabled: Boolean,
+    health: Int,
+    val enemyType: EnemyType,
+    var range: Int,
+    var damage: Double,
+    var accuracy: Double,
+    var move: Int,
+    val vision: Int
 ) :
     Character(
         id,
-        InitialValues.HEALTH_DOG,
+        health,
         InitialValues.ENEMY_GROUP,
         posX,
         posY,

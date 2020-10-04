@@ -1,8 +1,8 @@
 package com.cramsan.awslib.eventsystem.events
 
 class InteractiveEventOption(
-    val id: Int,
-    val eventId: Int,
+    val id: String,
+    val eventId: String,
     val label: String
 ) {
     override fun toString(): String {

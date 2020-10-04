@@ -18,6 +18,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class SceneTests {
 
@@ -45,29 +46,38 @@ class SceneTests {
                 posX = 25
                 posY = 25
             }
-            characters {
-                dog {
-                    id = 1
-                    posX = 2
-                    posY = 2
+            entityBuilders {
+                enemy {
+                    id = "1"
                 }
-                dog {
-                    id = 2
+            }
+            entity {
+                enemy {
+                    template = "1"
+                    id = "1"
+                }
+                enemy {
+                    template = "1"
+                    id = "2"
                     posX = 4
                     posY = 39
                 }
-                dog {
-                    id = 3
+                enemy {
+                    template = "1"
+                    id = "3"
                     posX = 58
                     posY = 90
                 }
-                dog {
+                enemy {
                     id = 4
+                    template = "1"
+                    id = "4"
                     posX = 92
                     posY = 83
                 }
-                dog {
-                    id = 5
+                enemy {
+                    template = "1"
+                    id = "5"
                     posX = 50
                     posY = 18
                 }
@@ -175,11 +185,23 @@ class SceneTests {
                 posX = 0
                 posY = 25
             }
-            characters {
-                dog {
-                    id = 1
+            entityBuilders {
+                enemy {
+                    id = "1"
+                }
+            }
+            entity {
+                enemy {
+                    id = "1"
+                    template = "1"
                     posX = 2
                     posY = 2
+                }
+                enemy {
+                    id = "1"
+                    template = "1"
+                    posX = 3
+                    posY = 3
                 }
             }
         }
@@ -191,7 +213,9 @@ class SceneTests {
         try {
             scene.loadScene()
         } catch (e: Exception) {
-            assertEquals(e.message?.startsWith("Could not register dog "), true)
+            assertEquals(e.message?.startsWith("Entity with Id already registered"), true)
+            return
         }
+        assertTrue(false, "Scene did not fail to register a duplicate")
     }
 }

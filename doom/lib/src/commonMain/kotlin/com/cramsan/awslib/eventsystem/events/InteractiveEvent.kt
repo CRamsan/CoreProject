@@ -1,7 +1,7 @@
 package com.cramsan.awslib.eventsystem.events
 
 class InteractiveEvent(
-    id: Int,
+    id: String,
     val text: String,
     val options: List<InteractiveEventOption>
 ) :

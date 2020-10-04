@@ -1,7 +1,6 @@
 package com.cramsan.awslib.entity.implementation
 
 import com.cramsan.awslib.entity.GameEntityInterface
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.utils.constants.InitialValues
 
 /**
@@ -19,7 +18,6 @@ class Player(
         InitialValues.GROUP_PLAYER,
         posX,
         posY,
-        EntityType.PLAYER,
         speed,
         true,
         true

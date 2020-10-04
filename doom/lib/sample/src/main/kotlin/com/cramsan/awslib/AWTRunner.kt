@@ -33,58 +33,79 @@ class AWTRunner {
                     speed = 20
                 }
 
-                characters {
-                    dog {
-                        id = 5
+                entityBuilders {
+                    enemy {
+                        id = "dog"
+                    }
+                    ally {
+                        id = "scientist"
+                    }
+                }
+
+                entity {
+                    enemy {
+                        id = "5"
+                        template = "dog"
                         posX = 15
                         posY = 26
                         priority = 5
                         enabled = false
                     }
-                    scientist {
-                        id = 1
-                        group = 0
+                    ally {
+                        template = "scientist"
+                        id = "1"
+                        group = "0"
                         posX = 2
                         posY = 23
                     }
-                    scientist {
-                        id = 2
-                        group = 0
+                    ally {
+                        template = "scientist"
+                        id = "2"
+                        group = "0"
                         posX = 4
                         posY = 23
                     }
                 }
 
+                itemBuilders {
+                    consumable {
+                        id = "health"
+                    }
+                }
+
+                items {
+                    item {
+                        id = "10"
+                        template = "health"
+                        posX = 4
+                        posY = 20
+                    }
+                }
+
                 triggers {
                     character {
-                        id = 523
-                        eventId = 912
-                        targetId = 1
+                        id = "523"
+                        eventId = "912"
+                        targetId = "1"
                         enabled = true
                     }
                     character {
-                        id = 525
-                        eventId = 482
-                        targetId = 2
+                        id = "525"
+                        eventId = "482"
+                        targetId = "2"
                         enabled = true
                     }
                 }
                 events {
                     interactive {
-                        id = 912
+                        id = "912"
                         text = "Welcome to this new game"
                     }
                     swapCharacter {
-                        id = 482
-                        enableCharacterId = 5
-                        disableCharacterId = 2
+                        id = "482"
+                        enableCharacterId = "5"
+                        disableCharacterId = "2"
                         nextEventId = InitialValues.NOOP_ID
-                    }
-                }
-                items {
-                    health {
-                        posX = 4
-                        posY = 20
                     }
                 }
             } ?: return

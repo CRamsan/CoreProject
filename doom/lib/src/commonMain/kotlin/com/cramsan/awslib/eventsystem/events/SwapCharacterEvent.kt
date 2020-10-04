@@ -1,10 +1,10 @@
 package com.cramsan.awslib.eventsystem.events
 
 class SwapCharacterEvent(
-    id: Int,
-    nextEventId: Int,
-    enableEntityId: Int,
-    disableEntityId: Int
+    id: String,
+    nextEventId: String,
+    enableEntityId: String,
+    disableEntityId: String
 ) :
     NonInteractiveEvent(
         id,

@@ -2,17 +2,16 @@ package com.cramsan.awslib.ai.implementation
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
 import com.cramsan.awslib.entity.CharacterInterface
+import com.cramsan.awslib.entity.implementation.Enemy
 import com.cramsan.awslib.entitymanager.TurnActionInterface
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.Cell
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.map.GameMapAStarFunctionProvider
 import com.cramsan.awslib.map.GridPositionableInterface
-import com.cramsan.awslib.utils.constants.GameEntityRange
 import com.cramsan.awslib.utils.pathfinding.AStarAlgorithm
 import com.cramsan.framework.logging.EventLoggerInterface
 import kotlin.math.pow
@@ -87,7 +86,7 @@ class DummyAIRepoImpl(private val log: EventLoggerInterface) : AIRepo {
             if (character == it)
                 return@forEach
 
-            if (character.type == it.type)
+            if (character.group == it.group)
                 return@forEach
 
             if (distance(character, it) <= range) {
@@ -101,10 +100,9 @@ class DummyAIRepoImpl(private val log: EventLoggerInterface) : AIRepo {
      * Retrieve the vision range for the [character].
      */
     private fun getEntityRange(character: CharacterInterface): Int {
-        return when (character.type) {
-            EntityType.SCIENTIST -> GameEntityRange.SCIENTIST
-            EntityType.PLAYER -> GameEntityRange.PLAYER
-            EntityType.DOG -> GameEntityRange.DOG
+        return when (character) {
+            is Enemy -> 10
+            else -> 0
         }
     }
 }

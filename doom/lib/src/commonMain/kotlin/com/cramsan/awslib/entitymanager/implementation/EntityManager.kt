@@ -12,7 +12,6 @@ import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.EntityManagerInterface
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TerrainType
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.CharacterTrigger
@@ -41,15 +40,15 @@ class EntityManager(
     private val aiRepo: AIRepo
 ) : EntityManagerInterface, EntityManagerInteractionReceiver {
 
-    val entityTriggerMap: HashMap<Int, CharacterTrigger> = HashMap()
+    val entityTriggerMap: HashMap<String, CharacterTrigger> = HashMap()
 
     var itemMap: Array<Array<ItemInterface?>> = Array(map.width) { arrayOfNulls<ItemInterface?>(map.height) }
     val itemSet = mutableSetOf<ItemInterface>()
 
     var triggerMap: Array<Array<CellTrigger?>> = Array(map.width) { arrayOfNulls<CellTrigger?>(map.height) }
-    val triggerIdMap: HashMap<Int, Trigger> = HashMap()
+    val triggerIdMap: HashMap<String, Trigger> = HashMap()
 
-    val eventMap: HashMap<Int, BaseEvent> = HashMap()
+    val eventMap: HashMap<String, BaseEvent> = HashMap()
     var nextEvent: BaseEvent? = null
     val channel = Channel<BaseEvent>()
     private val tag = "EntityManager"
@@ -84,7 +83,7 @@ class EntityManager(
     val addSet = mutableSetOf<CharacterInterface>()
 
     var entityMap: Array<Array<CharacterInterface?>> = Array(map.width) { arrayOfNulls<CharacterInterface?>(map.height) }
-    var entityIdMap: MutableMap<Int, CharacterInterface> = mutableMapOf()
+    var entityIdMap: MutableMap<String, CharacterInterface> = mutableMapOf()
 
     internal fun register(entity: CharacterInterface): Boolean {
         if (!entity.enabled) {
@@ -145,7 +144,7 @@ class EntityManager(
     override suspend fun runTurns(callback: SceneEventsCallback?) {
         queue.forEach {
             log.i(tag, "Entity: $it")
-            if (it.type != EntityType.PLAYER) {
+            if (it.group != InitialValues.GROUP_PLAYER) {
                 if (it.shouldMove) {
                     it.nextTurnAction = aiRepo.getNextTurnAction(it, this@EntityManager, map)
                 } else {

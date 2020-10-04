@@ -7,7 +7,8 @@ import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.entity.implementation.Character
 import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.ConsumableType
-import com.cramsan.awslib.entity.implementation.Dog
+import com.cramsan.awslib.entity.implementation.Enemy
+import com.cramsan.awslib.entity.implementation.EnemyType
 import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
@@ -41,10 +42,25 @@ class EntityManagerTests {
         fun createPlayer(posX: Int, posY: Int): Player {
             return Player(posX, posY, 50)
         }
-        fun createCharacter(id: Int, posX: Int, posY: Int): Character {
-            return Dog(id, posX, posY, 100, true)
+
+        fun createCharacter(id: String, posX: Int, posY: Int): Character {
+            return Enemy(
+                id,
+                posX,
+                posY,
+                100,
+                true,
+                100,
+                EnemyType.DOG,
+                10,
+                10.0,
+                10.0,
+                10,
+                10
+            )
         }
-        fun createItem(id: Int, posX: Int, posY: Int): ItemInterface {
+
+        fun createItem(id: String, posX: Int, posY: Int): ItemInterface {
             return ConsumableItem(id, posX, posY, ConsumableType.HEALTH, 10)
         }
     }
@@ -63,10 +79,14 @@ class EntityManagerTests {
     @Test
     fun registerTest() {
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(i, i, i)
+            val enemy1 = createCharacter("$i", i, i)
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
-            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
         }
     }
 
@@ -76,21 +96,32 @@ class EntityManagerTests {
     @Test
     fun registerWithCollisionTest() {
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(i, i, i)
+            val enemy1 = createCharacter("$i", i, i)
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
-            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
         }
 
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(1 * 100, i, i)
-            assertNotNull(entityManager.getEntity(i, i), "Expected location $i-$i is not already occupied")
+            val enemy1 = createCharacter("${1 * 100}", i, i)
+            assertNotNull(
+                entityManager.getEntity(i, i),
+                "Expected location $i-$i is not already occupied"
+            )
             try {
                 entityManager.register(enemy1)
                 fail("Trying to reregister should throw exception")
             } catch (e: Exception) {
             }
-            assertNotEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertNotEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
         }
     }
 
@@ -105,9 +136,15 @@ class EntityManagerTests {
             val scene = scene {
                 player {
                 }
-                characters {
-                    dog {
-                        id = i
+                entityBuilders {
+                    enemy {
+                        id = "1"
+                    }
+                }
+                entity {
+                    enemy {
+                        id = "$i"
+                        template = "1"
                         posX = i
                         posY = i
                     }
@@ -117,7 +154,11 @@ class EntityManagerTests {
             assertNotNull(enemy1)
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
-            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
             try {
                 entityManager.register(enemy1)
                 fail("Trying to reregister should throw exception")
@@ -135,7 +176,10 @@ class EntityManagerTests {
                 fail("Trying to reregister should throw exception")
             } catch (e: Exception) {
             }
-            assertNull(entityManager.getEntity(posX, posY), "Entity at location is not the expected one")
+            assertNull(
+                entityManager.getEntity(posX, posY),
+                "Entity at location is not the expected one"
+            )
         }
     }
 
@@ -145,7 +189,7 @@ class EntityManagerTests {
     @Test
     fun deregister() {
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(1, i, i)
+            val enemy1 = createCharacter("1", i, i)
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
             assertTrue(entityManager.deregister(enemy1))
             assertNull(entityManager.getEntity(enemy1.posX, enemy1.posY))
@@ -158,7 +202,7 @@ class EntityManagerTests {
     @Test
     fun rederegister() {
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(1, i, i)
+            val enemy1 = createCharacter("1", i, i)
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
             assertTrue(entityManager.deregister(enemy1))
             assertFalse(entityManager.deregister(enemy1))
@@ -172,10 +216,14 @@ class EntityManagerTests {
     @Test
     fun registerItemTest() {
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(i, i, i)
+            val enemy1 = createCharacter("$i", i, i)
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
-            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
         }
     }
 
@@ -185,21 +233,32 @@ class EntityManagerTests {
     @Test
     fun registerItemWithCollisionTest() {
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(i, i, i)
+            val enemy1 = createCharacter("$i", i, i)
             assertNull(entityManager.getEntity(i, i), "Expected location $i-$i is already occupied")
             assertTrue(entityManager.register(enemy1), "Failed to register dog")
-            assertEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
         }
 
         for (i in 0 until 50) {
-            val enemy1 = createCharacter(1 * 100, i, i)
-            assertNotNull(entityManager.getEntity(i, i), "Expected location $i-$i is not already occupied")
+            val enemy1 = createCharacter("${1 * 100}", i, i)
+            assertNotNull(
+                entityManager.getEntity(i, i),
+                "Expected location $i-$i is not already occupied"
+            )
             try {
                 entityManager.register(enemy1)
                 fail("Trying to reregister should throw exception")
             } catch (e: Exception) {
             }
-            assertNotEquals(entityManager.getEntity(i, i), enemy1, "Entity at location $i-$i is not the expected one")
+            assertNotEquals(
+                entityManager.getEntity(i, i),
+                enemy1,
+                "Entity at location $i-$i is not the expected one"
+            )
         }
     }
 
@@ -233,7 +292,7 @@ class EntityManagerTests {
     fun setPosition() {
         val posX = 5
         val posY = 5
-        val entity = createCharacter(1, posX, posY)
+        val entity = createCharacter("1", posX, posY)
         assertTrue(entityManager.register(entity))
 
         // Verify that after calling setPosition the location is updated
@@ -244,7 +303,7 @@ class EntityManagerTests {
         assertFalse(entityManager.isBlocked(posX, posY))
         assertTrue(entityManager.isBlocked(newPosX, newPosY))
 
-        val entity2 = createCharacter(2, posX, posY)
+        val entity2 = createCharacter("2", posX, posY)
         assertTrue(entityManager.register(entity2))
         assertFalse(entityManager.setPosition(entity2, newPosX, newPosY))
         assertTrue(entityManager.isBlocked(posX, posY))
@@ -262,7 +321,7 @@ class EntityManagerTests {
         val posX = 5
         val posY = 5
         assertNull(entityManager.getEntity(posX, posY))
-        val entity = createCharacter(1, posX, posY)
+        val entity = createCharacter("1", posX, posY)
         assertTrue(entityManager.register(entity))
         assertEquals(entityManager.getEntity(posX, posY), entity)
 
@@ -281,7 +340,7 @@ class EntityManagerTests {
         val posY = 5
         // Verify that registering an dog sets the location as blocked
         assertFalse(entityManager.isBlocked(posX, posY))
-        val entity = createCharacter(1, posX, posY)
+        val entity = createCharacter("1", posX, posY)
         assertFalse(entityManager.isBlocked(posX, posY))
         assertTrue(entityManager.register(entity), "Failed to register dog")
         assertTrue(entityManager.isBlocked(posX, posY))
@@ -307,15 +366,29 @@ class EntityManagerTests {
                 posX = 5
                 posY = 5
             }
+            itemBuilders {
+                consumable {
+                    id = "1"
+                }
+            }
             items {
-                health {
+                consumable {
+                    template = "1"
                     posX = 5
                     posY = 6
                 }
             }
         }
         assertNotNull(sceneConfig)
-        val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, null, log, aiRepo)
+        val entityManager = EntityManager(
+            map,
+            sceneConfig.triggerList,
+            sceneConfig.eventList,
+            sceneConfig.itemList,
+            null,
+            log,
+            aiRepo
+        )
         val player = sceneConfig.player
 
         val scene = Scene(entityManager, sceneConfig, log)

@@ -7,7 +7,11 @@ import com.cramsan.awslib.entity.ItemInterface
  * used to enable/disable changes while they are equipped.
  */
 open class EquippableItem(
-    override val id: Int,
+    override val id: String,
     override var posX: Int,
     override var posY: Int,
+    val range: Int,
+    val accuracy: Double,
+    val damage: Double,
+    val type: EquippableType,
 ) : ItemInterface

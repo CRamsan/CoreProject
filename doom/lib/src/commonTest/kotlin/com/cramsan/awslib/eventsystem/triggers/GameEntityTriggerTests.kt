@@ -2,12 +2,13 @@ package com.cramsan.awslib.eventsystem.triggers
 
 import com.cramsan.awslib.ai.`interface`.AIRepo
 import com.cramsan.awslib.dsl.scene
+import com.cramsan.awslib.entity.implementation.Ally
+import com.cramsan.awslib.entity.implementation.AllyType
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.map.GameMap
@@ -53,33 +54,43 @@ class GameEntityTriggerTests {
                 posX = 5
                 posY = 5
             }
-            characters {
-                scientist {
-                    id = 1
-                    group = 0
+            entityBuilders {
+                ally {
+                    id = "1"
+                }
+                enemy {
+                    id = "1"
+                }
+            }
+            entity {
+                ally {
+                    id = "1"
+                    template = "1"
+                    group = "0"
                     posX = 5
                     posY = 6
                 }
-                dog {
-                    id = 2
+                enemy {
+                    id = "2"
                     posX = 4
+                    template = "1"
                     posY = 9
                     enabled = false
                 }
             }
             triggers {
                 character {
-                    id = 523
-                    eventId = 352
-                    targetId = 1
+                    id = "523"
+                    eventId = "352"
+                    targetId = "1"
                     enabled = true
                 }
             }
             events {
                 swapCharacter {
-                    id = 352
-                    enableCharacterId = 2
-                    disableCharacterId = 1
+                    id = "352"
+                    enableCharacterId = "2"
+                    disableCharacterId = "1"
                     nextEventId = InitialValues.NOOP_ID
                 }
             }
@@ -98,7 +109,7 @@ class GameEntityTriggerTests {
         scene.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
         val enemy = entityManager.getEntity(5, 6)
         assertNotNull(enemy)
-        assertEquals(enemy.type, EntityType.DOG)
+        assertEquals(enemy.group, InitialValues.ENEMY_GROUP)
     }
 
     /**
@@ -113,15 +124,21 @@ class GameEntityTriggerTests {
                 posX = 5
                 posY = 5
             }
-            characters {
-                scientist {
-                    id = 1
-                    group = 0
-                    posX = 5
-                    posY = 6
+            entityBuilders {
+                ally {
+                    id = "1"
                 }
-                dog {
-                    id = 2
+                enemy {
+                    id = "1"
+                }
+            }
+            entity {
+                ally {
+                    id = "1"
+                    template = "1"
+                    group = "0"
+                    id = "2"
+                    template = "1"
                     posX = 4
                     posY = 9
                     enabled = false
@@ -129,31 +146,31 @@ class GameEntityTriggerTests {
             }
             triggers {
                 character {
-                    id = 523
-                    eventId = 912
-                    targetId = 1
+                    id = "523"
+                    eventId = "912"
+                    targetId = "1"
                     enabled = true
                 }
             }
             events {
                 interactive {
-                    id = 912
+                    id = "912"
                     text = "Should I transform?"
                     option {
-                        id = 0
-                        eventId = 352
+                        id = "0"
+                        eventId = "352"
                         label = "Yes"
                     }
                     option {
-                        id = 1
+                        id = "1"
                         eventId = InitialValues.NOOP_ID
                         label = "No"
                     }
                 }
                 swapCharacter {
-                    id = 352
-                    enableCharacterId = 2
-                    disableCharacterId = 1
+                    id = "352"
+                    enableCharacterId = "2"
+                    disableCharacterId = "1"
                     nextEventId = InitialValues.NOOP_ID
                 }
             }
@@ -193,13 +210,13 @@ class GameEntityTriggerTests {
         scene.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
         var enemy = entityManager.getEntity(5, 6)
         assertNotNull(enemy)
-        assertEquals(enemy.type, EntityType.SCIENTIST)
+        assertEquals(enemy.group, InitialValues.GROUP_PLAYER)
 
         targetIndex = 0
         scene.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
         enemy = entityManager.getEntity(5, 6)
         assertNotNull(enemy)
-        assertEquals(enemy.type, EntityType.DOG)
+        assertEquals(enemy.group, InitialValues.ENEMY_GROUP)
     }
 
     /**
@@ -214,25 +231,32 @@ class GameEntityTriggerTests {
                 posX = 5
                 posY = 5
             }
-            characters {
-                scientist {
-                    id = 1
-                    group = 0
+            entityBuilders {
+                ally {
+                    id = "1"
+                    type = AllyType.SCIENTIST
+                }
+            }
+            entity {
+                ally {
+                    id = "1"
+                    template = "1"
+                    group = "0"
                     posX = 5
                     posY = 6
                 }
             }
             triggers {
                 character {
-                    id = 523
-                    eventId = 912
-                    targetId = 1
+                    id = "523"
+                    eventId = "912"
+                    targetId = "1"
                     enabled = true
                 }
             }
             events {
                 interactive {
-                    id = 912
+                    id = "912"
                     text = "I am happy to see you"
                 }
             }
@@ -266,8 +290,8 @@ class GameEntityTriggerTests {
         assertEquals(5, player.posY)
 
         scene.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
-        var scientist = entityManager.getEntity(5, 6)
+        var scientist = entityManager.getEntity(5, 6) as Ally
         assertNotNull(scientist)
-        assertEquals(scientist.type, EntityType.SCIENTIST)
+        assertEquals(AllyType.SCIENTIST, scientist.allyType)
     }
 }

@@ -6,7 +6,6 @@ import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.platform.runTest
@@ -49,15 +48,21 @@ class CellTriggerTests {
                 posX = 5
                 posY = 5
             }
-            characters {
-                scientist {
-                    id = 1
-                    group = 0
-                    posX = 5
-                    posY = 6
+            entityBuilders {
+                enemy {
+                    id = "1"
                 }
-                dog {
-                    id = 2
+                ally {
+                    id = "1"
+                }
+            }
+            entity {
+                ally {
+                    id = "1"
+                    template = "1"
+                    group = "0"
+                    id = "2"
+                    template = "1"
                     posX = 4
                     posY = 9
                     enabled = false
@@ -65,8 +70,8 @@ class CellTriggerTests {
             }
             triggers {
                 cell {
-                    id = 523
-                    eventId = 352
+                    id = "523"
+                    eventId = "352"
                     enabled = true
                     posX = 5
                     posY = 4
@@ -74,9 +79,9 @@ class CellTriggerTests {
             }
             events {
                 swapCharacter {
-                    id = 352
-                    enableCharacterId = 2
-                    disableCharacterId = 1
+                    id = "352"
+                    enableCharacterId = "2"
+                    disableCharacterId = "1"
                     nextEventId = InitialValues.NOOP_ID
                 }
             }
@@ -94,6 +99,6 @@ class CellTriggerTests {
         scene.runTurn(TurnAction(TurnActionType.ATTACK, Direction.KEEP))
         val enemy = entityManager.getEntity(5, 5)
         assertNotNull(enemy)
-        assertEquals(enemy.type, EntityType.DOG)
+        assertEquals(enemy.group, InitialValues.ENEMY_GROUP)
     }
 }

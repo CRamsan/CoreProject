@@ -4,10 +4,10 @@ package com.cramsan.awslib.eventsystem.events
  *
  */
 class ChangeTriggerEvent(
-    id: Int,
-    nextEventId: Int,
-    enableEventId: Int,
-    disableEventId: Int
+    id: String,
+    nextEventId: String,
+    enableEventId: String,
+    disableEventId: String
 ) :
     NonInteractiveEvent(
         id,

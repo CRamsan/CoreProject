@@ -7,9 +7,9 @@ import com.cramsan.awslib.eventsystem.triggers.Trigger
  * [targetId]
  */
 class CharacterTrigger(
-    id: Int,
-    eventId: Int,
+    id: String,
+    eventId: String,
     enabled: Boolean,
-    val targetId: Int
+    val targetId: String
 ) :
     Trigger(id, eventId, enabled)

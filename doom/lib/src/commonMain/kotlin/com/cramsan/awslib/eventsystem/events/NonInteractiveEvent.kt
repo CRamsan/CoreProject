@@ -1,10 +1,10 @@
 package com.cramsan.awslib.eventsystem.events
 
 abstract class NonInteractiveEvent(
-    id: Int,
+    id: String,
     type: EventType,
-    val nextEventId: Int,
-    val enableId: Int,
-    val disableId: Int
+    val nextEventId: String,
+    val enableId: String,
+    val disableId: String
 ) :
     BaseEvent(id, type)

@@ -35,9 +35,15 @@ class DummyAIRepoImplTests {
                 posX = 2
                 posY = 1
             }
-            characters {
-                dog {
-                    id = 1
+            entityBuilders {
+                enemy {
+                    id = "1"
+                }
+            }
+            entity {
+                enemy {
+                    template = "1"
+                    id = "1"
                     posX = 1
                     posY = 1
                 }

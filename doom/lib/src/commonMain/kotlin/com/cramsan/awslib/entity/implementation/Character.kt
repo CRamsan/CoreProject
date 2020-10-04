@@ -1,19 +1,17 @@
 package com.cramsan.awslib.entity.implementation
 
 import com.cramsan.awslib.entity.CharacterInterface
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.utils.constants.InitialValues
 
 /**
  * This base class is to be used to define an entity that has [health] and a [group].
  */
 abstract class Character(
-    id: Int,
+    id: String,
     override var health: Int,
-    override var group: Int,
+    override var group: String,
     posX: Int,
     posY: Int,
-    type: EntityType,
     speed: Int,
     enabled: Boolean,
     shouldMove: Boolean
@@ -22,7 +20,6 @@ abstract class Character(
         id,
         posX,
         posY,
-        type,
         speed,
         enabled,
         shouldMove

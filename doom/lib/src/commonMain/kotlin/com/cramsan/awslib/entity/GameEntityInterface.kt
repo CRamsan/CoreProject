@@ -7,5 +7,5 @@ import com.cramsan.awslib.map.GridPositionableInterface
  * can be interacted on.
  */
 interface GameEntityInterface : GridPositionableInterface {
-    val id: Int
+    val id: String
 }

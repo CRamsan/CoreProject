@@ -5,8 +5,8 @@ package com.cramsan.awslib.eventsystem.triggers
  * the value of [enabled]. This class is abstract and should be extended to define how the [Event] will be triggered.
  */
 abstract class Trigger(
-    val id: Int,
-    val eventId: Int,
+    val id: String,
+    val eventId: String,
     var enabled: Boolean
 ) {
     override fun toString(): String {
