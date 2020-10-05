@@ -69,7 +69,7 @@ class SceneTests {
                     posY = 90
                 }
                 enemy {
-                    id = 4
+                    id = "4"
                     template = "1"
                     id = "4"
                     posX = 92

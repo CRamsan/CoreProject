@@ -136,7 +136,10 @@ class GameEntityTriggerTests {
                 ally {
                     id = "1"
                     template = "1"
-                    group = "0"
+                    posX = 5
+                    posY = 6
+                }
+                enemy {
                     id = "2"
                     template = "1"
                     posX = 4

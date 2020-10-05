@@ -1,5 +1,8 @@
 package com.cramsan.awslib.dsl
 
+import com.cramsan.awslib.entity.implementation.AllyType
+import com.cramsan.awslib.entity.implementation.ConsumableType
+import com.cramsan.awslib.entity.implementation.EnemyType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

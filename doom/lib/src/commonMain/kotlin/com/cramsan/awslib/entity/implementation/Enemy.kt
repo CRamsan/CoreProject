@@ -1,6 +1,5 @@
 package com.cramsan.awslib.entity.implementation
 
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.utils.constants.InitialValues
 
 /**
@@ -27,7 +26,6 @@ open class Enemy(
         InitialValues.ENEMY_GROUP,
         posX,
         posY,
-        EntityType.DOG,
         priority,
         enabled,
         true
