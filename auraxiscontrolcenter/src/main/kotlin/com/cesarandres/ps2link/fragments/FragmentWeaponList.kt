@@ -273,8 +273,7 @@ class FragmentWeaponList : BaseFragment() {
                 weaponKilledBy = weaponKilledByStats
             } catch (e: Exception) {
                 eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
+                return -1
             }
             return weaponKilledByStats.size + weaponKilledByStats.size
         }
@@ -296,14 +295,21 @@ class FragmentWeaponList : BaseFragment() {
             if (listRoot == null) {
                 return
             }
-            listRoot.adapter = WeaponItemAdapter(
-                activity!!,
-                weaponKills!!,
-                weaponKilledBy!!,
-                profileFaction!!,
-                this@FragmentWeaponList.fragmentMyWeapons.isChecked,
-                imageLoader
-            )
+
+            if (result == -1) {
+                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
+                    .show()
+                return
+            } else {
+                listRoot.adapter = WeaponItemAdapter(
+                    activity!!,
+                    weaponKills!!,
+                    weaponKilledBy!!,
+                    profileFaction!!,
+                    this@FragmentWeaponList.fragmentMyWeapons.isChecked,
+                    imageLoader
+                )
+            }
             setProgressButton(false)
         }
     }
