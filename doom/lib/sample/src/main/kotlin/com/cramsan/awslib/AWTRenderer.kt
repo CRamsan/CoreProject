@@ -4,13 +4,15 @@ import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.EquippableItem
+import com.cramsan.awslib.entity.implementation.Enemy
+import com.cramsan.awslib.entity.implementation.Player
+import com.cramsan.awslib.entity.implementation.Ally
 import com.cramsan.awslib.entity.implementation.KeyItem
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
-import com.cramsan.awslib.enums.EntityType
 import com.cramsan.awslib.enums.TerrainType
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
@@ -231,10 +233,10 @@ class AWTRenderer(
             }
 
             for (entity in manager.characterSet) {
-                when (entity.type) {
-                    EntityType.PLAYER -> g.color = Color.BLUE
-                    EntityType.DOG -> g.color = Color.RED
-                    EntityType.SCIENTIST -> g.color = Color.GREEN
+                when (entity) {
+                    is Player -> g.color = Color.BLUE
+                    is Enemy -> g.color = Color.RED
+                    is Ally -> g.color = Color.GREEN
                 }
                 g.fillRect(
                     entity.posX * cellWidth,

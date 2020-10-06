@@ -74,7 +74,7 @@ class AWTRunner {
                 }
 
                 items {
-                    item {
+                    consumable {
                         id = "10"
                         template = "health"
                         posX = 4
