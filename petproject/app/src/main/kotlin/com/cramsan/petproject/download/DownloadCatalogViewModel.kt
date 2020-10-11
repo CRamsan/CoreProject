@@ -46,7 +46,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
 
     fun isCatalogReady(): Boolean {
         eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "isCatalogReady")
-        val unixTime = System.currentTimeMillis() / 1000L
+        val unixTime = System.currentTimeMillis()
         val isReady = modelProvider.isCatalogAvailable(unixTime)
         mutableIsDownloadComplete.value = isReady
         return isReady
@@ -54,7 +54,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
 
     fun downloadCatalog() {
         eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "downloadCatalog")
-        val unixTime = System.currentTimeMillis() / 1000L
+        val unixTime = System.currentTimeMillis()
         if (modelProvider.isCatalogAvailable(unixTime)) {
             mutableIsDownloadComplete.value = true
             return

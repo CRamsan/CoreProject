@@ -81,7 +81,7 @@ abstract class CatalogDownloadViewModel(
 
     fun isCatalogReady(): Boolean {
         eventLogger.log(Severity.INFO, "AllPlantListViewModel", "isCatalogReady")
-        val unixTime = System.currentTimeMillis() / 1000L
+        val unixTime = System.currentTimeMillis()
         return modelProvider.isCatalogAvailable(unixTime)
     }
 }
