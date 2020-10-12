@@ -2,12 +2,12 @@ package com.cramsan.awslib
 
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.GameEntityInterface
-import com.cramsan.awslib.entity.implementation.ConsumableItem
-import com.cramsan.awslib.entity.implementation.EquippableItem
-import com.cramsan.awslib.entity.implementation.Enemy
-import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.entity.implementation.Ally
+import com.cramsan.awslib.entity.implementation.ConsumableItem
+import com.cramsan.awslib.entity.implementation.Enemy
+import com.cramsan.awslib.entity.implementation.EquippableItem
 import com.cramsan.awslib.entity.implementation.KeyItem
+import com.cramsan.awslib.entity.implementation.Player
 import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager

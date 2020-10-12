@@ -37,6 +37,21 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            // Changes the directory for Java sources. The default directory is
+            // 'src/main/java'.
+            java.srcDirs = ['src/main/kotlin']
+        }
+        test {
+            java.srcDirs = ['src/test/kotlin']
+        }
+        androidTest {
+            java.srcDirs = ['src/androidTest/kotlin']
+        }
+    }
+
+
     buildFeatures {
         dataBinding true
     }
