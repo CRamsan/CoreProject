@@ -66,7 +66,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
     }
 
     private suspend fun downloadCatalogOnBackground() = withContext(IODispatcher) {
-        val unixTime = System.currentTimeMillis() / 1000L
+        val unixTime = System.currentTimeMillis()
         GlobalScope.launch {
             modelProvider.downloadCatalog(unixTime)
         }.join()

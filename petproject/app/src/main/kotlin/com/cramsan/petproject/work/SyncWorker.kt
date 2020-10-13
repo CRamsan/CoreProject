@@ -24,9 +24,9 @@ class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
 
     override suspend fun doWork(): Result = coroutineScope {
         eventLogger.log(Severity.INFO, "SyncWorker", "Starting to sync")
-        val startTime = System.currentTimeMillis() / 1000L
+        val startTime = System.currentTimeMillis()
         modelProvider.downloadCatalog(startTime, true)
-        val endTime = System.currentTimeMillis() / 1000L
+        val endTime = System.currentTimeMillis()
         val latency = (endTime - startTime).toString()
         metrics.log("SyncWorker", "syncLatency", mapOf("Latency" to latency))
         // Indicate whether the work finished successfully with the Result

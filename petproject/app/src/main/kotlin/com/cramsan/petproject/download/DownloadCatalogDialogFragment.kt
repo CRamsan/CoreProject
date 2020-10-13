@@ -30,8 +30,9 @@ class DownloadCatalogDialogFragment : BaseDialogFragment<DownloadCatalogViewMode
         )
         if (model.isCatalogReady()) {
             closeDialog()
+        } else {
+            model.downloadCatalog()
         }
-        model.downloadCatalog()
         viewModel = model
     }
 
