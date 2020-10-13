@@ -41,37 +41,12 @@ kotlin {
                 implementation packages.KotlinTestAnnotationsCommon
             }
         }
-        commonTest {
-            dependencies {
-            }
-        }
         jvmMain {
             dependencies {
                 implementation packages.CoroutinesTest
                 implementation packages.JUnit
                 implementation packages.KotlinTest
                 implementation packages.KotlinTestJunit
-            }
-        }
-        jvmTest {
-            dependencies {
-
-            }
-        }
-        androidMain {
-            dependencies {
-            }
-        }
-        androidTest {
-            dependencies {
-            }
-        }
-        iosMain {
-            dependencies {
-            }
-        }
-        iosTest {
-            dependencies {
             }
         }
     }

@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+    }
+}
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework:halt")
+                implementation project(":framework:interfacelib")
+                implementation project(":framework:logging")
+            }
+        }
+    }
+}

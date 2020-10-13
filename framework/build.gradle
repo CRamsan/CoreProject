@@ -15,14 +15,27 @@ subprojects {
         libraryVersionName = "0.1"
     }
 }
+
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
-dependencies {
-    implementation packages.Okhttp
-    implementation packages.Gson
-    implementation packages.AppCenterSdkAnalytics
-    implementation packages.AppCenterSdkCrashes
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":framework:assert")
+                api project(":framework:crashhandler")
+                api project(":framework:halt")
+                api project(":framework:interfacelib")
+                api project(":framework:logging")
+                api project(":framework:metrics")
+                api project(":framework:preferences")
+                api project(":framework:thread")
+                api project(":framework:test")
+                api project(":framework:utils")
+            }
+        }
+    }
 }
