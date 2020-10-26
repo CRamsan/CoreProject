@@ -33,8 +33,13 @@ kotlin {
                 api project(":framework:metrics")
                 api project(":framework:preferences")
                 api project(":framework:thread")
-                api project(":framework:test")
                 api project(":framework:utils")
+            }
+        }
+
+        commonTest {
+            dependencies {
+                api project(":framework:test")
             }
         }
     }

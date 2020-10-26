@@ -114,22 +114,6 @@ kotlin {
                 implementation packages.Mockk
             }
         }
-        androidMain {
-            dependencies {
-            }
-        }
-        androidTest {
-            dependencies {
-            }
-        }
-        iosMain {
-            dependencies {
-            }
-        }
-        iosTest {
-            dependencies {
-            }
-        }
     }
 }
 
