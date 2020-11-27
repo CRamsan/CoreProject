@@ -24,3 +24,7 @@ kotlin {
         }
     }
 }
+
+release {
+    dependsOn ":framework:interfacelib:release"
+}

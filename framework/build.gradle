@@ -44,3 +44,15 @@ kotlin {
         }
     }
 }
+
+release {
+    dependsOn ":framework:assert:release"
+    dependsOn ":framework:crashhandler:release"
+    dependsOn ":framework:halt:release"
+    dependsOn ":framework:interfacelib:release"
+    dependsOn ":framework:logging:release"
+    dependsOn ":framework:metrics:release"
+    dependsOn ":framework:preferences:release"
+    dependsOn ":framework:thread:release"
+    dependsOn ":framework:utils:release"
+}
