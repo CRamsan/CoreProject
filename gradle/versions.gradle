@@ -169,12 +169,13 @@ def packages = [
         SpringTomcat : "org.springframework.boot:spring-boot-starter-tomcat",
         SpringWeb : "org.springframework.boot:spring-boot-starter-web",
         SqlDelightAndroidDriver : "com.squareup.sqldelight:android-driver:$versions_packages.SqlDelight",
+        SqlDelightCoroutineExt : "com.squareup.sqldelight:coroutines-extensions:$versions_packages.SqlDelight",
         SqlDelightGradle : "com.squareup.sqldelight:gradle-plugin:$versions_packages.SqlDelight",
         SqlDelightDriver : "com.squareup.sqldelight:sqlite-driver:$versions_packages.SqlDelight",
         Tornadofx : "no.tornado:tornadofx:$versions_packages.Tornadofx",
         Twitter4J : "org.twitter4j:twitter4j-core:$versions_packages.Twitter4J",
         UIAutomator : "androidx.test.uiautomator:uiautomator:$versions_packages.UIAutomator",
-        Volley : "com.android.volley:volley:$versions_packages.Volley"
+        Volley : "com.android.volley:volley:$versions_packages.Volley",
 ]
 ext.versions_tools = versions_tools
 ext.versions = versions_packages

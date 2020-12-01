@@ -20,6 +20,11 @@ kotlin {
                 implementation project(":framework:logging")
             }
         }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
     }
 }
 
@@ -27,4 +32,5 @@ release {
     dependsOn ":framework:halt:release"
     dependsOn ":framework:interfacelib:release"
     dependsOn ":framework:logging:release"
+    dependsOn ":framework:test:release"
 }

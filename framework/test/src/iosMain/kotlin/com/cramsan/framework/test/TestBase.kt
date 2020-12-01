@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 
 actual open class TestBase {
 
-    actual fun runBlockingTest(block: suspend () -> Unit) = runBlocking { block() }
+    actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) = runBlocking { block() }
 
     /**
      * Reference to the Scope used to run the tests. This scope can be injected into

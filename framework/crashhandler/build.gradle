@@ -22,9 +22,15 @@ kotlin {
                 implementation project(":framework:interfacelib")
             }
         }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
     }
 }
 
 release {
     dependsOn ":framework:interfacelib:release"
+    dependsOn ":framework:test:release"
 }

@@ -53,6 +53,7 @@ release {
     dependsOn ":framework:logging:release"
     dependsOn ":framework:metrics:release"
     dependsOn ":framework:preferences:release"
+    dependsOn ":framework:test:release"
     dependsOn ":framework:thread:release"
     dependsOn ":framework:utils:release"
 }

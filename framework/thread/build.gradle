@@ -19,10 +19,16 @@ kotlin {
                 implementation project(":framework:assert")
             }
         }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
     }
 }
 
 release {
     dependsOn ":framework:assert:release"
     dependsOn ":framework:interfacelib:release"
+    dependsOn ":framework:test:release"
 }

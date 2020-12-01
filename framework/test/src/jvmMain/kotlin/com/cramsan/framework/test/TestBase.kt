@@ -14,7 +14,7 @@ actual open class TestBase {
     @get:Rule
     var testCoroutineRule: TestCoroutineRule = TestCoroutineRule()
 
-    actual fun runBlockingTest(block: suspend () -> Unit) = testCoroutineRule.runBlockingTest { block() }
+    actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) = testCoroutineRule.runBlockingTest { block() }
 
     /**
      * Reference to the Scope used to run the tests. This scope can be injected into

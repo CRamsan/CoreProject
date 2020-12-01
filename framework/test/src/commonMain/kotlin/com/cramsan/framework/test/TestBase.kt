@@ -21,5 +21,5 @@ expect open class TestBase() {
      * need to wait for [TestCoroutineScope] to be available for common code.
      * https://github.com/Kotlin/kotlinx.coroutines/issues/1996
      */
-    fun runBlockingTest(block: suspend () -> Unit)
+    fun runBlockingTest(block: suspend CoroutineScope.() -> Unit)
 }

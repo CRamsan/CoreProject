@@ -131,8 +131,7 @@ tasks.register("release") {
 
     dependsOn 'ktlint'
     dependsOn 'build'
-    dependsOn 'jvmTest'
+    dependsOn 'check'
     dependsOn 'jacocoTestReport'
-    dependsOn 'test'
     dependsOn 'jacocoAndroidTestReport'
 }
