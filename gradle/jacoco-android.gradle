@@ -20,7 +20,7 @@ project.afterEvaluate {
             def testTaskName = "test${sourceName.capitalize()}UnitTest"
 
             // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
-            task "jacoco${testTaskName}Report" (type:JacocoReport, dependsOn: "$testTaskName") {
+            task "jacoco${testTaskName.capitalize()}Report" (type:JacocoReport, dependsOn: "$testTaskName") {
                 group = 'verification'
                 description = "Generate Jacoco Android coverage reports on the ${sourceName.capitalize()} build."
 
@@ -80,7 +80,7 @@ project.afterEvaluate {
                 def testTaskName = "test${sourceName.capitalize()}UnitTest"
 
                 // Make the androidTestCoverage depend on all other Android coverage tasks
-                dependsOn "jacoco${testTaskName}Report"
+                dependsOn "jacoco${testTaskName.capitalize()}Report"
             }
         }
     }
