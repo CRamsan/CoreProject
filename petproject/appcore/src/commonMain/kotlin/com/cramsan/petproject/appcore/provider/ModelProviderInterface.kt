@@ -4,6 +4,7 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.Plant
 import com.cramsan.petproject.appcore.model.PlantMetadata
 import com.cramsan.petproject.appcore.model.PresentablePlant
+import kotlinx.coroutines.flow.Flow
 
 interface ModelProviderInterface {
 
@@ -23,6 +24,8 @@ interface ModelProviderInterface {
 
     suspend fun getPlantsWithToxicity(animalType: AnimalType, locale: String): List<PresentablePlant>
 
+    fun getPlantsWithToxicityFlow(animalType: AnimalType, locale: String): Flow<List<PresentablePlant>>
+
     suspend fun getPlantsWithToxicityPaginated(
         animalType: AnimalType,
         locale: String,
@@ -30,7 +33,9 @@ interface ModelProviderInterface {
         offset: Long
     ): List<PresentablePlant>
 
-    suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType, query: String, locale: String): List<PresentablePlant>?
+    suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType, query: String, locale: String): List<PresentablePlant>
+
+    fun getPlantsWithToxicityFilteredFlow(animalType: AnimalType, query: String, locale: String): Flow<List<PresentablePlant>>
 
     suspend fun deleteAll()
 }

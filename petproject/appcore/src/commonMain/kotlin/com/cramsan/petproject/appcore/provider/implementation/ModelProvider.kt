@@ -25,16 +25,14 @@ import io.ktor.client.features.ClientRequestException
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.defaultSerializer
 import io.ktor.client.request.get
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
+import kotlin.coroutines.coroutineContext
 import kotlin.time.ExperimentalTime
 
 class ModelProvider(
@@ -51,9 +49,7 @@ class ModelProvider(
         }
     }
 
-    private lateinit var plantList: List<PresentablePlant>
     private val listeners = mutableSetOf<ModelProviderEventListenerInterface>()
-    private var filterJob: Job? = null
     var isCatalogReady = false
     private val mutex = Mutex()
     private val LAST_UPDATE = "LastUpdate"
@@ -207,8 +203,14 @@ class ModelProvider(
                 )
             )
         }
-        plantList = mutableList.sortedBy { it.mainCommonName }
-        return plantList
+        return mutableList.sortedBy { it.mainCommonName }
+    }
+
+    override fun getPlantsWithToxicityFlow(
+        animalType: AnimalType,
+        locale: String
+    ): Flow<List<PresentablePlant>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getPlantsWithToxicityPaginated(
@@ -245,38 +247,36 @@ class ModelProvider(
         animalType: AnimalType,
         query: String,
         locale: String
-    ): List<PresentablePlant>? = withContext(Dispatchers.Default) {
+    ): List<PresentablePlant> {
         eventLogger.log(Severity.INFO, "ModelProvider", "getPlantsWithToxicityFiltered")
         threadUtil.assertIsBackgroundThread()
 
         if (!isCatalogReady) {
             eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
-            return@withContext null
+            return emptyList()
         }
 
-        val list = plantList
+        val list = getPlantsWithToxicity(animalType, locale)
         val resultList = mutableListOf<PresentablePlant>()
-        filterJob?.cancelAndJoin()
-        val filterJobLocal = launch(Dispatchers.Default) {
-            eventLogger.log(Severity.DEBUG, "ModelProvider", "Starting Job $this")
-            for (plant in list) {
-                if (!isActive) {
-                    eventLogger.log(Severity.DEBUG, "ModelProvider", "Early cancelling Job $this")
-                    break
-                }
-                if (plant.scientificName.contains(query, true) || plant.mainCommonName.contains(query, true)) {
-                    resultList.add(plant)
-                }
+        for (plant in list) {
+            if (!coroutineContext.isActive) {
+                eventLogger.log(Severity.DEBUG, "ModelProvider", "Early cancelling Job $this")
+                break
+            }
+            if (plant.scientificName.contains(query, true) || plant.mainCommonName.contains(query, true)) {
+                resultList.add(plant)
             }
         }
-        filterJob = filterJobLocal
-        if (filterJobLocal.isCancelled) {
-            eventLogger.log(Severity.DEBUG, "ModelProvider", "Cancelling filterJob $filterJob")
-            return@withContext null
-        }
-        filterJobLocal.join()
         eventLogger.log(Severity.DEBUG, "ModelProvider", "Filtering returned ${resultList.size} results")
-        return@withContext resultList.sortedBy { it.mainCommonName }
+        return resultList.sortedBy { it.mainCommonName }
+    }
+
+    override fun getPlantsWithToxicityFilteredFlow(
+        animalType: AnimalType,
+        query: String,
+        locale: String
+    ): Flow<List<PresentablePlant>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getPlantMetadata(animalType: AnimalType, plantId: Int, locale: String): PlantMetadata? {
@@ -293,11 +293,7 @@ class ModelProvider(
 
         if (!isCatalogReady) {
             eventLogger.log(Severity.INFO, "ModelProvider", "Catalog is not ready")
-            return if (::plantList.isInitialized) {
-                plantList.size.toLong()
-            } else {
-                0
-            }
+            return 0
         }
 
         return modelStorage.getPlantCount()

@@ -5,6 +5,10 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.storage.ModelStorageDAO
 import com.cramsan.petproject.db.PetProjectDB
 import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
@@ -160,6 +164,21 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
     override fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId> {
         return getCustomPlantEntriesPaginated(animalType, locale, Long.MAX_VALUE, 0)
+    }
+
+    override fun getCustomPlantEntriesFlow(
+        animalType: AnimalType,
+        locale: String
+    ): Flow<List<GetAllPlantsWithAnimalId>> {
+        return if (animalType == AnimalType.ALL) {
+            database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(locale, Long.MAX_VALUE, 0).asFlow().mapToList().map { list ->
+                list.map { GetAllPlantsWithAnimalId(it) }
+            }
+        } else {
+            database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale, Long.MAX_VALUE, 0).asFlow().mapToList().map { list ->
+                list.map { GetAllPlantsWithAnimalId(it) }
+            }
+        }
     }
 
     override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {

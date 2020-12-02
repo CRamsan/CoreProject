@@ -1,6 +1,7 @@
 package com.cramsan.petproject.appcore.storage
 
 import com.cramsan.petproject.appcore.model.AnimalType
+import kotlinx.coroutines.flow.Flow
 
 interface ModelStorageInterface {
 
@@ -53,6 +54,8 @@ interface ModelStorageInterface {
     fun getCustomPlantEntry(animalType: AnimalType, plantId: Int, locale: String): GetPlantWithPlantIdAndAnimalId?
 
     fun getCustomPlantsEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId>
+
+    fun getCustomPlantsEntriesFlow(animalType: AnimalType, locale: String): Flow<List<GetAllPlantsWithAnimalId>>
 
     fun getCustomPlantEntriesPaginated(
         animalType: AnimalType,

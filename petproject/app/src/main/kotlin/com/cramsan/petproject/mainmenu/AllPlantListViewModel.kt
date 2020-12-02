@@ -126,7 +126,6 @@ class AllPlantListViewModel @ViewModelInject constructor(
 
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
         val plants = modelProvider.getPlantsWithToxicityFiltered(AnimalType.ALL, query, "en")
-            ?: return@withContext
         viewModelScope.launch {
             threadUtil.assertIsUIThread()
             observableLoadingVisibility.value = View.GONE

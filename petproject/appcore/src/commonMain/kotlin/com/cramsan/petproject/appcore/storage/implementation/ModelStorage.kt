@@ -14,6 +14,7 @@ import com.cramsan.petproject.appcore.storage.PlantCommonName
 import com.cramsan.petproject.appcore.storage.PlantFamily
 import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
+import kotlinx.coroutines.flow.Flow
 
 class ModelStorage(
     private val platformDelegate: ModelStorageDAO,
@@ -232,6 +233,16 @@ class ModelStorage(
         threadUtil.assertIsBackgroundThread()
 
         return platformDelegate.getCustomPlantEntries(animalType, locale)
+    }
+
+    override fun getCustomPlantsEntriesFlow(
+        animalType: AnimalType,
+        locale: String
+    ): Flow<List<GetAllPlantsWithAnimalId>> {
+        eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantsEntriesFlow")
+        threadUtil.assertIsBackgroundThread()
+
+        return platformDelegate.getCustomPlantEntriesFlow(animalType, locale)
     }
 
     override fun getCustomPlantEntriesPaginated(

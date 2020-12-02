@@ -45,6 +45,7 @@ kotlin {
                 implementation packages.KtorCore
                 implementation packages.KtorJson
                 implementation packages.KotlinxDatetime
+                implementation packages.SqlDelightCoroutineExt
             }
         }
         commonTest {

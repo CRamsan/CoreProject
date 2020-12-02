@@ -2,6 +2,7 @@ package com.cramsan.petproject.appcore.storage
 
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
+import kotlinx.coroutines.flow.Flow
 
 interface ModelStorageDAO {
 
@@ -56,6 +57,8 @@ interface ModelStorageDAO {
     fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description?
 
     fun getCustomPlantEntries(animalType: AnimalType, locale: String): List<GetAllPlantsWithAnimalId>
+
+    fun getCustomPlantEntriesFlow(animalType: AnimalType, locale: String): Flow<List<GetAllPlantsWithAnimalId>>
 
     fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId?
 
