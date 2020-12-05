@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
@@ -32,6 +35,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         get() = R.layout.fragment_main_menu
 
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
+    private lateinit var queryCleaner: OnBackPressedCallback
     private var layoutManager: LinearLayoutManager? = null
 
     // Only enable the searchView if data is available
@@ -143,18 +147,34 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         // Get the SearchView and set the searchable configuration
         val searchManager = ContextCompat.getSystemService(requireContext(), SearchManager::class.java) ?: return
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
+
+        queryCleaner = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            searchView.setQuery("", false)
+            queryCleaner.isEnabled = false
+            searchView.isIconified = true
+        }
+        queryCleaner.isEnabled = false
+
         searchView.apply {
             // Assumes current activity is the searchable activity
+            if (viewModel.queryString.value.isNotEmpty()) {
+                isIconified = false
+                queryCleaner.isEnabled = true
+                setQuery(viewModel.queryString.value, false)
+            }
             setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
-                        viewModel.queryString = query
+                        viewModel.queryString.value = query
+                        queryCleaner.isEnabled = true
                         return true
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
-                        viewModel.queryString = newText
+                        viewModel.queryString.value = newText
+                        queryCleaner.isEnabled = true
                         return true
                     }
                 }

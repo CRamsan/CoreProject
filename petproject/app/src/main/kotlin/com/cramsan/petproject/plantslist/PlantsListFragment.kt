@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -35,6 +38,7 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
     private var plantsAdapter: PlantsRecyclerViewAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
+    private lateinit var queryCleaner: OnBackPressedCallback
     private lateinit var animalType: AnimalType
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,7 +130,7 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(ANIMAL_TYPE, animalType.ordinal)
         layoutManager?.let {
-            if (viewModel.queryString.isNotBlank()) {
+            if (viewModel.queryString.value.isNotBlank()) {
                 outState.putInt(SCROLL_POS, it.findFirstVisibleItemPosition())
             }
         }
@@ -149,18 +153,34 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         // Get the SearchView and set the searchable configuration
         val searchManager = ContextCompat.getSystemService(requireContext(), SearchManager::class.java) ?: return
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
+
+        queryCleaner = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            searchView.setQuery("", false)
+            queryCleaner.isEnabled = false
+            searchView.isIconified = true
+        }
+        queryCleaner.isEnabled = false
+
         searchView.apply {
             // Assumes current activity is the searchable activity
+            if (viewModel.queryString.value.isNotEmpty()) {
+                isIconified = false
+                queryCleaner.isEnabled = true
+                setQuery(viewModel.queryString.value, false)
+            }
             setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
-                        viewModel.queryString = query
+                        viewModel.queryString.value = query
+                        queryCleaner.isEnabled = true
                         return true
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
-                        viewModel.queryString = newText
+                        viewModel.queryString.value = newText
+                        queryCleaner.isEnabled = true
                         return true
                     }
                 }

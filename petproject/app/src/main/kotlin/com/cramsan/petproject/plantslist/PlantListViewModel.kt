@@ -17,9 +17,11 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.properties.Delegates
 
 class PlantListViewModel @ViewModelInject constructor(
     application: Application,
@@ -44,8 +46,12 @@ class PlantListViewModel @ViewModelInject constructor(
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
     fun observableAnimalType(): LiveData<AnimalType> = observableAnimalType
 
-    var queryString: String by Delegates.observable("") { _, _, new ->
-        searchPlants(new)
+    var queryString = MutableStateFlow("")
+
+    init {
+        queryString.onEach {
+            searchPlants(it)
+        }.launchIn(viewModelScope)
     }
 
     override fun onCatalogUpdate(isReady: Boolean) {
@@ -57,7 +63,7 @@ class PlantListViewModel @ViewModelInject constructor(
     fun setAnimalType(animalType: AnimalType) {
         observableAnimalType.value = animalType
         viewModelScope.launch {
-            filterPlants(queryString)
+            filterPlants(queryString.value)
         }
     }
 

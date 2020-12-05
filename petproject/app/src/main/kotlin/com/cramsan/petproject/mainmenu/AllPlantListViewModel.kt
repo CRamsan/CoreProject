@@ -20,9 +20,11 @@ import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.SimpleEvent
 import io.ktor.client.features.ServerResponseException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.properties.Delegates
 
 class AllPlantListViewModel @ViewModelInject constructor(
     application: Application,
@@ -54,12 +56,13 @@ class AllPlantListViewModel @ViewModelInject constructor(
     fun observableNextActivityCat(): LiveData<SimpleEvent> = observableNextActivityCat
     fun observableNextActivityDog(): LiveData<SimpleEvent> = observableNextActivityDog
 
-    var queryString: String by Delegates.observable("") { _, _, new ->
-        searchPlants(new)
-    }
+    var queryString = MutableStateFlow("")
 
     init {
         observablePlants.value = emptyList()
+        queryString.onEach {
+            searchPlants(it)
+        }.launchIn(viewModelScope)
     }
 
     fun goToCats(view: View) {
