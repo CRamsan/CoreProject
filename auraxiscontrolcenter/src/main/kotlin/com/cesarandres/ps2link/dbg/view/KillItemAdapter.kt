@@ -16,14 +16,15 @@ import com.android.volley.Response.Listener
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.CharacterEvent
-import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.item.IContainDrawable
-import com.cesarandres.ps2link.dbg.content.response.Item_list_response
+import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.item.IContainDrawable
+import com.cramsan.ps2link.appcore.dbg.content.response.Item_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
+import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.Date
@@ -32,12 +33,12 @@ import java.util.Locale
 
 class KillItemAdapter(
     private val context: Context,
-    private val events: ArrayList<CharacterEvent>,
+    private val events: List<CharacterEvent>,
     private val characterId: String,
-    private val namespace: DBGCensus.Namespace,
+    private val namespace: Namespace,
     private val volley: RequestQueue,
     private val imageLoader: ImageLoader,
-    private val dbgCensus: DBGCensus
+    private val dbgCensus: DBGServiceClient
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
@@ -184,6 +185,8 @@ class KillItemAdapter(
         position: Int,
         view: View
     ) {
+        //TODO: Reenable this feature
+        /*
         val url =
             dbgCensus.generateGameDataRequest(Verb.GET, collection, resource_id, null, namespace)!!.toString()
         val success = Listener<Item_list_response> { response ->
@@ -225,6 +228,7 @@ class KillItemAdapter(
         val request = GsonRequest(url, Item_list_response::class.java, null, success, error)
         requestTable[view] = request
         volley.add(request)
+         */
     }
 
     internal class ViewHolder {

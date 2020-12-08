@@ -12,11 +12,12 @@ import com.android.volley.toolbox.ImageLoader
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.WallPaperMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.module.BitmapWorkerTask
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import org.json.JSONException
 import org.json.JSONObject
 import org.kodein.di.DIAware
@@ -31,7 +32,7 @@ abstract class BaseActivity : FragmentActivity(), DIAware {
     protected val eventLogger: EventLoggerInterface by instance()
     protected val metrics: MetricsInterface by instance()
     protected val volley: RequestQueue by instance()
-    protected val dbgCensus: DBGCensus by instance()
+    protected val dbgCensus: DBGServiceClient by instance()
     protected val imageLoader: ImageLoader by instance()
 
     private var currentTask: BitmapWorkerTask? = null

@@ -8,20 +8,26 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.CharacterProfile
-import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.item.WeaponStat
-import com.cesarandres.ps2link.dbg.content.response.Weapon_list_response
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
+import com.cramsan.ps2link.appcore.dbg.content.response.Weapon_list_response
 import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.content.item.Weapon
 import java.util.ArrayList
 import java.util.HashMap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * This fragment will retrieve the list of weapons for a player and display it.
@@ -33,7 +39,7 @@ class FragmentWeaponList : BaseFragment() {
 
     private var weaponKills: List<WeaponStat>? = null
     private var weaponKilledBy: List<WeaponStat>? = null
-    private var namespace: DBGCensus.Namespace? = null
+    private var namespace: Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -77,7 +83,7 @@ class FragmentWeaponList : BaseFragment() {
         }
 
         this.profileId = arguments!!.getString("PARAM_0")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
         this.profileFaction = ""
     }
 
@@ -113,35 +119,30 @@ class FragmentWeaponList : BaseFragment() {
             return
         }
 
-        setProgressButton(true)
-        val url = dbgCensus.generateGameDataRequest(
-            "characters_weapon_stat_by_faction/?" +
-                "character_id=" + character_id + "&c:join=item^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() +
-                "&c:join=vehicle^show:image_path'name." + dbgCensus.currentLang.name.toLowerCase() + "&c:limit=10000",
-            namespace!!
-        )!!.toString()
+        viewLifecycleOwner.lifecycleScope.launch {
+            setProgressButton(true)
+            val weaponListResponse = withContext(Dispatchers.IO) { dbgCensus.getWeaponList(character_id, namespace!!, CensusLang.EN) }
 
-        val success = Listener<Weapon_list_response> { response ->
-            setProgressButton(false)
-            val currentTask = GenerateWeaponStats()
-            setCurrentTask(currentTask)
-            currentTask.execute(response)
-        }
+            if (weaponListResponse != null) {
+                setProgressButton(false)
+                val currentTask = GenerateWeaponStats()
+                setCurrentTask(currentTask)
+                currentTask.execute(weaponListResponse)
+            } else {
+                setProgressButton(false)
+                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
+                    .show()
 
-        val error = ErrorListener {
-            setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
+            }
         }
-        dbgCensus.sendGsonRequest(url, Weapon_list_response::class.java, success, error, this)
     }
 
     /**
      * Use this task to go over the data we recieved and generate the objects that
      * we are going to pass to the adapter
      */
-    private inner class GenerateWeaponStats : AsyncTask<Weapon_list_response, Int, Int>() {
+    private inner class GenerateWeaponStats : AsyncTask<List<Weapon>, Int, Int>() {
 
         /*
          * (non-Javadoc)
@@ -157,7 +158,7 @@ class FragmentWeaponList : BaseFragment() {
          *
          * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
          */
-        override fun doInBackground(vararg args: Weapon_list_response): Int? {
+        override fun doInBackground(vararg args: List<Weapon>): Int? {
             val response = args[0]
             var weaponKillStats = ArrayList<WeaponStat>()
             var weaponKilledByStats = ArrayList<WeaponStat>()
@@ -171,7 +172,7 @@ class FragmentWeaponList : BaseFragment() {
 
             try {
 
-                val responseList = response.getcharacters_weapon_stat_by_faction_list()
+                val responseList = response
                 if (responseList == null) {
                     weaponKills = emptyList()
                     weaponKilledBy = emptyList()
@@ -186,7 +187,7 @@ class FragmentWeaponList : BaseFragment() {
                     } else {
                         try {
                             if (weapon.item_id_join_item != null) {
-                                weaponName = weapon.item_id_join_item!!.name!!.localizedName(dbgCensus.currentLang)
+                                weaponName = weapon.item_id_join_item!!.name!!.localizedName(CensusLang.EN)
                             } else {
                                 continue
                             }
@@ -217,7 +218,7 @@ class FragmentWeaponList : BaseFragment() {
 
                         if (weapon.vehicle_id_join_vehicle != null) {
                             stat.name = weaponName
-                            stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName(dbgCensus.currentLang)
+                            stat.vehicle = weapon.vehicle_id_join_vehicle!!.name!!.localizedName(CensusLang.EN)
                         } else {
                             stat.name = weaponName
                         }
@@ -258,8 +259,11 @@ class FragmentWeaponList : BaseFragment() {
                 weaponKillStats = ArrayList(weaponMap.values)
                 weaponKilledByStats = ArrayList(weaponKilledMap.values)
 
+                // TODO: Reenable this feature
+                /*
                 java.util.Collections.sort(weaponKillStats)
                 java.util.Collections.sort(weaponKilledByStats)
+                 */
 
                 for (i in weaponKillStats.indices.reversed()) {
                     if (weaponKillStats[i].kills <= 0) {

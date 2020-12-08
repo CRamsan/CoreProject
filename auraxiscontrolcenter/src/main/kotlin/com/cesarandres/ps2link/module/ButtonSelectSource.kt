@@ -9,9 +9,9 @@ import android.view.ViewGroup.LayoutParams
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.Namespace
 
 /**
  * @author Cesar Ramirez
@@ -25,7 +25,6 @@ class ButtonSelectSource(
     private val context: Context,
     root: ViewGroup,
     private val metrics: MetricsInterface,
-    private val dbgCensus: DBGCensus
 ) {
     var namespace = Namespace.PS2PC
 
@@ -93,7 +92,7 @@ class ButtonSelectSource(
     }
 
     interface SourceSelectionChangedListener {
-        fun onSourceSelectionChanged(selectedNamespace: DBGCensus.Namespace)
+        fun onSourceSelectionChanged(selectedNamespace: Namespace)
     }
 
     companion object {

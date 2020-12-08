@@ -7,18 +7,23 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.Member
-import com.cesarandres.ps2link.dbg.content.response.Outfit_member_response
+import com.cramsan.ps2link.appcore.dbg.content.Member
+import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_member_response
 import com.cesarandres.ps2link.dbg.view.OnlineMemberItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.util.ArrayList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * This fragment will do a request to retrieve all members for the given outfit
@@ -27,9 +32,9 @@ import java.util.ArrayList
  */
 class FragmentMembersOnline : BaseFragment() {
 
-    private var outfitId: String? = null
+    private lateinit var outfitId: String
     private val outfitName: String? = null
-    private var namespace: DBGCensus.Namespace? = null
+    private var namespace: Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -56,11 +61,11 @@ class FragmentMembersOnline : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (savedInstanceState == null) {
-            this.outfitId = arguments!!.getString("PARAM_0")
+            this.outfitId = arguments!!.getString("PARAM_0")!!
         } else {
-            this.outfitId = savedInstanceState.getString("outfitId")
+            this.outfitId = savedInstanceState.getString("outfitId")!!
         }
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
 
         this.fragmentTitle.text = outfitName
     }
@@ -92,38 +97,20 @@ class FragmentMembersOnline : BaseFragment() {
      */
     fun downloadOutfitMembers() {
         setProgressButton(true)
-        val url =
-            dbgCensus.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + dbgCensus.currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + this.outfitId, namespace!!)!!.toString()
-
-        val success = Listener<Outfit_member_response> { response ->
-            setProgressButton(false)
-            try {
-                updateContent(response.outfit_member_list)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
+        lifecycleScope.launch {
+            val response = withContext(Dispatchers.IO) { dbgCensus.getMembersOnline(outfitId, namespace!!, CensusLang.EN) }
+            updateContent(response)
         }
-
-        val error = ErrorListener {
-            setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-        }
-
-        dbgCensus.sendGsonRequest(url, Outfit_member_response::class.java, success, error, this)
     }
 
     /**
      * @param members An array list with all the members found. The adapter will
      * retrieve all online members and it will only display those
      */
-    private fun updateContent(members: ArrayList<Member>?) {
+    private fun updateContent(members: List<Member>?) {
         val listRoot = view!!.findViewById<View>(R.id.listViewMemberList) as ListView
 
-        listRoot.adapter = OnlineMemberItemAdapter(members!!, activity!!, dbgCensus)
+        listRoot.adapter = OnlineMemberItemAdapter(members!!, activity!!)
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             mCallbacks!!.onItemSelected(
                 ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),

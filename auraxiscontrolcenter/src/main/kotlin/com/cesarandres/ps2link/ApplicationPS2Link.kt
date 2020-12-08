@@ -6,7 +6,6 @@ import androidx.test.espresso.idling.CountingIdlingResource
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cesarandres.ps2link.dbg.volley.BitmapLruCache
 import com.cesarandres.ps2link.module.CacheManager
 import com.cramsan.framework.assert.AssertUtilInterface
@@ -32,6 +31,9 @@ import com.cramsan.framework.preferences.implementation.PreferencesAndroid
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
+import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.microsoft.appcenter.AppCenter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -52,6 +54,7 @@ class ApplicationPS2Link : Application(), DIAware {
     private val metrics: MetricsInterface by instance()
     private val errorCallback: EventLoggerErrorCallbackInterface by instance()
     private val dbgCensus: DBGCensus by instance()
+    private val dbgCensusClient: DBGServiceClient by instance()
     val idlingResource: CountingIdlingResource by instance()
 
     override val di = DI.lazy {
@@ -104,7 +107,10 @@ class ApplicationPS2Link : Application(), DIAware {
             CacheManager(this@ApplicationPS2Link)
         }
         bind<DBGCensus>() with singleton {
-            DBGCensus(this@ApplicationPS2Link)
+            DBGCensus(instance())
+        }
+        bind<DBGServiceClient>() with singleton {
+            DBGServiceClient(instance(), instance(), instance())
         }
         bind<CountingIdlingResource>() with singleton {
             CountingIdlingResource(TAG)
@@ -130,10 +136,10 @@ class ApplicationPS2Link : Application(), DIAware {
         }
 
         val lang = Locale.getDefault().language
-        dbgCensus.currentLang = DBGCensus.CensusLang.EN
-        for (clang in DBGCensus.CensusLang.values()) {
+        for (clang in CensusLang.values()) {
             if (lang.equals(clang.name, ignoreCase = true)) {
-                dbgCensus.currentLang = clang
+                //  TODO: Set this property app-wide
+                //   dbgCensus.currentLang = clang
                 metrics.log(TAG, "Language Set", mapOf("Lang" to clang.name))
             }
         }

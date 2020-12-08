@@ -11,23 +11,28 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.CharacterProfile
-import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.response.Character_list_response
+import com.cramsan.ps2link.appcore.dbg.Verb
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.response.Character_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * This fragment will read a profile from the database and display it to the
@@ -38,7 +43,7 @@ class FragmentProfile : BaseFragment() {
     private var isCached: Boolean = false
     private var profile: CharacterProfile? = null
     private var profileId: String = ""
-    private var namespace: DBGCensus.Namespace? = null
+    private var namespace: Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -52,7 +57,7 @@ class FragmentProfile : BaseFragment() {
         val task = UpdateProfileFromTable()
         setCurrentTask(task)
         this.profileId = arguments!!.getString("PARAM_0", "")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
         metrics.log(TAG, "Loading Profile", mapOf("PROFILE" to this.profileId, "NAMESPACE" to this.namespace!!.name))
         task.execute(this.profileId)
     }
@@ -163,7 +168,7 @@ class FragmentProfile : BaseFragment() {
 
                 if (character.server != null) {
                     (activity!!.findViewById<View>(R.id.textViewServerText) as TextView).text =
-                        character.server!!.name!!.localizedName(dbgCensus.currentLang)
+                        character.server!!.name!!.localizedName(CensusLang.EN)
                 } else {
                     (activity!!.findViewById<View>(R.id.textViewServerText) as TextView).text =
                         activity!!.resources.getString(R.string.text_unknown)
@@ -223,45 +228,18 @@ class FragmentProfile : BaseFragment() {
         idlingResource.increment()
         eventLogger.log(Severity.INFO, TAG, "Downloading Profile")
         this.setProgressButton(true)
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.CHARACTER,
-            character_id,
-            QueryString.generateQeuryString().AddCommand(
-                QueryCommand.RESOLVE,
-                "outfit,world,online_status"
-            )
-                .AddCommand(QueryCommand.JOIN, "type:world^inject_at:server"),
-            this.namespace!!
-        )!!.toString()
-        val success = Listener<Character_list_response> { response ->
-            setProgressButton(false)
-            try {
-                eventLogger.log(Severity.INFO, TAG, "Profile Downloaded")
-                profile = response.character_list!![0]
-                profile!!.namespace = this.namespace!!
-                profile!!.isCached = isCached
-                updateUI(profile!!)
-                val task = UpdateProfileToTable()
-                setCurrentTask(task)
-                task.execute(profile)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
-            idlingResource.decrement()
-        }
 
-        val error = ErrorListener {
+        lifecycleScope.launch {
+            val profile = withContext(Dispatchers.IO) { dbgCensus.getProfile(character_id!!, namespace!!, CensusLang.EN) }
             setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-            idlingResource.decrement()
+            eventLogger.log(Severity.INFO, TAG, "Profile Downloaded")
+            profile!!.namespace = namespace!!
+            profile!!.isCached = isCached
+            updateUI(profile!!)
+            val task = UpdateProfileToTable()
+            setCurrentTask(task)
+            task.execute(profile)
         }
-
-        dbgCensus.sendGsonRequest(url, Character_list_response::class.java, success, error, this)
     }
 
     /**

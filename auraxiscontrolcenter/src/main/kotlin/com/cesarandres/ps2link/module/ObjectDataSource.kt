@@ -7,28 +7,29 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
-import com.cesarandres.ps2link.dbg.content.CharacterProfile
-import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.Member
-import com.cesarandres.ps2link.dbg.content.Outfit
-import com.cesarandres.ps2link.dbg.content.World
-import com.cesarandres.ps2link.dbg.content.character.BattleRank
-import com.cesarandres.ps2link.dbg.content.character.Certs
-import com.cesarandres.ps2link.dbg.content.character.Name
-import com.cesarandres.ps2link.dbg.content.character.Server
-import com.cesarandres.ps2link.dbg.content.character.Times
-import com.cesarandres.ps2link.dbg.content.world.Name_Multi
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.Member
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
+import com.cramsan.ps2link.appcore.dbg.content.World
+import com.cramsan.ps2link.appcore.dbg.content.character.BattleRank
+import com.cramsan.ps2link.appcore.dbg.content.character.Certs
+import com.cramsan.ps2link.appcore.dbg.content.character.Name
+import com.cramsan.ps2link.appcore.dbg.content.character.Server
+import com.cramsan.ps2link.appcore.dbg.content.character.Times
+import com.cramsan.ps2link.appcore.dbg.content.world.Name_Multi
 import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.util.ArrayList
 
 /**
  * Class that retrieves information from the SQLiteManager and convert it into
  * objects that can be used by other classes.
  */
-class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
+class ObjectDataSource(context: Context) {
 /**
      * Constructor that requires a reference to the current context.
      *
@@ -263,7 +264,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         values.put(SQLiteManager.CHARACTERS_COLUMN_WORLD_ID, character.world_id)
         values.put(
             SQLiteManager.CHARACTERS_COLUMN_WORLD_NAME,
-            character.server!!.name!!.localizedName(dbgCensus.currentLang)
+            character.server!!.name!!.localizedName(CensusLang.EN)
         )
         if (character.outfit == null) {
             values.put(SQLiteManager.CHARACTERS_COLUMN_OUTFIT_NAME, "NONE")
@@ -387,7 +388,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
         }
         values.put(
             SQLiteManager.CHARACTERS_COLUMN_WORLD_NAME,
-            character.server!!.name!!.localizedName(dbgCensus.currentLang)
+            character.server!!.name!!.localizedName(CensusLang.EN)
         )
 
         if (temp) {
@@ -542,7 +543,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     fun insertFaction(faction: Faction): Boolean {
         val values = ContentValues()
         values.put(SQLiteManager.FACTIONS_COLUMN_ID, faction.id)
-        values.put(SQLiteManager.FACTIONS_COLUMN_NAME, faction.name!!.localizedName(dbgCensus.currentLang))
+        values.put(SQLiteManager.FACTIONS_COLUMN_NAME, faction.name!!.localizedName(CensusLang.EN))
         values.put(SQLiteManager.FACTIONS_COLUMN_CODE, faction.code)
         values.put(SQLiteManager.FACTIONS_COLUMN_ICON, faction.icon)
         var insertId: Long = -1
@@ -638,7 +639,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     fun updateFaction(faction: Faction): Int {
         val values = ContentValues()
         values.put(SQLiteManager.FACTIONS_COLUMN_ID, faction.id)
-        values.put(SQLiteManager.FACTIONS_COLUMN_NAME, faction.name!!.localizedName(dbgCensus.currentLang))
+        values.put(SQLiteManager.FACTIONS_COLUMN_NAME, faction.name!!.localizedName(CensusLang.EN))
         values.put(SQLiteManager.FACTIONS_COLUMN_CODE, faction.code)
         values.put(SQLiteManager.FACTIONS_COLUMN_ICON, faction.icon)
         var rowsChanged = 0
@@ -1217,7 +1218,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
      */
     fun insertWorld(world: World): Boolean {
         val values = ContentValues()
-        values.put(SQLiteManager.WORLDS_COLUMN_NAME, world.name!!.localizedName(dbgCensus.currentLang))
+        values.put(SQLiteManager.WORLDS_COLUMN_NAME, world.name!!.localizedName(CensusLang.EN))
         values.put(SQLiteManager.WORLDS_COLUMN_ID, world.world_id)
         values.put(SQLiteManager.WORLDS_COLUMN_STATE, world.state)
         var insertId: Long = -1
@@ -1297,7 +1298,7 @@ class ObjectDataSource(context: Context, private val dbgCensus: DBGCensus) {
     fun updateWorld(world: World): Int {
 
         val values = ContentValues()
-        values.put(SQLiteManager.WORLDS_COLUMN_NAME, world.name!!.localizedName(dbgCensus.currentLang))
+        values.put(SQLiteManager.WORLDS_COLUMN_NAME, world.name!!.localizedName(CensusLang.EN))
         values.put(SQLiteManager.WORLDS_COLUMN_ID, world.world_id)
         values.put(SQLiteManager.WORLDS_COLUMN_STATE, world.state)
         var rowsChanged = 0

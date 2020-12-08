@@ -170,7 +170,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
         }
 
         // Open the database for all other fragments to use
-        data = ObjectDataSource(this, dbgCensus)
+        data = ObjectDataSource(this)
         data!!.open()
     }
 

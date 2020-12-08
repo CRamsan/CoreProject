@@ -17,10 +17,11 @@ import com.android.volley.toolbox.ImageLoader
 import com.cesarandres.ps2link.ActivityContainer
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.DBGCensus
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 
@@ -49,7 +50,7 @@ abstract class BaseFragment : Fragment(), DIAware {
     override val di by lazy { (requireActivity().application as ApplicationPS2Link).di }
     protected val eventLogger: EventLoggerInterface by instance()
     protected val volley: RequestQueue by instance()
-    protected val dbgCensus: DBGCensus by instance()
+    protected val dbgCensus: DBGServiceClient by instance()
     protected val metrics: MetricsInterface by instance()
     protected val imageLoader: ImageLoader by instance()
     protected val idlingResource: CountingIdlingResource by instance()

@@ -3,7 +3,8 @@ package com.cesarandres.ps2link.module
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.cesarandres.ps2link.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.Namespace
 
 /**
  * This class will handle accessing and retrieving information from the local
@@ -50,8 +51,8 @@ class SQLiteManager
             db.execSQL("ALTER TABLE $TABLE_CHARACTERS_NAME ADD COLUMN $CHARACTERS_COLUMN_WORLD_NAME varchar(-1) DEFAULT '';")
         }
         if (oldVersion < 33) {
-            db.execSQL("ALTER TABLE " + TABLE_CHARACTERS_NAME + " ADD COLUMN " + CHARACTERS_COLUMN_NAMESPACE + " varchar(-1) DEFAULT '" + DBGCensus.Namespace.PS2PC.name + "';")
-            db.execSQL("ALTER TABLE " + TABLE_OUTFITS_NAME + " ADD COLUMN " + OUTFIT_COLUMN_NAMESPACE + " varchar(-1) DEFAULT '" + DBGCensus.Namespace.PS2PC.name + "';")
+            db.execSQL("ALTER TABLE " + TABLE_CHARACTERS_NAME + " ADD COLUMN " + CHARACTERS_COLUMN_NAMESPACE + " varchar(-1) DEFAULT '" + Namespace.PS2PC.name + "';")
+            db.execSQL("ALTER TABLE " + TABLE_OUTFITS_NAME + " ADD COLUMN " + OUTFIT_COLUMN_NAMESPACE + " varchar(-1) DEFAULT '" + Namespace.PS2PC.name + "';")
         }
         // onCreate(db);
     }

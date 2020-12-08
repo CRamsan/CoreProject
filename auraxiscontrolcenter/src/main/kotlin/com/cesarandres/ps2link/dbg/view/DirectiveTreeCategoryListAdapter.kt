@@ -11,9 +11,10 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.DirectiveTreeCategory
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.content.DirectiveTreeCategory
 import java.util.ArrayList
 
 class DirectiveTreeCategoryListAdapter(
@@ -101,7 +102,7 @@ class DirectiveTreeCategoryListAdapter(
         }
 
         val category = this.categories!![groupPosition]
-        holder.categoryName!!.text = category.name!!.localizedName(dbgCensus.currentLang)
+        holder.categoryName!!.text = category.name!!.localizedName(CensusLang.EN)
         holder.progress!!.max = category.maxValue
         holder.progress!!.progress = category.currentValue
 

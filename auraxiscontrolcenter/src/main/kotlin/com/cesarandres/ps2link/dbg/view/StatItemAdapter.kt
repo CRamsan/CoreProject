@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.content.character.Stat
+import com.cramsan.ps2link.appcore.dbg.content.character.Stat
 import java.util.ArrayList
 
 class StatItemAdapter(
     private val context: Context,
-    private val stats: ArrayList<Stat>,
+    private val stats: List<Stat>,
     characterId: String
 ) : BaseAdapter() {
 
@@ -36,16 +36,17 @@ class StatItemAdapter(
             }
         }
         val kdr = Stat()
+        /*
         if (deaths!!.all_time == "0") {
             deaths.all_time = "1"
         }
-        if (deaths.today == 0f) {
+        if (deaths.today() == 0f) {
             deaths.today = 1F
         }
-        if (deaths.thisWeek == 0f) {
+        if (deaths.thisWeek() == 0f) {
             deaths.thisWeek = 1F
         }
-        if (deaths.thisMonth == 0f) {
+        if (deaths.thisMonth() == 0f) {
             deaths.thisWeek = 1F
         }
         kdr.day = kdr.Day()
@@ -86,6 +87,7 @@ class StatItemAdapter(
         sph.thisWeek = score.thisWeek / (time.thisWeek / 3600f)
         sph.thisMonth = score.thisMonth / (time.thisMonth / 3600f)
         this.stats.add(0, sph)
+        */
     }
 
     override fun getCount(): Int {

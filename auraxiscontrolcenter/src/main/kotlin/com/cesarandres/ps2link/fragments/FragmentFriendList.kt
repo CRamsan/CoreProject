@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.CharacterFriend
-import com.cesarandres.ps2link.dbg.content.response.Character_friend_list_response
+import com.cramsan.ps2link.appcore.dbg.Verb
+import com.cramsan.ps2link.appcore.dbg.content.CharacterFriend
+import com.cramsan.ps2link.appcore.dbg.content.response.Character_friend_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
@@ -23,6 +23,11 @@ import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
 import com.cesarandres.ps2link.dbg.view.FriendItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * This fragment will display the friends of a given user. This fragment is
@@ -31,7 +36,7 @@ import com.cramsan.framework.logging.Severity
 class FragmentFriendList : BaseFragment() {
 
     private var profileId: String? = null
-    private var namespace: DBGCensus.Namespace? = null
+    private var namespace: Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -68,7 +73,7 @@ class FragmentFriendList : BaseFragment() {
         }
 
         this.profileId = arguments!!.getString("PARAM_0")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
     }
 
     /*
@@ -86,46 +91,13 @@ class FragmentFriendList : BaseFragment() {
      */
     fun downloadFriendsList(character_id: String?) {
         setProgressButton(true)
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.CHARACTERS_FRIEND,
-            null,
-            QueryString.generateQeuryString().AddComparison(
-                "character_id",
-                SearchModifier.EQUALS,
-                character_id!!
-            )
-                .AddCommand(QueryCommand.RESOLVE, "character_name"),
-            this.namespace!!
-        )!!.toString()
-
-        val success = Listener<Character_friend_list_response> { response ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            val friendList = withContext(Dispatchers.IO) { dbgCensus.getFriendList(character_id!!, namespace!!, CensusLang.EN) }
             setProgressButton(false)
-            try {
-                val listRoot = activity!!.findViewById<View>(R.id.listViewFriendList) as ListView
-                listRoot.adapter =
-                    FriendItemAdapter(activity!!, response.characters_friend_list!![0].friend_list!!)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
+            val listRoot = activity!!.findViewById<View>(R.id.listViewFriendList) as ListView
+            listRoot.adapter =
+                FriendItemAdapter(activity!!, friendList!!)
         }
-
-        val error = ErrorListener {
-            setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-        }
-
-        dbgCensus.sendGsonRequest(
-            url,
-            Character_friend_list_response::class.java,
-            success,
-            error,
-            this
-        )
     }
 
     companion object {

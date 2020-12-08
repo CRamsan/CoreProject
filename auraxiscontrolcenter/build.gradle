@@ -26,12 +26,14 @@ android {
 
 dependencies {
     implementation project(":framework")
+    implementation project(":auraxiscontrolcenter:appcore")
 
     implementation packages.Volley
     implementation packages.Gson
     implementation packages.PrettyTime
     implementation packages.Twitter4J
     implementation packages.AndroidXAppCompat
+    implementation packages.AndroidXLifecycleRuntimeKtx
     implementation packages.EspressoIdlingResource
 
     implementation packages.KotlinStdJdk8
@@ -58,4 +60,5 @@ dependencies {
 
 release {
     dependsOn ':framework:release'
+    dependsOn ':auraxiscontrocenter:appcore:release'
 }

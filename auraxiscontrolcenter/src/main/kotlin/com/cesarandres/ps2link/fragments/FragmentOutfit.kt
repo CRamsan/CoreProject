@@ -9,24 +9,27 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.Outfit
-import com.cesarandres.ps2link.dbg.content.response.Outfit_response
+import com.cramsan.ps2link.appcore.dbg.Verb
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
+import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.launch
 
 /**
  * This fragment will read the outfit from the database to display it to the user. Then a network
@@ -37,7 +40,7 @@ class FragmentOutfit : BaseFragment() {
     private var isCached: Boolean = false
     private var outfitId: String? = null
     private var outfit: Outfit? = null
-    private var namespace: DBGCensus.Namespace? = null
+    private var namespace: Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -51,7 +54,7 @@ class FragmentOutfit : BaseFragment() {
         val task = UpdateOutfitFromTable()
         setCurrentTask(task)
         this.outfitId = arguments!!.getString("PARAM_0")
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
         task.execute(this.outfitId)
     }
 
@@ -169,38 +172,15 @@ class FragmentOutfit : BaseFragment() {
      */
     fun downloadOutfit(outfitId: String?) {
         this.setProgressButton(true)
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.OUTFIT,
-            outfitId,
-            QueryString.generateQeuryString().AddCommand(QueryCommand.RESOLVE, "leader"),
-            this.namespace!!
-        )!!.toString()
-        val success = Listener<Outfit_response> { response ->
-            setProgressButton(false)
-            try {
-                outfit = response.outfit_list!![0]
-                outfit!!.namespace = this.namespace
-                outfit!!.isCached = isCached
-                updateUI(outfit!!)
-                val task = UpdateOutfitToTable()
-                setCurrentTask(task)
-                task.execute(outfit)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
 
-        val error = ErrorListener {
+        lifecycleScope.launch {
+            val outfit = dbgCensus.getOutfit(outfitId!!, namespace!!, CensusLang.EN)
             setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
+            updateUI(outfit!!)
+            val task = UpdateOutfitToTable()
+            setCurrentTask(task)
+            task.execute(outfit)
         }
-
-        dbgCensus.sendGsonRequest(url, Outfit_response::class.java, success, error, this)
     }
 
     /**

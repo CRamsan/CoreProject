@@ -21,7 +21,7 @@ import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cesarandres.ps2link.module.BitmapWorkerTask
 
 /**

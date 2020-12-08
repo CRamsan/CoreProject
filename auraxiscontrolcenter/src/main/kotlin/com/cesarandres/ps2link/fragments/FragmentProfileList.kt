@@ -11,7 +11,7 @@ import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
 import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
 import java.util.ArrayList
 

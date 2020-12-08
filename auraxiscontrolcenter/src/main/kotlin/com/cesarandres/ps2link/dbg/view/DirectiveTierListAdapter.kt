@@ -10,9 +10,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.Directive
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.content.Directive
 import java.util.ArrayList
 
 class DirectiveTierListAdapter(
@@ -21,7 +22,7 @@ class DirectiveTierListAdapter(
 ) : BaseExpandableListAdapter(),
     OnGroupExpandListener {
     private val expandableList: EmbeddableExpandableListView? = null
-    private var directives: ArrayList<Directive>? = null
+    private var directives: List<Directive>? = null
 
     override fun getChild(groupPosition: Int, childPosititon: Int): Any? {
         return null
@@ -82,7 +83,7 @@ class DirectiveTierListAdapter(
         val pbar = convertView.findViewById<View>(R.id.progressBarDirectiveProgress) as ProgressBar
         var name: String? = "None"
         try {
-            name = headerTitle.name!!.localizedName(dbgCensus.currentLang)
+            name = headerTitle.name!!.localizedName(CensusLang.EN)
         } catch (e: Exception) {
         }
 
@@ -118,7 +119,7 @@ class DirectiveTierListAdapter(
         }
     }
 
-    fun setDirectives(directives: ArrayList<Directive>) {
+    fun setDirectives(directives: List<Directive>) {
         this.directives = directives
     }
 }

@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+        classpath packages.KotlinxSerializationGradle
+        classpath packages.SqlDelightGradle
+    }
+}
+
+repositories {
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
+}
+
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+apply plugin: "com.squareup.sqldelight"
+
+sqldelight {
+    PetProjectDB {
+        packageName = "com.cramsan.ps2link.db"
+    }
+}
+
+dependencies {
+    implementation packages.SqlDelightAndroidDriver
+    implementation packages.KtorAndroid
+    implementation packages.KtorGson
+
+    testImplementation packages.SqlDelightAndroidDriver
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework")
+                implementation packages.KtorCore
+                implementation packages.KtorJson
+                implementation packages.KotlinxDatetime
+                implementation packages.KotlinxSerialization
+                implementation packages.SqlDelightCoroutineExt
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation project(":framework")
+            }
+        }
+    }
+}
+
+release {
+    dependsOn ':framework:release'
+}

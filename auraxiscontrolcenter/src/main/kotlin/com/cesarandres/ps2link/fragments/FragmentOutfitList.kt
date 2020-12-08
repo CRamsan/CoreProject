@@ -10,7 +10,7 @@ import android.widget.ListView
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.content.Outfit
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import java.util.ArrayList
 

@@ -11,15 +11,16 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.Outfit
-import com.cesarandres.ps2link.dbg.content.response.Outfit_response
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.Verb
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
+import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
@@ -30,10 +31,14 @@ import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.ArrayList
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * This fragment will show the user a field to search for outfits based on their
@@ -43,7 +48,7 @@ import java.util.Locale
  */
 class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
 
-    private var selectionButton: ButtonSelectSource? = null
+    private lateinit var selectionButton: ButtonSelectSource
     private var lastUsedNamespace: Namespace? = null
 
     /*
@@ -62,7 +67,6 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
             activity!!,
             activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
             metrics,
-            dbgCensus
         )
         selectionButton!!.listener = this
         return view
@@ -140,81 +144,30 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
         // Set the loading adapter while searching
         listRoot.adapter = LoadingItemAdapter(activity!!)
 
-        val query = QueryString.generateQeuryString()
-        try {
-            if (outfitTag.length >= 3) {
-                query.AddComparison(
-                    "alias_lower",
-                    SearchModifier.STARTSWITH,
-                    URLEncoder.encode(outfitTag, "UTF-8")
-                )
-            }
-            if (outfitName.length >= 3) {
-                query.AddComparison(
-                    "name_lower",
-                    SearchModifier.STARTSWITH,
-                    URLEncoder.encode(outfitName, "UTF-8")
-                )
-            }
-        } catch (e1: UnsupportedEncodingException) {
-            Toast.makeText(activity, R.string.text_problem_encoding, Toast.LENGTH_LONG).show()
-            (activity!!.findViewById<View>(R.id.listFoundOutfits) as ListView).adapter = null
-            return
-        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            val outfitList = withContext(Dispatchers.IO) { dbgCensus.getOutfitList(outfitTag, outfitName, selectionButton.namespace!!, CensusLang.EN) }
 
-        query.AddCommand(QueryCommand.LIMIT, "15")
-
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.OUTFIT,
-            "",
-            query,
-            selectionButton!!.namespace
-        )!!.toString()
-
-        val success = Listener<Outfit_response> { response ->
-            setProgressButton(false)
-            try {
-                val listRoot = activity!!.findViewById<View>(R.id.listFoundOutfits) as ListView
-                listRoot.adapter = OutfitItemAdapter(activity!!, response.outfit_list!!)
-
-                listRoot.onItemClickListener =
-                    OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-                        mCallbacks!!.onItemSelected(
-                            ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
-                            arrayOf(
-                                (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,
-                                lastUsedNamespace!!.name
-                            )
-                        )
-                    }
-
-                // Add the new outfits to the local cache
-                val currentTask = UpdateTmpOutfitTable()
-                setCurrentTask(currentTask)
-                currentTask.execute(response.outfit_list)
-                listRoot.isTextFilterEnabled = true
-            } catch (e: Exception) {
-                metrics.log(TAG, Constants.ERROR_PARSING_RESPONE)
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-
-        val error = ErrorListener {
-            setProgressButton(false)
             val listRoot = activity!!.findViewById<View>(R.id.listFoundOutfits) as ListView
-            if (listRoot != null) {
-                listRoot.adapter = null
-            }
-            metrics.log(TAG, Constants.ERROR_MAKING_REQUEST)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-        }
+            listRoot.adapter = OutfitItemAdapter(activity!!, outfitList!!)
 
-        dbgCensus.sendGsonRequest(url, Outfit_response::class.java, success, error, this)
+            listRoot.onItemClickListener =
+                OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
+                    mCallbacks!!.onItemSelected(
+                        ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
+                        arrayOf(
+                            (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,
+                            lastUsedNamespace!!.name
+                        )
+                    )
+                }
+
+            // Add the new outfits to the local cache
+            val currentTask = UpdateTmpOutfitTable()
+            setCurrentTask(currentTask)
+            currentTask.execute(outfitList)
+            listRoot.isTextFilterEnabled = true
+
+        }
     }
 
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
@@ -225,7 +178,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
      * This task will add the searched outfits to database. All outfits are
      * added to the database for the first time with the Temp flag set.
      */
-    private inner class UpdateTmpOutfitTable : AsyncTask<ArrayList<Outfit>, Int, Boolean>() {
+    private inner class UpdateTmpOutfitTable : AsyncTask<List<Outfit>, Int, Boolean>() {
 
         /*
          * (non-Javadoc)
@@ -241,7 +194,7 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
          *
          * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
          */
-        override fun doInBackground(vararg outfits: ArrayList<Outfit>): Boolean? {
+        override fun doInBackground(vararg outfits: List<Outfit>): Boolean? {
             val count = outfits[0].size
             val list = outfits[0]
             val data = activityContainer.data

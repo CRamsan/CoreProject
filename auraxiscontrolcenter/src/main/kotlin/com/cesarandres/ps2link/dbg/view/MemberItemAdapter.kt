@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.content.Member
-import com.cesarandres.ps2link.dbg.content.character.Name
+import com.cramsan.ps2link.appcore.dbg.content.Member
+import com.cramsan.ps2link.appcore.dbg.content.character.Name
 import com.cesarandres.ps2link.module.ObjectDataSource
 
 class MemberItemAdapter(
@@ -44,11 +44,7 @@ class MemberItemAdapter(
             member.online_status = ""
             member.outfit_id = ""
             member.rank = ""
-            member.name = object : Name() {
-                init {
-                    this.first = ""
-                }
-            }
+            member.name = Name(first = "")
         }
 
         return member

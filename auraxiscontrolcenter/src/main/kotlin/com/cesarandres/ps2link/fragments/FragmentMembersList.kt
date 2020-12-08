@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.Member
-import com.cesarandres.ps2link.dbg.content.response.Outfit_member_response
+import com.cramsan.ps2link.appcore.dbg.Verb
+import com.cramsan.ps2link.appcore.dbg.content.Member
+import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_member_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
@@ -24,7 +24,12 @@ import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
 import com.cesarandres.ps2link.dbg.view.MemberItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.util.ArrayList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Fargment that will retrieve and display all the members of an outfit in
@@ -36,9 +41,9 @@ class FragmentMembersList : BaseFragment() {
     private val isCached: Boolean = false
     private var shownOffline = false
     private var outfitSize: Int = 0
-    private var outfitId: String? = null
+    private lateinit var outfitId: String
     private var outfitName: String? = null
-    private var namespace: DBGCensus.Namespace? = null
+    private var namespace: Namespace? = null
 
     /*
      * (non-Javadoc)
@@ -66,14 +71,14 @@ class FragmentMembersList : BaseFragment() {
 
         // Check if outfit data has already been loaded
         if (savedInstanceState == null) {
-            this.outfitId = arguments!!.getString("PARAM_0")
+            this.outfitId = arguments!!.getString("PARAM_0")!!
         } else {
             this.outfitSize = savedInstanceState.getInt("outfitSize", 0)
-            this.outfitId = savedInstanceState.getString("outfitId")
+            this.outfitId = savedInstanceState.getString("outfitId")!!
             this.outfitName = savedInstanceState.getString("outfitName")
             this.shownOffline = savedInstanceState.getBoolean("showOffline")
         }
-        this.namespace = DBGCensus.Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
 
         this.fragmentShowOffline.setOnCheckedChangeListener { buttonView, isChecked ->
             shownOffline = isChecked
@@ -111,44 +116,15 @@ class FragmentMembersList : BaseFragment() {
      */
     fun downloadOutfitMembers() {
         setProgressButton(true)
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.OUTFIT,
-            "",
-            QueryString.generateQeuryString().AddComparison(
-                "outfit_id",
-                SearchModifier.EQUALS,
-                this.outfitId!!
-            )
-                .AddCommand(
-                    QueryCommand.RESOLVE,
-                    "member_online_status,member,member_character(name,type.faction)"
-                ),
-            namespace!!
-        )!!.toString()
+        lifecycleScope.launch {
+            val membersList = withContext(Dispatchers.IO) { dbgCensus.getMemberList(outfitId, namespace!!, CensusLang.EN)}
+            val task = UpdateMembers()
+            setCurrentTask(task)
+            val list = membersList
+            // Check this warning
+            task.execute(list)
 
-        val success = Listener<Outfit_member_response> { response ->
-            setProgressButton(false)
-            try {
-                val task = UpdateMembers()
-                setCurrentTask(task)
-                val list = response.outfit_list!![0].members
-                // Check this warning
-                task.execute(list)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
         }
-
-        val error = ErrorListener {
-            setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-        }
-        dbgCensus.sendGsonRequest(url, Outfit_member_response::class.java, success, error, this)
     }
 
     /**
@@ -177,7 +153,7 @@ class FragmentMembersList : BaseFragment() {
      * ones. This task can take a long time, specially on big outfits and on old
      * devices
      */
-    private inner class UpdateMembers : AsyncTask<ArrayList<Member>, Int, Int>() {
+    private inner class UpdateMembers : AsyncTask<List<Member>, Int, Int>() {
 
         /*
          * (non-Javadoc)
@@ -193,7 +169,7 @@ class FragmentMembersList : BaseFragment() {
          *
          * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
          */
-        override fun doInBackground(vararg members: ArrayList<Member>): Int? {
+        override fun doInBackground(vararg members: List<Member>): Int? {
             val newMembers = members[0]
             val data = activityContainer.data
             val outfit = data!!.getOutfit(outfitId!!) ?: return null

@@ -12,11 +12,11 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.Faction
-import com.cesarandres.ps2link.dbg.content.item.WeaponStat
-import com.cesarandres.ps2link.dbg.content.response.Item_list_response
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
+import com.cramsan.ps2link.appcore.dbg.content.response.Item_list_response
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import java.util.Hashtable
 
 class WeaponItemAdapter(

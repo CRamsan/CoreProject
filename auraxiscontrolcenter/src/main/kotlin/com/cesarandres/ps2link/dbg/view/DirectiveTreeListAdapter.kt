@@ -11,9 +11,10 @@ import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.CharacterDirectiveTree
+import com.cramsan.ps2link.appcore.dbg.content.CharacterDirectiveTree
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import java.util.ArrayList
 
 class DirectiveTreeListAdapter(
@@ -25,7 +26,7 @@ class DirectiveTreeListAdapter(
 
     protected var mInflater: LayoutInflater
     private val expandableList: EmbeddableExpandableListView? = null
-    private var directiveTrees: ArrayList<CharacterDirectiveTree>? = null
+    private var directiveTrees: List<CharacterDirectiveTree>? = null
     private val nextAdapter: DirectiveTierListAdapter
     private var nextList: EmbeddableExpandableListView? = null
 
@@ -110,7 +111,8 @@ class DirectiveTreeListAdapter(
             DBGCensus.ENDPOINT_URL + "/" + tree.directive_tier!!.imagePath,
             imageLoader
         )
-        holder.treeName!!.text = tree.directive_tree_id_join_directive_tree!!.name!!.localizedName(dbgCensus.currentLang)
+        holder.treeName!!.text = tree.directive_tree_id_join_directive_tree!!.name!!.localizedName(
+            CensusLang.EN)
         holder.treeValue!!.text = Integer.toString(tree.current_level_value)
         val resID = this.fragment.activity!!.resources.getIdentifier(
             "objective_progress_" + tree.current_directive_tier_id +
@@ -140,7 +142,7 @@ class DirectiveTreeListAdapter(
         }
     }
 
-    fun setDirectiveTrees(directiveTrees: ArrayList<CharacterDirectiveTree>) {
+    fun setDirectiveTrees(directiveTrees: List<CharacterDirectiveTree>) {
         this.directiveTrees = directiveTrees
     }
 

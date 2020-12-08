@@ -13,17 +13,20 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.DBGCensus
-import com.cesarandres.ps2link.dbg.content.World
-import com.cesarandres.ps2link.dbg.content.WorldEvent
-import com.cesarandres.ps2link.dbg.content.response.server.PS2
+import com.cramsan.ps2link.appcore.dbg.content.World
+import com.cramsan.ps2link.appcore.dbg.content.WorldEvent
+import com.cramsan.ps2link.appcore.dbg.content.response.server.PS2
 import com.cesarandres.ps2link.dbg.util.Logger
 import com.cesarandres.ps2link.fragments.FragmentSettings
+import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Locale
 
-class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGCensus, val namespace: DBGCensus.Namespace) : BaseAdapter() {
+class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGServiceClient, val namespace: Namespace) : BaseAdapter() {
     private val mInflater: LayoutInflater
     private val serverList: ArrayList<World>
     private val channelMap: HashMap<CompoundButton.OnCheckedChangeListener, String>
@@ -57,7 +60,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
         var name: String?
         var population: String? = ""
         for (world in this.serverList) {
-            name = world.name!!.localizedName(dbgCensus.currentLang)
+            name = world.name!!.localizedName(CensusLang.EN)
             try {
                 if (name == "Briggs") {
                     population = serverList.live!!.briggs!!.status
@@ -227,7 +230,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
         holder.serverAlertCheckBox!!.isChecked = this.serverList[position].isRegistered
         holder.serverAlertCheckBox!!.visibility = View.GONE
 
-        val name = this.serverList[position].name!!.localizedName(dbgCensus.currentLang)
+        val name = this.serverList[position].name!!.localizedName(CensusLang.EN)
 
         if (name == "Briggs") {
             holder.serverRegion!!.text = "(AU)"
@@ -268,7 +271,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                     holder.serverAlert!!.text =
                         (
                             context.resources.getString(R.string.text_server_alert_current) +
-                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang)
+                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(CensusLang.EN)
                             )
 
                     holder.serverAlert!!.setTextColor(Color.argb(255, 120, 235, 235))
@@ -277,7 +280,7 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
                     holder.serverAlert!!.text =
                         (
                             context.resources.getString(R.string.text_server_alert_recently) +
-                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(dbgCensus.currentLang)
+                                " " + lastAlert.metagame_event_id_join_metagame_event!!.description!!.localizedName(CensusLang.EN)
                             )
                     holder.serverAlert!!.setTypeface(null, Typeface.NORMAL)
                     holder.serverAlert!!.setTextColor(Color.GRAY)

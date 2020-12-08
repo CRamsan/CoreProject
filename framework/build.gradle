@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath packages.AndroidBuildGradle
         classpath packages.KotlinGradle
+        classpath packages.KotlinxSerializationGradle
     }
 }
 

@@ -8,16 +8,17 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.dbg.DBGCensus.Namespace
-import com.cesarandres.ps2link.dbg.DBGCensus.Verb
-import com.cesarandres.ps2link.dbg.content.response.Server_Status_response
-import com.cesarandres.ps2link.dbg.content.response.Server_response
-import com.cesarandres.ps2link.dbg.content.response.World_event_list_response
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.Verb
+import com.cramsan.ps2link.appcore.dbg.content.response.Server_Status_response
+import com.cramsan.ps2link.appcore.dbg.content.response.Server_response
+import com.cramsan.ps2link.appcore.dbg.content.response.World_event_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.util.QueryString
 import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
@@ -26,6 +27,10 @@ import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * This fragment will display the servers and theirs status
@@ -50,7 +55,6 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
             activity!!,
             activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
             metrics,
-            dbgCensus
         )
         selectionButton!!.listener = this
         return view
@@ -95,42 +99,18 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
      */
     fun downloadServers() {
         setProgressButton(true)
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.WORLD,
-            "",
-            QueryString.generateQeuryString().AddCommand(QueryCommand.LIMIT, "10"),
-            selectionButton!!.namespace
-        )!!.toString()
 
-        val success = Listener<Server_response> { response ->
-            try {
-                val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
-                listRoot.adapter = ServerItemAdapter(activity!!, response.world_list!!, dbgCensus, selectionButton!!.namespace)
-
-                for (world in response.world_list!!) {
-                    downloadServerAlert(world.world_id)
-                }
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServers")
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
+        lifecycleScope.launch {
+            val serverList = withContext(Dispatchers.IO) { dbgCensus.getServerList(selectionButton!!.namespace, CensusLang.EN) }
+            val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
+            listRoot.adapter = ServerItemAdapter(activity!!, serverList!!, dbgCensus, selectionButton!!.namespace)
+            for (world in serverList) {
+                downloadServerAlert(world.world_id)
             }
-
             setProgressButton(false)
             downloadServerPopulation()
             idlingResource.decrement()
         }
-
-        val error = ErrorListener {
-            setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServers")
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-            idlingResource.decrement()
-        }
-        idlingResource.increment()
-        dbgCensus.sendGsonRequest(url, Server_response::class.java, success, error, this)
     }
 
     /**
@@ -140,33 +120,14 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
      */
     fun downloadServerPopulation() {
         setProgressButton(true)
-        // This is not an standard API call
-        val url = "https://census.daybreakgames.com/s:PS2Link/json/status/ps2"
-
-        val success = Listener<Server_Status_response> { response ->
+        lifecycleScope.launch {
+            val serverPopulation = withContext(Dispatchers.IO) { dbgCensus.getServerPopulation() }
             setProgressButton(false)
-            try {
-                val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
-                val servers = response.ps2
-                (listRoot.adapter as ServerItemAdapter).setServerPopulation(servers!!)
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerPopulation")
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
-            }
+            val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
+            val servers = serverPopulation
+            (listRoot.adapter as ServerItemAdapter).setServerPopulation(servers!!)
             idlingResource.decrement()
         }
-
-        val error = ErrorListener {
-            setProgressButton(false)
-            eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerPopulation")
-            Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                .show()
-            idlingResource.decrement()
-        }
-
-        idlingResource.increment()
-        dbgCensus.sendGsonRequest(url, Server_Status_response::class.java, success, error, this)
     }
 
     /**
@@ -174,53 +135,16 @@ class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
      */
     private fun downloadServerAlert(serverId: String?) {
         setProgressButton(true)
-        // The URL looks like this:
-        // http://census.daybreakgames.com/get/ps2:v2/world_event?
-        // world_id=17&c:limit=1&type=METAGAME&c:join=metagame_event&c:lang=en
-        val url = dbgCensus.generateGameDataRequest(
-            Verb.GET,
-            PS2Collection.WORLD_EVENT,
-            "",
-            QueryString.generateQeuryString().AddCommand(
-                QueryCommand.LIMIT,
-                "1"
-            ).AddComparison(
-                "type",
-                QueryString.SearchModifier.EQUALS,
-                "METAGAME"
-            ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId!!).AddComparison(
-                "after",
-                QueryString.SearchModifier.EQUALS,
-                // Get metagame events that are newer than  minutes
-                java.lang.Long.toString(System.currentTimeMillis() / 1000L - 7200)
-            ).AddCommand(QueryCommand.JOIN, "metagame_event"),
-            selectionButton!!.namespace
-        )!!.toString()
-
-        val success = Listener<World_event_list_response> { response ->
+        lifecycleScope.launch {
+            val serverMetadata = withContext(Dispatchers.IO) { dbgCensus.getServerMetadata(serverId!!, selectionButton!!.namespace, CensusLang.EN) }
             setProgressButton(false)
-            try {
-                val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
-                val events = response.world_event_list
-                if (events != null && events.size > 0) {
-                    (listRoot.adapter as ServerItemAdapter).setServerAlert(events[0])
-                }
-            } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_PARSING_RESPONE}-DownloadServerAlert")
-                Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
-                    .show()
+            val listRoot = activity!!.findViewById<View>(R.id.listViewServers) as ListView
+            val events = serverMetadata
+            if (events != null && events.size > 0) {
+                (listRoot.adapter as ServerItemAdapter).setServerAlert(events[0])
             }
             idlingResource.decrement()
         }
-
-        val error = ErrorListener {
-            eventLogger.log(Severity.ERROR, TAG, "${Constants.ERROR_MAKING_REQUEST}-DownloadServerAlert")
-            setProgressButton(false)
-            idlingResource.decrement()
-        }
-
-        idlingResource.increment()
-        dbgCensus.sendGsonRequest(url, World_event_list_response::class.java, success, error, this)
     }
 
     override fun onSourceSelectionChanged(selectedNamespace: Namespace) {

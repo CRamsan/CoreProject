@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.fragments.FragmentDirectiveList
 import com.cesarandres.ps2link.fragments.FragmentFriendList
 import com.cesarandres.ps2link.fragments.FragmentKillList
 import com.cesarandres.ps2link.fragments.FragmentProfile
@@ -106,9 +105,6 @@ class FragmentProfilePager : BaseFragment() {
                     STATS -> (selectedFragment as FragmentStatList).downloadStatList(profileId)
                     KILLBOARD -> (selectedFragment as FragmentKillList).downloadKillList(profileId)
                     WEAPONS -> (selectedFragment as FragmentWeaponList).downloadWeaponList(profileId)
-                    DIRECTIVES -> (selectedFragment as FragmentDirectiveList).downloadDirectivesList(
-                        profileId
-                    )
                     else -> {
                     }
                 }
@@ -223,7 +219,6 @@ class FragmentProfilePager : BaseFragment() {
                 KILLBOARD -> fragment = FragmentKillList()
                 STATS -> fragment = FragmentStatList()
                 WEAPONS -> fragment = FragmentWeaponList()
-                DIRECTIVES -> fragment = FragmentDirectiveList()
                 else -> {
                 }
             }

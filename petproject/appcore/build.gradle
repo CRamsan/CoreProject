@@ -8,6 +8,7 @@ buildscript {
         classpath packages.AndroidBuildGradle
         classpath packages.KotlinGradle
         classpath packages.SqlDelightGradle
+        classpath packages.KotlinxSerializationGradle
     }
 }
 

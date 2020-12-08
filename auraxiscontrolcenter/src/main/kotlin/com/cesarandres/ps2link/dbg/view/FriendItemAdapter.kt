@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.dbg.content.CharacterFriend
+import com.cramsan.ps2link.appcore.dbg.content.CharacterFriend
 import java.util.ArrayList
 import java.util.Collections
 
 class FriendItemAdapter(
     private val context: Context,
-    private val friends: ArrayList<CharacterFriend>
+    _friends: List<CharacterFriend>
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
+    private val friends = _friends.toMutableList()
 
     init {
         this.mInflater = LayoutInflater.from(context)
@@ -30,7 +31,8 @@ class FriendItemAdapter(
             }
             i++
         }
-        Collections.sort(this.friends)
+        // TODO: Sort this list
+        //  Collections.sort(this.friends)
     }
 
     override fun getCount(): Int {
