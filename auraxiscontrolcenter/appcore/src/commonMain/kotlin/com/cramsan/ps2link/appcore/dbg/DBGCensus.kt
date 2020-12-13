@@ -1,10 +1,8 @@
 package com.cramsan.ps2link.appcore.dbg
 
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.ps2link.appcore.dbg.util.Collections.PS2Collection
 import com.cramsan.ps2link.appcore.dbg.util.QueryString
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.thread.ThreadUtilInterface
 import io.ktor.http.Url
 
 /**
@@ -43,7 +41,7 @@ class DBGCensus(
     ): Url {
         return Url(
             ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/" +
-                    identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
+                identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
         )
     }
 

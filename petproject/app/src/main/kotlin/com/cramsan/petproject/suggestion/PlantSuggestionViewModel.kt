@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
@@ -17,7 +18,6 @@ import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.model.feedback.Feedback
 import com.cramsan.petproject.appcore.model.feedback.FeedbackType
-import com.cramsan.petproject.base.BaseViewModel
 import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

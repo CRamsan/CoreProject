@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-data class WorldEvent (
+data class WorldEvent(
     var event: EventType? = null,
     var faction_nc: String? = null,
     var faction_tr: String? = null,

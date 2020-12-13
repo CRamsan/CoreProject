@@ -12,33 +12,20 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.Verb
-import com.cramsan.ps2link.appcore.dbg.content.Outfit
-import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
-import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
-import com.cesarandres.ps2link.module.Constants
-import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
-import java.io.UnsupportedEncodingException
-import java.net.URLEncoder
-import java.util.ArrayList
-import java.util.Locale
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 /**
  * This fragment will show the user a field to search for outfits based on their
@@ -46,7 +33,7 @@ import kotlinx.coroutines.withContext
  * characters long. When an outfit is found, it's content is cached into the
  * database.
  */
-class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
+class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
 
     private lateinit var selectionButton: ButtonSelectSource
     private var lastUsedNamespace: Namespace? = null
@@ -166,7 +153,6 @@ class FragmentAddOutfit : BaseFragment(), SourceSelectionChangedListener {
             setCurrentTask(currentTask)
             currentTask.execute(outfitList)
             listRoot.isTextFilterEnabled = true
-
         }
     }
 

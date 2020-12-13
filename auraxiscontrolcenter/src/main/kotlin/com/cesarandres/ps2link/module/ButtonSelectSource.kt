@@ -10,7 +10,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.cesarandres.ps2link.R
 import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import com.cramsan.ps2link.appcore.dbg.Namespace
 
 /**

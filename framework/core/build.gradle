@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+        classpath packages.HiltGradle
+    }
+}
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+
+android {
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    dependencies {
+        kapt packages.HiltCompiler
+        kapt packages.HiltAndroidXCompiler
+
+        implementation packages.AndroidMaterial
+        implementation packages.AndroidXAppCompat
+        implementation packages.AndroidxFragmentKtx
+        implementation packages.AndroidXLifecycleViewModelKtx
+        implementation packages.Hilt
+        implementation packages.HiltAndroidXViewModel
+    }
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework:interfacelib")
+                implementation project(":framework:assert")
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
+    }
+}
+
+release {
+    dependsOn ":framework:assert:release"
+    dependsOn ":framework:interfacelib:release"
+    dependsOn ":framework:test:release"
+}

@@ -1,11 +1,11 @@
 package com.cramsan.petproject
 
-import com.cramsan.petproject.base.BaseActivity
+import com.cramsan.petproject.base.BaseNavActivity
 import com.cramsan.petproject.mainmenu.AllPlantListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<AllPlantListViewModel>() {
+class MainActivity : BaseNavActivity<AllPlantListViewModel>() {
 
     override val contentViewLayout: Int
         get() = R.layout.activity_main_menu

@@ -9,30 +9,27 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
-import com.cramsan.ps2link.appcore.dbg.content.response.Weapon_list_response
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.Faction
 import com.cramsan.ps2link.appcore.dbg.content.item.Weapon
-import java.util.ArrayList
-import java.util.HashMap
+import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.ArrayList
+import java.util.HashMap
 
 /**
  * This fragment will retrieve the list of weapons for a player and display it.
  */
-class FragmentWeaponList : BaseFragment() {
+class FragmentWeaponList : BasePS2Fragment() {
 
     private var profileId: String? = null
     private var profileFaction: String? = null
@@ -133,7 +130,6 @@ class FragmentWeaponList : BaseFragment() {
                 eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
-
             }
         }
     }

@@ -15,10 +15,10 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.cramsan.framework.core.BaseFragment
 import com.cramsan.framework.logging.Severity
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.base.BaseFragment
 import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 

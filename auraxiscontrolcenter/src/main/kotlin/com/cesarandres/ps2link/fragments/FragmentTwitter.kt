@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.TwitterItemAdapter
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
 import com.cesarandres.ps2link.module.twitter.TwitterUtil
@@ -27,7 +27,7 @@ import java.util.Arrays
  * Fragment that retrieves the Twitter feed for several users planetside 2
  * related. It also has UI to show and hide some users.
  */
-class FragmentTwitter : BaseFragment() {
+class FragmentTwitter : BasePS2Fragment() {
 
     private val USER_PREFIX = "cb_"
     private var loaded = false

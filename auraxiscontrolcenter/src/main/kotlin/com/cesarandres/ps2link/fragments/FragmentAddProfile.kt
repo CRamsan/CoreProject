@@ -4,45 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
-import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.Verb
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
-import com.cramsan.ps2link.appcore.dbg.content.response.Character_list_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
-import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
-import com.cesarandres.ps2link.module.Constants
-import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
-import java.util.Locale
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 /**
  * This fragment will show the user with a field and a button to search for
  * profiles. The only requirement is that the name needs to be at least three
  * characters long.
  */
-class FragmentAddProfile : BaseFragment(), SourceSelectionChangedListener {
+class FragmentAddProfile : BasePS2Fragment(), SourceSelectionChangedListener {
 
     private var lastUsedNamespace: Namespace? = null
     private var selectionButton: ButtonSelectSource? = null

@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-data class CharacterDirectiveObjective (
+data class CharacterDirectiveObjective(
 
     var character_id: String? = null,
     var directive_id: String? = null,

@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-data class Objective (
+data class Objective(
     var objective_group_id: String? = null,
     var objective_id: String? = null,
     var objective_type_id: String? = null,

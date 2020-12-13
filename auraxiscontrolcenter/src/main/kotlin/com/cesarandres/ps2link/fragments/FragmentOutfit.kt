@@ -8,34 +8,25 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Verb
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.Outfit
-import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
-import com.cesarandres.ps2link.module.Constants
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
+import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
-import kotlinx.coroutines.launch
 
 /**
  * This fragment will read the outfit from the database to display it to the user. Then a network
  * request will be made to get updated information.
  */
-class FragmentOutfit : BaseFragment() {
+class FragmentOutfit : BasePS2Fragment() {
 
     private var isCached: Boolean = false
     private var outfitId: String? = null

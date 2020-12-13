@@ -13,20 +13,19 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
 import com.cesarandres.ps2link.R
+import com.cesarandres.ps2link.dbg.util.Logger
+import com.cesarandres.ps2link.fragments.FragmentSettings
+import com.cramsan.ps2link.appcore.DBGServiceClientImpl
+import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.World
 import com.cramsan.ps2link.appcore.dbg.content.WorldEvent
 import com.cramsan.ps2link.appcore.dbg.content.response.server.PS2
-import com.cesarandres.ps2link.dbg.util.Logger
-import com.cesarandres.ps2link.fragments.FragmentSettings
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Locale
 
-class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGServiceClient, val namespace: Namespace) : BaseAdapter() {
+class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGServiceClientImpl, val namespace: Namespace) : BaseAdapter() {
     private val mInflater: LayoutInflater
     private val serverList: ArrayList<World>
     private val channelMap: HashMap<CompoundButton.OnCheckedChangeListener, String>

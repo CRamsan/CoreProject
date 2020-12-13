@@ -31,9 +31,9 @@ import com.cramsan.framework.preferences.implementation.PreferencesAndroid
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import com.microsoft.appcenter.AppCenter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -54,7 +54,7 @@ class ApplicationPS2Link : Application(), DIAware {
     private val metrics: MetricsInterface by instance()
     private val errorCallback: EventLoggerErrorCallbackInterface by instance()
     private val dbgCensus: DBGCensus by instance()
-    private val dbgCensusClient: DBGServiceClient by instance()
+    private val dbgCensusClient: DBGServiceClientImpl by instance()
     val idlingResource: CountingIdlingResource by instance()
 
     override val di = DI.lazy {
@@ -109,8 +109,8 @@ class ApplicationPS2Link : Application(), DIAware {
         bind<DBGCensus>() with singleton {
             DBGCensus(instance())
         }
-        bind<DBGServiceClient>() with singleton {
-            DBGServiceClient(instance(), instance(), instance())
+        bind<DBGServiceClientImpl>() with singleton {
+            DBGServiceClientImpl(instance(), instance(), instance())
         }
         bind<CountingIdlingResource>() with singleton {
             CountingIdlingResource(TAG)

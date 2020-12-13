@@ -12,9 +12,9 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.fragment.app.FragmentTransaction
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
-import com.cesarandres.ps2link.base.BaseActivity
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cesarandres.ps2link.base.BaseFragment.FragmentCallbacks
+import com.cesarandres.ps2link.base.BasePS2Activity
+import com.cesarandres.ps2link.base.BasePS2Fragment
+import com.cesarandres.ps2link.base.BasePS2Fragment.FragmentCallbacks
 import com.cesarandres.ps2link.fragments.FragmentAbout
 import com.cesarandres.ps2link.fragments.FragmentAddOutfit
 import com.cesarandres.ps2link.fragments.FragmentAddProfile
@@ -28,7 +28,7 @@ import com.cesarandres.ps2link.fragments.holders.FragmentOutfitPager
 import com.cesarandres.ps2link.fragments.holders.FragmentProfilePager
 import com.cesarandres.ps2link.fragments.holders.FragmentRedditPager
 import com.cesarandres.ps2link.module.Constants
-import com.cesarandres.ps2link.module.ObjectDataSource
+import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.logging.Severity
 
 /**
@@ -43,7 +43,7 @@ import com.cramsan.framework.logging.Severity
  * current fragment on top of the stack. This works correctly in phone mode, it
  * has not been tested in tablets yet.
  */
-class ActivityContainer : BaseActivity(), FragmentCallbacks {
+class ActivityContainer : BasePS2Activity<NoopViewModel>() {
 
     protected lateinit var fragmentTitle: Button
     protected lateinit var fragmentProgress: ProgressBar
@@ -52,6 +52,10 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
     protected lateinit var fragmentAdd: ImageButton
     protected lateinit var fragmentStar: ToggleButton
     protected lateinit var fragmentAppend: ToggleButton
+
+    override val contentViewLayout = R.layout.activity_panel
+    override val toolbarViewId = null
+    override val logTag = "ActivityContainer"
 
     /**
      * @return current activity mode
@@ -80,15 +84,6 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
             }
         }
     /**
-     * @return the ObjectDataSource that gives access to the local sqlite db.
-     * You should not open or close this, those methods are tied to the
-     * activity lyfecycle.
-     */
-    /**
-     * @param data a new ObjectDataSource to be handled by this activity.
-     */
-    var data: ObjectDataSource? = null
-    /**
      * @return if the activity is running on tablet mode
      */
     var isTablet = false
@@ -101,9 +96,6 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Load the UI
-        setContentView(R.layout.activity_panel)
 
         // Set references to all the buttons in the action bar
         this.fragmentTitle = this.findViewById<View>(R.id.buttonFragmentTitle) as Button
@@ -168,15 +160,6 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
                 }
             }
         }
-
-        // Open the database for all other fragments to use
-        data = ObjectDataSource(this)
-        data!!.open()
-    }
-
-    public override fun onDestroy() {
-        super.onDestroy()
-        data!!.close()
     }
 
     /*
@@ -202,7 +185,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * (java.lang.String, java.lang.String[])
      */
     override fun onItemSelected(id: String, args: Array<String?>) {
-        metrics.log(TAG, "OnItemSelected", mapOf("Mode" to id))
+        metrics.log(logTag, "OnItemSelected", mapOf("Mode" to id))
         // Reset the database, this will also force some tasks to end
         val mode = ActivityMode.valueOf(id)
 
@@ -286,8 +269,8 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * activity mode does not belong to any class, this method will
      * return null.
      */
-    private fun getFragmentByMode(activityMode: ActivityMode): BaseFragment? {
-        var newFragment: BaseFragment? = null
+    private fun getFragmentByMode(activityMode: ActivityMode): BasePS2Fragment? {
+        var newFragment: BasePS2Fragment? = null
         when (activityMode) {
             ApplicationPS2Link.ActivityMode.ACTIVITY_ADD_OUTFIT -> newFragment = FragmentAddOutfit()
             ApplicationPS2Link.ActivityMode.ACTIVITY_ADD_PROFILE ->
@@ -334,7 +317,7 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
      * if we are on tablet mode we will pop the top of the stack.
      */
     fun upNavigation() {
-        metrics.log(TAG, "Up Navigation")
+        metrics.log(logTag, "Up Navigation")
         if (this.activityMode != ActivityMode.ACTIVITY_MAIN_MENU) {
             if (isTablet) {
                 if (supportFragmentManager.backStackEntryCount > 0) {
@@ -354,9 +337,5 @@ class ActivityContainer : BaseActivity(), FragmentCallbacks {
                 finish()
             }
         }
-    }
-
-    companion object {
-        const val TAG = "ActivityContainer"
     }
 }

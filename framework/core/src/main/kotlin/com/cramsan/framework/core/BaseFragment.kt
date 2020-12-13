@@ -1,4 +1,4 @@
-package com.cramsan.petproject.base
+package com.cramsan.framework.core
 
 import android.content.Context
 import android.os.Bundle

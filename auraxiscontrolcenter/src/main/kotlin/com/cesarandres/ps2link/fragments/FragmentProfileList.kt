@@ -10,16 +10,16 @@ import android.widget.ListView
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
 import java.util.ArrayList
 
 /**
  * Fragment that reads the profiles from the database that have been set as not
  * temporary
  */
-class FragmentProfileList : BaseFragment() {
+class FragmentProfileList : BasePS2Fragment() {
 
     /*
      * (non-Javadoc)

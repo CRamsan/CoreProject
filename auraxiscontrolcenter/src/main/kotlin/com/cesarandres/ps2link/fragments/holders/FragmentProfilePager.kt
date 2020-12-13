@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.fragments.FragmentFriendList
 import com.cesarandres.ps2link.fragments.FragmentKillList
 import com.cesarandres.ps2link.fragments.FragmentProfile
@@ -24,7 +24,7 @@ import java.util.HashMap
 /**
  * This fragment holds a view pager for all the profile related fragments
  */
-class FragmentProfilePager : BaseFragment() {
+class FragmentProfilePager : BasePS2Fragment() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var profileId: String? = null

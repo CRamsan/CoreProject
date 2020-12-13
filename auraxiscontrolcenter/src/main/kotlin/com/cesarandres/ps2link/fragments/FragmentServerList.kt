@@ -7,27 +7,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import android.widget.ListView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.Verb
-import com.cramsan.ps2link.appcore.dbg.content.response.Server_Status_response
-import com.cramsan.ps2link.appcore.dbg.content.response.Server_response
-import com.cramsan.ps2link.appcore.dbg.content.response.World_event_list_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.ServerItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
-import com.cesarandres.ps2link.module.Constants
-import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,7 +23,7 @@ import kotlinx.coroutines.withContext
 /**
  * This fragment will display the servers and theirs status
  */
-class FragmentServerList : BaseFragment(), SourceSelectionChangedListener {
+class FragmentServerList : BasePS2Fragment(), SourceSelectionChangedListener {
 
     private var selectionButton: ButtonSelectSource? = null
 

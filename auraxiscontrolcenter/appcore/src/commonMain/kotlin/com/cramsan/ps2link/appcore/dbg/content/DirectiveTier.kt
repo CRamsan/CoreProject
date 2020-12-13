@@ -3,7 +3,7 @@ package com.cramsan.ps2link.appcore.dbg.content
 import com.cramsan.ps2link.appcore.dbg.content.world.Name_Multi
 import kotlinx.serialization.SerialName
 
-data class DirectiveTier (
+data class DirectiveTier(
 
     /**
      * @return The name
@@ -11,7 +11,7 @@ data class DirectiveTier (
     /**
      * @param name The name
      */
-var name: Name_Multi? = null,
+    var name: Name_Multi? = null,
     /**
      * @return The completionCount
      */
@@ -19,7 +19,7 @@ var name: Name_Multi? = null,
      * @param completionCount The completion_count
      */
     @SerialName("completion_count")
-var completionCount: String? = null,
+    var completionCount: String? = null,
     /**
      * @return The directivePoints
      */
@@ -27,7 +27,7 @@ var completionCount: String? = null,
      * @param directivePoints The directive_points
      */
     @SerialName("directive_points")
-var directivePoints: String? = null,
+    var directivePoints: String? = null,
     /**
      * @return The directiveTierId
      */
@@ -35,7 +35,7 @@ var directivePoints: String? = null,
      * @param directiveTierId The directive_tier_id
      */
     @SerialName("directive_tier_id")
-var directiveTierId: String? = null,
+    var directiveTierId: String? = null,
     /**
      * @return The directiveTreeId
      */
@@ -43,7 +43,7 @@ var directiveTierId: String? = null,
      * @param directiveTreeId The directive_tree_id
      */
     @SerialName("directive_tree_id")
-var directiveTreeId: String? = null,
+    var directiveTreeId: String? = null,
     /**
      * @return The imageId
      */
@@ -51,7 +51,7 @@ var directiveTreeId: String? = null,
      * @param imageId The image_id
      */
     @SerialName("image_id")
-var imageId: String? = null,
+    var imageId: String? = null,
     /**
      * @return The imagePath
      */
@@ -59,7 +59,7 @@ var imageId: String? = null,
      * @param imagePath The image_path
      */
     @SerialName("image_path")
-var imagePath: String? = null,
+    var imagePath: String? = null,
     /**
      * @return The imageSetId
      */
@@ -67,7 +67,7 @@ var imagePath: String? = null,
      * @param imageSetId The image_set_id
      */
     @SerialName("image_set_id")
-var imageSetId: String? = null,
+    var imageSetId: String? = null,
     /**
      * @return The rewardSetId
      */
@@ -75,7 +75,7 @@ var imageSetId: String? = null,
      * @param rewardSetId The reward_set_id
      */
     @SerialName("reward_set_id")
-var rewardSetId: String? = null,
+    var rewardSetId: String? = null,
 
     var directives: List<Directive>? = null,
 

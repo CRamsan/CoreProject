@@ -10,35 +10,26 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Verb
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.response.Character_list_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
-import com.cesarandres.ps2link.module.Constants
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.Date
+import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.Faction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
 
 /**
  * This fragment will read a profile from the database and display it to the
  * user. It will then try to update the data by doing a query to the API
  */
-class FragmentProfile : BaseFragment() {
+class FragmentProfile : BasePS2Fragment() {
 
     private var isCached: Boolean = false
     private var profile: CharacterProfile? = null

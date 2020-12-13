@@ -13,7 +13,7 @@ import android.widget.Toast
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
 import com.cesarandres.ps2link.module.reddit.Child
 import com.cesarandres.ps2link.module.reddit.Content
@@ -22,7 +22,7 @@ import com.cesarandres.ps2link.module.reddit.RedditItemAdapter
 /**
  * Fragment that retrieves the hottest Reddit post
  */
-class FragmentReddit : BaseFragment() {
+class FragmentReddit : BasePS2Fragment() {
     private var subReddit: String? = null
 
     /*

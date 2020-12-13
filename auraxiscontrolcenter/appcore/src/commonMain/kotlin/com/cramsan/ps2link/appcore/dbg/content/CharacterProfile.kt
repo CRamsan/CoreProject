@@ -8,7 +8,7 @@ import com.cramsan.ps2link.appcore.dbg.content.character.Server
 import com.cramsan.ps2link.appcore.dbg.content.character.Stats
 import com.cramsan.ps2link.appcore.dbg.content.character.Times
 
-data class CharacterProfile (
+data class CharacterProfile(
     var character_id: String? = null,
     var name: Name? = null,
     var active_profile_id: String? = null,

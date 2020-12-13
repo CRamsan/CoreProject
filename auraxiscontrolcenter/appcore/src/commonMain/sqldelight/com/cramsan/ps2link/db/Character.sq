@@ -1,0 +1,48 @@
+CREATE TABLE Character (
+    id TEXT NOT NULL PRIMARY KEY UNIQUE,
+    name TEXT,
+    activeProfileId INTEGER,
+    currentPoints INTEGER,
+    percentageToNextCert INTEGER,
+    percentageToNextRank INTEGER,
+    rank INTEGER,
+    lastLogin INTEGER,
+    minutesPlayed INTEGER,
+    factionId TEXT,
+    worldId TEXT,
+    outfitName TEXT,
+    worldName TEXT,
+    namespace TEXT NOT NULL,
+    lastUpdated INTEGER NOT NULL
+);
+
+getCharacter:
+SELECT * FROM Character WHERE id == ? AND namespace == ?;
+
+getAllCharacters:
+SELECT * FROM Character WHERE namespace == ?;
+
+insertCharacter:
+INSERT OR REPLACE INTO Character(
+    id,
+    name,
+    activeProfileId,
+    currentPoints,
+    percentageToNextCert,
+    percentageToNextRank,
+    rank,
+    lastLogin,
+    minutesPlayed,
+    factionId,
+    worldId,
+    outfitName,
+    worldName,
+    namespace,
+    lastUpdated
+ ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteCharacter:
+DELETE FROM Character WHERE id == ? AND namespace == ?;
+
+deleteAll:
+DELETE FROM Character;

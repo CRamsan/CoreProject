@@ -13,12 +13,12 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 
 /**
  * Fragment that will provide settings for the user
  */
-class FragmentSettings : BaseFragment() {
+class FragmentSettings : BasePS2Fragment() {
 
     private var fromTimeHours: Int = 0
     private var fromTimeMinutes: Int = 0

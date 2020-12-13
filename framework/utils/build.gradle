@@ -12,67 +12,29 @@ buildscript {
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
 android {
-    testOptions {
-        unitTests.returnDefaultValues = true
+    dependencies {
+        testImplementation project(":framework:test")
     }
-}
-
-dependencies {
-    implementation packages.AndroidXCoreCommon
-    implementation packages.AndroidXCoreRuntime
-    implementation packages.AndroidXCoreTest
-    implementation packages.AndroidXLifecycleLiveDataKtx
-    implementation packages.AndroidXJUnit
-    implementation packages.AndroidXJUnitKtx
-    implementation packages.AndroidXTest
-    implementation packages.CoroutinesTest
-    implementation packages.JUnit
-    implementation packages.KotlinTest
-    implementation packages.KotlinTestJunit
-
-    testImplementation packages.AndroidXLifecycleViewModelKtx
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation packages.KotlinTestCommon
-                implementation packages.KotlinTestAnnotationsCommon
+                implementation project(":framework:interfacelib")
+                implementation project(":framework:assert")
             }
         }
         commonTest {
             dependencies {
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation packages.CoroutinesTest
-                implementation packages.JUnit
-                implementation packages.KotlinTest
-                implementation packages.KotlinTestJunit
-            }
-        }
-        jvmTest {
-            dependencies {
-
-            }
-        }
-        androidMain {
-            dependencies {
-            }
-        }
-        androidTest {
-            dependencies {
-            }
-        }
-        iosMain {
-            dependencies {
-            }
-        }
-        iosTest {
-            dependencies {
+                implementation project(":framework:test")
             }
         }
     }
+}
+
+release {
+    dependsOn ":framework:assert:release"
+    dependsOn ":framework:interfacelib:release"
+    dependsOn ":framework:test:release"
 }

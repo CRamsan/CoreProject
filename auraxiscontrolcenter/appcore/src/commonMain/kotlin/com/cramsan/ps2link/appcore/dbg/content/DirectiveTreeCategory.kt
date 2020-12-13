@@ -3,7 +3,7 @@ package com.cramsan.ps2link.appcore.dbg.content
 import com.cramsan.ps2link.appcore.dbg.content.world.Name_Multi
 import kotlinx.serialization.SerialName
 
-data class DirectiveTreeCategory (
+data class DirectiveTreeCategory(
 
     /**
      * @return The name

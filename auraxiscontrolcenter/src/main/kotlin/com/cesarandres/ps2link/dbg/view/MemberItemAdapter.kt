@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.appcore.dbg.content.Member
 import com.cramsan.ps2link.appcore.dbg.content.character.Name
-import com.cesarandres.ps2link.module.ObjectDataSource
 
 class MemberItemAdapter(
     private val context: Context,

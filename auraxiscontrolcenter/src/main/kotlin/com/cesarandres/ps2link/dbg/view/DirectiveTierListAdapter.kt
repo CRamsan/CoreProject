@@ -9,7 +9,7 @@ import android.widget.ExpandableListView.OnGroupExpandListener
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.DBGCensus
@@ -17,7 +17,7 @@ import com.cramsan.ps2link.appcore.dbg.content.Directive
 import java.util.ArrayList
 
 class DirectiveTierListAdapter(
-    private val fragment: BaseFragment,
+    private val fragment: BasePS2Fragment,
     private val dbgCensus: DBGCensus
 ) : BaseExpandableListAdapter(),
     OnGroupExpandListener {

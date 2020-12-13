@@ -1,6 +1,7 @@
 include 'framework'
 include 'framework:assert'
 include 'framework:crashhandler'
+include 'framework:core'
 include 'framework:halt'
 include 'framework:interfacelib'
 include 'framework:logging'

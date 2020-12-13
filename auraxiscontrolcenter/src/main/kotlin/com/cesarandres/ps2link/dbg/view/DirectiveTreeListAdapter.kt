@@ -10,15 +10,14 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.content.CharacterDirectiveTree
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.DBGCensus
-import java.util.ArrayList
+import com.cramsan.ps2link.appcore.dbg.content.CharacterDirectiveTree
 
 class DirectiveTreeListAdapter(
-    private val fragment: BaseFragment,
+    private val fragment: BasePS2Fragment,
     private val imageLoader: ImageLoader,
     private val dbgCensus: DBGCensus
 ) : BaseExpandableListAdapter(),
@@ -112,7 +111,8 @@ class DirectiveTreeListAdapter(
             imageLoader
         )
         holder.treeName!!.text = tree.directive_tree_id_join_directive_tree!!.name!!.localizedName(
-            CensusLang.EN)
+            CensusLang.EN
+        )
         holder.treeValue!!.text = Integer.toString(tree.current_level_value)
         val resID = this.fragment.activity!!.resources.getIdentifier(
             "objective_progress_" + tree.current_directive_tier_id +

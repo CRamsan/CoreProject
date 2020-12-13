@@ -11,22 +11,17 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.RequestQueue
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.item.IContainDrawable
-import com.cramsan.ps2link.appcore.dbg.content.response.Item_list_response
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
+import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.dbg.content.response.Item_list_response
 import java.text.SimpleDateFormat
-import java.util.ArrayList
 import java.util.Date
 import java.util.Hashtable
 import java.util.Locale
@@ -38,7 +33,7 @@ class KillItemAdapter(
     private val namespace: Namespace,
     private val volley: RequestQueue,
     private val imageLoader: ImageLoader,
-    private val dbgCensus: DBGServiceClient
+    private val dbgCensus: DBGServiceClientImpl
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
@@ -185,7 +180,7 @@ class KillItemAdapter(
         position: Int,
         view: View
     ) {
-        //TODO: Reenable this feature
+        // TODO: Reenable this feature
         /*
         val url =
             dbgCensus.generateGameDataRequest(Verb.GET, collection, resource_id, null, namespace)!!.toString()

@@ -11,7 +11,6 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import com.cramsan.ps2link.appcore.dbg.content.Member
 import java.util.ArrayList
 

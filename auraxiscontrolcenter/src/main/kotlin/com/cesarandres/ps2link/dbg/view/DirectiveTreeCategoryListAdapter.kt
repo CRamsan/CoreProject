@@ -10,7 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.util.EmbeddableExpandableListView
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.DBGCensus
@@ -18,7 +18,7 @@ import com.cramsan.ps2link.appcore.dbg.content.DirectiveTreeCategory
 import java.util.ArrayList
 
 class DirectiveTreeCategoryListAdapter(
-    private val fragment: BaseFragment,
+    private val fragment: BasePS2Fragment,
     private val expandableList: ExpandableListView,
     private val dbgCensus: DBGCensus,
     private val imageLoader: ImageLoader

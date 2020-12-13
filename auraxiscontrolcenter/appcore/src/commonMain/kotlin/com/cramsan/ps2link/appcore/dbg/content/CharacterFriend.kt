@@ -2,7 +2,7 @@ package com.cramsan.ps2link.appcore.dbg.content
 
 import com.cramsan.ps2link.appcore.dbg.content.character.Name
 
-data class CharacterFriend (
+data class CharacterFriend(
     var name: Name? = null,
     var character_id: String? = null,
     var last_login_time: String? = null,

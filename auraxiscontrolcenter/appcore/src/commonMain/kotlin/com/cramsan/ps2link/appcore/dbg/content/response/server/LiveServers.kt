@@ -2,7 +2,7 @@ package com.cramsan.ps2link.appcore.dbg.content.response.server
 
 import kotlinx.serialization.SerialName
 
-data class LiveServers (
+data class LiveServers(
     @SerialName("Briggs (AU)")
     var briggs: LiveServer? = null,
 

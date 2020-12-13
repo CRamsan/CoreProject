@@ -7,12 +7,12 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.base.BaseViewModel
 import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

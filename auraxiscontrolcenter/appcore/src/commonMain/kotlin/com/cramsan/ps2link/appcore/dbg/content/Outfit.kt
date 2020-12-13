@@ -2,7 +2,7 @@ package com.cramsan.ps2link.appcore.dbg.content
 
 import com.cramsan.ps2link.appcore.dbg.Namespace
 
-data class Outfit (
+data class Outfit(
     var outfit_id: String? = null,
     var name: String? = null,
     var alias: String? = null,

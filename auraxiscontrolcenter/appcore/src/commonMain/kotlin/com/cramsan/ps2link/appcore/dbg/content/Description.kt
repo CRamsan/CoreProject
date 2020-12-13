@@ -1,7 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-
-data class Description (
+data class Description(
 
     /**
      * @return The en

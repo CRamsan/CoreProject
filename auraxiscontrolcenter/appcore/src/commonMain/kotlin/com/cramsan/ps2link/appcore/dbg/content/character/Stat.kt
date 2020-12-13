@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content.character
 
-data class Stat (
+data class Stat(
     var all_time: String? = null,
     var last_save: String? = null,
     var last_save_date: String? = null,

@@ -1,20 +1,13 @@
-package com.cramsan.petproject.base
+package com.cramsan.framework.core
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.petproject.R
-import com.google.android.material.appbar.MaterialToolbar
 import javax.inject.Inject
 
-abstract class BaseActivity<T : BaseViewModel> :
-    AppCompatActivity() {
+abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     @Inject
     protected lateinit var eventLogger: EventLoggerInterface
@@ -28,16 +21,7 @@ abstract class BaseActivity<T : BaseViewModel> :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreate")
-
         setContentView(contentViewLayout)
-        val toolbar = toolbarViewId?.let { findViewById<MaterialToolbar>(it) }
-        toolbar?.apply {
-            val navController = findNavController(R.id.nav_host_fragment)
-            val appBarConfiguration = AppBarConfiguration(navController.graph)
-            setSupportActionBar(this)
-            findViewById<Toolbar>(R.id.main_menu_toolbar)
-                .setupWithNavController(navController, appBarConfiguration)
-        }
     }
 
     @CallSuper

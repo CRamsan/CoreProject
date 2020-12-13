@@ -17,14 +17,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.fragments.FragmentReddit
 import java.util.HashMap
 
 /**
  * This fragment holds a view pager for all the profile related fragments
  */
-class FragmentRedditPager : BaseFragment() {
+class FragmentRedditPager : BasePS2Fragment() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var goToReddit: Button? = null

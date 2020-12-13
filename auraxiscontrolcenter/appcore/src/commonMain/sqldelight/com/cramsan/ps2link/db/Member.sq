@@ -1,0 +1,29 @@
+CREATE TABLE Member (
+    id TEXT NOT NULL PRIMARY KEY UNIQUE,
+    rank TEXT,
+    outfitId TEXT,
+    onlineStatus TEXT,
+    name TEXT,
+    namespace TEXT NOT NULL,
+    lastUpdated INTEGER NOT NULL
+);
+
+getAllMembers:
+SELECT * FROM Member WHERE outfitId == ? AND namespace == ?;
+
+insertMember:
+INSERT OR REPLACE INTO Member(
+    id,
+    rank,
+    outfitId,
+    onlineStatus,
+    name,
+    namespace,
+    lastUpdated
+) VALUES (?, ?, ?, ?, ?, ?, ?);
+
+deleteOutfit:
+DELETE FROM Member WHERE outfitId == ? AND namespace == ?;
+
+deleteAll:
+DELETE FROM Member;

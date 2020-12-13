@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.fragments.FragmentMembersList
 import com.cesarandres.ps2link.fragments.FragmentMembersOnline
 import com.cesarandres.ps2link.fragments.FragmentOutfit
@@ -24,7 +24,7 @@ import java.util.HashMap
  * This fragment has a view pager that displays the online member next to all
  * the member.
  */
-class FragmentOutfitPager : BaseFragment() {
+class FragmentOutfitPager : BasePS2Fragment() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var outfitId: String? = null

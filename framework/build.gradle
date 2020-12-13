@@ -28,6 +28,7 @@ kotlin {
             dependencies {
                 api project(":framework:assert")
                 api project(":framework:crashhandler")
+                api project(":framework:core")
                 api project(":framework:halt")
                 api project(":framework:interfacelib")
                 api project(":framework:logging")
@@ -48,6 +49,7 @@ kotlin {
 
 release {
     dependsOn ":framework:assert:release"
+    dependsOn ":framework:core:release"
     dependsOn ":framework:crashhandler:release"
     dependsOn ":framework:halt:release"
     dependsOn ":framework:interfacelib:release"

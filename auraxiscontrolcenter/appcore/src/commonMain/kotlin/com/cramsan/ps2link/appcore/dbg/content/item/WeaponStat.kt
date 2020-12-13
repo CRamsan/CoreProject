@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content.item
 
-data class WeaponStat (
+data class WeaponStat(
 
     var name: String? = null,
     var vehicle: String? = null,

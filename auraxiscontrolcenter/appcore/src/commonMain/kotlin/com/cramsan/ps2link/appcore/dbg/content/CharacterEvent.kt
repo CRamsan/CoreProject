@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-data class CharacterEvent (
+data class CharacterEvent(
     var attacker: CharacterProfileLimited? = null,
     var character: CharacterProfileLimited? = null,
     var important_character_id: String? = null,

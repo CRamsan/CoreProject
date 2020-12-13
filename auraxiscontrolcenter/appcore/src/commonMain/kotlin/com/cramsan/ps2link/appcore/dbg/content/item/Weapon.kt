@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content.item
 
-data class Weapon (
+data class Weapon(
     var character_id: String? = null,
     var item_id: String? = null,
     var last_save: String? = null,

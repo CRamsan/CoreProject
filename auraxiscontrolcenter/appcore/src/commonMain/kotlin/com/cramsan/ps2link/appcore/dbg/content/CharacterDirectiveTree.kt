@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-data class CharacterDirectiveTree (
+data class CharacterDirectiveTree(
     var directive_tree_id_join_directive_tree: DirectiveTree? = null,
     var character_id: String? = null,
     var completion_time_date: String? = null,

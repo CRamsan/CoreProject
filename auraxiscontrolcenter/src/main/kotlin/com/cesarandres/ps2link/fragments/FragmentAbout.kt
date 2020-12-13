@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
+import com.cesarandres.ps2link.base.BasePS2Fragment
 
 /**
  *
  */
-class FragmentAbout : BaseFragment() {
+class FragmentAbout : BasePS2Fragment() {
 
     /*
      * (non-Javadoc)

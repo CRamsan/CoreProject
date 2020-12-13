@@ -1,9 +1,8 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-import com.cramsan.ps2link.appcore.dbg.content.item.IContainDrawable
 import com.cramsan.ps2link.appcore.dbg.content.world.Name_Multi
 
-data class Item (
+data class Item(
     var name: Name_Multi? = null,
     var description: Description? = null,
 

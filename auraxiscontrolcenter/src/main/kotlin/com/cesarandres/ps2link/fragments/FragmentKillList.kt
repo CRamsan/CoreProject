@@ -6,25 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Verb
-import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
-import com.cramsan.ps2link.appcore.dbg.content.response.Characters_event_list_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
-import com.cesarandres.ps2link.dbg.util.QueryString.SearchModifier
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.KillItemAdapter
-import com.cesarandres.ps2link.module.Constants
-import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,7 +21,7 @@ import kotlinx.coroutines.withContext
 /**
  * This fragment will retrieve the killboard of a player and display it.
  */
-class FragmentKillList : BaseFragment() {
+class FragmentKillList : BasePS2Fragment() {
 
     private var profileId: String? = null
     private var namespace: Namespace? = null
@@ -108,7 +97,6 @@ class FragmentKillList : BaseFragment() {
                     imageLoader,
                     dbgCensus
                 )
-
         }
     }
 

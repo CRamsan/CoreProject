@@ -9,8 +9,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.appcore.dbg.content.CharacterFriend
-import java.util.ArrayList
-import java.util.Collections
 
 class FriendItemAdapter(
     private val context: Context,

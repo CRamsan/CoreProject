@@ -5,19 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.content.response.Character_list_response
-import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
-import com.cesarandres.ps2link.dbg.util.QueryString
-import com.cesarandres.ps2link.dbg.util.QueryString.QueryCommand
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.StatItemAdapter
-import com.cesarandres.ps2link.module.Constants
-import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +18,7 @@ import kotlinx.coroutines.withContext
 /**
  * Retrieve the stats for the given character
  */
-class FragmentStatList : BaseFragment() {
+class FragmentStatList : BasePS2Fragment() {
 
     private var profileId: String? = null
     private var namespace: Namespace? = null
@@ -82,7 +73,6 @@ class FragmentStatList : BaseFragment() {
                 statList!!.stat_history!!,
                 character_id!!
             )
-
         }
     }
 

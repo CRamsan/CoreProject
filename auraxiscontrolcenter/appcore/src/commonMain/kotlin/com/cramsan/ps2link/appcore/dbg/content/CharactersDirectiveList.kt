@@ -2,7 +2,7 @@ package com.cramsan.ps2link.appcore.dbg.content
 
 import kotlinx.serialization.SerialName
 
-data class CharactersDirectiveList (
+data class CharactersDirectiveList(
 
     /**
      * @return The characterId

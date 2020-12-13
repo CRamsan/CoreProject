@@ -9,16 +9,16 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.content.Outfit
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
+import com.cramsan.ps2link.appcore.dbg.content.Outfit
 import java.util.ArrayList
 
 /**
  * This fragment will read and display all the outfits that have been set as
  * non-temporary in the database.
  */
-class FragmentOutfitList : BaseFragment() {
+class FragmentOutfitList : BasePS2Fragment() {
 
     /*
      * (non-Javadoc)

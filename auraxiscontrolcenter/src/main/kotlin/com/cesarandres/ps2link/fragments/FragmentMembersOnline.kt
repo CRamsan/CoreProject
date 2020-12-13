@@ -6,21 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.android.volley.Response.ErrorListener
-import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.content.Member
-import com.cramsan.ps2link.appcore.dbg.content.response.Outfit_member_response
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.dbg.view.OnlineMemberItemAdapter
-import com.cesarandres.ps2link.module.Constants
-import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
-import java.util.ArrayList
+import com.cramsan.ps2link.appcore.dbg.content.Member
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,7 +23,7 @@ import kotlinx.coroutines.withContext
  * and resolve the class they are using. This is very useful to show who is
  * online and display their current class
  */
-class FragmentMembersOnline : BaseFragment() {
+class FragmentMembersOnline : BasePS2Fragment() {
 
     private lateinit var outfitId: String
     private val outfitName: String? = null

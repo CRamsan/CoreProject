@@ -20,16 +20,16 @@ import androidx.core.content.ContextCompat
 import com.cesarandres.ps2link.ApplicationPS2Link
 import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.base.BaseFragment
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.module.BitmapWorkerTask
+import com.cramsan.ps2link.appcore.dbg.Namespace
 
 /**
  * This fragment is very static, it has all the buttons for most of the main
  * fragments. It will also display the Preferred Character and Preferred Outfit
  * buttons if those have been set.
  */
-class FragmentMainMenu : BaseFragment() {
+class FragmentMainMenu : BasePS2Fragment() {
     private var mServiceConn: ServiceConnection? = null
 
     /*
