@@ -2,29 +2,27 @@ package com.cesarandres.ps2link.fragments.holders
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
+import com.cesarandres.ps2link.databinding.FragmentOutfitPagerBinding
 import com.cesarandres.ps2link.fragments.FragmentMembersList
 import com.cesarandres.ps2link.fragments.FragmentMembersOnline
 import com.cesarandres.ps2link.fragments.FragmentOutfit
 import com.cesarandres.ps2link.module.ButtonSelectSource
+import com.cramsan.framework.core.NoopViewModel
 import java.util.HashMap
 
 /**
  * This fragment has a view pager that displays the online member next to all
  * the member.
  */
-class FragmentOutfitPager : BasePS2Fragment() {
+class FragmentOutfitPager : BasePS2Fragment<NoopViewModel, FragmentOutfitPagerBinding>() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var outfitId: String? = null
@@ -32,24 +30,15 @@ class FragmentOutfitPager : BasePS2Fragment() {
 
     private var selectionButton: ButtonSelectSource? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_outfit_pager, container, false)
-        return view
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mSectionsPagerAdapter = SectionsPagerAdapter(activity!!.supportFragmentManager)
+        mSectionsPagerAdapter = SectionsPagerAdapter(requireActivity().supportFragmentManager)
 
-        mViewPager = activity!!.findViewById<View>(R.id.outfitPager) as ViewPager
+        mViewPager = requireActivity().findViewById<View>(R.id.outfitPager) as ViewPager
         mViewPager!!.adapter = mSectionsPagerAdapter
 
-        var extras = activity!!.intent.extras
+        var extras = requireActivity().intent.extras
         if (extras == null) {
             extras = arguments
         }
@@ -57,6 +46,7 @@ class FragmentOutfitPager : BasePS2Fragment() {
         outfitId = extras!!.getString("PARAM_0")
         this.namespace = extras.getString("PARAM_1")
 
+        /*
         this.fragmentUpdate.setOnClickListener {
             metrics.log(TAG, "Update")
             val fragment: Fragment
@@ -85,11 +75,13 @@ class FragmentOutfitPager : BasePS2Fragment() {
                     .show()
             }
         }
+         */
 
         mViewPager!!.setOnPageChangeListener(
             object : ViewPager.OnPageChangeListener {
                 override fun onPageSelected(arg0: Int) {
                     metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Outfit", "Fragment" to arg0.toString()))
+                    /*
                     when (arg0) {
                         OUTFIT -> {
                             fragmentShowOffline.visibility = View.GONE
@@ -112,6 +104,8 @@ class FragmentOutfitPager : BasePS2Fragment() {
                             fragmentStar.visibility = View.GONE
                         }
                     }
+
+                     */
                 }
 
                 override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
@@ -121,9 +115,6 @@ class FragmentOutfitPager : BasePS2Fragment() {
                 }
             }
         )
-
-        this.fragmentAppend.visibility = View.VISIBLE
-        this.fragmentStar.visibility = View.VISIBLE
     }
 
     /*
@@ -133,12 +124,6 @@ class FragmentOutfitPager : BasePS2Fragment() {
      */
     override fun onResume() {
         super.onResume()
-        activityContainer.activityMode = ActivityMode.ACTIVITY_MEMBER_LIST
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        val titleLayout = activity!!.findViewById<View>(R.id.linearLayoutTitle) as LinearLayout
     }
 
     /**
@@ -232,4 +217,7 @@ class FragmentOutfitPager : BasePS2Fragment() {
         private val ONLINE = 1
         private val MEMBERS = 2
     }
+
+    override val logTag = "FragmentOutfitPager"
+    override val contentViewLayout = R.layout.fragment_outfit_pager
 }

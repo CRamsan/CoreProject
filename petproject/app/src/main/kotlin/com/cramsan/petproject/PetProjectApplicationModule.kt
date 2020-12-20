@@ -50,7 +50,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object ApplicationModule {
+object PetProjectApplicationModule {
 
     /*
     WTF: I don't know why this is not working

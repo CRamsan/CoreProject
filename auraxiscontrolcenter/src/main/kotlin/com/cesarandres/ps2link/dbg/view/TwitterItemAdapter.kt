@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.module.twitter.PS2Tweet
@@ -16,16 +15,14 @@ import java.util.Date
 class TwitterItemAdapter(
     context: Context,
     users: Array<String>,
-    data: ObjectDataSource,
-    val imageLoader: ImageLoader
 ) :
     DBItemAdapter() {
+
+    private var twitList = emptyList<PS2Tweet>()
 
     init {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         this.mInflater = LayoutInflater.from(context)
-        this.size = data.countAllTweets(users)
-        this.cursor = data.getTweetCursor(users)
     }
 
     override fun getCount(): Int {
@@ -35,12 +32,7 @@ class TwitterItemAdapter(
     override fun getItem(position: Int): PS2Tweet? {
         var tweet: PS2Tweet? = null
         try {
-            tweet = ObjectDataSource.cursorToTweet(
-                ObjectDataSource.cursorToPosition(
-                    cursor!!,
-                    position
-                )
-            )
+            tweet = twitList.get(position)
         } catch (e: IllegalStateException) {
             tweet = PS2Tweet()
             tweet.id = ""
@@ -87,7 +79,7 @@ class TwitterItemAdapter(
         val updateTime = p.format(Date(tweet.date!! * 1000L))
 
         val newURL = tweet.imgUrl!!.replace("http:", "https:")
-        holder.userImage!!.setImageUrl(newURL, imageLoader)
+        // holder.userImage!!.setImageUrl(newURL, imageLoader)
         holder.tweetDate!!.text = updateTime
 
         return convertView

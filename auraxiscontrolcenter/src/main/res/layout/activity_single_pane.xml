@@ -1,30 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/LayoutFillParentStyle">
+<?xml version="1.0" encoding="utf-8"?>
 
-    <ImageView
-        android:id="@+id/imageViewBackground"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/BLACK"
-        android:contentDescription="@string/text_Background"
-        android:scaleType="fitStart"
-        android:src="@drawable/ps2_activity_background" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/LayoutFillParentStyle"
+    tools:context=".ActivityContainer">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout style="@style/BaseAppBarLayout">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/main_menu_toolbar"
+            style="@style/BaseToolBar"
+            tools:title="@string/app_name" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include
+        <ImageView
+            android:id="@+id/imageViewBackground"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/layout_title" />
+            android:layout_height="fill_parent"
+            android:background="@color/BLACK"
+            android:contentDescription="@string/text_Background"
+            android:scaleType="fitStart"
+            android:src="@drawable/ps2_activity_background" />
 
-        <FrameLayout
-            android:id="@+id/activityFrameLayout"
-            style="@style/FragmentBottomStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
-    </LinearLayout>
-
-</FrameLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            style="@style/BaseContentLayout"
+            app:defaultNavHost="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:navGraph="@navigation/navigation"
+            tools:layout="@layout/fragment_main_menu" />
+    </FrameLayout>
+</LinearLayout>

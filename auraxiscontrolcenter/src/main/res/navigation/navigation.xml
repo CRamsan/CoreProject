@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainMenuFragment">
+
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.cesarandres.ps2link.fragments.FragmentMainMenu"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main_menu">
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentProfileList"
+            app:destination="@id/fragmentProfileList" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentAbout"
+            app:destination="@id/fragmentAbout" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentReddit"
+            app:destination="@id/fragmentReddit" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentTwitter"
+            app:destination="@id/fragmentTwitter" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentOutfitList"
+            app:destination="@id/fragmentOutfitList" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentOutfitPager"
+            app:destination="@id/fragmentOutfitPager" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_fragmentServerList"
+            app:destination="@id/fragmentServerList" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddProfile"
+        android:name="com.cesarandres.ps2link.fragments.FragmentAddProfile"
+        android:label="FragmentAddProfile"
+        tools:layout="@layout/fragment_add_profile">
+        <action
+            android:id="@+id/action_fragmentAddProfile_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAbout"
+        android:name="com.cesarandres.ps2link.fragments.FragmentAbout"
+        android:label="FragmentAbout"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/fragmentReddit"
+        android:name="com.cesarandres.ps2link.fragments.FragmentReddit"
+        android:label="FragmentReddit"
+        tools:layout="@layout/fragment_reddit" />
+    <fragment
+        android:id="@+id/fragmentTwitter"
+        android:name="com.cesarandres.ps2link.fragments.FragmentTwitter"
+        android:label="FragmentTwitter"
+        tools:layout="@layout/fragment_twitter" />
+    <fragment
+        android:id="@+id/fragmentAddOutfit"
+        android:name="com.cesarandres.ps2link.fragments.FragmentAddOutfit"
+        android:label="FragmentAddOutfit"
+        tools:layout="@layout/fragment_add_outfit">
+        <action
+            android:id="@+id/action_fragmentAddOutfit_to_fragmentOutfitPager"
+            app:destination="@id/fragmentOutfitPager" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.cesarandres.ps2link.fragments.FragmentProfile"
+        android:label="FragmentProfile"
+        tools:layout="@layout/fragment_profile_pager" >
+        <action
+            android:id="@+id/action_fragmentProfile_self"
+            app:destination="@id/fragmentProfile" />
+        <action
+            android:id="@+id/action_fragmentProfile_to_fragmentOutfitPager"
+            app:destination="@id/fragmentOutfitPager" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentProfileList"
+        android:name="com.cesarandres.ps2link.fragments.FragmentProfileList"
+        android:label="FragmentProfileList"
+        tools:layout="@layout/fragment_profile_list">
+        <action
+            android:id="@+id/action_fragmentProfileList_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
+        <action
+            android:id="@+id/action_fragmentProfileList_to_fragmentAddProfile"
+            app:destination="@id/fragmentAddProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentOutfitList"
+        android:name="com.cesarandres.ps2link.fragments.FragmentOutfitList"
+        android:label="FragmentOutfitList"
+        tools:layout="@layout/fragment_outfit_list">
+        <action
+            android:id="@+id/action_fragmentOutfitList_to_fragmentAddOutfit"
+            app:destination="@id/fragmentAddOutfit" />
+        <action
+            android:id="@+id/action_fragmentOutfitList_to_fragmentOutfitPager"
+            app:destination="@id/fragmentOutfitPager" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentOutfitPager"
+        android:name="com.cesarandres.ps2link.fragments.holders.FragmentOutfitPager"
+        android:label="FragmentOutfitPager"
+        tools:layout="@layout/fragment_outfit_pager" >
+        <action
+            android:id="@+id/action_fragmentOutfitPager_to_fragmentProfile"
+            app:destination="@id/fragmentProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentServerList"
+        android:name="com.cesarandres.ps2link.fragments.FragmentServerList"
+        android:label="FragmentServerList"
+        tools:layout="@layout/fragment_server_list" />
+
+</navigation>

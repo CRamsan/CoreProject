@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import javax.inject.Inject
 
-abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
+abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
 
     @Inject
     lateinit var eventLogger: EventLoggerInterface
@@ -24,7 +22,6 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
 
     abstract val logTag: String
     protected lateinit var viewModel: VM
-    protected lateinit var dataBinding: DB
     abstract val contentViewLayout: Int
 
     @CallSuper
@@ -47,9 +44,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreateView")
-        dataBinding = DataBindingUtil.inflate(inflater, contentViewLayout, container, false)
-        dataBinding.lifecycleOwner = this
-        return dataBinding.root
+        return null
     }
 
     @CallSuper

@@ -1,25 +1,22 @@
 package com.cesarandres.ps2link.fragments
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
-import com.cesarandres.ps2link.ApplicationPS2Link
-import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
-import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
+import com.cesarandres.ps2link.databinding.FragmentProfileListBinding
+import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
-import java.util.ArrayList
 
 /**
  * Fragment that reads the profiles from the database that have been set as not
  * temporary
  */
-class FragmentProfileList : BasePS2Fragment() {
+class FragmentProfileList : BasePS2Fragment<NoopViewModel, FragmentProfileListBinding>() {
 
     /*
      * (non-Javadoc)
@@ -32,6 +29,7 @@ class FragmentProfileList : BasePS2Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_profile_list, container, false)
     }
 
@@ -44,30 +42,9 @@ class FragmentProfileList : BasePS2Fragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        this.fragmentTitle.text = getString(R.string.title_profiles)
-        this.fragmentUpdate.setOnClickListener {
-            metrics.log(TAG, "Update")
-            val task = ReadProfilesTable()
-            setCurrentTask(task)
-            task.execute()
-        }
-        this.fragmentAdd.setOnClickListener {
-            metrics.log(TAG, "Add Profile")
-            mCallbacks!!.onItemSelected(
-                ActivityMode.ACTIVITY_ADD_PROFILE.toString(),
-                emptyArray()
-            )
-        }
-        val listRoot = activity!!.findViewById<View>(R.id.listViewProfileList) as ListView
+        val listRoot = requireActivity().findViewById<View>(R.id.listViewProfileList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             val profile = (myAdapter.getItemAtPosition(myItemInt) as CharacterProfile)
-            mCallbacks!!.onItemSelected(
-                ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
-                arrayOf(
-                    profile.character_id,
-                    profile.namespace!!.name
-                )
-            )
         }
     }
 
@@ -78,56 +55,14 @@ class FragmentProfileList : BasePS2Fragment() {
      */
     override fun onResume() {
         super.onResume()
-        activityContainer.activityMode = ActivityMode.ACTIVITY_PROFILE_LIST
-        this.fragmentUpdate.visibility = View.VISIBLE
-        this.fragmentAdd.visibility = View.VISIBLE
-        val task = ReadProfilesTable()
-        setCurrentTask(task)
-        task.execute()
-    }
-
-    /**
-     * Reads the profiles in the database that are set as non temporary
-     */
-    private inner class ReadProfilesTable : AsyncTask<Int, Int, ArrayList<CharacterProfile>>() {
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPreExecute()
-         */
-        override fun onPreExecute() {
-            setProgressButton(true)
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
-         */
-        protected override fun doInBackground(vararg params: Int?): ArrayList<CharacterProfile>? {
-            var tmpProfileList: ArrayList<CharacterProfile>? = null
-            val data = activityContainer.data
-            data!!.deleteAllCharacterProfiles(false)
-            tmpProfileList = data.getAllCharacterProfiles(false)
-            return tmpProfileList
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-         */
-        override fun onPostExecute(result: ArrayList<CharacterProfile>?) {
-            if (result != null) {
-                val listRoot = activity!!.findViewById<View>(R.id.listViewProfileList) as ListView
-                listRoot.adapter = ProfileItemAdapter(activity!!, result, true)
-            }
-            setProgressButton(false)
-        }
     }
 
     companion object {
         const val TAG = "FragmentProfileList"
     }
+
+    override val logTag: String
+        get() = TODO("Not yet implemented")
+    override val contentViewLayout: Int
+        get() = TODO("Not yet implemented")
 }

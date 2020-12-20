@@ -3,31 +3,15 @@ package com.cesarandres.ps2link.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
+import com.cesarandres.ps2link.databinding.FragmentAboutBinding
+import com.cramsan.framework.core.NoopViewModel
 
 /**
  *
  */
-class FragmentAbout : BasePS2Fragment() {
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.cesarandres.ps2link.base.BaseFragment#onCreateView(android.view.
-     * LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-     */
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_about, container, false)
-    }
+class FragmentAbout : BasePS2Fragment<NoopViewModel, FragmentAboutBinding>() {
 
     /*
      * (non-Javadoc)
@@ -38,11 +22,9 @@ class FragmentAbout : BasePS2Fragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        this.fragmentTitle.text = getString(R.string.title_about)
-        val buttonHomepage = activity!!.findViewById<View>(R.id.buttonAboutHomepage) as Button
-        buttonHomepage.setOnClickListener {
+        dataBinding.buttonAboutHomepage.setOnClickListener {
             metrics.log(TAG, "Go To Website")
-            val url = activity!!.resources.getString(R.string.url_homepage)
+            val url = requireActivity().resources.getString(R.string.url_homepage)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
@@ -52,4 +34,7 @@ class FragmentAbout : BasePS2Fragment() {
     companion object {
         const val TAG = "FragmentAbout"
     }
+
+    override val logTag = "FragmentAbout"
+    override val contentViewLayout = R.layout.fragment_about
 }

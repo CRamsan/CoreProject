@@ -5,12 +5,17 @@ import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.metrics.MetricsInterface
 import javax.inject.Inject
 
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     @Inject
     protected lateinit var eventLogger: EventLoggerInterface
+
+    @Inject
+    lateinit var metrics: MetricsInterface
+
     protected lateinit var viewModel: T
 
     abstract val contentViewLayout: Int

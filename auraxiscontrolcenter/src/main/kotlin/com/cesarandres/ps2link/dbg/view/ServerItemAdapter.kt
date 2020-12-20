@@ -14,8 +14,7 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.util.Logger
-import com.cesarandres.ps2link.fragments.FragmentSettings
-import com.cramsan.ps2link.appcore.DBGServiceClientImpl
+import com.cramsan.ps2link.appcore.DBGServiceClient
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.World
@@ -25,11 +24,10 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.Locale
 
-class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGServiceClientImpl, val namespace: Namespace) : BaseAdapter() {
+class ServerItemAdapter(private val context: Context, serverList: List<World>, val dbgCensus: DBGServiceClient, val namespace: Namespace) : BaseAdapter() {
     private val mInflater: LayoutInflater
     private val serverList: ArrayList<World>
     private val channelMap: HashMap<CompoundButton.OnCheckedChangeListener, String>
-    private val notificationsEnabled: Boolean
 
     init {
         // Cache the LayoutInflate to avoid asking for a new one each time.
@@ -37,8 +35,6 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
         this.serverList = ArrayList(serverList)
         this.channelMap = HashMap<CompoundButton.OnCheckedChangeListener, String>()
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        notificationsEnabled =
-            settings.getBoolean(FragmentSettings.PREF_KEY_NOTIFICATION_ENABLE, false)
 
         for (world in this.serverList) {
             var channel = namespace.toString() + "-" + world.world_id
@@ -225,7 +221,6 @@ class ServerItemAdapter(private val context: Context, serverList: List<World>, v
             holder.serverStatus!!.setTextColor(Color.RED)
         }
 
-        holder.serverAlertCheckBox!!.isEnabled = notificationsEnabled
         holder.serverAlertCheckBox!!.isChecked = this.serverList[position].isRegistered
         holder.serverAlertCheckBox!!.visibility = View.GONE
 

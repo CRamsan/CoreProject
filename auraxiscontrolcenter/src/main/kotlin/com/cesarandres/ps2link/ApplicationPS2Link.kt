@@ -2,52 +2,29 @@ package com.cesarandres.ps2link
 
 import android.app.Application
 import android.graphics.Bitmap
-import androidx.test.espresso.idling.CountingIdlingResource
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.ImageLoader
-import com.android.volley.toolbox.Volley
-import com.cesarandres.ps2link.dbg.volley.BitmapLruCache
-import com.cesarandres.ps2link.module.CacheManager
-import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.assert.implementation.AssertUtil
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
-import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
-import com.cramsan.framework.crashehandler.implementation.CrashHandler
-import com.cramsan.framework.halt.HaltUtilInterface
-import com.cramsan.framework.halt.implementation.HaltUtil
-import com.cramsan.framework.halt.implementation.HaltUtilAndroid
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
-import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.metrics.implementation.AppCenterMetrics
-import com.cramsan.framework.metrics.implementation.Metrics
-import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
-import com.cramsan.framework.preferences.PreferencesInterface
-import com.cramsan.framework.preferences.implementation.Preferences
-import com.cramsan.framework.preferences.implementation.PreferencesAndroid
-import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.framework.thread.implementation.ThreadUtil
-import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
-import com.cramsan.ps2link.appcore.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import com.microsoft.appcenter.AppCenter
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.androidXModule
-import org.kodein.di.bind
-import org.kodein.di.instance
-import org.kodein.di.newInstance
-import org.kodein.di.singleton
+import dagger.hilt.android.HiltAndroidApp
 import java.util.Locale
+import javax.inject.Inject
 
-class ApplicationPS2Link : Application(), DIAware {
+@HiltAndroidApp
+class ApplicationPS2Link : Application() {
 
+    @Inject
+    lateinit var eventLogger: EventLoggerInterface
+
+    @Inject
+    lateinit var crashHandler: CrashHandlerInterface
+
+    @Inject
+    lateinit var metrics: MetricsInterface
+
+    /*
     private val eventLogger: EventLoggerInterface by instance()
     private val crashHandler: CrashHandlerInterface by instance()
     private val cacheManager: CacheManager by instance()
@@ -56,7 +33,6 @@ class ApplicationPS2Link : Application(), DIAware {
     private val dbgCensus: DBGCensus by instance()
     private val dbgCensusClient: DBGServiceClientImpl by instance()
     val idlingResource: CountingIdlingResource by instance()
-
     override val di = DI.lazy {
         import(androidXModule(this@ApplicationPS2Link))
 
@@ -116,6 +92,7 @@ class ApplicationPS2Link : Application(), DIAware {
             CountingIdlingResource(TAG)
         }
     }
+    */
 
     /*
      * (non-Javadoc)
@@ -129,11 +106,6 @@ class ApplicationPS2Link : Application(), DIAware {
         crashHandler.initialize()
         metrics.initialize()
         metrics.log(TAG, "Application Started")
-        GlobalScope.launch {
-            if (cacheManager.getCacheSize() > CacheManager.MAX_CACHE_SIZE) {
-                cacheManager.clearCache()
-            }
-        }
 
         val lang = Locale.getDefault().language
         for (clang in CensusLang.values()) {

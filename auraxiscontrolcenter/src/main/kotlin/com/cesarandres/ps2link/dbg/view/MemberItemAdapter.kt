@@ -12,16 +12,13 @@ import com.cramsan.ps2link.appcore.dbg.content.character.Name
 
 class MemberItemAdapter(
     private val context: Context,
-    outfitId: String,
-    data: ObjectDataSource,
-    showOffline: Boolean
 ) : DBItemAdapter() {
+
+    private var memberList = emptyList<Member>()
 
     init {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         this.mInflater = LayoutInflater.from(context)
-        this.size = data.countAllMembers(outfitId, showOffline)
-        this.cursor = data.getMembersCursor(outfitId, showOffline)
     }
 
     override fun getCount(): Int {
@@ -31,12 +28,7 @@ class MemberItemAdapter(
     override fun getItem(position: Int): Member {
         var member: Member
         try {
-            member = ObjectDataSource.cursorToMember(
-                ObjectDataSource.cursorToPosition(
-                    cursor!!,
-                    position
-                )
-            )
+            member = memberList.get(position)
         } catch (e: Exception) {
             member = Member()
             member.character_id = ""

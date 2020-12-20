@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+    </data>
+<LinearLayout
     android:id="@+id/linearLayoutTwitter"
     style="@style/LayoutFrameStyle"
     android:orientation="vertical">
@@ -23,3 +26,4 @@
         android:cacheColorHint="#00000000"></ListView>
 
 </LinearLayout>
+</layout>

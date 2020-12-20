@@ -1,10 +1,12 @@
 def versions_tools = [
     AndroidBuildToolsVersion : "30.0.2",
     CompileSdkVersion : 29,
+    KotlinVersion : "1.4.20",
     MinSdkVersion : 22,
     TargetSdkVersion : 29,
     JavaCompatibility : JavaVersion.VERSION_11,
-    JavaCompatibilityForAndroid : JavaVersion.VERSION_1_8
+    JavaCompatibilityForAndroid : JavaVersion.VERSION_1_8,
+    JetpackCompose : "1.0.0-alpha08",
 ]
 
 
@@ -47,10 +49,11 @@ def versions_packages = [
     HiltAndroidX : "1.0.0-alpha01",
     JacksonDatabinding : "2.11.3",
     JUnit : "4.13.1",
+    JetpackCompose :versions_tools.JetpackCompose,
     OpenjfxGradle : "0.0.9",
     Kodein : "7.1.0",
-    Kotlin : "1.4.20",
-    KotlinGradle: "1.4.20",
+    Kotlin : versions_tools.KotlinVersion,
+    KotlinGradle: versions_tools.KotlinVersion,
     KotlinxDatetime : "0.1.1",
     KotlinxSerialization : "1.0.1",
     KtlintVerion : "0.39.0",
@@ -131,6 +134,14 @@ def packages = [
         HiltCompiler : "com.google.dagger:hilt-android-compiler:$versions_packages.Hilt",
         HiltGradle : "com.google.dagger:hilt-android-gradle-plugin:$versions_packages.Hilt",
         JacksonDatabinding : "com.fasterxml.jackson.core:jackson-databind:$versions_packages.JacksonDatabinding",
+        JetpackComposeUI : "androidx.compose.ui:ui:$versions_packages.JetpackCompose",
+        JetpackComposeTooling : "androidx.compose.ui:ui-tooling:$versions_packages.JetpackCompose",
+        JetpackComposeFoundation : "androidx.compose.foundation:foundation:$versions_packages.JetpackCompose",
+        JetpackComposeMaterial : "androidx.compose.material:material:$versions_packages.JetpackCompose",
+        JetpackComposeIconsCore : "androidx.compose.material:material-icons-core:$versions_packages.JetpackCompose",
+        JetpackComposeIconsExtended : "androidx.compose.material:material-icons-extended:$versions_packages.JetpackCompose",
+        JetpackComposeRuntimeLiveData : "androidx.compose.runtime:runtime-livedata:$versions_packages.JetpackCompose",
+        JetpackComposeUItestJunit : "androidx.compose.ui:ui-test-junit4:$versions_packages.JetpackCompose",
         OpenjfxGradle : "org.openjfx:javafx-plugin:$versions_packages.OpenjfxGradle",
         JUnit : "junit:junit:$versions_packages.JUnit",
         Kodein : "org.kodein.di:kodein-di:$versions_packages.Kodein",

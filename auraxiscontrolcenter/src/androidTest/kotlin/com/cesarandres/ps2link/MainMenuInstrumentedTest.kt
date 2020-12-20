@@ -1,11 +1,7 @@
 package com.cesarandres.ps2link
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -44,11 +40,13 @@ class MainMenuInstrumentedTest {
 
     @Test
     fun switchBackgrounds() {
+        /*
         onView(withId(R.id.buttonNC)).perform(click())
         allowPermissionsIfNeeded(WRITE_EXTERNAL_STORAGE)
         onView(withId(R.id.buttonTR)).perform(click())
         onView(withId(R.id.buttonVS)).perform(click())
         onView(withId(R.id.buttonPS2)).perform(click())
+         */
     }
 
     @Test
@@ -64,16 +62,6 @@ class MainMenuInstrumentedTest {
     @Test
     fun openOutfits() {
         onView(withId(R.id.buttonOutfit)).perform(click())
-    }
-
-    @Test
-    fun openNews() {
-        onView(withId(R.id.buttonNews)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
-    }
-
-    @Test
-    fun openSettings() {
-        onView(withId(R.id.buttonSettings)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
     }
 
     @Test

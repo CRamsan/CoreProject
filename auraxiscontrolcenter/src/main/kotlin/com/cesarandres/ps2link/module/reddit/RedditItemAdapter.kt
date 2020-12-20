@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import org.ocpsoft.prettytime.PrettyTime
@@ -15,7 +14,6 @@ import java.util.Date
 class RedditItemAdapter(
     private val context: Context,
     private val children: List<Child>,
-    private val imageLoader: ImageLoader
 ) :
     BaseAdapter() {
     protected var mInflater: LayoutInflater
@@ -82,7 +80,7 @@ class RedditItemAdapter(
         holder.thumbnail!!.setDefaultImageResId(0)
         holder.thumbnail!!.setImageUrl("", null)
         if (child.data!!.thumbnail != "self") {
-            holder.thumbnail!!.setImageUrl(child.data!!.thumbnail, imageLoader)
+            // holder.thumbnail!!.setImageUrl(child.data!!.thumbnail, imageLoader)
         } else {
             holder.thumbnail!!.setDefaultImageResId(R.drawable.image_not_found)
             holder.thumbnail!!.setImageUrl("", null)

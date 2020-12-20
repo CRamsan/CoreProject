@@ -1,6 +1,5 @@
 package com.cesarandres.ps2link.fragments
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,15 +13,17 @@ import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
+import com.cesarandres.ps2link.databinding.FragmentRedditBinding
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
 import com.cesarandres.ps2link.module.reddit.Child
 import com.cesarandres.ps2link.module.reddit.Content
 import com.cesarandres.ps2link.module.reddit.RedditItemAdapter
+import com.cramsan.framework.core.NoopViewModel
 
 /**
  * Fragment that retrieves the hottest Reddit post
  */
-class FragmentReddit : BasePS2Fragment() {
+class FragmentReddit : BasePS2Fragment<NoopViewModel, FragmentRedditBinding>() {
     private var subReddit: String? = null
 
     /*
@@ -31,12 +32,12 @@ class FragmentReddit : BasePS2Fragment() {
      * @see com.cesarandres.ps2link.base.BaseFragment#onCreateView(android.view.
      * LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
-    @SuppressLint("InflateParams")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_reddit, container, false)
     }
 
@@ -49,8 +50,7 @@ class FragmentReddit : BasePS2Fragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        this.fragmentTitle.text = getString(R.string.title_reddit)
-        val listRoot = view!!.findViewById<View>(R.id.listViewRedditList) as ListView
+        val listRoot = requireView().findViewById<View>(R.id.listViewRedditList) as ListView
         val bundle = arguments
         this.subReddit = bundle!!.getString("PARAM_0")
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
@@ -102,35 +102,34 @@ class FragmentReddit : BasePS2Fragment() {
      * Send a request to get all the information from the Reddit server
      */
     fun updatePosts() {
-        setProgressButton(true)
+
         val url = REDDIT_URL + this.subReddit + REDDIT_ENDPOINT
 
         val success = Listener<Content> { response ->
-            setProgressButton(false)
+
             try {
-                val listRoot = view!!.findViewById<View>(R.id.listViewRedditList) as ListView
-                listRoot.adapter = RedditItemAdapter(this!!.activity!!, response.data!!.children, imageLoader)
+                val listRoot = requireView().findViewById<View>(R.id.listViewRedditList) as ListView
+                listRoot.adapter = RedditItemAdapter(this!!.requireActivity(), response.data!!.children)
             } catch (e: Exception) {
                 Toast.makeText(
                     activity,
-                    view!!.resources.getString(R.string.toast_error_retrieving_data),
+                    requireView().resources.getString(R.string.toast_error_retrieving_data),
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
 
         val error = ErrorListener {
-            setProgressButton(false)
+
             Toast.makeText(
                 activity,
-                view!!.resources.getString(R.string.toast_error_retrieving_data),
+                requireView().resources.getString(R.string.toast_error_retrieving_data),
                 Toast.LENGTH_SHORT
             ).show()
         }
 
         val gsonOject = GsonRequest(url, Content::class.java, null, success, error)
         gsonOject.tag = this
-        volley.add(gsonOject)
     }
 
     companion object {
@@ -138,4 +137,8 @@ class FragmentReddit : BasePS2Fragment() {
         val REDDIT_URL = "https://www.reddit.com/r/"
         val REDDIT_ENDPOINT = "/hot.json"
     }
+
+    override val logTag = "FragmentReddit"
+    override val contentViewLayout: Int
+        get() = TODO("Not yet implemented")
 }

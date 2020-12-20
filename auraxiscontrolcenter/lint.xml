@@ -4,4 +4,6 @@
     <issue id="InvalidPackage">
         <ignore regexp=".*twitter4j.*" />
     </issue>
+
+    <issue id="Instantiatable" severity="ignore" />
 </lint>

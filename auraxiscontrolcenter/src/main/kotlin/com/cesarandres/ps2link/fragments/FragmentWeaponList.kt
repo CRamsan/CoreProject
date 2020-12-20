@@ -2,21 +2,20 @@ package com.cesarandres.ps2link.fragments
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
+import com.cesarandres.ps2link.databinding.FragmentWeaponListBinding
 import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
 import com.cesarandres.ps2link.module.Constants
+import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.logging.Severity
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
 import com.cramsan.ps2link.appcore.dbg.content.Faction
 import com.cramsan.ps2link.appcore.dbg.content.item.Weapon
 import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
@@ -29,7 +28,7 @@ import java.util.HashMap
 /**
  * This fragment will retrieve the list of weapons for a player and display it.
  */
-class FragmentWeaponList : BasePS2Fragment() {
+class FragmentWeaponList : BasePS2Fragment<NoopViewModel, FragmentWeaponListBinding>() {
 
     private var profileId: String? = null
     private var profileFaction: String? = null
@@ -41,46 +40,20 @@ class FragmentWeaponList : BasePS2Fragment() {
     /*
      * (non-Javadoc)
      *
-     * @see com.cesarandres.ps2link.base.BaseFragment#onCreateView(android.view.
-     * LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-     */
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_weapon_list, container, false)
-    }
-
-    /*
-     * (non-Javadoc)
-     *
      * @see
      * com.cesarandres.ps2link.base.BaseFragment#onActivityCreated(android.os
      * .Bundle)
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val listRoot = activity!!.findViewById<View>(R.id.listViewWeaponList) as ListView
+        val listRoot = requireActivity().findViewById<View>(R.id.listViewWeaponList) as ListView
         listRoot.onItemClickListener = OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
             /*mCallbacks.onItemSelected(ApplicationPS2Link.ActivityMode.ACTIVITY_PROFILE.toString(),
 			new String[] { ((CharacterEvent) myAdapter.getItemAtPosition(myItemInt)).getImportant_character_id() });*/
         }
 
-        this.fragmentMyWeapons.setOnCheckedChangeListener { buttonView, isChecked ->
-            val listRoot = activity!!.findViewById<View>(R.id.listViewWeaponList) as ListView
-            if (listRoot.adapter == null) {
-                return@setOnCheckedChangeListener
-            }
-            val weaponAdapter = listRoot.adapter as WeaponItemAdapter?
-            if (weaponAdapter != null) {
-                weaponAdapter.isMyWeapons = isChecked
-                listRoot.adapter = weaponAdapter
-            }
-        }
-
-        this.profileId = arguments!!.getString("PARAM_0")
-        this.namespace = Namespace.valueOf(arguments!!.getString("PARAM_1", ""))
+        this.profileId = requireArguments().getString("PARAM_0")
+        this.namespace = Namespace.valueOf(requireArguments().getString("PARAM_1", ""))
         this.profileFaction = ""
     }
 
@@ -109,24 +82,17 @@ class FragmentWeaponList : BasePS2Fragment() {
      * character_id and displays it.
      */
     fun downloadWeaponList(character_id: String?) {
-        if ("" == profileFaction) {
-            val task = GetProfileFromTable()
-            setCurrentTask(task)
-            task.execute(this.profileId)
-            return
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            setProgressButton(true)
+
             val weaponListResponse = withContext(Dispatchers.IO) { dbgCensus.getWeaponList(character_id, namespace!!, CensusLang.EN) }
 
             if (weaponListResponse != null) {
-                setProgressButton(false)
+
                 val currentTask = GenerateWeaponStats()
-                setCurrentTask(currentTask)
                 currentTask.execute(weaponListResponse)
             } else {
-                setProgressButton(false)
+
                 eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
@@ -146,7 +112,6 @@ class FragmentWeaponList : BasePS2Fragment() {
          * @see android.os.AsyncTask#onPreExecute()
          */
         override fun onPreExecute() {
-            setProgressButton(true)
         }
 
         /*
@@ -287,11 +252,11 @@ class FragmentWeaponList : BasePS2Fragment() {
             if (this.isCancelled) {
                 return
             }
-            if (activity!!.isFinishing || activity!!.isDestroyed) {
+            if (requireActivity().isFinishing || requireActivity().isDestroyed) {
                 return
             }
 
-            val listRoot = activity!!.findViewById<ListView>(R.id.listViewWeaponList)
+            val listRoot = requireActivity().findViewById<ListView>(R.id.listViewWeaponList)
             if (listRoot == null) {
                 return
             }
@@ -302,61 +267,12 @@ class FragmentWeaponList : BasePS2Fragment() {
                 return
             } else {
                 listRoot.adapter = WeaponItemAdapter(
-                    activity!!,
+                    requireActivity(),
                     weaponKills!!,
                     weaponKilledBy!!,
                     profileFaction!!,
-                    this@FragmentWeaponList.fragmentMyWeapons.isChecked,
-                    imageLoader
+                    true
                 )
-            }
-            setProgressButton(false)
-        }
-    }
-
-    /**
-     * Read the profile from the database and retrieve the character data
-     */
-    private inner class GetProfileFromTable : AsyncTask<String, Int, CharacterProfile>() {
-
-        private var profile_id: String? = null
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPreExecute()
-         */
-        override fun onPreExecute() {
-            setProgressButton(true)
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
-         */
-        override fun doInBackground(vararg args: String): CharacterProfile? {
-            this.profile_id = args[0]
-            val data = activityContainer.data
-            return data!!.getCharacter(profile_id!!)
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-         */
-        override fun onPostExecute(result: CharacterProfile?) {
-            setProgressButton(false)
-            if (result != null) {
-                profileFaction = result.faction_id
-                downloadWeaponList(this.profile_id)
-            } else {
-                Toast.makeText(
-                    activity,
-                    resources.getString(R.string.toast_profile_download_failed),
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
@@ -364,4 +280,7 @@ class FragmentWeaponList : BasePS2Fragment() {
     companion object {
         const val TAG = "FragmentWeaponList"
     }
+
+    override val logTag = "FragmentWeaponList"
+    override val contentViewLayout = R.layout.fragment_weapon_list
 }

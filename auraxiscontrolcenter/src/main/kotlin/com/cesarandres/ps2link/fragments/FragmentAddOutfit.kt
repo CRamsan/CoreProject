@@ -1,27 +1,23 @@
 package com.cesarandres.ps2link.fragments
 
-import android.os.AsyncTask
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.cesarandres.ps2link.ApplicationPS2Link.ActivityMode
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
+import com.cesarandres.ps2link.databinding.FragmentAddOutfitBinding
 import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
+import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.Outfit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,31 +29,10 @@ import java.util.Locale
  * characters long. When an outfit is found, it's content is cached into the
  * database.
  */
-class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
+class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBinding>(), SourceSelectionChangedListener {
 
     private lateinit var selectionButton: ButtonSelectSource
     private var lastUsedNamespace: Namespace? = null
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.cesarandres.ps2link.base.BaseFragment#onCreateView(android.view.
-     * LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-     */
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_add_outfit, container, false)
-        selectionButton = ButtonSelectSource(
-            activity!!,
-            activity!!.findViewById<View>(R.id.linearLayoutTitle) as ViewGroup,
-            metrics,
-        )
-        selectionButton!!.listener = this
-        return view
-    }
 
     /*
      * (non-Javadoc)
@@ -68,24 +43,12 @@ class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        this.fragmentTitle.text = getString(R.string.title_outfits)
         val buttonOutfits =
-            activity!!.findViewById<View>(R.id.imageButtonSearchOutfit) as ImageButton
+            requireActivity().findViewById<View>(R.id.imageButtonSearchOutfit) as ImageButton
         buttonOutfits.setOnClickListener {
             metrics.log(TAG, "Search")
             downloadOutfits()
         }
-
-        this.fragmentUpdate.setOnClickListener {
-            metrics.log(TAG, "Update")
-            downloadOutfits()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        val titleLayout = activity!!.findViewById<View>(R.id.linearLayoutTitle) as LinearLayout
-        selectionButton!!.removeButtons(activity!!, titleLayout)
     }
 
     /*
@@ -95,8 +58,6 @@ class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
      */
     override fun onResume() {
         super.onResume()
-        activityContainer.activityMode = ActivityMode.ACTIVITY_ADD_OUTFIT
-        this.fragmentUpdate.visibility = View.VISIBLE
     }
 
     /**
@@ -109,8 +70,8 @@ class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
     fun downloadOutfits() {
         this.lastUsedNamespace = selectionButton!!.namespace
 
-        val searchField = activity!!.findViewById<View>(R.id.fieldSearchOutfit) as EditText
-        val searchTagField = activity!!.findViewById<View>(R.id.fieldSearchTag) as EditText
+        val searchField = requireActivity().findViewById<View>(R.id.fieldSearchOutfit) as EditText
+        val searchTagField = requireActivity().findViewById<View>(R.id.fieldSearchTag) as EditText
         val outfitName = searchField.text.toString().toLowerCase(Locale.getDefault())
         val outfitTag = searchTagField.text.toString().toLowerCase(Locale.getDefault())
 
@@ -126,32 +87,23 @@ class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
             return
         }
 
-        val listRoot = activity!!.findViewById<View>(R.id.listFoundOutfits) as ListView
+        val listRoot = requireActivity().findViewById<View>(R.id.listFoundOutfits) as ListView
         listRoot.onItemClickListener = null
         // Set the loading adapter while searching
-        listRoot.adapter = LoadingItemAdapter(activity!!)
+        listRoot.adapter = LoadingItemAdapter(requireActivity())
 
         viewLifecycleOwner.lifecycleScope.launch {
             val outfitList = withContext(Dispatchers.IO) { dbgCensus.getOutfitList(outfitTag, outfitName, selectionButton.namespace!!, CensusLang.EN) }
 
-            val listRoot = activity!!.findViewById<View>(R.id.listFoundOutfits) as ListView
-            listRoot.adapter = OutfitItemAdapter(activity!!, outfitList!!)
+            val listRoot = requireActivity().findViewById<View>(R.id.listFoundOutfits) as ListView
+            listRoot.adapter = OutfitItemAdapter(requireActivity(), outfitList!!)
 
             listRoot.onItemClickListener =
                 OnItemClickListener { myAdapter, myView, myItemInt, mylng ->
-                    mCallbacks!!.onItemSelected(
-                        ActivityMode.ACTIVITY_MEMBER_LIST.toString(),
-                        arrayOf(
-                            (myAdapter.getItemAtPosition(myItemInt) as Outfit).outfit_id,
-                            lastUsedNamespace!!.name
-                        )
-                    )
+                    TODO()
                 }
 
             // Add the new outfits to the local cache
-            val currentTask = UpdateTmpOutfitTable()
-            setCurrentTask(currentTask)
-            currentTask.execute(outfitList)
             listRoot.isTextFilterEnabled = true
         }
     }
@@ -160,61 +112,10 @@ class FragmentAddOutfit : BasePS2Fragment(), SourceSelectionChangedListener {
         downloadOutfits()
     }
 
-    /**
-     * This task will add the searched outfits to database. All outfits are
-     * added to the database for the first time with the Temp flag set.
-     */
-    private inner class UpdateTmpOutfitTable : AsyncTask<List<Outfit>, Int, Boolean>() {
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPreExecute()
-         */
-        override fun onPreExecute() {
-            setProgressButton(true)
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
-         */
-        override fun doInBackground(vararg outfits: List<Outfit>): Boolean? {
-            val count = outfits[0].size
-            val list = outfits[0]
-            val data = activityContainer.data
-            var outfit: Outfit? = null
-            for (i in 0 until count) {
-                outfit = data!!.getOutfit(list[i].outfit_id!!)
-                // If outfit is not in cache
-                if (outfit == null) {
-                    val newOutfit = list[i]
-                    newOutfit.namespace = lastUsedNamespace
-                    data.insertOutfit(newOutfit, true)
-                } else {
-                    // If not, update the record
-                    if (outfit.isCached) {
-                        data.updateOutfit(list[i], false)
-                    } else {
-                        data.updateOutfit(list[i], true)
-                    }
-                }
-            }
-            return true
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-         */
-        override fun onPostExecute(result: Boolean?) {
-            setProgressButton(false)
-        }
-    }
-
     companion object {
         const val TAG = "FragmentAddOutfit"
     }
+
+    override val logTag = "FragmentAddOutfit"
+    override val contentViewLayout = R.layout.fragment_add_outfit
 }

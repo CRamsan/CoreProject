@@ -10,13 +10,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
-import com.cramsan.ps2link.appcore.DBGServiceClientImpl
+import com.cramsan.ps2link.appcore.DBGServiceClient
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
 import com.cramsan.ps2link.appcore.dbg.content.Faction
@@ -31,9 +29,7 @@ class KillItemAdapter(
     private val events: List<CharacterEvent>,
     private val characterId: String,
     private val namespace: Namespace,
-    private val volley: RequestQueue,
-    private val imageLoader: ImageLoader,
-    private val dbgCensus: DBGServiceClientImpl
+    private val dbgCensus: DBGServiceClient
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
@@ -92,10 +88,6 @@ class KillItemAdapter(
 
         if (getItem(position).weapon_name != null) {
             holder.weaponName!!.text = getItem(position).weapon_name
-            holder.weaponImage!!.setImageUrl(
-                getItem(position).imagePath,
-                imageLoader
-            )
         } else {
             holder.weaponName!!.text = context.getText(R.string.text_loading_ellipsis)
 

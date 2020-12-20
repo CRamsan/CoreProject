@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import com.cramsan.ps2link.appcore.dbg.content.Faction
 import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
 import com.cramsan.ps2link.appcore.dbg.content.response.Item_list_response
@@ -25,7 +23,6 @@ class WeaponItemAdapter(
     private val weaponKilledBy: List<WeaponStat>,
     private val characterFaction: String,
     var isMyWeapons: Boolean,
-    val imageLoader: ImageLoader
 ) : BaseAdapter() {
 
     protected var mInflater: LayoutInflater
@@ -156,11 +153,6 @@ class WeaponItemAdapter(
             holder.headshots!!.visibility = View.GONE
             holder.vehiclekills!!.visibility = View.GONE
         }
-
-        holder.weaponImage!!.setImageUrl(
-            DBGCensus.ENDPOINT_URL + "/" + stat.imagePath,
-            imageLoader
-        )
 
         return convertView
     }

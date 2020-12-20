@@ -1,8 +1,41 @@
 <resources>
 
-    <style name="PS2Theme" parent="android:Theme.Black.NoTitleBar"></style>
+    <!-- Base application theme. -->
+    <style name="PS2Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
-    <style name="PS2ThemeDialog" parent="android:Theme.Black.NoTitleBar"></style>
+    <!-- Base application theme. -->
+    <style name="AppTheme.NoActionBar" parent="PS2Theme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="PS2Theme" />
+
+    <style name="BaseAppBarLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
+        <item name="android:background">@color/BLACK</item>
+    </style>
+
+    <style name="BaseToolBar" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">@drawable/frame_title</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="BaseContentLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 
     <style name="ActionBarButtonStyle">
         <item name="android:minHeight">1dp</item>
@@ -14,15 +47,6 @@
         <item name="android:visibility">gone</item>
         <item name="android:background">@drawable/ps2_button</item>
         <item name="android:textColor">@color/WHITE</item>
-    </style>
-
-    <style name="ActionBarTitleBarStyle">
-        <item name="android:background">@drawable/frame_title</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">left</item>
-        <item name="android:typeface">monospace</item>
     </style>
 
     <style name="FragmentBottomStyle">
@@ -54,26 +78,28 @@
     <style name="LayoutFillParentStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="ButtonStyle" parent="@android:style/TextAppearance.Large">
+    <style name="ButtonStyle">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:typeface">monospace</item>
-        <item name="android:background">@drawable/ps2_button_bold</item>
+        <item name="android:background">@drawable/ps2_button_bold_normal</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">10dp</item>
+        <item name="rippleColor">@color/highlight</item>
     </style>
 
-    <style name="GreenButtonStyle" parent="@android:style/TextAppearance.Large">
+    <style name="GreenButtonStyle">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:typeface">monospace</item>
-        <item name="android:background">@drawable/ps2_button_bold_green</item>
+        <item name="android:background">@drawable/ps2_button_green_normal</item>
     </style>
 
     <color name="BLACK">#000000</color>

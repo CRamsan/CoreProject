@@ -31,6 +31,9 @@ import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.cramsan.framework.utils.dispatcher.DispatcherProvider
 import com.cramsan.framework.utils.dispatcher.DispatcherProviderImpl
+import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.DBGServiceClientImpl
+import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +43,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object ApplicationModule {
+object PS2ApplicationModule {
 
     /*
     WTF: I don't know why this is not working
@@ -141,4 +144,16 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideDispatcher(): DispatcherProvider = DispatcherProviderImpl()
+
+    @Provides
+    @Singleton
+    fun provideDbgCensus(eventLogger: EventLoggerInterface): DBGCensus = DBGCensus(eventLogger)
+
+    @Provides
+    @Singleton
+    fun provideDbgServiceClient(
+        eventLogger: EventLoggerInterface,
+        metricsClient: MetricsInterface,
+        dbgCensus: DBGCensus,
+    ): DBGServiceClient = DBGServiceClientImpl(eventLogger, metricsClient, dbgCensus)
 }

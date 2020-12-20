@@ -19,8 +19,19 @@ android {
         applicationId "com.cesarandres.ps2link"
         versionName "5.4.0"
     }
+
     buildFeatures {
-        dataBinding false
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    kotlinOptions {
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion versions_tools.KotlinVersion
+        kotlinCompilerExtensionVersion versions_tools.JetpackCompose
     }
 }
 
@@ -28,24 +39,41 @@ dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
 
-    implementation packages.Volley
+    implementation packages.AndroidXAppCompat
+    implementation packages.AndroidxActivityKtx
+    implementation packages.AndroidxFragmentKtx
+    implementation packages.AndroidXLifecycleLiveDataKtx
+    implementation packages.AndroidXLifecycleViewModelKtx
+    implementation packages.AndroidXLifecycleRuntimeKtx
+    implementation packages.AndroidXPagingRuntimeKtx
+    implementation packages.AndroidXRecyclerView
+    implementation packages.AndroidXPreferences
+    implementation packages.AndroidXPreferencesKtx
+    implementation packages.AndroidXNavigationFragmentKtx
+    implementation packages.AndroidXNavigationUIKtx
+    implementation packages.AndroidXWorkManagerRuntimeKtx
+    implementation packages.AndroidXWorkManagerRuntime
+    implementation packages.AndroidMaterial
+    implementation packages.ConstraintLayout
+    implementation packages.EspressoIdlingResource
+    implementation packages.JetpackComposeUI
+    implementation packages.JetpackComposeTooling
+    implementation packages.JetpackComposeFoundation
+    implementation packages.JetpackComposeMaterial
+    implementation packages.JetpackComposeIconsCore
+    implementation packages.JetpackComposeIconsExtended
+    implementation packages.JetpackComposeRuntimeLiveData
+    implementation packages.AppCenterSdk
+    implementation packages.Glide
     implementation packages.Gson
+    implementation packages.KtorAndroid
     implementation packages.PrettyTime
     implementation packages.Twitter4J
-    implementation packages.AndroidXAppCompat
-    implementation packages.AndroidXLifecycleRuntimeKtx
-    implementation packages.EspressoIdlingResource
+    implementation packages.Volley
 
-    implementation packages.KotlinStdJdk8
-    implementation packages.CoroutinesCore
-    implementation packages.CoroutinesAndroid
+    kapt packages.GlideCompiler
 
-    implementation packages.Kodein
-    implementation packages.KodeinAndroid
-
-    implementation packages.AppCenterSdk
-
-    testImplementation packages.JUnit
+    testImplementation project(":framework:test")
 
     androidTestImplementation packages.AndroidXJUnit
     androidTestImplementation packages.AndroidXJUnitKtx
@@ -60,5 +88,5 @@ dependencies {
 
 release {
     dependsOn ':framework:release'
-    dependsOn ':auraxiscontrocenter:appcore:release'
+    dependsOn ':auraxiscontrolcenter:appcore:release'
 }
