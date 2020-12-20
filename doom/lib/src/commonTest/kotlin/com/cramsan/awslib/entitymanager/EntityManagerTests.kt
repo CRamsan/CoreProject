@@ -15,10 +15,10 @@ import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
-import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -30,7 +30,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-class EntityManagerTests {
+class EntityManagerTests: TestBase() {
 
     private lateinit var map: GameMap
     private lateinit var entityManager: EntityManager
@@ -266,7 +266,7 @@ class EntityManagerTests {
      * Test running turns and verify properties are updated
      */
     @Test
-    fun runTurns() = runTest {
+    fun runTurns() = runBlockingTest {
         val player = createPlayer(1, 1)
         assertTrue(entityManager.register(player))
 
@@ -358,7 +358,7 @@ class EntityManagerTests {
      * Test picking up items
      */
     @Test
-    fun playerPicksUpItemTest() = runTest {
+    fun playerPicksUpItemTest() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())
 
         val sceneConfig = scene {

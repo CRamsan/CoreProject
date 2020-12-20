@@ -21,7 +21,7 @@ class AndroidViewModelTests : TestBase() {
 
     @BeforeTest
     fun setUp() {
-        repository = Repository()
+        repository = RepositoryImpl()
         viewModel = AndroidViewModel(testCoroutineScope, repository)
     }
 

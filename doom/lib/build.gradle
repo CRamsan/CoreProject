@@ -28,6 +28,7 @@ kotlin {
         }
         commonTest {
             dependencies {
+                implementation project(":framework:test")
             }
         }
         jvmMain {

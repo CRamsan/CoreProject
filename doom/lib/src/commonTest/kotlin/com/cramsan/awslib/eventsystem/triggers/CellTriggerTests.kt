@@ -8,20 +8,20 @@ import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
-import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class CellTriggerTests {
+class CellTriggerTests : TestBase() {
 
     private lateinit var log: EventLoggerInterface
     private lateinit var assert: AssertUtilInterface
@@ -40,7 +40,7 @@ class CellTriggerTests {
      * Test GameEntityTrigger
      */
     @Test
-    fun gameEntityTriggerWithSwapEventTest() = runTest {
+    fun gameEntityTriggerWithSwapEventTest() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())
 
         val sceneConfig = scene {

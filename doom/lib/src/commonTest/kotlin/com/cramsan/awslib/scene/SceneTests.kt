@@ -8,11 +8,11 @@ import com.cramsan.awslib.entitymanager.implementation.TurnAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
-import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class SceneTests {
+class SceneTests : TestBase() {
 
     private lateinit var log: EventLoggerInterface
     private lateinit var assert: AssertUtilInterface
@@ -39,7 +39,7 @@ class SceneTests {
      * Test Basic Scene
      */
     @Test
-    fun basicSceneTest() = runTest {
+    fun basicSceneTest() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())
         val sceneConfig = scene {
             player {
@@ -126,7 +126,7 @@ class SceneTests {
      * Test Basic Scene
      */
     @Test
-    fun mapWithWallsSceneTest() = runTest {
+    fun mapWithWallsSceneTest() = runBlockingTest {
         val map = GameMap(MapGenerator.createMapWithWalls())
 
         val sceneConfig = scene {

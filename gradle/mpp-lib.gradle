@@ -61,7 +61,14 @@ dependencies {
     testImplementation packages.Mockk
     testImplementation packages.MockkAndroid
 
-    testImplementation packages.Robolectric
+    androidTestImplementation packages.AndroidXJUnitKtx
+    androidTestImplementation packages.CoroutinesTest
+    androidTestImplementation packages.JUnit
+    androidTestImplementation packages.KotlinTest
+    androidTestImplementation packages.KotlinTestJunit
+    androidTestImplementation packages.Mockk
+    androidTestImplementation packages.MockkAndroid
+    androidTestImplementation packages.Robolectric
 }
 
 kotlin {

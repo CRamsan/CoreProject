@@ -12,13 +12,13 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.map.GameMap
-import com.cramsan.awslib.platform.runTest
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class GameEntityTriggerTests {
+class GameEntityTriggerTests : TestBase() {
 
     private lateinit var log: EventLoggerInterface
     private lateinit var assert: AssertUtilInterface
@@ -46,7 +46,7 @@ class GameEntityTriggerTests {
      * Test GameEntityTrigger
      */
     @Test
-    fun gameEntityTriggerWithSwapEventTest() = runTest {
+    fun gameEntityTriggerWithSwapEventTest() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())
 
         val sceneConfig = scene {
@@ -116,7 +116,7 @@ class GameEntityTriggerTests {
      * Test GameEntityTrigger with Options
      */
     @Test
-    fun gameEntityTriggerWithInteractiveEvent() = runTest {
+    fun gameEntityTriggerWithInteractiveEvent() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())
 
         val sceneConfig = scene {
@@ -226,7 +226,7 @@ class GameEntityTriggerTests {
      * Test GameEntityTrigger without Options
      */
     @Test
-    fun gameEntityTriggerWithInteractiveEventWithoutOptions() = runTest {
+    fun gameEntityTriggerWithInteractiveEventWithoutOptions() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())
 
         val sceneConfig = scene {
@@ -275,7 +275,7 @@ class GameEntityTriggerTests {
                 override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {}
                 override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {}
                 override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
-                    runTest {
+                    runBlockingTest {
                         assertEquals(0, options.size)
                         eventReceiver.selectOption(null)
                     }
