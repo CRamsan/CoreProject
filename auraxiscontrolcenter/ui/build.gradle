@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+    }
+}
+
+apply plugin: "com.android.library"
+apply from: "$rootDir/gradle/applib.gradle"
+
+android {
+    defaultConfig {
+        versionName "1.0"
+    }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    kotlinOptions {
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion versions_tools.KotlinVersion
+        kotlinCompilerExtensionVersion versions_tools.JetpackCompose
+    }
+
+    kapt {
+        correctErrorTypes true
+    }
+}
+
+dependencies {
+    implementation packages.AndroidXAppCompat
+    implementation packages.AndroidxActivityKtx
+    implementation packages.AndroidxFragmentKtx
+    implementation packages.ConstraintLayout
+    implementation packages.JetpackComposeUI
+    implementation packages.JetpackComposeTooling
+    implementation packages.JetpackComposeFoundation
+    implementation packages.JetpackComposeMaterial
+    implementation packages.JetpackComposeIconsCore
+    implementation packages.JetpackComposeIconsExtended
+    implementation packages.JetpackComposeRuntimeLiveData
+}

@@ -28,3 +28,4 @@ include 'doom:game:ios'
 
 include 'auraxiscontrolcenter'
 include 'auraxiscontrolcenter:appcore'
+include 'auraxiscontrolcenter:ui'

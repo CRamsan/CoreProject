@@ -11,6 +11,17 @@ This is the mono-repo that holds all the code for all my projects. The reason fo
  - [Framework](framework/)
  - [Root gradle file](/build.gradle), [properties](gradle.properties) and [settings](settings.gradle)
 
- # Documentation
+# Documentation
  - [Design](/DESIGN.md)
  - [CI/CD](/CONTINUOUS.md)
+ 
+## Getting started
+ 
+### Prerequisites
+- JDK 11
+- Gradle 6.7.1(installed from the wrapper)
+- Android Studio 2020.3.1 Canary 1
+- IntelliJ is not currently supported
+
+To build the entire project run: `./grdlew release`
+

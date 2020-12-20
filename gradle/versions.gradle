@@ -1,17 +1,17 @@
 def versions_tools = [
     AndroidBuildToolsVersion : "30.0.2",
     CompileSdkVersion : 29,
-    KotlinVersion : "1.4.20",
+    KotlinVersion : "1.4.21",
     MinSdkVersion : 22,
     TargetSdkVersion : 29,
     JavaCompatibility : JavaVersion.VERSION_11,
     JavaCompatibilityForAndroid : JavaVersion.VERSION_1_8,
-    JetpackCompose : "1.0.0-alpha08",
+    JetpackCompose : "1.0.0-alpha09",
 ]
 
 
 def versions_packages = [
-    AndroidGradlePlugin : '4.2.0-alpha13',
+    AndroidGradlePlugin : '7.0.0-alpha02',
     AndroidMaterial : "1.2.1",
     AndroidxActivityKtx : "1.1.0",
     AndroidXArchCore : "2.1.0",

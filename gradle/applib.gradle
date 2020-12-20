@@ -1,0 +1,95 @@
+repositories {
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+apply from: "$rootDir/gradle/jacoco-android.gradle"
+
+android {
+    buildToolsVersion versions_tools.AndroidBuildToolsVersion
+    compileSdkVersion versions_tools.CompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion versions_tools.MinSdkVersion
+        targetSdkVersion versions_tools.TargetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main {
+            // Changes the directory for Java sources. The default directory is
+            // 'src/main/java'.
+            java.srcDirs = ['src/main/kotlin']
+        }
+        test {
+            java.srcDirs = ['src/test/kotlin']
+        }
+        androidTest {
+            java.srcDirs = ['src/androidTest/kotlin']
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility versions_tools.JavaCompatibilityForAndroid
+        targetCompatibility versions_tools.JavaCompatibilityForAndroid
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
+
+    kotlinOptions {
+        jvmTarget = versions_tools.JavaCompatibilityForAndroid
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed"
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation packages.AndroidMaterial
+    implementation packages.KotlinStdJdk8
+    implementation packages.CoroutinesCore
+    implementation packages.CoroutinesAndroid
+
+    testImplementation packages.AndroidXTest
+    testImplementation packages.AndroidXJUnit
+    testImplementation packages.AndroidXJUnitKtx
+    testImplementation packages.AndroidXCoreCommon
+    testImplementation packages.AndroidXCoreRuntime
+    testImplementation packages.AndroidXCoreTest
+    testImplementation packages.CoroutinesTest
+    testImplementation packages.JUnit
+    testImplementation packages.KotlinTest
+    testImplementation packages.KotlinTestJunit
+    testImplementation packages.Mockk
+    testImplementation packages.MockkAndroid
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'build'
+    dependsOn 'test'
+    dependsOn 'jacocoAndroidTestReport'
+    dependsOn 'assembleAndroidTest'
+}
