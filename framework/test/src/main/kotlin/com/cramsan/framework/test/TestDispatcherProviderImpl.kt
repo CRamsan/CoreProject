@@ -1,7 +1,9 @@
-package com.cramsan.framework.utils.dispatcher
+package com.cramsan.framework.test
 
-import com.cramsan.framework.test.TestCoroutineRule
+import com.cramsan.framework.core.DispatcherProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class TestDispatcherProviderImpl(
     private val testCoroutineRule: TestCoroutineRule
 ) : DispatcherProvider {

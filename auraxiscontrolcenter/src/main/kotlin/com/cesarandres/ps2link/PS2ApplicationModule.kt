@@ -2,6 +2,8 @@ package com.cesarandres.ps2link
 
 import android.content.Context
 import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
@@ -29,8 +31,6 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
-import com.cramsan.framework.utils.dispatcher.DispatcherProvider
-import com.cramsan.framework.utils.dispatcher.DispatcherProviderImpl
 import com.cramsan.ps2link.appcore.DBGServiceClient
 import com.cramsan.ps2link.appcore.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.dbg.DBGCensus

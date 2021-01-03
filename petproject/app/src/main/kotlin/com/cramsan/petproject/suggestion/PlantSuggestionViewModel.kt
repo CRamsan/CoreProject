@@ -10,6 +10,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.BaseViewModel
+import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
@@ -27,8 +28,9 @@ class PlantSuggestionViewModel @ViewModelInject constructor(
     eventLogger: EventLoggerInterface,
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
+    dispatcherProvider: DispatcherProvider,
     @Assisted private val savedStateHandle: SavedStateHandle
-) : BaseViewModel(application, eventLogger, metricsClient, threadUtil) {
+) : BaseViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider) {
 
     val observableText = MutableLiveData<String>()
     val observableIsComplete = LiveEvent<CompletedEvent>()

@@ -37,6 +37,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation project(":framework:interfacelib")
+
                 implementation packages.KotlinTestCommon
                 implementation packages.KotlinTestAnnotationsCommon
             }

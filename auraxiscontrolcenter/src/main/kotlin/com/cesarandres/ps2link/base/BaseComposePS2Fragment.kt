@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.ComposeBaseFragment
 import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.ui.theme.PS2Theme
 import javax.inject.Inject
 
 /**
@@ -32,8 +33,13 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
         super.onCreateView(inflater, container, savedInstanceState)
         return ComposeView(requireContext()).apply {
             setContent {
-                Text(text = "Hello world.")
+                PS2Theme {
+                    CreateComposeContent()
+                }
             }
         }
     }
+
+    @Composable
+    abstract fun CreateComposeContent()
 }

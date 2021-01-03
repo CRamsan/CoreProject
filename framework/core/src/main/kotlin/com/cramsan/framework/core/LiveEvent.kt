@@ -1,4 +1,4 @@
-package com.cramsan.petproject.base
+package com.cramsan.framework.core
 
 import androidx.annotation.MainThread
 import androidx.collection.ArraySet
@@ -6,7 +6,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
-@Deprecated("Use the framework version of this class")
 open class LiveEvent<T : BaseEvent> : MediatorLiveData<T>() {
 
     private val observers = ArraySet<ObserverWrapper<in T>>()

@@ -190,17 +190,17 @@ class KillItemAdapter(
                 if (weaponName == null) {
                     weaponName = context.getText(R.string.text_unknown).toString()
                 }
-                events[position].weapon_name = weaponName
+                _events[position].weapon_name = weaponName
                 name!!.text = weaponName
 
-                events[position].imagePath = DBGCensus.ENDPOINT_URL + "/" + item.imagePath
+                _events[position].imagePath = DBGCensus.ENDPOINT_URL + "/" + item.imagePath
                 val imageUrl = DBGCensus.ENDPOINT_URL + "/" + item.imagePath
                 image!!.setImageUrl(
                     imageUrl,
                     imageLoader
                 )
             } else {
-                events[position].weapon_name = context.getText(R.string.text_unknown).toString()
+                _events[position].weapon_name = context.getText(R.string.text_unknown).toString()
                 name!!.text = context.getText(R.string.text_unknown).toString()
                 image!!.setImageUrl("", null)
             }

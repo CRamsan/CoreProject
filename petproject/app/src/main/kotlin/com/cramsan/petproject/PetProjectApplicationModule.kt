@@ -2,6 +2,8 @@ package com.cramsan.petproject
 
 import android.content.Context
 import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
@@ -208,4 +210,8 @@ object PetProjectApplicationModule {
     @Provides
     @Singleton
     fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
+    fun provideDispatcher(): DispatcherProvider = DispatcherProviderImpl()
 }

@@ -1,4 +1,4 @@
-package com.cramsan.framework.utils.dispatcher
+package com.cramsan.framework.core
 
 import kotlinx.coroutines.Dispatchers
 

@@ -6,6 +6,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cramsan.framework.core.BaseViewModel
+import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
@@ -20,9 +21,10 @@ class DebugMenuViewModel @ViewModelInject constructor(
     eventLogger: EventLoggerInterface,
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
+    dispatcherProvider: DispatcherProvider,
     val modelProvider: ModelProviderInterface,
     @Assisted private val savedStateHandle: SavedStateHandle
-) : BaseViewModel(application, eventLogger, metricsClient, threadUtil) {
+) : BaseViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider) {
 
     override val logTag: String
         get() = "DebugMenuViewModel"

@@ -19,9 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ActivityContainer : BasePS2Activity<NoopViewModel>() {
 
-    override val contentViewLayout = R.layout.activity_panel
-    override val toolbarViewId: Int?
-        get() = null
-    override val logTag: String
-        get() = "ActivityContainer"
+    override val contentViewLayout = R.layout.activity_single_pane
+    override val toolbarViewId = R.id.main_menu_toolbar
+    override val logTag = "ActivityContainer"
 }

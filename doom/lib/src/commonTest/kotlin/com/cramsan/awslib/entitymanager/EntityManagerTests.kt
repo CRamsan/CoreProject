@@ -30,7 +30,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-class EntityManagerTests: TestBase() {
+class EntityManagerTests : TestBase() {
 
     private lateinit var map: GameMap
     private lateinit var entityManager: EntityManager

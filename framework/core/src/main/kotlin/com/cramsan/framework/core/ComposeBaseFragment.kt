@@ -21,8 +21,7 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
     lateinit var metrics: MetricsInterface
 
     abstract val logTag: String
-    protected lateinit var viewModel: VM
-    abstract val contentViewLayout: Int
+    abstract val viewModel: VM
 
     @CallSuper
     override fun onAttach(context: Context) {
@@ -37,13 +36,26 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
     }
 
     @CallSuper
+    protected open fun onViewModelEvent(event: BaseEvent) {
+        eventLogger.log(Severity.INFO, logTag, "Event: $event")
+    }
+
+    @CallSuper
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreateView")
+        viewModel.events().observe(
+            viewLifecycleOwner,
+            {
+                it?.let {
+                    onViewModelEvent(it)
+                }
+            }
+        )
         return null
     }
 

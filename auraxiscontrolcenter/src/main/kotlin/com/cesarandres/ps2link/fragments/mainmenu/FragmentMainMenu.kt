@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments
+package com.cesarandres.ps2link.fragments.mainmenu
 
 import android.os.Bundle
 import android.view.View

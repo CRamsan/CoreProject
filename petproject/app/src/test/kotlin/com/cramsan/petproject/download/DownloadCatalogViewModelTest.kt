@@ -44,7 +44,7 @@ class DownloadCatalogViewModelTest : TestBase() {
         testDispatcher = TestCoroutineDispatcher()
         observer = mockk(relaxed = true)
 
-        viewModel = DownloadCatalogViewModel(application, log, metrics, thread, modelProvider, testDispatcher)
+        viewModel = DownloadCatalogViewModel(application, log, metrics, thread, modelProvider, testDispatcher, dispatcherProvider)
         viewModel.observableIsDownloadComplete.observeForever(observer)
     }
 

@@ -22,7 +22,7 @@ class CallbackManager : IGameSubsystem {
         for (i in queue.indices) {
             val nextBlock = queue.peek()
             // If the next block is expected to run in the future then
-            // we know that we can stop checking for more events.
+            // we know that we can stop checking for more _events.
             if (nextBlock.time > time) {
                 break
             }

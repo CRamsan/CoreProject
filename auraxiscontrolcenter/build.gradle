@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
+    implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx

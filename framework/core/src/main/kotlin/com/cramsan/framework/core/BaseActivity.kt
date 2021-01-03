@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
+import com.google.android.material.appbar.MaterialToolbar
 import javax.inject.Inject
 
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
@@ -27,6 +28,11 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreate")
         setContentView(contentViewLayout)
+
+        val toolbar = toolbarViewId?.let { findViewById<MaterialToolbar>(it) }
+        toolbar?.apply {
+            setSupportActionBar(this)
+        }
     }
 
     @CallSuper

@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
@@ -29,9 +30,10 @@ class PlantListViewModel @ViewModelInject constructor(
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
     modelProvider: ModelProviderInterface,
+    dispatcherProvider: DispatcherProvider,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) :
-    CatalogDownloadViewModel(application, eventLogger, metricsClient, threadUtil, modelProvider) {
+    CatalogDownloadViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider, modelProvider) {
 
     override val logTag: String
         get() = "PlantListViewModel"
