@@ -20,8 +20,8 @@ This is the mono-repo that holds all the code for all my projects. The reason fo
 ### Prerequisites
 - JDK 11
 - Gradle 6.7.1(installed from the wrapper)
-- Android Studio 2020.3.1 Canary 1
-- IntelliJ is not currently supported
+- Android Studio 2020.3.1 Canary 1(Stable) / Android Studio 2020.3.1 Canary 2 (Early testing)
+- IntelliJ is not currently supported(#139)
 
 To build the entire project run: `./grdlew release`
 
