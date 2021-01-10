@@ -1,9 +1,9 @@
-# Auraxis Control Center
-This is the source code for the Auraxis Control Center
+# Project Name
+*Project description*
 
 # Build Status
 
-[![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
+[![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master) *Replace with link to actual widget*
 
 # Analytics
 

@@ -1,5 +1,5 @@
-# Auraxis Control Center
-This is the source code for the Auraxis Control Center
+# Safe For My Pet
+This is the source code for the Safe For My Pet app.
 
 # Build Status
 
@@ -31,3 +31,8 @@ Webservice: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/buil
 [Reviews](https://play.google.com/apps/publish/?account=6214892269219109827#ReviewsPlace:p=com.cramsan.petproject&appid=4973759825635320328)
 
 [Ratings](https://play.google.com/apps/publish/?account=6214892269219109827#RatingsPlace:p=com.cramsan.petproject&appid=4973759825635320328)
+
+## References
+---
+
+- Template: [PROJECT.md](../docs/templates/PROJECT.md).
