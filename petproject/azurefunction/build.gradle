@@ -44,7 +44,7 @@ azurefunctions {
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
 }
 
+registerDependency(":petproject:appcore")
 release {
-    dependsOn ':petproject:appcore:release'
     dependsOn 'azureFunctionsPackageZip'
 }

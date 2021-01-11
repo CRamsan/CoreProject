@@ -50,6 +50,4 @@ bootWar {
     providedClasspath("src/main/resources/PetProject.sql")
 }
 
-release {
-    dependsOn ':petproject:appcore:release'
-}
+registerDependency(":petproject:appcore")

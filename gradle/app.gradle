@@ -106,6 +106,14 @@ dependencies {
     testImplementation packages.MockkAndroid
 }
 
+ext.registerDependency = { project ->
+    release.configure { dependsOn("${project}:releaseAndroid") }
+}
+
+ext.registerJvmDependency = { project ->
+    release.configure { dependsOn("${project}:releaseJvm") }
+}
+
 tasks.register("release") {
     group = 'build'
     description = 'Run all the steps to build a release artifact'

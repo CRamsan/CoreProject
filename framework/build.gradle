@@ -47,16 +47,14 @@ kotlin {
     }
 }
 
-release {
-    dependsOn ":framework:assert:release"
-    dependsOn ":framework:core:release"
-    dependsOn ":framework:crashhandler:release"
-    dependsOn ":framework:halt:release"
-    dependsOn ":framework:interfacelib:release"
-    dependsOn ":framework:logging:release"
-    dependsOn ":framework:metrics:release"
-    dependsOn ":framework:preferences:release"
-    dependsOn ":framework:test:release"
-    dependsOn ":framework:thread:release"
-    dependsOn ":framework:utils:release"
-}
+registerDependency(":framework:assert")
+registerDependency(":framework:core")
+registerDependency(":framework:crashhandler")
+registerDependency(":framework:halt")
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:logging")
+registerDependency(":framework:metrics")
+registerDependency(":framework:preferences")
+registerDependency(":framework:test")
+registerDependency(":framework:thread")
+registerDependency(":framework:utils")

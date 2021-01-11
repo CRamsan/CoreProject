@@ -22,7 +22,5 @@ kotlin {
     }
 }
 
-release {
-    dependsOn ":framework:interfacelib:release"
-    dependsOn ":framework:logging:release"
-}
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:logging")

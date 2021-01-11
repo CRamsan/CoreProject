@@ -20,6 +20,4 @@ dependencies {
     implementation project(":framework")
 }
 
-release {
-    dependsOn ':doom:lib:release'
-}
+registerDependency(":doom:lib")

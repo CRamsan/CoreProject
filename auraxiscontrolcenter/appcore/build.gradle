@@ -58,6 +58,4 @@ kotlin {
     }
 }
 
-release {
-    dependsOn ':framework:release'
-}
+registerDependency(":framework")

@@ -87,7 +87,5 @@ dependencies {
     androidTestImplementation packages.AppCenterEspressoTestExt
 }
 
-release {
-    dependsOn ':framework:release'
-    dependsOn ':auraxiscontrolcenter:appcore:release'
-}
+registerDependency(":framework")
+registerDependency(":auraxiscontrolcenter:appcore")

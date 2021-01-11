@@ -1,8 +1,17 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath packages.KotlinGradle
+        classpath packages.KotlinNoArg
+        classpath packages.KotlinAllOpen
+    }
 }
 
-sourceCompatibility = versions_tools.JavaCompatibility
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "com.cramsan.awsgame.desktop.DesktopLauncher"
@@ -44,11 +53,4 @@ task dist(type: Jar) {
 
 dist.dependsOn classes
 
-tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
-    dependsOn ':doom:game:core:release'
-    dependsOn 'build'
-    dependsOn 'test'
-}
+registerDependency(":doom:game:core")

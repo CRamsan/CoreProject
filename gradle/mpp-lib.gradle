@@ -133,13 +133,35 @@ tasks {
     }
 }
 
-tasks.register("release") {
+ext.registerDependency = { project ->
+    releaseJvm.configure { dependsOn("${project}:releaseJvm") }
+    releaseAndroid.configure { dependsOn("${project}:releaseAndroid") }
+}
+
+tasks.register("releaseJvm") {
     group = 'build'
-    description = 'Run all the steps to build a release artifact'
+    description = 'Run all the steps to build a releaseAndroid artifact'
 
     dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'check'
+    dependsOn 'compileKotlinJvm'
+    dependsOn 'jvmTest'
     dependsOn 'jacocoTestReport'
+}
+
+tasks.register("releaseAndroid") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseJvm artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'assemble'
+    dependsOn 'test'
     dependsOn 'jacocoAndroidTestReport'
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact for Android and JVM targets'
+
+    dependsOn 'releaseJvm'
+    dependsOn 'releaseAndroid'
 }

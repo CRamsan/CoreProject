@@ -60,6 +60,4 @@ dependencies {
     androidTestImplementation packages.AndroidXWorkManagerTesting
 }
 
-release {
-    dependsOn ':petproject:appcore:release'
-}
+registerDependency(":petproject:appcore")

@@ -47,8 +47,6 @@ kotlin {
     }
 }
 
-release {
-    dependsOn ":framework:assert:release"
-    dependsOn ":framework:interfacelib:release"
-    dependsOn ":framework:test:release"
-}
+registerDependency(":framework:assert")
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:test")

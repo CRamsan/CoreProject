@@ -18,7 +18,11 @@ test {
     }
 }
 
-tasks.register("release") {
+ext.registerDependency = { project ->
+    release.configure { dependsOn("${project}:releaseJvm") }
+}
+
+tasks.register("releaseJvm") {
     group = 'build'
     description = 'Run all the steps to build a release artifact'
 
@@ -26,4 +30,8 @@ tasks.register("release") {
     dependsOn 'build'
     dependsOn 'test'
     dependsOn 'jacocoTestReport'
+}
+
+tasks.register("release") {
+    dependsOn "releaseJvm"
 }

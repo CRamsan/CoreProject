@@ -21,6 +21,5 @@ dependencies {
     implementation packages.KotlinReflect
     implementation packages.Tornadofx
 }
-release {
-    dependsOn ':doom:lib:release'
-}
+
+registerDependency(":doom:lib")
