@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -14,7 +13,6 @@ import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -62,21 +60,21 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
             return
         }
         mutableIsDownloadComplete.value = false
-        viewModelScope.launch {
+        ioScope.launch {
             downloadCatalogOnBackground()
         }
     }
 
     private suspend fun downloadCatalogOnBackground() = withContext(IODispatcher) {
         val unixTime = System.currentTimeMillis()
-        GlobalScope.launch {
+        ioScope.launch {
             modelProvider.downloadCatalog(unixTime)
         }.join()
         mutableIsDownloadComplete.postValue(true)
     }
 
     override fun onCatalogUpdate(isReady: Boolean) {
-        viewModelScope.launch {
+        ioScope.launch {
             mutableIsDownloadComplete.value = !isReady
         }
     }
