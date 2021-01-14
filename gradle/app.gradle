@@ -72,7 +72,9 @@ android {
 
     // Why is this needed again?
     packagingOptions {
-        exclude 'META-INF/*'
+        exclude 'META-INF/**'
+        exclude "META-INF/licenses/**"
+        exclude "**/attach_hotspot_windows.dll" // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
     }
 
     kotlinOptions {
