@@ -9,7 +9,6 @@ def versions_tools = [
     JetpackCompose : "1.0.0-alpha09",
 ]
 
-
 def versions_packages = [
     AndroidGradlePlugin : '7.0.0-alpha02',
     AndroidMaterial : "1.2.1",
@@ -61,6 +60,7 @@ def versions_packages = [
     Mockito : "3.5.10",
     Mockk : "1.10.2",
     Okhttp : "4.9.0",
+    Objenesis : "2.6",
     PrettyTime : "4.0.6.Final",
     Robolectric : "4.4",
     SpringDependencyManagement : "1.0.10.RELEASE",
@@ -170,6 +170,7 @@ def packages = [
         MockkAndroid : "io.mockk:mockk-android:$versions_packages.Mockk",
         MockkCommon : "io.mockk:mockk-common:$versions_packages.Mockk",
         Okhttp : "com.squareup.okhttp3:okhttp:$versions_packages.Okhttp",
+        Objenesis : "org.objenesis:objenesis:$versions_packages.Objenesis",
         PrettyTime : "org.ocpsoft.prettytime:prettytime:$versions_packages.PrettyTime",
         Robolectric : "org.robolectric:robolectric:$versions_packages.Robolectric",
         RoboVMCocoatouch : "com.mobidevelop.robovm:robovm-cocoatouch:$versions_packages.GdxRoboVM",
@@ -192,6 +193,85 @@ def packages = [
         UIAutomator : "androidx.test.uiautomator:uiautomator:$versions_packages.UIAutomator",
         Volley : "com.android.volley:volley:$versions_packages.Volley",
 ]
+
+def hilt_kapt = [
+        packages.HiltCompiler,
+        packages.HiltAndroidXCompiler,
+]
+
+def hilt = [
+        packages.Hilt,
+        packages.HiltAndroidXViewModel,
+]
+
+def core_android = [
+        packages.KotlinStdJdk8,
+        packages.CoroutinesCore,
+        packages.CoroutinesAndroid,
+]
+
+def core_test_android = [
+        packages.AndroidXTest,
+        packages.AndroidXJUnit,
+        packages.AndroidXJUnitKtx,
+        packages.AndroidXCoreCommon,
+        packages.AndroidXCoreRuntime,
+        packages.AndroidXCoreTest,
+        packages.CoroutinesTest,
+        packages.JUnit,
+        packages.KotlinTest,
+        packages.KotlinTestJunit,
+        packages.Mockk,
+        packages.MockkAndroid,
+]
+
+def core_android_test_android = [
+        packages.AndroidXJUnitKtx,
+        packages.CoroutinesTest,
+        packages.JUnit,
+        packages.KotlinTest,
+        packages.KotlinTestJunit,
+        packages.Mockk,
+        packages.MockkAndroid,
+        packages.Robolectric,
+]
+def core_jvm = [
+        packages.KotlinStdJdk8,
+        packages.CoroutinesCore,
+]
+
+def core_test_jvm = [
+        packages.CoroutinesTest,
+        packages.JUnit,
+        packages.KotlinTest,
+        packages.KotlinTestJunit,
+        packages.Mockk,
+]
+
+def core_common = [
+        packages.KotlinStdCommon,
+        packages.CoroutinesCore,
+]
+
+def core_test_common = [
+        packages.KotlinTestCommon,
+        packages.KotlinTestAnnotationsCommon,
+        packages.MockkCommon,
+]
+
+def meta_packages = [
+        HiltKapt : hilt_kapt,
+        Hilt : hilt,
+        CoreAndroid : core_android,
+        CoreCommon : core_common,
+        CoreJVM : core_jvm,
+        CoreAndrodTestAndroid: core_android_test_android,
+        CoreTestAndroid : core_test_android,
+        CoreTestCommon : core_test_common,
+        CoreTestJVM : core_test_jvm,
+]
+
 ext.versions_tools = versions_tools
 ext.versions = versions_packages
 ext.packages = packages
+ext.meta_packages = meta_packages

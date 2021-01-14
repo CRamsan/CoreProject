@@ -1,13 +1,18 @@
+/*
+Gradle plugin to create an Android app with good default values.
+ */
+
 repositories {
     maven {
+        // Needed for importing kotlinx-datetime
         url "https://kotlin.bintray.com/kotlinx/"
     }
 }
 
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-kapt"
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
+apply plugin: "androidx.navigation.safeargs.kotlin" // Enable  safe-args for Jetpack Navigation
 apply plugin: "dagger.hilt.android.plugin"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
 
@@ -22,15 +27,20 @@ android {
     }
 
     buildTypes {
+        // Release build.
         release {
+            // Minify is currently disabled. Maybe I should look into enabling this in the future?
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+        // Pre-release build. Designed for early-access testing. It inherits all properties from
+        // release build type, but uses a separate applicationId.
 		stage {
             initWith release
             applicationIdSuffix ".stage"
             matchingFallbacks = ['release']
         }
+        // Debug settings enabled.
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
@@ -38,42 +48,48 @@ android {
     }
 
     sourceSets {
+        // Add 'kotlin' as a valid source folder. The default directory is onyl 'src/main/java'.
         main {
-            // Changes the directory for Java sources. The default directory is
-            // 'src/main/java'.
-            java.srcDirs = ['src/main/kotlin']
+            java.srcDirs += ['src/main/kotlin']
         }
         test {
-            java.srcDirs = ['src/test/kotlin']
+            java.srcDirs += ['src/test/kotlin']
         }
         androidTest {
-            java.srcDirs = ['src/androidTest/kotlin']
+            java.srcDirs += ['src/androidTest/kotlin']
         }
     }
 
-
     buildFeatures {
-        dataBinding true
+        dataBinding true // Enable databinding https://developer.android.com/topic/libraries/data-binding
     }
 
     compileOptions {
+        // Set the compile options for Java source
         sourceCompatibility versions_tools.JavaCompatibilityForAndroid
         targetCompatibility versions_tools.JavaCompatibilityForAndroid
     }
 
+    // Why is this needed again?
     packagingOptions {
         exclude 'META-INF/*'
     }
 
     kotlinOptions {
+        // Set the compile target for Kotlin source
         jvmTarget = versions_tools.JavaCompatibilityForAndroid
     }
 
     testOptions {
         unitTests {
             includeAndroidResources = true
+
+            // Allows framework calls to return default values. I should look if I can remove this.
+            // Instead we could relly on the testing framework to mock system calls.
             returnDefaultValues = true
+
             all {
+                // Enable printing the result of the unit tests.
                 testLogging {
                     events "passed", "skipped", "failed"
                 }
@@ -83,33 +99,28 @@ android {
 }
 
 dependencies {
-    kapt packages.HiltCompiler
-    kapt packages.HiltAndroidXCompiler
+    kapt meta_packages.HiltKapt
 
-    implementation packages.KotlinStdJdk8
-    implementation packages.CoroutinesCore
-    implementation packages.CoroutinesAndroid
-    implementation packages.Hilt
-    implementation packages.HiltAndroidXViewModel
+    implementation meta_packages.CoreAndroid
+    implementation meta_packages.Hilt
 
-    testImplementation packages.AndroidXTest
-    testImplementation packages.AndroidXJUnit
-    testImplementation packages.AndroidXJUnitKtx
-    testImplementation packages.AndroidXCoreCommon
-    testImplementation packages.AndroidXCoreRuntime
-    testImplementation packages.AndroidXCoreTest
-    testImplementation packages.CoroutinesTest
-    testImplementation packages.JUnit
-    testImplementation packages.KotlinTest
-    testImplementation packages.KotlinTestJunit
-    testImplementation packages.Mockk
-    testImplementation packages.MockkAndroid
+    testImplementation meta_packages.CoreTestAndroid
+
+    // This is needed as the new version of Objenesis does not compile on Android<26
+    // https://github.com/mockito/mockito/issues/2007
+    // https://github.com/easymock/objenesis/issues/79
+    androidTestImplementation (packages.Objenesis) {
+        force = true
+    }
+    androidTestImplementation meta_packages.CoreAndrodTestAndroid
 }
 
+// Register a dependency to a Android library with the `releaseAndroid` task
 ext.registerDependency = { project ->
     release.configure { dependsOn("${project}:releaseAndroid") }
 }
 
+// Register a dependency to a JVM library with the `releaseJVM` task
 ext.registerJvmDependency = { project ->
     release.configure { dependsOn("${project}:releaseJvm") }
 }
@@ -118,9 +129,8 @@ tasks.register("release") {
     group = 'build'
     description = 'Run all the steps to build a release artifact'
 
-    dependsOn 'ktlint'
-    dependsOn 'build'
-    dependsOn 'test'
-    dependsOn 'jacocoAndroidTestReport'
-    dependsOn 'assembleAndroidTest'
+    dependsOn 'ktlint' // Verifies the format
+    dependsOn 'build' // Assembles and test this project
+    dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results
+    dependsOn 'assembleAndroidTest' // Assemble the androidTest APK
 }

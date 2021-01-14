@@ -1,4 +1,7 @@
-// Configure the ktlint tasks for each individual subproject
+/**
+ * Configure the ktlint tasks for each individual subproject
+ */
+
 configurations {
     ktlint
 }

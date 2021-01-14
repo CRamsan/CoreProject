@@ -4,6 +4,7 @@ apply plugin: "kotlinx-serialization"
 apply plugin: "kotlin-kapt"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
 
+// Set the task name for the jacoco-mpp-jvm plugin
 ext {
     jvmTestTaskName = "jvmTest"
 }
@@ -27,13 +28,13 @@ android {
         main {
             // Changes the directory for Java sources. The default directory is
             // 'src/main/java'.
-            java.srcDirs = ['src/main/kotlin']
+            java.srcDirs += ['src/main/kotlin']
         }
         test {
-            java.srcDirs = ['src/test/kotlin']
+            java.srcDirs += ['src/test/kotlin']
         }
         androidTest {
-            java.srcDirs = ['src/androidTest/kotlin']
+            java.srcDirs += ['src/androidTest/kotlin']
         }
     }
     testOptions {
@@ -49,26 +50,17 @@ android {
 }
 
 dependencies {
-    implementation packages.KotlinStdJdk8
-    implementation packages.CoroutinesCore
-    implementation packages.CoroutinesAndroid
+    implementation meta_packages.CoreAndroid
 
-    testImplementation packages.AndroidXJUnitKtx
-    testImplementation packages.CoroutinesTest
-    testImplementation packages.JUnit
-    testImplementation packages.KotlinTest
-    testImplementation packages.KotlinTestJunit
-    testImplementation packages.Mockk
-    testImplementation packages.MockkAndroid
+    testImplementation meta_packages.CoreTestAndroid
 
-    androidTestImplementation packages.AndroidXJUnitKtx
-    androidTestImplementation packages.CoroutinesTest
-    androidTestImplementation packages.JUnit
-    androidTestImplementation packages.KotlinTest
-    androidTestImplementation packages.KotlinTestJunit
-    androidTestImplementation packages.Mockk
-    androidTestImplementation packages.MockkAndroid
-    androidTestImplementation packages.Robolectric
+    // This is needed as the new version of Objenesis does not compile on Android<26
+    // https://github.com/mockito/mockito/issues/2007
+    // https://github.com/easymock/objenesis/issues/79
+    androidTestImplementation (packages.Objenesis) {
+        force = true
+    }
+    androidTestImplementation meta_packages.CoreAndrodTestAndroid
 }
 
 kotlin {

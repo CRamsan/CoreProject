@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation packages.AndroidMaterial
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx
     implementation packages.AndroidxFragmentKtx

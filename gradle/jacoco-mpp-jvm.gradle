@@ -1,3 +1,8 @@
+/**
+ * Apply jacoco for the JVM target in a MPP project.
+ * This plugin expects jvmTestTaskName to have the name of the task to run jvm tests.
+ * Example: ext.jvmTestTaskName = "jvmTest"
+ */
 apply plugin: 'jacoco'
 
 project.afterEvaluate {
@@ -14,6 +19,7 @@ project.afterEvaluate {
                 "src/main/java",
                 "src/main/kotlin"
         ]
+
         sourceDirectories.setFrom(files(coverageSourceDirs))
         additionalSourceDirs.setFrom(files(coverageSourceDirs))
         executionData(files("${project.buildDir}/jacoco/${jvmTestTaskName}.exec"))
@@ -23,5 +29,4 @@ project.afterEvaluate {
             html.enabled = true
         }
     }
-
 }

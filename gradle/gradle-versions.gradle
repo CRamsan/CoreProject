@@ -1,7 +1,9 @@
-// Apply the versions plugin. This plugin can be applied to the root project only as it is capable to traverse the submodules
+// Apply the versions plugin.
+// This plugin should be applied to the root project.
 
 apply plugin: "com.github.ben-manes.versions"
 
+// Define some extra patterns to determine non-stable packages
 def isNonStable = { String version ->
     def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
     def regex = /^[0-9,.v-]+(-r)?$/
@@ -9,7 +11,7 @@ def isNonStable = { String version ->
 }
 
 tasks.named("dependencyUpdates").configure {
-    // Example 1: reject all non stable versions
+    // Example 1: reject non stable versions
     rejectVersionIf {
         isNonStable(it.candidate.version)
     }
