@@ -1,3 +1,7 @@
+/**
+ * Plugin to create a kotlin MPP with safe defaults.
+ * This plugin requires that the project set the values for libraryVersionCode and libraryVersionName.
+ */
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "kotlinx-serialization"

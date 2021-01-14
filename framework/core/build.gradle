@@ -19,15 +19,14 @@ android {
     }
 
     dependencies {
-        kapt packages.HiltCompiler
-        kapt packages.HiltAndroidXCompiler
+        kapt meta_packages.HiltKapt
+
+        implementation meta_packages.Hilt
 
         implementation packages.AndroidMaterial
         implementation packages.AndroidXAppCompat
         implementation packages.AndroidxFragmentKtx
         implementation packages.AndroidXLifecycleViewModelKtx
-        implementation packages.Hilt
-        implementation packages.HiltAndroidXViewModel
     }
 }
 

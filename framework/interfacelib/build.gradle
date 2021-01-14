@@ -9,15 +9,6 @@ buildscript {
     }
 }
 
-subprojects {
-    ext {
-        libraryVersionCode = 1
-        libraryVersionName = "0.1"
-    }
-}
-ext.libraryVersionCode = 1
-ext.libraryVersionName = "0.1"
-
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
 dependencies {

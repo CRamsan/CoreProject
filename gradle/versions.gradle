@@ -226,7 +226,10 @@ def core_test_android = [
 ]
 
 def core_android_test_android = [
+        packages.AndroidXJUnit,
         packages.AndroidXJUnitKtx,
+        packages.AndroidXTest,
+        packages.AndroidXTestRules,
         packages.CoroutinesTest,
         packages.JUnit,
         packages.KotlinTest,

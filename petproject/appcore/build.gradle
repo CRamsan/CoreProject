@@ -61,11 +61,6 @@ kotlin {
                 implementation packages.SqlDelightDriver
             }
         }
-
-        jvmTest {
-            dependencies {
-            }
-        }
     }
 }
 

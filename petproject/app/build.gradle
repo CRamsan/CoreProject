@@ -48,10 +48,6 @@ dependencies {
 
     testImplementation project(":framework:test")
 
-    androidTestImplementation packages.AndroidXJUnit
-    androidTestImplementation packages.AndroidXJUnitKtx
-    androidTestImplementation packages.AndroidXTest
-    androidTestImplementation packages.AndroidXTestRules
     androidTestImplementation packages.AndroidXTestRunner
     androidTestImplementation packages.EspressoIntents
     androidTestImplementation packages.Espresso
