@@ -13,8 +13,6 @@ apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
 dependencies {
     implementation packages.Gdx
-    implementation packages.KotlinStdJdk8
-    implementation packages.CoroutinesCore
 
     implementation project(":doom:lib")
     implementation project(":framework")

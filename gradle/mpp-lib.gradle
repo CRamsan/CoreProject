@@ -93,29 +93,31 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation packages.KotlinStdCommon
-                implementation packages.CoroutinesCore
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreCommon.each { implementation it }
             }
         }
         commonTest {
             dependencies {
-                implementation packages.KotlinTestCommon
-                implementation packages.KotlinTestAnnotationsCommon
-                implementation packages.MockkCommon
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                // implementation packages.KotlinTestCommon
+                meta_packages.CoreTestCommon.each { implementation it }
             }
         }
         jvmMain {
             dependencies {
-                implementation packages.KotlinStdJdk8
-                implementation packages.CoroutinesCore
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreJVM.each { implementation it }
             }
         }
         jvmTest {
             dependencies {
-                implementation packages.CoroutinesTest
-                implementation packages.KotlinTest
-                implementation packages.KotlinTestJunit
-                implementation packages.Mockk
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreTestJVM.each { implementation it }
             }
         }
     }

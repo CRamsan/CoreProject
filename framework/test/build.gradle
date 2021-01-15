@@ -26,5 +26,10 @@ kotlin {
                 implementation project(":framework:interfacelib")
             }
         }
+        jvmMain {
+            dependencies {
+                meta_packages.CoreTestJVM.each { implementation it }
+            }
+        }
     }
 }
