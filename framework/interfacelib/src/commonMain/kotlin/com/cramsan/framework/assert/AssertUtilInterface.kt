@@ -1,6 +1,6 @@
 package com.cramsan.framework.assert
 
-import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 
 /**
@@ -22,9 +22,9 @@ interface AssertUtilInterface {
     val eventLogger: EventLoggerInterface?
 
     /**
-     * Optional [HaltUtilInterface]. It is only needed if [haltOnFailure] is set to true
+     * Optional [HaltUtil]. It is only needed if [haltOnFailure] is set to true
      */
-    val haltUtil: HaltUtilInterface?
+    val haltUtil: HaltUtil?
 
     /**
      * If the [condition] is true, this function does not do anything. Otherwise this function may

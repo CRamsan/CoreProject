@@ -15,6 +15,7 @@ import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cramsan.framework.core.NoopViewModel
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +45,7 @@ class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBind
         val buttonCharacters =
             requireActivity().findViewById<View>(R.id.imageButtonSearchProfile) as ImageButton
         buttonCharacters.setOnClickListener {
-            metrics.log(TAG, "Search Profile")
+            logMetric(TAG, "Search Profile")
             downloadProfiles()
         }
     }

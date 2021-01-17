@@ -56,7 +56,7 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
         /*
         this.fragmentUpdate.setOnClickListener(
             View.OnClickListener {
-                metrics.log(TAG, "Update")
+                logMetric(TAG, "Update")
                 val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
                     ?: return@OnClickListener
                 when (mViewPager!!.currentItem) {

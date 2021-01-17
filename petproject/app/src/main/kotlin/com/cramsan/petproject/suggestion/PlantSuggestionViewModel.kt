@@ -12,8 +12,9 @@ import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logI
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.ToxicityValue
@@ -29,8 +30,8 @@ class PlantSuggestionViewModel @ViewModelInject constructor(
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
-) : BaseViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider) {
+    @Assisted savedStateHandle: SavedStateHandle
+) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     val observableText = MutableLiveData<String>()
     val observableIsComplete = LiveEvent<CompletedEvent>()
@@ -62,12 +63,12 @@ class PlantSuggestionViewModel @ViewModelInject constructor(
     }
 
     fun save(view: View) {
-        eventLogger.log(Severity.INFO, "PlantSuggestionViewModel", "savePlant")
+        logI("PlantSuggestionViewModel", "savePlant")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion =
                 "${observableText.value}: Cats:${observableSelectedCatToxicity.value?.name} - Dogs:${observableSelectedDogToxicity.value?.name}"
             val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
-            metricsClient.log("PlantSuggestionViewModel", "suggestion", mapOf("Data" to suggestion))
+            logMetric("PlantSuggestionViewModel", "suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = CompletedEvent(true)
             }

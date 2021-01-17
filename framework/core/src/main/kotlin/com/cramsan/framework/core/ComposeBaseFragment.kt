@@ -7,18 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import javax.inject.Inject
+import com.cramsan.framework.logging.logD
 
 abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
-
-    @Inject
-    lateinit var eventLogger: EventLoggerInterface
-
-    @Inject
-    lateinit var metrics: MetricsInterface
 
     abstract val logTag: String
     abstract val viewModel: VM
@@ -26,18 +17,18 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
     @CallSuper
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        eventLogger.log(Severity.INFO, logTag, "onAttach")
+        logD(logTag, "onAttach")
     }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onCreate")
+        logD(logTag, "onCreate")
     }
 
     @CallSuper
     protected open fun onViewModelEvent(event: BaseEvent) {
-        eventLogger.log(Severity.INFO, logTag, "Event: $event")
+        logD(logTag, "Event: $event")
     }
 
     @CallSuper
@@ -47,7 +38,7 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onCreateView")
+        logD(logTag, "onCreateView")
         viewModel.events().observe(
             viewLifecycleOwner,
             {
@@ -62,54 +53,54 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : Fragment() {
     @CallSuper
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onActivityCreated")
+        logD(logTag, "onActivityCreated")
     }
 
     @CallSuper
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, logTag, "onStart")
+        logD(logTag, "onStart")
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, logTag, "onResume")
+        logD(logTag, "onResume")
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, logTag, "onPause")
+        logD(logTag, "onPause")
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, logTag, "onStop")
+        logD(logTag, "onStop")
     }
 
     @CallSuper
     override fun onDestroyView() {
         super.onDestroyView()
-        eventLogger.log(Severity.INFO, logTag, "onDestroyView")
+        logD(logTag, "onDestroyView")
     }
 
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, logTag, "onDestroy")
+        logD(logTag, "onDestroy")
     }
 
     @CallSuper
     override fun onDetach() {
         super.onDetach()
-        eventLogger.log(Severity.INFO, logTag, "onDetach")
+        logD(logTag, "onDetach")
     }
 
     @CallSuper
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        eventLogger.log(Severity.INFO, logTag, "onSaveInstanceState")
+        logD(logTag, "onSaveInstanceState")
     }
 }

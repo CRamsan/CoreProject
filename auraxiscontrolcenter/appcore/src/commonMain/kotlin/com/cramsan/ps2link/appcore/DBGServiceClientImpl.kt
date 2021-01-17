@@ -3,6 +3,7 @@ package com.cramsan.ps2link.appcore
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.DBGCensus
 import com.cramsan.ps2link.appcore.dbg.Namespace
@@ -378,7 +379,7 @@ class DBGServiceClientImpl(
             LATENCY to duration,
             RETRY to retry,
         ).mapValues { it.value.toString() }
-        metricsClient.log(TAG, "Request Completed", metadata)
+        logMetric(TAG, "Request Completed", metadata)
 
         return response
     }

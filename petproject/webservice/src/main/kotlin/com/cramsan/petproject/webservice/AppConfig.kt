@@ -1,9 +1,9 @@
 package com.cramsan.petproject.webservice
 
 import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.halt.HaltUtilInterface
-import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.halt.HaltUtil
+import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -12,10 +12,10 @@ import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
+import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.framework.thread.implementation.ThreadUtilImpl
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
@@ -29,7 +29,7 @@ class AppConfig {
 
     @Bean
     fun metrics(): MetricsInterface {
-        return Metrics(
+        return MetricsImpl(
             object : MetricsDelegate {
                 override fun initialize() {}
                 override fun log(tag: String, event: String) {}
@@ -49,16 +49,16 @@ class AppConfig {
     }
 
     @Bean
-    fun haltUtil(): HaltUtilInterface {
-        return HaltUtil(HaltUtilJVM())
+    fun haltUtil(): HaltUtil {
+        return HaltUtilImpl(HaltUtilJVM())
     }
 
     @Bean
     fun assertUtil(
         eventLogger: EventLoggerInterface,
-        haltUtil: HaltUtilInterface
+        haltUtil: HaltUtil
     ): AssertUtilInterface {
-        return AssertUtil(false, eventLogger, haltUtil)
+        return AssertUtilImpl(false, eventLogger, haltUtil)
     }
 
     @Bean
@@ -66,7 +66,7 @@ class AppConfig {
         eventLogger: EventLoggerInterface,
         assertUtil: AssertUtilInterface
     ): ThreadUtilInterface {
-        return ThreadUtil(ThreadUtilJVM(eventLogger, assertUtil))
+        return ThreadUtilImpl(ThreadUtilJVM(eventLogger, assertUtil))
     }
 
     @Bean

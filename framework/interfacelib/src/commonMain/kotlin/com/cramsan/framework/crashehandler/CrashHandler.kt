@@ -3,7 +3,7 @@ package com.cramsan.framework.crashehandler
 /**
  * This module will handle crashes and report them.
  */
-interface CrashHandlerInterface {
+interface CrashHandler {
 
     /**
      * The delegate that will handle registering as the exception handler

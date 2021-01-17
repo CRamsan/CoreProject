@@ -2,11 +2,19 @@ package com.cramsan.framework.logging.implementation
 
 import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logE
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logV
+import com.cramsan.framework.logging.logW
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
+import io.mockk.verify
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class EventLoggerCommonTest : TestBase() {
 
@@ -70,5 +78,86 @@ class EventLoggerCommonTest : TestBase() {
         eventLogger.log(Severity.INFO, "Test", "Message-3")
         eventLogger.log(Severity.WARNING, "Test", "Message-4")
         eventLogger.log(Severity.ERROR, "Test", "Message-5")
+    }
+
+    @Test
+    fun `test logV top-level function`() = runBlockingTest {
+        val eventLogger: EventLoggerInterface = mockk(relaxed = true)
+        val tag = "TestTag"
+        val message = "Error message"
+
+        // Configure singleton
+        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+
+        logV(tag, message)
+        verify { eventLogger.v(tag, message) }
+    }
+
+    @Test
+    fun `test logD top-level function`() = runBlockingTest {
+        val eventLogger: EventLoggerInterface = mockk(relaxed = true)
+        val tag = "TestTag"
+        val message = "Error message"
+
+        // Configure singleton
+        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+
+        logD(tag, message)
+        verify { eventLogger.d(tag, message) }
+    }
+
+    @Test
+    fun `test logI top-level function`() = runBlockingTest {
+        val eventLogger: EventLoggerInterface = mockk(relaxed = true)
+        val tag = "TestTag"
+        val message = "Error message"
+
+        // Configure singleton
+        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+
+        logI(tag, message)
+        verify { eventLogger.i(tag, message) }
+    }
+
+    @Test
+    fun `test logW top-level functions`() = runBlockingTest {
+        val eventLogger: EventLoggerInterface = mockk(relaxed = true)
+        val warningException: Throwable = mockk(relaxed = true)
+        val tag = "TestTag"
+        val message = "Error message"
+
+        // Configure singleton
+        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+
+        logW(tag, message)
+        verify { eventLogger.w(tag, message, null) }
+
+        logW(tag, message, warningException)
+        verify { eventLogger.w(tag, message, warningException) }
+    }
+
+    @Test
+    fun `test logE top-level functions`() = runBlockingTest {
+        val eventLogger: EventLoggerInterface = mockk(relaxed = true)
+        val errorException: Throwable = mockk(relaxed = true)
+        val tag = "TestTag"
+        val message = "Error message"
+
+        // Configure singleton
+        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+
+        logE(tag, message)
+        verify { eventLogger.e(tag, message, null) }
+
+        logE(tag, message, errorException)
+        verify { eventLogger.e(tag, message, errorException) }
+    }
+
+    @Test
+    fun `test configuring singleton`() = runBlockingTest {
+        val eventLogger: EventLoggerInterface = mockk(relaxed = true)
+
+        // Configure the singleton
+        assertEquals(eventLogger, com.cramsan.framework.logging.EventLogger.instance(eventLogger))
     }
 }

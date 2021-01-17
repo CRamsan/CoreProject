@@ -44,6 +44,12 @@ android {
         jvmTarget = versions_tools.JavaCompatibilityForAndroid
     }
 
+    packagingOptions {
+        exclude 'META-INF/**'
+        exclude "META-INF/licenses/**"
+        exclude "**/attach_hotspot_windows.dll" // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
+    }
+    
     testOptions {
         unitTests {
             includeAndroidResources = true

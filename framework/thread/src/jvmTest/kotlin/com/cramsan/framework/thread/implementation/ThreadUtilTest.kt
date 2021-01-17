@@ -1,6 +1,6 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilImpl
 import com.cramsan.framework.logging.EventLoggerInterface
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -25,14 +25,14 @@ class ThreadUtilTest {
 
     @Test
     fun testIsBackgroundThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         threadUtilTest.testIsBackgroundThread(ThreadUtilJVM(eventLogger, haltUtil))
     }
 
     @Test
     fun testIsBackgroundThreadInJavaThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         Thread {
             run {
@@ -45,7 +45,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsNotUIThreadInJavaThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         Thread {
             run {
@@ -58,7 +58,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsBackgroundThreadInCoroutine() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         runBlocking {
             launch(Dispatchers.IO) {
@@ -71,7 +71,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsNotUIThreadInCoroutine() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         runBlocking {
             launch(Dispatchers.IO) {
@@ -84,7 +84,7 @@ class ThreadUtilTest {
 
     @Test
     fun testDispatchToBackground() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
         Thread {
             run {

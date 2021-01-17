@@ -16,7 +16,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.core.BaseFragment
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.databinding.FragmentMainMenuBinding
@@ -93,13 +94,13 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         viewModel.observableShowDataDownloaded().observe(
             viewLifecycleOwner,
             Observer {
-                eventLogger.log(Severity.INFO, "MainMenuActivity", "Data is downloaded")
+                logI("MainMenuActivity", "Data is downloaded")
                 enableSearchView = true
                 requireActivity().invalidateOptionsMenu()
             }
         )
         layoutManager = LinearLayoutManager(context)
-        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, eventLogger, requireContext())
+        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsAdapter
     }
@@ -121,7 +122,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
     }
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
-        eventLogger.log(Severity.INFO, "MainMenuFragment", "onNewItemSelected")
+        logI("MainMenuFragment", "onNewItemSelected")
         val action = MainMenuFragmentDirections.actionMainMenuFragmentToPlantDetailsFragment(plantId, animalType)
         findNavController().navigate(action)
     }
@@ -137,7 +138,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        eventLogger.log(Severity.INFO, "MainMenuActivity", "onCreateOptionsMenu")
+        logI("MainMenuActivity", "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.main_menu, menu)
@@ -199,7 +200,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
             true
         }
         else -> {
-            eventLogger.log(Severity.DEBUG, "MainMenuActivity", "Action item not handled")
+            logD("MainMenuActivity", "Action item not handled")
             super.onOptionsItemSelected(item)
         }
     }

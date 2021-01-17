@@ -10,7 +10,7 @@ import kotlin.test.assertTrue
 class HaltUtilCommonTest {
 
     suspend fun testStopThread(platformDelegate: HaltUtilDelegate) = coroutineScope {
-        val haltUtil = HaltUtil(platformDelegate)
+        val haltUtil = HaltUtilImpl(platformDelegate)
 
         launch(Dispatchers.Default) {
             delay(DELAY_TIME)
@@ -20,7 +20,7 @@ class HaltUtilCommonTest {
     }
 
     suspend fun testStopResumeStopThread(platformDelegate: HaltUtilDelegate) = coroutineScope {
-        val haltUtil = HaltUtil(platformDelegate)
+        val haltUtil = HaltUtilImpl(platformDelegate)
 
         launch(Dispatchers.Default) {
             delay(DELAY_TIME)

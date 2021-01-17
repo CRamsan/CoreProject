@@ -8,7 +8,7 @@ interface PreferencesDelegate {
     /**
      * Save [value] of type [String] as the specified [key]
      */
-    fun saveString(key: String, value: String)
+    fun saveString(key: String, value: String?)
 
     /**
      * Read [key] as a nullable [String]
@@ -18,7 +18,7 @@ interface PreferencesDelegate {
     /**
      * Save [value] of type [Int] as the specified [key]
      */
-    fun saveInt(key: String, value: Int)
+    fun saveInt(key: String, value: Int?)
 
     /**
      * Read [key] as a nullable [Int]
@@ -28,7 +28,7 @@ interface PreferencesDelegate {
     /**
      * Save [value] of type [Long] as the specified [key]
      */
-    fun saveLong(key: String, value: Long)
+    fun saveLong(key: String, value: Long?)
 
     /**
      * Read [key] as a nullable [Long]

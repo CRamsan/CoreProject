@@ -9,18 +9,9 @@ import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import javax.inject.Inject
+import com.cramsan.framework.logging.logD
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
-
-    @Inject
-    lateinit var eventLogger: EventLoggerInterface
-
-    @Inject
-    lateinit var metrics: MetricsInterface
 
     abstract val logTag: String
     protected lateinit var viewModel: VM
@@ -30,13 +21,13 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
     @CallSuper
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        eventLogger.log(Severity.INFO, logTag, "onAttach")
+        logD(logTag, "onAttach")
     }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onCreate")
+        logD(logTag, "onCreate")
     }
 
     @CallSuper
@@ -46,7 +37,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onCreateView")
+        logD(logTag, "onCreateView")
         dataBinding = DataBindingUtil.inflate(inflater, contentViewLayout, container, false)
         dataBinding.lifecycleOwner = this
         return dataBinding.root
@@ -55,54 +46,58 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
     @CallSuper
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onActivityCreated")
+        logD(logTag, "onActivityCreated")
     }
 
     @CallSuper
     override fun onStart() {
         super.onStart()
-        eventLogger.log(Severity.INFO, logTag, "onStart")
+        logD(logTag, "onStart")
+        viewModel.onStart()
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
-        eventLogger.log(Severity.INFO, logTag, "onResume")
+        logD(logTag, "onResume")
+        viewModel.onResume()
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
-        eventLogger.log(Severity.INFO, logTag, "onPause")
+        logD(logTag, "onPause")
+        viewModel.onPause()
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
-        eventLogger.log(Severity.INFO, logTag, "onStop")
+        logD(logTag, "onStop")
+        viewModel.onStop()
     }
 
     @CallSuper
     override fun onDestroyView() {
         super.onDestroyView()
-        eventLogger.log(Severity.INFO, logTag, "onDestroyView")
+        logD(logTag, "onDestroyView")
     }
 
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
-        eventLogger.log(Severity.INFO, logTag, "onDestroy")
+        logD(logTag, "onDestroy")
     }
 
     @CallSuper
     override fun onDetach() {
         super.onDetach()
-        eventLogger.log(Severity.INFO, logTag, "onDetach")
+        logD(logTag, "onDetach")
     }
 
     @CallSuper
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        eventLogger.log(Severity.INFO, logTag, "onSaveInstanceState")
+        logD(logTag, "onSaveInstanceState")
     }
 }

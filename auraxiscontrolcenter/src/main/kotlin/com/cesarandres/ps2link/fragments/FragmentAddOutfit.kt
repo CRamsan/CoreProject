@@ -16,6 +16,7 @@ import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cramsan.framework.core.NoopViewModel
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +47,7 @@ class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBindin
         val buttonOutfits =
             requireActivity().findViewById<View>(R.id.imageButtonSearchOutfit) as ImageButton
         buttonOutfits.setOnClickListener {
-            metrics.log(TAG, "Search")
+            logMetric(TAG, "Search")
             downloadOutfits()
         }
     }

@@ -1,15 +1,15 @@
 package com.cramsan.petproject.azurefunction
 
-import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import com.cramsan.framework.metrics.MetricsDelegate
-import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
-import com.cramsan.framework.thread.implementation.ThreadUtil
+import com.cramsan.framework.metrics.implementation.MetricsImpl
+import com.cramsan.framework.thread.implementation.ThreadUtilImpl
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorageJdbcProvider
@@ -20,7 +20,7 @@ import java.io.OutputStream
 
 class DependenciesConfig {
     val metrics by lazy {
-        Metrics(
+        MetricsImpl(
             object : MetricsDelegate {
                 override fun initialize() {}
                 override fun log(tag: String, event: String) {}
@@ -38,15 +38,15 @@ class DependenciesConfig {
     }
 
     val haltUtil by lazy {
-        HaltUtil(HaltUtilJVM())
+        HaltUtilImpl(HaltUtilJVM())
     }
 
     val assertUtil by lazy {
-        AssertUtil(false, eventLogger, haltUtil)
+        AssertUtilImpl(false, eventLogger, haltUtil)
     }
 
     val threadUtil by lazy {
-        ThreadUtil(ThreadUtilJVM(eventLogger, assertUtil))
+        ThreadUtilImpl(ThreadUtilJVM(eventLogger, assertUtil))
     }
 
     val modelStorage by lazy {

@@ -18,6 +18,7 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentRedditBinding
 import com.cesarandres.ps2link.fragments.FragmentReddit
 import com.cramsan.framework.core.NoopViewModel
+import com.cramsan.framework.metrics.logMetric
 import java.util.HashMap
 
 /**
@@ -52,7 +53,7 @@ class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentRedditBinding
                 PS4 -> intentUri = FragmentReddit.REDDIT_URL + PS2_PS4
                 else -> intentUri = FragmentReddit.REDDIT_URL + PS2_PC
             }
-            metrics.log(TAG, "Open Reddit URL", mapOf("Site" to intentUri))
+            logMetric(TAG, "Open Reddit URL", mapOf("Site" to intentUri))
             val openRedditIntent = Intent(Intent.ACTION_VIEW, Uri.parse(intentUri))
             startActivity(openRedditIntent)
         }
@@ -80,7 +81,7 @@ class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentRedditBinding
         /*
         this.fragmentUpdate.setOnClickListener(
             View.OnClickListener {
-                metrics.log(TAG, "Update")
+                logMetric(TAG, "Update")
                 val selectedFragment = mSectionsPagerAdapter!!.getFragment(mViewPager!!.currentItem)
                     ?: return@OnClickListener
                 when (mViewPager!!.currentItem) {
@@ -94,7 +95,7 @@ class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentRedditBinding
         mViewPager!!.setOnPageChangeListener(
             object : ViewPager.OnPageChangeListener {
                 override fun onPageSelected(arg0: Int) {
-                    metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
+                    logMetric(TAG, "OnFragmentSelected", mapOf("Activity" to "Reddit", "Fragment" to arg0.toString()))
                 }
 
                 override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {

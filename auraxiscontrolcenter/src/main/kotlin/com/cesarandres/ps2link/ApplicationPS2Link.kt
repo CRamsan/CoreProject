@@ -2,10 +2,11 @@ package com.cesarandres.ps2link
 
 import android.app.Application
 import android.graphics.Bitmap
-import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.microsoft.appcenter.AppCenter
 import dagger.hilt.android.HiltAndroidApp
@@ -19,7 +20,7 @@ class ApplicationPS2Link : Application() {
     lateinit var eventLogger: EventLoggerInterface
 
     @Inject
-    lateinit var crashHandler: CrashHandlerInterface
+    lateinit var crashHandler: CrashHandler
 
     @Inject
     lateinit var metrics: MetricsInterface
@@ -105,14 +106,14 @@ class ApplicationPS2Link : Application() {
         AppCenter.start(this, "2cbdd11d-e4ef-4626-b09f-2a7deb82664a")
         crashHandler.initialize()
         metrics.initialize()
-        metrics.log(TAG, "Application Started")
+        logMetric(TAG, "Application Started")
 
         val lang = Locale.getDefault().language
         for (clang in CensusLang.values()) {
             if (lang.equals(clang.name, ignoreCase = true)) {
                 //  TODO: Set this property app-wide
                 //   dbgCensus.currentLang = clang
-                metrics.log(TAG, "Language Set", mapOf("Lang" to clang.name))
+                logMetric(TAG, "Language Set", mapOf("Lang" to clang.name))
             }
         }
     }

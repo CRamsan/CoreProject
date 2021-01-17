@@ -1,10 +1,10 @@
 package com.cramsan.petproject.download
 
 import androidx.lifecycle.Observer
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.logging.EventLogger
+import com.cramsan.framework.metrics.Metrics
 import com.cramsan.framework.test.TestBase
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.thread.ThreadUtil
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import io.mockk.coEvery
@@ -25,9 +25,6 @@ class DownloadCatalogViewModelTest : TestBase() {
 
     lateinit var application: PetProjectApplication
     lateinit var modelProvider: ModelProviderInterface
-    lateinit var log: EventLoggerInterface
-    lateinit var metrics: MetricsInterface
-    lateinit var thread: ThreadUtilInterface
     lateinit var testDispatcher: CoroutineDispatcher
     lateinit var viewModel: DownloadCatalogViewModel
 
@@ -38,13 +35,13 @@ class DownloadCatalogViewModelTest : TestBase() {
     fun setUp() {
         application = mockk(relaxed = true)
         modelProvider = mockk(relaxed = true)
-        log = mockk(relaxed = true)
-        metrics = mockk(relaxed = true)
-        thread = mockk(relaxed = true)
+        EventLogger.instance(mockk(relaxed = true))
+        ThreadUtil.instance(mockk(relaxed = true))
+        Metrics.instance(mockk(relaxed = true))
         testDispatcher = TestCoroutineDispatcher()
         observer = mockk(relaxed = true)
 
-        viewModel = DownloadCatalogViewModel(application, log, metrics, thread, modelProvider, testDispatcher, dispatcherProvider)
+        viewModel = DownloadCatalogViewModel(application, modelProvider, testDispatcher, dispatcherProvider, mockk())
         viewModel.observableIsDownloadComplete.observeForever(observer)
     }
 

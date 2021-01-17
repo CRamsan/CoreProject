@@ -10,7 +10,8 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitBinding
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logE
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.Faction
@@ -85,7 +86,7 @@ class FragmentOutfit : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() {
                     leaderButton.isEnabled = true
                     leaderButton.alpha = 1f
                     leaderButton.setOnClickListener {
-                        metrics.log(TAG, "Open Outfit Leader")
+                        logMetric(TAG, "Open Outfit Leader")
                         TODO()
                     }
                 }
@@ -94,8 +95,8 @@ class FragmentOutfit : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() {
             val settings = requireActivity().getSharedPreferences("PREFERENCES", 0)
             val preferedOutfitId = settings.getString("preferedOutfit", "")
         } catch (e: NullPointerException) {
-            metrics.log(TAG, "NPE when updating the UI")
-            eventLogger.log(Severity.ERROR, TAG, "Null Pointer while trying to set character data on UI")
+            logMetric(TAG, "NPE when updating the UI")
+            logE(TAG, "Null Pointer while trying to set character data on UI")
         }
     }
 

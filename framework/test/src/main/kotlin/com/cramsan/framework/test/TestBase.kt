@@ -2,8 +2,10 @@ package com.cramsan.framework.test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.cramsan.framework.core.DispatcherProvider
+import io.mockk.MockKAnnotations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
 import org.junit.Rule
 
 @ExperimentalCoroutinesApi
@@ -19,6 +21,11 @@ actual open class TestBase {
     var testCoroutineRule: TestCoroutineRule = TestCoroutineRule()
 
     actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) = testCoroutineRule.runBlockingTest { block() }
+
+    @Before
+    open fun setupTest() {
+        MockKAnnotations.init(this)
+    }
 
     /**
      * Reference to the Scope used to run the tests. This scope can be injected into

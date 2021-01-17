@@ -2,7 +2,7 @@ package com.cramsan.petproject.appcore.provider.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.utils.format.StringFormatter
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -39,7 +39,7 @@ class ModelProvider(
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface,
     private val modelStorage: ModelStorageInterface,
-    private val preferences: PreferencesInterface,
+    private val preferences: Preferences,
     private val config: ProviderConfig
 ) : ModelProviderInterface {
 

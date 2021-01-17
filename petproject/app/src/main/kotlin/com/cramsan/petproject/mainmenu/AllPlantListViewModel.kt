@@ -9,10 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.thread.assertIsUIThread
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -29,14 +27,11 @@ import kotlinx.coroutines.withContext
 
 class AllPlantListViewModel @ViewModelInject constructor(
     application: Application,
-    eventLogger: EventLoggerInterface,
-    metricsClient: MetricsInterface,
-    threadUtil: ThreadUtilInterface,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    @Assisted savedStateHandle: SavedStateHandle
 ) :
-    CatalogDownloadViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider, modelProvider) {
+    CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
     override val logTag: String
         get() = "AllPlantListViewModel"
@@ -114,7 +109,7 @@ class AllPlantListViewModel @ViewModelInject constructor(
     }
 
     private fun searchPlants(query: String) {
-        eventLogger.log(Severity.INFO, "AllPlantListViewModel", "searchPlants")
+        logI("AllPlantListViewModel", "searchPlants")
         observableLoadingVisibility.value = View.VISIBLE
 
         if (query.isEmpty()) {
@@ -132,7 +127,7 @@ class AllPlantListViewModel @ViewModelInject constructor(
     private suspend fun filterPlants(query: String) = withContext(Dispatchers.IO) {
         val plants = modelProvider.getPlantsWithToxicityFiltered(AnimalType.ALL, query, "en")
         viewModelScope.launch {
-            threadUtil.assertIsUIThread()
+            assertIsUIThread()
             observableLoadingVisibility.value = View.GONE
             observablePlants.value = plants
         }

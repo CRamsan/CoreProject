@@ -16,6 +16,7 @@ import com.cesarandres.ps2link.fragments.FragmentMembersOnline
 import com.cesarandres.ps2link.fragments.FragmentOutfit
 import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cramsan.framework.core.NoopViewModel
+import com.cramsan.framework.metrics.logMetric
 import java.util.HashMap
 
 /**
@@ -48,7 +49,7 @@ class FragmentOutfitPager : BasePS2Fragment<NoopViewModel, FragmentOutfitPagerBi
 
         /*
         this.fragmentUpdate.setOnClickListener {
-            metrics.log(TAG, "Update")
+            logMetric(TAG, "Update")
             val fragment: Fragment
             try {
                 when (mViewPager!!.currentItem) {
@@ -80,7 +81,7 @@ class FragmentOutfitPager : BasePS2Fragment<NoopViewModel, FragmentOutfitPagerBi
         mViewPager!!.setOnPageChangeListener(
             object : ViewPager.OnPageChangeListener {
                 override fun onPageSelected(arg0: Int) {
-                    metrics.log(TAG, "OnFragmentSelected", mapOf("Activity" to "Outfit", "Fragment" to arg0.toString()))
+                    logMetric(TAG, "OnFragmentSelected", mapOf("Activity" to "Outfit", "Fragment" to arg0.toString()))
                     /*
                     when (arg0) {
                         OUTFIT -> {

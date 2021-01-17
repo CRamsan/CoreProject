@@ -15,9 +15,6 @@ import com.cesarandres.ps2link.fragments.OpenServerList
 import com.cesarandres.ps2link.fragments.OpenTwitter
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
 import com.cramsan.ps2link.appcore.dbg.content.Outfit
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,12 +23,9 @@ import kotlinx.coroutines.flow.map
 
 class MainMenuViewModel @ViewModelInject constructor(
     application: Application,
-    eventLogger: EventLoggerInterface,
-    metricsClient: MetricsInterface,
-    threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
-) : BaseViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider), MainMenuEventHandler {
+    @Assisted savedStateHandle: SavedStateHandle
+) : BaseViewModel(application, dispatcherProvider, savedStateHandle), MainMenuEventHandler {
 
     override val logTag: String
         get() = "MainMenuViewModel"

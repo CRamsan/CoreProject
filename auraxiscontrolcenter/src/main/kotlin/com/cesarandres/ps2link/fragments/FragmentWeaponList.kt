@@ -13,7 +13,7 @@ import com.cesarandres.ps2link.databinding.FragmentWeaponListBinding
 import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.Faction
@@ -93,7 +93,7 @@ class FragmentWeaponList : BasePS2Fragment<NoopViewModel, FragmentWeaponListBind
                 currentTask.execute(weaponListResponse)
             } else {
 
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_MAKING_REQUEST)
+                logE(TAG, Constants.ERROR_MAKING_REQUEST)
                 Toast.makeText(activity, R.string.toast_error_retrieving_data, Toast.LENGTH_SHORT)
                     .show()
             }
@@ -237,7 +237,7 @@ class FragmentWeaponList : BasePS2Fragment<NoopViewModel, FragmentWeaponListBind
                 weaponKills = weaponKillStats
                 weaponKilledBy = weaponKilledByStats
             } catch (e: Exception) {
-                eventLogger.log(Severity.ERROR, TAG, Constants.ERROR_PARSING_RESPONE)
+                logE(TAG, Constants.ERROR_PARSING_RESPONE)
                 return -1
             }
             return weaponKilledByStats.size + weaponKilledByStats.size

@@ -23,7 +23,7 @@ import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.scene.SceneEventsCallback
 import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -41,7 +41,7 @@ import kotlin.system.exitProcess
 
 class AWTRenderer(
     val eventLoggerInterface: EventLoggerInterface,
-    val haltUtilInterface: HaltUtilInterface,
+    val haltUtilInterface: HaltUtil,
     val assertUtilInterface: AssertUtilInterface
 ) : JFrame(), EntityManagerEventListener {
 

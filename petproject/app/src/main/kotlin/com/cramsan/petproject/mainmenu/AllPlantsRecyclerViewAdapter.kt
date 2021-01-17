@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logV
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
@@ -17,7 +17,6 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 class AllPlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentAdapterListener?,
     private val animalType: AnimalType,
-    val eventLogger: EventLoggerInterface,
     context: Context
 ) :
     RecyclerView.Adapter<AllPlantsRecyclerViewAdapter.ViewHolder>() {
@@ -36,20 +35,20 @@ class AllPlantsRecyclerViewAdapter(
     }
 
     fun updateValues(values: List<PresentablePlant>) {
-        eventLogger.log(Severity.VERBOSE, "AllPlantsRecyclerViewAdapter", "updateValues")
+        logV("AllPlantsRecyclerViewAdapter", "updateValues")
         mValues = values
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        eventLogger.log(Severity.DEBUG, "AllPlantsRecyclerViewAdapter", "onCreateViewHolder")
+        logD("AllPlantsRecyclerViewAdapter", "onCreateViewHolder")
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_plant, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        eventLogger.log(Severity.VERBOSE, "AllPlantsRecyclerViewAdapter", "onBindViewHolder")
+        logV("AllPlantsRecyclerViewAdapter", "onBindViewHolder")
         val item = mValues[position]
         holder.mViewHeader.text = item.mainCommonName
         holder.mViewSubHeader.text = item.scientificName

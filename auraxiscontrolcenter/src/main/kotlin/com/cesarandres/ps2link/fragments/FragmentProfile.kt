@@ -14,7 +14,9 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitBinding
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logE
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
@@ -47,7 +49,7 @@ class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() 
         super.onActivityCreated(savedInstanceState)
         this.profileId = requireArguments().getString("PARAM_0", "")
         this.namespace = Namespace.valueOf(requireArguments().getString("PARAM_1", ""))
-        metrics.log(TAG, "Loading Profile", mapOf("PROFILE" to this.profileId, "NAMESPACE" to this.namespace!!.name))
+        logMetric(TAG, "Loading Profile", mapOf("PROFILE" to this.profileId, "NAMESPACE" to this.namespace!!.name))
     }
 
     /*
@@ -69,7 +71,7 @@ class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() 
      * @param character Character that contains all the data to populate the UI
      */
     private fun updateUI(character: CharacterProfile) {
-        eventLogger.log(Severity.INFO, TAG, "Updating UI")
+        logI(TAG, "Updating UI")
         try {
             if (this.view != null) {
                 val faction =
@@ -145,7 +147,7 @@ class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() 
                     outfitButton.isEnabled = true
                     outfitButton.alpha = 1f
                     outfitButton.setOnClickListener {
-                        metrics.log(TAG, "Open Outfit")
+                        logMetric(TAG, "Open Outfit")
                     }
                 }
 
@@ -161,23 +163,23 @@ class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() 
             val settings = requireActivity().getSharedPreferences("PREFERENCES", 0)
             val preferedProfileId = settings.getString("preferedProfile", "")
         } catch (e: NullPointerException) {
-            metrics.log(TAG, "NPE when updating the UI")
-            eventLogger.log(Severity.ERROR, TAG, "Null Pointer while trying to set character data on UI")
+            logMetric(TAG, "NPE when updating the UI")
+            logE(TAG, "Null Pointer while trying to set character data on UI")
         }
-        eventLogger.log(Severity.INFO, TAG, "UI was updated")
+        logI(TAG, "UI was updated")
     }
 
     /**
      * @param character_id Character id of the character that wants to be download
      */
     fun downloadProfiles(character_id: String?) {
-        eventLogger.log(Severity.INFO, TAG, "Downloading Profile")
+        logI(TAG, "Downloading Profile")
         this
 
             .lifecycleScope.launch {
                 val profile = withContext(Dispatchers.IO) { dbgCensus.getProfile(character_id!!, namespace!!, CensusLang.EN) }
 
-                eventLogger.log(Severity.INFO, TAG, "Profile Downloaded")
+                logI(TAG, "Profile Downloaded")
                 profile!!.namespace = namespace!!
                 profile!!.isCached = isCached
                 updateUI(profile!!)

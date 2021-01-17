@@ -5,13 +5,13 @@ import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.Severity
 
 class LoggerAndroid : EventLoggerDelegate {
-    override fun log(severity: Severity, tag: String, message: String) {
+    override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
         when (severity) {
             Severity.VERBOSE -> Log.v(tag, message)
             Severity.DEBUG -> Log.d(tag, message)
             Severity.INFO -> Log.i(tag, message)
-            Severity.WARNING -> Log.w(tag, message)
-            Severity.ERROR -> Log.e(tag, message)
+            Severity.WARNING -> Log.w(tag, message, throwable)
+            Severity.ERROR -> Log.e(tag, message, throwable)
         }
     }
 }

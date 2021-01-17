@@ -1,15 +1,14 @@
 package com.cramsan.petproject.download
 
 import android.app.Application
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,14 +17,12 @@ import kotlinx.coroutines.withContext
 
 class DownloadCatalogViewModel @ViewModelInject constructor(
     application: Application,
-    eventLogger: EventLoggerInterface,
-    metricsClient: MetricsInterface,
-    threadUtil: ThreadUtilInterface,
     val modelProvider: ModelProviderInterface,
     val IODispatcher: CoroutineDispatcher,
     dispatcherProvider: DispatcherProvider,
+    @Assisted savedStateHandle: SavedStateHandle,
 ) :
-    BaseViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider),
+    BaseViewModel(application, dispatcherProvider, savedStateHandle),
     ModelProviderEventListenerInterface {
 
     override val logTag: String
@@ -45,7 +42,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
     }
 
     fun isCatalogReady(): Boolean {
-        eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "isCatalogReady")
+        logI("DownloadCatalogViewModel", "isCatalogReady")
         val unixTime = System.currentTimeMillis()
         val isReady = modelProvider.isCatalogAvailable(unixTime)
         mutableIsDownloadComplete.value = isReady
@@ -53,7 +50,7 @@ class DownloadCatalogViewModel @ViewModelInject constructor(
     }
 
     fun downloadCatalog() {
-        eventLogger.log(Severity.INFO, "DownloadCatalogViewModel", "downloadCatalog")
+        logI("DownloadCatalogViewModel", "downloadCatalog")
         val unixTime = System.currentTimeMillis()
         if (modelProvider.isCatalogAvailable(unixTime)) {
             mutableIsDownloadComplete.value = true

@@ -10,8 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logI
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.LiveEvent
@@ -24,8 +25,8 @@ class PlantFeedbackViewModel @ViewModelInject constructor(
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
-) : BaseViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider) {
+    @Assisted savedStateHandle: SavedStateHandle
+) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     override val logTag: String
         get() = "PlantFeedbackViewModel"
@@ -43,12 +44,12 @@ class PlantFeedbackViewModel @ViewModelInject constructor(
     fun isComplete() = observableIsComplete
 
     fun cancel(view: View) {
-        eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "cancel")
+        logI("PlantFeedbackViewModel", "cancel")
         observableIsComplete.value = CompletedEvent(false)
     }
 
     fun sendFeedback(view: View) {
-        eventLogger.log(Severity.INFO, "PlantFeedbackViewModel", "sendFeedback")
+        logI("PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.value?.name} - " +
                 "PlantId:${plantId.value} - " +
@@ -57,7 +58,7 @@ class PlantFeedbackViewModel @ViewModelInject constructor(
                 "Name:${name.value} - " +
                 "Link:${link.value} - " +
                 "Text:${text.value}"
-            metricsClient.log("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
+            logMetric("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = CompletedEvent(true)
             }

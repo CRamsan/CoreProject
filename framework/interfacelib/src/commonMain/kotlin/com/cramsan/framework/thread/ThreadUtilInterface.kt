@@ -22,11 +22,13 @@ interface ThreadUtilInterface {
     /**
      * The [block] will be dispatched to be executed in a background thread
      */
+    @Deprecated("Move to managing dispatching by using coroutines")
     fun dispatchToBackground(block: RunBlock)
 
     /**
      * The [block] will be dispatched to be executed in the UI thread
      */
+    @Deprecated("Move to managing dispatching by using coroutines")
     fun dispatchToUI(block: RunBlock)
 
     /**

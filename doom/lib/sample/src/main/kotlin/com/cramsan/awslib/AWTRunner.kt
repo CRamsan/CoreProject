@@ -6,8 +6,8 @@ import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapLoader
-import com.cramsan.framework.assert.implementation.AssertUtil
-import com.cramsan.framework.halt.implementation.HaltUtil
+import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLogger
@@ -111,8 +111,8 @@ class AWTRunner {
             } ?: return
 
             val eventLogger = EventLogger(Severity.VERBOSE, null, LoggerJVM())
-            val haltUtil = HaltUtil(HaltUtilJVM())
-            val assertUtil = AssertUtil(true, eventLogger, haltUtil)
+            val haltUtil = HaltUtilImpl(HaltUtilJVM())
+            val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)
             val aiRepo = DummyAIRepoImpl(eventLogger)
 
             val renderer = AWTRenderer(eventLogger, haltUtil, assertUtil)

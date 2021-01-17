@@ -4,7 +4,7 @@ package com.cramsan.framework.halt
  * Module interface to manage threads for debug purposes. This module will delegate to [platformDelegate]
  * to accomplish this based on the requirements of each platform.
  */
-interface HaltUtilInterface {
+interface HaltUtil {
 
     /**
      * Platform delegate

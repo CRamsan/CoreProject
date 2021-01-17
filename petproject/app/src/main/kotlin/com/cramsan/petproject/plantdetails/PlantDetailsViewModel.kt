@@ -9,10 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
@@ -27,12 +24,9 @@ import kotlinx.coroutines.withContext
 class PlantDetailsViewModel @ViewModelInject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,
-    eventLogger: EventLoggerInterface,
-    metricsClient: MetricsInterface,
-    threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
-) : CatalogDownloadViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider, modelProvider) {
+    @Assisted savedStateHandle: SavedStateHandle
+) : CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
     override val logTag: String
         get() = "PlantDetailsViewModel"
@@ -68,7 +62,7 @@ class PlantDetailsViewModel @ViewModelInject constructor(
     }
 
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
-        eventLogger.log(Severity.INFO, "PlantDetailsViewModel", "reloadPlant")
+        logI("PlantDetailsViewModel", "reloadPlant")
         viewModelScope.launch {
             loadPlant(animalType, plantId)
         }

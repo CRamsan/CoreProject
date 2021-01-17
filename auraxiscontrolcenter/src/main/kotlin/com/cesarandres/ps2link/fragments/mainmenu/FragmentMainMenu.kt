@@ -7,6 +7,7 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentMainMenuBinding
 import com.cramsan.framework.core.NoopViewModel
+import com.cramsan.framework.metrics.logMetric
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -38,23 +39,23 @@ class FragmentMainMenu : BasePS2Fragment<NoopViewModel, FragmentMainMenuBinding>
         val buttonAbout = requireActivity().findViewById<View>(R.id.buttonAbout) as Button
 
         buttonCharacters.setOnClickListener {
-            metrics.log(logTag, "Open Profile")
+            logMetric(logTag, "Open Profile")
         }
         buttonServers.setOnClickListener {
-            metrics.log(logTag, "Open Servers")
+            logMetric(logTag, "Open Servers")
         }
         buttonOutfit.setOnClickListener {
-            metrics.log(logTag, "Open Outfit")
+            logMetric(logTag, "Open Outfit")
         }
 
         buttonTwitter.setOnClickListener {
-            metrics.log(logTag, "Open Twitter")
+            logMetric(logTag, "Open Twitter")
         }
         buttonReddit.setOnClickListener {
-            metrics.log(logTag, "Open Reddit")
+            logMetric(logTag, "Open Reddit")
         }
         buttonAbout.setOnClickListener {
-            metrics.log(logTag, "Open About")
+            logMetric(logTag, "Open About")
         }
     }
 
@@ -82,7 +83,7 @@ class FragmentMainMenu : BasePS2Fragment<NoopViewModel, FragmentMainMenuBinding>
             requireActivity().findViewById<View>(R.id.buttonPreferedProfile) as Button
         if (preferedProfileId != "") {
             buttonPreferedProfile.setOnClickListener {
-                metrics.log(logTag, "Open Preferred Profile")
+                logMetric(logTag, "Open Preferred Profile")
                 val settings = requireActivity().getSharedPreferences("PREFERENCES", 0)
                 TODO()
             }
@@ -99,7 +100,7 @@ class FragmentMainMenu : BasePS2Fragment<NoopViewModel, FragmentMainMenuBinding>
         if (preferedOutfitId != "") {
 
             buttonPreferedOutfit.setOnClickListener {
-                metrics.log(logTag, "Open Preferred Outfit")
+                logMetric(logTag, "Open Preferred Outfit")
                 val settings = requireActivity().getSharedPreferences("PREFERENCES", 0)
                 TODO()
             }

@@ -1,7 +1,7 @@
 package com.cramsan.petproject
 
 import android.app.Application
-import com.cramsan.framework.crashehandler.CrashHandlerInterface
+import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
@@ -17,7 +17,7 @@ class PetProjectApplication : Application() {
     lateinit var eventLogger: EventLoggerInterface
 
     @Inject
-    lateinit var crashHandler: CrashHandlerInterface
+    lateinit var crashHandler: CrashHandler
 
     @Inject
     lateinit var metrics: MetricsInterface

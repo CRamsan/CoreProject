@@ -3,14 +3,12 @@ package com.cramsan.framework.preferences
 /**
  * This module has a simple API to easily persist data in local storage. It was designed to be used for simple operations that do not require high performance.
  */
-interface PreferencesInterface {
-
-    val platformDelegate: PreferencesDelegate
+interface Preferences {
 
     /**
      * Save [value] of type [String] as the specified [key]
      */
-    fun saveString(key: String, value: String)
+    fun saveString(key: String, value: String?)
 
     /**
      * Read [key] as a nullable [String]
@@ -20,7 +18,7 @@ interface PreferencesInterface {
     /**
      * Save [value] of type [Int] as the specified [key]
      */
-    fun saveInt(key: String, value: Int)
+    fun saveInt(key: String, value: Int?)
 
     /**
      * Read [key] as a nullable [Int]
@@ -30,7 +28,7 @@ interface PreferencesInterface {
     /**
      * Save [value] of type [Long] as the specified [key]
      */
-    fun saveLong(key: String, value: Long)
+    fun saveLong(key: String, value: Long?)
 
     /**
      * Read [key] as a nullable [Long]

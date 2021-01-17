@@ -1,7 +1,7 @@
 package com.cramsan.framework.thread.implementation
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilImpl
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,19 +30,19 @@ class ThreadUtilTest {
 
     @Test
     fun testIsUIThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         threadUtilTest.testIsUIThread(ThreadUtilAndroid(haltUtil))
     }
 
     @Test
     fun testIsNotBackgroundThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         threadUtilTest.testIsNotBackgroundThread(ThreadUtilAndroid(haltUtil))
     }
 
     @Test
     fun testIsBackgroundThreadInJavaThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         Thread {
             run {
                 threadUtilTest.testIsBackgroundThread(ThreadUtilAndroid(haltUtil))
@@ -54,7 +54,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsNotUIThreadInJavaThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         Thread {
             run {
                 threadUtilTest.testIsNotUIThread(ThreadUtilAndroid(haltUtil))
@@ -66,7 +66,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsBackgroundThreadInCoroutine() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         runBlocking {
             launch(Dispatchers.IO) {
                 threadUtilTest.testIsBackgroundThread(ThreadUtilAndroid(haltUtil))
@@ -78,7 +78,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsNotUIThreadInCoroutine() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         runBlocking {
             launch(Dispatchers.IO) {
                 threadUtilTest.testIsNotUIThread(ThreadUtilAndroid(haltUtil))
@@ -90,7 +90,7 @@ class ThreadUtilTest {
 
     @Test
     fun testIsUIThreadInDispatchToUI() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         threadUtilTest.testIsUIThreadInDispatchToUI(ThreadUtilAndroid(haltUtil)) {
             semaphore.release()
         }
@@ -99,7 +99,7 @@ class ThreadUtilTest {
 
     @Test
     fun testDispatchToBackground() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         Thread {
             run {
                 threadUtilTest.testDispatchToBackground(ThreadUtilAndroid(haltUtil)) {
@@ -112,7 +112,7 @@ class ThreadUtilTest {
 
     @Test
     fun testDispatchToBackgroundFromUIThread() {
-        val haltUtil = mockk<AssertUtil>(relaxUnitFun = true)
+        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
         threadUtilTest.testDispatchToBackgroundFromUIThread(ThreadUtilAndroid(haltUtil)) {
             semaphore.release()
         }

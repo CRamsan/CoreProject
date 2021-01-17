@@ -1,17 +1,17 @@
 package com.cesarandres.ps2link
 
 import android.content.Context
-import com.cramsan.framework.assert.implementation.AssertUtil
+import com.cramsan.framework.assert.implementation.AssertUtilImpl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.DispatcherProviderImpl
+import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
-import com.cramsan.framework.crashehandler.CrashHandlerInterface
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
-import com.cramsan.framework.crashehandler.implementation.CrashHandler
+import com.cramsan.framework.crashehandler.implementation.CrashHandlerImpl
+import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.HaltUtilDelegate
-import com.cramsan.framework.halt.HaltUtilInterface
-import com.cramsan.framework.halt.implementation.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
+import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -21,16 +21,16 @@ import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterMetrics
-import com.cramsan.framework.metrics.implementation.Metrics
 import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
+import com.cramsan.framework.metrics.implementation.MetricsImpl
+import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
-import com.cramsan.framework.preferences.PreferencesInterface
-import com.cramsan.framework.preferences.implementation.Preferences
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
+import com.cramsan.framework.preferences.implementation.PreferencesImpl
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.framework.thread.implementation.ThreadUtil
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
+import com.cramsan.framework.thread.implementation.ThreadUtilImpl
 import com.cramsan.ps2link.appcore.DBGServiceClient
 import com.cramsan.ps2link.appcore.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.dbg.DBGCensus
@@ -64,10 +64,10 @@ object PS2ApplicationModule {
     @Singleton
     fun provideThreadUtilDelegate(
         eventLoggerInterface: EventLoggerInterface,
-        haltUtilInterface: HaltUtilInterface
+        haltUtilInterface: HaltUtil
     ): ThreadUtilDelegate {
         return ThreadUtilAndroid(
-            AssertUtil(
+            AssertUtilImpl(
                 BuildConfig.DEBUG,
                 eventLoggerInterface,
                 haltUtilInterface
@@ -81,8 +81,8 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideCrashHandlerInterface(crashHandlerDelegate: CrashHandlerDelegate): CrashHandlerInterface =
-        CrashHandler(crashHandlerDelegate)
+    fun provideCrashHandlerInterface(crashHandlerDelegate: CrashHandlerDelegate): CrashHandler =
+        CrashHandlerImpl(crashHandlerDelegate)
 
     @Provides
     @Singleton
@@ -91,7 +91,7 @@ object PS2ApplicationModule {
     @Provides
     @Singleton
     fun provideMetricsInterface(metricsDelegate: MetricsDelegate): MetricsInterface =
-        Metrics(metricsDelegate)
+        MetricsImpl(metricsDelegate)
 
     @Provides
     @Singleton
@@ -121,13 +121,13 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideHaltUtilInterface(haltUtilDelegate: HaltUtilDelegate): HaltUtilInterface =
-        HaltUtil(haltUtilDelegate)
+    fun provideHaltUtilInterface(haltUtilDelegate: HaltUtilDelegate): HaltUtil =
+        HaltUtilImpl(haltUtilDelegate)
 
     @Provides
     @Singleton
     fun provideThreadUtilInterface(threadUtilDelegate: ThreadUtilDelegate): ThreadUtilInterface =
-        ThreadUtil(threadUtilDelegate)
+        ThreadUtilImpl(threadUtilDelegate)
 
     @Provides
     @Singleton
@@ -138,8 +138,8 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun providePreferencesInterface(preferencesDelegate: PreferencesDelegate): PreferencesInterface =
-        Preferences(preferencesDelegate)
+    fun providePreferencesInterface(preferencesDelegate: PreferencesDelegate): Preferences =
+        PreferencesImpl(preferencesDelegate)
 
     @Provides
     @Singleton

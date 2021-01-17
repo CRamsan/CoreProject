@@ -1,13 +1,12 @@
 package com.cramsan.petproject.appcore.provider.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.preferences.PreferencesInterface
+import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.ProviderConfig
-import com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId
 import com.cramsan.petproject.appcore.storage.ModelStorageInterface
 import io.mockk.every
 import io.mockk.mockk
@@ -27,7 +26,7 @@ internal class ModelProviderCommonTest {
     lateinit var eventLogger: EventLoggerInterface
     lateinit var threadUtil: ThreadUtilInterface
     lateinit var configProvider: ProviderConfig
-    lateinit var preferences: PreferencesInterface
+    lateinit var preferences: Preferences
     lateinit var modelStorage: ModelStorageInterface
     lateinit var modelProvider: ModelProviderInterface
 

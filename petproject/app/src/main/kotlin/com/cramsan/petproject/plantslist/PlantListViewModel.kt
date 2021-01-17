@@ -9,10 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logW
+import com.cramsan.framework.thread.assertIsUIThread
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -26,14 +25,11 @@ import kotlinx.coroutines.withContext
 
 class PlantListViewModel @ViewModelInject constructor(
     application: Application,
-    eventLogger: EventLoggerInterface,
-    metricsClient: MetricsInterface,
-    threadUtil: ThreadUtilInterface,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    @Assisted savedStateHandle: SavedStateHandle
 ) :
-    CatalogDownloadViewModel(application, eventLogger, metricsClient, threadUtil, dispatcherProvider, modelProvider) {
+    CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
     override val logTag: String
         get() = "PlantListViewModel"
@@ -80,7 +76,7 @@ class PlantListViewModel @ViewModelInject constructor(
     }
 
     private fun searchPlants(query: String) {
-        eventLogger.log(Severity.INFO, "PlantListViewModel", "searchPlants")
+        logI("PlantListViewModel", "searchPlants")
         viewModelScope.launch {
             filterPlants(query)
         }
@@ -93,8 +89,7 @@ class PlantListViewModel @ViewModelInject constructor(
         }
 
         if (animalType == null) {
-            eventLogger.log(
-                Severity.WARNING,
+            logW(
                 "PlantListViewModel",
                 "Unable to filterPlants. AnimalType is null"
             )
@@ -112,7 +107,7 @@ class PlantListViewModel @ViewModelInject constructor(
         }
 
         viewModelScope.launch {
-            threadUtil.assertIsUIThread()
+            assertIsUIThread()
             setLoadingMode(false)
             observablePlants.value = plants
         }

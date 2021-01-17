@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cramsan.framework.core.BaseFragment
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
@@ -74,7 +74,7 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
 
         val linearLayoutManager = LinearLayoutManager(context)
         layoutManager = linearLayoutManager
-        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType, eventLogger, requireContext())
+        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
         plantsAdapter = plantsRecyclerAdapter
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsRecyclerAdapter
@@ -139,13 +139,13 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
     }
 
     override fun onNewItemSelected(plantId: Int, animalType: AnimalType) {
-        eventLogger.log(Severity.INFO, "PlantsListFragment", "onNewItemSelected")
+        logI("PlantsListFragment", "onNewItemSelected")
         val action = PlantsListFragmentDirections.actionPlantsListFragmentToPlantDetailsFragment(plantId, animalType)
         findNavController().navigate(action)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        eventLogger.log(Severity.INFO, "PlantsListActivity", "onCreateOptionsMenu")
+        logI("PlantsListActivity", "onCreateOptionsMenu")
 
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.plant_list, menu)

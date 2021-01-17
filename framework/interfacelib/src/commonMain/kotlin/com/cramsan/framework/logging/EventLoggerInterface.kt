@@ -29,9 +29,10 @@ interface EventLoggerInterface {
     val platformDelegate: EventLoggerDelegate
 
     /**
-     * Log a [message] and [tag]. If the [severity] is less than [targetSeverity], the message is not logged
+     * Log a [message] and [tag]. If the [severity] is less than [targetSeverity], the message is not logged.
+     * There is an optional [throwable] that can be logged.
      */
-    fun log(severity: Severity, tag: String, message: String)
+    fun log(severity: Severity, tag: String, message: String, throwable: Throwable? = null)
 
     /**
      * Log a message with [Severity.DEBUG] severity
@@ -51,10 +52,10 @@ interface EventLoggerInterface {
     /**
      * Log a message with [Severity.WARNING] message
      */
-    fun w(tag: String, message: String) = log(Severity.WARNING, tag, message)
+    fun w(tag: String, message: String, throwable: Throwable? = null) = log(Severity.WARNING, tag, message, throwable)
 
     /**
      * Log a message with [Severity.ERROR] message
      */
-    fun e(tag: String, message: String) = log(Severity.ERROR, tag, message)
+    fun e(tag: String, message: String, throwable: Throwable? = null) = log(Severity.ERROR, tag, message, throwable)
 }

@@ -5,7 +5,7 @@ import com.cramsan.framework.preferences.PreferencesDelegate
 
 class PreferencesAndroid(private val applicationContext: Context) : PreferencesDelegate {
 
-    override fun saveString(key: String, value: String) {
+    override fun saveString(key: String, value: String?) {
         val sharedPref = applicationContext.getSharedPreferences("global", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             putString(key, value)
@@ -18,10 +18,14 @@ class PreferencesAndroid(private val applicationContext: Context) : PreferencesD
         return sharedPref.getString(key, "")
     }
 
-    override fun saveInt(key: String, value: Int) {
+    override fun saveInt(key: String, value: Int?) {
         val sharedPref = applicationContext.getSharedPreferences("global", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putInt(key, value)
+            if (value == null) {
+                remove(key)
+            } else {
+                putInt(key, value)
+            }
             commit()
         }
     }
@@ -31,10 +35,14 @@ class PreferencesAndroid(private val applicationContext: Context) : PreferencesD
         return sharedPref.getInt(key, 0)
     }
 
-    override fun saveLong(key: String, value: Long) {
+    override fun saveLong(key: String, value: Long?) {
         val sharedPref = applicationContext.getSharedPreferences("global", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putLong(key, value)
+            if (value == null) {
+                remove(key)
+            } else {
+                putLong(key, value)
+            }
             commit()
         }
     }

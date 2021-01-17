@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.cesarandres.ps2link.R
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.Namespace
 
 /**
@@ -79,7 +80,7 @@ class ButtonSelectSource(
             }
         }
         namespaceButton.visibility = View.VISIBLE
-        metrics.log(TAG, "OnNamespaceButtonClicked", mapOf("Namespace" to namespace.name))
+        logMetric(TAG, "OnNamespaceButtonClicked", mapOf("Namespace" to namespace.name))
 
         if (listener != null) {
             listener!!.onSourceSelectionChanged(namespace)

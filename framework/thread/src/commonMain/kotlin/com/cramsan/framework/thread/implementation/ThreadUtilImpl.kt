@@ -4,7 +4,7 @@ import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 
-class ThreadUtil(override val platformDelegate: ThreadUtilDelegate) : ThreadUtilInterface {
+class ThreadUtilImpl(override val platformDelegate: ThreadUtilDelegate) : ThreadUtilInterface {
 
     override fun isUIThread(): Boolean {
         return platformDelegate.isUIThread()

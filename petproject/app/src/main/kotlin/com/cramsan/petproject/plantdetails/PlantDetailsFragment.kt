@@ -16,7 +16,9 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cramsan.framework.core.BaseFragment
-import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.logE
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logV
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
@@ -64,7 +66,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
                                 target: Target<Drawable>?,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                eventLogger.log(Severity.ERROR, "PlantDetailsFragment", e.toString())
+                                logE("PlantDetailsFragment", e.toString())
                                 return false
                             }
 
@@ -75,8 +77,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
                                 dataSource: DataSource?,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                eventLogger.log(
-                                    Severity.VERBOSE,
+                                logV(
                                     "PlantDetailsFragment",
                                     "Resource loaded successfully"
                                 )
@@ -108,7 +109,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
         )
 
         dataBinding.plantFeedbackSave.setOnClickListener {
-            eventLogger.log(Severity.INFO, "PlantDetailsFragment", "onClick")
+            logI("PlantDetailsFragment", "onClick")
             val action = PlantDetailsFragmentDirections.actionPlantDetailsFragmentToPlantFeedbackFragment(animalType, plantId)
             findNavController().navigate(action)
         }

@@ -11,10 +11,10 @@ class EventLogger(
     override val platformDelegate: EventLoggerDelegate
 ) : EventLoggerInterface {
 
-    override fun log(severity: Severity, tag: String, message: String) {
+    override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
         if (severity < targetSeverity)
             return
-        platformDelegate.log(severity, tag, message)
+        platformDelegate.log(severity, tag, message, throwable)
         errorCallback?.let {
             if (severity == Severity.WARNING) {
                 it.onWarning(tag, message)

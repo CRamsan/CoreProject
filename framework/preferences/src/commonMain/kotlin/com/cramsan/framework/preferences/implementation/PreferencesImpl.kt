@@ -1,11 +1,11 @@
 package com.cramsan.framework.preferences.implementation
 
+import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
-import com.cramsan.framework.preferences.PreferencesInterface
 
-class Preferences(override val platformDelegate: PreferencesDelegate) : PreferencesInterface {
+class PreferencesImpl(private val platformDelegate: PreferencesDelegate) : Preferences {
 
-    override fun saveString(key: String, value: String) {
+    override fun saveString(key: String, value: String?) {
         platformDelegate.saveString(key, value)
     }
 
@@ -13,7 +13,7 @@ class Preferences(override val platformDelegate: PreferencesDelegate) : Preferen
         return platformDelegate.loadString(key)
     }
 
-    override fun saveInt(key: String, value: Int) {
+    override fun saveInt(key: String, value: Int?) {
         platformDelegate.saveInt(key, value)
     }
 
@@ -21,7 +21,7 @@ class Preferences(override val platformDelegate: PreferencesDelegate) : Preferen
         return platformDelegate.loadInt(key)
     }
 
-    override fun saveLong(key: String, value: Long) {
+    override fun saveLong(key: String, value: Long?) {
         platformDelegate.saveLong(key, value)
     }
 

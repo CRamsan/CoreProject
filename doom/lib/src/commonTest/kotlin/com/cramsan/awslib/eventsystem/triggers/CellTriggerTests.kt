@@ -12,7 +12,7 @@ import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapGenerator
 import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.halt.HaltUtilInterface
+import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
@@ -25,7 +25,7 @@ class CellTriggerTests : TestBase() {
 
     private lateinit var log: EventLoggerInterface
     private lateinit var assert: AssertUtilInterface
-    private lateinit var halt: HaltUtilInterface
+    private lateinit var halt: HaltUtil
     private lateinit var aiRepo: AIRepo
 
     @BeforeTest
