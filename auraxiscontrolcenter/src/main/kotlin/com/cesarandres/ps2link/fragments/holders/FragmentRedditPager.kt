@@ -12,6 +12,7 @@ import android.widget.LinearLayout.LayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -25,6 +26,9 @@ import java.util.HashMap
  * This fragment holds a view pager for all the profile related fragments
  */
 class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentRedditBinding>() {
+
+    override val viewModel: NoopViewModel by viewModels()
+
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var goToReddit: Button? = null

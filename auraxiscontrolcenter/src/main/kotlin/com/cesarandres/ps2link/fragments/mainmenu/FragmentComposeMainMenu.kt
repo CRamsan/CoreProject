@@ -34,8 +34,8 @@ class FragmentComposeMainMenu : BaseComposePS2Fragment<MainMenuViewModel>() {
 
     @Composable
     override fun CreateComposeContent() {
-        val preferredProfile = viewModel.preferredProfileName.observeAsState(null)
-        val preferredOutfit = viewModel.preferredOutfileName.observeAsState(null)
+        val preferredProfile = viewModel.preferredProfileName.observeAsState()
+        val preferredOutfit = viewModel.preferredOutfileName.observeAsState()
         MainMenuCompose(
             preferredProfile = preferredProfile.value,
             preferredOutfit = preferredOutfit.value,

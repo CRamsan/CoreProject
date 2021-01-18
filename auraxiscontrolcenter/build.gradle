@@ -69,6 +69,7 @@ dependencies {
     implementation packages.Gson
     implementation packages.KtorAndroid
     implementation packages.PrettyTime
+    implementation packages.SqlDelightAndroidDriver
     implementation packages.Twitter4J
     implementation packages.Volley
 

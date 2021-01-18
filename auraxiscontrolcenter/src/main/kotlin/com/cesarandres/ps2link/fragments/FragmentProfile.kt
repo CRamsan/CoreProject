@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -33,6 +34,7 @@ import java.util.Date
  */
 class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     private var isCached: Boolean = false
     private var profile: CharacterProfile? = null
     private var profileId: String = ""
@@ -180,7 +182,7 @@ class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() 
                 val profile = withContext(Dispatchers.IO) { dbgCensus.getProfile(character_id!!, namespace!!, CensusLang.EN) }
 
                 logI(TAG, "Profile Downloaded")
-                profile!!.namespace = namespace!!
+                // profile!!.namespace = namespace!!
                 profile!!.isCached = isCached
                 updateUI(profile!!)
             }

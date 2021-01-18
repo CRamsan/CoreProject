@@ -20,6 +20,9 @@ interface DBGServiceClient {
         currentLang: CensusLang,
     ): CharacterProfile?
 
+    /**
+     * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/character_name/?name.first_lower=^cram&c:limit=25&c:join=character&c:lang=en
+     */
     suspend fun getProfiles(
         searchField: String,
         namespace: Namespace,

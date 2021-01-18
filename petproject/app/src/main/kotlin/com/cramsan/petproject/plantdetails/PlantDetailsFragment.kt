@@ -29,6 +29,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
 
     private lateinit var animalType: AnimalType
 
+    override val viewModel: PlantDetailsViewModel by viewModels()
     override val contentViewLayout: Int
         get() = R.layout.fragment_plant_details
     override val logTag: String
@@ -41,11 +42,9 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
         val plantId = args.PlantId
         animalType = args.AnimalType
 
-        val model: PlantDetailsViewModel by viewModels()
-        dataBinding.viewModel = model
-        viewModel = model
+        dataBinding.viewModel = viewModel
 
-        model.observableOpenSourceLink().observe(
+        viewModel.observableOpenSourceLink().observe(
             viewLifecycleOwner,
             Observer {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.value))
@@ -53,7 +52,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
             }
         )
 
-        model.observablePlantImageSource.observe(
+        viewModel.observablePlantImageSource.observe(
             viewLifecycleOwner,
             Observer {
                 Glide.with(this)
@@ -114,7 +113,7 @@ class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDe
             findNavController().navigate(action)
         }
 
-        model.reloadPlant(animalType, plantId)
+        viewModel.reloadPlant(animalType, plantId)
     }
 
     companion object {

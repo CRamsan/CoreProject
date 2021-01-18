@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -20,6 +21,7 @@ import kotlinx.coroutines.withContext
  */
 class FragmentStatList : BasePS2Fragment<NoopViewModel, FragmentStatListBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     private var profileId: String? = null
     private var namespace: Namespace? = null
 

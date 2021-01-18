@@ -16,7 +16,7 @@ import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
@@ -121,7 +121,7 @@ object PetProjectApplicationModule {
             true -> Severity.DEBUG
             false -> Severity.INFO
         }
-        return EventLogger(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
+        return EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
     }
 
     @Provides

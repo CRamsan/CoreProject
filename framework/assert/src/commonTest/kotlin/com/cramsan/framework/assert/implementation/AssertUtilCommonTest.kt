@@ -6,7 +6,7 @@ import com.cramsan.framework.assert.assertNotNull
 import com.cramsan.framework.assert.assertNull
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.test.TestBase
 import io.mockk.Called
 import io.mockk.Runs
@@ -25,7 +25,7 @@ class AssertUtilCommonTest : TestBase() {
 
     @Test
     fun assertTrueWithHaltEnabled() = runBlockingTest {
-        val eventLogger = mockkClass(EventLogger::class)
+        val eventLogger = mockkClass(EventLoggerImpl::class)
         val haltUtil = mockkClass(HaltUtilImpl::class)
         val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)
 
@@ -39,7 +39,7 @@ class AssertUtilCommonTest : TestBase() {
 
     @Test
     fun assertFalseWithHaltEnabled() = runBlockingTest {
-        val eventLogger = mockkClass(EventLogger::class)
+        val eventLogger = mockkClass(EventLoggerImpl::class)
         val haltUtil = mockkClass(HaltUtilImpl::class)
         val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)
         val classTag = "Test"
@@ -57,7 +57,7 @@ class AssertUtilCommonTest : TestBase() {
 
     @Test
     fun assertTrueWithHaltDisabled() = runBlockingTest {
-        val eventLogger = mockkClass(EventLogger::class)
+        val eventLogger = mockkClass(EventLoggerImpl::class)
         val haltUtil = mockkClass(HaltUtilImpl::class)
         val assertUtil = AssertUtilImpl(false, eventLogger, haltUtil)
 
@@ -71,7 +71,7 @@ class AssertUtilCommonTest : TestBase() {
 
     @Test
     fun assertFalseWithHaltDisabled() = runBlockingTest {
-        val eventLogger = mockkClass(EventLogger::class)
+        val eventLogger = mockkClass(EventLoggerImpl::class)
         val haltUtil = mockkClass(HaltUtilImpl::class)
         val assertUtil = AssertUtilImpl(false, eventLogger, haltUtil)
         val classTag = "Test"

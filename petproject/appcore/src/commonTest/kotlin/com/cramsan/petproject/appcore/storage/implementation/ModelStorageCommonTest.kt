@@ -1,7 +1,7 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -21,7 +21,7 @@ internal class ModelStorageCommonTest {
     private lateinit var modelStorage: ModelStorageInterface
 
     fun setUp(platformProvider: ModelStoragePlatformProvider) {
-        log = mockk<EventLogger>(relaxUnitFun = true)
+        log = mockk<EventLoggerImpl>(relaxUnitFun = true)
         threadUtil = mockk<ThreadUtilImpl>(relaxUnitFun = true)
         val newModelStorage = ModelStorage(platformProvider.provide(), log, threadUtil)
         modelStorage = newModelStorage

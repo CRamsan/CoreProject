@@ -8,8 +8,7 @@ import com.google.android.material.appbar.MaterialToolbar
 
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
-    protected lateinit var viewModel: T
-
+    abstract val viewModel: T
     abstract val contentViewLayout: Int
     abstract val toolbarViewId: Int?
     abstract val logTag: String

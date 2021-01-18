@@ -14,7 +14,7 @@ import com.cramsan.framework.logging.logD
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
 
     abstract val logTag: String
-    protected lateinit var viewModel: VM
+    abstract val viewModel: VM
     protected lateinit var dataBinding: DB
     abstract val contentViewLayout: Int
 

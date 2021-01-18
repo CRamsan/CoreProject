@@ -1,8 +1,10 @@
 package com.cramsan.framework.test
 
+import io.mockk.MockKAnnotations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
+import kotlin.test.BeforeTest
 
 /**
  * This is a compy-paste of the Android version of this file. We are waiting for support of code sharing
@@ -22,4 +24,9 @@ actual open class TestBase {
      */
     actual val testCoroutineScope: CoroutineScope
         get() = testCoroutineRule.testCoroutineScope
+
+    @BeforeTest
+    actual open fun setupTest() {
+        MockKAnnotations.init(this)
+    }
 }

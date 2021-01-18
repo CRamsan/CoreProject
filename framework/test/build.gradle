@@ -24,6 +24,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework:interfacelib")
+
+                meta_packages.CoreTestCommon.each { implementation it }
             }
         }
         jvmMain {

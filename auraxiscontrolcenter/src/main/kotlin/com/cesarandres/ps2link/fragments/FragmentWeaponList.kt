@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -30,6 +31,7 @@ import java.util.HashMap
  */
 class FragmentWeaponList : BasePS2Fragment<NoopViewModel, FragmentWeaponListBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     private var profileId: String? = null
     private var profileFaction: String? = null
 

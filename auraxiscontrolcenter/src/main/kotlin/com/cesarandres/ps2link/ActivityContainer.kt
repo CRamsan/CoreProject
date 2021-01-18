@@ -1,5 +1,7 @@
 package com.cesarandres.ps2link
 
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BasePS2Activity
 import com.cramsan.framework.core.NoopViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,4 +24,5 @@ class ActivityContainer : BasePS2Activity<NoopViewModel>() {
     override val contentViewLayout = R.layout.activity_single_pane
     override val toolbarViewId = R.id.main_menu_toolbar
     override val logTag = "ActivityContainer"
+    override val viewModel: NoopViewModel by viewModels()
 }

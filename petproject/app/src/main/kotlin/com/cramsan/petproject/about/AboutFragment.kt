@@ -2,6 +2,7 @@ package com.cramsan.petproject.about
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import androidx.fragment.app.viewModels
 import com.cramsan.framework.core.BaseFragment
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.petproject.R
@@ -19,4 +20,6 @@ class AboutFragment : BaseFragment<NoopViewModel, FragmentAboutBinding>() {
 
         dataBinding.referenceFreepik.movementMethod = LinkMovementMethod.getInstance()
     }
+
+    override val viewModel: NoopViewModel by viewModels()
 }

@@ -1,14 +1,16 @@
+import com.cramsan.ps2link.appcore.dbg.Faction;
+
 CREATE TABLE Character (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     name TEXT,
     activeProfileId INTEGER,
     currentPoints INTEGER,
-    percentageToNextCert INTEGER,
-    percentageToNextRank INTEGER,
+    percentageToNextCert REAL,
+    percentageToNextRank REAL,
     rank INTEGER,
     lastLogin INTEGER,
     minutesPlayed INTEGER,
-    factionId TEXT,
+    factionId TEXT as Faction,
     worldId TEXT,
     outfitName TEXT,
     worldName TEXT,
@@ -20,7 +22,7 @@ getCharacter:
 SELECT * FROM Character WHERE id == ? AND namespace == ?;
 
 getAllCharacters:
-SELECT * FROM Character WHERE namespace == ?;
+SELECT * FROM Character;
 
 insertCharacter:
 INSERT OR REPLACE INTO Character(

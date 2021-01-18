@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -25,6 +26,7 @@ import kotlinx.coroutines.withContext
  */
 class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBinding>(), SourceSelectionChangedListener {
 
+    override val viewModel: NoopViewModel by viewModels()
     private var selectionButton: ButtonSelectSource? = null
 
     /*

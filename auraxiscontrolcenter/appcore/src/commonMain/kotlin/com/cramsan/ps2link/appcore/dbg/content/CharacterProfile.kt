@@ -1,6 +1,5 @@
 package com.cramsan.ps2link.appcore.dbg.content
 
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.character.BattleRank
 import com.cramsan.ps2link.appcore.dbg.content.character.Certs
 import com.cramsan.ps2link.appcore.dbg.content.character.Name
@@ -26,5 +25,5 @@ data class CharacterProfile(
     var online_status: Int = 0,
     var isCached: Boolean = false,
     var character_id_join_character: CharacterProfile? = null,
-    var namespace: Namespace? = null,
+    // var namespace: Namespace,
 )

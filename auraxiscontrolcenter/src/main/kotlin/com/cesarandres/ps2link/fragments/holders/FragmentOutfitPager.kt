@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -24,6 +25,9 @@ import java.util.HashMap
  * the member.
  */
 class FragmentOutfitPager : BasePS2Fragment<NoopViewModel, FragmentOutfitPagerBinding>() {
+
+    override val viewModel: NoopViewModel by viewModels()
+
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mViewPager: ViewPager? = null
     private var outfitId: String? = null

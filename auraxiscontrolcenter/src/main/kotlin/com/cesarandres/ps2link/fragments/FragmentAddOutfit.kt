@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -32,6 +33,7 @@ import java.util.Locale
  */
 class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBinding>(), SourceSelectionChangedListener {
 
+    override val viewModel: NoopViewModel by viewModels()
     private lateinit var selectionButton: ButtonSelectSource
     private var lastUsedNamespace: Namespace? = null
 

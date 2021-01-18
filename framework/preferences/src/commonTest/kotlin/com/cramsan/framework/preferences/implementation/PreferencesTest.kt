@@ -1,7 +1,9 @@
 package com.cramsan.framework.preferences.implementation
 
+import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.test.TestBase
-import org.junit.Test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -9,9 +11,10 @@ import kotlin.test.assertNull
  * @Author cramsan
  * @created 1/16/2021
  */
+@ExperimentalCoroutinesApi
 class PreferencesTest : TestBase() {
 
-    lateinit var preferences: PreferencesImpl
+    lateinit var preferences: Preferences
 
     override fun setupTest() {
         super.setupTest()

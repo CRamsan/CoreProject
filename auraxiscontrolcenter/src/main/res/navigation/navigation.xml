@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAddProfile"
-        android:name="com.cesarandres.ps2link.fragments.FragmentAddProfile"
+        android:name="com.cesarandres.ps2link.fragments.addprofile.FragmentComposeProfileAdd"
         android:label="FragmentAddProfile"
         tools:layout="@layout/fragment_add_profile">
         <action
@@ -85,7 +85,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentProfileList"
-        android:name="com.cesarandres.ps2link.fragments.FragmentProfileList"
+        android:name="com.cesarandres.ps2link.fragments.profilelist.FragmentComposeProfileList"
         android:label="FragmentProfileList"
         tools:layout="@layout/fragment_profile_list">
         <action

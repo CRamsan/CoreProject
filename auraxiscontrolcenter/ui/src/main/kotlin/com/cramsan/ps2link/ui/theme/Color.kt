@@ -2,9 +2,18 @@ package com.cramsan.ps2link.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val purple200 = Color(0xFFBB86FC)
-val purple500 = Color(0xFF6200EE)
-val purple700 = Color(0xFF3700B3)
-val teal200 = Color(0x5517444e)
-val teal200Alph = Color(0x2217444e)
-val teal900 = Color(0xFF287882)
+/**
+ * Primary color palette
+ */
+val primaryColor = Color(0xFF004d40)
+val primaryLightColor = Color(0xFF39796b)
+val primaryDarkColor = Color(0xFF00251a)
+val secondaryColor = Color(0xFF00acc1)
+val secondaryDarkColor = Color(0xFF007c91)
+val secondaryTextColor = Color(0xFF000000)
+
+/**
+ * Extra colors
+ */
+val gold = Color(0xFFFFEB3B)
+val goldDisabled = Color(0xFFAA9D2B)

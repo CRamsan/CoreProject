@@ -11,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.LinearLayout
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentTwitterBinding
@@ -26,6 +27,7 @@ import java.util.Arrays
  */
 class FragmentTwitter : BasePS2Fragment<NoopViewModel, FragmentTwitterBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     private val USER_PREFIX = "cb_"
     private var loaded = false
     private var users: Array<String>? = null

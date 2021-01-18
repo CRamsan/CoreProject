@@ -1,11 +1,12 @@
 package com.cramsan.petproject
 
+import androidx.activity.viewModels
+import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.petproject.base.BaseNavActivity
-import com.cramsan.petproject.mainmenu.AllPlantListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseNavActivity<AllPlantListViewModel>() {
+class MainActivity : BaseNavActivity<NoopViewModel>() {
 
     override val contentViewLayout: Int
         get() = R.layout.activity_main_menu
@@ -13,4 +14,5 @@ class MainActivity : BaseNavActivity<AllPlantListViewModel>() {
         get() = R.id.main_menu_toolbar
     override val logTag: String
         get() = "MainMenuActivity"
+    override val viewModel: NoopViewModel by viewModels()
 }

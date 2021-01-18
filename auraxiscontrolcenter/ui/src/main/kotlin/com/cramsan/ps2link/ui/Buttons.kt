@@ -2,86 +2,126 @@ package com.cramsan.ps2link.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.cramsan.ps2link.ui.theme.Opacity
 import com.cramsan.ps2link.ui.theme.PS2Theme
-import com.cramsan.ps2link.ui.theme.teal200
-import com.cramsan.ps2link.ui.theme.teal200Alph
-import com.cramsan.ps2link.ui.theme.teal900
+import com.cramsan.ps2link.ui.theme.Padding
+import com.cramsan.ps2link.ui.theme.Size
 
-@Composable
-fun Button(modifier: Modifier = Modifier, label: String, onClick: () -> Unit = {}) {
-    val shape = MaterialTheme.shapes.small
-    Text(
-        text = label,
-        modifier = modifier.background(teal200Alph, shape)
-            .clickable(onClick = onClick)
-            .clip(shape)
-            .border(BorderStroke(1.dp, teal900), shape)
-            .padding(
-                horizontal = 10.dp,
-                vertical = 5.dp
-            ),
-        color = MaterialTheme.colors.onPrimary,
-        textAlign = TextAlign.Center,
-    )
+@OptIn(ExperimentalMaterialApi::class)
+data class BoldButtonColors(private val backgroundColor: Color, private val contentColor: Color) :
+    ButtonColors {
+    override fun backgroundColor(enabled: Boolean): Color = backgroundColor
+    override fun contentColor(enabled: Boolean): Color = contentColor
 }
 
 @Composable
-fun BoldButton(modifier: Modifier = Modifier, label: String, star: Boolean = false, onClick: () -> Unit = {}) {
-    val shape = MaterialTheme.shapes.small
-    Row(
-        modifier = modifier.background(teal200, shape)
-            .clickable(onClick = onClick)
-            .clip(shape)
-            .border(BorderStroke(3.dp, teal900), shape)
-            .padding(15.dp),
-        verticalAlignment = Alignment.CenterVertically,
+fun BoldButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    val color = MaterialTheme.colors.primary
+    val buttonColors = BoldButtonColors(
+        backgroundColor = color.setAlpha(
+            Opacity.translucent
+        ),
+        contentColor = contentColorFor(color = color)
+    )
+
+    Button(
+        onClick = onClick,
+        border = BorderStroke(Size.xsmall, color),
+        colors = buttonColors,
+        modifier = modifier,
     ) {
-        if (star) {
-            Image(imageResource(id = R.drawable.icon_star_selected))
-        }
-        Text(
-            text = label,
-            color = MaterialTheme.colors.onPrimary,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
+        content()
     }
 }
 
-@Preview(
-    name = "Bold Button",
-    group = "Bold"
-)
+@Composable
+fun MainMenuButton(
+    modifier: Modifier = Modifier,
+    label: String,
+    star: Boolean = false,
+    onClick: () -> Unit = {},
+) {
+    BoldButton(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (star) {
+                Image(imageResource(id = R.drawable.icon_star_selected))
+            }
+            Text(
+                text = label,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(vertical = Padding.large).fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Composable
+fun SlimButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    val color = MaterialTheme.colors.primary
+    val buttonColors = BoldButtonColors(
+        backgroundColor = color.setAlpha(Opacity.transparent),
+        contentColor = contentColorFor(color = color)
+    )
+
+    Button(
+        onClick = onClick,
+        border = BorderStroke(Size.xmicro, color),
+        colors = buttonColors,
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            content()
+        }
+    }
+}
+
+@Preview
 @Composable
 fun BoldButtonPreview() {
     PS2Theme {
-        BoldButton(label = "Android")
-    }
-}
-
-@Preview(
-    name = "Normal Button",
-    group = "Normal"
-)
-@Composable
-fun NormalButtonPreview() {
-    PS2Theme {
-        Button(label = "Android")
+        Column {
+            BoldButton {
+                Text("Android")
+            }
+            MainMenuButton(label = "Crasman2", star = true)
+            BoldButton {
+                Text("Test")
+            }
+            SlimButton {
+                Text("Slim Test")
+            }
+        }
     }
 }

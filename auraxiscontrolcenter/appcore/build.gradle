@@ -34,8 +34,6 @@ dependencies {
     implementation packages.SqlDelightAndroidDriver
     implementation packages.KtorAndroid
     implementation packages.KtorGson
-
-    testImplementation packages.SqlDelightAndroidDriver
 }
 
 kotlin {
@@ -52,7 +50,7 @@ kotlin {
         }
         commonTest {
             dependencies {
-                implementation project(":framework")
+                implementation project(":framework:test")
             }
         }
     }

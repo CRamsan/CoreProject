@@ -15,7 +15,7 @@ class PreferencesAndroid(private val applicationContext: Context) : PreferencesD
 
     override fun loadString(key: String): String? {
         val sharedPref = applicationContext.getSharedPreferences("global", Context.MODE_PRIVATE)
-        return sharedPref.getString(key, "")
+        return sharedPref.getString(key, null)
     }
 
     override fun saveInt(key: String, value: Int?) {

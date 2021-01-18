@@ -4,7 +4,7 @@ import com.cramsan.framework.assert.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
@@ -34,7 +34,7 @@ class DependenciesConfig {
     }
 
     val eventLogger by lazy {
-        EventLogger(Severity.INFO, errorCallback, LoggerJVM())
+        EventLoggerImpl(Severity.INFO, errorCallback, LoggerJVM())
     }
 
     val haltUtil by lazy {

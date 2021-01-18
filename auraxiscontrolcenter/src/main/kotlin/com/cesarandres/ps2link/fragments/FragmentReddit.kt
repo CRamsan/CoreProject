@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.android.volley.Response.ErrorListener
 import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
@@ -24,6 +25,7 @@ import com.cramsan.framework.core.NoopViewModel
  * Fragment that retrieves the hottest Reddit post
  */
 class FragmentReddit : BasePS2Fragment<NoopViewModel, FragmentRedditBinding>() {
+    override val viewModel: NoopViewModel by viewModels()
     private var subReddit: String? = null
 
     /*

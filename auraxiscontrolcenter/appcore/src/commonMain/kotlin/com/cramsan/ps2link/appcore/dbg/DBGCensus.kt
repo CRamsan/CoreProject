@@ -1,6 +1,5 @@
 package com.cramsan.ps2link.appcore.dbg
 
-import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.ps2link.appcore.dbg.util.Collections.PS2Collection
 import com.cramsan.ps2link.appcore.dbg.util.QueryString
 import io.ktor.http.Url
@@ -20,9 +19,7 @@ import io.ktor.http.Url
  * http://census.daybreakgames.com/.
  */
 
-class DBGCensus(
-    private val eventLogger: EventLoggerInterface,
-) {
+class DBGCensus {
 
     /**
      * @param verb action to realize, count or get

@@ -5,7 +5,7 @@ import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 
-class EventLogger(
+class EventLoggerImpl(
     override val targetSeverity: Severity,
     override val errorCallback: EventLoggerErrorCallbackInterface?,
     override val platformDelegate: EventLoggerDelegate

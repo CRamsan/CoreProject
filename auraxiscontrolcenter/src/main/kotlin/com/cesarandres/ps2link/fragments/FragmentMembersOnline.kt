@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -24,6 +25,7 @@ import kotlinx.coroutines.withContext
  */
 class FragmentMembersOnline : BasePS2Fragment<NoopViewModel, FragmentMemberListBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     private lateinit var outfitId: String
     private val outfitName: String? = null
     private var namespace: Namespace? = null

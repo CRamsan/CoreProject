@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments
+package com.cesarandres.ps2link.fragments.addprofile
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -30,6 +31,7 @@ import java.util.Locale
  */
 class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBinding>(), SourceSelectionChangedListener {
 
+    override val viewModel: NoopViewModel by viewModels()
     private var lastUsedNamespace: Namespace? = null
     private var selectionButton: ButtonSelectSource? = null
 

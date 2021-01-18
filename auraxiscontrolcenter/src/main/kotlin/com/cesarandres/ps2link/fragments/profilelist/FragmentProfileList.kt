@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments
+package com.cesarandres.ps2link.fragments.profilelist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentProfileListBinding
@@ -17,6 +18,8 @@ import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
  * temporary
  */
 class FragmentProfileList : BasePS2Fragment<NoopViewModel, FragmentProfileListBinding>() {
+
+    override val viewModel: NoopViewModel by viewModels()
 
     /*
      * (non-Javadoc)

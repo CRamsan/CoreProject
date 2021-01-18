@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
@@ -27,6 +28,7 @@ import java.util.Locale
  */
 class FragmentOutfit : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     private var isCached: Boolean = false
     private var outfitId: String? = null
     private var outfit: Outfit? = null

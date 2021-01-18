@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments.mainmenu
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentMainMenuBinding
@@ -17,6 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class FragmentMainMenu : BasePS2Fragment<NoopViewModel, FragmentMainMenuBinding>() {
+
+    override val viewModel: NoopViewModel by viewModels()
 
     override val logTag = "FragmentMainMenu"
     override val contentViewLayout = R.layout.fragment_main_menu

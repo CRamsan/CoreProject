@@ -15,7 +15,7 @@ getOutfit:
 SELECT * FROM Outfit WHERE outfitId == ? AND namespace == ?;
 
 getAllOutfits:
-SELECT * FROM Outfit WHERE namespace == ?;
+SELECT * FROM Outfit;
 
 insertOutfit:
 INSERT OR REPLACE INTO Outfit(

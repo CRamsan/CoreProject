@@ -1,8 +1,7 @@
 package com.cramsan.ps2link.appcore
 
-import com.cramsan.framework.logging.EventLoggerInterface
-import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logI
 import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.DBGCensus
@@ -31,8 +30,6 @@ import com.cramsan.ps2link.appcore.dbg.util.Collections
 import com.cramsan.ps2link.appcore.dbg.util.QueryString
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.defaultSerializer
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Url
@@ -60,24 +57,16 @@ import kotlin.time.toDuration
  */
 
 class DBGServiceClientImpl(
-    private val eventLogger: EventLoggerInterface,
-    private val metricsClient: MetricsInterface,
     private val census: DBGCensus,
-    // private val http: HttpClient, TODO: Reenable
+    private val http: HttpClient,
 ) : DBGServiceClient {
-
-    private val http: HttpClient = HttpClient {
-        install(JsonFeature) {
-            serializer = defaultSerializer()
-        }
-    }
 
     override suspend fun getProfile(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
     ): CharacterProfile? {
-        eventLogger.log(Severity.INFO, TAG, "Downloading Profile")
+        logI(TAG, "Downloading Profile")
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTER,
@@ -99,7 +88,7 @@ class DBGServiceClientImpl(
         namespace: Namespace,
         currentLang: CensusLang,
     ): List<CharacterProfile>? {
-        eventLogger.log(Severity.INFO, TAG, "Downloading Profile List")
+        logI(TAG, "Downloading Profile List")
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTER_NAME,
@@ -117,7 +106,7 @@ class DBGServiceClientImpl(
         )
 
         val body = sendRequestWithRetry<Character_list_response>(url)
-        return body?.character_name_list
+        return body?.character_name_list?.map { it.character_id_join_character }?.filterNotNull()
     }
 
     override suspend fun getFriendList(
@@ -352,10 +341,10 @@ class DBGServiceClientImpl(
     @OptIn(ExperimentalTime::class)
     private suspend inline fun <reified T> sendRequestWithRetry(url: Url): T? {
         for (retry in 0..3) {
+            delay(retry.toDuration(DurationUnit.SECONDS))
             val response = sendRequest(url, retry)
 
             return if (response.status.isSuccess()) {
-                delay(retry.toDuration(DurationUnit.SECONDS))
                 response.receive()
             } else if (response.status.value in 300..500) {
                 null
@@ -369,6 +358,8 @@ class DBGServiceClientImpl(
 
     @OptIn(ExperimentalTime::class)
     private suspend fun sendRequest(url: Url, retry: Int): HttpResponse {
+        logD(TAG, "Url: $url")
+
         val startInstant = Clock.System.now()
         val response = http.get<HttpResponse>(url)
         val endInstant = Clock.System.now()

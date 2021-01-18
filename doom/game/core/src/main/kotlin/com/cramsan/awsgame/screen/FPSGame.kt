@@ -24,7 +24,7 @@ import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -148,7 +148,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
             }
         } ?: return
 
-        val logger = EventLogger(Severity.INFO, null, LoggerJVM())
+        val logger = EventLoggerImpl(Severity.INFO, null, LoggerJVM())
         // val haltUtil = HaltUtil(HaltUtilJVM())
         // val assert = AssertUtil(true, logger, haltUtil)
         val aiRepo = DummyAIRepoImpl(logger)

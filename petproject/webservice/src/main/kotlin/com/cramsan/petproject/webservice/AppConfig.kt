@@ -8,7 +8,7 @@ import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
@@ -45,7 +45,7 @@ class AppConfig {
 
     @Bean
     fun eventLogger(errorCallback: EventLoggerErrorCallbackInterface): EventLoggerInterface {
-        return EventLogger(Severity.INFO, errorCallback, LoggerJVM())
+        return EventLoggerImpl(Severity.INFO, errorCallback, LoggerJVM())
     }
 
     @Bean

@@ -1,9 +1,11 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
+import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.db.Character
 import com.cramsan.ps2link.db.Member
 import com.cramsan.ps2link.db.Outfit
+import kotlinx.coroutines.flow.Flow
 
 interface DbgDAO {
 
@@ -12,18 +14,20 @@ interface DbgDAO {
         name: String?,
         activeProfileId: Long?,
         currentPoints: Long?,
-        percentageToNextCert: Long?,
-        percentageToNextRank: Long?,
+        percentageToNextCert: Double?,
+        percentageToNextRank: Double?,
         rank: Long?,
         lastLogin: Long?,
         minutesPlayed: Long?,
-        factionId: String?,
+        factionId: Faction?,
         worldId: String?,
         outfitName: String?,
         worldName: String?,
         namespace: Namespace,
         lastUpdated: Long,
     )
+
+    fun getAllCharactersAsFlow(): Flow<List<Character>>
 
     fun removeCharacter(
         characterId: String,
@@ -71,7 +75,9 @@ interface DbgDAO {
 
     fun getAllOutfits(
         namespace: Namespace,
-    ): List<Outfit>?
+    ): List<Outfit>
+
+    fun getAllOutfitsAsFlow(): Flow<List<Outfit>>
 
     fun insertOutfit(
         outfitId: String,

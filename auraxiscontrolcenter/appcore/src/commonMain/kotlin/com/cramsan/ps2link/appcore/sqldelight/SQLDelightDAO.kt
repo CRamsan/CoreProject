@@ -1,16 +1,23 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
+import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.db.Character
 import com.cramsan.ps2link.db.Member
 import com.cramsan.ps2link.db.Outfit
 import com.cramsan.ps2link.db.PS2LinkDB
 import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.flow.Flow
 
 class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
 
     private var database: PS2LinkDB = PS2LinkDB(
-        sqlDriver,
+        driver = sqlDriver,
+        CharacterAdapter = Character.Adapter(
+            factionIdAdapter = factionAdapter
+        )
     )
 
     override fun insertCharacter(
@@ -18,12 +25,12 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         name: String?,
         activeProfileId: Long?,
         currentPoints: Long?,
-        percentageToNextCert: Long?,
-        percentageToNextRank: Long?,
+        percentageToNextCert: Double?,
+        percentageToNextRank: Double?,
         rank: Long?,
         lastLogin: Long?,
         minutesPlayed: Long?,
-        factionId: String?,
+        factionId: Faction?,
         worldId: String?,
         outfitName: String?,
         worldName: String?,
@@ -47,6 +54,10 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
             namespace.name,
             lastUpdated,
         )
+    }
+
+    override fun getAllCharactersAsFlow(): Flow<List<Character>> {
+        return database.characterQueries.getAllCharacters().asFlow().mapToList()
     }
 
     override fun removeCharacter(
@@ -116,7 +127,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
     override fun getCharacters(
         namespace: Namespace,
     ): List<Character> {
-        return database.characterQueries.getAllCharacters(namespace.name).executeAsList()
+        return database.characterQueries.getAllCharacters().executeAsList()
     }
 
     override fun getAllMembers(
@@ -135,8 +146,12 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
 
     override fun getAllOutfits(
         namespace: Namespace,
-    ): List<Outfit>? {
-        return database.outfitQueries.getAllOutfits(namespace.name).executeAsList()
+    ): List<Outfit> {
+        return database.outfitQueries.getAllOutfits().executeAsList()
+    }
+
+    override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
+        return database.outfitQueries.getAllOutfits().asFlow().mapToList()
     }
 
     override fun insertOutfit(

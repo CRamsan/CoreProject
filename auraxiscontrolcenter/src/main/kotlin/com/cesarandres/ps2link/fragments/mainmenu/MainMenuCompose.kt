@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.ui.BoldButton
+import com.cramsan.ps2link.ui.MainMenuButton
 
 @Composable
 fun MainMenuCompose(
@@ -31,32 +31,32 @@ fun MainMenuCompose(
             Spacer(modifier = Modifier.height(50.dp))
             val buttonModifier = Modifier.padding(10.dp).fillMaxWidth()
             preferredProfile?.let {
-                BoldButton(buttonModifier, it, true) { eventHandler.onPreferredProfileClick() }
+                MainMenuButton(buttonModifier, it, true) { eventHandler.onPreferredProfileClick() }
             }
             preferredOutfit?.let {
-                BoldButton(buttonModifier, it, true) { eventHandler.onPreferredOutfitClick() }
+                MainMenuButton(buttonModifier, it, true) { eventHandler.onPreferredOutfitClick() }
             }
-            BoldButton(
+            MainMenuButton(
                 buttonModifier,
                 stringResource(R.string.title_profiles), false,
             ) { eventHandler.onProfileClick() }
-            BoldButton(
+            MainMenuButton(
                 buttonModifier,
                 stringResource(R.string.title_servers), false,
             ) { eventHandler.onServersClick() }
-            BoldButton(
+            MainMenuButton(
                 buttonModifier,
                 stringResource(R.string.title_outfits), false,
             ) { eventHandler.onOutfitsClick() }
-            BoldButton(
+            MainMenuButton(
                 buttonModifier,
                 stringResource(R.string.title_twitter), false,
             ) { eventHandler.onTwitterClick() }
-            BoldButton(
+            MainMenuButton(
                 buttonModifier,
                 stringResource(R.string.title_reddit), false,
             ) { eventHandler.onRedditClick() }
-            BoldButton(
+            MainMenuButton(
                 buttonModifier,
                 stringResource(R.string.title_about), false,
             ) { eventHandler.onAboutClick() }

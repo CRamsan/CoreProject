@@ -32,6 +32,7 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
         get() = "MainMenuFragment"
     override val contentViewLayout: Int
         get() = R.layout.fragment_main_menu
+    override val viewModel: AllPlantListViewModel by viewModels()
 
     private lateinit var plantsAdapter: AllPlantsRecyclerViewAdapter
     private lateinit var queryCleaner: OnBackPressedCallback
@@ -48,8 +49,6 @@ class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBin
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val model: AllPlantListViewModel by viewModels()
-        viewModel = model
         dataBinding.viewModel = viewModel
 
         viewModel.observableNextActivityCat().observe(

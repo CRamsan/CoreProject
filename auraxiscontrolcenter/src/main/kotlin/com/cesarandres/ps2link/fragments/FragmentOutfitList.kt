@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitBinding
@@ -15,6 +16,7 @@ import com.cramsan.framework.core.NoopViewModel
  */
 class FragmentOutfitList : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() {
 
+    override val viewModel: NoopViewModel by viewModels()
     /*
      * (non-Javadoc)
      *

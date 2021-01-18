@@ -1,6 +1,7 @@
 package com.cramsan.framework.test
 
 import kotlinx.coroutines.CoroutineScope
+import kotlin.test.BeforeTest
 
 /**
  * Base class that should handle running unit tests. This class will be implemented on each platform
@@ -22,4 +23,7 @@ expect open class TestBase() {
      * https://github.com/Kotlin/kotlinx.coroutines/issues/1996
      */
     fun runBlockingTest(block: suspend CoroutineScope.() -> Unit)
+
+    @BeforeTest
+    open fun setupTest()
 }

@@ -30,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBinding>(), PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
+    override val viewModel: PlantListViewModel by viewModels()
     override val contentViewLayout: Int
         get() = R.layout.fragment_plants_list
     override val logTag: String
@@ -57,8 +58,6 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         super.onActivityCreated(savedInstanceState)
 
         var startingOffset: Int? = null
-        val model: PlantListViewModel by viewModels()
-        viewModel = model
         viewModel.setAnimalType(animalType)
 
         if (savedInstanceState != null) {
@@ -78,9 +77,9 @@ class PlantsListFragment : BaseFragment<PlantListViewModel, FragmentPlantsListBi
         plantsAdapter = plantsRecyclerAdapter
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsRecyclerAdapter
-        dataBinding.viewModel = model
+        dataBinding.viewModel = viewModel
 
-        model.observablePlants().observe(
+        viewModel.observablePlants().observe(
             viewLifecycleOwner,
             Observer<List<PresentablePlant>> { plants ->
                 plantsRecyclerAdapter.updateValues(plants)
