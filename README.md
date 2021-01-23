@@ -15,8 +15,9 @@ A lot of the code is written in a shared module called **Framework** that abstra
 
 # Documentation
  - [Design](/DESIGN.md)
- - [CI/CD](/CONTINUOUS.md)
- 
+ - [CI/CD](/CONTINUOUS.md) 
+ - [Testing](/TESTING.md)
+
 ## Getting started
  
 ### Prerequisites
@@ -35,7 +36,7 @@ To just build the code, run `./grdlew assembleDebug` for Android projects or `./
 The code is configured to follow a pre-defined format style. This is enforced by the build process, so it is important to always follow the format otherwise the build process will fail. To automatlly fix any format issues, just run `./gradlew ktlintf`.
 
 ### Testing
-To run the tests you can run `./gradlew check` in a multi-platform project, `./gradlew testDebugUnitTest` for Android and `./gradlew jvmTest`.
+You can read more about testing in the [Testing](/TESTING.md) page.
 
 ### Create a new module
 If you want to start a new project and need module, look at the [New Module](NEW_MODULE.md) page for some examples about how to get started.
