@@ -7,6 +7,22 @@ import com.cramsan.ps2link.appcore.dbg.Namespace
 class PS2SettingsImpl(
     val preferences: Preferences
 ) : PS2Settings {
+    override suspend fun updatePreferredCharacterId(characterId: String?) {
+        preferences.saveString(PREFERRED_CHARACTER_ID, characterId)
+    }
+
+    override suspend fun getPreferredCharacterId(): String? {
+        return preferences.loadString(PREFERRED_CHARACTER_ID)
+    }
+
+    override suspend fun updatePreferredOutfitId(outfitId: String?) {
+        preferences.saveString(PREFERRED_OUTFIT_ID, outfitId)
+    }
+
+    override suspend fun getPreferredOutfitId(): String? {
+        return preferences.loadString(PREFERRED_OUTFIT_ID)
+    }
+
     override suspend fun updatePreferredNamespace(namespace: Namespace?) {
         preferences.saveString(PREFERRED_NAMESPACE, namespace?.name)
     }
@@ -42,6 +58,8 @@ class PS2SettingsImpl(
     }
 
     companion object {
+        const val PREFERRED_CHARACTER_ID = "preferredCharacterId"
+        const val PREFERRED_OUTFIT_ID = "preferredOutfitId"
         const val PREFERRED_NAMESPACE = "preferredNamespace"
         const val PREFERRED_CENSUS_LANG = "preferredCensusLang"
         const val CURRENT_NAMESPACE = "currentNamespace"

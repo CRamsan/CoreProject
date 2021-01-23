@@ -13,6 +13,14 @@ import com.cramsan.ps2link.appcore.dbg.Namespace
  */
 interface PS2Settings {
 
+    suspend fun updatePreferredCharacterId(characterId: String?)
+
+    suspend fun getPreferredCharacterId(): String?
+
+    suspend fun updatePreferredOutfitId(outfitId: String?)
+
+    suspend fun getPreferredOutfitId(): String?
+
     suspend fun updatePreferredNamespace(namespace: Namespace?)
 
     suspend fun getPreferredNamespace(): Namespace?

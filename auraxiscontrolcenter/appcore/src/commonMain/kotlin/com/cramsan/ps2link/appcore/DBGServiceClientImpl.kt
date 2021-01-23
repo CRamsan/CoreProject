@@ -89,6 +89,9 @@ class DBGServiceClientImpl(
         currentLang: CensusLang,
     ): List<CharacterProfile>? {
         logI(TAG, "Downloading Profile List")
+        if (searchField.length < 3) {
+            return emptyList()
+        }
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTER_NAME,

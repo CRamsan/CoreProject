@@ -45,7 +45,7 @@ abstract class BaseViewModel(
     @CallSuper
     override fun onCleared() {
         super.onCleared()
-        logD(logTag, "onCreate")
+        logD(logTag, "onCleared")
         ioScope.cancel()
     }
 }

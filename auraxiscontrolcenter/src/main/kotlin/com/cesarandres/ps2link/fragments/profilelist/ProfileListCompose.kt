@@ -1,20 +1,21 @@
 package com.cesarandres.ps2link.fragments.profilelist
 
 import androidx.annotation.MainThread
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.ui.FrameBottom
 
 @Composable
 fun ProfileListCompose(
     profileItems: List<CharacterProfile>,
     eventHandler: ProfileListEventHandler,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    FrameBottom(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(profileItems) {
             }
@@ -25,7 +26,7 @@ fun ProfileListCompose(
 @MainThread
 interface ProfileListEventHandler {
     fun onSearchProfileClick()
-    fun onProfileSelected(profileId: String)
+    fun onProfileSelected(profileId: String, namespace: Namespace)
 }
 
 @Preview
@@ -35,7 +36,7 @@ fun NormalButtonPreview() {
         profileItems = emptyList(),
         eventHandler = object : ProfileListEventHandler {
             override fun onSearchProfileClick() = Unit
-            override fun onProfileSelected(profileId: String) = Unit
+            override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         }
     )
 }

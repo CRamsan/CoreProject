@@ -34,6 +34,7 @@ data class BoldButtonColors(private val backgroundColor: Color, private val cont
 @Composable
 fun BoldButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
@@ -47,6 +48,7 @@ fun BoldButton(
 
     Button(
         onClick = onClick,
+        enabled = enabled,
         border = BorderStroke(Size.xsmall, color),
         colors = buttonColors,
         modifier = modifier,
@@ -58,12 +60,14 @@ fun BoldButton(
 @Composable
 fun MainMenuButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     label: String,
     star: Boolean = false,
     onClick: () -> Unit = {},
 ) {
     BoldButton(
         modifier = modifier,
+        enabled = enabled,
         onClick = onClick
     ) {
         Row(
@@ -84,6 +88,7 @@ fun MainMenuButton(
 @Composable
 fun SlimButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
@@ -96,6 +101,7 @@ fun SlimButton(
     Button(
         onClick = onClick,
         border = BorderStroke(Size.xmicro, color),
+        enabled = enabled,
         colors = buttonColors,
         modifier = modifier
     ) {

@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments
+package com.cesarandres.ps2link.fragments.profilepager.profile
 
 import android.graphics.Color
 import android.os.Bundle

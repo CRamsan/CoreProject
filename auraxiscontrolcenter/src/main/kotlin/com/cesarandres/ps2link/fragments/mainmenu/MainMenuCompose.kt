@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.fragments.mainmenu
 
 import androidx.annotation.MainThread
 import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,15 +14,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.db.Outfit
+import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.MainMenuButton
 
 @Composable
 fun MainMenuCompose(
-    preferredProfile: String?,
-    preferredOutfit: String?,
+    preferredProfile: Character?,
+    preferredOutfit: Outfit?,
     eventHandler: MainMenuEventHandler,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    FrameBottom(modifier = Modifier.fillMaxSize()) {
         ScrollableColumn(
             modifier = Modifier.padding(horizontal = 50.dp)
                 .wrapContentWidth()
@@ -31,34 +34,48 @@ fun MainMenuCompose(
             Spacer(modifier = Modifier.height(50.dp))
             val buttonModifier = Modifier.padding(10.dp).fillMaxWidth()
             preferredProfile?.let {
-                MainMenuButton(buttonModifier, it, true) { eventHandler.onPreferredProfileClick() }
+                MainMenuButton(
+                    buttonModifier,
+                    label = it.name ?: "",
+                    star = true
+                ) { eventHandler.onPreferredProfileClick(it.id, it.namespace) }
             }
             preferredOutfit?.let {
-                MainMenuButton(buttonModifier, it, true) { eventHandler.onPreferredOutfitClick() }
+                MainMenuButton(
+                    buttonModifier,
+                    label = it.name ?: "",
+                    star = true
+                ) { eventHandler.onPreferredOutfitClick(it.outfitId, it.namespace) }
             }
             MainMenuButton(
                 buttonModifier,
-                stringResource(R.string.title_profiles), false,
+                label = stringResource(R.string.title_profiles),
+                star = false,
             ) { eventHandler.onProfileClick() }
             MainMenuButton(
                 buttonModifier,
-                stringResource(R.string.title_servers), false,
+                label = stringResource(R.string.title_servers),
+                star = false,
             ) { eventHandler.onServersClick() }
             MainMenuButton(
                 buttonModifier,
-                stringResource(R.string.title_outfits), false,
+                label = stringResource(R.string.title_outfits),
+                star = false,
             ) { eventHandler.onOutfitsClick() }
             MainMenuButton(
                 buttonModifier,
-                stringResource(R.string.title_twitter), false,
+                label = stringResource(R.string.title_twitter),
+                star = false,
             ) { eventHandler.onTwitterClick() }
             MainMenuButton(
                 buttonModifier,
-                stringResource(R.string.title_reddit), false,
+                label = stringResource(R.string.title_reddit),
+                star = false,
             ) { eventHandler.onRedditClick() }
             MainMenuButton(
                 buttonModifier,
-                stringResource(R.string.title_about), false,
+                label = stringResource(R.string.title_about),
+                star = false,
             ) { eventHandler.onAboutClick() }
             Spacer(modifier = Modifier.height(50.dp))
         }
@@ -67,8 +84,8 @@ fun MainMenuCompose(
 
 @MainThread
 interface MainMenuEventHandler {
-    fun onPreferredProfileClick()
-    fun onPreferredOutfitClick()
+    fun onPreferredProfileClick(characterId: String, namespace: Namespace)
+    fun onPreferredOutfitClick(outfitId: String, namespace: Namespace)
     fun onProfileClick()
     fun onServersClick()
     fun onOutfitsClick()
@@ -81,11 +98,11 @@ interface MainMenuEventHandler {
 @Composable
 fun NormalButtonPreview() {
     MainMenuCompose(
-        preferredProfile = "Cramsan",
-        preferredOutfit = "Derp Company",
+        preferredProfile = null,
+        preferredOutfit = null,
         eventHandler = object : MainMenuEventHandler {
-            override fun onPreferredProfileClick() = Unit
-            override fun onPreferredOutfitClick() = Unit
+            override fun onPreferredProfileClick(characterId: String, namespace: Namespace) = Unit
+            override fun onPreferredOutfitClick(outfitId: String, namespace: Namespace) = Unit
             override fun onProfileClick() = Unit
             override fun onServersClick() = Unit
             override fun onOutfitsClick() = Unit

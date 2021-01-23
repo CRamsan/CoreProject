@@ -24,7 +24,7 @@
             app:destination="@id/fragmentTwitter" />
         <action
             android:id="@+id/action_mainMenuFragment_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
+            app:destination="@id/fragmentProfilePager" />
         <action
             android:id="@+id/action_mainMenuFragment_to_fragmentOutfitList"
             app:destination="@id/fragmentOutfitList" />
@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_add_profile">
         <action
             android:id="@+id/action_fragmentAddProfile_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
+            app:destination="@id/fragmentProfilePager" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAbout"
@@ -69,19 +69,22 @@
             app:destination="@id/fragmentOutfitPager" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentProfile"
-        android:name="com.cesarandres.ps2link.fragments.FragmentProfile"
-        android:label="FragmentProfile"
-        tools:layout="@layout/fragment_profile_pager" >
+        android:id="@+id/fragmentProfilePager"
+        android:name="com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePager"
+        android:label="FragmentProfilePager"
+        tools:layout="@layout/fragment_profile_pager">
         <action
             android:id="@+id/action_fragmentProfile_self"
-            app:destination="@id/fragmentProfile" />
+            app:destination="@id/fragmentProfilePager" />
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentOutfitPager"
             app:destination="@id/fragmentOutfitPager" />
         <argument
             android:name="characterId"
             app:argType="string" />
+        <argument
+            android:name="namespace"
+            app:argType="com.cramsan.ps2link.appcore.dbg.Namespace" />
     </fragment>
     <fragment
         android:id="@+id/fragmentProfileList"
@@ -90,7 +93,7 @@
         tools:layout="@layout/fragment_profile_list">
         <action
             android:id="@+id/action_fragmentProfileList_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
+            app:destination="@id/fragmentProfilePager" />
         <action
             android:id="@+id/action_fragmentProfileList_to_fragmentAddProfile"
             app:destination="@id/fragmentAddProfile" />
@@ -114,10 +117,13 @@
         tools:layout="@layout/fragment_outfit_pager" >
         <action
             android:id="@+id/action_fragmentOutfitPager_to_fragmentProfile"
-            app:destination="@id/fragmentProfile" />
+            app:destination="@id/fragmentProfilePager" />
         <argument
             android:name="outfitId"
             app:argType="string" />
+        <argument
+            android:name="namespace"
+            app:argType="com.cramsan.ps2link.appcore.dbg.Namespace" />
     </fragment>
     <fragment
         android:id="@+id/fragmentServerList"

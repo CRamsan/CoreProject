@@ -8,13 +8,13 @@ enum class Faction(val code: String) {
     UNKNOWN(""), ;
 
     companion object {
+
+        private val enumMapping: Map<String, Faction> by lazy {
+            values().associateBy { it.code }
+        }
+
         fun fromString(code: String?): Faction {
-            return when (code) {
-                VS.code -> VS
-                NC.code -> NC
-                TR.code -> TR
-                else -> UNKNOWN
-            }
+            return enumMapping[code] ?: UNKNOWN
         }
     }
 }

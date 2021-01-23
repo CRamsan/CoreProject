@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
+import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.db.Character
@@ -9,6 +10,7 @@ import com.cramsan.ps2link.db.PS2LinkDB
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
 class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
@@ -16,8 +18,13 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
     private var database: PS2LinkDB = PS2LinkDB(
         driver = sqlDriver,
         CharacterAdapter = Character.Adapter(
-            factionIdAdapter = factionAdapter
-        )
+            factionIdAdapter = factionAdapter,
+            namespaceAdapter = namespaceAdapter,
+        ),
+        OutfitAdapter = Outfit.Adapter(
+            factionIdAdapter = factionAdapter,
+            namespaceAdapter = namespaceAdapter,
+        ),
     )
 
     override fun insertCharacter(
@@ -30,13 +37,14 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         rank: Long?,
         lastLogin: Long?,
         minutesPlayed: Long?,
-        factionId: Faction?,
+        factionId: Faction,
         worldId: String?,
         outfitName: String?,
         worldName: String?,
         namespace: Namespace,
         lastUpdated: Long,
     ) {
+        assertIsBackgroundThread()
         return database.characterQueries.insertCharacter(
             characterId,
             name,
@@ -51,7 +59,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
             worldId,
             outfitName,
             worldName,
-            namespace.name,
+            namespace,
             lastUpdated,
         )
     }
@@ -64,9 +72,10 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         characterId: String,
         namespace: Namespace,
     ) {
+        assertIsBackgroundThread()
         return database.characterQueries.deleteCharacter(
             characterId,
-            namespace.name,
+            namespace,
         )
     }
 
@@ -74,8 +83,16 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         characterId: String,
         namespace: Namespace,
     ): Character? {
-        return database.characterQueries.getCharacter(characterId, namespace.name)
+        assertIsBackgroundThread()
+        return database.characterQueries.getCharacter(characterId, namespace)
             .executeAsOneOrNull()
+    }
+
+    override fun getCharacterAsFlow(
+        characterId: String,
+        namespace: Namespace
+    ): Flow<Character?> {
+        return database.characterQueries.getCharacter(characterId, namespace).asFlow().mapToOneOrNull()
     }
 
     override fun insertMember(
@@ -87,6 +104,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         namespace: Namespace,
         lastUpdated: Long,
     ) {
+        assertIsBackgroundThread()
         database.memberQueries.insertMember(
             id,
             rank,
@@ -102,6 +120,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         memberList: List<Member>,
         lastUpdated: Long,
     ) {
+        assertIsBackgroundThread()
         database.memberQueries.transaction {
             memberList.forEach {
                 database.memberQueries.insertMember(
@@ -121,12 +140,14 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         outfitId: String,
         namespace: Namespace,
     ) {
+        assertIsBackgroundThread()
         database.memberQueries.deleteOutfit(outfitId, namespace.name)
     }
 
     override fun getCharacters(
         namespace: Namespace,
     ): List<Character> {
+        assertIsBackgroundThread()
         return database.characterQueries.getAllCharacters().executeAsList()
     }
 
@@ -134,19 +155,22 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         outfitId: String,
         namespace: Namespace,
     ): List<Member> {
-        return database.memberQueries.getAllMembers(outfitId, namespace.name).executeAsList()
+        assertIsBackgroundThread()
+        return database.memberQueries.getAllMembers(outfitId, namespace.toSqlType()).executeAsList()
     }
 
     override fun getOutfit(
         outfitId: String,
         namespace: Namespace,
     ): Outfit? {
-        return database.outfitQueries.getOutfit(outfitId, namespace.name).executeAsOneOrNull()
+        assertIsBackgroundThread()
+        return database.outfitQueries.getOutfit(outfitId, namespace).executeAsOneOrNull()
     }
 
     override fun getAllOutfits(
         namespace: Namespace,
     ): List<Outfit> {
+        assertIsBackgroundThread()
         return database.outfitQueries.getAllOutfits().executeAsList()
     }
 
@@ -162,10 +186,11 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         memberCount: Long?,
         timeCreated: Long?,
         worldId: Long?,
-        factionId: String?,
-        namespace: String,
+        factionId: Faction,
+        namespace: Namespace,
         lastUpdated: Long,
     ) {
+        assertIsBackgroundThread()
         database.outfitQueries.insertOutfit(
             outfitId,
             name,
@@ -184,10 +209,12 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         outfitId: String,
         namespace: Namespace,
     ) {
-        database.outfitQueries.deleteOutfit(outfitId, namespace.name)
+        assertIsBackgroundThread()
+        database.outfitQueries.deleteOutfit(outfitId, namespace)
     }
 
     override fun deleteAll() {
+        assertIsBackgroundThread()
         database.characterQueries.deleteAll()
         database.memberQueries.deleteAll()
         database.outfitQueries.deleteAll()

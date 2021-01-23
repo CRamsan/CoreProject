@@ -1,4 +1,5 @@
 import com.cramsan.ps2link.appcore.dbg.Faction;
+import com.cramsan.ps2link.appcore.dbg.Namespace;
 
 CREATE TABLE Character (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
@@ -10,11 +11,11 @@ CREATE TABLE Character (
     rank INTEGER,
     lastLogin INTEGER,
     minutesPlayed INTEGER,
-    factionId TEXT as Faction,
+    factionId TEXT as Faction NOT NULL,
     worldId TEXT,
     outfitName TEXT,
     worldName TEXT,
-    namespace TEXT NOT NULL,
+    namespace TEXT as Namespace NOT NULL,
     lastUpdated INTEGER NOT NULL
 );
 

@@ -26,7 +26,7 @@ fun CharacterProfile.toCharacter(namespace: Namespace): Character {
         worldId = world_id,
         outfitName = outfitName,
         worldName = null,
-        namespace = namespace.name,
+        namespace = namespace,
         lastUpdated = Clock.System.now().toEpochMilliseconds(),
     )
 }

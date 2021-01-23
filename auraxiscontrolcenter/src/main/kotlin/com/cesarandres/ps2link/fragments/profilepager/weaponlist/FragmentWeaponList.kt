@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments
+package com.cesarandres.ps2link.fragments.profilepager.weaponlist
 
 import android.os.AsyncTask
 import android.os.Bundle

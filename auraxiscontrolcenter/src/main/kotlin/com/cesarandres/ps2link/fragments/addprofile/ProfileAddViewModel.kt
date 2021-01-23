@@ -17,9 +17,12 @@ import com.cramsan.ps2link.db.Character
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.time.ExperimentalTime
+import kotlin.time.seconds
 
 class ProfileAddViewModel @ViewModelInject constructor(
     application: Application,
@@ -49,16 +52,16 @@ class ProfileAddViewModel @ViewModelInject constructor(
 
     private var searchJob: Job? = null
 
+    @OptIn(ExperimentalTime::class)
     override fun onSearchFieldUpdated(searchField: String) {
         searchJob?.cancel()
         searchJob = null
         _searchQuery.value = searchField
         searchJob = ioScope.launch {
-            if (searchField.length < 3) {
-                _profileList.value = emptyList()
-                return@launch
-            }
             loadingStarted()
+            // Add this delay to allow for fast typing to cancel previous requests without hitting the API.
+            // This means that there is a 1 extra second of UPL.
+            delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             val profiles = Namespace.values().map { namespace ->
                 val job = async {
@@ -78,7 +81,7 @@ class ProfileAddViewModel @ViewModelInject constructor(
         }
     }
 
-    override fun onProfileSelected(profileId: String) {
-        events.value = OpenProfile(profileId)
+    override fun onProfileSelected(profileId: String, namespace: Namespace) {
+        events.value = OpenProfile(profileId, namespace)
     }
 }

@@ -1,3 +1,6 @@
+import com.cramsan.ps2link.appcore.dbg.Faction;
+import com.cramsan.ps2link.appcore.dbg.Namespace;
+
 CREATE TABLE Outfit (
     outfitId TEXT NOT NULL PRIMARY KEY UNIQUE,
     name TEXT,
@@ -6,8 +9,8 @@ CREATE TABLE Outfit (
     memberCount INTEGER,
     timeCreated INTEGER,
     worldId INTEGER,
-    factionId TEXT,
-    namespace TEXT NOT NULL,
+    factionId TEXT as Faction NOT NULL,
+    namespace TEXT as Namespace NOT NULL,
     lastUpdated INTEGER NOT NULL
 );
 

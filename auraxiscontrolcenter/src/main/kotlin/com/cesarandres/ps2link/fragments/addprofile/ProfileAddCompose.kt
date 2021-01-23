@@ -14,6 +14,7 @@ import com.cesarandres.ps2link.toUIFaction
 import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.ProfileItem
 
 @Composable
@@ -23,24 +24,27 @@ fun ProfileAddCompose(
     isLoading: Boolean,
     eventHandler: ProfileAddEventHandler,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        TextField(
-            value = searchField,
-            onValueChange = { eventHandler.onSearchFieldUpdated(it) }
-        )
+    FrameBottom(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            TextField(
+                value = searchField,
+                onValueChange = { eventHandler.onSearchFieldUpdated(it) }
+            )
 
-        Box {
-            LazyColumn {
-                items(profileItems) {
-                    ProfileItem(
-                        label = it.name ?: "",
-                        level = it.rank?.toInt(),
-                        faction = it.factionId?.toUIFaction()
-                    )
+            Box {
+                LazyColumn {
+                    items(profileItems) {
+                        ProfileItem(
+                            label = it.name ?: "",
+                            level = it.rank?.toInt(),
+                            faction = it.factionId.toUIFaction(),
+                            onClick = { eventHandler.onProfileSelected(it.id, it.namespace) }
+                        )
+                    }
                 }
-            }
-            if (isLoading) {
-                CircularProgressIndicator()
+                if (isLoading) {
+                    CircularProgressIndicator()
+                }
             }
         }
     }
@@ -49,7 +53,7 @@ fun ProfileAddCompose(
 @MainThread
 interface ProfileAddEventHandler {
     fun onSearchFieldUpdated(searchField: String)
-    fun onProfileSelected(profileId: String)
+    fun onProfileSelected(profileId: String, namespace: Namespace)
 }
 
 @Preview
@@ -63,7 +67,7 @@ fun NormalButtonPreview() {
                 name = "Cramsan1",
                 rank = 80,
                 factionId = Faction.VS,
-                namespace = Namespace.PS2PS4US.name,
+                namespace = Namespace.PS2PS4US,
                 activeProfileId = 1,
                 currentPoints = 1,
                 lastLogin = 0,
@@ -79,7 +83,7 @@ fun NormalButtonPreview() {
         isLoading = true,
         eventHandler = object : ProfileAddEventHandler {
             override fun onSearchFieldUpdated(searchField: String) = Unit
-            override fun onProfileSelected(profileId: String) = Unit
+            override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         },
     )
 }

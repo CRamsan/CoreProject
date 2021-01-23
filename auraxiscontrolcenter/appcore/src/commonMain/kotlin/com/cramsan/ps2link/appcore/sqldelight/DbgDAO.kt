@@ -19,7 +19,7 @@ interface DbgDAO {
         rank: Long?,
         lastLogin: Long?,
         minutesPlayed: Long?,
-        factionId: Faction?,
+        factionId: Faction,
         worldId: String?,
         outfitName: String?,
         worldName: String?,
@@ -38,6 +38,11 @@ interface DbgDAO {
         characterId: String,
         namespace: Namespace,
     ): Character?
+
+    fun getCharacterAsFlow(
+        characterId: String,
+        namespace: Namespace,
+    ): Flow<Character?>
 
     fun insertMember(
         id: String,
@@ -87,8 +92,8 @@ interface DbgDAO {
         memberCount: Long?,
         timeCreated: Long?,
         worldId: Long?,
-        factionId: String?,
-        namespace: String,
+        factionId: Faction,
+        namespace: Namespace,
         lastUpdated: Long,
     )
 

@@ -50,7 +50,7 @@ class FragmentComposeProfileAdd : BaseComposePS2Fragment<ProfileAddViewModel>() 
         super.onViewModelEvent(event)
         when (event) {
             is OpenProfile -> {
-                val action = FragmentComposeProfileAddDirections.actionFragmentAddProfileToFragmentProfile(event.characterId)
+                val action = FragmentComposeProfileAddDirections.actionFragmentAddProfileToFragmentProfile(event.characterId, event.namespace)
                 findNavController().navigate(action)
             }
         }

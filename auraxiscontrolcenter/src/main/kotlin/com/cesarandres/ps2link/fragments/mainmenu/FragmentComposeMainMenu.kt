@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
@@ -34,8 +34,8 @@ class FragmentComposeMainMenu : BaseComposePS2Fragment<MainMenuViewModel>() {
 
     @Composable
     override fun CreateComposeContent() {
-        val preferredProfile = viewModel.preferredProfileName.observeAsState()
-        val preferredOutfit = viewModel.preferredOutfileName.observeAsState()
+        val preferredProfile = viewModel.preferredProfile.collectAsState(null)
+        val preferredOutfit = viewModel.preferredOutfit.collectAsState(null)
         MainMenuCompose(
             preferredProfile = preferredProfile.value,
             preferredOutfit = preferredOutfit.value,
@@ -53,15 +53,20 @@ class FragmentComposeMainMenu : BaseComposePS2Fragment<MainMenuViewModel>() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateUI()
+    }
+
     override fun onViewModelEvent(event: BaseEvent) {
         super.onViewModelEvent(event)
         when (event) {
             is OpenProfile -> {
-                val action = FragmentComposeMainMenuDirections.actionMainMenuFragmentToFragmentProfile(event.characterId)
+                val action = FragmentComposeMainMenuDirections.actionMainMenuFragmentToFragmentProfile(event.characterId, event.namespace)
                 findNavController().navigate(action)
             }
             is OpenOutfit -> {
-                val action = FragmentComposeMainMenuDirections.actionMainMenuFragmentToFragmentOutfitPager(event.outfitId)
+                val action = FragmentComposeMainMenuDirections.actionMainMenuFragmentToFragmentOutfitPager(event.outfitId, event.namespace)
                 findNavController().navigate(action)
             }
             is OpenProfileList -> {

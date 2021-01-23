@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenAbout
 import com.cesarandres.ps2link.fragments.OpenOutfit
@@ -17,10 +17,12 @@ import com.cesarandres.ps2link.fragments.OpenTwitter
 import com.cramsan.framework.assert.assertNotNull
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainMenuViewModel @ViewModelInject constructor(
     application: Application,
@@ -46,57 +48,46 @@ class MainMenuViewModel @ViewModelInject constructor(
     private val _preferredProfileId = MutableStateFlow<String?>(null)
     private val _preferredOutfitId = MutableStateFlow<String?>(null)
 
-    private val _preferredProfile = _preferredProfileId.map { profileId ->
+    val preferredProfile = _preferredProfileId.map { profileId ->
         profileId?.let {
             val namespace = ps2Settings.getPreferredNamespace()
-            val lang = ps2Settings.getPreferredLang()
 
             assertNotNull(namespace, logTag, "Namespace cannot be null")
-            assertNotNull(lang, logTag, "CensusLang cannot be null")
 
-            if (namespace != null && lang != null) {
-                dbgCensus.getProfile(it, namespace, lang)
+            if (namespace != null) {
+                dbgDAO.getCharacter(it, namespace)
             } else {
                 null
             }
         }
     }
-    private val _preferredOutfit = _preferredOutfitId.map { outfitId ->
+    val preferredOutfit = _preferredOutfitId.map { outfitId ->
         outfitId?.let {
             val namespace = ps2Settings.getPreferredNamespace()
-            val lang = ps2Settings.getPreferredLang()
 
             assertNotNull(namespace, logTag, "Namespace cannot be null")
-            assertNotNull(lang, logTag, "CensusLang cannot be null")
 
-            if (namespace != null && lang != null) {
-                dbgCensus.getOutfit(it, namespace, lang)
+            if (namespace != null) {
+                dbgDAO.getOutfit(it, namespace)
             } else {
                 null
             }
         }
     }
 
-    private val _preferredProfileName = _preferredProfile.map {
-        it?.name?.first
-    }
-    private val _preferredOutfitName = _preferredOutfit.map {
-        it?.name
-    }
-
-    val preferredProfileName = _preferredProfileName.asLiveData()
-    val preferredOutfileName = _preferredOutfitName.asLiveData()
-
-    override fun onPreferredProfileClick() {
-        _preferredProfileId.value?.let {
-            events.value = OpenProfile(it)
+    fun updateUI() {
+        viewModelScope.launch {
+            _preferredProfileId.value = ps2Settings.getPreferredCharacterId()
+            _preferredOutfitId.value = ps2Settings.getPreferredOutfitId()
         }
     }
 
-    override fun onPreferredOutfitClick() {
-        _preferredOutfitId.value?.let {
-            events.value = OpenOutfit(it)
-        }
+    override fun onPreferredProfileClick(characterId: String, namespace: Namespace) {
+        events.value = OpenProfile(characterId, namespace)
+    }
+
+    override fun onPreferredOutfitClick(outfitId: String, namespace: Namespace) {
+        events.value = OpenOutfit(outfitId, namespace)
     }
 
     override fun onProfileClick() {
