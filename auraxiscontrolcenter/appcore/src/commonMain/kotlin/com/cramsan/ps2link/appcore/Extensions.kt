@@ -3,6 +3,7 @@ package com.cramsan.ps2link.appcore
 import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.appcore.dbg.content.character.Stat
 import com.cramsan.ps2link.db.Character
 import kotlinx.datetime.Clock
 
@@ -29,4 +30,28 @@ fun CharacterProfile.toCharacter(namespace: Namespace): Character {
         namespace = namespace,
         lastUpdated = Clock.System.now().toEpochMilliseconds(),
     )
+}
+
+fun Stat.getToday(): Float {
+    return day?.d01?.toFloat() ?: 0f
+}
+
+fun Stat.setToday(value: Float) {
+    day?.d01 = value.toString()
+}
+
+fun Stat.getThisWeek(): Float {
+    return week?.w01?.toFloat() ?: 0f
+}
+
+fun Stat.setThisWeek(value: Float) {
+    week?.w01 = value.toString()
+}
+
+fun Stat.getThisMonth(): Float {
+    return month?.m01?.toFloat() ?: 0f
+}
+
+fun Stat.setThisMonth(value: Float) {
+    month?.m01 = value.toString()
 }

@@ -15,6 +15,7 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentProfilePagerBinding
 import com.cesarandres.ps2link.fragments.profilepager.friendlist.FragmentComposeFriendList
 import com.cesarandres.ps2link.fragments.profilepager.profile.FragmentComposeProfile
+import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,8 +59,8 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
             return when (ProfilePage.values()[position]) {
                 ProfilePage.PROFILE -> FragmentComposeProfile.instance(profileId, namespace)
                 ProfilePage.FRIENDS -> FragmentComposeFriendList.instance(profileId, namespace)
+                ProfilePage.STATS -> FragmentComposeStatList.instance(profileId, namespace)
                 /*
-                ProfilePage.STATS -> FragmentStatList()
                 ProfilePage.KILLBOARD -> FragmentKillList()
                 ProfilePage.WEAPONS -> FragmentWeaponList()
                  */
@@ -70,8 +71,8 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
     private enum class ProfilePage {
         PROFILE,
         FRIENDS,
-        /*
         STATS,
+        /*
         KILLBOARD,
         WEAPONS,
          */
