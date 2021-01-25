@@ -1,6 +1,6 @@
 # Project Repo
 
-This is the mono-repo that holds all the code for all my projects. The reason for going with a mono-repo was to make code-sharing easier and reducing maintenance cost.
+This is the mono-repo that holds all the code for several projects. The reason for going with a mono-repo was to make code-sharing easier and reducing maintenance cost.
 
 ## Current Projects
  - [Auraxis Control Center](auraxiscontrolcenter/)
