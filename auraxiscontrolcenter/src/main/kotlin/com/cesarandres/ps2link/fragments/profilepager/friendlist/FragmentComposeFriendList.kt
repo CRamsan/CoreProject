@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments.profilepager.profile
+package com.cesarandres.ps2link.fragments.profilepager.friendlist
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable
@@ -9,7 +9,6 @@ import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePagerDirections
 import com.cramsan.framework.core.BaseEvent
-import com.cramsan.ps2link.appcore.dbg.LoginStatus
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,10 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
+class FragmentComposeFriendList : BaseComposePS2Fragment<FriendListViewModel>() {
 
     override val logTag = "FragmentComposeProfile"
-    override val viewModel: ProfileViewModel by viewModels()
+    override val viewModel: FriendListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +32,10 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
 
     @Composable
     override fun CreateComposeContent() {
-        val profile = viewModel.profile.collectAsState(null)
+        val friendList = viewModel.friendList.collectAsState(emptyList())
         val isLoading = viewModel.isLoading.collectAsState()
-        ProfileCompose(
-            faction = profile.value?.factionId,
-            br = profile.value?.rank?.toInt(),
-            percentToNextBR = profile.value?.percentageToNextRank?.toInt(),
-            certs = profile.value?.currentPoints?.toInt(),
-            percentToNextCert = profile.value?.percentageToNextCert?.toInt(),
-            loginStatus = LoginStatus.UNKNOWN,
-            lastLogin = profile.value?.lastLogin?.toString(),
-            outfit = null,
-            server = profile.value?.worldName,
-            hoursPlayed = profile.value?.minutesPlayed?.toInt(),
+        FriendListCompose(
+            friendList = friendList.value,
             isLoading = isLoading.value,
             eventHandler = viewModel
         )
@@ -70,12 +60,12 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
         private const val CHARACTER_ID_KEY = "characterId"
         private const val NAMESPACE_KEY = "namespace"
 
-        fun instance(characterId: String, namespace: Namespace): FragmentComposeProfile {
+        fun instance(characterId: String, namespace: Namespace): FragmentComposeFriendList {
             val bundle = Bundle().apply {
                 putString(CHARACTER_ID_KEY, characterId)
                 putSerializable(NAMESPACE_KEY, namespace)
             }
-            return FragmentComposeProfile().apply {
+            return FragmentComposeFriendList().apply {
                 arguments = bundle
             }
         }

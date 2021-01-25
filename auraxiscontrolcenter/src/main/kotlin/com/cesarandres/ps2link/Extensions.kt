@@ -1,9 +1,9 @@
 package com.cesarandres.ps2link
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.LoginStatus
+import com.cramsan.ps2link.ui.OnlineStatus
 
 /**
  * @Author cramsan
@@ -21,8 +21,8 @@ fun Faction?.toUIFaction(): com.cramsan.ps2link.ui.Faction {
 }
 
 @Composable
-fun LoginStatus?.toStatusString() = when (this) {
-    LoginStatus.ONLINE -> stringResource(R.string.text_online)
-    LoginStatus.OFFLINE -> stringResource(R.string.text_offline)
-    else -> stringResource(R.string.text_unknown)
+fun LoginStatus?.toOnlineStatus() = when (this) {
+    LoginStatus.ONLINE -> OnlineStatus.ONLINE
+    LoginStatus.OFFLINE -> OnlineStatus.OFFLINE
+    else -> OnlineStatus.UNKNOWN
 }

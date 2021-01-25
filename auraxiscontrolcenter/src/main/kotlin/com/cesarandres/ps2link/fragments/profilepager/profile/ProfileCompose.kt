@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.toStatusString
+import com.cesarandres.ps2link.toOnlineStatus
 import com.cesarandres.ps2link.toUIFaction
 import com.cramsan.ps2link.appcore.dbg.Faction
 import com.cramsan.ps2link.appcore.dbg.LoginStatus
@@ -21,6 +21,7 @@ import com.cramsan.ps2link.db.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.toStringResource
 import com.cramsan.ps2link.ui.widgets.BR
 import com.cramsan.ps2link.ui.widgets.BRBar
 import com.cramsan.ps2link.ui.widgets.FactionIcon
@@ -66,7 +67,7 @@ fun ProfileCompose(
                         FrameSlim {
                             Column {
                                 Text(text = stringResource(R.string.text_status))
-                                Text(text = loginStatus.toStatusString())
+                                Text(text = loginStatus.toOnlineStatus().toStringResource())
                             }
                         }
 

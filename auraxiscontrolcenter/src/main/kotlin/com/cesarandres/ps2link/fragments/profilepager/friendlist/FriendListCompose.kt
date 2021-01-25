@@ -1,0 +1,56 @@
+package com.cesarandres.ps2link.fragments.profilepager.friendlist
+
+import androidx.annotation.MainThread
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.cesarandres.ps2link.toOnlineStatus
+import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.models.FriendCharacter
+import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.items.FriendItem
+
+@Composable
+fun FriendListCompose(
+    friendList: List<FriendCharacter>,
+    isLoading: Boolean,
+    eventHandler: FriendListEventHandler,
+) {
+    FrameBottom(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            LazyColumn {
+                items(friendList) {
+                    FriendItem(
+                        label = it.characterName ?: "",
+                        onlineStatus = it.loginStatus.toOnlineStatus(),
+                        onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
+                    )
+                }
+            }
+            if (isLoading) {
+                CircularProgressIndicator()
+            }
+        }
+    }
+}
+
+@MainThread
+interface FriendListEventHandler {
+    fun onProfileSelected(profileId: String, namespace: Namespace)
+}
+
+@Preview
+@Composable
+fun Preview() {
+    FriendListCompose(
+        friendList = emptyList(),
+        isLoading = true,
+        eventHandler = object : FriendListEventHandler {
+            override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
+        },
+    )
+}
