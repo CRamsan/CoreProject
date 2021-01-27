@@ -1,6 +1,8 @@
 package com.cesarandres.ps2link
 
 import android.content.Context
+import com.cramsan.framework.assert.AssertUtil
+import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtilImpl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.DispatcherProviderImpl
@@ -57,20 +59,20 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object PS2ApplicationModule {
 
-    /*
-    WTF: I don't know why this is not working
     @Provides
-    fun provideAssertUtilInterface(
+    @Singleton
+    fun provideAssertUtil(
         eventLoggerInterface: EventLoggerInterface,
-        haltUtilInterface: HaltUtilInterface
+        haltUtilInterface: HaltUtil,
     ): AssertUtilInterface {
-        return AssertUtil(
+        // TODO: This is not working. I assume this is a Hilt bug
+        val impl = AssertUtilImpl(
             BuildConfig.DEBUG,
             eventLoggerInterface,
             haltUtilInterface
         )
+        return AssertUtil.instance(impl)
     }
-     */
 
     @Provides
     @Singleton

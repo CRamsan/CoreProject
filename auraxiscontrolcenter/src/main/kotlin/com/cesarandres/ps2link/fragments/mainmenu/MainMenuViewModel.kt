@@ -21,6 +21,7 @@ import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -60,7 +61,7 @@ class MainMenuViewModel @ViewModelInject constructor(
                 null
             }
         }
-    }
+    }.flowOn(dispatcherProvider.ioDispatcher())
     val preferredOutfit = _preferredOutfitId.map { outfitId ->
         outfitId?.let {
             val namespace = ps2Settings.getPreferredNamespace()
@@ -73,7 +74,7 @@ class MainMenuViewModel @ViewModelInject constructor(
                 null
             }
         }
-    }
+    }.flowOn(dispatcherProvider.ioDispatcher())
 
     fun updateUI() {
         viewModelScope.launch {

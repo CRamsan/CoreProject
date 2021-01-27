@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
@@ -27,8 +28,9 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
 
     @Composable
     override fun CreateComposeContent() {
+        val profileList = viewModel.profileList.observeAsState(emptyList())
         ProfileListCompose(
-            profileItems = emptyList(),
+            profileItems = profileList.value,
             eventHandler = viewModel,
         )
     }

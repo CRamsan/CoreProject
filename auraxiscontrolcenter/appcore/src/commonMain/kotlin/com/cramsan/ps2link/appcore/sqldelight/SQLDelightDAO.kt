@@ -42,6 +42,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         outfitName: String?,
         worldName: String?,
         namespace: Namespace,
+        cached: Boolean,
         lastUpdated: Long,
     ) {
         assertIsBackgroundThread()
@@ -60,8 +61,14 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
             outfitName,
             worldName,
             namespace,
+            cached,
             lastUpdated,
         )
+    }
+
+    override fun insertCharacter(character: Character) {
+        assertIsBackgroundThread()
+        return database.characterQueries.insertCharacterInstance(character)
     }
 
     override fun getAllCharactersAsFlow(): Flow<List<Character>> {

@@ -36,7 +36,7 @@ interface DBGServiceClient {
     ): List<CharacterFriend>?
 
     suspend fun getKillList(
-        character_id: String?,
+        character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
     ): List<CharacterEvent>?

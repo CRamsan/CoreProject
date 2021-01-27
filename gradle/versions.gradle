@@ -10,6 +10,7 @@ def versions_tools = [
 ]
 
 def versions_packages = [
+    AccompanistCoil : "0.4.2",
     AndroidGradlePlugin : '7.0.0-alpha02',
     AndroidMaterial : "1.2.1",
     AndroidxActivityKtx : "1.1.0",
@@ -29,6 +30,7 @@ def versions_packages = [
     AppCenterSdk : "4.1.0",
     AzureFunctionGradlePlugin : "1.5.0",
     AzureFunctionsJavaLibrary : "1.4.0",
+    Coil : "1.1.1",
     ConstraintLayout : "2.0.4",
     Coroutines : "1.4.2",
     Espresso : "3.3.0",
@@ -73,6 +75,7 @@ def versions_packages = [
 ]
 
 def packages = [
+        AccompanistCoil : "dev.chrisbanes.accompanist:accompanist-coil:$versions_packages.AccompanistCoil",
         AndroidBuildGradle : "com.android.tools.build:gradle:$versions_packages.AndroidGradlePlugin",
         AndroidMaterial : "com.google.android.material:material:$versions_packages.AndroidMaterial",
         AndroidxActivityKtx : "androidx.activity:activity-ktx:$versions_packages.AndroidxActivityKtx",
@@ -106,6 +109,7 @@ def packages = [
         AppCenterSdkCrashes : "com.microsoft.appcenter:appcenter-crashes:$versions_packages.AppCenterSdk",
         AzureFunctionsGradle : "com.microsoft.azure:azure-functions-gradle-plugin:$versions_packages.AzureFunctionGradlePlugin",
         AzureFunctionsJavaLibrary : "com.microsoft.azure.functions:azure-functions-java-library:$versions_packages.AzureFunctionsJavaLibrary",
+        Coil : "io.coil-kt:coil:$versions_packages.Coil",
         ConstraintLayout : "androidx.constraintlayout:constraintlayout:$versions_packages.ConstraintLayout",
         CoroutinesSwing : "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$versions_packages.Coroutines",
         CoroutinesAndroid : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions_packages.Coroutines",

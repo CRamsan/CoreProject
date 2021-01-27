@@ -78,6 +78,7 @@ fun NormalButtonPreview() {
                 percentageToNextRank = 0.0,
                 worldId = "",
                 worldName = "",
+                cached = true,
             )
         ),
         isLoading = true,

@@ -16,6 +16,7 @@ CREATE TABLE Character (
     outfitName TEXT,
     worldName TEXT,
     namespace TEXT as Namespace NOT NULL,
+    cached INTEGER as Boolean NOT NULL,
     lastUpdated INTEGER NOT NULL
 );
 
@@ -23,7 +24,7 @@ getCharacter:
 SELECT * FROM Character WHERE id == ? AND namespace == ?;
 
 getAllCharacters:
-SELECT * FROM Character;
+SELECT * FROM Character WHERE cached == 1;
 
 insertCharacter:
 INSERT OR REPLACE INTO Character(
@@ -41,8 +42,29 @@ INSERT OR REPLACE INTO Character(
     outfitName,
     worldName,
     namespace,
+    cached,
     lastUpdated
- ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+ ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+insertCharacterInstance:
+INSERT OR REPLACE INTO Character(
+    id,
+    name,
+    activeProfileId,
+    currentPoints,
+    percentageToNextCert,
+    percentageToNextRank,
+    rank,
+    lastLogin,
+    minutesPlayed,
+    factionId,
+    worldId,
+    outfitName,
+    worldName,
+    namespace,
+    cached,
+    lastUpdated
+ ) VALUES ?;
 
 deleteCharacter:
 DELETE FROM Character WHERE id == ? AND namespace == ?;

@@ -24,8 +24,11 @@ interface DbgDAO {
         outfitName: String?,
         worldName: String?,
         namespace: Namespace,
+        cached: Boolean,
         lastUpdated: Long,
     )
+
+    fun insertCharacter(character: Character)
 
     fun getAllCharactersAsFlow(): Flow<List<Character>>
 

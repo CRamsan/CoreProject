@@ -1,24 +1,21 @@
-package com.cesarandres.ps2link.fragments.profilepager.profile
+package com.cesarandres.ps2link.fragments.profilepager
 
 import android.app.Application
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
-import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.CensusLang
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
-import com.cramsan.ps2link.appcore.toCharacter
 import com.cramsan.ps2link.db.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ProfileViewModel @ViewModelInject constructor(
+class ProfilePagerViewModel @ViewModelInject constructor(
     application: Application,
     dbgServiceClient: DBGServiceClient,
     dbgDAO: DbgDAO,
@@ -26,20 +23,21 @@ class ProfileViewModel @ViewModelInject constructor(
     dispatcherProvider: DispatcherProvider,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
-        application,
-        dbgServiceClient,
-        dbgDAO,
-        pS2Settings,
-        dispatcherProvider,
-        savedStateHandle
-    ),
-    ProfileEventHandler {
+    application,
+    dbgServiceClient,
+    dbgDAO,
+    pS2Settings,
+    dispatcherProvider,
+    savedStateHandle
+) {
 
     override val logTag: String
-        get() = "ProfileViewModel"
+        get() = "ProfilePagerViewModel"
 
     // State
     lateinit var profile: Flow<Character?>
+    private lateinit var characterId: String
+    private lateinit var namespace: Namespace
 
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
@@ -47,27 +45,44 @@ class ProfileViewModel @ViewModelInject constructor(
             // TODO: Provide some event that can be handled by the UI
             return
         }
+        this.characterId = characterId
+        this.namespace = namespace
         profile = dbgDAO.getCharacterAsFlow(characterId, namespace)
+    }
+
+    fun addCharacter() {
         ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-
-            val isCached = dbgDAO.getCharacter(characterId, namespace)?.cached ?: false
-
-            val profileResponse = dbgCensus.getProfile(characterId, namespace, lang)
-            if (profileResponse == null) {
+            val character = dbgDAO.getCharacter(characterId, namespace)
+            if (character == null) {
                 // TODO : Report error
                 return@launch
             }
-            profileResponse.let {
-                dbgDAO.insertCharacter(
-                    profileResponse.toCharacter(namespace)
-                        .copy(cached = isCached)
-                )
-            }
+            dbgDAO.insertCharacter(character.copy(cached = true))
         }
     }
 
-    override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
-        events.value = OpenOutfit(outfitId, namespace)
+    fun removeCharacter() {
+        ioScope.launch {
+            val character = dbgDAO.getCharacter(characterId, namespace)
+            if (character == null) {
+                // TODO : Report error
+                return@launch
+            }
+            dbgDAO.insertCharacter(character.copy(cached = false))
+        }
+    }
+
+    fun pinCharacter() {
+        ioScope.launch {
+            ps2Settings.updatePreferredNamespace(namespace)
+            ps2Settings.updatePreferredCharacterId(characterId)
+        }
+    }
+
+    fun unpinCharacter() {
+        ioScope.launch {
+            ps2Settings.updatePreferredNamespace(null)
+            ps2Settings.updatePreferredCharacterId(null)
+        }
     }
 }

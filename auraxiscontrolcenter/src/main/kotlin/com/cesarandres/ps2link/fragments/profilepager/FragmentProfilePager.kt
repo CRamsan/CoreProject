@@ -2,6 +2,9 @@ package com.cesarandres.ps2link.fragments.profilepager
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -14,9 +17,9 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentProfilePagerBinding
 import com.cesarandres.ps2link.fragments.profilepager.friendlist.FragmentComposeFriendList
+import com.cesarandres.ps2link.fragments.profilepager.killlist.FragmentComposeKillList
 import com.cesarandres.ps2link.fragments.profilepager.profile.FragmentComposeProfile
 import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
-import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.ps2link.appcore.dbg.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,9 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * This fragment holds a view pager for all the profile related fragments
  */
 @AndroidEntryPoint
-class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePagerBinding>() {
+class FragmentProfilePager : BasePS2Fragment<ProfilePagerViewModel, FragmentProfilePagerBinding>() {
 
-    override val viewModel: NoopViewModel by viewModels()
+    override val viewModel: ProfilePagerViewModel by viewModels()
     override val logTag = "FragmentProfilePager"
     override val contentViewLayout = R.layout.fragment_profile_pager
     val args: FragmentProfilePagerArgs by navArgs()
@@ -41,6 +44,7 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
         savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+        setHasOptionsMenu(true)
 
         viewPager = dataBinding.profilePager
         profileId = args.characterId
@@ -49,7 +53,34 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
+        viewModel.setUp(profileId, namespace)
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.profile_menu, menu)
+        return
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_add -> {
+                viewModel.addCharacter()
+            }
+            R.id.action_remove -> {
+                viewModel.removeCharacter()
+            }
+            R.id.action_star -> {
+                viewModel.pinCharacter()
+            }
+            R.id.action_unstar -> {
+                viewModel.unpinCharacter()
+            }
+            R.id.action_update -> {
+            }
+        }
+        return true
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
@@ -60,8 +91,8 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
                 ProfilePage.PROFILE -> FragmentComposeProfile.instance(profileId, namespace)
                 ProfilePage.FRIENDS -> FragmentComposeFriendList.instance(profileId, namespace)
                 ProfilePage.STATS -> FragmentComposeStatList.instance(profileId, namespace)
+                ProfilePage.KILLBOARD -> FragmentComposeKillList.instance(profileId, namespace)
                 /*
-                ProfilePage.KILLBOARD -> FragmentKillList()
                 ProfilePage.WEAPONS -> FragmentWeaponList()
                  */
             }
@@ -72,8 +103,8 @@ class FragmentProfilePager : BasePS2Fragment<NoopViewModel, FragmentProfilePager
         PROFILE,
         FRIENDS,
         STATS,
-        /*
         KILLBOARD,
+        /*
         WEAPONS,
          */
     }

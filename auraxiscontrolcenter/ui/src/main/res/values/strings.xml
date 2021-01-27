@@ -76,7 +76,10 @@
     <string name="text_faction_icon">Faction Icon</string>
     <string name="text_certs">Certifications</string>
     <string name="text_update">Update</string>
-    <string name="text_add">Add</string>
+    <string name="text_track_profile">Add</string>
+    <string name="text_untrack_profile">Remove</string>
+    <string name="text_star_profile">Set as preferred</string>
+    <string name="text_unstar_profile">Remove as preferred</string>
     <string name="text_search">Search</string>
     <string name="text_killer_faction">Killer\'s Faction</string>
     <string name="text_class">Class</string>

@@ -23,6 +23,7 @@ data class CharacterProfile(
     var stats: Stats? = null,
     var server: Server? = null,
     var online_status: Int = 0,
+    // TODO: Deprecate this field
     var isCached: Boolean = false,
     var character_id_join_character: CharacterProfile? = null,
     // var namespace: Namespace,

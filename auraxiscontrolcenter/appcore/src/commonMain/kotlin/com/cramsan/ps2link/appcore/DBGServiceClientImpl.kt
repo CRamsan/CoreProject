@@ -136,7 +136,7 @@ class DBGServiceClientImpl(
     }
 
     override suspend fun getKillList(
-        character_id: String?,
+        character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
     ): List<CharacterEvent>? {
@@ -147,7 +147,7 @@ class DBGServiceClientImpl(
             QueryString.generateQeuryString().AddComparison(
                 "character_id",
                 QueryString.SearchModifier.EQUALS,
-                character_id!!
+                character_id
             )
                 .AddCommand(
                     QueryString.QueryCommand.RESOLVE,

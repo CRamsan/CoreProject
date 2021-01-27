@@ -31,14 +31,14 @@ class DBGCensus {
     fun generateGameDataRequest(
         verb: Verb,
         collection: PS2Collection,
-        identifier: String? = "",
+        identifier: String? = null,
         query: QueryString? = QueryString(),
         namespace: Namespace,
         currentLang: CensusLang,
     ): Url {
         return Url(
             ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/" +
-                identifier + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
+                (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
         )
     }
 

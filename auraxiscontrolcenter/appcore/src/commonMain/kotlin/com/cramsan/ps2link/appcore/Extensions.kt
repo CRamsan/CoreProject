@@ -28,6 +28,7 @@ fun CharacterProfile.toCharacter(namespace: Namespace): Character {
         outfitName = outfitName,
         worldName = null,
         namespace = namespace,
+        cached = false,
         lastUpdated = Clock.System.now().toEpochMilliseconds(),
     )
 }

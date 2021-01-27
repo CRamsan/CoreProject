@@ -61,7 +61,7 @@ class FragmentKillList : BasePS2Fragment<NoopViewModel, FragmentKillListBinding>
     fun downloadKillList(character_id: String?) {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val eventList = withContext(Dispatchers.IO) { dbgCensus.getKillList(character_id, namespace!!, CensusLang.EN) }
+            val eventList = withContext(Dispatchers.IO) { dbgCensus.getKillList(character_id!!, namespace!!, CensusLang.EN) }
 
             if (eventList == null) {
                 return@launch

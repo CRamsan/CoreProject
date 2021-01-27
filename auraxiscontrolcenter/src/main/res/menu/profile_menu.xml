@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add"
+        android:title="@string/text_track_profile"
+        android:icon="@drawable/icon_user_add"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_remove"
+        android:title="@string/text_untrack_profile"
+        android:icon="@drawable/icon_delete"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_star"
+        android:title="@string/text_star_profile"
+        android:icon="@drawable/icon_star_unselected"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_unstar"
+        android:title="@string/text_unstar_profile"
+        android:icon="@drawable/icon_star_selected"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_update"
+        android:title="@string/text_update"
+        android:icon="@drawable/icon_refresh"
+        app:showAsAction="ifRoom" />
+</menu>
