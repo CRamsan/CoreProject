@@ -10,8 +10,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
-import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.network.models.content.CharacterProfile
+import com.cramsan.ps2link.network.models.content.Faction
 import java.util.ArrayList
 
 class ProfileItemAdapter(

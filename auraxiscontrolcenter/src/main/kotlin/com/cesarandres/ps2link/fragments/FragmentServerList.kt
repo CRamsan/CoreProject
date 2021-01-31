@@ -12,11 +12,10 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentServerListBinding
 import com.cesarandres.ps2link.dbg.view.ServerItemAdapter
-import com.cesarandres.ps2link.module.ButtonSelectSource
-import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,10 +23,9 @@ import kotlinx.coroutines.withContext
 /**
  * This fragment will display the servers and theirs status
  */
-class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBinding>(), SourceSelectionChangedListener {
+class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBinding>() {
 
     override val viewModel: NoopViewModel by viewModels()
-    private var selectionButton: ButtonSelectSource? = null
 
     /*
      * (non-Javadoc)
@@ -42,7 +40,6 @@ class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBind
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        selectionButton!!.listener = this
         return view
     }
 
@@ -73,9 +70,9 @@ class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBind
     fun downloadServers() {
 
         lifecycleScope.launch {
-            val serverList = withContext(Dispatchers.IO) { dbgCensus.getServerList(selectionButton!!.namespace, CensusLang.EN) }
+            val serverList = withContext(Dispatchers.IO) { dbgCensus.getServerList(Namespace.UNDETERMINED.toNetworkModel(), CensusLang.EN) }
             val listRoot = requireActivity().findViewById<View>(R.id.listViewServers) as ListView
-            listRoot.adapter = ServerItemAdapter(requireActivity(), serverList!!, dbgCensus, selectionButton!!.namespace)
+            listRoot.adapter = ServerItemAdapter(requireActivity(), serverList!!, dbgCensus, Namespace.UNDETERMINED)
             for (world in serverList) {
                 downloadServerAlert(world.world_id)
             }
@@ -106,7 +103,7 @@ class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBind
     private fun downloadServerAlert(serverId: String?) {
 
         lifecycleScope.launch {
-            val serverMetadata = withContext(Dispatchers.IO) { dbgCensus.getServerMetadata(serverId!!, selectionButton!!.namespace, CensusLang.EN) }
+            val serverMetadata = withContext(Dispatchers.IO) { dbgCensus.getServerMetadata(serverId!!, com.cramsan.ps2link.network.models.Namespace.UNDETERMINED, CensusLang.EN) }
 
             val listRoot = requireActivity().findViewById<View>(R.id.listViewServers) as ListView
             val events = serverMetadata
@@ -116,7 +113,7 @@ class FragmentServerList : BasePS2Fragment<NoopViewModel, FragmentServerListBind
         }
     }
 
-    override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
+    fun onSourceSelectionChanged(selectedNamespace: Namespace) {
         downloadServers()
     }
 

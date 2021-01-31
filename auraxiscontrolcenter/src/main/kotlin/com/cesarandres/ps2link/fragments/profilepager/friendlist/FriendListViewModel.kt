@@ -8,28 +8,24 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.LoginStatus
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.models.FriendCharacter
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
-import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.FriendCharacter
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FriendListViewModel @ViewModelInject constructor(
     application: Application,
-    dbgServiceClient: DBGServiceClient,
-    dbgDAO: DbgDAO,
+    pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
-        dbgServiceClient,
-        dbgDAO,
+        pS2LinkRepository,
         pS2Settings,
         dispatcherProvider,
         savedStateHandle
@@ -51,21 +47,8 @@ class FriendListViewModel @ViewModelInject constructor(
         }
 
         ioScope.launch {
-            val friendListResponse = dbgCensus.getFriendList(
-                character_id = characterId,
-                namespace = namespace,
-                currentLang = ps2Settings.getCurrentLang() ?: CensusLang.EN,
-            )
-            _friendList.value = friendListResponse?.map { friend ->
-                friend.character_id?.let { id ->
-                    FriendCharacter(
-                        id,
-                        friend.name?.first,
-                        namespace,
-                        LoginStatus.fromString(friend.online.toString())
-                    )
-                }
-            }?.filterNotNull() ?: emptyList()
+            val currentLang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            _friendList.value = pS2LinkRepository.getFriendList(characterId, namespace, currentLang)
         }
     }
 

@@ -9,22 +9,19 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cesarandres.ps2link.fragments.OpenProfileSearch
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
-import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.Namespace
 
 class ProfileListViewModel @ViewModelInject constructor(
     application: Application,
-    dbgServiceClient: DBGServiceClient,
-    dbgDAO: DbgDAO,
+    pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
-        dbgServiceClient,
-        dbgDAO,
+        pS2LinkRepository,
         pS2Settings,
         dispatcherProvider,
         savedStateHandle
@@ -35,7 +32,7 @@ class ProfileListViewModel @ViewModelInject constructor(
         get() = "ProfileListViewModel"
 
     // State
-    private val _profileList = dbgDAO.getAllCharactersAsFlow()
+    private val _profileList = pS2LinkRepository.getAllCharactersAsFlow()
     val profileList = _profileList.asLiveData()
 
     override fun onSearchProfileClick() {

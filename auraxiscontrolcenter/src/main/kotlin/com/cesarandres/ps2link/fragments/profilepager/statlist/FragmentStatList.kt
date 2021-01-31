@@ -10,8 +10,9 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentStatListBinding
 import com.cesarandres.ps2link.dbg.view.StatItemAdapter
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,7 +55,7 @@ class FragmentStatList : BasePS2Fragment<NoopViewModel, FragmentStatListBinding>
     fun downloadStatList(character_id: String?) {
 
         lifecycleScope.launch {
-            val statList = withContext(Dispatchers.IO) { dbgCensus.getStatList(character_id!!, namespace!!, CensusLang.EN) }
+            val statList = withContext(Dispatchers.IO) { dbgCensus.getStatList(character_id!!, namespace!!.toNetworkModel(), CensusLang.EN) }
             val listRoot = requireActivity().findViewById<View>(R.id.listViewStatList) as ListView
             listRoot.adapter = StatItemAdapter(
                 requireActivity(),

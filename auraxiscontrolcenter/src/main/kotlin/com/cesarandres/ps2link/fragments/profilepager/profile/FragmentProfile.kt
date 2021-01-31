@@ -18,10 +18,12 @@ import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.metrics.logMetric
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
-import com.cramsan.ps2link.appcore.dbg.content.Faction
+import com.cramsan.ps2link.appcore.localizedName
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.network.models.content.CharacterProfile
+import com.cramsan.ps2link.network.models.content.Faction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -179,7 +181,7 @@ class FragmentProfile : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() 
         this
 
             .lifecycleScope.launch {
-                val profile = withContext(Dispatchers.IO) { dbgCensus.getProfile(character_id!!, namespace!!, CensusLang.EN) }
+                val profile = withContext(Dispatchers.IO) { dbgCensus.getProfile(character_id!!, namespace!!.toNetworkModel(), CensusLang.EN) }
 
                 logI(TAG, "Profile Downloaded")
                 // profile!!.namespace = namespace!!

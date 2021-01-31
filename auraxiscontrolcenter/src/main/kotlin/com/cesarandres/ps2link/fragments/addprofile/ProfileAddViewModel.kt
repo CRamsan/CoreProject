@@ -7,16 +7,12 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
-import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
-import com.cramsan.ps2link.appcore.toCharacter
-import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,15 +22,13 @@ import kotlin.time.seconds
 
 class ProfileAddViewModel @ViewModelInject constructor(
     application: Application,
-    dbgServiceClient: DBGServiceClient,
-    dbgDAO: DbgDAO,
+    pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
-        dbgServiceClient,
-        dbgDAO,
+        pS2LinkRepository,
         pS2Settings,
         dispatcherProvider,
         savedStateHandle
@@ -63,19 +57,7 @@ class ProfileAddViewModel @ViewModelInject constructor(
             // This means that there is a 1 extra second of UPL.
             delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val profiles = Namespace.values().map { namespace ->
-                val job = async {
-                    val endpointProfileList = dbgCensus.getProfiles(
-                        searchField = searchField,
-                        namespace = namespace,
-                        currentLang = lang
-                    )
-                    endpointProfileList?.map {
-                        it.toCharacter(namespace)
-                    }
-                }
-                job
-            }.awaitAll().filterNotNull().flatten().sortedBy { it.name }
+            val profiles = pS2LinkRepository.searchForCharacter(searchField, lang)
             _profileList.value = profiles
             loadingCompleted()
         }

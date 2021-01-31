@@ -10,7 +10,7 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.logMetric
 import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.ps2link.appcore.dbg.CensusLang
+import com.cramsan.ps2link.core.models.CensusLang
 import com.microsoft.appcenter.AppCenter
 import dagger.hilt.android.HiltAndroidApp
 import java.util.Locale

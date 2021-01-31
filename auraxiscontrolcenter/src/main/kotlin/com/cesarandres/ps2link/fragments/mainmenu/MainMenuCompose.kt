@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.db.Character
-import com.cramsan.ps2link.db.Outfit
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.MainMenuButton
 
@@ -38,14 +38,14 @@ fun MainMenuCompose(
                     buttonModifier,
                     label = it.name ?: "",
                     star = true
-                ) { eventHandler.onPreferredProfileClick(it.id, it.namespace) }
+                ) { eventHandler.onPreferredProfileClick(it.characterId, it.namespace) }
             }
             preferredOutfit?.let {
                 MainMenuButton(
                     buttonModifier,
                     label = it.name ?: "",
                     star = true
-                ) { eventHandler.onPreferredOutfitClick(it.outfitId, it.namespace) }
+                ) { eventHandler.onPreferredOutfitClick(it.id, it.namespace) }
             }
             MainMenuButton(
                 buttonModifier,

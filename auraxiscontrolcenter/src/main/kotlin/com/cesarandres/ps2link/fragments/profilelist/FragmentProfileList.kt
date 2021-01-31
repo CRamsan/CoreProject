@@ -11,7 +11,7 @@ import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentProfileListBinding
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.content.CharacterProfile
+import com.cramsan.ps2link.network.models.content.CharacterProfile
 
 /**
  * Fragment that reads the profiles from the database that have been set as not

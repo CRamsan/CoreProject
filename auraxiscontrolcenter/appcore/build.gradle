@@ -8,7 +8,6 @@ buildscript {
         classpath packages.AndroidBuildGradle
         classpath packages.KotlinGradle
         classpath packages.KotlinxSerializationGradle
-        classpath packages.SqlDelightGradle
     }
 }
 
@@ -22,13 +21,6 @@ ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
 apply from: "$rootDir/gradle/mpp-lib.gradle"
-apply plugin: "com.squareup.sqldelight"
-
-sqldelight {
-    PS2LinkDB {
-        packageName = "com.cramsan.ps2link.db"
-    }
-}
 
 dependencies {
     implementation packages.SqlDelightAndroidDriver
@@ -60,6 +52,9 @@ kotlin {
 }
 
 registerDependency(":framework")
+registerDependency(":auraxiscontrolcenter:db-models")
+registerDependency(":auraxiscontrolcenter:network-models")
+registerDependency(":auraxiscontrolcenter:core-models")
 registerDependency(":auraxiscontrolcenter:db-models")
 registerDependency(":auraxiscontrolcenter:network-models")
 registerDependency(":auraxiscontrolcenter:core-models")

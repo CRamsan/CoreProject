@@ -11,8 +11,9 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentMemberListBinding
 import com.cesarandres.ps2link.dbg.view.MemberItemAdapter
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -85,7 +86,7 @@ class FragmentMembersList : BasePS2Fragment<NoopViewModel, FragmentMemberListBin
     fun downloadOutfitMembers() {
 
         lifecycleScope.launch {
-            val membersList = withContext(Dispatchers.IO) { dbgCensus.getMemberList(outfitId, namespace!!, CensusLang.EN) }
+            val membersList = withContext(Dispatchers.IO) { dbgCensus.getMemberList(outfitId, namespace!!.toNetworkModel(), CensusLang.EN) }
             val list = membersList
             // Check this warning
         }

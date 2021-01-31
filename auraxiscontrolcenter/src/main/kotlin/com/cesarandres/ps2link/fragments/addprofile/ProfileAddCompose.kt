@@ -10,12 +10,15 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cesarandres.ps2link.toUIFaction
-import com.cramsan.ps2link.appcore.dbg.Faction
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.ProfileItem
+import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.days
 
 @Composable
 fun ProfileAddCompose(
@@ -36,9 +39,9 @@ fun ProfileAddCompose(
                     items(profileItems) {
                         ProfileItem(
                             label = it.name ?: "",
-                            level = it.rank?.toInt(),
-                            faction = it.factionId.toUIFaction(),
-                            onClick = { eventHandler.onProfileSelected(it.id, it.namespace) }
+                            level = it.battleRank?.toInt(),
+                            faction = it.faction,
+                            onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
                         )
                     }
                 }
@@ -56,6 +59,7 @@ interface ProfileAddEventHandler {
     fun onProfileSelected(profileId: String, namespace: Namespace)
 }
 
+@OptIn(ExperimentalTime::class)
 @Preview
 @Composable
 fun NormalButtonPreview() {
@@ -63,21 +67,19 @@ fun NormalButtonPreview() {
         searchField = "Cramsan",
         profileItems = listOf(
             Character(
-                id = "",
+                characterId = "",
                 name = "Cramsan1",
-                rank = 80,
-                factionId = Faction.VS,
+                battleRank = 80,
+                faction = Faction.VS,
                 namespace = Namespace.PS2PS4US,
                 activeProfileId = 1,
-                currentPoints = 1,
-                lastLogin = 0,
-                lastUpdated = 0,
-                minutesPlayed = 0,
-                outfitName = null,
+                certs = 1,
+                lastLogin = Instant.DISTANT_PAST,
+                timePlayed = 10.days,
+                outfit = null,
                 percentageToNextCert = 0.0,
-                percentageToNextRank = 0.0,
-                worldId = "",
-                worldName = "",
+                percentageToNextBattleRank = 0.0,
+                server = Server("", "Ceres"),
                 cached = true,
             )
         ),

@@ -14,12 +14,10 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentAddOutfitBinding
 import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
-import com.cesarandres.ps2link.module.ButtonSelectSource
-import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.metrics.logMetric
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,10 +29,10 @@ import java.util.Locale
  * characters long. When an outfit is found, it's content is cached into the
  * database.
  */
-class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBinding>(), SourceSelectionChangedListener {
+class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBinding>() {
 
     override val viewModel: NoopViewModel by viewModels()
-    private lateinit var selectionButton: ButtonSelectSource
+    // private lateinit var selectionButton: ButtonSelectSource
     private var lastUsedNamespace: Namespace? = null
 
     /*
@@ -71,7 +69,7 @@ class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBindin
      * information.
      */
     fun downloadOutfits() {
-        this.lastUsedNamespace = selectionButton!!.namespace
+        this.lastUsedNamespace = Namespace.UNDETERMINED // Namespace.UNDETERMINED.toNetworkModel()
 
         val searchField = requireActivity().findViewById<View>(R.id.fieldSearchOutfit) as EditText
         val searchTagField = requireActivity().findViewById<View>(R.id.fieldSearchTag) as EditText
@@ -96,7 +94,7 @@ class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBindin
         listRoot.adapter = LoadingItemAdapter(requireActivity())
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val outfitList = withContext(Dispatchers.IO) { dbgCensus.getOutfitList(outfitTag, outfitName, selectionButton.namespace!!, CensusLang.EN) }
+            val outfitList = withContext(Dispatchers.IO) { dbgCensus.getOutfitList(outfitTag, outfitName, com.cramsan.ps2link.network.models.Namespace.UNDETERMINED, CensusLang.EN) }
 
             val listRoot = requireActivity().findViewById<View>(R.id.listFoundOutfits) as ListView
             listRoot.adapter = OutfitItemAdapter(requireActivity(), outfitList!!)
@@ -111,7 +109,7 @@ class FragmentAddOutfit : BasePS2Fragment<NoopViewModel, FragmentAddOutfitBindin
         }
     }
 
-    override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
+    fun onSourceSelectionChanged(selectedNamespace: Namespace) {
         downloadOutfits()
     }
 

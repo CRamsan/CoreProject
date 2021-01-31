@@ -10,17 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.character.Stat
-import com.cramsan.ps2link.appcore.getThisMonth
-import com.cramsan.ps2link.appcore.getThisWeek
-import com.cramsan.ps2link.appcore.getToday
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.StatItem
 
 @Composable
 fun StatListCompose(
-    statList: List<Stat>,
+    statList: List<StatItem>,
     isLoading: Boolean,
     eventHandler: StatListEventHandler,
 ) {
@@ -29,11 +26,11 @@ fun StatListCompose(
             LazyColumn {
                 items(statList) {
                     StatItem(
-                        label = it.stat_name ?: stringResource(R.string.text_unknown),
-                        allTime = it.all_time?.toFloat(),
-                        today = it.getToday(),
-                        thisWeek = it.getThisWeek(),
-                        thisMonth = it.getThisMonth(),
+                        label = it.statName ?: stringResource(R.string.text_unknown),
+                        allTime = it.allTime?.toFloat(),
+                        today = it.today?.toFloat(),
+                        thisWeek = it.thisWeek?.toFloat(),
+                        thisMonth = it.thisMonth?.toFloat(),
                     )
                 }
             }

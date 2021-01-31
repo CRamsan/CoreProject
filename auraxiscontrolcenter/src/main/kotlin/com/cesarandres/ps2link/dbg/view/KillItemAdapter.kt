@@ -14,11 +14,11 @@ import com.android.volley.toolbox.NetworkImageView
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.dbg.util.Collections.PS2Collection
 import com.cesarandres.ps2link.dbg.volley.GsonRequest
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.CharacterEvent
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.response.Item_list_response
+import com.cramsan.ps2link.appcore.census.DBGServiceClient
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.network.models.content.CharacterEvent
+import com.cramsan.ps2link.network.models.content.Faction
+import com.cramsan.ps2link.network.models.content.response.Item_list_response
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Hashtable

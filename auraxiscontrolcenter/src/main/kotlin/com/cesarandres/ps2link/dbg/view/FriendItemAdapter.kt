@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.content.CharacterFriend
+import com.cramsan.ps2link.network.models.content.CharacterFriend
 
 class FriendItemAdapter(
     private val context: Context,

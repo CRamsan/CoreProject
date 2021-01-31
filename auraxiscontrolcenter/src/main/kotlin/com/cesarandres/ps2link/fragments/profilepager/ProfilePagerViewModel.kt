@@ -7,25 +7,23 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
-import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
-import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProfilePagerViewModel @ViewModelInject constructor(
     application: Application,
-    dbgServiceClient: DBGServiceClient,
-    dbgDAO: DbgDAO,
+    pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
     application,
-    dbgServiceClient,
-    dbgDAO,
+    pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
     savedStateHandle
@@ -47,28 +45,30 @@ class ProfilePagerViewModel @ViewModelInject constructor(
         }
         this.characterId = characterId
         this.namespace = namespace
-        profile = dbgDAO.getCharacterAsFlow(characterId, namespace)
+        profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
     }
 
     fun addCharacter() {
         ioScope.launch {
-            val character = dbgDAO.getCharacter(characterId, namespace)
+            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
             if (character == null) {
                 // TODO : Report error
                 return@launch
             }
-            dbgDAO.insertCharacter(character.copy(cached = true))
+            pS2LinkRepository.saveCharacter(character.copy(cached = true))
         }
     }
 
     fun removeCharacter() {
         ioScope.launch {
-            val character = dbgDAO.getCharacter(characterId, namespace)
+            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
             if (character == null) {
                 // TODO : Report error
                 return@launch
             }
-            dbgDAO.insertCharacter(character.copy(cached = false))
+            pS2LinkRepository.saveCharacter(character.copy(cached = false))
         }
     }
 

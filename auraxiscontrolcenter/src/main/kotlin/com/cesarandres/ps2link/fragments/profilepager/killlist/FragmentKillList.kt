@@ -11,8 +11,9 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentKillListBinding
 import com.cesarandres.ps2link.dbg.view.KillItemAdapter
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -61,7 +62,7 @@ class FragmentKillList : BasePS2Fragment<NoopViewModel, FragmentKillListBinding>
     fun downloadKillList(character_id: String?) {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val eventList = withContext(Dispatchers.IO) { dbgCensus.getKillList(character_id!!, namespace!!, CensusLang.EN) }
+            val eventList = withContext(Dispatchers.IO) { dbgCensus.getKillList(character_id!!, namespace!!.toNetworkModel(), CensusLang.EN) }
 
             if (eventList == null) {
                 return@launch

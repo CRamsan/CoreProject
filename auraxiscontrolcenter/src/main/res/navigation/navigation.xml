@@ -84,7 +84,7 @@
             app:argType="string" />
         <argument
             android:name="namespace"
-            app:argType="com.cramsan.ps2link.appcore.dbg.Namespace" />
+            app:argType="com.cramsan.ps2link.core.models.Namespace" />
     </fragment>
     <fragment
         android:id="@+id/fragmentProfileList"
@@ -123,7 +123,7 @@
             app:argType="string" />
         <argument
             android:name="namespace"
-            app:argType="com.cramsan.ps2link.appcore.dbg.Namespace" />
+            app:argType="com.cramsan.ps2link.core.models.Namespace" />
     </fragment>
     <fragment
         android:id="@+id/fragmentServerList"

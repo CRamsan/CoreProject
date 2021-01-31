@@ -1,7 +1,7 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
-import com.cramsan.ps2link.appcore.dbg.Faction
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.db.models.Faction
+import com.cramsan.ps2link.db.models.Namespace
 import com.squareup.sqldelight.ColumnAdapter
 
 /**

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.ComposeBaseFragment
-import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import javax.inject.Inject
 

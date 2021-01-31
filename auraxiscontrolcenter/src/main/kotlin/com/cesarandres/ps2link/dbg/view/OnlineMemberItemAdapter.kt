@@ -11,7 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.content.Member
+import com.cramsan.ps2link.network.models.content.Member
 import java.util.ArrayList
 
 class OnlineMemberItemAdapter(

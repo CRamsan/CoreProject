@@ -11,9 +11,10 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentMemberListBinding
 import com.cesarandres.ps2link.dbg.view.OnlineMemberItemAdapter
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.Member
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.network.models.content.Member
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -76,7 +77,7 @@ class FragmentMembersOnline : BasePS2Fragment<NoopViewModel, FragmentMemberListB
     fun downloadOutfitMembers() {
 
         lifecycleScope.launch {
-            val response = withContext(Dispatchers.IO) { dbgCensus.getMembersOnline(outfitId, namespace!!, CensusLang.EN) }
+            val response = withContext(Dispatchers.IO) { dbgCensus.getMembersOnline(outfitId, namespace!!.toNetworkModel(), CensusLang.EN) }
             updateContent(response)
         }
     }

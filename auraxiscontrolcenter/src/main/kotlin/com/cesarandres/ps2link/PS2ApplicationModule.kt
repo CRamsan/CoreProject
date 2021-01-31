@@ -36,15 +36,17 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.DBGServiceClientImpl
-import com.cramsan.ps2link.appcore.buildHttpClient
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.census.DBGCensus
+import com.cramsan.ps2link.appcore.census.DBGServiceClient
+import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
+import com.cramsan.ps2link.appcore.census.buildHttpClient
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.preferences.PS2SettingsImpl
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepositoryImpl
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
-import com.cramsan.ps2link.db.PS2LinkDB
+import com.cramsan.ps2link.db.models.PS2LinkDB
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import dagger.Module
@@ -53,6 +55,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.HttpClient
+import kotlinx.datetime.Clock
 import javax.inject.Singleton
 
 @Module
@@ -200,4 +203,16 @@ object PS2ApplicationModule {
     fun providePS2Settings(
         preferencesInterface: Preferences,
     ): PS2Settings = PS2SettingsImpl(preferencesInterface)
+
+    @Provides
+    @Singleton
+    fun provideClock(): Clock = Clock.System
+
+    @Provides
+    @Singleton
+    fun providePS2LinkRepository(
+        dbgServiceClient: DBGServiceClient,
+        dbgDAO: DbgDAO,
+        clock: Clock,
+    ): PS2LinkRepository = PS2LinkRepositoryImpl(dbgServiceClient, dbgDAO, clock)
 }

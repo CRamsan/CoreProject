@@ -8,9 +8,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cesarandres.ps2link.toOnlineStatus
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.models.FriendCharacter
+import com.cramsan.ps2link.core.models.FriendCharacter
+import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.FriendItem
 
@@ -26,7 +25,7 @@ fun FriendListCompose(
                 items(friendList) {
                     FriendItem(
                         label = it.characterName ?: "",
-                        onlineStatus = it.loginStatus.toOnlineStatus(),
+                        onlineStatus = it.loginStatus,
                         onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
                     )
                 }

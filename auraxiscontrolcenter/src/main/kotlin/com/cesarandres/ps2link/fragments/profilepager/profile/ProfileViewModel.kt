@@ -8,27 +8,23 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
-import com.cramsan.ps2link.appcore.DBGServiceClient
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
-import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
-import com.cramsan.ps2link.appcore.toCharacter
-import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProfileViewModel @ViewModelInject constructor(
     application: Application,
-    dbgServiceClient: DBGServiceClient,
-    dbgDAO: DbgDAO,
+    pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
-        dbgServiceClient,
-        dbgDAO,
+        pS2LinkRepository,
         pS2Settings,
         dispatcherProvider,
         savedStateHandle
@@ -47,23 +43,10 @@ class ProfileViewModel @ViewModelInject constructor(
             // TODO: Provide some event that can be handled by the UI
             return
         }
-        profile = dbgDAO.getCharacterAsFlow(characterId, namespace)
+        profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-
-            val isCached = dbgDAO.getCharacter(characterId, namespace)?.cached ?: false
-
-            val profileResponse = dbgCensus.getProfile(characterId, namespace, lang)
-            if (profileResponse == null) {
-                // TODO : Report error
-                return@launch
-            }
-            profileResponse.let {
-                dbgDAO.insertCharacter(
-                    profileResponse.toCharacter(namespace)
-                        .copy(cached = isCached)
-                )
-            }
+            pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true)
         }
     }
 

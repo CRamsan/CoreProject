@@ -53,3 +53,5 @@ dependencies {
 }
 
 registerDependency(":auraxiscontrolcenter:core-models")
+
+registerDependency(":auraxiscontrolcenter:core-models")

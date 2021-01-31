@@ -1,10 +1,10 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
-import com.cramsan.ps2link.appcore.dbg.Faction
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.db.Character
 import com.cramsan.ps2link.db.Member
 import com.cramsan.ps2link.db.Outfit
+import com.cramsan.ps2link.db.models.Faction
+import com.cramsan.ps2link.db.models.Namespace
 import kotlinx.coroutines.flow.Flow
 
 interface DbgDAO {
@@ -67,9 +67,7 @@ interface DbgDAO {
         namespace: Namespace,
     )
 
-    fun getCharacters(
-        namespace: Namespace,
-    ): List<Character>
+    fun getCharacters(): List<Character>
 
     fun getAllMembers(
         outfitId: String,

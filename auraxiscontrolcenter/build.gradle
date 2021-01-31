@@ -39,8 +39,11 @@ dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
-    implementation project(":auraxiscontrolcenter:network-models")
+    // This is needed as the App needs the instance of the DB to inject
     implementation project(":auraxiscontrolcenter:db-models")
+    // This is needed while we still have the legacy activities that used the raw network
+    // responses
+    implementation project(":auraxiscontrolcenter:network-models")
     implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
@@ -91,6 +94,5 @@ dependencies {
 registerDependency(":framework")
 registerDependency(":auraxiscontrolcenter:appcore")
 registerDependency(":auraxiscontrolcenter:core-models")
-registerDependency(":auraxiscontrolcenter:network-models")
 registerDependency(":auraxiscontrolcenter:db-models")
 registerDependency(":auraxiscontrolcenter:ui")

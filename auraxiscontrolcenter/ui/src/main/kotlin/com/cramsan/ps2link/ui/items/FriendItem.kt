@@ -7,7 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.cramsan.ps2link.ui.OnlineStatus
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.toStringResource
@@ -16,7 +16,7 @@ import com.cramsan.ps2link.ui.toStringResource
 fun FriendItem(
     modifier: Modifier = Modifier,
     label: String,
-    onlineStatus: OnlineStatus = OnlineStatus.UNKNOWN,
+    onlineStatus: LoginStatus = LoginStatus.UNKNOWN,
     onClick: () -> Unit = {},
 ) {
     SlimButton(
@@ -44,7 +44,7 @@ fun FriendItemPreview() {
     PS2Theme {
         FriendItem(
             label = "Cramsan",
-            onlineStatus = OnlineStatus.ONLINE,
+            onlineStatus = LoginStatus.ONLINE,
         )
     }
 }

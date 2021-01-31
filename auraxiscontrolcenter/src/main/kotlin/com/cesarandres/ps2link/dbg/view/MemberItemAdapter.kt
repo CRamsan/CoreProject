@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.content.Member
-import com.cramsan.ps2link.appcore.dbg.content.character.Name
+import com.cramsan.ps2link.network.models.content.Member
+import com.cramsan.ps2link.network.models.content.character.Name
 
 class MemberItemAdapter(
     private val context: Context,

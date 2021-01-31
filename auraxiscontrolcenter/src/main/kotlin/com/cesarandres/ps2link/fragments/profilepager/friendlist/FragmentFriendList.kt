@@ -11,8 +11,9 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentFriendListBinding
 import com.cesarandres.ps2link.dbg.view.FriendItemAdapter
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -61,7 +62,7 @@ class FragmentFriendList : BasePS2Fragment<NoopViewModel, FragmentFriendListBind
     fun downloadFriendsList(character_id: String?) {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val friendList = withContext(Dispatchers.IO) { dbgCensus.getFriendList(character_id!!, namespace!!, CensusLang.EN) }
+            val friendList = withContext(Dispatchers.IO) { dbgCensus.getFriendList(character_id!!, namespace!!.toNetworkModel(), CensusLang.EN) }
 
             val listRoot = requireActivity().findViewById<View>(R.id.listViewFriendList) as ListView
             listRoot.adapter =

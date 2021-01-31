@@ -1,7 +1,7 @@
 package com.cesarandres.ps2link.fragments
 
 import com.cramsan.framework.core.BaseEvent
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.core.models.Namespace
 
 data class OpenProfile(val characterId: String, val namespace: Namespace) : BaseEvent()
 data class OpenOutfit(val outfitId: String, val namespace: Namespace) : BaseEvent()

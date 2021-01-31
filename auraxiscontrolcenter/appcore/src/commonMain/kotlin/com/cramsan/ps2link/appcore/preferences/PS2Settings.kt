@@ -1,7 +1,7 @@
 package com.cramsan.ps2link.appcore.preferences
 
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 
 /**
  * @Author cramsan

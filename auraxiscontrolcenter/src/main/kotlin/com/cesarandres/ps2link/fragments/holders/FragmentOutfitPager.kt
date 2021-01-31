@@ -15,7 +15,6 @@ import com.cesarandres.ps2link.databinding.FragmentOutfitPagerBinding
 import com.cesarandres.ps2link.fragments.FragmentMembersList
 import com.cesarandres.ps2link.fragments.FragmentMembersOnline
 import com.cesarandres.ps2link.fragments.FragmentOutfit
-import com.cesarandres.ps2link.module.ButtonSelectSource
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.metrics.logMetric
 import java.util.HashMap
@@ -32,8 +31,6 @@ class FragmentOutfitPager : BasePS2Fragment<NoopViewModel, FragmentOutfitPagerBi
     private var mViewPager: ViewPager? = null
     private var outfitId: String? = null
     private var namespace: String? = null
-
-    private var selectionButton: ButtonSelectSource? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

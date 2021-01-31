@@ -1,9 +1,10 @@
 package com.cramsan.ps2link.appcore
 
 import com.cramsan.framework.test.TestBase
-import com.cramsan.ps2link.appcore.dbg.DBGCensus
+import com.cramsan.ps2link.appcore.census.DBGCensus
+import com.cramsan.ps2link.appcore.census.DBGServiceClient
+import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
 import io.mockk.impl.annotations.MockK
 
 class DBGServiceClientImplTest : TestBase() {

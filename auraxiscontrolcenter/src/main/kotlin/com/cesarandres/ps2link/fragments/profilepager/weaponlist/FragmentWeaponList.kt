@@ -15,11 +15,13 @@ import com.cesarandres.ps2link.dbg.view.WeaponItemAdapter
 import com.cesarandres.ps2link.module.Constants
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.logging.logE
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.item.Weapon
-import com.cramsan.ps2link.appcore.dbg.content.item.WeaponStat
+import com.cramsan.ps2link.appcore.localizedName
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.network.models.content.Faction
+import com.cramsan.ps2link.network.models.content.item.Weapon
+import com.cramsan.ps2link.network.models.content.item.WeaponStat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,7 +89,7 @@ class FragmentWeaponList : BasePS2Fragment<NoopViewModel, FragmentWeaponListBind
 
         viewLifecycleOwner.lifecycleScope.launch {
 
-            val weaponListResponse = withContext(Dispatchers.IO) { dbgCensus.getWeaponList(character_id, namespace!!, CensusLang.EN) }
+            val weaponListResponse = withContext(Dispatchers.IO) { dbgCensus.getWeaponList(character_id, namespace!!.toNetworkModel(), CensusLang.EN) }
 
             if (weaponListResponse != null) {
 
@@ -150,7 +152,9 @@ class FragmentWeaponList : BasePS2Fragment<NoopViewModel, FragmentWeaponListBind
                     } else {
                         try {
                             if (weapon.item_id_join_item != null) {
-                                weaponName = weapon.item_id_join_item!!.name!!.localizedName(CensusLang.EN)
+                                weaponName = weapon.item_id_join_item!!.name!!.localizedName(
+                                    CensusLang.EN
+                                )
                             } else {
                                 continue
                             }

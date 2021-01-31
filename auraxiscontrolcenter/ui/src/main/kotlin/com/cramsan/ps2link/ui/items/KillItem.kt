@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.cramsan.ps2link.ui.Faction
-import com.cramsan.ps2link.ui.KillType
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme

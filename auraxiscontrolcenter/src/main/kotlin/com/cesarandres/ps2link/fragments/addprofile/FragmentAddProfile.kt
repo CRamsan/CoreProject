@@ -13,12 +13,11 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentAddProfileBinding
 import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.ProfileItemAdapter
-import com.cesarandres.ps2link.module.ButtonSelectSource
-import com.cesarandres.ps2link.module.ButtonSelectSource.SourceSelectionChangedListener
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.metrics.logMetric
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,11 +28,10 @@ import java.util.Locale
  * profiles. The only requirement is that the name needs to be at least three
  * characters long.
  */
-class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBinding>(), SourceSelectionChangedListener {
+class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBinding>() {
 
     override val viewModel: NoopViewModel by viewModels()
     private var lastUsedNamespace: Namespace? = null
-    private var selectionButton: ButtonSelectSource? = null
 
     /*
      * (non-Javadoc)
@@ -68,7 +66,7 @@ class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBind
      */
     private fun downloadProfiles() {
         val searchField = requireView().findViewById<View>(R.id.fieldSearchProfile) as EditText
-        this.lastUsedNamespace = selectionButton!!.namespace
+        this.lastUsedNamespace = Namespace.UNDETERMINED
         if (searchField.text.toString().length < 3) {
             Toast.makeText(activity, R.string.text_profile_name_too_short, Toast.LENGTH_SHORT)
                 .show()
@@ -81,7 +79,7 @@ class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBind
         listRoot.adapter = LoadingItemAdapter(this!!.requireActivity())
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val profiles = withContext(Dispatchers.IO) { dbgCensus.getProfiles(searchField.text.toString().toLowerCase(Locale.getDefault()), selectionButton!!.namespace, CensusLang.EN) }
+            val profiles = withContext(Dispatchers.IO) { dbgCensus.getProfiles(searchField.text.toString().toLowerCase(Locale.getDefault()), Namespace.UNDETERMINED.toNetworkModel(), CensusLang.EN) }
             val listRoot = requireView().findViewById<View>(R.id.listFoundProfiles) as ListView
             listRoot.adapter = ProfileItemAdapter(
                 requireActivity(),
@@ -91,7 +89,7 @@ class FragmentAddProfile : BasePS2Fragment<NoopViewModel, FragmentAddProfileBind
         }
     }
 
-    override fun onSourceSelectionChanged(selectedNamespace: Namespace) {
+    fun onSourceSelectionChanged(selectedNamespace: Namespace) {
         downloadProfiles()
     }
 

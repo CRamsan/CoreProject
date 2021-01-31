@@ -9,9 +9,10 @@ import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePagerDirections
 import com.cramsan.framework.core.BaseEvent
-import com.cramsan.ps2link.appcore.dbg.LoginStatus
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.core.models.LoginStatus
+import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.time.ExperimentalTime
 
 /**
  * Fragment to display the list of locally stored profiles.
@@ -31,21 +32,22 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
         viewModel.setUp(characterId, namespace)
     }
 
+    @OptIn(ExperimentalTime::class)
     @Composable
     override fun CreateComposeContent() {
         val profile = viewModel.profile.collectAsState(null)
         val isLoading = viewModel.isLoading.collectAsState()
         ProfileCompose(
-            faction = profile.value?.factionId,
-            br = profile.value?.rank?.toInt(),
-            percentToNextBR = profile.value?.percentageToNextRank?.toInt(),
-            certs = profile.value?.currentPoints?.toInt(),
+            faction = profile.value?.faction,
+            br = profile.value?.battleRank?.toInt(),
+            percentToNextBR = profile.value?.percentageToNextBattleRank?.toInt(),
+            certs = profile.value?.certs?.toInt(),
             percentToNextCert = profile.value?.percentageToNextCert?.toInt(),
             loginStatus = LoginStatus.UNKNOWN,
             lastLogin = profile.value?.lastLogin?.toString(),
             outfit = null,
-            server = profile.value?.worldName,
-            hoursPlayed = profile.value?.minutesPlayed?.toInt(),
+            server = profile.value?.server?.serverName,
+            hoursPlayed = profile.value?.timePlayed?.inHours,
             isLoading = isLoading.value,
             eventHandler = viewModel
         )

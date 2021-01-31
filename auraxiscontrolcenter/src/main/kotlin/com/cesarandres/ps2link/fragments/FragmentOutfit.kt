@@ -13,10 +13,11 @@ import com.cesarandres.ps2link.databinding.FragmentOutfitBinding
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.metrics.logMetric
-import com.cramsan.ps2link.appcore.dbg.CensusLang
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.appcore.dbg.content.Faction
-import com.cramsan.ps2link.appcore.dbg.content.Outfit
+import com.cramsan.ps2link.appcore.toNetworkModel
+import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.network.models.content.Faction
+import com.cramsan.ps2link.network.models.content.Outfit
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.Date
@@ -107,7 +108,7 @@ class FragmentOutfit : BasePS2Fragment<NoopViewModel, FragmentOutfitBinding>() {
      */
     fun downloadOutfit(outfitId: String?) {
         lifecycleScope.launch {
-            val outfit = dbgCensus.getOutfit(outfitId!!, namespace!!, CensusLang.EN)
+            val outfit = dbgCensus.getOutfit(outfitId!!, namespace!!.toNetworkModel(), CensusLang.EN)
 
             updateUI(outfit!!)
         }

@@ -1,12 +1,12 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
 import com.cramsan.framework.thread.assertIsBackgroundThread
-import com.cramsan.ps2link.appcore.dbg.Faction
-import com.cramsan.ps2link.appcore.dbg.Namespace
 import com.cramsan.ps2link.db.Character
 import com.cramsan.ps2link.db.Member
 import com.cramsan.ps2link.db.Outfit
-import com.cramsan.ps2link.db.PS2LinkDB
+import com.cramsan.ps2link.db.models.Faction
+import com.cramsan.ps2link.db.models.Namespace
+import com.cramsan.ps2link.db.models.PS2LinkDB
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -151,9 +151,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         database.memberQueries.deleteOutfit(outfitId, namespace.name)
     }
 
-    override fun getCharacters(
-        namespace: Namespace,
-    ): List<Character> {
+    override fun getCharacters(): List<Character> {
         assertIsBackgroundThread()
         return database.characterQueries.getAllCharacters().executeAsList()
     }

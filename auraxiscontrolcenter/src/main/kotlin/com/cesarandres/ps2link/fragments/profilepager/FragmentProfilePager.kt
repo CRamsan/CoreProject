@@ -20,7 +20,7 @@ import com.cesarandres.ps2link.fragments.profilepager.friendlist.FragmentCompose
 import com.cesarandres.ps2link.fragments.profilepager.killlist.FragmentComposeKillList
 import com.cesarandres.ps2link.fragments.profilepager.profile.FragmentComposeProfile
 import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

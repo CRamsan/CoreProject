@@ -2,7 +2,7 @@ package com.cesarandres.ps2link.base
 
 import com.cramsan.framework.core.BaseActivity
 import com.cramsan.framework.core.BaseViewModel
-import com.cramsan.ps2link.appcore.DBGServiceClient
+import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import javax.inject.Inject
 
 /**

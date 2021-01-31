@@ -12,12 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.toOnlineStatus
-import com.cesarandres.ps2link.toUIFaction
-import com.cramsan.ps2link.appcore.dbg.Faction
-import com.cramsan.ps2link.appcore.dbg.LoginStatus
-import com.cramsan.ps2link.appcore.dbg.Namespace
-import com.cramsan.ps2link.db.Outfit
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.LoginStatus
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.SlimButton
@@ -37,7 +35,7 @@ fun ProfileCompose(
     lastLogin: String?,
     outfit: Outfit?,
     server: String?,
-    hoursPlayed: Int?,
+    hoursPlayed: Double?,
     isLoading: Boolean,
     eventHandler: ProfileEventHandler,
 ) {
@@ -45,7 +43,7 @@ fun ProfileCompose(
         Box {
             Column {
                 // Top Faction icon
-                FactionIcon(faction = faction.toUIFaction())
+                FactionIcon(faction = faction ?: Faction.UNKNOWN)
 
                 // BR Progress bar
                 FrameSlim {
@@ -67,7 +65,7 @@ fun ProfileCompose(
                         FrameSlim {
                             Column {
                                 Text(text = stringResource(R.string.text_status))
-                                Text(text = loginStatus.toOnlineStatus().toStringResource())
+                                Text(text = (loginStatus ?: LoginStatus.UNKNOWN).toStringResource())
                             }
                         }
 
@@ -87,7 +85,7 @@ fun ProfileCompose(
                                     enabled = outfit != null,
                                     onClick = {
                                         outfit?.let {
-                                            eventHandler.onOutfitSelected(it.outfitId, it.namespace)
+                                            eventHandler.onOutfitSelected(it.id, it.namespace)
                                         }
                                     }
                                 ) {
@@ -145,7 +143,7 @@ fun Preview() {
         lastLogin = "Two hours ago",
         outfit = null,
         server = "Genudine",
-        hoursPlayed = 1000,
+        hoursPlayed = 1000.toDouble(),
         isLoading = true,
         eventHandler = object : ProfileEventHandler {
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit

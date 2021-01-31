@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.dbg.content.character.Stat
+import com.cramsan.ps2link.network.models.content.character.Stat
 
 class StatItemAdapter(
     private val context: Context,

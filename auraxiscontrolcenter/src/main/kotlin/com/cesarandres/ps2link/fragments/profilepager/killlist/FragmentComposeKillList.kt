@@ -9,7 +9,7 @@ import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePagerDirections
 import com.cramsan.framework.core.BaseEvent
-import com.cramsan.ps2link.appcore.dbg.Namespace
+import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

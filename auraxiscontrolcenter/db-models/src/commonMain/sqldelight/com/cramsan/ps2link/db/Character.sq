@@ -1,0 +1,73 @@
+import com.cramsan.ps2link.db.models.Faction;
+import com.cramsan.ps2link.db.models.Namespace;
+
+CREATE TABLE Character (
+    id TEXT NOT NULL PRIMARY KEY UNIQUE,
+    name TEXT,
+    activeProfileId INTEGER,
+    currentPoints INTEGER,
+    percentageToNextCert REAL,
+    percentageToNextRank REAL,
+    rank INTEGER,
+    lastLogin INTEGER,
+    minutesPlayed INTEGER,
+    factionId TEXT as Faction NOT NULL,
+    worldId TEXT,
+    outfitName TEXT,
+    worldName TEXT,
+    namespace TEXT as Namespace NOT NULL,
+    cached INTEGER as Boolean NOT NULL,
+    lastUpdated INTEGER NOT NULL
+);
+
+getCharacter:
+SELECT * FROM Character WHERE id == ? AND namespace == ?;
+
+getAllCharacters:
+SELECT * FROM Character WHERE cached == 1;
+
+insertCharacter:
+INSERT OR REPLACE INTO Character(
+    id,
+    name,
+    activeProfileId,
+    currentPoints,
+    percentageToNextCert,
+    percentageToNextRank,
+    rank,
+    lastLogin,
+    minutesPlayed,
+    factionId,
+    worldId,
+    outfitName,
+    worldName,
+    namespace,
+    cached,
+    lastUpdated
+ ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+insertCharacterInstance:
+INSERT OR REPLACE INTO Character(
+    id,
+    name,
+    activeProfileId,
+    currentPoints,
+    percentageToNextCert,
+    percentageToNextRank,
+    rank,
+    lastLogin,
+    minutesPlayed,
+    factionId,
+    worldId,
+    outfitName,
+    worldName,
+    namespace,
+    cached,
+    lastUpdated
+ ) VALUES ?;
+
+deleteCharacter:
+DELETE FROM Character WHERE id == ? AND namespace == ?;
+
+deleteAll:
+DELETE FROM Character;
