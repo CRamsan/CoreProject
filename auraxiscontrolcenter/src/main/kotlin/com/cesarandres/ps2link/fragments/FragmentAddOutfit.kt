@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentAddOutfitBinding
-import com.cesarandres.ps2link.dbg.view.LoadingItemAdapter
 import com.cesarandres.ps2link.dbg.view.OutfitItemAdapter
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.framework.metrics.logMetric
