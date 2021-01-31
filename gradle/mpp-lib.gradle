@@ -59,11 +59,14 @@ dependencies {
     testImplementation meta_packages.CoreTestAndroid
 
     // This is needed as the new version of Objenesis does not compile on Android<26
-    // https://github.com/mockito/mockito/issues/2007
-    // https://github.com/easymock/objenesis/issues/79
-    androidTestImplementation (packages.Objenesis) {
+    // https://github.com/CRamsan/CoreProject/issues/161
+    // The trick was to use old Objenesis as a dependency for instrumented tests and new Objenesis
+    // for everything else (JVM/Android unit test).
+    /*
+    androidTestImplementation (packages.ObjenesisPinned) {
         force = true
     }
+     */
     androidTestImplementation meta_packages.CoreAndrodTestAndroid
 }
 
@@ -138,7 +141,7 @@ ext.registerDependency = { project ->
 
 tasks.register("releaseJvm") {
     group = 'build'
-    description = 'Run all the steps to build a releaseAndroid artifact'
+    description = 'Run all the steps to build a releaseJvm artifact'
 
     dependsOn 'ktlint'
     dependsOn 'compileKotlinJvm'
@@ -148,12 +151,11 @@ tasks.register("releaseJvm") {
 
 tasks.register("releaseAndroid") {
     group = 'build'
-    description = 'Run all the steps to build a releaseJvm artifact'
+    description = 'Run all the steps to build a releaseAndroid artifact'
 
-    dependsOn 'ktlint'
-    dependsOn 'assemble'
-    dependsOn 'test'
-    dependsOn 'jacocoAndroidTestReport'
+    dependsOn 'ktlint' // Verifies the format
+    dependsOn 'build' // Assembles and test this project
+    dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results
 }
 
 tasks.register("release") {

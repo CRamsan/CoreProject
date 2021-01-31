@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath packages.AndroidBuildGradle
+        classpath packages.KotlinGradle
+        classpath packages.KotlinxSerializationGradle
+    }
+}
+
+repositories {
+    maven {
+        url "https://kotlin.bintray.com/kotlinx/"
+    }
+}
+
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+
+dependencies {
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework")
+                implementation packages.KotlinxSerialization
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
+    }
+}
+
+registerDependency(":framework")

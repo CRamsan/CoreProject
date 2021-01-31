@@ -10,7 +10,7 @@ import com.cramsan.framework.assert.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.logging.implementation.EventLogger
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
 import kotlinx.coroutines.runBlocking
 import java.awt.EventQueue
@@ -110,7 +110,7 @@ class AWTRunner {
                 }
             } ?: return
 
-            val eventLogger = EventLogger(Severity.VERBOSE, null, LoggerJVM())
+            val eventLogger = EventLoggerImpl(Severity.VERBOSE, null, LoggerJVM())
             val haltUtil = HaltUtilImpl(HaltUtilJVM())
             val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)
             val aiRepo = DummyAIRepoImpl(eventLogger)

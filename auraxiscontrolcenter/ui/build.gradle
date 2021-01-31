@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation project(":auraxiscontrolcenter:core-models")
     implementation packages.AndroidMaterial
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx
@@ -50,3 +51,5 @@ dependencies {
     implementation packages.JetpackComposeIconsExtended
     implementation packages.JetpackComposeRuntimeLiveData
 }
+
+registerDependency(":auraxiscontrolcenter:core-models")

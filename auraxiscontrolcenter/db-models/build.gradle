@@ -26,14 +26,8 @@ apply plugin: "com.squareup.sqldelight"
 
 sqldelight {
     PS2LinkDB {
-        packageName = "com.cramsan.ps2link.db"
+        packageName = "com.cramsan.ps2link.db.models"
     }
-}
-
-dependencies {
-    implementation packages.SqlDelightAndroidDriver
-    implementation packages.KtorAndroid
-    implementation packages.KtorGson
 }
 
 kotlin {
@@ -41,13 +35,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework")
-                implementation project(":auraxiscontrolcenter:core-models")
-                implementation project(":auraxiscontrolcenter:db-models")
-                implementation project(":auraxiscontrolcenter:network-models")
-                implementation packages.KtorCore
-                implementation packages.KtorJson
-                implementation packages.KotlinxDatetime
-                implementation packages.KotlinxSerialization
                 implementation packages.SqlDelightCoroutineExt
             }
         }
@@ -60,6 +47,3 @@ kotlin {
 }
 
 registerDependency(":framework")
-registerDependency(":auraxiscontrolcenter:db-models")
-registerDependency(":auraxiscontrolcenter:network-models")
-registerDependency(":auraxiscontrolcenter:core-models")

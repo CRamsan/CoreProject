@@ -62,7 +62,11 @@ def versions_packages = [
     Mockito : "3.5.10",
     Mockk : "1.10.5",
     Okhttp : "4.9.0",
-    Objenesis : "2.6",
+    // https://github.com/CRamsan/CoreProject/issues/161
+    // The trick was to use old Objenesis as a dependency for instrumented tests and new Objenesis
+    // for everything else (JVM/Android unit test).
+    Objenesis : "3.1",
+    ObjenesisPinned : "2.6",
     PrettyTime : "5.0.0.Final",
     Robolectric : "4.4",
     SpringDependencyManagement : "1.0.11.RELEASE",
@@ -175,6 +179,7 @@ def packages = [
         MockkCommon : "io.mockk:mockk-common:$versions_packages.Mockk",
         Okhttp : "com.squareup.okhttp3:okhttp:$versions_packages.Okhttp",
         Objenesis : "org.objenesis:objenesis:$versions_packages.Objenesis",
+        ObjenesisPinned : "org.objenesis:objenesis:$versions_packages.ObjenesisPinned",
         PrettyTime : "org.ocpsoft.prettytime:prettytime:$versions_packages.PrettyTime",
         Robolectric : "org.robolectric:robolectric:$versions_packages.Robolectric",
         RoboVMCocoatouch : "com.mobidevelop.robovm:robovm-cocoatouch:$versions_packages.GdxRoboVM",
@@ -225,6 +230,7 @@ def core_test_android = [
         packages.JUnit,
         packages.KotlinTest,
         packages.KotlinTestJunit,
+        //packages.Objenesis,
         packages.Mockk,
         packages.MockkAndroid,
 ]
@@ -238,7 +244,7 @@ def core_android_test_android = [
         packages.JUnit,
         packages.KotlinTest,
         packages.KotlinTestJunit,
-        packages.Mockk,
+        //packages.ObjenesisPinned,
         packages.MockkAndroid,
         packages.Robolectric,
 ]

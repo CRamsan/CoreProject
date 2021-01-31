@@ -28,4 +28,7 @@ include 'doom:game:ios'
 
 include 'auraxiscontrolcenter'
 include 'auraxiscontrolcenter:appcore'
+include 'auraxiscontrolcenter:core-models'
+include 'auraxiscontrolcenter:db-models'
+include 'auraxiscontrolcenter:network-models'
 include 'auraxiscontrolcenter:ui'

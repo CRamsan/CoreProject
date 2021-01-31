@@ -38,6 +38,9 @@ android {
 dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
+    implementation project(":auraxiscontrolcenter:core-models")
+    implementation project(":auraxiscontrolcenter:network-models")
+    implementation project(":auraxiscontrolcenter:db-models")
     implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
@@ -87,3 +90,7 @@ dependencies {
 
 registerDependency(":framework")
 registerDependency(":auraxiscontrolcenter:appcore")
+registerDependency(":auraxiscontrolcenter:core-models")
+registerDependency(":auraxiscontrolcenter:network-models")
+registerDependency(":auraxiscontrolcenter:db-models")
+registerDependency(":auraxiscontrolcenter:ui")
