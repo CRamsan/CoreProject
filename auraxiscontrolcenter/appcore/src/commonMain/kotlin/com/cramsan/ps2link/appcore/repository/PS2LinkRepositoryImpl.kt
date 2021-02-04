@@ -4,6 +4,7 @@ import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.getThisMonth
 import com.cramsan.ps2link.appcore.getThisWeek
 import com.cramsan.ps2link.appcore.getToday
+import com.cramsan.ps2link.appcore.localizedName
 import com.cramsan.ps2link.appcore.setThisMonth
 import com.cramsan.ps2link.appcore.setThisWeek
 import com.cramsan.ps2link.appcore.setToday
@@ -13,6 +14,7 @@ import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.toDBModel
 import com.cramsan.ps2link.appcore.toNetworkModel
 import com.cramsan.ps2link.appcore.toStatItem
+import com.cramsan.ps2link.appcore.toWeaponEventType
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.FriendCharacter
@@ -21,12 +23,17 @@ import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.StatItem
+import com.cramsan.ps2link.core.models.WeaponEventType
+import com.cramsan.ps2link.core.models.WeaponItem
+import com.cramsan.ps2link.core.models.WeaponStatItem
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.network.models.content.CharacterEvent
 import com.cramsan.ps2link.network.models.content.character.Day
 import com.cramsan.ps2link.network.models.content.character.Month
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.character.Week
+import com.cramsan.ps2link.network.models.content.item.StatNameType
+import com.cramsan.ps2link.network.models.content.item.Weapon
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -155,6 +162,59 @@ class PS2LinkRepositoryImpl(
             currentLang = currentLang,
         )?.stat_history
         return formatStats(statListResponse)
+    }
+
+    override suspend fun getWeaponList(
+        characterId: String,
+        namespace: Namespace,
+        lang: CensusLang,
+    ): List<WeaponItem> {
+        val weaponListResponse = dbgCensus.getWeaponList(characterId, namespace.toNetworkModel(), CensusLang.EN)
+        return formatWeapons(weaponListResponse, lang)
+    }
+
+    private fun formatWeapons(weaponList: List<Weapon>?, currentLang: CensusLang): List<WeaponItem> {
+        if (weaponList == null) {
+            return emptyList()
+        }
+
+        val weaponMap = weaponList.groupBy { it.item_id }
+        return weaponMap.map {
+            val weaponId = it.key
+            val weaponStats = it.value
+
+            var weaponName: String? = null
+            var vehicleName: String? = null
+            var weaponUrl: String? = null
+            val statMapping = mutableMapOf<WeaponEventType, WeaponStatItem>()
+            for (stat in weaponStats) {
+                val weaponEventType = StatNameType.fromString(stat.stat_name)?.toWeaponEventType() ?: continue
+                weaponName = stat.item_id_join_item?.name?.localizedName(currentLang)
+                vehicleName = stat.vehicle_id_join_vehicle?.name?.localizedName(CensusLang.EN)
+                weaponUrl = if (stat.item_id_join_item != null) {
+                    stat.item_id_join_item?.image_path
+                } else if (stat.vehicle_id_join_vehicle != null) {
+                    stat.vehicle_id_join_vehicle?.image_path
+                } else {
+                    null
+                }
+                statMapping[weaponEventType] = WeaponStatItem(
+                    mapOf(
+                        com.cramsan.ps2link.core.models.Faction.TR to stat.value_tr.toLong(),
+                        com.cramsan.ps2link.core.models.Faction.NC to stat.value_nc.toLong(),
+                        com.cramsan.ps2link.core.models.Faction.VS to stat.value_vs.toLong(),
+                    )
+                )
+            }
+
+            WeaponItem(
+                weaponId = weaponId,
+                weaponName = weaponName,
+                vehicleName = vehicleName,
+                weaponImage = weaponUrl,
+                statMapping = statMapping,
+            )
+        }
     }
 
     private fun formatStats(stats: List<Stat>?): List<StatItem> {

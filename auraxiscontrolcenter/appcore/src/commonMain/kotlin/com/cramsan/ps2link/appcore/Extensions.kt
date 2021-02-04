@@ -3,12 +3,14 @@ package com.cramsan.ps2link.appcore
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
+import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.db.Character
 import com.cramsan.ps2link.db.Outfit
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.db.models.Namespace
 import com.cramsan.ps2link.network.models.content.CharacterProfile
 import com.cramsan.ps2link.network.models.content.character.Stat
+import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.world.Name_Multi
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
@@ -178,4 +180,15 @@ fun Stat.getThisMonth(): Float {
 
 fun Stat.setThisMonth(value: Float) {
     month?.m01 = value.toString()
+}
+
+fun StatNameType.toWeaponEventType(): WeaponEventType {
+    return when (this) {
+        StatNameType.WEAPON_KILLS -> WeaponEventType.KILLS
+        StatNameType.WEAPON_VEHICLE_KILLS -> WeaponEventType.VEHICLE_KILLS
+        StatNameType.WEAPON_HEADSHOTS -> WeaponEventType.HEADSHOT_KILLS
+        StatNameType.WEAPON_KILLED_BY -> WeaponEventType.KILLED_BY
+        StatNameType.WEAPON_DAMAGE_TAKEN -> WeaponEventType.DAMAGE_TAKEN
+        StatNameType.WEAPON_DAMAGE_GIVEN -> WeaponEventType.DAMAGE_GIVEN
+    }
 }

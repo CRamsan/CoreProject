@@ -15,7 +15,6 @@ import com.android.volley.Response.Listener
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentRedditBinding
-import com.cesarandres.ps2link.dbg.volley.GsonRequest
 import com.cesarandres.ps2link.module.reddit.Child
 import com.cesarandres.ps2link.module.reddit.Content
 import com.cesarandres.ps2link.module.reddit.RedditItemAdapter
@@ -129,9 +128,6 @@ class FragmentReddit : BasePS2Fragment<NoopViewModel, FragmentRedditBinding>() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-
-        val gsonOject = GsonRequest(url, Content::class.java, null, success, error)
-        gsonOject.tag = this
     }
 
     companion object {

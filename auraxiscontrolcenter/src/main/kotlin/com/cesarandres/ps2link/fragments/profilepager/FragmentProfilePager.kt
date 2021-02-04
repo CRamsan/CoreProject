@@ -20,6 +20,7 @@ import com.cesarandres.ps2link.fragments.profilepager.friendlist.FragmentCompose
 import com.cesarandres.ps2link.fragments.profilepager.killlist.FragmentComposeKillList
 import com.cesarandres.ps2link.fragments.profilepager.profile.FragmentComposeProfile
 import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
+import com.cesarandres.ps2link.fragments.profilepager.weaponlist.FragmentComposeWeaponList
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -92,9 +93,7 @@ class FragmentProfilePager : BasePS2Fragment<ProfilePagerViewModel, FragmentProf
                 ProfilePage.FRIENDS -> FragmentComposeFriendList.instance(profileId, namespace)
                 ProfilePage.STATS -> FragmentComposeStatList.instance(profileId, namespace)
                 ProfilePage.KILLBOARD -> FragmentComposeKillList.instance(profileId, namespace)
-                /*
-                ProfilePage.WEAPONS -> FragmentWeaponList()
-                 */
+                ProfilePage.WEAPONS -> FragmentComposeWeaponList.instance(profileId, namespace)
             }
         }
     }
@@ -104,8 +103,6 @@ class FragmentProfilePager : BasePS2Fragment<ProfilePagerViewModel, FragmentProf
         FRIENDS,
         STATS,
         KILLBOARD,
-        /*
         WEAPONS,
-         */
     }
 }

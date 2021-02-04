@@ -41,6 +41,9 @@ interface DBGServiceClient {
         currentLang: CensusLang,
     ): List<CharacterEvent>?
 
+    /**
+     * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/characters_weapon_stat_by_faction/?character_id=5428010618041058369&c%3Ajoin=item%5Eshow%3Aimage_path%27name.en&c%3Ajoin=vehicle%5Eshow%3Aimage_path%27name.en&c%3Alimit=10000&c%3Alang=en
+     */
     suspend fun getWeaponList(
         character_id: String?,
         namespace: Namespace,
