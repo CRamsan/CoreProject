@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAbout"
-        android:name="com.cesarandres.ps2link.fragments.FragmentAbout"
+        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
         android:label="FragmentAbout"
         tools:layout="@layout/fragment_about" />
     <fragment
@@ -56,12 +56,12 @@
         tools:layout="@layout/fragment_reddit" />
     <fragment
         android:id="@+id/fragmentTwitter"
-        android:name="com.cesarandres.ps2link.fragments.FragmentTwitter"
+        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
         android:label="FragmentTwitter"
         tools:layout="@layout/fragment_twitter" />
     <fragment
         android:id="@+id/fragmentAddOutfit"
-        android:name="com.cesarandres.ps2link.fragments.FragmentAddOutfit"
+        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
         android:label="FragmentAddOutfit"
         tools:layout="@layout/fragment_add_outfit">
         <action
@@ -112,7 +112,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentOutfitPager"
-        android:name="com.cesarandres.ps2link.fragments.holders.FragmentOutfitPager"
+        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
         android:label="FragmentOutfitPager"
         tools:layout="@layout/fragment_outfit_pager" >
         <action
@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentServerList"
-        android:name="com.cesarandres.ps2link.fragments.FragmentServerList"
+        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
         android:label="FragmentServerList"
         tools:layout="@layout/fragment_server_list" />
 
