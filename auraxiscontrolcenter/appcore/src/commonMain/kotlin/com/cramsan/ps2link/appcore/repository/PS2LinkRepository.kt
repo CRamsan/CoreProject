@@ -5,6 +5,7 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.FriendCharacter
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponItem
 import kotlinx.coroutines.flow.Flow
@@ -61,4 +62,8 @@ interface PS2LinkRepository {
         namespace: Namespace,
         lang: CensusLang,
     ): List<WeaponItem>
+
+    suspend fun getServerList(
+        lang: CensusLang,
+    ): List<Server>
 }

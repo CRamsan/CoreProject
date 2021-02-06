@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentServerList"
-        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
+        android:name="com.cesarandres.ps2link.fragments.serverlist.FragmentComposeServerList"
         android:label="FragmentServerList"
         tools:layout="@layout/fragment_server_list" />
 

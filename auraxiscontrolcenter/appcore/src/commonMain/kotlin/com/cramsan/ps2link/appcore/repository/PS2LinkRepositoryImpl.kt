@@ -22,6 +22,7 @@ import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
@@ -171,6 +172,26 @@ class PS2LinkRepositoryImpl(
     ): List<WeaponItem> {
         val weaponListResponse = dbgCensus.getWeaponList(characterId, namespace.toNetworkModel(), CensusLang.EN)
         return formatWeapons(weaponListResponse, lang)
+    }
+
+    override suspend fun getServerList(lang: CensusLang): List<Server> = coroutineScope {
+        val serverList = Namespace.values().map { namespace ->
+            val job = async { dbgCensus.getServerList(namespace.toNetworkModel(), lang) }
+            job
+        }.awaitAll().filterNotNull().flatten()
+
+        /*
+            val serverPopulation = withContext(Dispatchers.IO) { dbgCensus.getServerPopulation() }
+
+            val listRoot = requireActivity().findViewById<View>(R.id.listViewServers) as ListView
+            val servers = serverPopulation
+            (listRoot.adapter as ServerItemAdapter).setServerPopulation(servers!!)
+         */
+        serverList.map {
+            it.world_id?.let { worldId ->
+                Server(worldId, it.name?.localizedName(lang) ?: "")
+            }
+        }.filterNotNull()
     }
 
     private fun formatWeapons(weaponList: List<Weapon>?, currentLang: CensusLang): List<WeaponItem> {

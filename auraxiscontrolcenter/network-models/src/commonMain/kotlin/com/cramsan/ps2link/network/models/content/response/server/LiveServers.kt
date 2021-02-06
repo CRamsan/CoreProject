@@ -3,9 +3,6 @@ package com.cramsan.ps2link.network.models.content.response.server
 import kotlinx.serialization.SerialName
 
 data class LiveServers(
-    @SerialName("Briggs (AU)")
-    var briggs: LiveServer? = null,
-
     @SerialName("Cobalt (EU)")
     var cobalt: LiveServer? = null,
 
