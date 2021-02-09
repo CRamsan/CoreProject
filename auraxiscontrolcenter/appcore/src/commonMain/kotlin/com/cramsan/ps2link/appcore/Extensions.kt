@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore
 
 import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.RedditPost
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
@@ -12,6 +13,7 @@ import com.cramsan.ps2link.network.models.content.CharacterProfile
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.world.Name_Multi
+import com.cramsan.ps2link.network.models.reddit.Post
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
@@ -191,4 +193,10 @@ fun StatNameType.toWeaponEventType(): WeaponEventType {
         StatNameType.WEAPON_DAMAGE_TAKEN -> WeaponEventType.DAMAGE_TAKEN
         StatNameType.WEAPON_DAMAGE_GIVEN -> WeaponEventType.DAMAGE_GIVEN
     }
+}
+
+fun Post.toCoreModel(): RedditPost {
+    return RedditPost(
+        url, title
+    )
 }

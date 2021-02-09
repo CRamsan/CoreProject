@@ -1,8 +1,7 @@
 package com.cramsan.ps2link.appcore.census
 
-import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logI
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.ps2link.appcore.network.HttpClient
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.network.models.Namespace
 import com.cramsan.ps2link.network.models.Verb
@@ -27,18 +26,10 @@ import com.cramsan.ps2link.network.models.content.response.World_event_list_resp
 import com.cramsan.ps2link.network.models.content.response.server.PS2
 import com.cramsan.ps2link.network.models.util.Collections
 import com.cramsan.ps2link.network.models.util.QueryString
-import io.ktor.client.HttpClient
-import io.ktor.client.call.receive
-import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Url
-import io.ktor.http.isSuccess
-import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
-import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.hours
-import kotlin.time.toDuration
 
 /**
  * This class will be in charge of formatting requests for DBG Census API and
@@ -78,7 +69,7 @@ class DBGServiceClientImpl(
             namespace,
             currentLang,
         )
-        val body = sendRequestWithRetry<Character_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
         return body?.character_list?.first()
     }
 
@@ -107,7 +98,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Character_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
         return body?.character_name_list?.map { it.character_id_join_character }?.filterNotNull()
     }
 
@@ -130,7 +121,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Character_friend_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<Character_friend_list_response>(Url(url))
         return body?.characters_friend_list?.firstOrNull()?.friend_list
     }
 
@@ -157,7 +148,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Characters_event_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<Characters_event_list_response>(Url(url))
         return body?.characters_event_list
     }
 
@@ -174,7 +165,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Weapon_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<Weapon_list_response>(Url(url))
         return body?.characters_weapon_stat_by_faction_list
     }
 
@@ -203,7 +194,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Outfit_response>(Url(url))
+        val body = http.sendRequestWithRetry<Outfit_response>(Url(url))
         return body?.outfit_list
     }
 
@@ -221,7 +212,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Outfit_response>(Url(url))
+        val body = http.sendRequestWithRetry<Outfit_response>(Url(url))
         return body?.outfit_list?.first()
     }
 
@@ -247,7 +238,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Outfit_member_response>(Url(url))
+        val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
         return body?.outfit_list?.firstOrNull()?.members
     }
 
@@ -264,7 +255,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Server_response>(Url(url))
+        val body = http.sendRequestWithRetry<Server_response>(Url(url))
         return body?.world_list
     }
 
@@ -272,7 +263,7 @@ class DBGServiceClientImpl(
         // This is not an standard API call
         val url = Url("https://census.daybreakgames.com/s:PS2Link/json/status/ps2")
 
-        return sendRequestWithRetry<Server_Status_response>(url)?.ps2
+        return http.sendRequestWithRetry<Server_Status_response>(url)?.ps2
     }
 
     @OptIn(ExperimentalTime::class)
@@ -305,7 +296,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<World_event_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<World_event_list_response>(Url(url))
         return body?.world_event_list
     }
 
@@ -325,7 +316,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = sendRequestWithRetry<Character_list_response>(Url(url))
+        val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
         val profile = body?.character_list?.firstOrNull()
         return profile?.stats
     }
@@ -336,52 +327,11 @@ class DBGServiceClientImpl(
         currentLang: CensusLang,
     ): List<Member>? {
         val url = census.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + CensusLang.EN.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId, namespace, CensusLang.EN)
-        val body = sendRequestWithRetry<Outfit_member_response>(Url(url))
+        val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
         return body?.outfit_member_list
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private suspend inline fun <reified T> sendRequestWithRetry(url: Url): T? {
-        for (retry in 0..3) {
-            delay(retry.toDuration(DurationUnit.SECONDS))
-            val response = sendRequest(url, retry)
-
-            return if (response.status.isSuccess()) {
-                response.receive()
-            } else if (response.status.value in 300..500) {
-                null
-            } else {
-                continue
-            }
-        }
-
-        return null
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private suspend fun sendRequest(url: Url, retry: Int): HttpResponse {
-        logD(TAG, "Url: $url")
-
-        val startInstant = Clock.System.now()
-        val response = http.get<HttpResponse>(url)
-        val endInstant = Clock.System.now()
-
-        val duration = endInstant.minus(startInstant).inMilliseconds
-        val metadata = mapOf(
-            RESPONSE_CODE to response.status.value,
-            LATENCY to duration,
-            RETRY to retry,
-        ).mapValues { it.value.toString() }
-        logMetric(TAG, "Request Completed", metadata)
-
-        return response
     }
 
     companion object {
         val TAG = "DBGServiceClient"
-
-        val RESPONSE_CODE = "RESPONSE_CODE"
-        val LATENCY = "LATENCY"
-        val RETRY = "RETRY"
     }
 }

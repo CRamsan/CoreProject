@@ -4,7 +4,7 @@ import com.cramsan.framework.test.TestBase
 import com.cramsan.ps2link.appcore.census.DBGCensus
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
-import io.ktor.client.HttpClient
+import com.cramsan.ps2link.appcore.network.HttpClient
 import io.mockk.impl.annotations.MockK
 
 class DBGServiceClientImplTest : TestBase() {

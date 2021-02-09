@@ -40,10 +40,13 @@ import com.cramsan.ps2link.appcore.census.DBGCensus
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.census.buildHttpClient
+import com.cramsan.ps2link.appcore.network.HttpClient
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.preferences.PS2SettingsImpl
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepositoryImpl
+import com.cramsan.ps2link.appcore.repository.RedditRepository
+import com.cramsan.ps2link.appcore.repository.RedditRepositoryImpl
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
 import com.cramsan.ps2link.db.models.PS2LinkDB
@@ -54,7 +57,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.ktor.client.HttpClient
 import kotlinx.datetime.Clock
 import javax.inject.Singleton
 
@@ -173,8 +175,14 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient {
+    fun provideKtorHttpClient(): io.ktor.client.HttpClient {
         return buildHttpClient()
+    }
+
+    @Provides
+    @Singleton
+    fun provideHttpClientImpl(http: io.ktor.client.HttpClient): HttpClient {
+        return HttpClient(http)
     }
 
     @Provides
@@ -215,4 +223,10 @@ object PS2ApplicationModule {
         dbgDAO: DbgDAO,
         clock: Clock,
     ): PS2LinkRepository = PS2LinkRepositoryImpl(dbgServiceClient, dbgDAO, clock)
+
+    @Provides
+    @Singleton
+    fun provideRedditRepository(
+        http: HttpClient,
+    ): RedditRepository = RedditRepositoryImpl(http)
 }
