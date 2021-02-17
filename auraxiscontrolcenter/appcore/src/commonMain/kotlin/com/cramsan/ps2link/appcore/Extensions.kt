@@ -14,6 +14,7 @@ import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.world.Name_Multi
 import com.cramsan.ps2link.network.models.reddit.Post
+import com.cramsan.ps2link.network.models.twitter.PS2Tweet
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
@@ -198,5 +199,16 @@ fun StatNameType.toWeaponEventType(): WeaponEventType {
 fun Post.toCoreModel(): RedditPost {
     return RedditPost(
         url, title
+    )
+}
+
+fun PS2Tweet.toCoreModel(): com.cramsan.ps2link.core.models.PS2Tweet {
+    return com.cramsan.ps2link.core.models.PS2Tweet(
+        user = user,
+        content = content,
+        tag = tag,
+        date = date,
+        imgUrl = imgUrl,
+        id = id,
     )
 }

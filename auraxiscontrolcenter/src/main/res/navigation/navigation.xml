@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAddProfile"
-        android:name="com.cesarandres.ps2link.fragments.addprofile.FragmentComposeProfileAdd"
+        android:name="com.cesarandres.ps2link.fragments.addoutfit.FragmentComposeProfileAdd"
         android:label="FragmentAddProfile"
         tools:layout="@layout/fragment_add_profile">
         <action
@@ -56,7 +56,7 @@
         tools:layout="@layout/fragment_reddit" />
     <fragment
         android:id="@+id/fragmentTwitter"
-        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
+        android:name="com.cesarandres.ps2link.fragments.twitter.FragmentComposeTwitterList"
         android:label="FragmentTwitter"
         tools:layout="@layout/fragment_twitter" />
     <fragment
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentOutfitList"
-        android:name="com.cesarandres.ps2link.fragments.FragmentOutfitList"
+        android:name="com.cesarandres.ps2link.fragments.outfitlist.FragmentComposeOutfitList"
         android:label="FragmentOutfitList"
         tools:layout="@layout/fragment_outfit_list">
         <action

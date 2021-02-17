@@ -1,6 +1,7 @@
 package com.cesarandres.ps2link
 
 import android.content.Context
+import com.cramsan.appcore.twitter.TwitterClientImpl
 import com.cramsan.framework.assert.AssertUtil
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtilImpl
@@ -47,8 +48,11 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepositoryImpl
 import com.cramsan.ps2link.appcore.repository.RedditRepository
 import com.cramsan.ps2link.appcore.repository.RedditRepositoryImpl
+import com.cramsan.ps2link.appcore.repository.TwitterRepository
+import com.cramsan.ps2link.appcore.repository.TwitterRepositoryImpl
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
+import com.cramsan.ps2link.appcore.twitter.TwitterClient
 import com.cramsan.ps2link.db.models.PS2LinkDB
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
@@ -83,7 +87,7 @@ object PS2ApplicationModule {
     @Singleton
     fun provideThreadUtilDelegate(
         eventLoggerInterface: EventLoggerInterface,
-        haltUtilInterface: HaltUtil
+        haltUtilInterface: HaltUtil,
     ): ThreadUtilDelegate {
         return ThreadUtilAndroid(
             AssertUtilImpl(
@@ -127,13 +131,14 @@ object PS2ApplicationModule {
     @Singleton
     fun provideEventLoggerInterface(
         eventLoggerErrorCallbackInterface: EventLoggerErrorCallbackInterface,
-        eventLoggerDelegate: EventLoggerDelegate
+        eventLoggerDelegate: EventLoggerDelegate,
     ): EventLoggerInterface {
         val severity: Severity = when (BuildConfig.DEBUG) {
             true -> Severity.DEBUG
             false -> Severity.INFO
         }
-        val instance = EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
+        val instance =
+            EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
         return EventLogger.instance(instance)
     }
 
@@ -195,7 +200,7 @@ object PS2ApplicationModule {
     @Provides
     @Singleton
     fun provideSqlDelightDriver(
-        @ApplicationContext appContext: Context
+        @ApplicationContext appContext: Context,
     ): SqlDriver {
         return AndroidSqliteDriver(PS2LinkDB.Schema, appContext, "ps2link.db")
     }
@@ -229,4 +234,16 @@ object PS2ApplicationModule {
     fun provideRedditRepository(
         http: HttpClient,
     ): RedditRepository = RedditRepositoryImpl(http)
+
+    @Provides
+    @Singleton
+    fun provideTwitterClient(): TwitterClient = TwitterClientImpl()
+
+    @Provides
+    @Singleton
+    fun provideTwitterRepository(
+        twitterClient: TwitterClient,
+        preferences: Preferences,
+        dispatcherProvider: DispatcherProvider,
+    ): TwitterRepository = TwitterRepositoryImpl(twitterClient, preferences, dispatcherProvider)
 }

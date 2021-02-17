@@ -5,6 +5,7 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.FriendCharacter
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponItem
@@ -66,4 +67,8 @@ interface PS2LinkRepository {
     suspend fun getServerList(
         lang: CensusLang,
     ): List<Server>
+
+    fun getAllOutfitsAsFlow(): Flow<List<Outfit>>
+
+    suspend fun getAllOutfits(): List<Outfit>
 }

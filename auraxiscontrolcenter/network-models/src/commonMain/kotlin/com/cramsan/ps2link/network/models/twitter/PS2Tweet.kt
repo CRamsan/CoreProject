@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.module.twitter
+package com.cramsan.ps2link.network.models.twitter
 
 /**
  * This class will hold the information of a tweet.

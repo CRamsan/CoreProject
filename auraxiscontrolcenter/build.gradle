@@ -41,9 +41,6 @@ dependencies {
     implementation project(":auraxiscontrolcenter:core-models")
     // This is needed as the App needs the instance of the DB to inject
     implementation project(":auraxiscontrolcenter:db-models")
-    // This is needed while we still have the legacy activities that used the raw network
-    // responses
-    implementation project(":auraxiscontrolcenter:network-models")
     implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
@@ -77,7 +74,6 @@ dependencies {
     implementation packages.KtorAndroid
     implementation packages.PrettyTime
     implementation packages.SqlDelightAndroidDriver
-    implementation packages.Twitter4J
     implementation packages.Volley
 
     kapt packages.GlideCompiler

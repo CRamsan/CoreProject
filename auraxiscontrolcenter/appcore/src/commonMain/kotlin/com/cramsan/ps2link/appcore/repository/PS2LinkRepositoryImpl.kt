@@ -22,6 +22,7 @@ import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
@@ -192,6 +193,16 @@ class PS2LinkRepositoryImpl(
                 Server(worldId, it.name?.localizedName(lang) ?: "")
             }
         }.filterNotNull()
+    }
+
+    override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
+        return dbgDAO.getAllOutfitsAsFlow().map { list ->
+            list.map { it.toCoreModel() }
+        }
+    }
+
+    override suspend fun getAllOutfits(): List<Outfit> {
+        return dbgDAO.getAllOutfits().map { it.toCoreModel() }
     }
 
     private fun formatWeapons(weaponList: List<Weapon>?, currentLang: CensusLang): List<WeaponItem> {

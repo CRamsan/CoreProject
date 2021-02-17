@@ -79,9 +79,7 @@ interface DbgDAO {
         namespace: Namespace,
     ): Outfit?
 
-    fun getAllOutfits(
-        namespace: Namespace,
-    ): List<Outfit>
+    fun getAllOutfits(): List<Outfit>
 
     fun getAllOutfitsAsFlow(): Flow<List<Outfit>>
 

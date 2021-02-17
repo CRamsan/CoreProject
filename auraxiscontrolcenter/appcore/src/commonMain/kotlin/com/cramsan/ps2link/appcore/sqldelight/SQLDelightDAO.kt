@@ -172,9 +172,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : DbgDAO {
         return database.outfitQueries.getOutfit(outfitId, namespace).executeAsOneOrNull()
     }
 
-    override fun getAllOutfits(
-        namespace: Namespace,
-    ): List<Outfit> {
+    override fun getAllOutfits(): List<Outfit> {
         assertIsBackgroundThread()
         return database.outfitQueries.getAllOutfits().executeAsList()
     }
