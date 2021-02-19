@@ -29,7 +29,7 @@ class OutfitListViewModel @ViewModelInject constructor(
     OutfitListEventHandler {
 
     override val logTag: String
-        get() = "ProfileListViewModel"
+        get() = "OutfitListViewModel"
 
     // State
     private val _outfitList = pS2LinkRepository.getAllOutfitsAsFlow()

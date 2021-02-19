@@ -205,6 +205,28 @@ class PS2LinkRepositoryImpl(
         return dbgDAO.getAllOutfits().map { it.toCoreModel() }
     }
 
+    override suspend fun searchForOutfits(
+        tagSearchField: String,
+        nameSearchField: String,
+        currentLang: CensusLang,
+    ): List<Outfit> = coroutineScope {
+        val outfits = Namespace.values().map { namespace ->
+            val job = async {
+                val endpointOutfitList = dbgCensus.getOutfitList(
+                    outfitTag = tagSearchField,
+                    outfitName = nameSearchField,
+                    namespace = namespace.toNetworkModel(),
+                    currentLang = currentLang
+                )
+                endpointOutfitList?.map {
+                    it.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds())
+                }
+            }
+            job
+        }.awaitAll().filterNotNull().flatten()
+        outfits
+    }
+
     private fun formatWeapons(weaponList: List<Weapon>?, currentLang: CensusLang): List<WeaponItem> {
         if (weaponList == null) {
             return emptyList()

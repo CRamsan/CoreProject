@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentComposeOutfitList : BaseComposePS2Fragment<OutfitListViewModel>() {
 
-    override val logTag = "FragmentComposeMainMenu"
+    override val logTag = "FragmentComposeOutfitList"
     override val viewModel: OutfitListViewModel by viewModels()
 
     @Composable

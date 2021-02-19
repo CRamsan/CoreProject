@@ -151,6 +151,15 @@ fun Stat.toStatItem(): StatItem {
     )
 }
 
+fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Namespace, lastUpdated: Long): com.cramsan.ps2link.core.models.Outfit {
+    return com.cramsan.ps2link.core.models.Outfit(
+        id = outfit_id,
+        name = name,
+        tag = alias,
+        namespace = namespace.toCoreModel(),
+    )
+}
+
 @OptIn(ExperimentalTime::class)
 fun Outfit.toCoreModel(): com.cramsan.ps2link.core.models.Outfit {
     return com.cramsan.ps2link.core.models.Outfit(
