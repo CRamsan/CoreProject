@@ -138,4 +138,5 @@
     <string name="toast_time_error">Este tiempo esta causando un conflicto</string>
     <string name="toast_push_notifications_disabled">Notificaciones fuera de servicio temporalmente</string>
     <string name="text_search">Buscar</string>
+    <string name="text_player_name">Nombre del jugador</string>
 </resources>

@@ -43,7 +43,7 @@ fun BoldButton(
         backgroundColor = color.setAlpha(
             Opacity.translucent
         ),
-        contentColor = contentColorFor(color = color)
+        contentColor = MaterialTheme.colors.onPrimary
     )
 
     Button(
@@ -78,6 +78,7 @@ fun MainMenuButton(
             }
             Text(
                 text = label,
+                style = MaterialTheme.typography.h6,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(vertical = Padding.large).fillMaxWidth()
             )

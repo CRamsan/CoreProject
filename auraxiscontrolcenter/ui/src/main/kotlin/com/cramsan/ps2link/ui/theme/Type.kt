@@ -4,10 +4,18 @@ import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.ResourceFont
+import androidx.compose.ui.text.font.fontFamily
 import androidx.compose.ui.unit.sp
+import com.cramsan.ps2link.ui.R
+
+val PS2Font = fontFamily(
+    ResourceFont(resId = R.font.planetside2)
+)
 
 // Set of Material typography styles to start with
 val typography = Typography(
+    defaultFontFamily = PS2Font,
     body1 = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,

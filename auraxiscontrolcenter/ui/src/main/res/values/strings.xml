@@ -114,6 +114,7 @@
     <string name="text_choose_donation">Choose Donation</string>
     <string name="text_thanks">Thanks for your support</string>
     <string name="text_thanks_failed">There was a problem processing your donation</string>
+    <string name="text_player_name">Player name</string>
 
     <string name="toast_profile_download_failed">Profile data download failed.</string>
     <string name="toast_push_notifications_disabled">Push notifications disabled temporarily</string>
@@ -128,7 +129,6 @@
     <!-- This probably does not need to be translated -->
     <string name="title_twitter" translatable="false">TWITTER</string>
     <string name="url_homepage" translatable="false">https://cramsan.com/auraxiscontrolcenter-site/</string>
-    <string name="text_empty" translatable="false"></string>
     <string name="text_leader">LEADER</string>
     <string name="text_created">CREATED</string>
 

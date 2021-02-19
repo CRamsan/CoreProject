@@ -5,17 +5,28 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.items.ProfileItem
+import com.cramsan.ps2link.ui.theme.PS2Theme
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 import kotlin.time.days
@@ -29,10 +40,25 @@ fun ProfileAddCompose(
 ) {
     FrameBottom(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            TextField(
-                value = searchField,
-                onValueChange = { eventHandler.onSearchFieldUpdated(it) }
-            )
+            FrameSlim {
+                TextField(
+                    value = searchField,
+                    modifier = Modifier.focus(),
+                    label = { Text(stringResource(R.string.text_player_name)) },
+                    maxLines = 1,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
+                    backgroundColor = Color.Transparent,
+                    onImeActionPerformed = { _, controller ->
+                        controller?.hideSoftwareKeyboard()
+                    },
+                    onValueChange = { eventHandler.onSearchFieldUpdated(it) }
+                )
+            }
 
             Box {
                 LazyColumn {
@@ -63,30 +89,32 @@ interface ProfileAddEventHandler {
 @Preview
 @Composable
 fun NormalButtonPreview() {
-    ProfileAddCompose(
-        searchField = "Cramsan",
-        profileItems = listOf(
-            Character(
-                characterId = "",
-                name = "Cramsan1",
-                battleRank = 80,
-                faction = Faction.VS,
-                namespace = Namespace.PS2PS4US,
-                activeProfileId = 1,
-                certs = 1,
-                lastLogin = Instant.DISTANT_PAST,
-                timePlayed = 10.days,
-                outfit = null,
-                percentageToNextCert = 0.0,
-                percentageToNextBattleRank = 0.0,
-                server = Server("", "Ceres"),
-                cached = true,
-            )
-        ),
-        isLoading = true,
-        eventHandler = object : ProfileAddEventHandler {
-            override fun onSearchFieldUpdated(searchField: String) = Unit
-            override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
-        },
-    )
+    PS2Theme {
+        ProfileAddCompose(
+            searchField = "Cramsan",
+            profileItems = listOf(
+                Character(
+                    characterId = "",
+                    name = "Cramsan1",
+                    battleRank = 80,
+                    faction = Faction.VS,
+                    namespace = Namespace.PS2PS4US,
+                    activeProfileId = 1,
+                    certs = 1,
+                    lastLogin = Instant.DISTANT_PAST,
+                    timePlayed = 10.days,
+                    outfit = null,
+                    percentageToNextCert = 0.0,
+                    percentageToNextBattleRank = 0.0,
+                    server = Server("", "Ceres"),
+                    cached = true,
+                )
+            ),
+            isLoading = true,
+            eventHandler = object : ProfileAddEventHandler {
+                override fun onSearchFieldUpdated(searchField: String) = Unit
+                override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
+            },
+        )
+    }
 }

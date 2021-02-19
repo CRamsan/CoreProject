@@ -19,6 +19,7 @@ import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.MainMenuButton
+import com.cramsan.ps2link.ui.theme.PS2Theme
 
 @Composable
 fun MainMenuCompose(
@@ -94,21 +95,26 @@ interface MainMenuEventHandler {
     fun onAboutClick()
 }
 
-@Preview
+@Preview(
+    showBackground = true,
+    backgroundColor = 0xFF000000,
+)
 @Composable
 fun NormalButtonPreview() {
-    MainMenuCompose(
-        preferredProfile = null,
-        preferredOutfit = null,
-        eventHandler = object : MainMenuEventHandler {
-            override fun onPreferredProfileClick(characterId: String, namespace: Namespace) = Unit
-            override fun onPreferredOutfitClick(outfitId: String, namespace: Namespace) = Unit
-            override fun onProfileClick() = Unit
-            override fun onServersClick() = Unit
-            override fun onOutfitsClick() = Unit
-            override fun onTwitterClick() = Unit
-            override fun onRedditClick() = Unit
-            override fun onAboutClick() = Unit
-        }
-    )
+    PS2Theme {
+        MainMenuCompose(
+            preferredProfile = null,
+            preferredOutfit = null,
+            eventHandler = object : MainMenuEventHandler {
+                override fun onPreferredProfileClick(characterId: String, namespace: Namespace) = Unit
+                override fun onPreferredOutfitClick(outfitId: String, namespace: Namespace) = Unit
+                override fun onProfileClick() = Unit
+                override fun onServersClick() = Unit
+                override fun onOutfitsClick() = Unit
+                override fun onTwitterClick() = Unit
+                override fun onRedditClick() = Unit
+                override fun onAboutClick() = Unit
+            }
+        )
+    }
 }
