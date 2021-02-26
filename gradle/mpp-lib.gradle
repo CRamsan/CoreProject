@@ -28,6 +28,19 @@ android {
         sourceCompatibility versions_tools.JavaCompatibilityForAndroid
         targetCompatibility versions_tools.JavaCompatibilityForAndroid
     }
+
+    // https://youtrack.jetbrains.com/issue/KT-43944
+    // https://issuetracker.google.com/issues/175496966
+    // TODO: Remove this block when using kotlin 1.5
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+
     sourceSets {
         main {
             // Changes the directory for Java sources. The default directory is

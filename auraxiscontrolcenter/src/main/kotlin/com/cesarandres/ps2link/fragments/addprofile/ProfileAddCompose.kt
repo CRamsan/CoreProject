@@ -5,20 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
@@ -43,20 +35,28 @@ fun ProfileAddCompose(
             FrameSlim {
                 TextField(
                     value = searchField,
-                    modifier = Modifier.focus(),
-                    label = { Text(stringResource(R.string.text_player_name)) },
+                    // modifier = Modifier.focus(),
+                    /*
+                    label = {
+                        val text = stringResource(R.string.text_player_name)
+                        Text(text)
+                    },
+                     */
                     maxLines = 1,
+                    /*
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.None,
                         autoCorrect = false,
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Done,
                     ),
-                    backgroundColor = Color.Transparent,
                     onImeActionPerformed = { _, controller ->
-                        controller?.hideSoftwareKeyboard()
+                        controller.hideSoftwareKeyboard()
                     },
-                    onValueChange = { eventHandler.onSearchFieldUpdated(it) }
+                     */
+                    onValueChange = { text ->
+                        eventHandler.onSearchFieldUpdated(text)
+                    }
                 )
             }
 
