@@ -99,11 +99,10 @@ class PlantListViewModel @ViewModelInject constructor(
             return@withContext
         }
 
-        val plants: List<PresentablePlant>? = if (query.isEmpty()) {
+        val plants: List<PresentablePlant> = if (query.isEmpty()) {
             modelProvider.getPlantsWithToxicity(animalType, "en")
         } else {
             modelProvider.getPlantsWithToxicityFiltered(animalType, query, "en")
-                ?: return@withContext
         }
 
         viewModelScope.launch {
