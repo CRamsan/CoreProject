@@ -58,7 +58,9 @@ class ProfileAddViewModel @ViewModelInject constructor(
             delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             val profiles = pS2LinkRepository.searchForCharacter(searchField, lang)
-            _profileList.value = profiles
+            _profileList.value = profiles.sortedBy {
+                it.name
+            }
             loadingCompleted()
         }
     }

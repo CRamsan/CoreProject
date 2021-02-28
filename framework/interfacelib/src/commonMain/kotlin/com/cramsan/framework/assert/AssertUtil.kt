@@ -35,3 +35,7 @@ fun assertNull(any: Any?, tag: String, message: String) {
 fun assertNotNull(any: Any?, tag: String, message: String) {
     AssertUtil.singleton.assert(any != null, tag, message)
 }
+
+fun assertFailure(tag: String, message: String) {
+    AssertUtil.singleton.assert(false, tag, message)
+}

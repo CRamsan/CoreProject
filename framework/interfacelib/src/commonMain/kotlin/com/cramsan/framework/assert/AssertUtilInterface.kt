@@ -32,4 +32,12 @@ interface AssertUtilInterface {
      * fails, [tag] and [message] may be used to log a message by using the [eventLogger].
      */
     fun assert(condition: Boolean, tag: String, message: String)
+
+    fun assertFalse(condition: Boolean, tag: String, message: String)
+
+    fun assertNull(any: Any?, tag: String, message: String)
+
+    fun assertNotNull(any: Any?, tag: String, message: String)
+
+    fun assertFailure(tag: String, message: String)
 }

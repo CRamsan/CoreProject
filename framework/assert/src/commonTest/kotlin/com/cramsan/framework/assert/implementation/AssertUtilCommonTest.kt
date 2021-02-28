@@ -1,6 +1,7 @@
 package com.cramsan.framework.assert.implementation
 
 import com.cramsan.framework.assert.assert
+import com.cramsan.framework.assert.assertFailure
 import com.cramsan.framework.assert.assertFalse
 import com.cramsan.framework.assert.assertNotNull
 import com.cramsan.framework.assert.assertNull
@@ -90,6 +91,26 @@ class AssertUtilCommonTest : TestBase() {
     }
 
     @Test
+    fun assertFailure() = runBlockingTest {
+        val eventLogger = mockkClass(EventLoggerImpl::class)
+        val haltUtil = mockkClass(HaltUtilImpl::class)
+        val assertUtil = AssertUtilImpl(false, eventLogger, haltUtil)
+        val classTag = "Test"
+
+        every { eventLogger.log(Severity.ERROR, classTag, "Assert-Message-1") } just Runs
+        every { haltUtil.stopThread() } just Runs
+
+        assertUtil.assertFailure("Test", "Assert-Message-1")
+
+        verify(exactly = 1) {
+            eventLogger.log(Severity.ERROR, classTag, "Assert-Message-1")
+        }
+        verify(exactly = 0) {
+            haltUtil.stopThread()
+        }
+    }
+
+    @Test
     fun `test global functions`() = runBlockingTest {
         val assertUtil: AssertUtilImpl = mockk(relaxed = true)
         val tag = "TestTag"
@@ -117,6 +138,9 @@ class AssertUtilCommonTest : TestBase() {
         verify { assertUtil.assert(true, tag, message) }
 
         assertNotNull(null, tag, message)
+        verify { assertUtil.assert(false, tag, message) }
+
+        assertFailure(tag, message)
         verify { assertUtil.assert(false, tag, message) }
     }
 }

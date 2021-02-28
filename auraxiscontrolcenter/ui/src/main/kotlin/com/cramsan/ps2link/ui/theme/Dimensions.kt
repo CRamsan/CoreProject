@@ -14,6 +14,7 @@ object Size {
 }
 
 object Padding {
+    val micro = 1.dp
     val xsmall = 2.dp
     val small = 4.dp
     val medium = 8.dp
@@ -24,5 +25,5 @@ object Padding {
 
 object Opacity {
     const val transparent = 0.20f
-    const val translucent = 0.75f
+    const val translucent = 0.55f
 }

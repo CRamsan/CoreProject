@@ -4,25 +4,34 @@ import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.Overlay
+import com.cramsan.ps2link.ui.SearchField
 import com.cramsan.ps2link.ui.items.ProfileItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import com.cramsan.ps2link.ui.theme.Padding
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 import kotlin.time.days
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ProfileAddCompose(
     searchField: String,
@@ -30,49 +39,34 @@ fun ProfileAddCompose(
     isLoading: Boolean,
     eventHandler: ProfileAddEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
-            FrameSlim {
-                TextField(
+            FrameSlim(modifier = Modifier.fillMaxWidth()) {
+                SearchField(
                     value = searchField,
-                    // modifier = Modifier.focus(),
-                    /*
-                    label = {
-                        val text = stringResource(R.string.text_player_name)
-                        Text(text)
-                    },
-                     */
-                    maxLines = 1,
-                    /*
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.None,
-                        autoCorrect = false,
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done,
-                    ),
-                    onImeActionPerformed = { _, controller ->
-                        controller.hideSoftwareKeyboard()
-                    },
-                     */
-                    onValueChange = { text ->
-                        eventHandler.onSearchFieldUpdated(text)
-                    }
-                )
+                    hint = stringResource(R.string.text_player_name),
+                ) { text ->
+                    eventHandler.onSearchFieldUpdated(text)
+                }
             }
 
-            Box {
+            Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn {
                     items(profileItems) {
                         ProfileItem(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = Padding.micro),
                             label = it.name ?: "",
-                            level = it.battleRank?.toInt(),
+                            level = it.battleRank?.toInt() ?: 0,
                             faction = it.faction,
+                            namespace = it.namespace,
                             onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
                         )
                     }
                 }
+
+                Overlay(enabled = isLoading)
                 if (isLoading) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
         }

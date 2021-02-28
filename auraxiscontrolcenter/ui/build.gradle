@@ -38,6 +38,8 @@ android {
 
 dependencies {
     implementation project(":auraxiscontrolcenter:core-models")
+    implementation project(":framework:assert")
+    implementation project(":framework:interfacelib")
     implementation packages.AndroidMaterial
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx
@@ -53,5 +55,5 @@ dependencies {
 }
 
 registerDependency(":auraxiscontrolcenter:core-models")
-
-registerDependency(":auraxiscontrolcenter:core-models")
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:assert")

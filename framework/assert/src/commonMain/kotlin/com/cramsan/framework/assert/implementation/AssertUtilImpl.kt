@@ -23,7 +23,7 @@ class AssertUtilImpl(
         }
     }
 
-    override fun assert(condition: Boolean, tag: String, message: String) {
+    private fun assertImpl(condition: Boolean, tag: String, message: String) {
         if (condition) {
             return
         }
@@ -31,5 +31,25 @@ class AssertUtilImpl(
         if (haltOnFailure) {
             haltUtil?.stopThread()
         }
+    }
+
+    override fun assert(condition: Boolean, tag: String, message: String) {
+        assertImpl(condition, tag, message)
+    }
+
+    override fun assertFalse(condition: Boolean, tag: String, message: String) {
+        assertImpl(!condition, tag, message)
+    }
+
+    override fun assertNull(any: Any?, tag: String, message: String) {
+        assertImpl(any == null, tag, message)
+    }
+
+    override fun assertNotNull(any: Any?, tag: String, message: String) {
+        assertImpl(any != null, tag, message)
+    }
+
+    override fun assertFailure(tag: String, message: String) {
+        assertImpl(false, tag, message)
     }
 }
