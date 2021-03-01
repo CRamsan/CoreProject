@@ -174,6 +174,7 @@ fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Nam
         id = outfit_id,
         name = name,
         tag = alias,
+        memberCount = member_count,
         namespace = namespace.toCoreModel(),
     )
 }
@@ -184,6 +185,7 @@ fun Outfit.toCoreModel(): com.cramsan.ps2link.core.models.Outfit {
         id = outfitId,
         name = name,
         tag = alias,
+        memberCount = memberCount?.toInt() ?: 0,
         namespace = namespace.toCoreModel(),
     )
 }

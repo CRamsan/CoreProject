@@ -3,17 +3,20 @@ package com.cesarandres.ps2link.fragments.addoutfit
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SearchField
 import com.cramsan.ps2link.ui.items.OutfitItem
 import kotlin.time.ExperimentalTime
 
@@ -27,28 +30,35 @@ fun OutfitAddCompose(
 ) {
     FrameBottom(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            TextField(
-                value = tagSearchField,
-                onValueChange = { eventHandler.onTagFieldUpdated(it) }
-            )
-
-            TextField(
-                value = nameSearchField,
-                onValueChange = { eventHandler.onNameFieldUpdated(it) }
-            )
-
-            Box {
+            Row {
+                SearchField(
+                    modifier = Modifier.weight(1f),
+                    value = tagSearchField,
+                    hint = stringResource(R.string.text_tag),
+                ) { text ->
+                    eventHandler.onTagFieldUpdated(text)
+                }
+                SearchField(
+                    modifier = Modifier.weight(3f),
+                    value = nameSearchField,
+                    hint = stringResource(R.string.text_outfit_name),
+                ) { text ->
+                    eventHandler.onNameFieldUpdated(text)
+                }
+            }
+            Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn {
                     items(outfitItems) {
                         OutfitItem(
-                            label = it.name ?: "",
+                            tag = it.tag ?: "",
+                            name = it.name ?: "",
+                            memberCount = it.memberCount,
+                            namespace = it.namespace,
                             onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) }
                         )
                     }
                 }
-                if (isLoading) {
-                    CircularProgressIndicator()
-                }
+                LoadingOverlay(enabled = isLoading)
             }
         }
     }
@@ -73,6 +83,7 @@ fun OutfitAddComposePreview() {
                 id = "",
                 name = "Cramsan1",
                 tag = "D3rp",
+                memberCount = 200,
                 namespace = Namespace.PS2PS4US,
             )
         ),

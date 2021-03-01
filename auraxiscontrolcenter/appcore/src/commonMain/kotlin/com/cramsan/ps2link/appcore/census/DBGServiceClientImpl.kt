@@ -176,15 +176,23 @@ class DBGServiceClientImpl(
         namespace: Namespace,
         currentLang: CensusLang,
     ): List<Outfit>? {
-        val query = QueryString.generateQeuryString().AddComparison(
-            "alias_lower",
-            QueryString.SearchModifier.STARTSWITH,
-            outfitTag
-        ).AddComparison(
-            "name_lower",
-            QueryString.SearchModifier.STARTSWITH,
-            outfitName
-        ).AddCommand(QueryString.QueryCommand.LIMIT, "15")
+        val query = QueryString.generateQeuryString().apply {
+            if (outfitTag.length >= 3) {
+                AddComparison(
+                    "alias_lower",
+                    QueryString.SearchModifier.STARTSWITH,
+                    outfitTag
+                )
+            }
+            if (outfitName.length >= 3) {
+                AddComparison(
+                    "name_lower",
+                    QueryString.SearchModifier.STARTSWITH,
+                    outfitName
+                )
+            }
+            AddCommand(QueryString.QueryCommand.LIMIT, "15")
+        }
 
         val url = census.generateGameDataRequest(
             Verb.GET,
@@ -208,7 +216,8 @@ class DBGServiceClientImpl(
             Verb.GET,
             Collections.PS2Collection.OUTFIT,
             outfitId,
-            QueryString.generateQeuryString().AddCommand(QueryString.QueryCommand.RESOLVE, "leader"),
+            QueryString.generateQeuryString()
+                .AddCommand(QueryString.QueryCommand.RESOLVE, "leader"),
             namespace,
             currentLang,
         )
@@ -287,12 +296,13 @@ class DBGServiceClientImpl(
                 "type",
                 QueryString.SearchModifier.EQUALS,
                 "METAGAME"
-            ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId!!).AddComparison(
-                "after",
-                QueryString.SearchModifier.EQUALS,
-                // Get metagame events that are newer than 2 hours
-                Clock.System.now().minus(15.hours).epochSeconds.toString()
-            ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
+            ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId!!)
+                .AddComparison(
+                    "after",
+                    QueryString.SearchModifier.EQUALS,
+                    // Get metagame events that are newer than 2 hours
+                    Clock.System.now().minus(15.hours).epochSeconds.toString()
+                ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
             namespace,
             currentLang,
         )
@@ -311,8 +321,12 @@ class DBGServiceClientImpl(
             Verb.GET,
             Collections.PS2Collection.CHARACTER,
             character_id,
-            QueryString.generateQeuryString().AddCommand(QueryString.QueryCommand.RESOLVE, "stat_history")
-                .AddCommand(QueryString.QueryCommand.HIDE, "name,battle_rank,certs,times,daily_ribbon"),
+            QueryString.generateQeuryString()
+                .AddCommand(QueryString.QueryCommand.RESOLVE, "stat_history")
+                .AddCommand(
+                    QueryString.QueryCommand.HIDE,
+                    "name,battle_rank,certs,times,daily_ribbon"
+                ),
             namespace,
             currentLang,
         )
@@ -327,7 +341,12 @@ class DBGServiceClientImpl(
         namespace: Namespace,
         currentLang: CensusLang,
     ): List<Member>? {
-        val url = census.generateGameDataRequest("outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + CensusLang.EN.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId, namespace, CensusLang.EN)
+        val url =
+            census.generateGameDataRequest(
+                "outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + CensusLang.EN.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
+                namespace,
+                CensusLang.EN
+            )
         val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
         return body?.outfit_member_list
     }

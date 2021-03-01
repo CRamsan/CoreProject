@@ -19,13 +19,14 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchField(
+    modifier: Modifier = Modifier,
     value: String,
     hint: String,
     onValueChange: (String) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     TextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = value,
         label = {
             Text(hint)

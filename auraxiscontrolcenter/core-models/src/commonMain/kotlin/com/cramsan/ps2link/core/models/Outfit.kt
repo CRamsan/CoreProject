@@ -8,5 +8,6 @@ data class Outfit(
     val id: String,
     val name: String?,
     val tag: String?,
+    val memberCount: Int,
     val namespace: Namespace,
 )

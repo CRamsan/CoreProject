@@ -105,6 +105,9 @@ class PS2LinkRepositoryImpl(
         searchField: String,
         currentLang: CensusLang,
     ): List<Character> = coroutineScope {
+        if (searchField.length < 3) {
+            return@coroutineScope emptyList()
+        }
         val profiles = Namespace.validNamespaces.map { namespace ->
             val job = async {
                 val endpointProfileList = dbgCensus.getProfiles(
@@ -210,7 +213,11 @@ class PS2LinkRepositoryImpl(
         nameSearchField: String,
         currentLang: CensusLang,
     ): List<Outfit> = coroutineScope {
-        val outfits = Namespace.values().map { namespace ->
+        if (tagSearchField.length < 3 && nameSearchField.length < 3) {
+            return@coroutineScope emptyList()
+        }
+
+        val outfits = Namespace.validNamespaces.map { namespace ->
             val job = async {
                 val endpointOutfitList = dbgCensus.getOutfitList(
                     outfitTag = tagSearchField,

@@ -61,7 +61,7 @@
     <string name="text_low">low</string>
     <string name="text_medium">medium</string>
     <string name="text_high">high</string>
-    <string name="text_outfit_members">Members:</string>
+    <string name="text_outfit_members">Members: %s</string>
     <string name="text_tag_too_short">Tag is too short</string>
     <string name="text_unknown">Unknown</string>
     <string name="text_outfit_name_too_short">Outfit name is too short</string>

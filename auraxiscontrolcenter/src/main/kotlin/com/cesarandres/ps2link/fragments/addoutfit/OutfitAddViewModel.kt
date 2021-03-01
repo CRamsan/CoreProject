@@ -5,7 +5,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
-import com.cesarandres.ps2link.fragments.OpenProfile
+import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -73,6 +73,7 @@ class OutfitAddViewModel @ViewModelInject constructor(
     fun search(tag: String, name: String) {
         searchJob?.cancel()
         searchJob = null
+
         searchJob = ioScope.launch {
             loadingStarted()
             // Add this delay to allow for fast typing to cancel previous requests without hitting the API.
@@ -86,6 +87,6 @@ class OutfitAddViewModel @ViewModelInject constructor(
     }
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
-        events.value = OpenProfile(outfitId, namespace)
+        events.value = OpenOutfit(outfitId, namespace)
     }
 }
