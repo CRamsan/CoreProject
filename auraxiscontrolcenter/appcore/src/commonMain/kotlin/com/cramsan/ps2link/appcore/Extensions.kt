@@ -1,8 +1,10 @@
 package com.cramsan.ps2link.appcore
 
 import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.RedditPost
 import com.cramsan.ps2link.core.models.Server
+import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.db.Character
@@ -10,8 +12,10 @@ import com.cramsan.ps2link.db.Outfit
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.db.models.Namespace
 import com.cramsan.ps2link.network.models.content.CharacterProfile
+import com.cramsan.ps2link.network.models.content.OnlineStatus
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.item.StatNameType
+import com.cramsan.ps2link.network.models.content.response.server.PopulationStatus
 import com.cramsan.ps2link.network.models.content.world.Name_Multi
 import com.cramsan.ps2link.network.models.reddit.Post
 import com.cramsan.ps2link.network.models.twitter.PS2Tweet
@@ -85,7 +89,7 @@ fun com.cramsan.ps2link.core.models.Namespace.toNetworkModel() = when (this) {
 @OptIn(ExperimentalTime::class)
 fun Character.toCoreModel(): com.cramsan.ps2link.core.models.Character {
     val server = if (worldId != null && worldName != null) {
-        Server(worldId!!, worldName!!)
+        Server(worldId!!, worldName!!, null, namespace.toCoreModel())
     } else {
         null
     }
@@ -139,6 +143,20 @@ fun Name_Multi.localizedName(currentLang: CensusLang): String? {
         CensusLang.TR -> this.tr
         CensusLang.EN -> this.en
     }
+}
+
+fun PopulationStatus?.toCoreModel(): Population = when (this) {
+    PopulationStatus.HIGH -> Population.HIGH
+    PopulationStatus.MEDIUM -> Population.MEDIUM
+    PopulationStatus.LOW -> Population.LOW
+    null -> Population.UNKNOWN
+}
+
+fun OnlineStatus?.toCoreModel(): ServerStatus = when (this) {
+    OnlineStatus.ONLINE -> ServerStatus.ONLINE
+    OnlineStatus.OFFLINE -> ServerStatus.OFFLINE
+    OnlineStatus.LOCKED -> ServerStatus.LOCKED
+    null -> ServerStatus.UNKNOWN
 }
 
 fun Stat.toStatItem(): StatItem {

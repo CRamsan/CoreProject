@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
@@ -23,8 +24,10 @@ class FragmentComposeServerList : BaseComposePS2Fragment<ServerListViewModel>() 
     @Composable
     override fun CreateComposeContent() {
         val serverList = viewModel.serverList.observeAsState(emptyList())
+        val isLoading = viewModel.isLoading.collectAsState()
         ServerListCompose(
             serverItems = serverList.value,
+            isLoading = isLoading.value,
         )
     }
 

@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.framework.logging.logI
+import com.cramsan.ps2link.appcore.census.DBGCensus.Companion.SERVICE_ID
 import com.cramsan.ps2link.appcore.network.HttpClient
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.network.models.Namespace
@@ -261,7 +262,7 @@ class DBGServiceClientImpl(
 
     override suspend fun getServerPopulation(): PS2? {
         // This is not an standard API call
-        val url = Url("https://census.daybreakgames.com/s:PS2Link/json/status/ps2")
+        val url = Url("https://census.daybreakgames.com/s:$SERVICE_ID/json/status/ps2")
 
         return http.sendRequestWithRetry<Server_Status_response>(url)?.ps2
     }

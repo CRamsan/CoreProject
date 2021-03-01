@@ -139,4 +139,8 @@
     <string name="toast_push_notifications_disabled">Notificaciones fuera de servicio temporalmente</string>
     <string name="text_search">Buscar</string>
     <string name="text_player_name">Nombre del jugador</string>
+    <string name="text_unknown_caps">DESCONOCIDO</string>
+    <string name="text_low_caps">BAJO</string>
+    <string name="text_medium_caps">MEDIO</string>
+    <string name="text_high_caps">ALTO</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.cramsan.ps2link.network.models.content.item
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Weapon(
     var character_id: String? = null,
     var item_id: String? = null,

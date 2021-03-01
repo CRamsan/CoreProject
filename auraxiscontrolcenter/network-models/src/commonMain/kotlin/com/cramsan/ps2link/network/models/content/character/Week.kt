@@ -1,5 +1,8 @@
 package com.cramsan.ps2link.network.models.content.character
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Week(
     var w01: String? = null,
     var w02: String? = null,

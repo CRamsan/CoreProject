@@ -24,23 +24,28 @@ import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
+import com.cramsan.ps2link.core.models.ServerMetadata
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.core.models.WeaponStatItem
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.network.models.content.CharacterEvent
+import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.character.Day
 import com.cramsan.ps2link.network.models.content.character.Month
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.character.Week
 import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.item.Weapon
+import com.cramsan.ps2link.network.models.content.response.server.PS2
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
@@ -100,7 +105,7 @@ class PS2LinkRepositoryImpl(
         searchField: String,
         currentLang: CensusLang,
     ): List<Character> = coroutineScope {
-        val profiles = Namespace.values().map { namespace ->
+        val profiles = Namespace.validNamespaces.map { namespace ->
             val job = async {
                 val endpointProfileList = dbgCensus.getProfiles(
                     searchField = searchField,
@@ -176,23 +181,18 @@ class PS2LinkRepositoryImpl(
     }
 
     override suspend fun getServerList(lang: CensusLang): List<Server> = coroutineScope {
-        val serverList = Namespace.values().map { namespace ->
-            val job = async { dbgCensus.getServerList(namespace.toNetworkModel(), lang) }
-            job
-        }.awaitAll().filterNotNull().flatten()
-
-        /*
-            val serverPopulation = withContext(Dispatchers.IO) { dbgCensus.getServerPopulation() }
-
-            val listRoot = requireActivity().findViewById<View>(R.id.listViewServers) as ListView
-            val servers = serverPopulation
-            (listRoot.adapter as ServerItemAdapter).setServerPopulation(servers!!)
-         */
-        serverList.map {
-            it.world_id?.let { worldId ->
-                Server(worldId, it.name?.localizedName(lang) ?: "")
+        val serverPopulation = withContext(Dispatchers.Default) { dbgCensus.getServerPopulation() }
+        Namespace.validNamespaces.map { namespace ->
+            val job = async {
+                dbgCensus.getServerList(namespace.toNetworkModel(), lang)?.map {
+                    it.world_id?.let { worldId ->
+                        val serverMetadata = getServerMetadata(it, serverPopulation, lang)
+                        Server(worldId, it.name?.localizedName(lang) ?: "", serverMetadata, namespace)
+                    }
+                }
             }
-        }.filterNotNull()
+            job
+        }.awaitAll().filterNotNull().flatten().filterNotNull()
     }
 
     override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
@@ -225,6 +225,26 @@ class PS2LinkRepositoryImpl(
             job
         }.awaitAll().filterNotNull().flatten()
         outfits
+    }
+
+    private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {
+        val server = when (world.name?.localizedName(currentLang)) {
+            "Ceres" -> ps2Metadata?.livePS4?.ceres
+            "Genudine" -> ps2Metadata?.livePS4?.genudine
+            "Cobalt" -> ps2Metadata?.live?.cobalt
+            "Connery" -> ps2Metadata?.live?.connery
+            "Emerald" -> ps2Metadata?.live?.emerald
+            "Miller" -> ps2Metadata?.live?.miller
+            else -> null
+        }
+
+        val population = server?.status.toCoreModel()
+        val status = world.state.toCoreModel()
+
+        return ServerMetadata(
+            status = status,
+            population = population,
+        )
     }
 
     private fun formatWeapons(weaponList: List<Weapon>?, currentLang: CensusLang): List<WeaponItem> {

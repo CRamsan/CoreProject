@@ -52,8 +52,12 @@
     <string name="text_members">MEMBERS</string>
     <string name="text_offline_caps">OFFLINE</string>
     <string name="text_locked_caps">LOCKED</string>
+    <string name="text_unknown_caps">UNKNOWN</string>
     <string name="text_none">NONE</string>
 
+    <string name="text_low_caps">LOW</string>
+    <string name="text_medium_caps">MEDIUM</string>
+    <string name="text_high_caps">HIGH</string>
     <string name="text_low">low</string>
     <string name="text_medium">medium</string>
     <string name="text_high">high</string>
@@ -107,7 +111,7 @@
     <string name="text_stat_today">Today:</string>
     <string name="text_stat_week">This week:</string>
     <string name="text_stat_month">This month:</string>
-    <string name="text_server_population">Population:</string>
+    <string name="text_server_population">Population: %s</string>
     <string name="text_server_alert">Alert:</string>
     <string name="text_vehicle_kills_">Vehicle Kills: </string>
     <string name="text_wia_killed_by">Victim: </string>

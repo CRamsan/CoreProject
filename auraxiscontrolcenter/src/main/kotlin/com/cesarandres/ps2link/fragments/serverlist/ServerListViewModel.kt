@@ -46,8 +46,10 @@ class ServerListViewModel @ViewModelInject constructor(
      * current list of servers and their state.
      */
     private suspend fun downloadServers() {
+        loadingStarted()
         val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
         val serverList = pS2LinkRepository.getServerList(lang)
         _serverList.value = serverList
+        loadingCompleted()
     }
 }

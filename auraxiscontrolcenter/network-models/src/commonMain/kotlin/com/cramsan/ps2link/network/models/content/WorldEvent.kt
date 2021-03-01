@@ -1,5 +1,8 @@
 package com.cramsan.ps2link.network.models.content
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class WorldEvent(
     var event: EventType? = null,
     var faction_nc: String? = null,

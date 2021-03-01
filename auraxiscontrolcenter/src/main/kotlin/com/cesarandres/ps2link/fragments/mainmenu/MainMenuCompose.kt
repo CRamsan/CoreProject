@@ -1,6 +1,7 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
 import androidx.annotation.MainThread
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,7 @@ fun MainMenuCompose(
             modifier = Modifier.padding(horizontal = 50.dp)
                 .verticalScroll(rememberScrollState())
                 .wrapContentWidth()
+                .animateContentSize()
         ) {
             Spacer(modifier = Modifier.height(50.dp))
             val buttonModifier = Modifier.padding(10.dp).fillMaxWidth()

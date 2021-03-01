@@ -20,3 +20,11 @@ val errorColor = Color(0xFFE91E1E)
  */
 val gold = Color(0xFFFFEB3B)
 val goldDisabled = Color(0xFFAA9D2B)
+
+/**
+ * UI Colors
+ */
+val negative = Color(0xFFE91E63)
+val positive = Color(0xFF4CAF50)
+val warning = Color(0xFFFFC107)
+val undefined = Color(0xFFB9B9B9)

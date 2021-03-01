@@ -1,5 +1,8 @@
 package com.cramsan.ps2link.network.models.content
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CharacterEvent(
     var attacker: CharacterProfileLimited? = null,
     var character: CharacterProfileLimited? = null,

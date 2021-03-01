@@ -7,5 +7,6 @@ package com.cramsan.ps2link.core.models
 data class Server(
     val worldId: String,
     val serverName: String,
-    val serverMetadata: ServerMetadata? = null,
+    val serverMetadata: ServerMetadata?,
+    val namespace: Namespace,
 )

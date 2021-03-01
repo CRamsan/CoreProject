@@ -4,11 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LiveServersPS4(
-
-    @SerialName("Ceres (EU)")
-    var ceres: LiveServer? = null,
-
-    @SerialName("Genudine")
-    var genudine: LiveServer? = null,
-)
+enum class PopulationStatus {
+    @SerialName("high")
+    HIGH,
+    @SerialName("medium")
+    MEDIUM,
+    @SerialName("low")
+    LOW,
+}

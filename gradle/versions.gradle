@@ -173,6 +173,7 @@ def packages = [
         KtorCore : "io.ktor:ktor-client-core:$versions_packages.Ktor",
         KtorGson : "io.ktor:ktor-client-gson:$versions_packages.Ktor",
         KtorJson : "io.ktor:ktor-client-json:$versions_packages.Ktor",
+        KtorSerialization : "io.ktor:ktor-client-serialization:$versions_packages.Ktor",
         Mockito : "org.mockito:mockito-android:$versions_packages.Mockito",
         Mockk : "io.mockk:mockk:$versions_packages.Mockk",
         MockkAndroid : "io.mockk:mockk-android:$versions_packages.Mockk",

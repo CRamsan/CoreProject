@@ -1,7 +1,9 @@
 package com.cramsan.ps2link.network.models.content
 
 import com.cramsan.ps2link.network.models.Namespace
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Outfit(
     var outfit_id: String,
     var name: String? = null,

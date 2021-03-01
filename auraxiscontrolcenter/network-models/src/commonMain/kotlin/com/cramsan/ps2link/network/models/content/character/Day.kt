@@ -1,5 +1,8 @@
 package com.cramsan.ps2link.network.models.content.character
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Day(
     var d01: String? = null,
     var d02: String? = null,

@@ -6,7 +6,9 @@ import com.cramsan.ps2link.network.models.content.character.Name
 import com.cramsan.ps2link.network.models.content.character.Server
 import com.cramsan.ps2link.network.models.content.character.Stats
 import com.cramsan.ps2link.network.models.content.character.Times
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CharacterProfile(
     var character_id: String,
     var name: Name? = null,
