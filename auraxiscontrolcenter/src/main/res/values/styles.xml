@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="PS2Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryLightColor</item>
     </style>
 
     <!-- Base application theme. -->
@@ -91,7 +91,7 @@
         <item name="android:background">@drawable/ps2_button_bold_normal</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">10dp</item>
-        <item name="rippleColor">@color/highlight</item>
+        <item name="rippleColor">@color/secondaryDarkColor</item>
     </style>
 
     <style name="GreenButtonStyle">

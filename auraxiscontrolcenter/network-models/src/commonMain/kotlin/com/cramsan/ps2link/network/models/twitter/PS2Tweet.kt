@@ -25,7 +25,7 @@ class PS2Tweet : Comparable<PS2Tweet> {
      * @param tag the alias of this user
      */
     var tag: String? = null
-    var date: Int? = null
+    var date: Long? = null
     /**
      * @return the url of the thumbnail for this tweet
      */
@@ -49,7 +49,7 @@ class PS2Tweet : Comparable<PS2Tweet> {
      * @param tag tag or alias of the user
      * @param imgUrl url to retrieve the image of the user
      */
-    constructor(id: String, user: String, date: Int, content: String, tag: String, imgUrl: String) {
+    constructor(id: String, user: String, date: Long, content: String, tag: String, imgUrl: String) {
         this.user = user
         this.date = date
         this.content = content
@@ -66,14 +66,14 @@ class PS2Tweet : Comparable<PS2Tweet> {
     /**
      * @return the unix date when this tweet was created
      */
-    fun getDate(): Int {
+    fun getDate(): Long {
         return date!!
     }
 
     /**
      * @param date the unix date when this tweet was created
      */
-    fun setDate(date: Int) {
+    fun setDate(date: Long) {
         this.date = date
     }
 

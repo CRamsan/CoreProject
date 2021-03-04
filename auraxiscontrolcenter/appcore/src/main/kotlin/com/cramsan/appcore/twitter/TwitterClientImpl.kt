@@ -70,6 +70,9 @@ class TwitterClientImpl : TwitterClient {
      * communicating with the twitter API
      */
     private fun retrieveTweets(twitter: Twitter, users: List<String>): List<PS2Tweet> {
+        if (users.isEmpty()) {
+            return emptyList()
+        }
         val usersFound = twitter.lookupUsers(*users.toTypedArray())
         val tweetsFound = ArrayList<com.cramsan.ps2link.network.models.twitter.PS2Tweet>()
         for (foundUser in usersFound) {
@@ -95,7 +98,7 @@ class TwitterClientImpl : TwitterClient {
                         com.cramsan.ps2link.network.models.twitter.PS2Tweet(
                             java.lang.Long.toString(status3.id),
                             name,
-                            (status3.createdAt.time / 1000).toInt(),
+                            status3.createdAt.time,
                             text,
                             tag,
                             imgUrl

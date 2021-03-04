@@ -22,7 +22,7 @@ class TwitterRepositoryImpl(
 ) : TwitterRepository,
     LifecycleAwareComponent by BackgroundModuleLifecycleAwareComponent(dispatcherProvider) {
 
-    private val followedUsers = MutableStateFlow<MutableMap<TwitterUser, Boolean>>(mutableMapOf())
+    private val followedUsers = MutableStateFlow<Map<TwitterUser, Boolean>>(mapOf())
     private val tweetList = MutableStateFlow<List<PS2Tweet>>(emptyList())
 
     private val dataMutex = Mutex()
@@ -64,8 +64,8 @@ class TwitterRepositoryImpl(
     }
 
     override suspend fun setFollowStatus(user: TwitterUser, follow: Boolean) {
-        followedUsers.value.let {
-            it[user] = follow
+        followedUsers.value = followedUsers.value.toMutableMap().apply {
+            put(user, follow)
         }
     }
 
@@ -76,6 +76,7 @@ class TwitterRepositoryImpl(
     }
 
     override fun getTweetsAsFlow(): StateFlow<List<PS2Tweet>> = tweetList
+    override fun getTwitterUsersAsFlow(): StateFlow<Map<TwitterUser, Boolean>> = followedUsers
 
     private suspend fun getTweetsForUsers(users: List<TwitterUser>): List<PS2Tweet> = dataMutex.withLock {
         val tweets = twitterClient.getTweets(users)
@@ -83,7 +84,7 @@ class TwitterRepositoryImpl(
         return tweets
     }
 
-    private fun MutableMap<TwitterUser, Boolean>.toUserList(): List<TwitterUser> {
+    private fun Map<TwitterUser, Boolean>.toUserList(): List<TwitterUser> {
         return filter { it.value }.keys.toList()
     }
 

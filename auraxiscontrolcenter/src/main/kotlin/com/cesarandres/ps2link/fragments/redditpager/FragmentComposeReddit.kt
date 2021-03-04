@@ -5,15 +5,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cramsan.framework.core.BaseEvent
 import com.cramsan.ps2link.core.models.RedditPage
 import dagger.hilt.android.AndroidEntryPoint
+import org.ocpsoft.prettytime.PrettyTime
+import javax.inject.Inject
 
 /**
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
 class FragmentComposeReddit : BaseComposePS2Fragment<RedditViewModel>() {
+
+    @Inject
+    lateinit var prettyTime: PrettyTime
 
     override val logTag = "FragmentComposeProfile"
     override val viewModel: RedditViewModel by viewModels()
@@ -33,14 +37,9 @@ class FragmentComposeReddit : BaseComposePS2Fragment<RedditViewModel>() {
         RedditCompose(
             redditContent = redditContent.value,
             isLoading = isLoading.value,
-            eventHandler = viewModel
+            prettyTime = prettyTime,
+            eventHandler = viewModel,
         )
-    }
-
-    override fun onViewModelEvent(event: BaseEvent) {
-        super.onViewModelEvent(event)
-        when (event) {
-        }
     }
 
     companion object {

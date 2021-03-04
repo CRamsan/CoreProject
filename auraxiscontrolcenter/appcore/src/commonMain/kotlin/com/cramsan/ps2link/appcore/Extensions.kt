@@ -227,17 +227,24 @@ fun StatNameType.toWeaponEventType(): WeaponEventType {
 
 fun Post.toCoreModel(): RedditPost {
     return RedditPost(
-        url, title
+        url = url ?: "",
+        title = title ?: "",
+        author = author ?: "",
+        label = selftext,
+        upvotes = ((ups ?: 0) - (downs ?: 0)),
+        comments = num_comments ?: 0,
+        createdTime = created_utc ?: 0,
+        imgUr = "",
     )
 }
 
 fun PS2Tweet.toCoreModel(): com.cramsan.ps2link.core.models.PS2Tweet {
     return com.cramsan.ps2link.core.models.PS2Tweet(
-        user = user,
-        content = content,
-        tag = tag,
-        date = date,
-        imgUrl = imgUrl,
-        id = id,
+        user = user ?: "",
+        content = content ?: "",
+        tag = tag ?: "",
+        date = date ?: 0,
+        imgUrl = imgUrl ?: "",
+        id = id ?: "",
     )
 }

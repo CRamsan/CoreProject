@@ -1,5 +1,8 @@
 package com.cramsan.ps2link.network.models.reddit
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Post(
     val selftext: String? = null,
     val mod_reason_title: String? = null,

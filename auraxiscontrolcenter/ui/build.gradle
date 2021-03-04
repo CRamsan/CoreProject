@@ -40,10 +40,12 @@ dependencies {
     implementation project(":auraxiscontrolcenter:core-models")
     implementation project(":framework:assert")
     implementation project(":framework:interfacelib")
+    implementation packages.AccompanistCoil
     implementation packages.AndroidMaterial
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx
     implementation packages.AndroidxFragmentKtx
+    implementation packages.Coil
     implementation packages.ConstraintLayout
     implementation packages.JetpackComposeUI
     implementation packages.JetpackComposeTooling
@@ -52,6 +54,8 @@ dependencies {
     implementation packages.JetpackComposeIconsCore
     implementation packages.JetpackComposeIconsExtended
     implementation packages.JetpackComposeRuntimeLiveData
+    implementation packages.PrettyTime
+    implementation packages.SqlDelightAndroidDriver
 }
 
 registerDependency(":auraxiscontrolcenter:core-models")

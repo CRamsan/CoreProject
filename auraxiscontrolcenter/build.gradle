@@ -69,14 +69,11 @@ dependencies {
     implementation packages.JetpackComposeRuntimeLiveData
     implementation packages.KotlinxDatetime
     implementation packages.AppCenterSdk
-    implementation packages.Glide
-    implementation packages.Gson
     implementation packages.KtorAndroid
     implementation packages.PrettyTime
     implementation packages.SqlDelightAndroidDriver
-    implementation packages.Volley
 
-    kapt packages.GlideCompiler
+    //kapt packages.GlideCompiler
 
     testImplementation project(":framework:test")
 

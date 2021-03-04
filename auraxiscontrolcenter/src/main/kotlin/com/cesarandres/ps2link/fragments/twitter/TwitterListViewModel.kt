@@ -10,6 +10,9 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
+import com.cramsan.ps2link.appcore.twitter.TwitterUser
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class TwitterListViewModel @ViewModelInject constructor(
     application: Application,
@@ -19,17 +22,31 @@ class TwitterListViewModel @ViewModelInject constructor(
     private val twitterRepository: TwitterRepository,
     @Assisted savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
-    application,
-    pS2LinkRepository,
-    pS2Settings,
-    dispatcherProvider,
-    savedStateHandle
-) {
+        application,
+        pS2LinkRepository,
+        pS2Settings,
+        dispatcherProvider,
+        savedStateHandle
+    ),
+    TweetListComposeEventHandler {
 
     override val logTag: String
         get() = "TwitterListViewModel"
 
     // State
-    private val _tweetList = twitterRepository.getTweetsAsFlow()
-    val tweetList = _tweetList.asLiveData()
+    val tweetList = twitterRepository.getTweetsAsFlow().map { list ->
+        list.sortedByDescending { twit ->
+            twit.date
+        }
+    }.asLiveData()
+    val twitterUsers = twitterRepository.getTwitterUsersAsFlow().asLiveData()
+
+    override fun onTwitterUserClicked(twitterUser: TwitterUser) {
+        ioScope.launch {
+            loadingStarted()
+            val following = twitterRepository.getTwitterUsers()[twitterUser] ?: true
+            twitterRepository.setFollowStatus(twitterUser, !following)
+            loadingCompleted()
+        }
+    }
 }

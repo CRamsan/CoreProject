@@ -14,6 +14,7 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentProfilePagerBinding
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.ps2link.core.models.RedditPage
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -41,6 +42,12 @@ class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentProfilePagerB
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
+
+        val tabLayout = dataBinding.tabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = RedditPage.values()[position].path
+        }.attach()
+
         return view
     }
 

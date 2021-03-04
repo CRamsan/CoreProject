@@ -62,6 +62,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.datetime.Clock
+import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Singleton
 
 @Module
@@ -238,6 +239,10 @@ object PS2ApplicationModule {
     @Provides
     @Singleton
     fun provideTwitterClient(): TwitterClient = TwitterClientImpl()
+
+    @Provides
+    @Singleton
+    fun providePrettyTime(): PrettyTime = PrettyTime()
 
     @Provides
     @Singleton
