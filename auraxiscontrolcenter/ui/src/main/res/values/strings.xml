@@ -133,6 +133,8 @@
     <!-- This probably does not need to be translated -->
     <string name="title_twitter" translatable="false">TWITTER</string>
     <string name="title_twitter_handle" translatable="false">\@%s</string>
+    <string name="twitter_upload_by">%s by %s</string>
+    <string name="twitter_comments">%d comments</string>
     <string name="url_homepage" translatable="false">https://cramsan.com/auraxiscontrolcenter-site/</string>
     <string name="text_leader">LEADER</string>
     <string name="text_created">CREATED</string>

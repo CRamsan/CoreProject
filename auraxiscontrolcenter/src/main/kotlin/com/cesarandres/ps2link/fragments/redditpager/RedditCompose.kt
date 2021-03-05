@@ -25,6 +25,7 @@ fun RedditCompose(
         LazyColumn {
             items(redditContent) {
                 RedditPostItem(
+                    modifier = Modifier.fillParentMaxWidth(),
                     url = it.url,
                     title = it.title,
                     author = it.author,

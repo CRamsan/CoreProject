@@ -16,7 +16,7 @@ class RedditRepositoryImpl(
         logI(TAG, "Downloading Reddit Posts")
         val url = "$BASE_URL/${redditPage.path}/$JSON_ENDPOINT"
         val body = http.sendRequestWithRetry<RedditResponse>(Url(url))
-        return body?.data?.children?.map { it.toCoreModel() } ?: emptyList()
+        return body?.data?.children?.map { it.data.toCoreModel() } ?: emptyList()
     }
 
     companion object {

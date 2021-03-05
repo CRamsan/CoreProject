@@ -7,7 +7,6 @@
     <color name="secondaryColor">#FF26c6da</color>
     <color name="secondaryLightColor">#FF6ff9ff</color>
     <color name="secondaryDarkColor">#FF0095a8</color>
-    <color name="blackTransparent">#80000000</color>
     <color name="primaryTextColor">#FFFFFFFF</color>
     <color name="secondaryTextColor">#FF000000</color>
     <color name="errorColor">#FFE91E1E</color>
@@ -21,5 +20,7 @@
     <color name="positive">#FF4CAF50</color>
     <color name="warning">#FFFFC107</color>
     <color name="undefined">#FFB9B9B9</color>
+    <color name="blackTransparent">#80000000</color>
+    <color name="secondaryTextColorInactive">#6C6C6C</color>
 
 </resources>

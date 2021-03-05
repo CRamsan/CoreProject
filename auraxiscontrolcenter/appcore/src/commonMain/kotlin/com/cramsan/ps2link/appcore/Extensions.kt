@@ -233,7 +233,7 @@ fun Post.toCoreModel(): RedditPost {
         label = selftext,
         upvotes = ((ups ?: 0) - (downs ?: 0)),
         comments = num_comments ?: 0,
-        createdTime = created_utc ?: 0,
+        createdTime = created_utc?.times(1000)?.toLong() ?: 0,
         imgUr = "",
     )
 }

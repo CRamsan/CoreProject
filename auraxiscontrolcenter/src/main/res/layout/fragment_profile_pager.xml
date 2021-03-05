@@ -13,9 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ps2_background"
+            app:tabMode="auto"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/primaryColor"
-            app:tabSelectedTextColor="@color/primaryLightColor"/>
+            app:tabTextColor="@color/secondaryTextColorInactive"
+            app:tabSelectedTextColor="@color/primaryTextColor"/>
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/profilePager"
             android:layout_width="match_parent"
