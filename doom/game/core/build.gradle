@@ -13,9 +13,11 @@ apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
 dependencies {
     implementation packages.Gdx
+    implementation meta_packages.LibKtx
 
     implementation project(":doom:lib")
     implementation project(":framework")
 }
 
 registerDependency(":doom:lib")
+registerDependency(":framework")
