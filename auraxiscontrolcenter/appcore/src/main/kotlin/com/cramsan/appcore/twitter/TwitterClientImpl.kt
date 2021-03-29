@@ -17,10 +17,10 @@ import java.util.ArrayList
 class TwitterClientImpl : TwitterClient {
 
     // TODO: Remove these secrets from the code.
-    private val CONSUMER_SECRET = "eGaL0bIj6Y0p84cs6RZdw7WvXoq9EkDF9KES0bPnhw"
-    private val CONSUMER_KEY = "AdtZzl6c9v4QiqC6yHWSVw"
-    private val ACCESS_TOKEN = "752283427-izyU9iznlS6LHIGjwWaq9RK9mQuaVCr6XpYnJwEB"
-    private val ACCESS_TOKEN_SECRET = "qfSQnSs7jQUnNHqt14SWJcY1KmVVm7mf3azPFT4a2OuqV"
+    private val CONSUMER_SECRET = ""
+    private val CONSUMER_KEY = ""
+    private val ACCESS_TOKEN = ""
+    private val ACCESS_TOKEN_SECRET = ""
 
     /**
      * @param users an array with all the users to retrieve tweets from
