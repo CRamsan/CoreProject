@@ -17,6 +17,7 @@ A lot of the code is written in a shared module called **Framework** that abstra
  - [Design](/DESIGN.md)
  - [CI/CD](/CONTINUOUS.md) 
  - [Testing](/TESTING.md)
+ - [Workflow](/WORKFLOW.md)
 
 ## Getting started
  
