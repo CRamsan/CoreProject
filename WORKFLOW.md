@@ -2,7 +2,9 @@
 
 This doc goes over the entire lifecycle of a task and how code changes go from implementation to release.
 
-## Automatic Bug Reports
+## Bug management
+
+### Automatic Bug Reports
 
 The Framework has a [Crash Handler](https://github.com/CRamsan/CoreProject/tree/master/framework/crashhandler) module for 
 crash reporting, this module allows to log crashes and also internal errors. The current implementation is based on 
@@ -13,6 +15,10 @@ When an application crashes, [App Center] will generate a report and it will aut
 **Currently crash reports are the only automatic mechanism to get issues automatically created.**
 
 The issues are automatically created with no labels, so they need to be triaged to the right components and assigned the right labels.
+
+### Bug lifecycle
+
+In order to keep the backlog of items clean, this repository uses Github Actions to close stale issues. The bugs are first marked as stale and then closed if they remain inactive. Issues that are part of a project are not auto-closed.
 
 ## Releasing a fix
 
