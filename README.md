@@ -14,7 +14,7 @@ A lot of the code is written in a shared module called **Framework** that abstra
  - [Root gradle file](/build.gradle), [properties](gradle.properties) and [settings](settings.gradle)
 
 # Documentation
-You can find detailed documentation in the [Wiki](/wiki/).
+You can find detailed documentation in the [wiki](https://github.com/CRamsan/CoreProject/wiki/).
 
 ## Getting started
  
@@ -34,7 +34,7 @@ To just build the code, run `./grdlew assembleDebug` for Android projects or `./
 The code is configured to follow a pre-defined format style. This is enforced by the build process, so it is important to always follow the format otherwise the build process will fail. To automatlly fix any format issues, just run `./gradlew ktlintf`.
 
 ### Testing
-You can read more about testing in the [Testing](/TESTING.md) page.
+You can read more about testing in the [Testing](https://github.com/CRamsan/CoreProject/wiki/Testing) page.
 
 ### Create a new module
 If you want to start a new project and need module, look at the [New Module](NEW_MODULE.md) page for some examples about how to get started.
