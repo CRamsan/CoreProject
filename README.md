@@ -14,10 +14,7 @@ A lot of the code is written in a shared module called **Framework** that abstra
  - [Root gradle file](/build.gradle), [properties](gradle.properties) and [settings](settings.gradle)
 
 # Documentation
- - [Design](/DESIGN.md)
- - [CI/CD](/CONTINUOUS.md) 
- - [Testing](/TESTING.md)
- - [Workflow](/WORKFLOW.md)
+You can find detailed documentation in the [Wiki](/wiki/).
 
 ## Getting started
  
