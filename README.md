@@ -37,4 +37,4 @@ The code is configured to follow a pre-defined format style. This is enforced by
 You can read more about testing in the [Testing](https://github.com/CRamsan/CoreProject/wiki/Testing) page.
 
 ### Create a new module
-If you want to start a new project and need module, look at the [New Module](NEW_MODULE.md) page for some examples about how to get started.
+If you want to start a new project and need module, look at the [New Module](https://github.com/CRamsan/CoreProject/wiki/New-Module) page for some examples about how to get started.
