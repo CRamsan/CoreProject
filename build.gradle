@@ -41,4 +41,3 @@ tasks.register("release") {
     dependsOn ':petproject:azurefunction:release'
     dependsOn ':auraxiscontrolcenter:release'
 }
-
