@@ -22,8 +22,8 @@ You can find detailed documentation in the [wiki](https://github.com/CRamsan/Cor
  
 ### Prerequisites
 - JDK 11
-- Gradle 6.7.1(installed from the wrapper)
-- Android Studio 2020.3.1 Canary 1(Stable) / Android Studio 2020.3.1 Canary 2 (Early testing)
+- Gradle 6.8.3(installed from the wrapper)
+- Android Studio 2020.3.1 Canary 7
 - IntelliJ is not currently supported(issue #139)
 
 ### Building the code
