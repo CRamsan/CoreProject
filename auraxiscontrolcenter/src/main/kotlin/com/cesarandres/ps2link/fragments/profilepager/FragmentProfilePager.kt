@@ -33,7 +33,7 @@ class FragmentProfilePager : BasePS2Fragment<ProfilePagerViewModel, FragmentProf
     override val viewModel: ProfilePagerViewModel by viewModels()
     override val logTag = "FragmentProfilePager"
     override val contentViewLayout = R.layout.fragment_profile_pager
-    val args: FragmentProfilePagerArgs by navArgs()
+    private val args: FragmentProfilePagerArgs by navArgs()
 
     private lateinit var viewPager: ViewPager2
     private lateinit var profileId: String

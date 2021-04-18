@@ -1,4 +1,4 @@
-package com.cesarandres.ps2link.fragments.profilepager.profile
+package com.cesarandres.ps2link.fragments.outfitpager.outfit
 
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,7 @@ import com.cramsan.ps2link.ui.widgets.BRBar
 import com.cramsan.ps2link.ui.widgets.FactionIcon
 
 @Composable
-fun ProfileCompose(
+fun OutfitCompose(
     faction: Faction?,
     br: Int?,
     percentToNextBR: Int?,
@@ -37,7 +37,7 @@ fun ProfileCompose(
     server: String?,
     hoursPlayed: Double?,
     isLoading: Boolean,
-    eventHandler: ProfileEventHandler,
+    eventHandler: OutfitEventHandler,
 ) {
     FrameBottom(modifier = Modifier.fillMaxSize()) {
         Box {
@@ -85,7 +85,7 @@ fun ProfileCompose(
                                     enabled = outfit != null,
                                     onClick = {
                                         outfit?.let {
-                                            eventHandler.onOutfitSelected(it.id, it.namespace)
+                                            eventHandler.onProfileSelected(it.id, it.namespace)
                                         }
                                     }
                                 ) {
@@ -126,14 +126,14 @@ fun ProfileCompose(
 }
 
 @MainThread
-interface ProfileEventHandler {
-    fun onOutfitSelected(outfitId: String, namespace: Namespace)
+interface OutfitEventHandler {
+    fun onProfileSelected(profileId: String, namespace: Namespace)
 }
 
 @Preview
 @Composable
 fun Preview() {
-    ProfileCompose(
+    OutfitCompose(
         faction = Faction.VS,
         br = 80,
         percentToNextBR = 75,
@@ -145,8 +145,8 @@ fun Preview() {
         server = "Genudine",
         hoursPlayed = 1000.toDouble(),
         isLoading = true,
-        eventHandler = object : ProfileEventHandler {
-            override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
+        eventHandler = object : OutfitEventHandler {
+            override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         },
     )
 }

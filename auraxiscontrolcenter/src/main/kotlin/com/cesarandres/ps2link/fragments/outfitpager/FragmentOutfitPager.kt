@@ -16,9 +16,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitPagerBinding
+import com.cesarandres.ps2link.fragments.outfitpager.outfit.FragmentComposeProfile
 import com.cesarandres.ps2link.fragments.profilepager.ProfilePagerViewModel
 import com.cesarandres.ps2link.fragments.profilepager.friendlist.FragmentComposeFriendList
-import com.cesarandres.ps2link.fragments.profilepager.profile.FragmentComposeProfile
 import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +35,7 @@ class FragmentOutfitPager : BasePS2Fragment<ProfilePagerViewModel, FragmentOutfi
     val args: FragmentOutfitPagerArgs by navArgs()
 
     private lateinit var viewPager: ViewPager2
-    private lateinit var profileId: String
+    private lateinit var outfitId: String
     private lateinit var namespace: Namespace
 
     override fun onCreateView(
@@ -47,13 +47,13 @@ class FragmentOutfitPager : BasePS2Fragment<ProfilePagerViewModel, FragmentOutfi
         setHasOptionsMenu(true)
 
         viewPager = dataBinding.outfitPager
-        profileId = args.characterId
+        outfitId = args.outfitId
         namespace = args.namespace
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
-        viewModel.setUp(profileId, namespace)
+        viewModel.setUp(outfitId, namespace)
         return view
     }
 
@@ -88,9 +88,9 @@ class FragmentOutfitPager : BasePS2Fragment<ProfilePagerViewModel, FragmentOutfi
 
         override fun createFragment(position: Int): Fragment {
             return when (ProfilePage.values()[position]) {
-                ProfilePage.OUTFIT -> FragmentComposeProfile.instance(profileId, namespace)
-                ProfilePage.ONLINE -> FragmentComposeFriendList.instance(profileId, namespace)
-                ProfilePage.MEMBERS -> FragmentComposeStatList.instance(profileId, namespace)
+                ProfilePage.OUTFIT -> FragmentComposeProfile.instance(outfitId, namespace)
+                ProfilePage.ONLINE -> FragmentComposeFriendList.instance(outfitId, namespace)
+                ProfilePage.MEMBERS -> FragmentComposeStatList.instance(outfitId, namespace)
             }
         }
     }

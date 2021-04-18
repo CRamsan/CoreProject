@@ -1,14 +1,12 @@
-package com.cesarandres.ps2link.fragments.profilepager.profile
+package com.cesarandres.ps2link.fragments.outfitpager.outfit
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cesarandres.ps2link.fragments.OpenOutfit
-import com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePagerDirections
-import com.cramsan.framework.core.BaseEvent
+import com.cesarandres.ps2link.fragments.profilepager.profile.ProfileCompose
+import com.cesarandres.ps2link.fragments.profilepager.profile.ProfileViewModel
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,20 +49,6 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
             isLoading = isLoading.value,
             eventHandler = viewModel
         )
-    }
-
-    override fun onViewModelEvent(event: BaseEvent) {
-        super.onViewModelEvent(event)
-        when (event) {
-            is OpenOutfit -> {
-                val action =
-                    FragmentProfilePagerDirections.actionFragmentProfileToFragmentOutfitPager(
-                        event.outfitId,
-                        event.namespace
-                    )
-                findNavController().navigate(action)
-            }
-        }
     }
 
     companion object {

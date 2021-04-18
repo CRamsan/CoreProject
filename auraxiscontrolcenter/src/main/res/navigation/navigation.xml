@@ -122,7 +122,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentProfilePager"
-        android:name="com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPager"
+        android:name="com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePager"
         android:label="FragmentProfilePager"
         tools:layout="@layout/fragment_profile_pager">
         <action
@@ -188,7 +188,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentOutfitPager"
-        android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
+        android:name="com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPager"
         android:label="FragmentOutfitPager"
         tools:layout="@layout/fragment_outfit_pager" >
         <action

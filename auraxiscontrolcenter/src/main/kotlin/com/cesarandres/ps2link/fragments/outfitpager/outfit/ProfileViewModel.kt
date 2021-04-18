@@ -1,11 +1,11 @@
-package com.cesarandres.ps2link.fragments.profilepager.profile
+package com.cesarandres.ps2link.fragments.outfitpager.outfit
 
 import android.app.Application
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
-import com.cesarandres.ps2link.fragments.OpenOutfit
+import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
@@ -16,7 +16,7 @@ import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ProfileViewModel @ViewModelInject constructor(
+class OutfitViewModel @ViewModelInject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
@@ -29,7 +29,7 @@ class ProfileViewModel @ViewModelInject constructor(
         dispatcherProvider,
         savedStateHandle
     ),
-    ProfileEventHandler {
+    OutfitEventHandler {
 
     override val logTag: String
         get() = "ProfileViewModel"
@@ -50,7 +50,7 @@ class ProfileViewModel @ViewModelInject constructor(
         }
     }
 
-    override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
-        events.value = OpenOutfit(outfitId, namespace)
+    override fun onProfileSelected(profileId: String, namespace: Namespace) {
+        events.value = OpenProfile(profileId, namespace)
     }
 }

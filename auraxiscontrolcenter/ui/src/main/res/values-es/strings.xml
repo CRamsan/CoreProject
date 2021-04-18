@@ -143,4 +143,6 @@
     <string name="text_low_caps">BAJO</string>
     <string name="text_medium_caps">MEDIO</string>
     <string name="text_high_caps">ALTO</string>
+    <string name="twitter_comments">%d comentarios</string>
+    <string name="twitter_upload_by">%s por %s</string>
 </resources>
