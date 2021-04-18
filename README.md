@@ -3,10 +3,12 @@
 This is the mono-repo that holds all the code for several projects. The reason for going with a mono-repo was to make code-sharing easier and reducing maintenance cost.
 
 ## Current Projects
- - [Auraxis Control Center](auraxiscontrolcenter/)
- - [Safe for my pets](petproject/)
- - [Doom](/doom)
- - [Framework](framework/)
+| Project | Builds |
+| --- | ----------- |
+| [Auraxis Control Center](auraxiscontrolcenter/) | [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master) |
+| [Safe for my pets](petproject/) | Android: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/build/status/PetProject-Android?branchName=master)](https://dev.azure.com/CRamsan/PetProject/_build/latest?definitionId=3&branchName=master) Webservice: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/build/status/PetProject-Webservice?branchName=master)](https://dev.azure.com/CRamsan/PetProject/_build/latest?definitionId=8&branchName=master) |
+| [Doom](/doom) | Android: [![Build Status](https://dev.azure.com/CRamsan/Doom-Project/_apis/build/status/Doom-Project_Android?branchName=master)](https://dev.azure.com/CRamsan/Doom-Project/_build/latest?definitionId=11&branchName=master) Desktop: [![Build Status](https://dev.azure.com/CRamsan/Doom-Project/_apis/build/status/Doom-Project_Desktop?branchName=master)](https://dev.azure.com/CRamsan/Doom-Project/_build/latest?definitionId=12&branchName=master) |
+| [Framework](framework/) | |
 
 # Framework
 A lot of the code is written in a shared module called **Framework** that abstract a lot of complexities out of the client apps.
