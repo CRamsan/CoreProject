@@ -10,12 +10,11 @@ import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
-import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
-import kotlinx.coroutines.flow.Flow
+import com.cramsan.ps2link.core.models.Outfit
 import kotlinx.coroutines.launch
 
-class ProfilePagerViewModel @ViewModelInject constructor(
+class OutfitPagerViewModel @ViewModelInject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
@@ -30,28 +29,31 @@ class ProfilePagerViewModel @ViewModelInject constructor(
 ) {
 
     override val logTag: String
-        get() = "ProfilePagerViewModel"
+        get() = "OutfitPagerViewModel"
 
     // State
-    lateinit var profile: Flow<Character?>
-    private lateinit var characterId: String
+    private var outfit: Outfit? = null
+    private lateinit var outfitId: String
     private lateinit var namespace: Namespace
 
-    fun setUp(characterId: String?, namespace: Namespace?) {
-        if (characterId == null || namespace == null) {
-            logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
+    fun setUp(outfitId: String?, namespace: Namespace?) {
+        if (outfitId == null || namespace == null) {
+            logE(logTag, "Invalid arguments: outfitId=$outfitId namespace=$namespace")
             // TODO: Provide some event that can be handled by the UI
             return
         }
-        this.characterId = characterId
+        this.outfitId = outfitId
         this.namespace = namespace
-        profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
-    }
-
-    fun addCharacter() {
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
+            outfit = pS2LinkRepository.getOutfit(outfitId, namespace, lang, false)
+        }
+    }
+
+    fun addOutfit() {
+        ioScope.launch {
+            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            val character = pS2LinkRepository.getCharacter(outfitId, namespace, lang)
             if (character == null) {
                 // TODO : Report error
                 return@launch
@@ -60,10 +62,10 @@ class ProfilePagerViewModel @ViewModelInject constructor(
         }
     }
 
-    fun removeCharacter() {
+    fun removeOutfit() {
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
+            val character = pS2LinkRepository.getCharacter(outfitId, namespace, lang)
             if (character == null) {
                 // TODO : Report error
                 return@launch
@@ -72,17 +74,17 @@ class ProfilePagerViewModel @ViewModelInject constructor(
         }
     }
 
-    fun pinCharacter() {
+    fun pinOutfit() {
         ioScope.launch {
             ps2Settings.updatePreferredNamespace(namespace)
-            ps2Settings.updatePreferredCharacterId(characterId)
+            ps2Settings.updatePreferredOutfitId(outfitId)
         }
     }
 
-    fun unpinCharacter() {
+    fun unpinOutfit() {
         ioScope.launch {
             ps2Settings.updatePreferredNamespace(null)
-            ps2Settings.updatePreferredCharacterId(null)
+            ps2Settings.updatePreferredOutfitId(null)
         }
     }
 }

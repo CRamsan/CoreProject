@@ -34,6 +34,20 @@ INSERT OR REPLACE INTO Outfit(
     lastUpdated
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
+insertOutfitInstance:
+INSERT OR REPLACE INTO Outfit(
+    outfitId,
+    name,
+    alias,
+    leaderCharacterId,
+    memberCount,
+    timeCreated,
+    worldId,
+    factionId,
+    namespace,
+    lastUpdated
+) VALUES ?;
+
 deleteOutfit:
 DELETE FROM Outfit WHERE outfitId == ? AND namespace == ?;
 

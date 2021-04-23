@@ -72,6 +72,15 @@ interface PS2LinkRepository {
 
     suspend fun getAllOutfits(): List<Outfit>
 
+    suspend fun getOutfit(
+        outfitId: String,
+        namespace: Namespace,
+        lang: CensusLang,
+        forceUpdate: Boolean = false,
+    ): Outfit?
+
+    fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?>
+
     suspend fun searchForOutfits(
         tagSearchField: String,
         nameSearchField: String,

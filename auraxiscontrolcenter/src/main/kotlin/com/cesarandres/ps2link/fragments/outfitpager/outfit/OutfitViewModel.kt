@@ -11,8 +11,8 @@ import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
-import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -32,21 +32,21 @@ class OutfitViewModel @ViewModelInject constructor(
     OutfitEventHandler {
 
     override val logTag: String
-        get() = "ProfileViewModel"
+        get() = "OutfitViewModel"
 
     // State
-    lateinit var profile: Flow<Character?>
+    lateinit var outfit: Flow<Outfit?>
 
-    fun setUp(characterId: String?, namespace: Namespace?) {
-        if (characterId == null || namespace == null) {
-            logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
+    fun setUp(outfitId: String?, namespace: Namespace?) {
+        if (outfitId == null || namespace == null) {
+            logE(logTag, "Invalid arguments: outfitId=$outfitId namespace=$namespace")
             // TODO: Provide some event that can be handled by the UI
             return
         }
-        profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
+        outfit = pS2LinkRepository.getOutfitAsFlow(outfitId, namespace)
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true)
+            pS2LinkRepository.getOutfit(outfitId, namespace, lang, forceUpdate = true)
         }
     }
 

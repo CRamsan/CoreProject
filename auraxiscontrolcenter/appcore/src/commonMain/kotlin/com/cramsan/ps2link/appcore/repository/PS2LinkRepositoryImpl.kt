@@ -59,21 +59,19 @@ class PS2LinkRepositoryImpl(
 
     @OptIn(ExperimentalTime::class)
     override suspend fun saveCharacter(character: Character) {
-        dbgDAO.insertCharacter(character.toDBModel(clock.now().toEpochMilliseconds()))
+        dbgDAO.insertCharacter(character)
     }
 
     override suspend fun removeCharacter(characterId: String, namespace: Namespace) {
-        dbgDAO.removeCharacter(characterId, namespace.toDBModel())
+        dbgDAO.removeCharacter(characterId, namespace)
     }
 
     override fun getAllCharactersAsFlow(): Flow<List<Character>> {
-        return dbgDAO.getAllCharactersAsFlow().map { list ->
-            list.map { it.toCoreModel() }
-        }
+        return dbgDAO.getAllCharactersAsFlow()
     }
 
     override suspend fun getAllCharacters(): List<Character> {
-        return dbgDAO.getCharacters().map { it.toCoreModel() }
+        return dbgDAO.getCharacters()
     }
 
     override suspend fun getCharacter(
@@ -82,13 +80,13 @@ class PS2LinkRepositoryImpl(
         lang: CensusLang,
         forceUpdate: Boolean,
     ): Character? {
-        val cachedCharacter = dbgDAO.getCharacter(characterId, namespace.toDBModel())
-        if (!forceUpdate && (cachedCharacter == null || isCharacterValid(cachedCharacter))) {
-            return cachedCharacter?.toCoreModel()
+        val cachedCharacter = dbgDAO.getCharacter(characterId, namespace)
+        if (!forceUpdate && (cachedCharacter == null || isCharacterValid(cachedCharacter.toDBModel(clock.now().toEpochMilliseconds())))) {
+            return cachedCharacter
         }
         val profile = dbgCensus.getProfile(characterId, namespace.toNetworkModel(), lang)
             ?.toCharacter(namespace.toDBModel(), clock.now().toEpochMilliseconds()) ?: return null
-        dbgDAO.insertCharacter(profile)
+        dbgDAO.insertCharacter(profile.toCoreModel())
         return profile.toCoreModel()
     }
 
@@ -96,9 +94,7 @@ class PS2LinkRepositoryImpl(
         characterId: String,
         namespace: Namespace,
     ): Flow<Character?> {
-        return dbgDAO.getCharacterAsFlow(characterId, namespace.toDBModel()).map {
-            it?.toCoreModel()
-        }
+        return dbgDAO.getCharacterAsFlow(characterId, namespace)
     }
 
     override suspend fun searchForCharacter(
@@ -199,13 +195,31 @@ class PS2LinkRepositoryImpl(
     }
 
     override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
-        return dbgDAO.getAllOutfitsAsFlow().map { list ->
-            list.map { it.toCoreModel() }
-        }
+        return dbgDAO.getAllOutfitsAsFlow()
     }
 
     override suspend fun getAllOutfits(): List<Outfit> {
-        return dbgDAO.getAllOutfits().map { it.toCoreModel() }
+        return dbgDAO.getAllOutfits()
+    }
+
+    override suspend fun getOutfit(
+        outfitId: String,
+        namespace: Namespace,
+        lang: CensusLang,
+        forceUpdate: Boolean
+    ): Outfit? {
+        val cachedOutfit = dbgDAO.getOutfit(outfitId, namespace)
+        if (!forceUpdate && (cachedOutfit == null || isOutfitValid(cachedOutfit.toDBModel(clock.now().toEpochMilliseconds())))) {
+            return cachedOutfit
+        }
+        val outfit = dbgCensus.getOutfit(outfitId, namespace.toNetworkModel(), lang)
+            ?.toDBModel(namespace.toDBModel(), clock.now().toEpochMilliseconds()) ?: return null
+        dbgDAO.insertOutfit(outfit.toCoreModel())
+        return outfit.toCoreModel()
+    }
+
+    override fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?> {
+        return dbgDAO.getOutfitAsFlow(outfitId, namespace)
     }
 
     override suspend fun searchForOutfits(
@@ -434,6 +448,15 @@ class PS2LinkRepositoryImpl(
         }
 
         return Instant.fromEpochMilliseconds(character.lastUpdated) + EXPIRATION_TIME < clock.now()
+    }
+
+    @OptIn(ExperimentalTime::class)
+    private fun isOutfitValid(outfit: com.cramsan.ps2link.db.Outfit?): Boolean {
+        if (outfit == null) {
+            return false
+        }
+
+        return Instant.fromEpochMilliseconds(outfit.lastUpdated) + EXPIRATION_TIME < clock.now()
     }
 
     companion object {

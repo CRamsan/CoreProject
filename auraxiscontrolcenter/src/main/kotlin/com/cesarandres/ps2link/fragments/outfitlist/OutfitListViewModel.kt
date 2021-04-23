@@ -6,7 +6,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
-import com.cesarandres.ps2link.fragments.OpenProfile
+import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cesarandres.ps2link.fragments.OpenProfileSearch
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
@@ -40,6 +40,6 @@ class OutfitListViewModel @ViewModelInject constructor(
     }
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
-        events.value = OpenProfile(outfitId, namespace)
+        events.value = OpenOutfit(outfitId, namespace)
     }
 }

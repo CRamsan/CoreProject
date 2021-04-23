@@ -1,10 +1,13 @@
+import com.cramsan.ps2link.db.models.Faction;
+import com.cramsan.ps2link.db.models.Namespace;
+
 CREATE TABLE Member (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     rank TEXT,
     outfitId TEXT,
     onlineStatus TEXT,
     name TEXT,
-    namespace TEXT NOT NULL,
+    namespace TEXT as Namespace NOT NULL,
     lastUpdated INTEGER NOT NULL
 );
 

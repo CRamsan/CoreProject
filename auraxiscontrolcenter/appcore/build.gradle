@@ -8,6 +8,7 @@ buildscript {
         classpath packages.AndroidBuildGradle
         classpath packages.KotlinGradle
         classpath packages.KotlinxSerializationGradle
+        classpath packages.HiltGradle
     }
 }
 
@@ -23,6 +24,10 @@ ext.libraryVersionName = "0.1"
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
 dependencies {
+    kapt meta_packages.HiltKapt
+
+    implementation meta_packages.Hilt
+
     implementation packages.SqlDelightAndroidDriver
     implementation packages.KtorAndroid
     implementation packages.Twitter4J
@@ -53,9 +58,6 @@ kotlin {
 }
 
 registerDependency(":framework")
-registerDependency(":auraxiscontrolcenter:db-models")
-registerDependency(":auraxiscontrolcenter:network-models")
-registerDependency(":auraxiscontrolcenter:core-models")
 registerDependency(":auraxiscontrolcenter:db-models")
 registerDependency(":auraxiscontrolcenter:network-models")
 registerDependency(":auraxiscontrolcenter:core-models")

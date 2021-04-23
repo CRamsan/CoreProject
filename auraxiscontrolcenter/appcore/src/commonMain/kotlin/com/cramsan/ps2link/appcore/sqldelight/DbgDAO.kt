@@ -1,10 +1,10 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
-import com.cramsan.ps2link.db.Character
-import com.cramsan.ps2link.db.Member
-import com.cramsan.ps2link.db.Outfit
-import com.cramsan.ps2link.db.models.Faction
-import com.cramsan.ps2link.db.models.Namespace
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.Member
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import kotlinx.coroutines.flow.Flow
 
 interface DbgDAO {
@@ -59,6 +59,7 @@ interface DbgDAO {
 
     fun insertMemberList(
         memberList: List<Member>,
+        namespace: Namespace,
         lastUpdated: Long,
     )
 
@@ -79,6 +80,11 @@ interface DbgDAO {
         namespace: Namespace,
     ): Outfit?
 
+    fun getOutfitAsFlow(
+        outfitId: String,
+        namespace: Namespace,
+    ): Flow<Outfit?>
+
     fun getAllOutfits(): List<Outfit>
 
     fun getAllOutfitsAsFlow(): Flow<List<Outfit>>
@@ -95,6 +101,8 @@ interface DbgDAO {
         namespace: Namespace,
         lastUpdated: Long,
     )
+
+    fun insertOutfit(outfit: Outfit)
 
     fun removeOutfit(
         outfitId: String,

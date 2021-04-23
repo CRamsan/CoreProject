@@ -20,7 +20,7 @@
     <color name="positive">#FF4CAF50</color>
     <color name="warning">#FFFFC107</color>
     <color name="undefined">#FFB9B9B9</color>
-    <color name="blackTransparent">#80000000</color>
+    <color name="blackTransparent">#8000363a</color>
     <color name="secondaryTextColorInactive">#6C6C6C</color>
 
 </resources>

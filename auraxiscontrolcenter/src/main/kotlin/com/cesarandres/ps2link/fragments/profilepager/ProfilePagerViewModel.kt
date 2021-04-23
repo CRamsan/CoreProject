@@ -12,7 +12,6 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProfilePagerViewModel @ViewModelInject constructor(
@@ -33,7 +32,7 @@ class ProfilePagerViewModel @ViewModelInject constructor(
         get() = "ProfilePagerViewModel"
 
     // State
-    lateinit var profile: Flow<Character?>
+    private var profile: Character? = null
     private lateinit var characterId: String
     private lateinit var namespace: Namespace
 
@@ -45,7 +44,10 @@ class ProfilePagerViewModel @ViewModelInject constructor(
         }
         this.characterId = characterId
         this.namespace = namespace
-        profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
+        ioScope.launch {
+            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            profile = pS2LinkRepository.getCharacter(characterId, namespace, lang, false)
+        }
     }
 
     fun addCharacter() {

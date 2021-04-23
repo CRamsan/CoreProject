@@ -39,8 +39,6 @@ dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
-    // This is needed as the App needs the instance of the DB to inject
-    implementation project(":auraxiscontrolcenter:db-models")
     implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
@@ -73,8 +71,6 @@ dependencies {
     implementation packages.PrettyTime
     implementation packages.SqlDelightAndroidDriver
 
-    //kapt packages.GlideCompiler
-
     testImplementation project(":framework:test")
 
     androidTestImplementation packages.AndroidXTestRunner
@@ -87,5 +83,4 @@ dependencies {
 registerDependency(":framework")
 registerDependency(":auraxiscontrolcenter:appcore")
 registerDependency(":auraxiscontrolcenter:core-models")
-registerDependency(":auraxiscontrolcenter:db-models")
 registerDependency(":auraxiscontrolcenter:ui")

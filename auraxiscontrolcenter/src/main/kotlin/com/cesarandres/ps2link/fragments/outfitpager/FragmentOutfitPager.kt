@@ -16,10 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitPagerBinding
-import com.cesarandres.ps2link.fragments.outfitpager.outfit.FragmentComposeProfile
-import com.cesarandres.ps2link.fragments.profilepager.ProfilePagerViewModel
-import com.cesarandres.ps2link.fragments.profilepager.friendlist.FragmentComposeFriendList
-import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
+import com.cesarandres.ps2link.fragments.outfitpager.outfit.FragmentComposeOutfit
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,11 +24,11 @@ import dagger.hilt.android.AndroidEntryPoint
  * This fragment holds a view pager for all the profile related fragments
  */
 @AndroidEntryPoint
-class FragmentOutfitPager : BasePS2Fragment<ProfilePagerViewModel, FragmentOutfitPagerBinding>() {
+class FragmentOutfitPager : BasePS2Fragment<OutfitPagerViewModel, FragmentOutfitPagerBinding>() {
 
-    override val viewModel: ProfilePagerViewModel by viewModels()
-    override val logTag = "FragmentProfilePager"
-    override val contentViewLayout = R.layout.fragment_profile_pager
+    override val viewModel: OutfitPagerViewModel by viewModels()
+    override val logTag = "FragmentOutfitPager"
+    override val contentViewLayout = R.layout.fragment_outfit_pager
     val args: FragmentOutfitPagerArgs by navArgs()
 
     private lateinit var viewPager: ViewPager2
@@ -66,16 +63,16 @@ class FragmentOutfitPager : BasePS2Fragment<ProfilePagerViewModel, FragmentOutfi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                viewModel.addCharacter()
+                viewModel.addOutfit()
             }
             R.id.action_remove -> {
-                viewModel.removeCharacter()
+                viewModel.removeOutfit()
             }
             R.id.action_star -> {
-                viewModel.pinCharacter()
+                viewModel.pinOutfit()
             }
             R.id.action_unstar -> {
-                viewModel.unpinCharacter()
+                viewModel.unpinOutfit()
             }
             R.id.action_update -> {
             }
@@ -88,9 +85,9 @@ class FragmentOutfitPager : BasePS2Fragment<ProfilePagerViewModel, FragmentOutfi
 
         override fun createFragment(position: Int): Fragment {
             return when (ProfilePage.values()[position]) {
-                ProfilePage.OUTFIT -> FragmentComposeProfile.instance(outfitId, namespace)
-                ProfilePage.ONLINE -> FragmentComposeFriendList.instance(outfitId, namespace)
-                ProfilePage.MEMBERS -> FragmentComposeStatList.instance(outfitId, namespace)
+                ProfilePage.OUTFIT -> FragmentComposeOutfit.instance(outfitId, namespace)
+                ProfilePage.ONLINE -> FragmentComposeOutfit.instance(outfitId, namespace)
+                ProfilePage.MEMBERS -> FragmentComposeOutfit.instance(outfitId, namespace)
             }
         }
     }

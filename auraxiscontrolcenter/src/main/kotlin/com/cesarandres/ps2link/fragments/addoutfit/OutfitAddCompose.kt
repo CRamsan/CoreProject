@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
+import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SearchField
 import com.cramsan.ps2link.ui.items.OutfitItem
+import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 
 @Composable
@@ -83,6 +85,10 @@ fun OutfitAddComposePreview() {
                 id = "",
                 name = "Cramsan1",
                 tag = "D3rp",
+                faction = Faction.VS,
+                worldId = 1,
+                timeCreated = Instant.fromEpochSeconds(1000000),
+                leaderCharacterId = "325354435",
                 memberCount = 200,
                 namespace = Namespace.PS2PS4US,
             )

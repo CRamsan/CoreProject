@@ -8,6 +8,7 @@ import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.db.Character
+import com.cramsan.ps2link.db.Member
 import com.cramsan.ps2link.db.Outfit
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.db.models.Namespace
@@ -84,6 +85,21 @@ fun com.cramsan.ps2link.core.models.Namespace.toNetworkModel() = when (this) {
     com.cramsan.ps2link.core.models.Namespace.PS2PS4US -> com.cramsan.ps2link.network.models.Namespace.PS2PS4US
     com.cramsan.ps2link.core.models.Namespace.PS2PS4EU -> com.cramsan.ps2link.network.models.Namespace.PS2PS4EU
     com.cramsan.ps2link.core.models.Namespace.UNDETERMINED -> com.cramsan.ps2link.network.models.Namespace.UNDETERMINED
+}
+
+fun com.cramsan.ps2link.network.models.content.Outfit.toDBModel(namespace: Namespace, lastUpdated: Long): Outfit {
+    return Outfit(
+        outfitId = outfit_id,
+        name = name,
+        alias = alias,
+        leaderCharacterId = leader_character_id,
+        memberCount = member_count.toLong(),
+        timeCreated = time_created?.toLong(),
+        worldId = world_id?.toLong(),
+        factionId = Faction.NS,
+        namespace = namespace,
+        lastUpdated = lastUpdated,
+    )
 }
 
 @OptIn(ExperimentalTime::class)
@@ -174,9 +190,17 @@ fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Nam
         id = outfit_id,
         name = name,
         tag = alias,
+        faction = Faction.fromString(faction_id).toCoreModel(),
+        worldId = world_id?.toLong() ?: 0,
+        timeCreated = time_created?.let { Instant.fromEpochMilliseconds(it.toLong()) },
+        leaderCharacterId = leader_character_id,
         memberCount = member_count,
         namespace = namespace.toCoreModel(),
     )
+}
+
+fun Member.toCoreModel(): com.cramsan.ps2link.core.models.Member {
+    return com.cramsan.ps2link.core.models.Member(id)
 }
 
 @OptIn(ExperimentalTime::class)
@@ -185,8 +209,27 @@ fun Outfit.toCoreModel(): com.cramsan.ps2link.core.models.Outfit {
         id = outfitId,
         name = name,
         tag = alias,
+        faction = factionId.toCoreModel(),
+        worldId = worldId ?: 0,
+        timeCreated = timeCreated?.let { Instant.fromEpochMilliseconds(it) },
+        leaderCharacterId = leaderCharacterId,
         memberCount = memberCount?.toInt() ?: 0,
         namespace = namespace.toCoreModel(),
+    )
+}
+
+fun com.cramsan.ps2link.core.models.Outfit.toDBModel(lastUpdated: Long): Outfit {
+    return Outfit(
+        outfitId = id,
+        name = name,
+        alias = tag,
+        leaderCharacterId = leaderCharacterId,
+        memberCount = memberCount.toLong(),
+        timeCreated = timeCreated?.toEpochMilliseconds(),
+        worldId = worldId,
+        factionId = faction.toDBModel(),
+        namespace = namespace.toDBModel(),
+        lastUpdated = lastUpdated,
     )
 }
 

@@ -18,9 +18,7 @@ import com.cramsan.framework.assert.assertNotNull
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
-import com.cramsan.ps2link.appcore.toCoreModel
-import com.cramsan.ps2link.appcore.toDBModel
+import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
@@ -29,7 +27,6 @@ import kotlinx.coroutines.launch
 
 class MainMenuViewModel @ViewModelInject constructor(
     application: Application,
-    val dbgDAO: DbgDAO,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
@@ -57,7 +54,8 @@ class MainMenuViewModel @ViewModelInject constructor(
             assertNotNull(namespace, logTag, "Namespace cannot be null")
 
             if (namespace != null) {
-                dbgDAO.getCharacter(it, namespace.toDBModel())?.toCoreModel()
+                // TODO: Fix wrong language
+                pS2LinkRepository.getCharacter(it, namespace, CensusLang.EN)
             } else {
                 null
             }
@@ -70,7 +68,8 @@ class MainMenuViewModel @ViewModelInject constructor(
             assertNotNull(namespace, logTag, "Namespace cannot be null")
 
             if (namespace != null) {
-                dbgDAO.getOutfit(it, namespace.toDBModel())?.toCoreModel()
+                // TODO: Fix wrong language
+                pS2LinkRepository.getOutfit(it, namespace, CensusLang.EN)
             } else {
                 null
             }
