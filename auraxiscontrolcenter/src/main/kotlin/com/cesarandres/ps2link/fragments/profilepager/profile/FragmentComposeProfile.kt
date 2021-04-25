@@ -36,7 +36,7 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
         ProfileCompose(
             faction = profile.value?.faction,
             br = profile.value?.battleRank?.toInt(),
-            percentToNextBR = profile.value?.percentageToNextBattleRank?.toInt(),
+            percentToNextBR = profile.value?.percentageToNextBattleRank?.toFloat(),
             certs = profile.value?.certs?.toInt(),
             percentToNextCert = profile.value?.percentageToNextCert?.toInt(),
             loginStatus = LoginStatus.UNKNOWN,

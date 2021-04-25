@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ps2_background"
-            app:tabMode="auto"
+            app:tabMode="scrollable"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabTextColor="@color/secondaryTextColorInactive"
             app:tabSelectedTextColor="@color/primaryTextColor"/>

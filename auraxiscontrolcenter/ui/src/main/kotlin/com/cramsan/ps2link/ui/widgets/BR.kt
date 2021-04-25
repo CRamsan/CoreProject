@@ -5,8 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +24,9 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.theme.gold
+import com.cramsan.ps2link.ui.theme.goldBackground
 import com.cramsan.ps2link.ui.theme.goldDisabled
+import com.cramsan.ps2link.ui.theme.goldWhite
 
 @Composable
 fun BR(
@@ -41,7 +47,8 @@ fun BR(
     }
     Text(
         text = level.toString(),
-        modifier = modifier.background(backgroundColor, shape)
+        modifier = modifier
+            .background(backgroundColor, shape)
             .clip(shape)
             .border(BorderStroke(Size.micro, borderColor), shape)
             .padding(Padding.small),
@@ -53,30 +60,48 @@ fun BR(
 @Composable
 fun BRBar(
     modifier: Modifier = Modifier,
-    percentageToNextLevel: Int,
+    percentageToNextLevel: Float,
 ) {
-    Box(
+    val height = Size.large
+    Row(
         modifier = modifier
+            .height(height)
             .fillMaxWidth()
+            .padding(Padding.xsmall)
+            .clip(CutCornerShape(Size.xsmall))
             .background(BRGradient)
-    )
+    ) {
+        // TODO: This progress bar is not working! 
+        if (percentageToNextLevel > 0) {
+            Spacer(
+                modifier = Modifier
+                    .weight(1f)
+            )
+            Box(
+                modifier = modifier
+                    .fillMaxHeight()
+                    .weight(3f)
+                    .background(goldBackground)
+            )
+        }
+    }
 }
 
-private val BRGradient = Brush.horizontalGradient(listOf(gold, goldDisabled))
+private val BRGradient = Brush.horizontalGradient(listOf(goldWhite, gold))
 
 @Preview(
-    widthDp = 100,
-    heightDp = 20,
+    widthDp = 200,
+    heightDp = 25,
 )
 @Composable
 fun ProfileItemPreview() {
     PS2Theme {
-        Row {
+        Row(modifier = Modifier.fillMaxWidth()) {
             BR(
                 level = 80,
                 enabled = true,
             )
-            BRBar(percentageToNextLevel = 75)
+            BRBar(percentageToNextLevel = 75f)
             BR(
                 level = 181,
                 enabled = false,

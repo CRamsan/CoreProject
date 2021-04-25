@@ -55,7 +55,7 @@ fun Population.toStringResource(): String {
 @Composable
 fun Population.toColor() = when (this) {
     Population.HIGH -> positive
-    Population.MEDIUM -> negative
+    Population.MEDIUM -> warning
     Population.LOW -> warning
     Population.UNKNOWN -> undefined
 }

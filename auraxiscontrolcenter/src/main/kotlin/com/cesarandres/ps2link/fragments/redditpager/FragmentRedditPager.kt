@@ -11,7 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
-import com.cesarandres.ps2link.databinding.FragmentProfilePagerBinding
+import com.cesarandres.ps2link.databinding.FragmentRedditPagerBinding
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.ps2link.core.models.RedditPage
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,11 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
  * This fragment holds a view pager for a fragment for each subredit
  */
 @AndroidEntryPoint
-class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentProfilePagerBinding>() {
+class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentRedditPagerBinding>() {
 
     override val viewModel: NoopViewModel by viewModels()
     override val logTag = "FragmentRedditPager"
-    override val contentViewLayout = R.layout.fragment_profile_pager
+    override val contentViewLayout = R.layout.fragment_reddit_pager
 
     private lateinit var viewPager: ViewPager2
 
@@ -37,7 +37,7 @@ class FragmentRedditPager : BasePS2Fragment<NoopViewModel, FragmentProfilePagerB
         val view = super.onCreateView(inflater, container, savedInstanceState)
         setHasOptionsMenu(true)
 
-        viewPager = dataBinding.profilePager
+        viewPager = dataBinding.redditPager
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())

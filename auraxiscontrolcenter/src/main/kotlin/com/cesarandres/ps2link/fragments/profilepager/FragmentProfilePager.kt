@@ -22,6 +22,7 @@ import com.cesarandres.ps2link.fragments.profilepager.profile.FragmentComposePro
 import com.cesarandres.ps2link.fragments.profilepager.statlist.FragmentComposeStatList
 import com.cesarandres.ps2link.fragments.profilepager.weaponlist.FragmentComposeWeaponList
 import com.cramsan.ps2link.core.models.Namespace
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -48,12 +49,20 @@ class FragmentProfilePager : BasePS2Fragment<ProfilePagerViewModel, FragmentProf
         setHasOptionsMenu(true)
 
         viewPager = dataBinding.profilePager
-        profileId = args.characterId
-        namespace = args.namespace
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
+
+        val tabLayout = dataBinding.tabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            // TODO: Replace with string resource
+            tab.text = ProfilePage.values()[position].name
+        }.attach()
+
+        profileId = args.characterId
+        namespace = args.namespace
+
         viewModel.setUp(profileId, namespace)
         return view
     }
