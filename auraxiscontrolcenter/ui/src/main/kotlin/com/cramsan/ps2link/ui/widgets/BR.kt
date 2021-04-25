@@ -72,18 +72,19 @@ fun BRBar(
             .background(BRGradient)
     ) {
         // TODO: This progress bar is not working! 
-        if (percentageToNextLevel > 0) {
-            Spacer(
-                modifier = Modifier
-                    .weight(1f)
-            )
-            Box(
-                modifier = modifier
-                    .fillMaxHeight()
-                    .weight(3f)
-                    .background(goldBackground)
-            )
+        if (percentageToNextLevel <= 0) {
+            return@Row
         }
+        Spacer(
+            modifier = Modifier
+                .weight(percentageToNextLevel)
+        )
+        Box(
+            modifier = Modifier
+                .weight(100 - percentageToNextLevel)
+                .fillMaxHeight()
+                .background(goldBackground)
+        )
     }
 }
 
