@@ -8,12 +8,12 @@ import kotlinx.datetime.Instant
  */
 data class Outfit(
     val id: String,
-    val name: String?,
-    val tag: String?,
-    val faction: Faction,
-    val worldId: Long,
-    val timeCreated: Instant?,
-    val leaderCharacterId: String?,
-    val memberCount: Int,
-    val namespace: Namespace,
+    val name: String? = null,
+    val tag: String? = null,
+    val faction: Faction = Faction.UNKNOWN,
+    val worldId: Long? = null,
+    val timeCreated: Instant? = null,
+    val leaderCharacterId: String? = null,
+    val memberCount: Int = 0,
+    val namespace: Namespace = Namespace.UNDETERMINED,
 )

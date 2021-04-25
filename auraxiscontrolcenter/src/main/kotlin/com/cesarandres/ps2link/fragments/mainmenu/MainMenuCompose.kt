@@ -1,6 +1,8 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
 import androidx.annotation.MainThread
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,12 +20,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.MainMenuButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainMenuCompose(
     preferredProfile: Character?,
@@ -32,26 +37,31 @@ fun MainMenuCompose(
 ) {
     FrameBottom(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.padding(horizontal = 50.dp)
+            modifier = Modifier
+                .padding(horizontal = 50.dp)
                 .verticalScroll(rememberScrollState())
                 .wrapContentWidth()
                 .animateContentSize()
         ) {
             Spacer(modifier = Modifier.height(50.dp))
-            val buttonModifier = Modifier.padding(10.dp).fillMaxWidth()
-            preferredProfile?.let {
+            val buttonModifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth()
+            AnimatedVisibility(preferredProfile != null) {
+                requireNotNull(preferredProfile)
                 MainMenuButton(
                     buttonModifier,
-                    label = it.name ?: "",
+                    label = preferredProfile.name,
                     star = true
-                ) { eventHandler.onPreferredProfileClick(it.characterId, it.namespace) }
+                ) { eventHandler.onPreferredProfileClick(preferredProfile.characterId, preferredProfile.namespace) }
             }
-            preferredOutfit?.let {
+            AnimatedVisibility(preferredOutfit != null) {
+                requireNotNull(preferredOutfit)
                 MainMenuButton(
                     buttonModifier,
-                    label = it.name ?: "",
+                    label = preferredOutfit.name,
                     star = true
-                ) { eventHandler.onPreferredOutfitClick(it.id, it.namespace) }
+                ) { eventHandler.onPreferredOutfitClick(preferredOutfit.id, preferredOutfit.namespace) }
             }
             MainMenuButton(
                 buttonModifier,
@@ -108,8 +118,33 @@ interface MainMenuEventHandler {
 fun NormalButtonPreview() {
     PS2Theme {
         MainMenuCompose(
-            preferredProfile = null,
-            preferredOutfit = null,
+            preferredProfile = Character(
+                "",
+                "CRamsan",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Faction.VS,
+                Server("", "", null, Namespace.PS2PC),
+                null,
+                Namespace.PS2PS4EU,
+                false,
+            ),
+            preferredOutfit = Outfit(
+                id = "",
+                name = null,
+                tag = "D3RP",
+                faction = Faction.VS,
+                worldId = 0,
+                timeCreated = null,
+                leaderCharacterId = null,
+                memberCount = 100,
+                namespace = Namespace.PS2PC,
+            ),
             eventHandler = object : MainMenuEventHandler {
                 override fun onPreferredProfileClick(characterId: String, namespace: Namespace) = Unit
                 override fun onPreferredOutfitClick(outfitId: String, namespace: Namespace) = Unit

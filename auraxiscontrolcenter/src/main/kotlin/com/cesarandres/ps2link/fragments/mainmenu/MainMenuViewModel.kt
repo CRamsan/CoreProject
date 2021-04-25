@@ -19,10 +19,13 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 class MainMenuViewModel @ViewModelInject constructor(
@@ -47,32 +50,41 @@ class MainMenuViewModel @ViewModelInject constructor(
     private val _preferredProfileId = MutableStateFlow<String?>(null)
     private val _preferredOutfitId = MutableStateFlow<String?>(null)
 
-    val preferredProfile = _preferredProfileId.map { profileId ->
-        profileId?.let {
-            val namespace = ps2Settings.getPreferredNamespace()
+    val preferredProfile: Flow<Character?> = _preferredProfileId.transform { profileId ->
+        if (profileId.isNullOrBlank()) {
+            emit(null)
+            return@transform
+        }
 
-            assertNotNull(namespace, logTag, "Namespace cannot be null")
+        emit(Character(profileId, cached = false))
+        val namespace = ps2Settings.getPreferredNamespace()
 
-            if (namespace != null) {
-                // TODO: Fix wrong language
-                pS2LinkRepository.getCharacter(it, namespace, CensusLang.EN)
-            } else {
-                null
-            }
+        assertNotNull(namespace, logTag, "Namespace cannot be null")
+
+        if (namespace != null) {
+            // TODO: Fix wrong language
+            emit(pS2LinkRepository.getCharacter(profileId, namespace, CensusLang.EN))
+        } else {
+            emit(null)
         }
     }.flowOn(dispatcherProvider.ioDispatcher())
-    val preferredOutfit = _preferredOutfitId.map { outfitId ->
-        outfitId?.let {
-            val namespace = ps2Settings.getPreferredNamespace()
 
-            assertNotNull(namespace, logTag, "Namespace cannot be null")
+    val preferredOutfit: Flow<Outfit?> = _preferredOutfitId.transform { outfitId ->
+        if (outfitId.isNullOrBlank()) {
+            emit(null)
+            return@transform
+        }
 
-            if (namespace != null) {
-                // TODO: Fix wrong language
-                pS2LinkRepository.getOutfit(it, namespace, CensusLang.EN)
-            } else {
-                null
-            }
+        emit(Outfit(outfitId))
+        val namespace = ps2Settings.getPreferredNamespace()
+
+        assertNotNull(namespace, logTag, "Namespace cannot be null")
+
+        if (namespace != null) {
+            // TODO: Fix wrong language
+            emit(pS2LinkRepository.getOutfit(outfitId, namespace, CensusLang.EN))
+        } else {
+            emit(null)
         }
     }.flowOn(dispatcherProvider.ioDispatcher())
 

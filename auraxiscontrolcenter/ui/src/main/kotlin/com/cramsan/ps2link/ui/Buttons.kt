@@ -1,7 +1,11 @@
 package com.cramsan.ps2link.ui
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.ui.theme.Opacity
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
+import com.cramsan.ps2link.ui.widgets.CustomCircularProgressIndicator
 
 data class BoldButtonColors(private val backgroundColor: Color, private val contentColor: Color) :
     ButtonColors {
@@ -65,11 +69,12 @@ fun BoldButton(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainMenuButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    label: String,
+    label: String? = null,
     star: Boolean = false,
     onClick: () -> Unit = {},
 ) {
@@ -79,6 +84,7 @@ fun MainMenuButton(
         onClick = onClick
     ) {
         Row(
+            modifier = Modifier.animateContentSize(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             // TODO: Add content description
@@ -88,14 +94,27 @@ fun MainMenuButton(
                     contentDescription = null
                 )
             }
-            Text(
-                text = label,
-                style = MaterialTheme.typography.h5,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(vertical = Padding.small)
-                    .fillMaxWidth()
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                val isLoading = label == null
+                Crossfade(targetState = isLoading) {
+                    if (it) {
+                        CustomCircularProgressIndicator(
+                            color = MaterialTheme.colors.onPrimary,
+                            diameter = Size.large,
+                        )
+                    } else {
+                        Text(
+                            text = label ?: "",
+                            style = MaterialTheme.typography.h5,
+                            modifier = Modifier
+                                .padding(vertical = Padding.small)
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -136,14 +155,22 @@ fun SlimButton(
 fun BoldButtonPreview() {
     PS2Theme {
         Column {
+            MainMenuButton(label = "Crasman2", star = true)
+            MainMenuButton(star = true, enabled = false)
             BoldButton {
                 Text("Android")
             }
-            MainMenuButton(label = "Crasman2", star = true)
-            BoldButton {
+            BoldButton(
+                enabled = false
+            ) {
                 Text("Test")
             }
             SlimButton {
+                Text("Slim Test")
+            }
+            SlimButton(
+                enabled = false
+            ) {
                 Text("Slim Test")
             }
         }
