@@ -33,7 +33,7 @@ class FriendListViewModel @ViewModelInject constructor(
     FriendListEventHandler {
 
     override val logTag: String
-        get() = "ProfileViewModel"
+        get() = "FriendListViewModel"
 
     // State
     private val _friendList = MutableStateFlow<List<FriendCharacter>>(emptyList())

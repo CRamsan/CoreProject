@@ -7,11 +7,8 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cesarandres.ps2link.fragments.OpenOutfit
-import com.cramsan.framework.core.BaseEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -46,15 +43,5 @@ class FragmentComposeOutfitAdd : BaseComposePS2Fragment<OutfitAddViewModel>() {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         requireActivity().title = getString(R.string.title_outfits)
         return view
-    }
-
-    override fun onViewModelEvent(event: BaseEvent) {
-        super.onViewModelEvent(event)
-        when (event) {
-            is OpenOutfit -> {
-                val action = FragmentComposeOutfitAddDirections.actionFragmentAddOutfitToFragmentOutfitPager(event.outfitId, event.namespace)
-                findNavController().navigate(action)
-            }
-        }
     }
 }

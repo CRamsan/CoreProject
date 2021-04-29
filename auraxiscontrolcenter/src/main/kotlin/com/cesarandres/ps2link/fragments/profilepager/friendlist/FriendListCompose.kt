@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments.profilepager.friendlist
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -25,8 +26,9 @@ fun FriendListCompose(
             LazyColumn {
                 items(friendList) {
                     FriendItem(
+                        modifier = Modifier.fillMaxWidth(),
                         label = it.characterName ?: "",
-                        onlineStatus = it.loginStatus,
+                        loginStatus = it.loginStatus,
                         onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
                     )
                 }

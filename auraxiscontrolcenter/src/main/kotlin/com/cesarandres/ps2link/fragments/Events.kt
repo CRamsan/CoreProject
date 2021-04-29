@@ -1,10 +1,16 @@
 package com.cesarandres.ps2link.fragments
 
+import com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPagerArgs
+import com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePagerArgs
 import com.cramsan.framework.core.BaseEvent
 import com.cramsan.ps2link.core.models.Namespace
 
-data class OpenProfile(val characterId: String, val namespace: Namespace) : BaseEvent()
-data class OpenOutfit(val outfitId: String, val namespace: Namespace) : BaseEvent()
+data class OpenProfile(val characterId: String, val namespace: Namespace) : BaseEvent() {
+    val args = FragmentProfilePagerArgs(characterId, namespace)
+}
+data class OpenOutfit(val outfitId: String, val namespace: Namespace) : BaseEvent() {
+    val args = FragmentOutfitPagerArgs(outfitId, namespace)
+}
 object OpenProfileList : BaseEvent()
 object OpenProfileSearch : BaseEvent()
 object OpenOutfitList : BaseEvent()

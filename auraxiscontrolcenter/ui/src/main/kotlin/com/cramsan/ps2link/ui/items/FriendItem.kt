@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.ui.items
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,13 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import com.cramsan.ps2link.ui.toColor
 import com.cramsan.ps2link.ui.toStringResource
 
 @Composable
 fun FriendItem(
     modifier: Modifier = Modifier,
     label: String,
-    onlineStatus: LoginStatus = LoginStatus.UNKNOWN,
+    loginStatus: LoginStatus = LoginStatus.UNKNOWN,
     onClick: () -> Unit = {},
 ) {
     SlimButton(
@@ -30,9 +32,10 @@ fun FriendItem(
                 text = label,
                 textAlign = TextAlign.Start,
             )
+            Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = onlineStatus.toStringResource(),
-                textAlign = TextAlign.End,
+                text = loginStatus.toStringResource(),
+                color = loginStatus.toColor()
             )
         }
     }
@@ -44,7 +47,7 @@ fun FriendItemPreview() {
     PS2Theme {
         FriendItem(
             label = "Cramsan",
-            onlineStatus = LoginStatus.ONLINE,
+            loginStatus = LoginStatus.ONLINE,
         )
     }
 }

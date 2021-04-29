@@ -5,8 +5,8 @@ package com.cramsan.ps2link.core.models
  * @created 1/22/2021
  */
 enum class LoginStatus(val code: String) {
-    ONLINE("0"),
-    OFFLINE("1"),
+    ONLINE("1"),
+    OFFLINE("0"),
     UNKNOWN("-1");
 
     companion object {

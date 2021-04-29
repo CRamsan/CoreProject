@@ -7,11 +7,8 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cesarandres.ps2link.fragments.OpenProfile
-import com.cramsan.framework.core.BaseEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -44,15 +41,5 @@ class FragmentComposeProfileAdd : BaseComposePS2Fragment<ProfileAddViewModel>() 
         val view = super.onCreateView(inflater, container, savedInstanceState)
         requireActivity().title = getString(R.string.title_profiles)
         return view
-    }
-
-    override fun onViewModelEvent(event: BaseEvent) {
-        super.onViewModelEvent(event)
-        when (event) {
-            is OpenProfile -> {
-                val action = FragmentComposeProfileAddDirections.actionFragmentAddProfileToFragmentProfile(event.characterId, event.namespace)
-                findNavController().navigate(action)
-            }
-        }
     }
 }
