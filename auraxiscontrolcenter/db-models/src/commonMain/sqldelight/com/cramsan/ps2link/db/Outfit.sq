@@ -2,27 +2,28 @@ import com.cramsan.ps2link.db.models.Faction;
 import com.cramsan.ps2link.db.models.Namespace;
 
 CREATE TABLE Outfit (
-    outfitId TEXT NOT NULL PRIMARY KEY UNIQUE,
+    id TEXT NOT NULL PRIMARY KEY UNIQUE,
     name TEXT,
     alias TEXT,
     leaderCharacterId TEXT,
     memberCount INTEGER,
     timeCreated INTEGER,
-    worldId INTEGER,
+    worldId TEXT,
+    worldName TEXT,
     factionId TEXT as Faction NOT NULL,
     namespace TEXT as Namespace NOT NULL,
     lastUpdated INTEGER NOT NULL
 );
 
 getOutfit:
-SELECT * FROM Outfit WHERE outfitId == ? AND namespace == ?;
+SELECT * FROM Outfit WHERE id == ? AND namespace == ?;
 
 getAllOutfits:
 SELECT * FROM Outfit;
 
 insertOutfit:
 INSERT OR REPLACE INTO Outfit(
-    outfitId,
+    id,
     name,
     alias,
     leaderCharacterId,
@@ -36,7 +37,7 @@ INSERT OR REPLACE INTO Outfit(
 
 insertOutfitInstance:
 INSERT OR REPLACE INTO Outfit(
-    outfitId,
+    id,
     name,
     alias,
     leaderCharacterId,
@@ -49,7 +50,7 @@ INSERT OR REPLACE INTO Outfit(
 ) VALUES ?;
 
 deleteOutfit:
-DELETE FROM Outfit WHERE outfitId == ? AND namespace == ?;
+DELETE FROM Outfit WHERE id == ? AND namespace == ?;
 
 deleteAll:
 DELETE FROM Outfit;

@@ -1,5 +1,7 @@
 package com.cramsan.framework.haltUtil.implementation
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
 import com.cramsan.framework.halt.implementation.HaltUtilCommonTest
@@ -16,6 +18,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HaltUtilTest {
 
+    private val context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var haltUtilTest: HaltUtilCommonTest
 
     @Before
@@ -26,14 +29,14 @@ class HaltUtilTest {
     @Test
     fun testStopThread() {
         runBlocking {
-            haltUtilTest.testStopThread(HaltUtilAndroid())
+            haltUtilTest.testStopThread(HaltUtilAndroid(context))
         }
     }
 
     @Test
     fun testStopResumeStopThread() {
         runBlocking {
-            haltUtilTest.testStopResumeStopThread(HaltUtilAndroid())
+            haltUtilTest.testStopResumeStopThread(HaltUtilAndroid(context))
         }
     }
 }

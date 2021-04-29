@@ -1,6 +1,8 @@
 package com.cramsan.ps2link.appcore
 
 import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.RedditPost
 import com.cramsan.ps2link.core.models.Server
@@ -8,9 +10,7 @@ import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.db.Character
-import com.cramsan.ps2link.db.Member
 import com.cramsan.ps2link.db.Outfit
-import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.db.models.Namespace
 import com.cramsan.ps2link.network.models.content.CharacterProfile
 import com.cramsan.ps2link.network.models.content.OnlineStatus
@@ -29,41 +29,49 @@ import kotlin.time.minutes
  * @created 1/17/2021
  */
 
-fun CharacterProfile.toCharacter(namespace: Namespace, lastUpdated: Long): Character {
-    return Character(
-        id = character_id,
+@OptIn(ExperimentalTime::class)
+fun CharacterProfile.toCoreModel(namespace: Namespace, lastUpdated: Long, currentLang: CensusLang): com.cramsan.ps2link.core.models.Character {
+    return com.cramsan.ps2link.core.models.Character(
+        characterId = character_id,
         name = name?.first,
-        activeProfileId = profile_id?.toLong(),
-        currentPoints = certs?.available_points?.toLong(),
-        percentageToNextCert = certs?.percent_to_next?.toDouble(),
-        percentageToNextRank = battle_rank?.percent_to_next?.toDouble(),
-        rank = battle_rank?.value?.toLong(),
-        lastLogin = times?.last_login?.toLong(),
-        minutesPlayed = times?.minutes_played?.toLong(),
-        factionId = Faction.fromString(faction_id),
-        worldId = world_id,
-        outfitName = outfitName,
-        worldName = null,
-        namespace = namespace,
+        activeProfileId = profile_id,
+        loginStatus = LoginStatus.fromString(online_status),
+        certs = certs?.available_points?.toLong(),
+        percentageToNextCert = certs?.percent_to_next?.toDouble()?.times(100),
+        battleRank = battle_rank?.value?.toLong(),
+        percentageToNextBattleRank = battle_rank?.percent_to_next?.toDouble(),
+        lastLogin = times?.last_login?.toLong()?.let {
+            Instant.fromEpochSeconds(it)
+        },
+        timePlayed = times?.minutes_played?.toLong()?.minutes,
+        faction = com.cramsan.ps2link.db.models.Faction.fromString(faction_id).toCoreModel(),
+        server = world_id?.let {
+            Server(
+                worldId = it,
+                namespace = namespace.toCoreModel(),
+                serverName = server?.name?.localizedName(currentLang)
+            )
+        },
+        outfit = outfit?.toCoreModel(namespace, lastUpdated),
+        namespace = namespace.toCoreModel(),
         cached = false,
-        lastUpdated = lastUpdated,
     )
 }
 
-fun Faction.toCoreModel() = when (this) {
-    Faction.VS -> com.cramsan.ps2link.core.models.Faction.VS
-    Faction.NC -> com.cramsan.ps2link.core.models.Faction.NC
-    Faction.TR -> com.cramsan.ps2link.core.models.Faction.TR
-    Faction.NS -> com.cramsan.ps2link.core.models.Faction.NS
-    Faction.UNKNOWN -> com.cramsan.ps2link.core.models.Faction.UNKNOWN
+fun com.cramsan.ps2link.db.models.Faction.toCoreModel() = when (this) {
+    com.cramsan.ps2link.db.models.Faction.VS -> Faction.VS
+    com.cramsan.ps2link.db.models.Faction.NC -> Faction.NC
+    com.cramsan.ps2link.db.models.Faction.TR -> Faction.TR
+    com.cramsan.ps2link.db.models.Faction.NS -> Faction.NS
+    com.cramsan.ps2link.db.models.Faction.UNKNOWN -> Faction.UNKNOWN
 }
 
-fun com.cramsan.ps2link.core.models.Faction.toDBModel() = when (this) {
-    com.cramsan.ps2link.core.models.Faction.VS -> Faction.VS
-    com.cramsan.ps2link.core.models.Faction.NC -> Faction.NC
-    com.cramsan.ps2link.core.models.Faction.TR -> Faction.TR
-    com.cramsan.ps2link.core.models.Faction.NS -> Faction.NS
-    com.cramsan.ps2link.core.models.Faction.UNKNOWN -> Faction.UNKNOWN
+fun Faction.toDBModel() = when (this) {
+    Faction.VS -> com.cramsan.ps2link.db.models.Faction.VS
+    Faction.NC -> com.cramsan.ps2link.db.models.Faction.NC
+    Faction.TR -> com.cramsan.ps2link.db.models.Faction.TR
+    Faction.NS -> com.cramsan.ps2link.db.models.Faction.NS
+    Faction.UNKNOWN -> com.cramsan.ps2link.db.models.Faction.UNKNOWN
 }
 
 fun Namespace.toCoreModel() = when (this) {
@@ -71,6 +79,18 @@ fun Namespace.toCoreModel() = when (this) {
     Namespace.PS2PS4US -> com.cramsan.ps2link.core.models.Namespace.PS2PS4US
     Namespace.PS2PS4EU -> com.cramsan.ps2link.core.models.Namespace.PS2PS4EU
     Namespace.UNDETERMINED -> com.cramsan.ps2link.core.models.Namespace.UNDETERMINED
+}
+
+fun com.cramsan.ps2link.db.models.LoginStatus.toCoreModel() = when (this) {
+    com.cramsan.ps2link.db.models.LoginStatus.ONLINE -> LoginStatus.ONLINE
+    com.cramsan.ps2link.db.models.LoginStatus.OFFLINE -> LoginStatus.OFFLINE
+    com.cramsan.ps2link.db.models.LoginStatus.UNKNOWN -> LoginStatus.UNKNOWN
+}
+
+fun LoginStatus.toDBModel() = when (this) {
+    LoginStatus.ONLINE -> com.cramsan.ps2link.db.models.LoginStatus.ONLINE
+    LoginStatus.OFFLINE -> com.cramsan.ps2link.db.models.LoginStatus.OFFLINE
+    LoginStatus.UNKNOWN -> com.cramsan.ps2link.db.models.LoginStatus.UNKNOWN
 }
 
 fun com.cramsan.ps2link.core.models.Namespace.toDBModel() = when (this) {
@@ -87,33 +107,45 @@ fun com.cramsan.ps2link.core.models.Namespace.toNetworkModel() = when (this) {
     com.cramsan.ps2link.core.models.Namespace.UNDETERMINED -> com.cramsan.ps2link.network.models.Namespace.UNDETERMINED
 }
 
+/*
 fun com.cramsan.ps2link.network.models.content.Outfit.toDBModel(namespace: Namespace, lastUpdated: Long): Outfit {
     return Outfit(
-        outfitId = outfit_id,
+        id = outfit_id,
         name = name,
         alias = alias,
         leaderCharacterId = leader_character_id,
         memberCount = member_count.toLong(),
         timeCreated = time_created?.toLong(),
-        worldId = world_id?.toLong(),
+        worldId = world_id?.toString(),
+        worldName = wor
         factionId = Faction.NS,
         namespace = namespace,
         lastUpdated = lastUpdated,
     )
 }
-
+*/
 @OptIn(ExperimentalTime::class)
 fun Character.toCoreModel(): com.cramsan.ps2link.core.models.Character {
-    val server = if (worldId != null && worldName != null) {
-        Server(worldId!!, worldName!!, null, namespace.toCoreModel())
-    } else {
-        null
+    val server = worldId?.let {
+        Server(
+            worldId = it,
+            serverName = worldName,
+            namespace = namespace.toCoreModel(),
+            serverMetadata = null
+        )
     }
 
+    val outfit = outfitId?.let {
+        com.cramsan.ps2link.core.models.Outfit(
+            id = it,
+            name = outfitName,
+        )
+    }
     return com.cramsan.ps2link.core.models.Character(
         characterId = id,
         name = name,
         activeProfileId = activeProfileId,
+        loginStatus = loginStatus?.toCoreModel(),
         certs = currentPoints,
         battleRank = rank,
         percentageToNextCert = percentageToNextCert,
@@ -122,7 +154,7 @@ fun Character.toCoreModel(): com.cramsan.ps2link.core.models.Character {
         timePlayed = minutesPlayed?.minutes,
         faction = factionId.toCoreModel(),
         server = server,
-        outfit = null,
+        outfit = outfit,
         namespace = namespace.toCoreModel(),
         cached = cached,
     )
@@ -134,15 +166,18 @@ fun com.cramsan.ps2link.core.models.Character.toDBModel(lastUpdated: Long): Char
         id = characterId,
         name = name,
         activeProfileId = activeProfileId,
+        loginStatus = loginStatus.toDBModel(),
         currentPoints = certs,
         percentageToNextCert = percentageToNextCert,
         percentageToNextRank = percentageToNextBattleRank,
         rank = battleRank,
+        outfitRank = null,
         lastLogin = lastLogin?.toEpochMilliseconds(),
         minutesPlayed = timePlayed?.inMinutes?.toLong(),
         factionId = faction.toDBModel(),
         worldId = server?.worldId,
         worldName = server?.serverName,
+        outfitId = outfit?.id,
         outfitName = outfit?.name,
         namespace = namespace.toDBModel(),
         cached = true,
@@ -190,8 +225,8 @@ fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Nam
         id = outfit_id,
         name = name,
         tag = alias,
-        faction = Faction.fromString(faction_id).toCoreModel(),
-        worldId = world_id?.toLong() ?: 0,
+        faction = com.cramsan.ps2link.db.models.Faction.fromString(faction_id).toCoreModel(),
+        worldId = world_id?.toString(),
         timeCreated = time_created?.let { Instant.fromEpochMilliseconds(it.toLong()) },
         leaderCharacterId = leader_character_id,
         memberCount = member_count,
@@ -199,18 +234,15 @@ fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Nam
     )
 }
 
-fun Member.toCoreModel(): com.cramsan.ps2link.core.models.Member {
-    return com.cramsan.ps2link.core.models.Member(id)
-}
-
 @OptIn(ExperimentalTime::class)
 fun Outfit.toCoreModel(): com.cramsan.ps2link.core.models.Outfit {
     return com.cramsan.ps2link.core.models.Outfit(
-        id = outfitId,
+        id = id,
         name = name,
         tag = alias,
         faction = factionId.toCoreModel(),
-        worldId = worldId ?: 0,
+        worldId = worldId,
+        worldName = worldName,
         timeCreated = timeCreated?.let { Instant.fromEpochMilliseconds(it) },
         leaderCharacterId = leaderCharacterId,
         memberCount = memberCount?.toInt() ?: 0,
@@ -220,13 +252,14 @@ fun Outfit.toCoreModel(): com.cramsan.ps2link.core.models.Outfit {
 
 fun com.cramsan.ps2link.core.models.Outfit.toDBModel(lastUpdated: Long): Outfit {
     return Outfit(
-        outfitId = id,
+        id = id,
         name = name,
         alias = tag,
         leaderCharacterId = leaderCharacterId,
         memberCount = memberCount.toLong(),
         timeCreated = timeCreated?.toEpochMilliseconds(),
         worldId = worldId,
+        worldName = worldName,
         factionId = faction.toDBModel(),
         namespace = namespace.toDBModel(),
         lastUpdated = lastUpdated,

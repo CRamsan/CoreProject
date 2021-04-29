@@ -17,6 +17,8 @@ kotlin {
             dependencies {
                 implementation project(":framework:interfacelib")
                 implementation project(":framework:logging")
+
+                implementation packages.SupportCompat
             }
         }
     }

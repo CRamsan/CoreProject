@@ -5,9 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
+import org.ocpsoft.prettytime.PrettyTime
+import javax.inject.Inject
 import kotlin.time.ExperimentalTime
 
 /**
@@ -15,6 +16,9 @@ import kotlin.time.ExperimentalTime
  */
 @AndroidEntryPoint
 class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
+
+    @Inject
+    lateinit var prettyTime: PrettyTime
 
     override val logTag = "FragmentComposeProfile"
     override val viewModel: ProfileViewModel by viewModels()
@@ -38,14 +42,15 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
             br = profile.value?.battleRank?.toInt(),
             percentToNextBR = profile.value?.percentageToNextBattleRank?.toFloat(),
             certs = profile.value?.certs?.toInt(),
-            percentToNextCert = profile.value?.percentageToNextCert?.toInt(),
-            loginStatus = LoginStatus.UNKNOWN,
-            lastLogin = profile.value?.lastLogin?.toString(),
-            outfit = null,
+            percentToNextCert = profile.value?.percentageToNextCert?.toFloat(),
+            loginStatus = profile.value?.loginStatus,
+            lastLogin = profile.value?.lastLogin,
+            outfit = profile.value?.outfit,
             server = profile.value?.server?.serverName,
-            hoursPlayed = profile.value?.timePlayed?.inHours,
-            isLoading = isLoading.value,
-            eventHandler = viewModel
+            timePlayed = profile.value?.timePlayed,
+            prettyTime = prettyTime,
+            eventHandler = viewModel,
+            isLoading = isLoading.value
         )
     }
 

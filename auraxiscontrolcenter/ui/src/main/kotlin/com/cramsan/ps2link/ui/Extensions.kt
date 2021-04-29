@@ -33,11 +33,17 @@ fun ServerStatus.toStringResource() = when (this) {
     ServerStatus.UNKNOWN -> stringResource(R.string.text_unknown_caps)
 }
 
-fun ServerStatus.toColor() = when (this) {
+fun LoginStatus?.toColor() = when (this) {
+    LoginStatus.ONLINE -> positive
+    LoginStatus.OFFLINE -> negative
+    LoginStatus.UNKNOWN, null -> undefined
+}
+
+fun ServerStatus?.toColor() = when (this) {
     ServerStatus.ONLINE -> positive
     ServerStatus.OFFLINE -> negative
     ServerStatus.LOCKED -> warning
-    ServerStatus.UNKNOWN -> undefined
+    ServerStatus.UNKNOWN, null -> undefined
 }
 
 @Composable

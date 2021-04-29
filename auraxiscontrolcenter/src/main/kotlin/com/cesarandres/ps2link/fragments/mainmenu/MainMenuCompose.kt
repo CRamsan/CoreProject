@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
@@ -122,6 +123,7 @@ fun NormalButtonPreview() {
                 "",
                 "CRamsan",
                 null,
+                LoginStatus.UNKNOWN,
                 null,
                 null,
                 null,
@@ -129,7 +131,7 @@ fun NormalButtonPreview() {
                 null,
                 null,
                 Faction.VS,
-                Server("", "", null, Namespace.PS2PC),
+                Server("", Namespace.PS2PC, "", null),
                 null,
                 Namespace.PS2PS4EU,
                 false,
@@ -139,7 +141,7 @@ fun NormalButtonPreview() {
                 name = null,
                 tag = "D3RP",
                 faction = Faction.VS,
-                worldId = 0,
+                worldId = "0",
                 timeCreated = null,
                 leaderCharacterId = null,
                 memberCount = 100,

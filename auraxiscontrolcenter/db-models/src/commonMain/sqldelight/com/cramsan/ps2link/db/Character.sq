@@ -1,20 +1,24 @@
 import com.cramsan.ps2link.db.models.Faction;
 import com.cramsan.ps2link.db.models.Namespace;
+import com.cramsan.ps2link.db.models.LoginStatus;
 
 CREATE TABLE Character (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     name TEXT,
-    activeProfileId INTEGER,
+    activeProfileId TEXT,
+    loginStatus TEXT as LoginStatus NOT NULL,
     currentPoints INTEGER,
     percentageToNextCert REAL,
     percentageToNextRank REAL,
     rank INTEGER,
+    outfitRank INTEGER,
     lastLogin INTEGER,
     minutesPlayed INTEGER,
     factionId TEXT as Faction NOT NULL,
     worldId TEXT,
-    outfitName TEXT,
     worldName TEXT,
+    outfitId TEXT,
+    outfitName TEXT,
     namespace TEXT as Namespace NOT NULL,
     cached INTEGER as Boolean NOT NULL,
     lastUpdated INTEGER NOT NULL
@@ -31,6 +35,7 @@ INSERT OR REPLACE INTO Character(
     id,
     name,
     activeProfileId,
+    loginStatus,
     currentPoints,
     percentageToNextCert,
     percentageToNextRank,
@@ -39,18 +44,20 @@ INSERT OR REPLACE INTO Character(
     minutesPlayed,
     factionId,
     worldId,
-    outfitName,
     worldName,
+    outfitId,
+    outfitName,
     namespace,
     cached,
     lastUpdated
- ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+ ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertCharacterInstance:
 INSERT OR REPLACE INTO Character(
     id,
     name,
     activeProfileId,
+    loginStatus,
     currentPoints,
     percentageToNextCert,
     percentageToNextRank,
@@ -59,8 +66,9 @@ INSERT OR REPLACE INTO Character(
     minutesPlayed,
     factionId,
     worldId,
-    outfitName,
     worldName,
+    outfitId,
+    outfitName,
     namespace,
     cached,
     lastUpdated

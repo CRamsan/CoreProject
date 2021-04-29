@@ -12,7 +12,8 @@ import kotlin.time.ExperimentalTime
 data class Character(
     val characterId: String,
     val name: String? = null,
-    val activeProfileId: Long? = null,
+    val activeProfileId: String? = null,
+    val loginStatus: LoginStatus = LoginStatus.UNKNOWN,
     val certs: Long? = null,
     val battleRank: Long? = null,
     val percentageToNextCert: Double? = null,

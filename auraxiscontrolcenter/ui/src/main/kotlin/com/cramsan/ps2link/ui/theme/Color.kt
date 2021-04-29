@@ -16,12 +16,19 @@ val secondaryTextColor = Color(0xFF000000)
 val errorColor = Color(0xFFE91E1E)
 
 /**
- * Extra colors
+ * BattleRank colors
  */
 val gold = Color(0xFFFFE606)
-val goldWhite = Color(0xFFFFFCE2)
+val goldWhite = Color(0xFFFFF7B1)
 val goldDisabled = Color(0xFF69611B)
 val goldBackground = Color(0xFF2C290D)
+
+/**
+ * Cert Colors
+ */
+val certOrange = Color(0xFFFF5722)
+val certWhite = Color(0xFFFF7D5A)
+val certBackground = Color(0xFF381B12)
 
 /**
  * UI Colors

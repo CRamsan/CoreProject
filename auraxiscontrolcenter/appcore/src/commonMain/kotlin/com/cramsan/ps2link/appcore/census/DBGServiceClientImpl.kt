@@ -100,7 +100,7 @@ class DBGServiceClientImpl(
         )
 
         val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
-        return body?.character_name_list?.map { it.character_id_join_character }?.filterNotNull()
+        return body?.character_name_list?.mapNotNull { it.character_id_join_character }
     }
 
     override suspend fun getFriendList(

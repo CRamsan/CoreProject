@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
 import com.cramsan.ps2link.db.models.Faction
+import com.cramsan.ps2link.db.models.LoginStatus
 import com.cramsan.ps2link.db.models.Namespace
 import com.squareup.sqldelight.ColumnAdapter
 
@@ -14,11 +15,12 @@ val factionAdapter = object : ColumnAdapter<Faction, String> {
     override fun encode(value: Faction) = value.code
 }
 
-fun Faction.toSqlType() = factionAdapter.encode(this)
-
 val namespaceAdapter = object : ColumnAdapter<Namespace, String> {
     override fun decode(databaseValue: String) = Namespace.fromString(databaseValue)
     override fun encode(value: Namespace) = value.namespace
 }
 
-fun Namespace.toSqlType() = namespaceAdapter.encode(this)
+val loginStatusAdapter = object : ColumnAdapter<LoginStatus, String> {
+    override fun decode(databaseValue: String) = LoginStatus.fromString(databaseValue)
+    override fun encode(value: LoginStatus) = value.code
+}

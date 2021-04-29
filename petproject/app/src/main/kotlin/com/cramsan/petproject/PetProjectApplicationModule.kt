@@ -126,7 +126,7 @@ object PetProjectApplicationModule {
 
     @Provides
     @Singleton
-    fun provideHaltUtilDelegate(): HaltUtilDelegate = HaltUtilAndroid()
+    fun provideHaltUtilDelegate(@ApplicationContext appContext: Context): HaltUtilDelegate = HaltUtilAndroid(appContext)
 
     @Provides
     @Singleton

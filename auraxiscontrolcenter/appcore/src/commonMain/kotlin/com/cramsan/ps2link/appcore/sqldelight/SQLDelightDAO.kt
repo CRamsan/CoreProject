@@ -5,7 +5,7 @@ import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.toDBModel
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
-import com.cramsan.ps2link.core.models.Member
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.db.models.PS2LinkDB
@@ -27,20 +27,19 @@ class SQLDelightDAO(
         CharacterAdapter = com.cramsan.ps2link.db.Character.Adapter(
             factionIdAdapter = factionAdapter,
             namespaceAdapter = namespaceAdapter,
+            loginStatusAdapter = loginStatusAdapter,
         ),
         OutfitAdapter = com.cramsan.ps2link.db.Outfit.Adapter(
             factionIdAdapter = factionAdapter,
             namespaceAdapter = namespaceAdapter,
         ),
-        MemberAdapter = com.cramsan.ps2link.db.Member.Adapter(
-            namespaceAdapter = namespaceAdapter,
-        )
     )
 
     override fun insertCharacter(
         characterId: String,
         name: String?,
-        activeProfileId: Long?,
+        activeProfileId: String?,
+        loginStatus: LoginStatus,
         currentPoints: Long?,
         percentageToNextCert: Double?,
         percentageToNextRank: Double?,
@@ -49,8 +48,9 @@ class SQLDelightDAO(
         minutesPlayed: Long?,
         factionId: Faction,
         worldId: String?,
-        outfitName: String?,
         worldName: String?,
+        outfitId: String?,
+        outfitName: String?,
         namespace: Namespace,
         cached: Boolean,
         lastUpdated: Long,
@@ -60,6 +60,7 @@ class SQLDelightDAO(
             characterId,
             name,
             activeProfileId,
+            loginStatus.toDBModel(),
             currentPoints,
             percentageToNextCert,
             percentageToNextRank,
@@ -68,8 +69,9 @@ class SQLDelightDAO(
             minutesPlayed,
             factionId.toDBModel(),
             worldId,
-            outfitName,
             worldName,
+            outfitId,
+            outfitName,
             namespace.toDBModel(),
             cached,
             lastUpdated,
@@ -112,67 +114,9 @@ class SQLDelightDAO(
         return database.characterQueries.getCharacter(characterId, namespace.toDBModel()).asFlow().mapToOneOrNull().map { it?.toCoreModel() }
     }
 
-    override fun insertMember(
-        id: String,
-        rank: String?,
-        outfitId: String?,
-        onlineStatus: String?,
-        name: String?,
-        namespace: Namespace,
-        lastUpdated: Long,
-    ) {
-        assertIsBackgroundThread()
-        database.memberQueries.insertMember(
-            id,
-            rank,
-            outfitId,
-            onlineStatus,
-            name,
-            namespace.toDBModel(),
-            lastUpdated
-        )
-    }
-
-    override fun insertMemberList(
-        memberList: List<Member>,
-        namespace: Namespace,
-        lastUpdated: Long,
-    ) {
-        assertIsBackgroundThread()
-        database.memberQueries.transaction {
-            memberList.forEach {
-                database.memberQueries.insertMember(
-                    it.id,
-                    it.rank,
-                    it.outfitId,
-                    it.online,
-                    it.name,
-                    namespace.toDBModel(),
-                    lastUpdated
-                )
-            }
-        }
-    }
-
-    override fun removeMembersFromOutfit(
-        outfitId: String,
-        namespace: Namespace,
-    ) {
-        assertIsBackgroundThread()
-        database.memberQueries.deleteOutfit(outfitId, namespace.toDBModel())
-    }
-
     override fun getCharacters(): List<Character> {
         assertIsBackgroundThread()
         return database.characterQueries.getAllCharacters().executeAsList().map { it.toCoreModel() }
-    }
-
-    override fun getAllMembers(
-        outfitId: String,
-        namespace: Namespace,
-    ): List<Member> {
-        assertIsBackgroundThread()
-        return database.memberQueries.getAllMembers(outfitId, namespace.toDBModel()).executeAsList().map { it.toCoreModel() }
     }
 
     override fun getOutfit(
@@ -203,7 +147,7 @@ class SQLDelightDAO(
         leaderCharacterId: String?,
         memberCount: Long?,
         timeCreated: Long?,
-        worldId: Long?,
+        worldId: String?,
         factionId: Faction,
         namespace: Namespace,
         lastUpdated: Long,
@@ -239,7 +183,6 @@ class SQLDelightDAO(
     override fun deleteAll() {
         assertIsBackgroundThread()
         database.characterQueries.deleteAll()
-        database.memberQueries.deleteAll()
         database.outfitQueries.deleteAll()
     }
 }

@@ -9,7 +9,6 @@ import com.cramsan.ps2link.appcore.setThisMonth
 import com.cramsan.ps2link.appcore.setThisWeek
 import com.cramsan.ps2link.appcore.setToday
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
-import com.cramsan.ps2link.appcore.toCharacter
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.toDBModel
 import com.cramsan.ps2link.appcore.toNetworkModel
@@ -81,13 +80,13 @@ class PS2LinkRepositoryImpl(
         forceUpdate: Boolean,
     ): Character? {
         val cachedCharacter = dbgDAO.getCharacter(characterId, namespace)
-        if (!forceUpdate && (cachedCharacter == null || isCharacterValid(cachedCharacter.toDBModel(clock.now().toEpochMilliseconds())))) {
+        if (!forceUpdate && (cachedCharacter != null && isCharacterValid(cachedCharacter.toDBModel(clock.now().toEpochMilliseconds())))) {
             return cachedCharacter
         }
         val profile = dbgCensus.getProfile(characterId, namespace.toNetworkModel(), lang)
-            ?.toCharacter(namespace.toDBModel(), clock.now().toEpochMilliseconds()) ?: return null
-        dbgDAO.insertCharacter(profile.toCoreModel())
-        return profile.toCoreModel()
+            ?.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds(), lang) ?: return null
+        dbgDAO.insertCharacter(profile)
+        return profile
     }
 
     override fun getCharacterAsFlow(
@@ -104,7 +103,7 @@ class PS2LinkRepositoryImpl(
         if (searchField.length < 3) {
             return@coroutineScope emptyList()
         }
-        val profiles = Namespace.validNamespaces.map { namespace ->
+        Namespace.validNamespaces.map { namespace ->
             val job = async {
                 val endpointProfileList = dbgCensus.getProfiles(
                     searchField = searchField,
@@ -112,14 +111,11 @@ class PS2LinkRepositoryImpl(
                     currentLang = currentLang
                 )
                 endpointProfileList?.map {
-                    it.toCharacter(namespace.toDBModel(), clock.now().toEpochMilliseconds())
+                    it.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds(), currentLang)
                 }
             }
             job
-        }.awaitAll().filterNotNull().flatten().map {
-            it.toCoreModel()
-        }
-        profiles
+        }.awaitAll().filterNotNull().flatten()
     }
 
     override suspend fun getFriendList(
@@ -186,7 +182,12 @@ class PS2LinkRepositoryImpl(
                 dbgCensus.getServerList(namespace.toNetworkModel(), lang)?.map {
                     it.world_id?.let { worldId ->
                         val serverMetadata = getServerMetadata(it, serverPopulation, lang)
-                        Server(worldId, it.name?.localizedName(lang) ?: "", serverMetadata, namespace)
+                        Server(
+                            worldId = worldId,
+                            serverName = it.name?.localizedName(lang) ?: "",
+                            namespace = namespace,
+                            serverMetadata = serverMetadata
+                        )
                     }
                 }
             }
@@ -213,9 +214,9 @@ class PS2LinkRepositoryImpl(
             return cachedOutfit
         }
         val outfit = dbgCensus.getOutfit(outfitId, namespace.toNetworkModel(), lang)
-            ?.toDBModel(namespace.toDBModel(), clock.now().toEpochMilliseconds()) ?: return null
-        dbgDAO.insertOutfit(outfit.toCoreModel())
-        return outfit.toCoreModel()
+            ?.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds()) ?: return null
+        dbgDAO.insertOutfit(outfit)
+        return outfit
     }
 
     override fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?> {

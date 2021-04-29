@@ -24,24 +24,36 @@ import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
+import com.cramsan.ps2link.ui.toColor
 import com.cramsan.ps2link.ui.toStringResource
 import com.cramsan.ps2link.ui.widgets.BR
 import com.cramsan.ps2link.ui.widgets.BRBar
+import com.cramsan.ps2link.ui.widgets.Cert
+import com.cramsan.ps2link.ui.widgets.CertBar
 import com.cramsan.ps2link.ui.widgets.FactionIcon
+import kotlinx.datetime.Instant
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.Date
+import kotlin.math.roundToInt
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.minutes
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun ProfileCompose(
     faction: Faction?,
     br: Int?,
     percentToNextBR: Float?,
     certs: Int?,
-    percentToNextCert: Int?,
+    percentToNextCert: Float?,
     loginStatus: LoginStatus?,
-    lastLogin: String?,
+    lastLogin: Instant?,
     outfit: Outfit?,
     server: String?,
-    hoursPlayed: Double?,
+    timePlayed: Duration?,
     isLoading: Boolean,
+    prettyTime: PrettyTime,
     eventHandler: ProfileEventHandler,
 ) {
     FrameBottom {
@@ -55,9 +67,12 @@ fun ProfileCompose(
                     faction = faction ?: Faction.UNKNOWN
                 )
 
+                val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)
+                val smallModifier = Modifier.fillMaxWidth().padding(Padding.small)
+
                 // BR Progress bar
-                FrameSlim(modifier = Modifier.fillMaxWidth()) {
-                    Row(modifier = Modifier.fillMaxWidth().padding(Size.small), verticalAlignment = Alignment.CenterVertically) {
+                FrameSlim(modifier = mediumModifier) {
+                    Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
                         BR(level = br ?: 0)
                         BRBar(
                             modifier = Modifier.weight(1f),
@@ -68,33 +83,47 @@ fun ProfileCompose(
                 }
 
                 // Next cert progress bar
-                FrameSlim(modifier = Modifier.fillMaxWidth()) {
+                FrameSlim(modifier = mediumModifier) {
+                    Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
+                        CertBar(
+                            modifier = Modifier.weight(1f),
+                            percentageToNextCert = percentToNextCert ?: 0f
+                        )
+                        Cert(certs ?: 0)
+                    }
                 }
 
                 // Character base stats
-                FrameSlim(modifier = Modifier.fillMaxWidth()) {
-                    Column {
+                FrameSlim(modifier = mediumModifier) {
+                    Column(modifier = smallModifier) {
                         // Login status
-                        FrameSlim {
-                            Column {
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
                                 Text(text = stringResource(R.string.text_status))
-                                Text(text = (loginStatus ?: LoginStatus.UNKNOWN).toStringResource())
+                                Text(
+                                    text = (loginStatus ?: LoginStatus.UNKNOWN).toStringResource(),
+                                    color = loginStatus.toColor()
+                                )
                             }
                         }
 
                         // Last login
-                        FrameSlim {
-                            Column {
+                        val lastLoginString = lastLogin?.let {
+                            prettyTime.format(Date(it.toEpochMilliseconds()))
+                        } ?: stringResource(R.string.text_unknown)
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
                                 Text(text = stringResource(R.string.text_last_login))
-                                Text(text = lastLogin ?: stringResource(R.string.text_unknown))
+                                Text(text = lastLoginString)
                             }
                         }
 
                         // Outfit
-                        FrameSlim {
-                            Column {
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
                                 Text(text = stringResource(R.string.title_outfit))
                                 SlimButton(
+                                    modifier = Modifier.fillMaxWidth(),
                                     enabled = outfit != null,
                                     onClick = {
                                         outfit?.let {
@@ -108,23 +137,19 @@ fun ProfileCompose(
                         }
 
                         // Server
-                        FrameSlim {
-                            Column {
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
                                 Text(text = stringResource(R.string.title_server))
                                 Text(text = server ?: stringResource(R.string.text_unknown))
                             }
                         }
 
                         // Hours played
-                        FrameSlim {
-                            Column {
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
                                 Text(text = stringResource(R.string.text_hours_played))
                                 Text(
-                                    text = if (hoursPlayed == null) {
-                                        hoursPlayed.toString()
-                                    } else {
-                                        stringResource(R.string.text_unknown)
-                                    }
+                                    text = timePlayed?.inHours?.roundToInt()?.toString() ?: stringResource(R.string.text_unknown)
                                 )
                             }
                         }
@@ -143,6 +168,7 @@ interface ProfileEventHandler {
     fun onOutfitSelected(outfitId: String, namespace: Namespace)
 }
 
+@OptIn(ExperimentalTime::class)
 @Preview
 @Composable
 fun Preview() {
@@ -151,12 +177,13 @@ fun Preview() {
         br = 80,
         percentToNextBR = 75f,
         certs = 1000,
-        percentToNextCert = 50,
+        percentToNextCert = 50f,
         loginStatus = LoginStatus.ONLINE,
-        lastLogin = "Two hours ago",
+        lastLogin = Instant.DISTANT_FUTURE,
         outfit = null,
         server = "Genudine",
-        hoursPlayed = 1000.toDouble(),
+        timePlayed = 1000.minutes,
+        prettyTime = PrettyTime(),
         isLoading = true,
         eventHandler = object : ProfileEventHandler {
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit

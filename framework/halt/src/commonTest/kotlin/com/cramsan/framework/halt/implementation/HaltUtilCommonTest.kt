@@ -38,6 +38,6 @@ class HaltUtilCommonTest {
     }
 
     companion object {
-        private const val DELAY_TIME = 2000L
+        private const val DELAY_TIME = 100L
     }
 }

@@ -88,14 +88,19 @@ fun NormalButtonPreview() {
                     battleRank = 80,
                     faction = Faction.VS,
                     namespace = Namespace.PS2PS4US,
-                    activeProfileId = 1,
+                    activeProfileId = "1",
                     certs = 1,
                     lastLogin = Instant.DISTANT_PAST,
                     timePlayed = 10.days,
                     outfit = null,
                     percentageToNextCert = 0.0,
                     percentageToNextBattleRank = 0.0,
-                    server = Server("", "Ceres", null, Namespace.PS2PC),
+                    server = Server(
+                        "",
+                        Namespace.PS2PC,
+                        "Ceres",
+                        null
+                    ),
                     cached = true,
                 )
             ),
