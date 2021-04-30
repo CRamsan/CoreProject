@@ -1,8 +1,6 @@
 package com.cesarandres.ps2link.fragments.profilepager.statlist
 
 import android.app.Application
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
@@ -16,13 +14,14 @@ import com.cramsan.ps2link.core.models.StatItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StatListViewModel @ViewModelInject constructor(
+class StatListViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
         pS2LinkRepository,

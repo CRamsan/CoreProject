@@ -1,8 +1,6 @@
 package com.cesarandres.ps2link.fragments.profilepager.profile
 
 import android.app.Application
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
@@ -15,13 +13,14 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel @ViewModelInject constructor(
+class ProfileViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
         pS2LinkRepository,

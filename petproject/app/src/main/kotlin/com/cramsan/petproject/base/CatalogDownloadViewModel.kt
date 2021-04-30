@@ -2,7 +2,6 @@ package com.cramsan.petproject.base
 
 import android.app.Application
 import android.view.View
-import androidx.hilt.Assisted
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -21,7 +20,7 @@ abstract class CatalogDownloadViewModel(
     application: Application,
     dispatcherProvider: DispatcherProvider,
     val modelProvider: ModelProviderInterface,
-    @Assisted savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) :
     BaseViewModel(application, dispatcherProvider, savedStateHandle),
     ModelProviderEventListenerInterface {

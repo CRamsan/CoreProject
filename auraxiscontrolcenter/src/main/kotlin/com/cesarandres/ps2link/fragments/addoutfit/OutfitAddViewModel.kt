@@ -1,8 +1,6 @@
 package com.cesarandres.ps2link.fragments.addoutfit
 
 import android.app.Application
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
@@ -20,15 +18,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
-class OutfitAddViewModel @ViewModelInject constructor(
+class OutfitAddViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
         application,
         pS2LinkRepository,

@@ -2,8 +2,6 @@ package com.cramsan.petproject.feedback
 
 import android.app.Application
 import android.view.View
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -18,14 +16,15 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PlantFeedbackViewModel @ViewModelInject constructor(
+class PlantFeedbackViewModel @Inject constructor(
     application: Application,
     eventLogger: EventLoggerInterface,
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     override val logTag: String

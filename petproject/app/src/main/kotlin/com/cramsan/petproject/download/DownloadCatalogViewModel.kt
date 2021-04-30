@@ -1,8 +1,6 @@
 package com.cramsan.petproject.download
 
 import android.app.Application
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -14,13 +12,14 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DownloadCatalogViewModel @ViewModelInject constructor(
+class DownloadCatalogViewModel @Inject constructor(
     application: Application,
     val modelProvider: ModelProviderInterface,
     val IODispatcher: CoroutineDispatcher,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) :
     BaseViewModel(application, dispatcherProvider, savedStateHandle),
     ModelProviderEventListenerInterface {

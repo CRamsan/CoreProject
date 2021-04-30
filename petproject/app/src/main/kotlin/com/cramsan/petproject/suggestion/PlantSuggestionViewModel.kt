@@ -2,8 +2,6 @@ package com.cramsan.petproject.suggestion
 
 import android.app.Application
 import android.view.View
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -23,14 +21,15 @@ import com.cramsan.petproject.appcore.model.feedback.FeedbackType
 import com.cramsan.petproject.base.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PlantSuggestionViewModel @ViewModelInject constructor(
+class PlantSuggestionViewModel @Inject constructor(
     application: Application,
     eventLogger: EventLoggerInterface,
     metricsClient: MetricsInterface,
     threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     val observableText = MutableLiveData<String>()

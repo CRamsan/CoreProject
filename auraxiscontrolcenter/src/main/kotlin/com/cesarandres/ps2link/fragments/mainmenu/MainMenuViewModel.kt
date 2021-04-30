@@ -1,8 +1,6 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
 import android.app.Application
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cesarandres.ps2link.base.BasePS2ViewModel
@@ -22,18 +20,21 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainMenuViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainMenuViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BasePS2ViewModel(
         application,
         pS2LinkRepository,

@@ -2,8 +2,6 @@ package com.cramsan.petproject.plantdetails
 
 import android.app.Application
 import android.view.View
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
@@ -20,12 +18,13 @@ import com.cramsan.petproject.base.StringEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PlantDetailsViewModel @ViewModelInject constructor(
+class PlantDetailsViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
     override val logTag: String

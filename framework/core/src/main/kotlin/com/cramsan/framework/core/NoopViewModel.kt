@@ -1,10 +1,12 @@
 package com.cramsan.framework.core
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class NoopViewModel @ViewModelInject constructor(
+@HiltViewModel
+class NoopViewModel @Inject constructor(
     application: Application,
     dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel(application, dispatcherProvider, SavedStateHandle()) {

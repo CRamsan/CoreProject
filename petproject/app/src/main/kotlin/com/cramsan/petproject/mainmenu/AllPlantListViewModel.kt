@@ -2,8 +2,6 @@ package com.cramsan.petproject.mainmenu
 
 import android.app.Application
 import android.view.View
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -24,12 +22,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AllPlantListViewModel @ViewModelInject constructor(
+class AllPlantListViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    @Assisted savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) :
     CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
