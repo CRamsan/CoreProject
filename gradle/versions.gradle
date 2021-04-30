@@ -11,7 +11,7 @@ def versions_tools = [
 
 def versions_packages = [
     AccompanistCoil : "0.6.1",
-    AndroidGradlePlugin : '7.0.0-alpha07',
+    AndroidGradlePlugin : '7.0.0-alpha14',
     AndroidMaterial : "1.3.0",
     AndroidxActivityKtx : "1.2.0",
     AndroidXArchCore : "2.1.0",
