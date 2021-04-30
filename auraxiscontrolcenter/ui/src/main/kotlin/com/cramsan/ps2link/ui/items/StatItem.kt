@@ -2,6 +2,7 @@ package com.cramsan.ps2link.ui.items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,24 +26,40 @@ fun StatItem(
     ) {
         Column {
             Text(
-                text = label,
+                text = label.replace("_", " ").capitalize(),
             )
-        }
-        Row {
-            Text(
-                text = allTime?.toString() ?: stringResource(R.string.text_unknown),
-            )
-            Text(
-                text = today?.toString() ?: stringResource(R.string.text_unknown),
-            )
-        }
-        Row {
-            Text(
-                text = thisWeek?.toString() ?: stringResource(R.string.text_unknown),
-            )
-            Text(
-                text = thisMonth?.toString() ?: stringResource(R.string.text_unknown),
-            )
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = stringResource(
+                        R.string.text_stat_all,
+                        allTime?.toString() ?: stringResource(R.string.text_unknown)
+                    ),
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = stringResource(
+                        R.string.text_stat_today,
+                        today?.toString() ?: stringResource(R.string.text_unknown)
+                    ),
+                )
+            }
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = stringResource(
+                        R.string.text_stat_week,
+                        thisWeek?.toString() ?: stringResource(R.string.text_unknown)
+                    ),
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = stringResource(
+                        R.string.text_stat_month,
+                        thisMonth?.toString() ?: stringResource(R.string.text_unknown)
+                    ),
+                )
+            }
         }
     }
 }

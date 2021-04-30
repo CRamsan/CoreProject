@@ -383,7 +383,8 @@ class PS2LinkRepositoryImpl(
         sph.week = Week()
         sph.month = Month()
 
-        sph.stat_name = "scorehour"
+        // TODO: Replace this with a resource
+        sph.stat_name = "Score/Hour"
         sph.all_time = (
             (score?.all_time?.toFloatOrNull() ?: 0f) / ((time?.all_time?.toFloatOrNull() ?: 1f) / 3600f)
             ).toString()
