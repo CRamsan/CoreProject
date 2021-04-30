@@ -54,6 +54,7 @@ dependencies {
     implementation packages.JetpackComposeIconsCore
     implementation packages.JetpackComposeIconsExtended
     implementation packages.JetpackComposeRuntimeLiveData
+    implementation packages.KotlinxDatetime
     implementation packages.PrettyTime
     implementation packages.SqlDelightAndroidDriver
 }

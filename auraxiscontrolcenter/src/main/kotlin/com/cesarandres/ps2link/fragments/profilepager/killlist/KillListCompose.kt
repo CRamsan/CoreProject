@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments.profilepager.killlist
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -25,6 +26,7 @@ fun KillListCompose(
             LazyColumn {
                 items(killList) {
                     KillItem(
+                        modifier = Modifier.fillMaxWidth(),
                         killType = it.killType,
                         faction = it.faction,
                         attacker = it.attacker,

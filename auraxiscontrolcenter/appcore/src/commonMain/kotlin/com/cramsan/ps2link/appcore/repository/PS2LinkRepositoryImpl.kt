@@ -407,7 +407,7 @@ class PS2LinkRepositoryImpl(
         return characterEventList.map {
             val weaponName = it.weapon_name
             val attackerName: String?
-            val time = it.timestamp?.toLong()
+            val time = it.timestamp?.toLong()?.let { Instant.fromEpochSeconds(it) }
             val killType: KillType
             var eventCharacterId: String? = null
             val faction: Faction = Faction.fromString(it.attacker?.faction_id)

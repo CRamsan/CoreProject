@@ -3,6 +3,7 @@ package com.cramsan.ps2link.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.ServerStatus
@@ -44,6 +45,11 @@ fun ServerStatus?.toColor() = when (this) {
     ServerStatus.OFFLINE -> negative
     ServerStatus.LOCKED -> warning
     ServerStatus.UNKNOWN, null -> undefined
+}
+
+fun KillType?.toColor() = when (this) {
+    KillType.KILL -> positive
+    KillType.KILLEDBY, KillType.SUICIDE, KillType.UNKNOWN, null -> negative
 }
 
 @Composable

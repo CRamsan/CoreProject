@@ -3,7 +3,6 @@ package com.cramsan.ps2link.ui.items
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,8 +15,6 @@ import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
-import com.cramsan.ps2link.ui.theme.Size
-import dev.chrisbanes.accompanist.coil.CoilImage
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 
@@ -59,6 +56,7 @@ fun TweetItem(
                 )
             }
             Row {
+                /*
                 CoilImage(
                     modifier = Modifier.size(Size.xlarge),
                     data = avatarUrl,
@@ -69,6 +67,7 @@ fun TweetItem(
                     modifier = Modifier.padding(vertical = Padding.medium),
                     text = content,
                 )
+                 */
             }
         }
     }

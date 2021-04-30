@@ -2,6 +2,8 @@ package com.cramsan.ps2link.ui.items
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +16,10 @@ import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Size
+import com.cramsan.ps2link.ui.toColor
 import com.cramsan.ps2link.ui.widgets.FactionIcon
+import kotlinx.datetime.Instant
+import java.text.SimpleDateFormat
 
 @Composable
 fun KillItem(
@@ -22,7 +27,7 @@ fun KillItem(
     killType: KillType = KillType.UNKNOWN,
     faction: Faction = Faction.UNKNOWN,
     attacker: String? = null,
-    time: Long? = null,
+    time: Instant? = null,
     weaponName: String? = null,
     weaponImage: Uri = Uri.EMPTY,
     onClick: () -> Unit = {},
@@ -31,30 +36,41 @@ fun KillItem(
         onClick = onClick,
         modifier = modifier
     ) {
-        Column {
-            FactionIcon(modifier = Modifier.size(Size.large), faction = faction)
-            Text(
-                stringResource(
-                    when (killType) {
-                        KillType.KILL -> R.string.text_killed_caps
-                        KillType.KILLEDBY -> R.string.text_killed_by_caps
-                        KillType.SUICIDE -> R.string.text_suicide_caps
-                        KillType.UNKNOWN -> R.string.title_unkown
-                    }
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(
+                        when (killType) {
+                            KillType.KILL -> R.string.text_killed_caps
+                            KillType.KILLEDBY -> R.string.text_killed_by_caps
+                            KillType.SUICIDE -> R.string.text_suicide_caps
+                            KillType.UNKNOWN -> R.string.title_unkown
+                        }
+                    ),
+                    color = killType.toColor(),
                 )
-            )
-            Text(attacker ?: stringResource(R.string.text_unknown))
-            Text(time.toString() ?: stringResource(R.string.text_unknown))
-            Text(weaponName ?: stringResource(R.string.text_unknown))
-            Text(weaponName ?: stringResource(R.string.text_unknown))
-            /*
-            CoilImage(
-                data = weaponImage
-            )
-             */
+                FactionIcon(modifier = Modifier.size(Size.large), faction = faction)
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(attacker ?: stringResource(R.string.text_unknown))
+                Text(time.toString() ?: stringResource(R.string.text_unknown))
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(weaponName ?: stringResource(R.string.text_unknown))
+                /*
+                Image(
+                    painter = rememberCoilPainter(
+                        request = weaponImage,
+                    ),
+                    contentDescription = ""
+                )
+                 */
+            }
         }
     }
 }
+
+var formatter = SimpleDateFormat("dd-MMMM hh:mm:ss a")
 
 @Preview
 @Composable
@@ -64,7 +80,7 @@ fun ProfileKillPreview() {
             killType = KillType.KILL,
             faction = Faction.TR,
             attacker = "Cramsan",
-            time = 100,
+            time = Instant.DISTANT_FUTURE,
             weaponName = "Masamune",
         )
     }
