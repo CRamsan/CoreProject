@@ -147,7 +147,6 @@ fun NormalButtonPreview() {
                 name = null,
                 tag = "D3RP",
                 faction = Faction.VS,
-                worldId = "0",
                 timeCreated = null,
                 leaderCharacterId = null,
                 memberCount = 100,

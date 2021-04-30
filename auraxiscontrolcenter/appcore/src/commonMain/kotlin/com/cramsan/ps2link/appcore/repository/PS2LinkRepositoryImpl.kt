@@ -212,11 +212,11 @@ class PS2LinkRepositoryImpl(
         forceUpdate: Boolean
     ): Outfit? {
         val cachedOutfit = dbgDAO.getOutfit(outfitId, namespace)
-        if (!forceUpdate && (cachedOutfit == null || isOutfitValid(cachedOutfit.toDBModel(clock.now().toEpochMilliseconds())))) {
+        if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit.toDBModel(clock.now().toEpochMilliseconds())))) {
             return cachedOutfit
         }
         val outfit = dbgCensus.getOutfit(outfitId, namespace.toNetworkModel(), lang)
-            ?.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds()) ?: return null
+            ?.toCoreModel(namespace.toDBModel(), null, clock.now().toEpochMilliseconds()) ?: return null
         dbgDAO.insertOutfit(outfit)
         return outfit
     }
@@ -243,7 +243,7 @@ class PS2LinkRepositoryImpl(
                     currentLang = currentLang
                 )
                 endpointOutfitList?.map {
-                    it.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds())
+                    it.toCoreModel(namespace.toDBModel(), null, clock.now().toEpochMilliseconds())
                 }
             }
             job

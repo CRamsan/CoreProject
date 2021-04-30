@@ -31,6 +31,13 @@ import kotlin.time.minutes
 
 @OptIn(ExperimentalTime::class)
 fun CharacterProfile.toCoreModel(namespace: Namespace, lastUpdated: Long, currentLang: CensusLang): com.cramsan.ps2link.core.models.Character {
+    val server = world_id?.let {
+        Server(
+            worldId = it,
+            namespace = namespace.toCoreModel(),
+            serverName = server?.name?.localizedName(currentLang)
+        )
+    }
     return com.cramsan.ps2link.core.models.Character(
         characterId = character_id,
         name = name?.first,
@@ -45,14 +52,8 @@ fun CharacterProfile.toCoreModel(namespace: Namespace, lastUpdated: Long, curren
         },
         timePlayed = times?.minutes_played?.toLong()?.minutes,
         faction = com.cramsan.ps2link.db.models.Faction.fromString(faction_id).toCoreModel(),
-        server = world_id?.let {
-            Server(
-                worldId = it,
-                namespace = namespace.toCoreModel(),
-                serverName = server?.name?.localizedName(currentLang)
-            )
-        },
-        outfit = outfit?.toCoreModel(namespace, lastUpdated),
+        server = server,
+        outfit = outfit?.toCoreModel(namespace, server, lastUpdated),
         namespace = namespace.toCoreModel(),
         cached = false,
     )
@@ -139,6 +140,7 @@ fun Character.toCoreModel(): com.cramsan.ps2link.core.models.Character {
         com.cramsan.ps2link.core.models.Outfit(
             id = it,
             name = outfitName,
+            namespace = namespace.toCoreModel(),
         )
     }
     return com.cramsan.ps2link.core.models.Character(
@@ -220,13 +222,13 @@ fun Stat.toStatItem(): StatItem {
     )
 }
 
-fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Namespace, lastUpdated: Long): com.cramsan.ps2link.core.models.Outfit {
+fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Namespace, server: Server?, lastUpdated: Long): com.cramsan.ps2link.core.models.Outfit {
     return com.cramsan.ps2link.core.models.Outfit(
         id = outfit_id,
         name = name,
         tag = alias,
         faction = com.cramsan.ps2link.db.models.Faction.fromString(faction_id).toCoreModel(),
-        worldId = world_id?.toString(),
+        server = server,
         timeCreated = time_created?.let { Instant.fromEpochMilliseconds(it.toLong()) },
         leaderCharacterId = leader_character_id,
         memberCount = member_count,
@@ -235,14 +237,13 @@ fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Nam
 }
 
 @OptIn(ExperimentalTime::class)
-fun Outfit.toCoreModel(): com.cramsan.ps2link.core.models.Outfit {
+fun Outfit.toCoreModel(server: Server?): com.cramsan.ps2link.core.models.Outfit {
     return com.cramsan.ps2link.core.models.Outfit(
         id = id,
         name = name,
         tag = alias,
         faction = factionId.toCoreModel(),
-        worldId = worldId,
-        worldName = worldName,
+        server = server,
         timeCreated = timeCreated?.let { Instant.fromEpochMilliseconds(it) },
         leaderCharacterId = leaderCharacterId,
         memberCount = memberCount?.toInt() ?: 0,
@@ -258,8 +259,8 @@ fun com.cramsan.ps2link.core.models.Outfit.toDBModel(lastUpdated: Long): Outfit 
         leaderCharacterId = leaderCharacterId,
         memberCount = memberCount.toLong(),
         timeCreated = timeCreated?.toEpochMilliseconds(),
-        worldId = worldId,
-        worldName = worldName,
+        worldId = server?.worldId,
+        worldName = server?.serverName,
         factionId = faction.toDBModel(),
         namespace = namespace.toDBModel(),
         lastUpdated = lastUpdated,

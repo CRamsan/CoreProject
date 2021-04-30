@@ -86,7 +86,6 @@ fun OutfitAddComposePreview() {
                 name = "Cramsan1",
                 tag = "D3rp",
                 faction = Faction.VS,
-                worldId = "1",
                 timeCreated = Instant.fromEpochSeconds(1000000),
                 leaderCharacterId = "325354435",
                 memberCount = 200,

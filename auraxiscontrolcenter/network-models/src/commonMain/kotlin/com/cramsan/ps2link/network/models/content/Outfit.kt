@@ -1,6 +1,5 @@
 package com.cramsan.ps2link.network.models.content
 
-import com.cramsan.ps2link.network.models.Namespace
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,10 +10,7 @@ data class Outfit(
     var leader_character_id: String? = null,
     var member_count: Int = 0,
     var time_created: String? = null,
-    var world_id: Int? = null,
     var faction_id: String? = null,
-    var isCached: Boolean = false,
-    var namespace: Namespace? = null,
     var members: List<Member>? = null,
     var leader: CharacterProfileNullId? = null,
 )

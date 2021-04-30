@@ -8,6 +8,7 @@ import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.db.models.PS2LinkDB
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
@@ -124,20 +125,29 @@ class SQLDelightDAO(
         namespace: Namespace,
     ): Outfit? {
         assertIsBackgroundThread()
-        return database.outfitQueries.getOutfit(outfitId, namespace.toDBModel()).executeAsOneOrNull()?.toCoreModel()
+        return database.outfitQueries.getOutfit(outfitId, namespace.toDBModel()).executeAsOneOrNull()?.run {
+            val server = worldId?.let {
+                Server(
+                    worldId = it,
+                    namespace = namespace,
+                    serverName = worldName,
+                )
+            }
+            toCoreModel(server)
+        }
     }
 
     override fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?> {
-        return database.outfitQueries.getOutfit(outfitId, namespace.toDBModel()).asFlow().mapToOneOrNull().map { it?.toCoreModel() }
+        return database.outfitQueries.getOutfit(outfitId, namespace.toDBModel()).asFlow().mapToOneOrNull().map { it?.toCoreModel(null) }
     }
 
     override fun getAllOutfits(): List<Outfit> {
         assertIsBackgroundThread()
-        return database.outfitQueries.getAllOutfits().executeAsList().map { it.toCoreModel() }
+        return database.outfitQueries.getAllOutfits().executeAsList().map { it.toCoreModel(null) }
     }
 
     override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
-        return database.outfitQueries.getAllOutfits().asFlow().mapToList().map { list -> list.map { outfit -> outfit.toCoreModel() } }
+        return database.outfitQueries.getAllOutfits().asFlow().mapToList().map { list -> list.map { outfit -> outfit.toCoreModel(null) } }
     }
 
     override fun insertOutfit(
