@@ -5,5 +5,5 @@ package com.cramsan.ps2link.core.models
  * @created 1/26/2021
  */
 data class WeaponStatItem(
-    val stats: Map<Faction, Long>
+    val stats: Map<Faction, Long?>
 )

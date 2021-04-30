@@ -1,17 +1,22 @@
 package com.cramsan.ps2link.ui.items
 
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import com.cramsan.ps2link.ui.toImageRes
 
 @Composable
 fun WeaponItem(
@@ -19,45 +24,53 @@ fun WeaponItem(
     faction: Faction = Faction.UNKNOWN,
     weaponImage: Uri = Uri.EMPTY,
     weaponName: String? = null,
-    totalKills: Long? = null,
-    totalVehiclesDestroyed: Long? = null,
-    totalHeadshotKills: Long? = null,
-    percentVSKills: Double? = null,
-    percentTRKills: Double? = null,
-    percentNCKills: Double? = null,
+    medalType: MedalType = MedalType.NONE,
+    totalKills: Long = 0,
+    totalVehiclesDestroyed: Long = 0,
+    totalHeadshotKills: Long = 0,
+    VSKills: Long? = null,
+    TRKills: Long? = null,
+    NCKills: Long? = null,
     onClick: () -> Unit = {},
 ) {
     SlimButton(
         onClick = onClick,
         modifier = modifier
     ) {
-        Row {
-            Column {
-                Text(weaponName ?: stringResource(R.string.text_unknown))
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(weaponName ?: stringResource(R.string.text_unknown))
+            Row {
                 /*
                 CoilImage(
                     data = weaponImage
                 )
                  */
-            }
-            Column {
-                Row {
-                    Text(totalKills?.toString() ?: stringResource(R.string.text_unknown))
-                    Text(percentNCKills?.toString() ?: stringResource(R.string.text_unknown))
-                    Text(percentTRKills?.toString() ?: stringResource(R.string.text_unknown))
-                    Text(percentVSKills?.toString() ?: stringResource(R.string.text_unknown))
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Row {
+                        Text(stringResource(R.string.text_kills, totalKills))
+                        NCKills?.let {
+                            Text(stringResource(R.string.text_nc_, it))
+                        }
+                        TRKills?.let {
+                            Text(stringResource(R.string.text_tr_, it))
+                        }
+                        VSKills?.let {
+                            Text(stringResource(R.string.text_vs_, it))
+                        }
+                    }
+                    Row {
+                        Text(stringResource(R.string.text_headshots_, totalHeadshotKills))
+                        Text(stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed))
+                    }
                 }
-                Row {
-                    Text(totalHeadshotKills?.toString() ?: stringResource(R.string.text_unknown))
-                    Text(totalVehiclesDestroyed?.toString() ?: stringResource(R.string.text_unknown))
-                }
-            }
-            Column {
-                /*
-                CoilImage(
-                    data = weaponImage
+                Image(
+                    painter = painterResource(medalType.toImageRes()),
+                    contentDescription = null
                 )
-                 */
             }
         }
     }
@@ -71,9 +84,9 @@ fun WeaponItemPreview() {
             weaponName = "Pulsar C",
             totalKills = 1234,
             totalHeadshotKills = 21,
-            percentVSKills = 0.32,
-            percentTRKills = 0.542,
-            percentNCKills = 0.12,
+            VSKills = 32,
+            TRKills = 54,
+            NCKills = 12,
         )
     }
 }

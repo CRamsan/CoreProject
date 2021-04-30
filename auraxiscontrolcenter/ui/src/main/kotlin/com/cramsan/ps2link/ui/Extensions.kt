@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
+import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.ui.theme.negative
@@ -50,6 +51,14 @@ fun ServerStatus?.toColor() = when (this) {
 fun KillType?.toColor() = when (this) {
     KillType.KILL -> positive
     KillType.KILLEDBY, KillType.SUICIDE, KillType.UNKNOWN, null -> negative
+}
+
+fun MedalType?.toImageRes() = when (this) {
+    MedalType.AURAXIUM -> R.drawable.medal_araxium
+    MedalType.GOLD -> R.drawable.medal_gold
+    MedalType.SILVER -> R.drawable.medal_silver
+    MedalType.BRONCE -> R.drawable.medal_copper
+    MedalType.NONE, null -> R.drawable.medal_empty
 }
 
 @Composable

@@ -49,20 +49,26 @@ fun MainMenuCompose(
                 .padding(10.dp)
                 .fillMaxWidth()
             AnimatedVisibility(preferredProfile != null) {
-                requireNotNull(preferredProfile)
                 MainMenuButton(
                     buttonModifier,
-                    label = preferredProfile.name,
+                    label = preferredProfile?.name,
                     star = true
-                ) { eventHandler.onPreferredProfileClick(preferredProfile.characterId, preferredProfile.namespace) }
+                ) {
+                    preferredProfile?.let {
+                        eventHandler.onPreferredProfileClick(it.characterId, it.namespace)
+                    }
+                }
             }
             AnimatedVisibility(preferredOutfit != null) {
-                requireNotNull(preferredOutfit)
                 MainMenuButton(
                     buttonModifier,
-                    label = preferredOutfit.name,
+                    label = preferredOutfit?.name,
                     star = true
-                ) { eventHandler.onPreferredOutfitClick(preferredOutfit.id, preferredOutfit.namespace) }
+                ) {
+                    preferredOutfit?.let {
+                        eventHandler.onPreferredOutfitClick(it.id, it.namespace)
+                    }
+                }
             }
             MainMenuButton(
                 buttonModifier,

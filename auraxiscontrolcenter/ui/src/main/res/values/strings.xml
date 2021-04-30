@@ -102,18 +102,18 @@
     <string name="text_about_description">Thanks for downloading this app.\nI hope you will enjoy using it and if you have some feedback I would really like to hear it.\nI can always be reached at cesar.ramsan@gmail.com, CRamsan at Reddit or CRamsan in the Emerald server.</string>
 
     <string name="text_loading_ellipsis">Loading&#8230;</string>
-    <string name="text_kills">Kills:</string>
-    <string name="text_tr_">TR:</string>
-    <string name="text_nc_">NC:</string>
-    <string name="text_vs_">VS:</string>
-    <string name="text_headshots_">Headshots:</string>
+    <string name="text_kills">Kills: %d</string>
+    <string name="text_tr_">TR: %d</string>
+    <string name="text_nc_">NC: %d</string>
+    <string name="text_vs_">VS: %d</string>
+    <string name="text_headshots_">Headshots: %d</string>
     <string name="text_stat_all">All Time: %s</string>
     <string name="text_stat_today">Today: %s</string>
     <string name="text_stat_week">This week: %s</string>
     <string name="text_stat_month">This month: %s</string>
     <string name="text_server_population">Population: %s</string>
     <string name="text_server_alert">Alert:</string>
-    <string name="text_vehicle_kills_">Vehicle Kills: </string>
+    <string name="text_vehicle_kills_">Vehicle Kills: %d</string>
     <string name="text_wia_killed_by">Victim: </string>
     <string name="text_choose_donation">Choose Donation</string>
     <string name="text_thanks">Thanks for your support</string>

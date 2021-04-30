@@ -28,6 +28,7 @@ import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.core.models.WeaponStatItem
+import com.cramsan.ps2link.core.models.toMedalType
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.network.models.content.CharacterEvent
 import com.cramsan.ps2link.network.models.content.World
@@ -171,8 +172,9 @@ class PS2LinkRepositoryImpl(
         namespace: Namespace,
         lang: CensusLang,
     ): List<WeaponItem> {
+        val character = getCharacter(characterId, namespace, lang) ?: return emptyList()
         val weaponListResponse = dbgCensus.getWeaponList(characterId, namespace.toNetworkModel(), CensusLang.EN)
-        return formatWeapons(weaponListResponse, lang)
+        return formatWeapons(weaponListResponse, character.faction, lang)
     }
 
     override suspend fun getServerList(lang: CensusLang): List<Server> = coroutineScope {
@@ -269,14 +271,14 @@ class PS2LinkRepositoryImpl(
         )
     }
 
-    private fun formatWeapons(weaponList: List<Weapon>?, currentLang: CensusLang): List<WeaponItem> {
+    private fun formatWeapons(weaponList: List<Weapon>?, faction: com.cramsan.ps2link.core.models.Faction, currentLang: CensusLang): List<WeaponItem> {
         if (weaponList == null) {
             return emptyList()
         }
 
         val weaponMap = weaponList.groupBy { it.item_id }
         return weaponMap.map {
-            val weaponId = it.key
+            val weaponId = it.key ?: return@map null
             val weaponStats = it.value
 
             var weaponName: String? = null
@@ -294,23 +296,41 @@ class PS2LinkRepositoryImpl(
                 } else {
                     null
                 }
+
+                val statTR = if (faction != com.cramsan.ps2link.core.models.Faction.TR) {
+                    stat.value_tr.toLong()
+                } else {
+                    null
+                }
+                val statNC = if (faction != com.cramsan.ps2link.core.models.Faction.NC) {
+                    stat.value_nc.toLong()
+                } else {
+                    null
+                }
+                val statVS = if (faction != com.cramsan.ps2link.core.models.Faction.VS) {
+                    stat.value_vs.toLong()
+                } else {
+                    null
+                }
                 statMapping[weaponEventType] = WeaponStatItem(
                     mapOf(
-                        com.cramsan.ps2link.core.models.Faction.TR to stat.value_tr.toLong(),
-                        com.cramsan.ps2link.core.models.Faction.NC to stat.value_nc.toLong(),
-                        com.cramsan.ps2link.core.models.Faction.VS to stat.value_vs.toLong(),
+                        com.cramsan.ps2link.core.models.Faction.TR to statTR,
+                        com.cramsan.ps2link.core.models.Faction.NC to statNC,
+                        com.cramsan.ps2link.core.models.Faction.VS to statVS,
                     )
                 )
             }
 
+            val kills = statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
             WeaponItem(
                 weaponId = weaponId,
                 weaponName = weaponName,
                 vehicleName = vehicleName,
                 weaponImage = weaponUrl,
                 statMapping = statMapping,
+                medalType = kills?.toMedalType()
             )
-        }
+        }.filterNotNull()
     }
 
     private fun formatStats(stats: List<Stat>?): List<StatItem> {
