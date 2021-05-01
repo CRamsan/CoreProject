@@ -1,7 +1,7 @@
 def versions_tools = [
     AndroidBuildToolsVersion : "30.0.2",
     CompileSdkVersion : 30,
-    KotlinVersion : "1.4.30",
+    KotlinVersion : "1.4.32",
     MinSdkVersion : 22,
     TargetSdkVersion : 30,
     JavaCompatibility : JavaVersion.VERSION_11,
