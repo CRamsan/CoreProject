@@ -9,10 +9,12 @@ import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
 import com.cramsan.ps2link.appcore.twitter.TwitterUser
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class TwitterListViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,

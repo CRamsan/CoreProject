@@ -10,8 +10,10 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class OutfitListViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,

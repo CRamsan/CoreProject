@@ -10,6 +10,7 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ import javax.inject.Inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
+@HiltViewModel
 class OutfitAddViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,

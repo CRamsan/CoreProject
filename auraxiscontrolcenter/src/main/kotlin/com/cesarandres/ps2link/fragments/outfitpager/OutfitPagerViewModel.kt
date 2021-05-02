@@ -10,9 +10,11 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class OutfitPagerViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,

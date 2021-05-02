@@ -127,7 +127,6 @@ object PetProjectApplicationModule {
         return EventLogger.instance(instance)
     }
 
-
     @Provides
     @Singleton
     fun provideHaltUtilDelegate(@ApplicationContext appContext: Context): HaltUtilDelegate = HaltUtilAndroid(appContext)

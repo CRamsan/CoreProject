@@ -9,11 +9,13 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.RedditRepository
 import com.cramsan.ps2link.core.models.RedditPage
 import com.cramsan.ps2link.core.models.RedditPost
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class RedditViewModel @Inject constructor(
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
