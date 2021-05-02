@@ -12,6 +12,7 @@ import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.HaltUtilDelegate
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
+import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -115,14 +116,17 @@ object PetProjectApplicationModule {
     @Singleton
     fun provideEventLoggerInterface(
         eventLoggerErrorCallbackInterface: EventLoggerErrorCallbackInterface,
-        eventLoggerDelegate: EventLoggerDelegate
+        eventLoggerDelegate: EventLoggerDelegate,
     ): EventLoggerInterface {
         val severity: Severity = when (BuildConfig.DEBUG) {
             true -> Severity.DEBUG
             false -> Severity.INFO
         }
-        return EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
+        val instance =
+            EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
+        return EventLogger.instance(instance)
     }
+
 
     @Provides
     @Singleton
