@@ -30,7 +30,11 @@ import kotlin.time.minutes
  */
 
 @OptIn(ExperimentalTime::class)
-fun CharacterProfile.toCoreModel(namespace: Namespace, lastUpdated: Long, currentLang: CensusLang): com.cramsan.ps2link.core.models.Character {
+fun CharacterProfile.toCoreModel(
+    namespace: Namespace,
+    lastUpdated: Long,
+    currentLang: CensusLang
+): com.cramsan.ps2link.core.models.Character {
     val server = world_id?.let {
         Server(
             worldId = it,
@@ -222,15 +226,27 @@ fun Stat.toStatItem(): StatItem {
     )
 }
 
-fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(namespace: Namespace, server: Server?, lastUpdated: Long): com.cramsan.ps2link.core.models.Outfit {
+fun com.cramsan.ps2link.network.models.content.Outfit.toCoreModel(
+    namespace: Namespace,
+    server: Server?,
+    lastUpdated: Long
+): com.cramsan.ps2link.core.models.Outfit {
     return com.cramsan.ps2link.core.models.Outfit(
         id = outfit_id,
         name = name,
         tag = alias,
-        faction = com.cramsan.ps2link.db.models.Faction.fromString(faction_id).toCoreModel(),
+        faction = com.cramsan.ps2link.db.models.Faction.fromString(leader?.faction_id).toCoreModel(),
         server = server,
         timeCreated = time_created?.let { Instant.fromEpochMilliseconds(it.toLong()) },
-        leaderCharacterId = leader_character_id,
+        leader = leader?.let { leader ->
+            leader_character_id?.let {
+                com.cramsan.ps2link.core.models.Character(
+                    characterId = it,
+                    leader.name?.first,
+                    cached = false
+                )
+            }
+        },
         memberCount = member_count,
         namespace = namespace.toCoreModel(),
     )
@@ -245,7 +261,13 @@ fun Outfit.toCoreModel(server: Server?): com.cramsan.ps2link.core.models.Outfit 
         faction = factionId.toCoreModel(),
         server = server,
         timeCreated = timeCreated?.let { Instant.fromEpochMilliseconds(it) },
-        leaderCharacterId = leaderCharacterId,
+        leader = leaderCharacterId?.let {
+            com.cramsan.ps2link.core.models.Character(
+                characterId = it,
+                name = leaderCharacterName,
+                cached = false,
+            )
+        },
         memberCount = memberCount?.toInt() ?: 0,
         namespace = namespace.toCoreModel(),
     )
@@ -256,7 +278,8 @@ fun com.cramsan.ps2link.core.models.Outfit.toDBModel(lastUpdated: Long): Outfit 
         id = id,
         name = name,
         alias = tag,
-        leaderCharacterId = leaderCharacterId,
+        leaderCharacterId = leader?.characterId,
+        leaderCharacterName = leader?.name,
         memberCount = memberCount.toLong(),
         timeCreated = timeCreated?.toEpochMilliseconds(),
         worldId = server?.worldId,

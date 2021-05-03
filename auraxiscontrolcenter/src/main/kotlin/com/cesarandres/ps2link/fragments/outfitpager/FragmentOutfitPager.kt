@@ -18,6 +18,7 @@ import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitPagerBinding
 import com.cesarandres.ps2link.fragments.outfitpager.outfit.FragmentComposeOutfit
 import com.cramsan.ps2link.core.models.Namespace
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -44,12 +45,20 @@ class FragmentOutfitPager : BasePS2Fragment<OutfitPagerViewModel, FragmentOutfit
         setHasOptionsMenu(true)
 
         viewPager = dataBinding.outfitPager
-        outfitId = args.outfitId
-        namespace = args.namespace
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
+
+        val tabLayout = dataBinding.tabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            // TODO: Replace with string resource
+            tab.text = OutfitPage.values()[position].name
+        }.attach()
+
+        outfitId = args.outfitId
+        namespace = args.namespace
+
         viewModel.setUp(outfitId, namespace)
         return view
     }
@@ -81,18 +90,18 @@ class FragmentOutfitPager : BasePS2Fragment<OutfitPagerViewModel, FragmentOutfit
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = ProfilePage.values().size
+        override fun getItemCount(): Int = OutfitPage.values().size
 
         override fun createFragment(position: Int): Fragment {
-            return when (ProfilePage.values()[position]) {
-                ProfilePage.OUTFIT -> FragmentComposeOutfit.instance(outfitId, namespace)
-                ProfilePage.ONLINE -> FragmentComposeOutfit.instance(outfitId, namespace)
-                ProfilePage.MEMBERS -> FragmentComposeOutfit.instance(outfitId, namespace)
+            return when (OutfitPage.values()[position]) {
+                OutfitPage.OUTFIT -> FragmentComposeOutfit.instance(outfitId, namespace)
+                OutfitPage.ONLINE -> FragmentComposeOutfit.instance(outfitId, namespace)
+                OutfitPage.MEMBERS -> FragmentComposeOutfit.instance(outfitId, namespace)
             }
         }
     }
 
-    private enum class ProfilePage {
+    private enum class OutfitPage {
         OUTFIT,
         ONLINE,
         MEMBERS,

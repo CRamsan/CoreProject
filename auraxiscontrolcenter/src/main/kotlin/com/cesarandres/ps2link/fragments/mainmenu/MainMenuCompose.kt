@@ -148,7 +148,7 @@ fun NormalButtonPreview() {
                 tag = "D3RP",
                 faction = Faction.VS,
                 timeCreated = null,
-                leaderCharacterId = null,
+                leader = null,
                 memberCount = 100,
                 namespace = Namespace.PS2PC,
             ),

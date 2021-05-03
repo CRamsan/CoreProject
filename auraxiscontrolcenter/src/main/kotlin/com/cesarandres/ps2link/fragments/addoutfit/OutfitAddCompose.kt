@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
+import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
@@ -87,7 +88,7 @@ fun OutfitAddComposePreview() {
                 tag = "D3rp",
                 faction = Faction.VS,
                 timeCreated = Instant.fromEpochSeconds(1000000),
-                leaderCharacterId = "325354435",
+                leader = Character("325354435", "Test", cached = false),
                 memberCount = 200,
                 namespace = Namespace.PS2PS4US,
             )

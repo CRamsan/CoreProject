@@ -6,6 +6,7 @@ CREATE TABLE Outfit (
     name TEXT,
     alias TEXT,
     leaderCharacterId TEXT,
+    leaderCharacterName TEXT,
     memberCount INTEGER,
     timeCreated INTEGER,
     worldId TEXT,
@@ -27,13 +28,14 @@ INSERT OR REPLACE INTO Outfit(
     name,
     alias,
     leaderCharacterId,
+    leaderCharacterName,
     memberCount,
     timeCreated,
     worldId,
     factionId,
     namespace,
     lastUpdated
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertOutfitInstance:
 INSERT OR REPLACE INTO Outfit(
@@ -41,6 +43,7 @@ INSERT OR REPLACE INTO Outfit(
     name,
     alias,
     leaderCharacterId,
+    leaderCharacterName,
     memberCount,
     timeCreated,
     worldId,

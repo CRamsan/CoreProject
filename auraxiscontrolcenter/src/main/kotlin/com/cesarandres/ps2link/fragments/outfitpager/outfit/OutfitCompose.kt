@@ -3,27 +3,107 @@ package com.cesarandres.ps2link.fragments.outfitpager.outfit
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.cesarandres.ps2link.R
+import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.theme.Padding
+import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.widgets.FactionIcon
+import kotlinx.datetime.Instant
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable
 fun OutfitCompose(
+    name: String? = null,
+    leader: Character? = null,
+    memberCount: Long = 0,
+    creationTime: Instant? = null,
     faction: Faction?,
     isLoading: Boolean,
     eventHandler: OutfitEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
-        Box {
-            Column {
+    FrameBottom {
+        Box(modifier = Modifier.padding(Padding.medium)) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 // Top Faction icon
-                FactionIcon(faction = faction ?: Faction.UNKNOWN)
+                FactionIcon(
+                    modifier = Modifier.size(Size.xxlarge),
+                    faction = faction ?: Faction.UNKNOWN
+                )
+
+                val mediumModifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Padding.medium)
+                val smallModifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Padding.small)
+
+                // Outfit name
+                FrameSlim(modifier = mediumModifier) {
+                    Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = name ?: stringResource(id = R.string.text_unknown))
+                    }
+                }
+
+                FrameSlim(modifier = mediumModifier) {
+                    Column(modifier = smallModifier) {
+                        // Leader
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
+                                Text(text = stringResource(R.string.text_leader))
+                                SlimButton(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    enabled = leader != null,
+                                    onClick = {
+                                        leader?.let {
+                                            eventHandler.onProfileSelected(it.characterId, it.namespace)
+                                        }
+                                    }
+                                ) {
+                                    Text(text = leader?.name ?: stringResource(R.string.text_unknown))
+                                }
+                            }
+                        }
+
+                        // Member count
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
+                                Text(text = stringResource(R.string.text_members))
+                                Text(text = memberCount.toString())
+                            }
+                        }
+
+                        // Creation date
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
+                                Text(text = stringResource(R.string.text_hours_played))
+                                Text(
+                                    text = creationTime?.let {
+                                        formatter.format(Date(it.toEpochMilliseconds()))
+                                    } ?: stringResource(R.string.text_unknown)
+                                )
+                            }
+                        }
+                    }
+                }
             }
             if (isLoading) {
                 CircularProgressIndicator()
@@ -31,6 +111,8 @@ fun OutfitCompose(
         }
     }
 }
+
+var formatter = SimpleDateFormat("MMMM dd, yyyy")
 
 @MainThread
 interface OutfitEventHandler {

@@ -31,9 +31,14 @@ class FragmentComposeOutfit : BaseComposePS2Fragment<OutfitViewModel>() {
     @Composable
     override fun CreateComposeContent() {
         val outfit = viewModel.outfit.collectAsState(null)
+        val leader = outfit.value?.leader
         val isLoading = viewModel.isLoading.collectAsState()
         OutfitCompose(
+            name = outfit.value?.name,
+            leader = leader,
             faction = outfit.value?.faction,
+            memberCount = outfit.value?.memberCount?.toLong() ?: 0,
+            creationTime = outfit.value?.timeCreated,
             isLoading = isLoading.value,
             eventHandler = viewModel
         )

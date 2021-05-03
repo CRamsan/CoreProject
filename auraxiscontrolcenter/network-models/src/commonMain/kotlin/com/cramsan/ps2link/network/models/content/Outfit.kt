@@ -10,7 +10,6 @@ data class Outfit(
     var leader_character_id: String? = null,
     var member_count: Int = 0,
     var time_created: String? = null,
-    var faction_id: String? = null,
     var members: List<Member>? = null,
     var leader: CharacterProfileNullId? = null,
 )

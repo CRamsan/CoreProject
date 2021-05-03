@@ -19,7 +19,6 @@ import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toColor
 import com.cramsan.ps2link.ui.widgets.FactionIcon
 import kotlinx.datetime.Instant
-import java.text.SimpleDateFormat
 
 @Composable
 fun KillItem(
@@ -69,8 +68,6 @@ fun KillItem(
         }
     }
 }
-
-var formatter = SimpleDateFormat("dd-MMMM hh:mm:ss a")
 
 @Preview
 @Composable

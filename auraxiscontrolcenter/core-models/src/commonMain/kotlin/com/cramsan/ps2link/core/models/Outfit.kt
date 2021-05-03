@@ -13,7 +13,7 @@ data class Outfit(
     val faction: Faction = Faction.UNKNOWN,
     val server: Server? = null,
     val timeCreated: Instant? = null,
-    val leaderCharacterId: String? = null,
+    val leader: Character? = null,
     val memberCount: Int = 0,
     val namespace: Namespace = Namespace.UNDETERMINED,
 )

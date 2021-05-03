@@ -70,6 +70,7 @@ interface DbgDAO {
         name: String?,
         alias: String?,
         leaderCharacterId: String?,
+        leaderCharacterName: String?,
         memberCount: Long?,
         timeCreated: Long?,
         worldId: String?,
