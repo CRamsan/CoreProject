@@ -13,6 +13,7 @@ import com.cramsan.ps2link.db.Character
 import com.cramsan.ps2link.db.Outfit
 import com.cramsan.ps2link.db.models.Namespace
 import com.cramsan.ps2link.network.models.content.CharacterProfile
+import com.cramsan.ps2link.network.models.content.Member
 import com.cramsan.ps2link.network.models.content.OnlineStatus
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.item.StatNameType
@@ -347,4 +348,17 @@ fun PS2Tweet.toCoreModel(): com.cramsan.ps2link.core.models.PS2Tweet {
         imgUrl = imgUrl ?: "",
         id = id ?: "",
     )
+}
+
+fun Member.toCoreModel(namespace: com.cramsan.ps2link.core.models.Namespace): com.cramsan.ps2link.core.models.Character? {
+    return character_id?.let {
+        com.cramsan.ps2link.core.models.Character(
+            characterId = it,
+            name = character?.name?.first,
+            activeProfileId = character?.active_profile_id,
+            loginStatus = LoginStatus.fromString(online_status),
+            namespace = namespace,
+            cached = false,
+        )
+    }
 }

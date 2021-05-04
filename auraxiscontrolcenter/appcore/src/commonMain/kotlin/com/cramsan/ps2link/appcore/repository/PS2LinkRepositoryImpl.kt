@@ -44,7 +44,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -249,6 +248,11 @@ class PS2LinkRepositoryImpl(
             job
         }.awaitAll().filterNotNull().flatten()
         outfits
+    }
+
+    override suspend fun getMembersOnline(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
+        return dbgCensus.getMembersOnline(outfitId, namespace.toNetworkModel(), currentLang)
+            ?.mapNotNull { it.toCoreModel(namespace) } ?: emptyList()
     }
 
     private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {

@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2Fragment
 import com.cesarandres.ps2link.databinding.FragmentOutfitPagerBinding
+import com.cesarandres.ps2link.fragments.outfitpager.online.FragmentComposeOnlineMembers
 import com.cesarandres.ps2link.fragments.outfitpager.outfit.FragmentComposeOutfit
 import com.cramsan.ps2link.core.models.Namespace
 import com.google.android.material.tabs.TabLayoutMediator
@@ -95,7 +96,7 @@ class FragmentOutfitPager : BasePS2Fragment<OutfitPagerViewModel, FragmentOutfit
         override fun createFragment(position: Int): Fragment {
             return when (OutfitPage.values()[position]) {
                 OutfitPage.OUTFIT -> FragmentComposeOutfit.instance(outfitId, namespace)
-                OutfitPage.ONLINE -> FragmentComposeOutfit.instance(outfitId, namespace)
+                OutfitPage.ONLINE -> FragmentComposeOnlineMembers.instance(outfitId, namespace)
                 OutfitPage.MEMBERS -> FragmentComposeOutfit.instance(outfitId, namespace)
             }
         }

@@ -86,4 +86,10 @@ interface PS2LinkRepository {
         nameSearchField: String,
         currentLang: CensusLang,
     ): List<Outfit>
+
+    suspend fun getMembersOnline(
+        outfitId: String,
+        namespace: Namespace,
+        currentLang: CensusLang
+    ): List<Character>
 }
