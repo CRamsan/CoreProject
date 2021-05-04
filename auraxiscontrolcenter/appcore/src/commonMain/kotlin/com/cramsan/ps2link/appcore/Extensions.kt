@@ -4,6 +4,7 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Population
+import com.cramsan.ps2link.core.models.Rank
 import com.cramsan.ps2link.core.models.RedditPost
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.ServerStatus
@@ -357,6 +358,7 @@ fun Member.toCoreModel(namespace: com.cramsan.ps2link.core.models.Namespace): co
             name = character?.name?.first,
             activeProfileId = character?.active_profile_id,
             loginStatus = LoginStatus.fromString(online_status),
+            outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
             namespace = namespace,
             cached = false,
         )

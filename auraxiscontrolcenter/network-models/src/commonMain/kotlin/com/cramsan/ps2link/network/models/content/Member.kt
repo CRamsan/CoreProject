@@ -8,6 +8,7 @@ data class Member(
     var character_id: String? = null,
     var online_status: String? = null,
     var rank: String? = null,
+    var rank_ordinal: String? = null,
     var outfit_id: String? = null,
     var character: CharacterProfileNullId? = null,
     var name: Name? = null,

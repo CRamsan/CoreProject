@@ -92,4 +92,10 @@ interface PS2LinkRepository {
         namespace: Namespace,
         currentLang: CensusLang
     ): List<Character>
+
+    suspend fun getMembers(
+        outfitId: String,
+        namespace: Namespace,
+        currentLang: CensusLang
+    ): List<Character>
 }

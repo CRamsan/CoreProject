@@ -255,6 +255,11 @@ class PS2LinkRepositoryImpl(
             ?.mapNotNull { it.toCoreModel(namespace) } ?: emptyList()
     }
 
+    override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
+        return dbgCensus.getMemberList(outfitId, namespace.toNetworkModel(), currentLang)
+            ?.mapNotNull { it.toCoreModel(namespace.toDBModel(), 0, currentLang) } ?: emptyList()
+    }
+
     private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {
         val server = when (world.name?.localizedName(currentLang)) {
             "Ceres" -> ps2Metadata?.livePS4?.ceres

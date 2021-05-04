@@ -20,6 +20,8 @@ data class CharacterProfile(
     var world_id: String? = null,
     var outfit: Outfit? = null,
     var outfitName: String? = null,
+    var rank: String? = null,
+    var rank_ordinal: String? = null,
     var profile: Profile? = null,
     var profile_id: String? = null,
     var stats: Stats? = null,

@@ -230,7 +230,7 @@ class DBGServiceClientImpl(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Member>? {
+    ): List<CharacterProfile>? {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.OUTFIT,

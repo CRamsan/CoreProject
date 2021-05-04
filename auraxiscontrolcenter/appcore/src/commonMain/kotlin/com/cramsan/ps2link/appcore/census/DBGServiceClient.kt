@@ -67,7 +67,7 @@ interface DBGServiceClient {
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Member>?
+    ): List<CharacterProfile>?
 
     suspend fun getServerList(
         namespace: Namespace,

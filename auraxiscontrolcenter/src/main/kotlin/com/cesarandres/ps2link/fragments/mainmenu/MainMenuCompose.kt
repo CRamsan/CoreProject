@@ -139,6 +139,7 @@ fun NormalButtonPreview() {
                 Faction.VS,
                 Server("", Namespace.PS2PC, "", null),
                 null,
+                null,
                 Namespace.PS2PS4EU,
                 false,
             ),

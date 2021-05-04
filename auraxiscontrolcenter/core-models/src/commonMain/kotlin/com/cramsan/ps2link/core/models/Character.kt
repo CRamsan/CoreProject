@@ -23,6 +23,7 @@ data class Character(
     val faction: Faction = Faction.UNKNOWN,
     val server: Server? = null,
     val outfit: Outfit? = null,
+    val outfitRank: Rank? = null,
     val namespace: Namespace = Namespace.UNDETERMINED,
     val cached: Boolean,
 )
