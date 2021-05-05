@@ -74,15 +74,6 @@ dependencies {
 
     testImplementation meta_packages.CoreTestAndroid
 
-    // This is needed as the new version of Objenesis does not compile on Android<26
-    // https://github.com/CRamsan/CoreProject/issues/161
-    // The trick was to use old Objenesis as a dependency for instrumented tests and new Objenesis
-    // for everything else (JVM/Android unit test).
-    /*
-    androidTestImplementation (packages.ObjenesisPinned) {
-        force = true
-    }
-     */
     androidTestImplementation meta_packages.CoreAndrodTestAndroid
 }
 

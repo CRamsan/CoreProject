@@ -57,8 +57,7 @@ def versions_packages = [
     KotlinGradle: versions_tools.KotlinVersion,
     KotlinxDatetime : "0.1.1",
     KotlinxSerialization : "1.1.0",
-    // TODO: 0.41 drops support for absolute paths. We will need to fix that before upgrading.
-    KtlintVerion : "0.40.0",
+    KtlintVerion : "0.41.0",
     Ktor : "1.5.4",
     Mockito : "3.5.10",
     Mockk : "1.11.0",
@@ -134,8 +133,6 @@ def packages = [
         GradleVersions : "com.github.ben-manes:gradle-versions-plugin:$versions_packages.GradleVersions",
         Gson : "com.google.code.gson:gson:$versions_packages.Gson",
         Hilt : "com.google.dagger:hilt-android:$versions_packages.Hilt",
-        // Review if this can be removed
-        HiltAndroidXViewModel : "androidx.hilt:hilt-lifecycle-viewmodel:$versions_packages.HiltAndroidX",
         HiltAndroidXCompiler : "androidx.hilt:hilt-compiler:$versions_packages.HiltAndroidX",
         HiltCompiler : "com.google.dagger:hilt-android-compiler:$versions_packages.Hilt",
         HiltGradle : "com.google.dagger:hilt-android-gradle-plugin:$versions_packages.Hilt",
@@ -199,8 +196,6 @@ def packages = [
         MockkAndroid : "io.mockk:mockk-android:$versions_packages.Mockk",
         MockkCommon : "io.mockk:mockk-common:$versions_packages.Mockk",
         Okhttp : "com.squareup.okhttp3:okhttp:$versions_packages.Okhttp",
-        Objenesis : "org.objenesis:objenesis:$versions_packages.Objenesis",
-        ObjenesisPinned : "org.objenesis:objenesis:$versions_packages.ObjenesisPinned",
         PrettyTime : "org.ocpsoft.prettytime:prettytime:$versions_packages.PrettyTime",
         Robolectric : "org.robolectric:robolectric:$versions_packages.Robolectric",
         RoboVMCocoatouch : "com.mobidevelop.robovm:robovm-cocoatouch:$versions_packages.GdxRoboVM",
@@ -251,7 +246,6 @@ def core_test_android = [
         packages.JUnit,
         packages.KotlinTest,
         packages.KotlinTestJunit,
-        //packages.Objenesis,
         packages.Mockk,
         packages.MockkAndroid,
 ]
@@ -265,7 +259,6 @@ def core_android_test_android = [
         packages.JUnit,
         packages.KotlinTest,
         packages.KotlinTestJunit,
-        //packages.ObjenesisPinned,
         packages.MockkAndroid,
         packages.Robolectric,
 ]
