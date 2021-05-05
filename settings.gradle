@@ -16,6 +16,16 @@ include 'petproject:appcore'
 include 'petproject:webservice'
 include 'petproject:azurefunction'
 
+include 'doom:lib'
+include 'doom:lib:leveleditor'
+include 'doom:lib:sample'
+
+include 'doom:game'
+include 'doom:game:core'
+include 'doom:game:desktop'
+include 'doom:game:android'
+include 'doom:game:ios'
+
 include 'auraxiscontrolcenter'
 include 'auraxiscontrolcenter:appcore'
 include 'auraxiscontrolcenter:core-models'
