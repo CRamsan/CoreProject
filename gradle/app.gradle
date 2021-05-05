@@ -66,8 +66,8 @@ android {
 
     compileOptions {
         // Set the compile options for Java source
-        sourceCompatibility versions_tools.JavaCompatibilityForAndroid
-        targetCompatibility versions_tools.JavaCompatibilityForAndroid
+        sourceCompatibility versions_tools.JavaCompatibility
+        targetCompatibility versions_tools.JavaCompatibility
     }
 
     // Why is this needed again?
@@ -79,7 +79,7 @@ android {
 
     kotlinOptions {
         // Set the compile target for Kotlin source
-        jvmTarget = versions_tools.JavaCompatibilityForAndroid
+        jvmTarget = versions_tools.JavaCompatibility
     }
 
     testOptions {

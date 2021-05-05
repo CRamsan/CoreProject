@@ -25,8 +25,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility versions_tools.JavaCompatibilityForAndroid
-        targetCompatibility versions_tools.JavaCompatibilityForAndroid
+        sourceCompatibility versions_tools.JavaCompatibility
+        targetCompatibility versions_tools.JavaCompatibility
     }
 
     // https://youtrack.jetbrains.com/issue/KT-43944
@@ -87,7 +87,7 @@ kotlin {
     android("android") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = versions_tools.JavaCompatibilityForAndroid
+                jvmTarget = versions_tools.JavaCompatibility
             }
         }
     }

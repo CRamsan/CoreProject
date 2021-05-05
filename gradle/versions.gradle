@@ -5,7 +5,6 @@ def versions_tools = [
     MinSdkVersion : 22,
     TargetSdkVersion : 30,
     JavaCompatibility : JavaVersion.VERSION_11,
-    JavaCompatibilityForAndroid : JavaVersion.VERSION_11,
     JetpackCompose : "1.0.0-beta05",
 ]
 
