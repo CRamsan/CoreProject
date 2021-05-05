@@ -24,12 +24,12 @@ class ProfileViewModel @Inject constructor(
     dispatcherProvider: DispatcherProvider,
     savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
-        application,
-        pS2LinkRepository,
-        pS2Settings,
-        dispatcherProvider,
-        savedStateHandle
-    ),
+    application,
+    pS2LinkRepository,
+    pS2Settings,
+    dispatcherProvider,
+    savedStateHandle
+),
     ProfileEventHandler {
 
     override val logTag: String

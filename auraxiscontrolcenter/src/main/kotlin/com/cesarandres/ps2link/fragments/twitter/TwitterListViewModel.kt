@@ -23,12 +23,12 @@ class TwitterListViewModel @Inject constructor(
     private val twitterRepository: TwitterRepository,
     savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
-        application,
-        pS2LinkRepository,
-        pS2Settings,
-        dispatcherProvider,
-        savedStateHandle
-    ),
+    application,
+    pS2LinkRepository,
+    pS2Settings,
+    dispatcherProvider,
+    savedStateHandle
+),
     TweetListComposeEventHandler {
 
     override val logTag: String

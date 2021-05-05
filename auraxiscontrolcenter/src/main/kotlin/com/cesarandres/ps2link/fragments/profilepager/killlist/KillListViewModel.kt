@@ -25,12 +25,12 @@ class KillListViewModel @Inject constructor(
     dispatcherProvider: DispatcherProvider,
     savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
-        application,
-        pS2LinkRepository,
-        pS2Settings,
-        dispatcherProvider,
-        savedStateHandle
-    ),
+    application,
+    pS2LinkRepository,
+    pS2Settings,
+    dispatcherProvider,
+    savedStateHandle
+),
     KillListEventHandler {
 
     override val logTag: String
