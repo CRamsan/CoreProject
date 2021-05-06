@@ -5,6 +5,10 @@
  */
 apply plugin: 'jacoco'
 
+jacoco {
+    toolVersion = versions_tools.Jacoco
+}
+
 project.afterEvaluate {
 
     task "jacocoTestReport" (type:JacocoReport, dependsOn: "$jvmTestTaskName") {

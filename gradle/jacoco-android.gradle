@@ -8,6 +8,10 @@
  */
 apply plugin: 'jacoco'
 
+jacoco {
+    toolVersion = versions_tools.Jacoco
+}
+
 project.afterEvaluate {
     // Grab all build types and product flavors
     def buildTypes = project.android.buildTypes.collect { type -> type.name }

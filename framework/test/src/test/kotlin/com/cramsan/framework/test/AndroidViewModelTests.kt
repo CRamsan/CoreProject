@@ -31,7 +31,7 @@ class AndroidViewModelTests : TestBase() {
         assertFalse(false)
         assertEquals("word", "word")
         assertNull(null)
-        assertNotEquals("word", null)
+        assertNotEquals<String?>("word", null)
     }
 
     @Test

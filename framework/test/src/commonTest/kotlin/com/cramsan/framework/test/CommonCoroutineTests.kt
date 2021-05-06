@@ -7,8 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kotlin.time.ExperimentalTime
-import kotlin.time.hours
 
 @ExperimentalCoroutinesApi
 class CommonCoroutineTests : TestBase() {
@@ -26,13 +24,12 @@ class CommonCoroutineTests : TestBase() {
         assertFalse(false)
         assertEquals("word", "word")
         assertNull(null)
-        assertNotEquals("word", null)
+        assertNotEquals<String?>("word", null)
     }
 
-    @ExperimentalTime
     fun `Test delays are executed instantly`() = runBlockingTest {
         // This method should run instantly
-        delay(1.hours)
+        delay(1000 * 60 * 60)
     }
 
     fun `Test for update in suspending function`() = runBlockingTest {

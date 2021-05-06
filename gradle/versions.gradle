@@ -4,6 +4,7 @@ def versions_tools = [
     KotlinVersion : "1.4.32",
     MinSdkVersion : 22,
     TargetSdkVersion : 30,
+    Jacoco: "0.8.7",
     JavaCompatibility : JavaVersion.VERSION_11,
     JetpackCompose : "1.0.0-beta05",
 ]

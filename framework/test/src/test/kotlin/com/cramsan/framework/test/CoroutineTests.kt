@@ -3,7 +3,6 @@ package com.cramsan.framework.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CoroutineTests : TestBase() {
@@ -21,7 +20,6 @@ class CoroutineTests : TestBase() {
         commonCoroutineTests.`Test simple assert`()
     }
 
-    @ExperimentalTime
     @Test
     fun `Test delays are executed instantly`() {
         commonCoroutineTests.`Test delays are executed instantly`()
