@@ -4,12 +4,10 @@
     <item
         android:id="@+id/action_add"
         android:title="@string/text_track_profile"
-        android:icon="@drawable/icon_user_add"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_remove"
         android:title="@string/text_untrack_profile"
-        android:icon="@drawable/icon_delete"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_star"
@@ -24,6 +22,5 @@
     <item
         android:id="@+id/action_update"
         android:title="@string/text_update"
-        android:icon="@drawable/icon_refresh"
         app:showAsAction="ifRoom" />
 </menu>
