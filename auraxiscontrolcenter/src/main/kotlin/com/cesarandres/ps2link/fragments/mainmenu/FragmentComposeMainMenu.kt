@@ -1,14 +1,11 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -33,18 +30,9 @@ class FragmentComposeMainMenu : BaseComposePS2Fragment<MainMenuViewModel>() {
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-        requireActivity().title = getString(R.string.app_name_capital)
-        return view
-    }
-
     override fun onResume() {
         super.onResume()
+        requireAppCompatActivity().supportActionBar?.title = getString(R.string.app_name_capital)
         viewModel.updateUI()
     }
 }

@@ -23,7 +23,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/BLACK"
-            android:contentDescription="@string/text_Background"
+            android:importantForAccessibility="no"
             android:scaleType="fitStart"
             android:src="@drawable/ps2_activity_background" />
 
@@ -33,7 +33,6 @@
             style="@style/BaseContentLayout"
             app:defaultNavHost="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:navGraph="@navigation/navigation"
-            tools:layout="@layout/fragment_main_menu" />
+            app:navGraph="@navigation/navigation" />
     </FrameLayout>
 </LinearLayout>

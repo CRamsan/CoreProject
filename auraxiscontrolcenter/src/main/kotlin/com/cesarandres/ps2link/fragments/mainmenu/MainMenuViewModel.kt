@@ -1,6 +1,7 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cesarandres.ps2link.base.BasePS2ViewModel
@@ -50,6 +51,10 @@ class MainMenuViewModel @Inject constructor(
     // State
     private val _preferredProfileId = MutableStateFlow<String?>(null)
     private val _preferredOutfitId = MutableStateFlow<String?>(null)
+
+    init {
+        Log.d("Test", "adsf")
+    }
 
     val preferredProfile: Flow<Character?> = _preferredProfileId.transform { profileId ->
         if (profileId.isNullOrBlank()) {

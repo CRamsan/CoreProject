@@ -28,6 +28,7 @@ import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.MainMenuButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import kotlinx.datetime.Instant
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -141,6 +142,7 @@ fun NormalButtonPreview() {
                 null,
                 null,
                 Namespace.PS2PS4EU,
+                Instant.DISTANT_PAST,
                 false,
             ),
             preferredOutfit = Outfit(

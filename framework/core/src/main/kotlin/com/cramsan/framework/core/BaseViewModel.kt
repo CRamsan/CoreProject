@@ -23,26 +23,6 @@ abstract class BaseViewModel(
     fun events() = events.asLiveData()
 
     @CallSuper
-    fun onStart() {
-        logD(logTag, "onStart")
-    }
-
-    @CallSuper
-    fun onResume() {
-        logD(logTag, "onResume")
-    }
-
-    @CallSuper
-    fun onPause() {
-        logD(logTag, "onPause")
-    }
-
-    @CallSuper
-    fun onStop() {
-        logD(logTag, "onStop")
-    }
-
-    @CallSuper
     override fun onCleared() {
         super.onCleared()
         logD(logTag, "onCleared")

@@ -29,28 +29,24 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         logD(logTag, "onStart")
-        viewModel.onStart()
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
         logD(logTag, "onResume")
-        viewModel.onResume()
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
         logD(logTag, "onPause")
-        viewModel.onPause()
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
         logD(logTag, "onStop")
-        viewModel.onStop()
     }
 
     @CallSuper

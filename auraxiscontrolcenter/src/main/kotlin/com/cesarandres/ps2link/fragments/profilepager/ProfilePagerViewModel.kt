@@ -11,6 +11,8 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +35,8 @@ class ProfilePagerViewModel @Inject constructor(
         get() = "ProfilePagerViewModel"
 
     // State
-    private var profile: Character? = null
+    private val _profile: MutableStateFlow<Character?> = MutableStateFlow(null)
+    val profile = _profile.asStateFlow()
     private lateinit var characterId: String
     private lateinit var namespace: Namespace
 
@@ -47,7 +50,7 @@ class ProfilePagerViewModel @Inject constructor(
         this.namespace = namespace
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            profile = pS2LinkRepository.getCharacter(characterId, namespace, lang, false)
+            _profile.value = pS2LinkRepository.getCharacter(characterId, namespace, lang, false)
         }
     }
 

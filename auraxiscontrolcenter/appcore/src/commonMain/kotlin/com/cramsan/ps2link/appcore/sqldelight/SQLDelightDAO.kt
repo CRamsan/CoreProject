@@ -17,6 +17,9 @@ import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 class SQLDelightDAO(
     sqlDriver: SqlDriver,
@@ -29,13 +32,19 @@ class SQLDelightDAO(
             factionIdAdapter = factionAdapter,
             namespaceAdapter = namespaceAdapter,
             loginStatusAdapter = loginStatusAdapter,
+            lastLoginAdapter = instantAdapter,
+            lastUpdatedAdapter = instantAdapter,
+            minutesPlayedAdapter = durationAdapter,
         ),
         OutfitAdapter = com.cramsan.ps2link.db.Outfit.Adapter(
             factionIdAdapter = factionAdapter,
             namespaceAdapter = namespaceAdapter,
+            lastUpdatedAdapter = instantAdapter,
+            timeCreatedAdapter = instantAdapter,
         ),
     )
 
+    @OptIn(ExperimentalTime::class)
     override fun insertCharacter(
         characterId: String,
         name: String?,
@@ -45,8 +54,9 @@ class SQLDelightDAO(
         percentageToNextCert: Double?,
         percentageToNextRank: Double?,
         rank: Long?,
-        lastLogin: Long?,
-        minutesPlayed: Long?,
+        outfitRank: Long?,
+        lastLogin: Instant?,
+        minutesPlayed: Duration?,
         factionId: Faction,
         worldId: String?,
         worldName: String?,
@@ -54,7 +64,7 @@ class SQLDelightDAO(
         outfitName: String?,
         namespace: Namespace,
         cached: Boolean,
-        lastUpdated: Long,
+        lastUpdated: Instant,
     ) {
         assertIsBackgroundThread()
         return database.characterQueries.insertCharacter(
@@ -66,6 +76,7 @@ class SQLDelightDAO(
             percentageToNextCert,
             percentageToNextRank,
             rank,
+            outfitRank,
             lastLogin,
             minutesPlayed,
             factionId.toDBModel(),
@@ -81,7 +92,7 @@ class SQLDelightDAO(
 
     override fun insertCharacter(character: Character) {
         assertIsBackgroundThread()
-        return database.characterQueries.insertCharacterInstance(character.toDBModel(clock.now().toEpochMilliseconds()))
+        return database.characterQueries.insertCharacterInstance(character.toDBModel(clock.now()))
     }
 
     override fun getAllCharactersAsFlow(): Flow<List<Character>> {
@@ -157,11 +168,12 @@ class SQLDelightDAO(
         leaderCharacterId: String?,
         leaderCharacterName: String?,
         memberCount: Long?,
-        timeCreated: Long?,
+        timeCreated: Instant?,
         worldId: String?,
+        worldName: String?,
         factionId: Faction,
         namespace: Namespace,
-        lastUpdated: Long,
+        lastUpdated: Instant,
     ) {
         assertIsBackgroundThread()
         database.outfitQueries.insertOutfit(
@@ -173,6 +185,7 @@ class SQLDelightDAO(
             memberCount,
             timeCreated,
             worldId,
+            worldName,
             factionId.toDBModel(),
             namespace.toDBModel(),
             lastUpdated
@@ -181,7 +194,7 @@ class SQLDelightDAO(
 
     override fun insertOutfit(outfit: Outfit) {
         assertIsBackgroundThread()
-        return database.outfitQueries.insertOutfitInstance(outfit.toDBModel(clock.now().toEpochMilliseconds()))
+        return database.outfitQueries.insertOutfitInstance(outfit.toDBModel(clock.now()))
     }
 
     override fun removeOutfit(
@@ -197,4 +210,107 @@ class SQLDelightDAO(
         database.characterQueries.deleteAll()
         database.outfitQueries.deleteAll()
     }
+}
+
+@OptIn(ExperimentalTime::class)
+private fun Character.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Character {
+    return com.cramsan.ps2link.db.Character(
+        id = characterId,
+        name = name,
+        activeProfileId = activeProfileId,
+        loginStatus = loginStatus.toDBModel(),
+        currentPoints = certs,
+        percentageToNextCert = percentageToNextCert,
+        percentageToNextRank = percentageToNextBattleRank,
+        rank = battleRank,
+        outfitRank = null,
+        lastLogin = lastLogin,
+        minutesPlayed = timePlayed,
+        factionId = faction.toDBModel(),
+        worldId = server?.worldId,
+        worldName = server?.serverName,
+        outfitId = outfit?.id,
+        outfitName = outfit?.name,
+        namespace = namespace.toDBModel(),
+        cached = true,
+        lastUpdated = lastUpdated,
+    )
+}
+
+@OptIn(ExperimentalTime::class)
+private fun Outfit.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Outfit {
+    return com.cramsan.ps2link.db.Outfit(
+        id = id,
+        name = name,
+        alias = tag,
+        leaderCharacterId = leader?.characterId,
+        leaderCharacterName = leader?.name,
+        memberCount = memberCount.toLong(),
+        timeCreated = timeCreated,
+        worldId = server?.worldId,
+        worldName = server?.serverName,
+        factionId = faction.toDBModel(),
+        namespace = namespace.toDBModel(),
+        lastUpdated = lastUpdated,
+    )
+}
+
+@OptIn(ExperimentalTime::class)
+private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): com.cramsan.ps2link.core.models.Outfit {
+    return com.cramsan.ps2link.core.models.Outfit(
+        id = id,
+        name = name,
+        tag = alias,
+        faction = factionId.toCoreModel(),
+        server = server,
+        timeCreated = timeCreated,
+        leader = leaderCharacterId?.let {
+            com.cramsan.ps2link.core.models.Character(
+                characterId = it,
+                name = leaderCharacterName,
+                cached = false,
+            )
+        },
+        memberCount = memberCount?.toInt() ?: 0,
+        namespace = namespace.toCoreModel(),
+        lastUpdate = lastUpdated,
+    )
+}
+
+@OptIn(ExperimentalTime::class)
+private fun com.cramsan.ps2link.db.Character.toCoreModel(): com.cramsan.ps2link.core.models.Character {
+    val server = worldId?.let {
+        Server(
+            worldId = it,
+            serverName = worldName,
+            namespace = namespace.toCoreModel(),
+            serverMetadata = null
+        )
+    }
+
+    val outfit = outfitId?.let {
+        com.cramsan.ps2link.core.models.Outfit(
+            id = it,
+            name = outfitName,
+            namespace = namespace.toCoreModel(),
+        )
+    }
+    return com.cramsan.ps2link.core.models.Character(
+        characterId = id,
+        name = name,
+        activeProfileId = activeProfileId,
+        loginStatus = loginStatus?.toCoreModel(),
+        certs = currentPoints,
+        battleRank = rank,
+        percentageToNextCert = percentageToNextCert,
+        percentageToNextBattleRank = percentageToNextRank,
+        lastLogin = lastLogin,
+        timePlayed = minutesPlayed,
+        faction = factionId.toCoreModel(),
+        server = server,
+        outfit = outfit,
+        namespace = namespace.toCoreModel(),
+        cached = cached,
+        lastUpdate = lastUpdated,
+    )
 }

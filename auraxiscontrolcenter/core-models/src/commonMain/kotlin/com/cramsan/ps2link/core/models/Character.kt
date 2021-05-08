@@ -25,5 +25,6 @@ data class Character(
     val outfit: Outfit? = null,
     val outfitRank: Rank? = null,
     val namespace: Namespace = Namespace.UNDETERMINED,
+    val lastUpdate: Instant? = null,
     val cached: Boolean,
 )

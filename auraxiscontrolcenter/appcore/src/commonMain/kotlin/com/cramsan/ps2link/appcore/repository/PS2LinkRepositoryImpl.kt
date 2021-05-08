@@ -80,11 +80,11 @@ class PS2LinkRepositoryImpl(
         forceUpdate: Boolean,
     ): Character? {
         val cachedCharacter = dbgDAO.getCharacter(characterId, namespace)
-        if (!forceUpdate && (cachedCharacter != null && isCharacterValid(cachedCharacter.toDBModel(clock.now().toEpochMilliseconds())))) {
+        if (!forceUpdate && (cachedCharacter != null && isCharacterValid(cachedCharacter))) {
             return cachedCharacter
         }
         val profile = dbgCensus.getProfile(characterId, namespace.toNetworkModel(), lang)
-            ?.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds(), lang) ?: return null
+            ?.toCoreModel(namespace.toDBModel(), clock.now(), lang) ?: return null
         dbgDAO.insertCharacter(profile)
         return profile
     }
@@ -111,7 +111,7 @@ class PS2LinkRepositoryImpl(
                     currentLang = currentLang
                 )
                 endpointProfileList?.map {
-                    it.toCoreModel(namespace.toDBModel(), clock.now().toEpochMilliseconds(), currentLang)
+                    it.toCoreModel(namespace.toDBModel(), clock.now(), currentLang)
                 }
             }
             job
@@ -211,11 +211,11 @@ class PS2LinkRepositoryImpl(
         forceUpdate: Boolean
     ): Outfit? {
         val cachedOutfit = dbgDAO.getOutfit(outfitId, namespace)
-        if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit.toDBModel(clock.now().toEpochMilliseconds())))) {
+        if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit))) {
             return cachedOutfit
         }
         val outfit = dbgCensus.getOutfit(outfitId, namespace.toNetworkModel(), lang)
-            ?.toCoreModel(namespace.toDBModel(), null, clock.now().toEpochMilliseconds()) ?: return null
+            ?.toCoreModel(namespace.toDBModel(), null, clock.now()) ?: return null
         dbgDAO.insertOutfit(outfit)
         return outfit
     }
@@ -242,7 +242,7 @@ class PS2LinkRepositoryImpl(
                     currentLang = currentLang
                 )
                 endpointOutfitList?.map {
-                    it.toCoreModel(namespace.toDBModel(), null, clock.now().toEpochMilliseconds())
+                    it.toCoreModel(namespace.toDBModel(), null, clock.now())
                 }
             }
             job
@@ -257,7 +257,7 @@ class PS2LinkRepositoryImpl(
 
     override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
         return dbgCensus.getMemberList(outfitId, namespace.toNetworkModel(), currentLang)
-            ?.mapNotNull { it.toCoreModel(namespace.toDBModel(), 0, currentLang) } ?: emptyList()
+            ?.mapNotNull { it.toCoreModel(namespace.toDBModel(), Instant.DISTANT_PAST, currentLang) } ?: emptyList()
     }
 
     private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {
@@ -473,21 +473,25 @@ class PS2LinkRepositoryImpl(
     }
 
     @OptIn(ExperimentalTime::class)
-    private fun isCharacterValid(character: com.cramsan.ps2link.db.Character?): Boolean {
-        if (character == null) {
-            return false
+    private fun isCharacterValid(character: Character?): Boolean {
+        character?.lastUpdate.let {
+            return if (it == null) {
+                false
+            } else {
+                it + EXPIRATION_TIME < clock.now()
+            }
         }
-
-        return Instant.fromEpochMilliseconds(character.lastUpdated) + EXPIRATION_TIME < clock.now()
     }
 
     @OptIn(ExperimentalTime::class)
-    private fun isOutfitValid(outfit: com.cramsan.ps2link.db.Outfit?): Boolean {
-        if (outfit == null) {
-            return false
+    private fun isOutfitValid(outfit: Outfit?): Boolean {
+        outfit?.lastUpdate.let {
+            return if (it == null) {
+                false
+            } else {
+                it + EXPIRATION_TIME < clock.now()
+            }
         }
-
-        return Instant.fromEpochMilliseconds(outfit.lastUpdated) + EXPIRATION_TIME < clock.now()
     }
 
     companion object {

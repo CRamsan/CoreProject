@@ -1,5 +1,7 @@
 import com.cramsan.ps2link.db.models.Faction;
 import com.cramsan.ps2link.db.models.Namespace;
+import kotlin.time.Duration;
+import kotlinx.datetime.Instant;
 
 CREATE TABLE Outfit (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
@@ -8,12 +10,12 @@ CREATE TABLE Outfit (
     leaderCharacterId TEXT,
     leaderCharacterName TEXT,
     memberCount INTEGER,
-    timeCreated INTEGER,
+    timeCreated INTEGER as Instant,
     worldId TEXT,
     worldName TEXT,
     factionId TEXT as Faction NOT NULL,
     namespace TEXT as Namespace NOT NULL,
-    lastUpdated INTEGER NOT NULL
+    lastUpdated INTEGER as Instant NOT NULL
 );
 
 getOutfit:
@@ -32,10 +34,11 @@ INSERT OR REPLACE INTO Outfit(
     memberCount,
     timeCreated,
     worldId,
+    worldName,
     factionId,
     namespace,
     lastUpdated
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertOutfitInstance:
 INSERT OR REPLACE INTO Outfit(
@@ -47,6 +50,7 @@ INSERT OR REPLACE INTO Outfit(
     memberCount,
     timeCreated,
     worldId,
+    worldName,
     factionId,
     namespace,
     lastUpdated

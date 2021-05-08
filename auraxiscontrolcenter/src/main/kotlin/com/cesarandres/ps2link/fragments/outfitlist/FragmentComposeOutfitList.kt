@@ -1,18 +1,15 @@
 package com.cesarandres.ps2link.fragments.outfitlist
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -33,17 +30,6 @@ class FragmentComposeOutfitList : BaseComposePS2Fragment<OutfitListViewModel>() 
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-        setHasOptionsMenu(true)
-        requireActivity().title = getString(R.string.title_profiles)
-        return view
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
@@ -58,5 +44,10 @@ class FragmentComposeOutfitList : BaseComposePS2Fragment<OutfitListViewModel>() 
             }
         }
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_outfits)
     }
 }

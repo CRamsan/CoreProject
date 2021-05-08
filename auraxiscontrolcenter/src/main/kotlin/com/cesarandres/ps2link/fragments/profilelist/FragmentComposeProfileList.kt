@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>() {
 
-    override val logTag = "FragmentComposeMainMenu"
+    override val logTag = "FragmentComposeProfileList"
     override val viewModel: ProfileListViewModel by viewModels()
 
     @Composable
@@ -40,7 +41,6 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().title = getString(R.string.title_profiles)
         return view
     }
 
@@ -58,5 +58,10 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
             }
         }
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_profiles)
     }
 }

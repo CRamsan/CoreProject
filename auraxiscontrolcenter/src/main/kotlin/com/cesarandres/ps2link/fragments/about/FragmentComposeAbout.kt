@@ -1,14 +1,11 @@
 package com.cesarandres.ps2link.fragments.about
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import com.cramsan.framework.core.NoopViewModel
+import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -19,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentComposeAbout : BaseComposePS2Fragment<NoopViewModel>(), AboutEventHandler {
 
-    override val logTag = "FragmentComposeMainMenu"
+    override val logTag = "FragmentComposeAbout"
     override val viewModel: NoopViewModel by viewModels()
 
     @Composable
@@ -29,14 +26,9 @@ class FragmentComposeAbout : BaseComposePS2Fragment<NoopViewModel>(), AboutEvent
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-        requireActivity().title = getString(R.string.app_name_capital)
-        return view
+    override fun onResume() {
+        super.onResume()
+        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_about)
     }
 
     override fun onAboutClick() {

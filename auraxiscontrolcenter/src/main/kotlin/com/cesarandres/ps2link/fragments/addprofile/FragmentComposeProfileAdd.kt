@@ -1,14 +1,11 @@
 package com.cesarandres.ps2link.fragments.addprofile
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -17,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentComposeProfileAdd : BaseComposePS2Fragment<ProfileAddViewModel>() {
 
-    override val logTag = "FragmentComposeMainMenu"
+    override val logTag = "FragmentComposeProfileAdd"
     override val viewModel: ProfileAddViewModel by viewModels()
 
     @Composable
@@ -33,13 +30,8 @@ class FragmentComposeProfileAdd : BaseComposePS2Fragment<ProfileAddViewModel>() 
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-        requireActivity().title = getString(R.string.title_profiles)
-        return view
+    override fun onResume() {
+        super.onResume()
+        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_profiles)
     }
 }

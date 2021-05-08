@@ -11,6 +11,10 @@ buildscript {
     }
 }
 
+repositories {
+    jcenter()
+}
+
 apply plugin: "com.android.application"
 apply from: "$rootDir/gradle/app.gradle"
 

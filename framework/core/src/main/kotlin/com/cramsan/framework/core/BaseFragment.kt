@@ -6,17 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.cramsan.framework.logging.logD
 
-abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
+abstract class BaseFragment : Fragment() {
 
     abstract val logTag: String
-    abstract val viewModel: VM
-    protected lateinit var dataBinding: DB
-    abstract val contentViewLayout: Int
 
     @CallSuper
     override fun onAttach(context: Context) {
@@ -36,14 +31,13 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
+        val view = super.onCreateView(inflater, container, savedInstanceState)
         logD(logTag, "onCreateView")
-        dataBinding = DataBindingUtil.inflate(inflater, contentViewLayout, container, false)
-        dataBinding.lifecycleOwner = this
-        return dataBinding.root
+        return view
     }
 
     @CallSuper
+    @Deprecated("Use onViewCreated instead")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         logD(logTag, "onActivityCreated")
@@ -53,28 +47,24 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
     override fun onStart() {
         super.onStart()
         logD(logTag, "onStart")
-        viewModel.onStart()
     }
 
     @CallSuper
     override fun onResume() {
         super.onResume()
         logD(logTag, "onResume")
-        viewModel.onResume()
     }
 
     @CallSuper
     override fun onPause() {
         super.onPause()
         logD(logTag, "onPause")
-        viewModel.onPause()
     }
 
     @CallSuper
     override fun onStop() {
         super.onStop()
         logD(logTag, "onStop")
-        viewModel.onStop()
     }
 
     @CallSuper
@@ -99,5 +89,10 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         logD(logTag, "onSaveInstanceState")
+    }
+
+    @CallSuper
+    protected open fun onViewModelEvent(event: BaseEvent) {
+        logD(logTag, "Event: $event")
     }
 }

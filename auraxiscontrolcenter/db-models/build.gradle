@@ -31,10 +31,16 @@ sqldelight {
 
 kotlin {
     sourceSets {
+        all {
+            languageSettings {
+                useExperimentalAnnotation('kotlin.time.ExperimentalTime')
+            }
+        }
         commonMain {
             dependencies {
                 implementation project(":framework")
                 implementation packages.SqlDelightCoroutineExt
+                implementation packages.KotlinxDatetime
             }
         }
         commonTest {

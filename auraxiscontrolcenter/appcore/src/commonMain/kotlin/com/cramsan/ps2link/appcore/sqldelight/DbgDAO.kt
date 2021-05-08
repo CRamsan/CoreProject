@@ -6,9 +6,13 @@ import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 interface DbgDAO {
 
+    @OptIn(ExperimentalTime::class)
     fun insertCharacter(
         characterId: String,
         name: String?,
@@ -18,8 +22,9 @@ interface DbgDAO {
         percentageToNextCert: Double?,
         percentageToNextRank: Double?,
         rank: Long?,
-        lastLogin: Long?,
-        minutesPlayed: Long?,
+        outfitRank: Long?,
+        lastLogin: Instant?,
+        minutesPlayed: Duration?,
         factionId: Faction,
         worldId: String?,
         worldName: String?,
@@ -27,7 +32,7 @@ interface DbgDAO {
         outfitName: String?,
         namespace: Namespace,
         cached: Boolean,
-        lastUpdated: Long,
+        lastUpdated: Instant,
     )
 
     fun insertCharacter(character: Character)
@@ -72,11 +77,12 @@ interface DbgDAO {
         leaderCharacterId: String?,
         leaderCharacterName: String?,
         memberCount: Long?,
-        timeCreated: Long?,
+        timeCreated: Instant?,
         worldId: String?,
+        worldName: String?,
         factionId: Faction,
         namespace: Namespace,
-        lastUpdated: Long,
+        lastUpdated: Instant,
     )
 
     fun insertOutfit(outfit: Outfit)

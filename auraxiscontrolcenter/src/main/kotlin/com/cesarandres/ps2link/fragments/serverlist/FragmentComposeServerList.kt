@@ -1,15 +1,13 @@
 package com.cesarandres.ps2link.fragments.serverlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -33,18 +31,11 @@ class FragmentComposeServerList : BaseComposePS2Fragment<ServerListViewModel>() 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel.setUp()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-        setHasOptionsMenu(true)
-        requireActivity().title = getString(R.string.title_profiles)
-        return view
+    override fun onResume() {
+        super.onResume()
+        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_servers)
     }
 }

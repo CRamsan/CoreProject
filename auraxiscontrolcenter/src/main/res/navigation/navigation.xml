@@ -188,7 +188,7 @@
         android:id="@+id/fragmentOutfitPager"
         android:name="com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPager"
         android:label="FragmentOutfitPager"
-        tools:layout="@layout/fragment_outfit_pager" >
+        tools:layout="@layout/fragment_pager" >
         <action
             android:id="@+id/action_fragmentOutfitPager_to_fragmentProfile"
             app:destination="@id/fragmentProfilePager"
