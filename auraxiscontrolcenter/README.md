@@ -5,6 +5,9 @@ This is the source code for the Auraxis Control Center
 
 [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
 
+# Documentation
+[Mocks](https://www.figma.com/files/project/30562182/Team-project?fuid=741159602862694256)
+
 # Analytics
 
 [Engagement](https://appcenter.ms/users/cramsan/apps/AuraxisControlCenter/analytics/overview)
