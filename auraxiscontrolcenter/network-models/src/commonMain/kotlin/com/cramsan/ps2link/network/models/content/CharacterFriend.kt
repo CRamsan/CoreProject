@@ -8,5 +8,5 @@ data class CharacterFriend(
     var name: Name? = null,
     var character_id: String? = null,
     var last_login_time: String? = null,
-    var online: Int = 0,
+    var online: String? = null,
 )

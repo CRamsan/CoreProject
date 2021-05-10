@@ -7,12 +7,18 @@ apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "kotlinx-serialization"
 apply plugin: "kotlin-kapt"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
+apply from: "$rootDir/gradle/ktlint.gradle"
 
 // Set the task name for the jacoco-mpp-jvm plugin
 ext {
     jvmTestTaskName = "jvmTest"
 }
 apply from: "$rootDir/gradle/jacoco-mpp-jvm.gradle"
+
+repositories {
+    mavenCentral()
+    google()
+}
 
 android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion

@@ -7,10 +7,6 @@ apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle" // Inherit the main configur
 apply plugin: "org.openjfx.javafxplugin" // Using javaFx plugin as the GUI framework
 apply plugin: "application" // Enable this application to run as an application.
 
-dependencies {
-
-}
-
 javafx {
     version versions_tools.JavaCompatibility
     modules = [ 'javafx.controls', 'javafx.fxml' ]

@@ -1,12 +1,10 @@
 package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.ps2link.core.models.CensusLang
-import com.cramsan.ps2link.network.models.Namespace
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.network.models.content.CharacterEvent
-import com.cramsan.ps2link.network.models.content.CharacterFriend
-import com.cramsan.ps2link.network.models.content.CharacterProfile
-import com.cramsan.ps2link.network.models.content.Member
-import com.cramsan.ps2link.network.models.content.Outfit
 import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.WorldEvent
 import com.cramsan.ps2link.network.models.content.character.Stats
@@ -18,7 +16,7 @@ interface DBGServiceClient {
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): CharacterProfile?
+    ): Character?
 
     /**
      * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/character_name/?name.first_lower=^cram&c:limit=25&c:join=character&c:lang=en
@@ -27,13 +25,13 @@ interface DBGServiceClient {
         searchField: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterProfile>?
+    ): List<Character>?
 
     suspend fun getFriendList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterFriend>?
+    ): List<Character>?
 
     suspend fun getKillList(
         character_id: String,
@@ -67,7 +65,7 @@ interface DBGServiceClient {
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterProfile>?
+    ): List<Character>?
 
     suspend fun getServerList(
         namespace: Namespace,
@@ -92,5 +90,5 @@ interface DBGServiceClient {
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Member>?
+    ): List<Character>?
 }

@@ -256,8 +256,8 @@ private fun Outfit.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Outfi
 }
 
 @OptIn(ExperimentalTime::class)
-private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): com.cramsan.ps2link.core.models.Outfit {
-    return com.cramsan.ps2link.core.models.Outfit(
+private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): Outfit {
+    return Outfit(
         id = id,
         name = name,
         tag = alias,
@@ -265,7 +265,7 @@ private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): com.cram
         server = server,
         timeCreated = timeCreated,
         leader = leaderCharacterId?.let {
-            com.cramsan.ps2link.core.models.Character(
+            Character(
                 characterId = it,
                 name = leaderCharacterName,
                 cached = false,
@@ -278,7 +278,7 @@ private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): com.cram
 }
 
 @OptIn(ExperimentalTime::class)
-private fun com.cramsan.ps2link.db.Character.toCoreModel(): com.cramsan.ps2link.core.models.Character {
+private fun com.cramsan.ps2link.db.Character.toCoreModel(): Character {
     val server = worldId?.let {
         Server(
             worldId = it,
@@ -289,13 +289,13 @@ private fun com.cramsan.ps2link.db.Character.toCoreModel(): com.cramsan.ps2link.
     }
 
     val outfit = outfitId?.let {
-        com.cramsan.ps2link.core.models.Outfit(
+        Outfit(
             id = it,
             name = outfitName,
             namespace = namespace.toCoreModel(),
         )
     }
-    return com.cramsan.ps2link.core.models.Character(
+    return Character(
         characterId = id,
         name = name,
         activeProfileId = activeProfileId,

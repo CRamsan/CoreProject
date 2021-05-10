@@ -9,7 +9,7 @@ import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
-import com.cramsan.ps2link.core.models.FriendCharacter
+import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +37,7 @@ class FriendListViewModel @Inject constructor(
         get() = "FriendListViewModel"
 
     // State
-    private val _friendList = MutableStateFlow<List<FriendCharacter>>(emptyList())
+    private val _friendList = MutableStateFlow<List<Character>>(emptyList())
     val friendList = _friendList.asStateFlow()
 
     fun setUp(characterId: String?, namespace: Namespace?) {

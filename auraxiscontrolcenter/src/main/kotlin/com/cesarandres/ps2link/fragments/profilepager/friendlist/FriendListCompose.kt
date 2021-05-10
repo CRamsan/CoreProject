@@ -10,14 +10,14 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cramsan.ps2link.core.models.FriendCharacter
+import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.FriendItem
 
 @Composable
 fun FriendListCompose(
-    friendList: List<FriendCharacter>,
+    friendList: List<Character>,
     isLoading: Boolean,
     eventHandler: FriendListEventHandler,
 ) {
@@ -27,7 +27,7 @@ fun FriendListCompose(
                 items(friendList) {
                     FriendItem(
                         modifier = Modifier.fillMaxWidth(),
-                        label = it.characterName ?: "",
+                        label = it.name ?: "",
                         loginStatus = it.loginStatus,
                         onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
                     )

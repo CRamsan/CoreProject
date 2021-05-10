@@ -30,6 +30,7 @@ repositories {
     maven {
         url "https://kotlin.bintray.com/kotlinx/"
     }
+    mavenCentral()
 }
 
 dependencies {

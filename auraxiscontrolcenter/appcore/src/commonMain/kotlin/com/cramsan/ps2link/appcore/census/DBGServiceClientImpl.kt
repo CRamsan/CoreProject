@@ -2,9 +2,17 @@ package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.appcore.census.DBGCensus.Companion.SERVICE_ID
+import com.cramsan.ps2link.appcore.localizedName
 import com.cramsan.ps2link.appcore.network.HttpClient
+import com.cramsan.ps2link.appcore.toCoreModel
+import com.cramsan.ps2link.appcore.toNetworkModel
 import com.cramsan.ps2link.core.models.CensusLang
-import com.cramsan.ps2link.network.models.Namespace
+import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.LoginStatus
+import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.Rank
+import com.cramsan.ps2link.core.models.Server
+import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.network.models.Verb
 import com.cramsan.ps2link.network.models.content.CharacterEvent
 import com.cramsan.ps2link.network.models.content.CharacterFriend
@@ -29,8 +37,10 @@ import com.cramsan.ps2link.network.models.util.Collections
 import com.cramsan.ps2link.network.models.util.QueryString
 import io.ktor.http.Url
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 import kotlin.time.hours
+import kotlin.time.minutes
 
 /**
  * This class will be in charge of formatting requests for DBG Census API and
@@ -50,13 +60,14 @@ import kotlin.time.hours
 class DBGServiceClientImpl(
     private val census: DBGCensus,
     private val http: HttpClient,
+    private val clock: Clock,
 ) : DBGServiceClient {
 
     override suspend fun getProfile(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): CharacterProfile? {
+    ): Character? {
         logI(TAG, "Downloading Profile")
         val url = census.generateGameDataRequest(
             Verb.GET,
@@ -67,18 +78,18 @@ class DBGServiceClientImpl(
                 "outfit,world,online_status"
             )
                 .AddCommand(QueryString.QueryCommand.JOIN, "type:world^inject_at:server"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
         val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
-        return body?.character_list?.first()
+        return body?.character_list?.first()?.toCoreModel(namespace, clock.now(), currentLang)
     }
 
     override suspend fun getProfiles(
         searchField: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterProfile>? {
+    ): List<Character>? {
         logI(TAG, "Downloading Profile List")
         if (searchField.length < 3) {
             return emptyList()
@@ -95,19 +106,19 @@ class DBGServiceClientImpl(
                 )
                 .AddCommand(QueryString.QueryCommand.LIMIT, "25")
                 .AddCommand(QueryString.QueryCommand.JOIN, "character"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
         val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
-        return body?.character_name_list?.mapNotNull { it.character_id_join_character }
+        return body?.character_name_list?.mapNotNull { it.character_id_join_character?.toCoreModel(namespace, clock.now(), currentLang) }
     }
 
     override suspend fun getFriendList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterFriend>? {
+    ): List<Character>? {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTERS_FRIEND,
@@ -118,12 +129,12 @@ class DBGServiceClientImpl(
                 character_id
             )
                 .AddCommand(QueryString.QueryCommand.RESOLVE, "character_name"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
         val body = http.sendRequestWithRetry<Character_friend_list_response>(Url(url))
-        return body?.characters_friend_list?.firstOrNull()?.friend_list
+        return body?.characters_friend_list?.firstOrNull()?.friend_list?.map { it.toCoreModel(namespace) }
     }
 
     override suspend fun getKillList(
@@ -145,7 +156,7 @@ class DBGServiceClientImpl(
                     "character,attacker"
                 ).AddCommand(QueryString.QueryCommand.LIMIT, "100")
                 .AddComparison("type", QueryString.SearchModifier.EQUALS, "DEATH,KILL"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
@@ -162,7 +173,7 @@ class DBGServiceClientImpl(
             "characters_weapon_stat_by_faction/?" +
                 "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.toLowerCase() +
                 "&c:join=vehicle^show:image_path'name." + currentLang.name.toLowerCase() + "&c:limit=10000",
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
@@ -175,7 +186,7 @@ class DBGServiceClientImpl(
         outfitName: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Outfit>? {
+    ): List<com.cramsan.ps2link.core.models.Outfit>? {
         val query = QueryString.generateQeuryString().apply {
             if (outfitTag.length >= 3) {
                 AddComparison(
@@ -199,38 +210,38 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.OUTFIT,
             "",
             query,
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
         val body = http.sendRequestWithRetry<Outfit_response>(Url(url))
-        return body?.outfit_list
+        return body?.outfit_list?.map { it.toCoreModel(namespace, null, clock.now()) }
     }
 
     override suspend fun getOutfit(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): Outfit? {
+    ): com.cramsan.ps2link.core.models.Outfit? {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.OUTFIT,
             outfitId,
             QueryString.generateQeuryString()
                 .AddCommand(QueryString.QueryCommand.RESOLVE, "leader"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
         val body = http.sendRequestWithRetry<Outfit_response>(Url(url))
-        return body?.outfit_list?.first()
+        return body?.outfit_list?.first()?.toCoreModel(namespace, null, clock.now())
     }
 
     override suspend fun getMemberList(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterProfile>? {
+    ): List<Character>? {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.OUTFIT,
@@ -244,12 +255,12 @@ class DBGServiceClientImpl(
                     QueryString.QueryCommand.RESOLVE,
                     "member_online_status,member,member_character(name,type.faction)"
                 ),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
         val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
-        return body?.outfit_list?.firstOrNull()?.members
+        return body?.outfit_list?.firstOrNull()?.members?.map { it.toCoreModel(namespace, clock.now(), currentLang) }
     }
 
     override suspend fun getServerList(
@@ -261,7 +272,7 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.WORLD,
             "",
             QueryString.generateQeuryString().AddCommand(QueryString.QueryCommand.LIMIT, "10"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
@@ -303,7 +314,7 @@ class DBGServiceClientImpl(
                     // Get metagame events that are newer than 2 hours
                     Clock.System.now().minus(15.hours).epochSeconds.toString()
                 ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
@@ -327,7 +338,7 @@ class DBGServiceClientImpl(
                     QueryString.QueryCommand.HIDE,
                     "name,battle_rank,certs,times,daily_ribbon"
                 ),
-            namespace,
+            namespace.toNetworkModel(),
             currentLang,
         )
 
@@ -340,18 +351,105 @@ class DBGServiceClientImpl(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Member>? {
+    ): List<Character>? {
         val url =
             census.generateGameDataRequest(
                 "outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + CensusLang.EN.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
-                namespace,
+                namespace.toNetworkModel(),
                 CensusLang.EN
             )
         val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
-        return body?.outfit_member_list
+        return body?.outfit_member_list?.mapNotNull { it.toCoreModel(namespace) }
     }
 
     companion object {
         val TAG = "DBGServiceClient"
     }
+}
+
+@OptIn(ExperimentalTime::class)
+private fun CharacterProfile.toCoreModel(
+    namespace: Namespace,
+    lastUpdated: Instant,
+    currentLang: CensusLang
+): Character {
+    val server = world_id?.let {
+        Server(
+            worldId = it,
+            namespace = namespace,
+            serverName = server?.name?.localizedName(currentLang)
+        )
+    }
+    return Character(
+        characterId = character_id,
+        name = name?.first,
+        activeProfileId = profile_id,
+        loginStatus = LoginStatus.fromString(online_status),
+        certs = certs?.available_points?.toLong(),
+        percentageToNextCert = certs?.percent_to_next?.toDouble()?.times(100),
+        battleRank = battle_rank?.value?.toLong(),
+        percentageToNextBattleRank = battle_rank?.percent_to_next?.toDouble(),
+        lastLogin = times?.last_login?.toLong()?.let {
+            Instant.fromEpochSeconds(it)
+        },
+        timePlayed = times?.minutes_played?.toLong()?.minutes,
+        faction = Faction.fromString(faction_id).toCoreModel(),
+        server = server,
+        outfit = outfit?.toCoreModel(namespace, server, lastUpdated),
+        namespace = namespace,
+        cached = false,
+    )
+}
+
+fun CharacterFriend.toCoreModel(
+    namespace: Namespace,
+): Character {
+    return Character(
+        characterId = character_id ?: "",
+        name = name?.first,
+        loginStatus = LoginStatus.fromString(online),
+        namespace = namespace,
+        cached = false,
+    )
+}
+
+fun Member.toCoreModel(namespace: Namespace): Character? {
+    return character_id?.let {
+        Character(
+            characterId = it,
+            name = character?.name?.first,
+            activeProfileId = character?.active_profile_id,
+            loginStatus = LoginStatus.fromString(online_status),
+            outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
+            namespace = namespace,
+            cached = false,
+        )
+    }
+}
+
+fun Outfit.toCoreModel(
+    namespace: Namespace,
+    server: Server?,
+    lastUpdate: Instant
+): com.cramsan.ps2link.core.models.Outfit {
+    return com.cramsan.ps2link.core.models.Outfit(
+        id = outfit_id,
+        name = name,
+        tag = alias,
+        faction = Faction.fromString(leader?.faction_id).toCoreModel(),
+        server = server,
+        timeCreated = time_created?.let { Instant.fromEpochMilliseconds(it.toLong()) },
+        leader = leader?.let { leader ->
+            leader_character_id?.let {
+                Character(
+                    characterId = it,
+                    leader.name?.first,
+                    cached = false
+                )
+            }
+        },
+        memberCount = member_count,
+        namespace = namespace,
+        lastUpdate = lastUpdate,
+    )
 }

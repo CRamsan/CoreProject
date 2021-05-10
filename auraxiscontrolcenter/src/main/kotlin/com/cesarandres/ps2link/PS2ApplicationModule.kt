@@ -211,7 +211,8 @@ object PS2ApplicationModule {
     fun provideDbgServiceClient(
         dbgCensus: DBGCensus,
         http: HttpClient,
-    ): DBGServiceClient = DBGServiceClientImpl(dbgCensus, http)
+        clock: Clock,
+    ): DBGServiceClient = DBGServiceClientImpl(dbgCensus, http, clock)
 
     @Provides
     @Singleton

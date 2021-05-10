@@ -10,16 +10,12 @@ import com.cramsan.ps2link.appcore.setThisWeek
 import com.cramsan.ps2link.appcore.setToday
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.toCoreModel
-import com.cramsan.ps2link.appcore.toDBModel
-import com.cramsan.ps2link.appcore.toNetworkModel
 import com.cramsan.ps2link.appcore.toStatItem
 import com.cramsan.ps2link.appcore.toWeaponEventType
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
-import com.cramsan.ps2link.core.models.FriendCharacter
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.KillType
-import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
@@ -83,8 +79,7 @@ class PS2LinkRepositoryImpl(
         if (!forceUpdate && (cachedCharacter != null && isCharacterValid(cachedCharacter))) {
             return cachedCharacter
         }
-        val profile = dbgCensus.getProfile(characterId, namespace.toNetworkModel(), lang)
-            ?.toCoreModel(namespace.toDBModel(), clock.now(), lang) ?: return null
+        val profile = dbgCensus.getProfile(characterId, namespace, lang) ?: return null
         dbgDAO.insertCharacter(profile)
         return profile
     }
@@ -107,12 +102,10 @@ class PS2LinkRepositoryImpl(
             val job = async {
                 val endpointProfileList = dbgCensus.getProfiles(
                     searchField = searchField,
-                    namespace = namespace.toNetworkModel(),
+                    namespace = namespace,
                     currentLang = currentLang
                 )
-                endpointProfileList?.map {
-                    it.toCoreModel(namespace.toDBModel(), clock.now(), currentLang)
-                }
+                endpointProfileList
             }
             job
         }.awaitAll().filterNotNull().flatten()
@@ -122,22 +115,13 @@ class PS2LinkRepositoryImpl(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<FriendCharacter> {
+    ): List<Character> {
         val friendListResponse = dbgCensus.getFriendList(
             character_id = characterId,
-            namespace = namespace.toNetworkModel(),
+            namespace = namespace,
             currentLang = lang,
         )
-        return friendListResponse?.mapNotNull { friend ->
-            friend.character_id?.let { id ->
-                FriendCharacter(
-                    id,
-                    friend.name?.first,
-                    namespace,
-                    LoginStatus.fromString(friend.online.toString())
-                )
-            }
-        } ?: emptyList()
+        return friendListResponse ?: emptyList()
     }
 
     override suspend fun getKillList(
@@ -147,7 +131,7 @@ class PS2LinkRepositoryImpl(
     ): List<KillEvent> {
         val killListResponse = dbgCensus.getKillList(
             character_id = characterId,
-            namespace = namespace.toNetworkModel(),
+            namespace = namespace,
             currentLang = lang,
         )
         return formatKillList(characterId, killListResponse, namespace)
@@ -160,7 +144,7 @@ class PS2LinkRepositoryImpl(
     ): List<StatItem> {
         val statListResponse = dbgCensus.getStatList(
             character_id = characterId,
-            namespace = namespace.toNetworkModel(),
+            namespace = namespace,
             currentLang = currentLang,
         )?.stat_history
         return formatStats(statListResponse)
@@ -172,7 +156,7 @@ class PS2LinkRepositoryImpl(
         lang: CensusLang,
     ): List<WeaponItem> {
         val character = getCharacter(characterId, namespace, lang) ?: return emptyList()
-        val weaponListResponse = dbgCensus.getWeaponList(characterId, namespace.toNetworkModel(), CensusLang.EN)
+        val weaponListResponse = dbgCensus.getWeaponList(characterId, namespace, CensusLang.EN)
         return formatWeapons(weaponListResponse, character.faction, lang)
     }
 
@@ -180,7 +164,7 @@ class PS2LinkRepositoryImpl(
         val serverPopulation = withContext(Dispatchers.Default) { dbgCensus.getServerPopulation() }
         Namespace.validNamespaces.map { namespace ->
             val job = async {
-                dbgCensus.getServerList(namespace.toNetworkModel(), lang)?.map {
+                dbgCensus.getServerList(namespace, lang)?.map {
                     it.world_id?.let { worldId ->
                         val serverMetadata = getServerMetadata(it, serverPopulation, lang)
                         Server(
@@ -214,8 +198,7 @@ class PS2LinkRepositoryImpl(
         if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit))) {
             return cachedOutfit
         }
-        val outfit = dbgCensus.getOutfit(outfitId, namespace.toNetworkModel(), lang)
-            ?.toCoreModel(namespace.toDBModel(), null, clock.now()) ?: return null
+        val outfit = dbgCensus.getOutfit(outfitId, namespace, lang) ?: return null
         dbgDAO.insertOutfit(outfit)
         return outfit
     }
@@ -238,12 +221,10 @@ class PS2LinkRepositoryImpl(
                 val endpointOutfitList = dbgCensus.getOutfitList(
                     outfitTag = tagSearchField,
                     outfitName = nameSearchField,
-                    namespace = namespace.toNetworkModel(),
+                    namespace = namespace,
                     currentLang = currentLang
                 )
-                endpointOutfitList?.map {
-                    it.toCoreModel(namespace.toDBModel(), null, clock.now())
-                }
+                endpointOutfitList
             }
             job
         }.awaitAll().filterNotNull().flatten()
@@ -251,13 +232,11 @@ class PS2LinkRepositoryImpl(
     }
 
     override suspend fun getMembersOnline(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
-        return dbgCensus.getMembersOnline(outfitId, namespace.toNetworkModel(), currentLang)
-            ?.mapNotNull { it.toCoreModel(namespace) } ?: emptyList()
+        return dbgCensus.getMembersOnline(outfitId, namespace, currentLang) ?: emptyList()
     }
 
     override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
-        return dbgCensus.getMemberList(outfitId, namespace.toNetworkModel(), currentLang)
-            ?.mapNotNull { it.toCoreModel(namespace.toDBModel(), Instant.DISTANT_PAST, currentLang) } ?: emptyList()
+        return dbgCensus.getMemberList(outfitId, namespace, currentLang) ?: emptyList()
     }
 
     private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {

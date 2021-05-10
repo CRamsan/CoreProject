@@ -2,7 +2,6 @@ package com.cramsan.ps2link.appcore.repository
 
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
-import com.cramsan.ps2link.core.models.FriendCharacter
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
@@ -44,7 +43,7 @@ interface PS2LinkRepository {
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<FriendCharacter>
+    ): List<Character>
 
     suspend fun getKillList(
         characterId: String,
