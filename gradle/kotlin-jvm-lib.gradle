@@ -6,10 +6,6 @@ apply plugin: 'kotlin'
 apply plugin: 'jacoco'
 apply from: "$rootDir/gradle/ktlint.gradle"
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation meta_packages.CoreJVM
 

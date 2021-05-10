@@ -15,11 +15,6 @@ ext {
 }
 apply from: "$rootDir/gradle/jacoco-mpp-jvm.gradle"
 
-repositories {
-    mavenCentral()
-    google()
-}
-
 android {
     buildToolsVersion versions_tools.AndroidBuildToolsVersion
     compileSdkVersion versions_tools.CompileSdkVersion

@@ -15,12 +15,6 @@ buildscript {
 apply plugin: "com.microsoft.azure.azurefunctions"
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
-repositories {
-    maven {
-        url "https://kotlin.bintray.com/kotlinx/"
-    }
-}
-
 group = 'com.cramsan.petproject.azurefunction'
 version = '0.0.1-SNAPSHOT'
 

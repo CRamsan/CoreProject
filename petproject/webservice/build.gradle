@@ -26,13 +26,6 @@ apply plugin: "io.spring.dependency-management"
 group = 'com.cramsan.petproject.webservice'
 version = '0.0.1-SNAPSHOT'
 
-repositories {
-    maven {
-        url "https://kotlin.bintray.com/kotlinx/"
-    }
-    mavenCentral()
-}
-
 dependencies {
     implementation project(":petproject:appcore")
     implementation project(":framework")

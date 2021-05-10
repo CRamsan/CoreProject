@@ -16,6 +16,17 @@ buildscript {
 
 apply from: "gradle/gradle-versions.gradle"
 
+subprojects {
+    repositories {
+        mavenCentral()
+        google()
+        maven {
+            url "https://kotlin.bintray.com/kotlinx/"
+        }
+        jcenter()
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

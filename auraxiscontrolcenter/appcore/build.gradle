@@ -11,12 +11,6 @@ buildscript {
     }
 }
 
-repositories {
-    maven {
-        url "https://kotlin.bintray.com/kotlinx/"
-    }
-}
-
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 

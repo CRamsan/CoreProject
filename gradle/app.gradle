@@ -1,16 +1,6 @@
 /*
 Gradle plugin to create an Android app with good default values.
  */
-
-repositories {
-    maven {
-        // Needed for importing kotlinx-datetime
-        url "https://kotlin.bintray.com/kotlinx/"
-    }
-    google()
-    mavenCentral()
-}
-
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
