@@ -3,12 +3,12 @@ package com.cramsan.petproject.about
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.fragment.app.viewModels
-import com.cramsan.framework.core.BaseFragment
+import com.cramsan.framework.core.BaseDatabindingFragment
 import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.petproject.R
 import com.cramsan.petproject.databinding.FragmentAboutBinding
 
-class AboutFragment : BaseFragment<NoopViewModel, FragmentAboutBinding>() {
+class AboutFragment : BaseDatabindingFragment<NoopViewModel, FragmentAboutBinding>() {
 
     override val contentViewLayout: Int
         get() = R.layout.fragment_about

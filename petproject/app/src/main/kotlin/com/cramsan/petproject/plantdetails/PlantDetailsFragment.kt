@@ -15,7 +15,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.cramsan.framework.core.BaseFragment
+import com.cramsan.framework.core.BaseDatabindingFragment
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.logging.logV
@@ -25,7 +25,7 @@ import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlantDetailsFragment : BaseFragment<PlantDetailsViewModel, FragmentPlantDetailsBinding>() {
+class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, FragmentPlantDetailsBinding>() {
 
     private lateinit var animalType: AnimalType
 

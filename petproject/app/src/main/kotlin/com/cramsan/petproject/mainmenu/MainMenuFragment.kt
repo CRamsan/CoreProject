@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cramsan.framework.core.BaseFragment
+import com.cramsan.framework.core.BaseDatabindingFragment
 import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.R
@@ -26,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainMenuFragment : BaseFragment<AllPlantListViewModel, FragmentMainMenuBinding>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
+class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, FragmentMainMenuBinding>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val logTag: String
         get() = "MainMenuFragment"
