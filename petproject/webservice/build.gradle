@@ -42,6 +42,8 @@ dependencies {
 
 bootWar {
     providedClasspath("src/main/resources/PetProject.sql")
+
+    duplicatesStrategy = DuplicatesStrategy.FAIL
 }
 
 registerDependency(":petproject:appcore")

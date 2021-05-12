@@ -11,14 +11,16 @@ buildscript {
 
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
+dependencies {
+    implementation packages.SupportCompat
+}
+
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
                 implementation project(":framework:interfacelib")
                 implementation project(":framework:logging")
-
-                implementation packages.SupportCompat
             }
         }
     }
