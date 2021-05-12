@@ -8,22 +8,22 @@ CREATE TABLE Character (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     name TEXT,
     activeProfileId TEXT,
-    loginStatus TEXT as LoginStatus NOT NULL,
+    loginStatus TEXT AS LoginStatus NOT NULL,
     currentPoints INTEGER,
     percentageToNextCert REAL,
     percentageToNextRank REAL,
     rank INTEGER,
     outfitRank INTEGER,
-    lastLogin INTEGER as Instant,
-    minutesPlayed INTEGER as Duration,
-    factionId TEXT as Faction NOT NULL,
+    lastLogin INTEGER AS Instant,
+    minutesPlayed INTEGER AS Duration,
+    factionId TEXT AS Faction NOT NULL,
     worldId TEXT,
     worldName TEXT,
     outfitId TEXT,
     outfitName TEXT,
-    namespace TEXT as Namespace NOT NULL,
-    cached INTEGER as Boolean NOT NULL,
-    lastUpdated INTEGER as Instant NOT NULL
+    namespace TEXT AS Namespace NOT NULL,
+    cached INTEGER AS Boolean NOT NULL,
+    lastUpdated INTEGER AS Instant NOT NULL
 );
 
 getCharacter:

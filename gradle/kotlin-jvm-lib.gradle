@@ -6,6 +6,10 @@ apply plugin: 'kotlin'
 apply plugin: 'jacoco'
 apply from: "$rootDir/gradle/ktlint.gradle"
 
+jacoco {
+    toolVersion = versions_tools.Jacoco
+}
+
 dependencies {
     implementation meta_packages.CoreJVM
 

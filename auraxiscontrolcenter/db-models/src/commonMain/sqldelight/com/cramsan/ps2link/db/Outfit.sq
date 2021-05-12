@@ -10,12 +10,12 @@ CREATE TABLE Outfit (
     leaderCharacterId TEXT,
     leaderCharacterName TEXT,
     memberCount INTEGER,
-    timeCreated INTEGER as Instant,
+    timeCreated INTEGER AS Instant,
     worldId TEXT,
     worldName TEXT,
-    factionId TEXT as Faction NOT NULL,
-    namespace TEXT as Namespace NOT NULL,
-    lastUpdated INTEGER as Instant NOT NULL
+    factionId TEXT AS Faction NOT NULL,
+    namespace TEXT AS Namespace NOT NULL,
+    lastUpdated INTEGER AS Instant NOT NULL
 );
 
 getOutfit:

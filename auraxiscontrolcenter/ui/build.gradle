@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath packages.AndroidBuildGradle
-        classpath packages.KotlinGradle
+        classpath packages.KotlinComposeGradle
     }
 }
 
@@ -27,7 +27,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion versions_tools.KotlinVersion
+        kotlinCompilerVersion versions_tools.KotlinComposeVersion
         kotlinCompilerExtensionVersion versions_tools.JetpackCompose
     }
 

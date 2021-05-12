@@ -33,6 +33,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Instant
 import kotlin.coroutines.coroutineContext
+import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 
 class ModelProvider(
@@ -63,7 +64,7 @@ class ModelProvider(
             val now = Instant.fromEpochMilliseconds(currentTime)
             val lastSaveTime = Instant.fromEpochMilliseconds(lastSave)
 
-            if (now.minus(lastSaveTime).inDays > 30) {
+            if (now.minus(lastSaveTime).toDouble(DurationUnit.DAYS) > 30) {
                 return false
             }
 
