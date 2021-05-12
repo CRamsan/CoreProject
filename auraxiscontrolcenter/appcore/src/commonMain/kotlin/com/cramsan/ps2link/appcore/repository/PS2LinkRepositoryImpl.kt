@@ -1,39 +1,19 @@
 package com.cramsan.ps2link.appcore.repository
 
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
-import com.cramsan.ps2link.appcore.getThisMonth
-import com.cramsan.ps2link.appcore.getThisWeek
-import com.cramsan.ps2link.appcore.getToday
 import com.cramsan.ps2link.appcore.localizedName
-import com.cramsan.ps2link.appcore.setThisMonth
-import com.cramsan.ps2link.appcore.setThisWeek
-import com.cramsan.ps2link.appcore.setToday
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.toCoreModel
-import com.cramsan.ps2link.appcore.toStatItem
-import com.cramsan.ps2link.appcore.toWeaponEventType
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.KillEvent
-import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.ServerMetadata
 import com.cramsan.ps2link.core.models.StatItem
-import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
-import com.cramsan.ps2link.core.models.WeaponStatItem
-import com.cramsan.ps2link.core.models.toMedalType
-import com.cramsan.ps2link.db.models.Faction
-import com.cramsan.ps2link.network.models.content.CharacterEvent
 import com.cramsan.ps2link.network.models.content.World
-import com.cramsan.ps2link.network.models.content.character.Day
-import com.cramsan.ps2link.network.models.content.character.Month
-import com.cramsan.ps2link.network.models.content.character.Stat
-import com.cramsan.ps2link.network.models.content.character.Week
-import com.cramsan.ps2link.network.models.content.item.StatNameType
-import com.cramsan.ps2link.network.models.content.item.Weapon
 import com.cramsan.ps2link.network.models.content.response.server.PS2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -42,7 +22,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
 
@@ -129,12 +108,11 @@ class PS2LinkRepositoryImpl(
         namespace: Namespace,
         lang: CensusLang,
     ): List<KillEvent> {
-        val killListResponse = dbgCensus.getKillList(
+        return dbgCensus.getKillList(
             character_id = characterId,
             namespace = namespace,
             currentLang = lang,
-        )
-        return formatKillList(characterId, killListResponse, namespace)
+        ) ?: emptyList()
     }
 
     override suspend fun getStatList(
@@ -142,12 +120,11 @@ class PS2LinkRepositoryImpl(
         namespace: Namespace,
         currentLang: CensusLang,
     ): List<StatItem> {
-        val statListResponse = dbgCensus.getStatList(
+        return dbgCensus.getStatList(
             character_id = characterId,
             namespace = namespace,
             currentLang = currentLang,
-        )?.stat_history
-        return formatStats(statListResponse)
+        ) ?: emptyList()
     }
 
     override suspend fun getWeaponList(
@@ -156,8 +133,7 @@ class PS2LinkRepositoryImpl(
         lang: CensusLang,
     ): List<WeaponItem> {
         val character = getCharacter(characterId, namespace, lang) ?: return emptyList()
-        val weaponListResponse = dbgCensus.getWeaponList(characterId, namespace, CensusLang.EN)
-        return formatWeapons(weaponListResponse, character.faction, lang)
+        return dbgCensus.getWeaponList(characterId, character.faction, namespace, CensusLang.EN) ?: emptyList()
     }
 
     override suspend fun getServerList(lang: CensusLang): List<Server> = coroutineScope {
@@ -239,218 +215,6 @@ class PS2LinkRepositoryImpl(
         return dbgCensus.getMemberList(outfitId, namespace, currentLang) ?: emptyList()
     }
 
-    private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {
-        val server = when (world.name?.localizedName(currentLang)) {
-            "Ceres" -> ps2Metadata?.livePS4?.ceres
-            "Genudine" -> ps2Metadata?.livePS4?.genudine
-            "Cobalt" -> ps2Metadata?.live?.cobalt
-            "Connery" -> ps2Metadata?.live?.connery
-            "Emerald" -> ps2Metadata?.live?.emerald
-            "Miller" -> ps2Metadata?.live?.miller
-            else -> null
-        }
-
-        val population = server?.status.toCoreModel()
-        val status = world.state.toCoreModel()
-
-        return ServerMetadata(
-            status = status,
-            population = population,
-        )
-    }
-
-    private fun formatWeapons(weaponList: List<Weapon>?, faction: com.cramsan.ps2link.core.models.Faction, currentLang: CensusLang): List<WeaponItem> {
-        if (weaponList == null) {
-            return emptyList()
-        }
-
-        val weaponMap = weaponList.groupBy { it.item_id }
-        return weaponMap.map {
-            val weaponId = it.key ?: return@map null
-            val weaponStats = it.value
-
-            var weaponName: String? = null
-            var vehicleName: String? = null
-            var weaponUrl: String? = null
-            val statMapping = mutableMapOf<WeaponEventType, WeaponStatItem>()
-            for (stat in weaponStats) {
-                val weaponEventType = StatNameType.fromString(stat.stat_name)?.toWeaponEventType() ?: continue
-                weaponName = stat.item_id_join_item?.name?.localizedName(currentLang)
-                vehicleName = stat.vehicle_id_join_vehicle?.name?.localizedName(CensusLang.EN)
-                weaponUrl = if (stat.item_id_join_item != null) {
-                    stat.item_id_join_item?.image_path
-                } else if (stat.vehicle_id_join_vehicle != null) {
-                    stat.vehicle_id_join_vehicle?.image_path
-                } else {
-                    null
-                }
-
-                val statTR = if (faction != com.cramsan.ps2link.core.models.Faction.TR) {
-                    stat.value_tr.toLong()
-                } else {
-                    null
-                }
-                val statNC = if (faction != com.cramsan.ps2link.core.models.Faction.NC) {
-                    stat.value_nc.toLong()
-                } else {
-                    null
-                }
-                val statVS = if (faction != com.cramsan.ps2link.core.models.Faction.VS) {
-                    stat.value_vs.toLong()
-                } else {
-                    null
-                }
-                statMapping[weaponEventType] = WeaponStatItem(
-                    mapOf(
-                        com.cramsan.ps2link.core.models.Faction.TR to statTR,
-                        com.cramsan.ps2link.core.models.Faction.NC to statNC,
-                        com.cramsan.ps2link.core.models.Faction.VS to statVS,
-                    )
-                )
-            }
-
-            val kills = statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
-            WeaponItem(
-                weaponId = weaponId,
-                weaponName = weaponName,
-                vehicleName = vehicleName,
-                weaponImage = weaponUrl,
-                statMapping = statMapping,
-                medalType = kills?.toMedalType()
-            )
-        }.filterNotNull()
-    }
-
-    private fun formatStats(stats: List<Stat>?): List<StatItem> {
-        if (stats == null) {
-            return emptyList()
-        }
-
-        var kills: Stat? = null
-        var deaths: Stat? = null
-        var score: Stat? = null
-        var time: Stat? = null
-        for (stat in stats) {
-            if (stat.stat_name == "kills") {
-                kills = stat
-            } else if (stat.stat_name == "deaths") {
-                deaths = stat
-            } else if (stat.stat_name == "score") {
-                score = stat
-            } else if (stat.stat_name == "time") {
-                time = stat
-            }
-        }
-        val kdr = Stat()
-        deaths?.let {
-            if (deaths.all_time == "0") {
-                deaths.all_time = "1"
-            }
-            if (deaths.getToday() == 0f) {
-                deaths.setToday(1F)
-            }
-            if (deaths.getThisWeek() == 0f) {
-                deaths.setThisWeek(1F)
-            }
-            if (deaths.getThisMonth() == 0f) {
-                deaths.setThisMonth(1F)
-            }
-        }
-        kdr.day = Day()
-        kdr.week = Week()
-        kdr.month = Month()
-
-        kdr.stat_name = "kdr"
-        kdr.all_time = (
-            (kills?.all_time?.toFloatOrNull() ?: 0f) / (deaths?.all_time?.toFloatOrNull() ?: 1f)
-            ).toString()
-
-        kdr.setToday((kills?.getToday() ?: 0f) / (deaths?.getToday() ?: 1f))
-        kdr.setThisWeek((kills?.getThisWeek() ?: 0f) / (deaths?.getThisWeek() ?: 1f))
-        kdr.setThisMonth((kills?.getThisMonth() ?: 0f) / (deaths?.getThisMonth() ?: 1f))
-
-        val results = mutableListOf<Stat>()
-        results.add(kdr)
-
-        val sph = Stat()
-        time?.let {
-            if (time.all_time == "0") {
-                time.all_time = "1"
-            }
-            if (time.getToday() == 0f) {
-                time.setToday(1F)
-            }
-            if (time.getThisWeek() == 0f) {
-                time.setThisWeek(1F)
-            }
-            if (time.getThisMonth() == 0f) {
-                time.setThisMonth(1F)
-            }
-        }
-        sph.day = Day()
-        sph.week = Week()
-        sph.month = Month()
-
-        // TODO: Replace this with a resource
-        sph.stat_name = "Score/Hour"
-        sph.all_time = (
-            (score?.all_time?.toFloatOrNull() ?: 0f) / ((time?.all_time?.toFloatOrNull() ?: 1f) / 3600f)
-            ).toString()
-        sph.setToday((score?.getToday() ?: 0f) / ((time?.getToday() ?: 3600f) / 3600f))
-        sph.setThisWeek((score?.getThisWeek() ?: 0f) / ((time?.getThisWeek() ?: 3600f) / 3600f))
-        sph.setThisMonth((score?.getThisMonth() ?: 0f) / ((time?.getThisMonth() ?: 3600f) / 3600f))
-        results.add(sph)
-
-        results.addAll(stats)
-        return results.map {
-            it.toStatItem()
-        }
-    }
-
-    fun formatKillList(characterId: String, characterEventList: List<CharacterEvent>?, namespace: Namespace): List<KillEvent> {
-        if (characterEventList == null) {
-            return emptyList()
-        }
-
-        return characterEventList.map {
-            val weaponName = it.weapon_name
-            val attackerName: String?
-            val time = it.timestamp?.toLong()?.let { Instant.fromEpochSeconds(it) }
-            val killType: KillType
-            var eventCharacterId: String? = null
-            val faction: Faction = Faction.fromString(it.attacker?.faction_id)
-
-            if (it.attacker_character_id == characterId) {
-                attackerName = it.character?.name?.first
-                it.important_character_id = it.character_id
-                if (it.character_id == characterId) {
-                    killType = KillType.SUICIDE
-                } else {
-                    killType = KillType.KILL
-                    eventCharacterId = it.character_id
-                }
-            } else if (it.character_id == characterId) {
-                killType = KillType.KILLEDBY
-                attackerName = it.attacker?.name?.first
-                eventCharacterId = it.attacker_character_id
-                it.important_character_id = it.attacker_character_id
-            } else {
-                killType = KillType.UNKNOWN
-                attackerName = null
-            }
-
-            KillEvent(
-                characterId = eventCharacterId,
-                namespace = namespace,
-                killType = killType,
-                faction = faction.toCoreModel(),
-                attacker = attackerName,
-                time = time,
-                weaponName = weaponName,
-            )
-        }
-    }
-
     @OptIn(ExperimentalTime::class)
     private fun isCharacterValid(character: Character?): Boolean {
         character?.lastUpdate.let {
@@ -477,4 +241,24 @@ class PS2LinkRepositoryImpl(
         @OptIn(ExperimentalTime::class)
         val EXPIRATION_TIME = 1.minutes
     }
+}
+
+private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {
+    val server = when (world.name?.localizedName(currentLang)) {
+        "Ceres" -> ps2Metadata?.livePS4?.ceres
+        "Genudine" -> ps2Metadata?.livePS4?.genudine
+        "Cobalt" -> ps2Metadata?.live?.cobalt
+        "Connery" -> ps2Metadata?.live?.connery
+        "Emerald" -> ps2Metadata?.live?.emerald
+        "Miller" -> ps2Metadata?.live?.miller
+        else -> null
+    }
+
+    val population = server?.status.toCoreModel()
+    val status = world.state.toCoreModel()
+
+    return ServerMetadata(
+        status = status,
+        population = population,
+    )
 }

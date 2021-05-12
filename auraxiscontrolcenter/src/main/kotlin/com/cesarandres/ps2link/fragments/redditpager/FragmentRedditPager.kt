@@ -1,10 +1,8 @@
 package com.cesarandres.ps2link.fragments.redditpager
 
 import androidx.fragment.app.viewModels
-import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2FragmentPager
 import com.cramsan.framework.core.NoopViewModel
-import com.cramsan.framework.core.requireAppCompatActivity
 import com.cramsan.ps2link.core.models.RedditPage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,11 +14,6 @@ class FragmentRedditPager : BasePS2FragmentPager<NoopViewModel>() {
 
     override val viewModel: NoopViewModel by viewModels()
     override val logTag = "FragmentRedditPager"
-
-    override fun onResume() {
-        super.onResume()
-        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_reddit)
-    }
 
     override fun itemCount() = RedditPage.values().size
 

@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -44,10 +43,5 @@ class FragmentComposeOutfitList : BaseComposePS2Fragment<OutfitListViewModel>() 
             }
         }
         return true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_outfits)
     }
 }

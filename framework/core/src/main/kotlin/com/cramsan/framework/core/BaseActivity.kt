@@ -13,13 +13,15 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
     abstract val toolbarViewId: Int?
     abstract val logTag: String
 
+    var toolbar: MaterialToolbar? = null
+
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logD(logTag, "onCreate")
         setContentView(contentViewLayout)
 
-        val toolbar = toolbarViewId?.let { findViewById<MaterialToolbar>(it) }
+        toolbar = toolbarViewId?.let { findViewById(it) }
         toolbar?.apply {
             setSupportActionBar(this)
         }

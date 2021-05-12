@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
-import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Inject
@@ -36,10 +34,5 @@ class FragmentComposeTwitterList : BaseComposePS2Fragment<TwitterListViewModel>(
             prettyTime = prettyTime,
             eventHandler = viewModel,
         )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_twitter)
     }
 }

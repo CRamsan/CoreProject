@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.cesarandres.ps2link.fragments.mainmenu.FragmentComposeMainMenu"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_main_menu">
+        android:label="@string/app_name">
         <action
             android:id="@+id/action_mainMenuFragment_to_fragmentProfileList"
             app:destination="@id/fragmentProfileList"
@@ -70,7 +69,7 @@
     <fragment
         android:id="@+id/fragmentAddProfile"
         android:name="com.cesarandres.ps2link.fragments.addprofile.FragmentComposeProfileAdd"
-        android:label="FragmentAddProfile">
+        android:label="@string/title_profiles">
         <action
             android:id="@+id/action_fragmentAddProfile_to_fragmentProfile"
             app:destination="@id/fragmentProfilePager"
@@ -82,8 +81,7 @@
     <fragment
         android:id="@+id/fragmentAbout"
         android:name="com.cesarandres.ps2link.fragments.about.FragmentComposeAbout"
-        android:label="FragmentAbout"
-        tools:layout="@layout/fragment_about"
+        android:label="@string/title_about"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -91,7 +89,7 @@
     <fragment
         android:id="@+id/fragmentReddit"
         android:name="com.cesarandres.ps2link.fragments.redditpager.FragmentRedditPager"
-        android:label="FragmentReddit"
+        android:label="@string/title_reddit"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -99,8 +97,7 @@
     <fragment
         android:id="@+id/fragmentTwitter"
         android:name="com.cesarandres.ps2link.fragments.twitter.FragmentComposeTwitterList"
-        android:label="FragmentTwitter"
-        tools:layout="@layout/fragment_twitter"
+        android:label="@string/title_twitter"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -108,8 +105,7 @@
     <fragment
         android:id="@+id/fragmentAddOutfit"
         android:name="com.cesarandres.ps2link.fragments.addoutfit.FragmentComposeOutfitAdd"
-        android:label="FragmentAddOutfit"
-        tools:layout="@layout/fragment_add_outfit">
+        android:label="@string/title_outfits">
         <action
             android:id="@+id/action_fragmentAddOutfit_to_fragmentOutfitPager"
             app:destination="@id/fragmentOutfitPager"
@@ -120,9 +116,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentProfilePager"
-        android:name="com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePager"
-        android:label="FragmentProfilePager"
-        tools:layout="@layout/fragment_profile_pager">
+        android:name="com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePager">
         <action
             android:id="@+id/action_fragmentProfile_self"
             app:destination="@id/fragmentProfilePager"
@@ -147,8 +141,7 @@
     <fragment
         android:id="@+id/fragmentProfileList"
         android:name="com.cesarandres.ps2link.fragments.profilelist.FragmentComposeProfileList"
-        android:label="FragmentProfileList"
-        tools:layout="@layout/fragment_profile_list">
+        android:label="@string/title_profiles">
         <action
             android:id="@+id/action_fragmentProfileList_to_fragmentProfile"
             app:destination="@id/fragmentProfilePager"
@@ -167,8 +160,7 @@
     <fragment
         android:id="@+id/fragmentOutfitList"
         android:name="com.cesarandres.ps2link.fragments.outfitlist.FragmentComposeOutfitList"
-        android:label="FragmentOutfitList"
-        tools:layout="@layout/fragment_outfit_list">
+        android:label="@string/title_outfits">
         <action
             android:id="@+id/action_fragmentOutfitList_to_fragmentAddOutfit"
             app:destination="@id/fragmentAddOutfit"
@@ -186,9 +178,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentOutfitPager"
-        android:name="com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPager"
-        android:label="FragmentOutfitPager"
-        tools:layout="@layout/fragment_pager" >
+        android:name="com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPager">
         <action
             android:id="@+id/action_fragmentOutfitPager_to_fragmentProfile"
             app:destination="@id/fragmentProfilePager"
@@ -206,7 +196,6 @@
     <fragment
         android:id="@+id/fragmentServerList"
         android:name="com.cesarandres.ps2link.fragments.serverlist.FragmentComposeServerList"
-        android:label="FragmentServerList"
-        tools:layout="@layout/fragment_server_list" />
+        android:label="@string/title_servers" />
 
 </navigation>

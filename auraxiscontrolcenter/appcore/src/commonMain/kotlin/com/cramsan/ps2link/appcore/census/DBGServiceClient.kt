@@ -2,13 +2,14 @@ package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
-import com.cramsan.ps2link.network.models.content.CharacterEvent
+import com.cramsan.ps2link.core.models.StatItem
+import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.WorldEvent
-import com.cramsan.ps2link.network.models.content.character.Stats
-import com.cramsan.ps2link.network.models.content.item.Weapon
 import com.cramsan.ps2link.network.models.content.response.server.PS2
 
 interface DBGServiceClient {
@@ -37,16 +38,17 @@ interface DBGServiceClient {
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<CharacterEvent>?
+    ): List<KillEvent>?
 
     /**
      * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/characters_weapon_stat_by_faction/?character_id=5428010618041058369&c%3Ajoin=item%5Eshow%3Aimage_path%27name.en&c%3Ajoin=vehicle%5Eshow%3Aimage_path%27name.en&c%3Alimit=10000&c%3Alang=en
      */
     suspend fun getWeaponList(
         character_id: String?,
+        faction: Faction,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Weapon>?
+    ): List<WeaponItem>?
 
     suspend fun getOutfitList(
         outfitTag: String,
@@ -84,7 +86,7 @@ interface DBGServiceClient {
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): Stats?
+    ): List<StatItem>?
 
     suspend fun getMembersOnline(
         outfitId: String,

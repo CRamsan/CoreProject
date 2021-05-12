@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cramsan.framework.core.requireAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -58,10 +57,5 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
             }
         }
         return true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireAppCompatActivity().supportActionBar?.title = getString(R.string.title_profiles)
     }
 }
