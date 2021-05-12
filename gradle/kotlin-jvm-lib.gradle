@@ -17,6 +17,10 @@ compileKotlin {
     kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
 }
 
+compileTestKotlin {
+    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
+}
+
 // Enable outputting the results of the tests
 test {
     testLogging {
