@@ -81,11 +81,13 @@ task copyAndroidNatives {
     }
 }
 
+/* Disable until we can verify that this is fixed on the final release of Android Gradle Plugin
 tasks.whenTaskAdded { packageTask ->
     if (packageTask.name.contains("package")) {
         packageTask.dependsOn 'copyAndroidNatives'
     }
 }
+ */
 
 task run(type: Exec) {
     def path

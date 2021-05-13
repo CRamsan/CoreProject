@@ -40,4 +40,6 @@ tasks.register("release") {
     dependsOn ':petproject:webservice:release'
     dependsOn ':petproject:azurefunction:release'
     dependsOn ':auraxiscontrolcenter:release'
+    dependsOn ':doom:game:desktop:release'
+    dependsOn ':doom:game:android:release'
 }
