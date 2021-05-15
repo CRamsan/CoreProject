@@ -20,6 +20,16 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+- name: ORG_GRADLE_PROJECT_ps2linkConsumerSecret
+  value: "test"
+- name: ORG_GRADLE_PROJECT_ps2linkConsumerKey
+  value: "test"
+- name: ORG_GRADLE_PROJECT_ps2linkAccessToken
+  value: "test"
+- name: ORG_GRADLE_PROJECT_ps2linkAccessTokenSecret
+  value: "test"
+
 steps:
 - task: android-manifest-version@1
   inputs:
