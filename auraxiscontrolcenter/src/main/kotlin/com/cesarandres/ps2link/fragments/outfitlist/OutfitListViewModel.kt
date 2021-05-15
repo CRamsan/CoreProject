@@ -7,10 +7,13 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cesarandres.ps2link.fragments.OpenProfileSearch
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +36,11 @@ class OutfitListViewModel @Inject constructor(
         get() = "OutfitListViewModel"
 
     // State
-    private val _outfitList = pS2LinkRepository.getAllOutfitsAsFlow()
+    private val _outfitList = pS2LinkRepository.getAllOutfitsAsFlow().map {
+        assertIsBackgroundThread()
+        it.sortedBy { outfit -> outfit.name?.toLowerCase() }
+    }.flowOn(dispatcherProvider.ioDispatcher())
+
     val outfitList = _outfitList.asLiveData()
 
     override fun onSearchOutfitClick() {

@@ -82,7 +82,9 @@ class OutfitAddViewModel @Inject constructor(
             delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             val outfits = pS2LinkRepository.searchForOutfits(tag, name, lang)
-            _outfitList.value = outfits
+            _outfitList.value = outfits.sortedBy {
+                it.name?.toLowerCase()
+            }
             loadingCompleted()
         }
     }

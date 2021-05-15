@@ -21,8 +21,8 @@ fun OutfitListCompose(
         LazyColumn {
             items(outfitItems) {
                 OutfitItem(
-                    name = it.name ?: "",
-                    tag = it.tag ?: "",
+                    name = it.name,
+                    tag = it.tag,
                     memberCount = it.memberCount,
                     namespace = it.namespace,
                     onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) }

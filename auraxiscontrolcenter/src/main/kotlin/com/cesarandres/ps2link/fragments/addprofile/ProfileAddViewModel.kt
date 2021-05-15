@@ -60,7 +60,7 @@ class ProfileAddViewModel @Inject constructor(
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             val profiles = pS2LinkRepository.searchForCharacter(searchField, lang)
             _profileList.value = profiles.sortedBy {
-                it.name
+                it.name?.toLowerCase()
             }
             loadingCompleted()
         }

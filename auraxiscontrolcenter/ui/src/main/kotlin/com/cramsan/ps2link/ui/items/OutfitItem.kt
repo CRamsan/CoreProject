@@ -23,8 +23,8 @@ import com.cramsan.ps2link.ui.widgets.NamespaceIcon
 @Composable
 fun OutfitItem(
     modifier: Modifier = Modifier,
-    tag: String,
-    name: String,
+    tag: String? = null,
+    name: String? = null,
     memberCount: Int,
     namespace: Namespace,
     onClick: () -> Unit = {},
@@ -38,11 +38,14 @@ fun OutfitItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = name,
+                    text = name ?: stringResource(R.string.text_unknown),
                     style = MaterialTheme.typography.body1,
                 )
                 Row {
-                    Text(tag, modifier = Modifier.weight(1f))
+                    Text(
+                        text = stringResource(R.string.text_outfit_tag, tag ?: stringResource(R.string.text_unknown)),
+                        modifier = Modifier.weight(1f),
+                    )
                     val args = memberCount.toString()
                     Text(stringResource(R.string.text_outfit_members, args), modifier = Modifier.weight(1f))
                 }
