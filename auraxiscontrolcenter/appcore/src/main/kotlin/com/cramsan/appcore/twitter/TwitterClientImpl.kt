@@ -14,13 +14,12 @@ import java.util.ArrayList
  * This class is used to retrieve tweets from the requested users. The public
  * methods will take care of configuring the connection with the API
  */
-class TwitterClientImpl : TwitterClient {
-
-    // TODO: Remove these secrets from the code.
-    private val CONSUMER_SECRET = ""
-    private val CONSUMER_KEY = ""
-    private val ACCESS_TOKEN = ""
-    private val ACCESS_TOKEN_SECRET = ""
+class TwitterClientImpl(
+    private val CONSUMER_SECRET: String,
+    private val CONSUMER_KEY: String,
+    private val ACCESS_TOKEN: String,
+    private val ACCESS_TOKEN_SECRET: String,
+) : TwitterClient {
 
     /**
      * @param users an array with all the users to retrieve tweets from

@@ -14,7 +14,6 @@ import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel

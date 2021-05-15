@@ -2,6 +2,10 @@ package com.cesarandres.ps2link
 
 import android.content.Context
 import com.cramsan.appcore.twitter.TwitterClientImpl
+import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
+import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN_SECRET
+import com.cramsan.appcore.twitter.TwitterModuleConstants.CONSUMER_KEY
+import com.cramsan.appcore.twitter.TwitterModuleConstants.CONSUMER_SECRET
 import com.cramsan.framework.assert.AssertUtil
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.assert.implementation.AssertUtilImpl
@@ -62,6 +66,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
 import org.ocpsoft.prettytime.PrettyTime
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -231,8 +236,34 @@ object PS2ApplicationModule {
     fun provideDbgCensus(): DBGCensus = DBGCensus()
 
     @Provides
+    @Named(CONSUMER_SECRET)
+    fun provideTwitterConsumerSecret(): String = BuildConfig.CONSUMER_SECRET
+
+    @Provides
+    @Named(CONSUMER_KEY)
+    fun provideTwitterConsumerKey(): String = BuildConfig.CONSUMER_KEY
+
+    @Provides
+    @Named(ACCESS_TOKEN)
+    fun provideTwitterAccessToken(): String = BuildConfig.ACCESS_TOKEN
+
+    @Provides
+    @Named(ACCESS_TOKEN_SECRET)
+    fun provideTwitterAccessTokenSecret(): String = BuildConfig.ACCESS_TOKEN_SECRET
+
+    @Provides
     @Singleton
-    fun provideTwitterClient(): TwitterClient = TwitterClientImpl()
+    fun provideTwitterClient(
+        @Named(CONSUMER_SECRET) consumerSecret: String,
+        @Named(CONSUMER_KEY) consumerKey: String,
+        @Named(ACCESS_TOKEN) accessToken: String,
+        @Named(ACCESS_TOKEN_SECRET) accessTokenSecret: String,
+    ): TwitterClient = TwitterClientImpl(
+        consumerSecret,
+        consumerKey,
+        accessToken,
+        accessTokenSecret,
+    )
 
     @Provides
     @Singleton

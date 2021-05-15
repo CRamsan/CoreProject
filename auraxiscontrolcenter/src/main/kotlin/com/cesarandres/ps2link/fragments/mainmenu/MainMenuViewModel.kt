@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cesarandres.ps2link.base.BasePS2ViewModel

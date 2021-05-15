@@ -17,7 +17,12 @@ apply from: "$rootDir/gradle/app.gradle"
 android {
     defaultConfig {
         applicationId "com.cesarandres.ps2link"
-        versionName "5.4.0"
+        versionName "5.5.0"
+
+        buildConfigField("String", "CONSUMER_SECRET", findProperty("ps2linkConsumerSecret") ?: "")
+        buildConfigField("String", "CONSUMER_KEY", findProperty("ps2linkConsumerKey") ?: "")
+        buildConfigField("String", "ACCESS_TOKEN", findProperty("ps2linkAccessToken") ?: "")
+        buildConfigField("String", "ACCESS_TOKEN_SECRET", findProperty("ps2linkAccessTokenSecret") ?: "")
     }
 
     buildFeatures {

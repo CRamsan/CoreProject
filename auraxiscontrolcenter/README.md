@@ -1,6 +1,17 @@
 # Auraxis Control Center
 This is the source code for the Auraxis Control Center
 
+In order to build the application you will need to provide the following credentials. The recommended approach is to use your gradle.properties file. This is the file located in `~/.gradle/gradle.properties` **NOT** the one checked into the repo.
+The following properties are required:
+```
+  ps2linkConsumerSecret="..."
+  ps2linkConsumerKey="..."
+  ps2linkAccessToken="..."
+  ps2linkAccessTokenSecret="..."
+```
+
+Now you can compile the app with `./gradlew auraxiscontrolcenter:release`
+
 # Build Status
 
 [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
