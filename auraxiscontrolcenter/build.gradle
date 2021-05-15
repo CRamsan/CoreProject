@@ -19,10 +19,14 @@ android {
         applicationId "com.cesarandres.ps2link"
         versionName "5.5.0"
 
-        buildConfigField("String", "CONSUMER_SECRET", findProperty("ps2linkConsumerSecret") ?: "")
-        buildConfigField("String", "CONSUMER_KEY", findProperty("ps2linkConsumerKey") ?: "")
-        buildConfigField("String", "ACCESS_TOKEN", findProperty("ps2linkAccessToken") ?: "")
-        buildConfigField("String", "ACCESS_TOKEN_SECRET", findProperty("ps2linkAccessTokenSecret") ?: "")
+        def consumerSecret = findProperty("ps2linkConsumerSecret") ?: ""
+        def consumerKey = findProperty("ps2linkConsumerKey") ?: ""
+        def accessToken = findProperty("ps2linkAccessToken") ?: ""
+        def accessTokenSecret = findProperty("ps2linkAccessTokenSecret") ?: ""
+        buildConfigField("String", "CONSUMER_SECRET", "\"${consumerSecret}\"")
+        buildConfigField("String", "CONSUMER_KEY", "\"${consumerKey}\"")
+        buildConfigField("String", "ACCESS_TOKEN", "\"${accessToken}\"")
+        buildConfigField("String", "ACCESS_TOKEN_SECRET", "\"${accessTokenSecret}\"")
     }
 
     buildFeatures {
