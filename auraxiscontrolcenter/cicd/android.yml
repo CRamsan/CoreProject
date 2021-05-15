@@ -21,13 +21,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- name: ORG_GRADLE_PROJECT_ps2linkConsumerSecret
+- name: ps2linkConsumerSecret
   value: "test"
-- name: ORG_GRADLE_PROJECT_ps2linkConsumerKey
+- name: ps2linkConsumerKey
   value: "test"
-- name: ORG_GRADLE_PROJECT_ps2linkAccessToken
+- name: ps2linkAccessToken
   value: "test"
-- name: ORG_GRADLE_PROJECT_ps2linkAccessTokenSecret
+- name: ps2linkAccessTokenSecret
   value: "test"
 
 steps:
@@ -42,6 +42,7 @@ steps:
     
 - task: Gradle@2
   inputs:
+    options: '-Pps2linkConsumerSecret=$(ps2linkConsumerSecret) -Pps2linkConsumerKey=$(ps2linkConsumerKey) -Pps2linkAccessToken=$(ps2linkAccessToken) -Pps2linkAccessTokenSecret=$(ps2linkAccessTokenSecret)'
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
