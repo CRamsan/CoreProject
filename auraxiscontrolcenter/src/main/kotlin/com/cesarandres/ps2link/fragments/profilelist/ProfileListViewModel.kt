@@ -7,10 +7,14 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cesarandres.ps2link.fragments.OpenProfileSearch
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +37,10 @@ class ProfileListViewModel @Inject constructor(
         get() = "ProfileListViewModel"
 
     // State
-    private val _profileList = pS2LinkRepository.getAllCharactersAsFlow()
+    private val _profileList = pS2LinkRepository.getAllCharactersAsFlow().map {
+        assertIsBackgroundThread()
+        it.sortedBy { character -> character.name?.toLowerCase() }
+    }.flowOn(dispatcherProvider.ioDispatcher())
     val profileList = _profileList.asLiveData()
 
     override fun onSearchProfileClick() {

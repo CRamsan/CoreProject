@@ -52,10 +52,6 @@ class MainMenuViewModel @Inject constructor(
     private val _preferredProfileId = MutableStateFlow<String?>(null)
     private val _preferredOutfitId = MutableStateFlow<String?>(null)
 
-    init {
-        Log.d("Test", "adsf")
-    }
-
     val preferredProfile: Flow<Character?> = _preferredProfileId.transform { profileId ->
         if (profileId.isNullOrBlank()) {
             emit(null)

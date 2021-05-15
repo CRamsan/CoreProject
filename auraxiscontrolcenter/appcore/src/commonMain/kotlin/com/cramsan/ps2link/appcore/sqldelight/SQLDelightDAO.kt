@@ -232,7 +232,7 @@ private fun Character.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Ch
         outfitId = outfit?.id,
         outfitName = outfit?.name,
         namespace = namespace.toDBModel(),
-        cached = true,
+        cached = cached,
         lastUpdated = lastUpdated,
     )
 }
