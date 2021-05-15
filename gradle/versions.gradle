@@ -33,7 +33,7 @@ def versions_packages = [
     AzureFunctionsJavaLibrary : "1.4.2",
     Coil : "1.2.1",
     ConstraintLayout : "2.0.4",
-    Coroutines : "1.4.3",
+    Coroutines : versions_tools.KotlinVersion,
     Espresso : "3.3.0",
     Firebase : "17.2.3",
     FirebaseCrashlytics : "2.0.0-beta02",
