@@ -20,16 +20,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-- name: ps2linkConsumerSecret
-  value: "test"
-- name: ps2linkConsumerKey
-  value: "test"
-- name: ps2linkAccessToken
-  value: "test"
-- name: ps2linkAccessTokenSecret
-  value: "test"
-
 steps:
 - task: android-manifest-version@1
   inputs:
