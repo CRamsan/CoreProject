@@ -1,6 +1,7 @@
 package com.cesarandres.ps2link
 
 import android.content.Context
+import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_CENTER_ID
 import com.cramsan.appcore.twitter.TwitterClientImpl
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN_SECRET
@@ -250,6 +251,10 @@ object PS2ApplicationModule {
     @Provides
     @Named(ACCESS_TOKEN_SECRET)
     fun provideTwitterAccessTokenSecret(): String = BuildConfig.ACCESS_TOKEN_SECRET
+
+    @Provides
+    @Named(APP_CENTER_ID)
+    fun provideAppCenterId(): String = BuildConfig.APP_CENTER_ID
 
     @Provides
     @Singleton
