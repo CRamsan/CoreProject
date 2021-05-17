@@ -15,6 +15,7 @@ CREATE TABLE Outfit (
     worldName TEXT,
     factionId TEXT AS Faction NOT NULL,
     namespace TEXT AS Namespace NOT NULL,
+    cached INTEGER AS Boolean NOT NULL,
     lastUpdated INTEGER AS Instant NOT NULL
 );
 
@@ -37,8 +38,9 @@ INSERT OR REPLACE INTO Outfit(
     worldName,
     factionId,
     namespace,
+    cached,
     lastUpdated
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertOutfitInstance:
 INSERT OR REPLACE INTO Outfit(
@@ -53,6 +55,7 @@ INSERT OR REPLACE INTO Outfit(
     worldName,
     factionId,
     namespace,
+    cached,
     lastUpdated
 ) VALUES ?;
 

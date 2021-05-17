@@ -173,6 +173,7 @@ class SQLDelightDAO(
         worldName: String?,
         factionId: Faction,
         namespace: Namespace,
+        cached: Boolean,
         lastUpdated: Instant,
     ) {
         assertIsBackgroundThread()
@@ -188,7 +189,8 @@ class SQLDelightDAO(
             worldName,
             factionId.toDBModel(),
             namespace.toDBModel(),
-            lastUpdated
+            cached,
+            lastUpdated,
         )
     }
 
@@ -251,6 +253,7 @@ private fun Outfit.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Outfi
         worldName = server?.serverName,
         factionId = faction.toDBModel(),
         namespace = namespace.toDBModel(),
+        cached = cached,
         lastUpdated = lastUpdated,
     )
 }
@@ -274,6 +277,7 @@ private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): Outfit {
         memberCount = memberCount?.toInt() ?: 0,
         namespace = namespace.toCoreModel(),
         lastUpdate = lastUpdated,
+        cached = cached,
     )
 }
 
@@ -293,6 +297,7 @@ private fun com.cramsan.ps2link.db.Character.toCoreModel(): Character {
             id = it,
             name = outfitName,
             namespace = namespace.toCoreModel(),
+            cached = false,
         )
     }
     return Character(

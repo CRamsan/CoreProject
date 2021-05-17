@@ -76,7 +76,7 @@ class MainMenuViewModel @Inject constructor(
             return@transform
         }
 
-        emit(Outfit(outfitId))
+        emit(Outfit(outfitId, cached = false))
         val namespace = ps2Settings.getPreferredOutfitNamespace()
 
         assertNotNull(namespace, logTag, "Namespace cannot be null")

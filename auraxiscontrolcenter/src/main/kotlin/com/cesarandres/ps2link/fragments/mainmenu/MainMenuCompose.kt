@@ -153,6 +153,7 @@ fun NormalButtonPreview() {
                 timeCreated = null,
                 leader = null,
                 memberCount = 100,
+                cached = false,
                 namespace = Namespace.PS2PC,
             ),
             eventHandler = object : MainMenuEventHandler {

@@ -11,9 +11,11 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -36,10 +38,38 @@ class ProfilePagerViewModel @Inject constructor(
         get() = "ProfilePagerViewModel"
 
     // State
-    private val _profile: MutableStateFlow<Character?> = MutableStateFlow(null)
-    val profile = _profile.asStateFlow()
-    private val _preferredProfile: MutableStateFlow<String?> = MutableStateFlow(null)
-    val preferredProfile = _preferredProfile.asStateFlow()
+    private val profile: Flow<Character?> by lazy {
+        pS2LinkRepository.getCharacterAsFlow(characterId, namespace).onEach {
+            if (it == null) {
+                _displayAddCharacter.value = false
+                _displayRemoveCharacter.value = false
+                _displayPreferProfile.value = false
+                _displayUnpreferProfile.value = false
+                return@onEach
+            }
+
+            if (it.cached) {
+                _displayAddCharacter.value = false
+                _displayRemoveCharacter.value = true
+            } else {
+                _displayAddCharacter.value = true
+                _displayRemoveCharacter.value = false
+            }
+            _profile = it
+            refreshPreferredCharacterState()
+        }
+    }
+    private val _displayAddCharacter = MutableStateFlow(false)
+    private val _displayRemoveCharacter = MutableStateFlow(false)
+    private val _displayPreferProfile = MutableStateFlow(false)
+    private val _displayUnpreferProfile = MutableStateFlow(false)
+    val title: Flow<String?> by lazy { profile.map { it?.name } }
+    val displayAddCharacter = _displayAddCharacter.asStateFlow()
+    val displayRemoveCharacter = _displayRemoveCharacter.asStateFlow()
+    val displayPreferProfile = _displayPreferProfile.asStateFlow()
+    val displayUnpreferProfile = _displayUnpreferProfile.asStateFlow()
+
+    private var _profile: Character? = null
     private lateinit var characterId: String
     private lateinit var namespace: Namespace
 
@@ -51,10 +81,6 @@ class ProfilePagerViewModel @Inject constructor(
         }
         this.characterId = characterId
         this.namespace = namespace
-        ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            _profile.value = pS2LinkRepository.getCharacter(characterId, namespace, lang, false)
-        }
     }
 
     suspend fun addCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
@@ -65,7 +91,6 @@ class ProfilePagerViewModel @Inject constructor(
             return@withContext
         }
         pS2LinkRepository.saveCharacter(character.copy(cached = true))
-        _profile.value = _profile.value?.copy(cached = true)
     }
 
     suspend fun removeCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
@@ -76,18 +101,30 @@ class ProfilePagerViewModel @Inject constructor(
             return@withContext
         }
         pS2LinkRepository.saveCharacter(character.copy(cached = false))
-        _profile.value = _profile.value?.copy(cached = false)
     }
 
     suspend fun pinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
         ps2Settings.updatePreferredProfileNamespace(namespace)
         ps2Settings.updatePreferredCharacterId(characterId)
-        _preferredProfile.value = characterId
+        refreshPreferredCharacterState()
     }
 
     suspend fun unpinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
         ps2Settings.updatePreferredProfileNamespace(null)
         ps2Settings.updatePreferredCharacterId(null)
-        _preferredProfile.value = null
+        refreshPreferredCharacterState()
+    }
+
+    private suspend fun refreshPreferredCharacterState() {
+        val preferredNamespace = ps2Settings.getPreferredProfileNamespace()
+        val preferredProfile = ps2Settings.getPreferredCharacterId()
+
+        if (preferredNamespace == _profile?.namespace && _profile?.characterId == preferredProfile) {
+            _displayPreferProfile.value = false
+            _displayUnpreferProfile.value = true
+        } else {
+            _displayPreferProfile.value = true
+            _displayUnpreferProfile.value = false
+        }
     }
 }

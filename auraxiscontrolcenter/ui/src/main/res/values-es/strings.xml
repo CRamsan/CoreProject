@@ -78,7 +78,7 @@
     <string name="text_track_profile">Agregar</string>
     <string name="text_untrack_profile">Remover</string>
     <string name="text_star_profile">Preferido</string>
-    <string name="text_unstar_profile">Remove como preferido</string>
+    <string name="text_unstar_profile">Remueve como preferido</string>
     <string name="text_killer_faction">Facción del Asesino</string>
     <string name="text_class">Clase</string>
 

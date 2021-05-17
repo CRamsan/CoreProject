@@ -82,6 +82,7 @@ interface DbgDAO {
         worldName: String?,
         factionId: Faction,
         namespace: Namespace,
+        cached: Boolean,
         lastUpdated: Instant,
     )
 

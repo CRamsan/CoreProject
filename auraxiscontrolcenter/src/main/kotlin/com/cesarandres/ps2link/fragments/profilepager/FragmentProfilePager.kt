@@ -49,9 +49,21 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
         namespace = args.namespace
 
         viewModel.setUp(profileId, namespace)
-        viewModel.profile.asLiveData().observe(viewLifecycleOwner) {
-            val title = it?.name ?: getString(R.string.text_unknown)
+        viewModel.title.asLiveData().observe(viewLifecycleOwner) {
+            val title = it ?: getString(R.string.text_unknown)
             requireAppCompatActivity().supportActionBar?.title = title
+        }
+        viewModel.displayAddCharacter.asLiveData().observe(viewLifecycleOwner) {
+            requireActivity().invalidateOptionsMenu()
+        }
+        viewModel.displayPreferProfile.asLiveData().observe(viewLifecycleOwner) {
+            requireActivity().invalidateOptionsMenu()
+        }
+        viewModel.displayRemoveCharacter.asLiveData().observe(viewLifecycleOwner) {
+            requireActivity().invalidateOptionsMenu()
+        }
+        viewModel.displayUnpreferProfile.asLiveData().observe(viewLifecycleOwner) {
+            requireActivity().invalidateOptionsMenu()
         }
 
         return view
@@ -74,19 +86,14 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.profile_menu, menu)
-        val preferredCharacter = viewModel.preferredProfile.value
-        val character = viewModel.profile.value
-        character?.let {
-            val addButton = menu.findItem(R.id.action_add)
-            val removeButton = menu.findItem(R.id.action_remove)
-            addButton.isVisible = !it.cached
-            removeButton.isVisible = it.cached
-        }
-
+        val addButton = menu.findItem(R.id.action_add)
+        val removeButton = menu.findItem(R.id.action_remove)
         val starButton = menu.findItem(R.id.action_star)
         val unstarButton = menu.findItem(R.id.action_unstar)
-        starButton.isVisible = preferredCharacter != character?.characterId
-        unstarButton.isVisible = preferredCharacter == character?.characterId
+        addButton.isVisible = viewModel.displayAddCharacter.value
+        removeButton.isVisible = viewModel.displayRemoveCharacter.value
+        starButton.isVisible = viewModel.displayPreferProfile.value
+        unstarButton.isVisible = viewModel.displayUnpreferProfile.value
         return
     }
 
@@ -106,7 +113,6 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
                     viewModel.unpinCharacter()
                 }
             }
-            requireActivity().invalidateOptionsMenu()
         }
         return true
     }

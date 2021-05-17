@@ -470,6 +470,7 @@ fun Outfit.toCoreModel(
         },
         memberCount = member_count,
         namespace = namespace,
+        cached = false,
         lastUpdate = lastUpdate,
     )
 }

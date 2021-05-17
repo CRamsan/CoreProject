@@ -11,7 +11,12 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +38,38 @@ class OutfitPagerViewModel @Inject constructor(
         get() = "OutfitPagerViewModel"
 
     // State
-    private var outfit: Outfit? = null
+    private val profile: Flow<Outfit?> by lazy {
+        pS2LinkRepository.getOutfitAsFlow(outfitId, namespace).onEach {
+            if (it == null) {
+                _displayAddOutfit.value = false
+                _displayRemoveOutfit.value = false
+                _displayPreferOutfit.value = false
+                _displayUnpreferOutfit.value = false
+                return@onEach
+            }
+
+            if (it.cached) {
+                _displayAddOutfit.value = false
+                _displayRemoveOutfit.value = true
+            } else {
+                _displayAddOutfit.value = true
+                _displayRemoveOutfit.value = false
+            }
+            _outfit = it
+            refreshPreferredOutfitState()
+        }
+    }
+    private val _displayAddOutfit = MutableStateFlow(false)
+    private val _displayRemoveOutfit = MutableStateFlow(false)
+    private val _displayPreferOutfit = MutableStateFlow(false)
+    private val _displayUnpreferOutfit = MutableStateFlow(false)
+    val title: Flow<String?> by lazy { profile.map { it?.name } }
+    val displayAddOutfit = _displayAddOutfit.asStateFlow()
+    val displayRemoveOutfit = _displayRemoveOutfit.asStateFlow()
+    val displayPreferOutfit = _displayPreferOutfit.asStateFlow()
+    val displayUnpreferOutfit = _displayUnpreferOutfit.asStateFlow()
+
+    private var _outfit: Outfit? = null
     private lateinit var outfitId: String
     private lateinit var namespace: Namespace
 
@@ -45,47 +81,50 @@ class OutfitPagerViewModel @Inject constructor(
         }
         this.outfitId = outfitId
         this.namespace = namespace
-        ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            outfit = pS2LinkRepository.getOutfit(outfitId, namespace, lang, false)
-        }
     }
 
-    fun addOutfit() {
-        ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val character = pS2LinkRepository.getCharacter(outfitId, namespace, lang)
-            if (character == null) {
-                // TODO : Report error
-                return@launch
-            }
-            pS2LinkRepository.saveCharacter(character.copy(cached = true))
+    suspend fun addOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val outfit = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
+        if (outfit == null) {
+            // TODO : Report error
+            return@withContext
         }
+        pS2LinkRepository.saveOutfit(outfit.copy(cached = true))
     }
 
-    fun removeOutfit() {
-        ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val character = pS2LinkRepository.getCharacter(outfitId, namespace, lang)
-            if (character == null) {
-                // TODO : Report error
-                return@launch
-            }
-            pS2LinkRepository.saveCharacter(character.copy(cached = false))
+    suspend fun removeOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val outfit = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
+        if (outfit == null) {
+            // TODO : Report error
+            return@withContext
         }
+        pS2LinkRepository.saveOutfit(outfit.copy(cached = false))
     }
 
-    fun pinOutfit() {
-        ioScope.launch {
-            ps2Settings.updatePreferredOutfitNamespace(namespace)
-            ps2Settings.updatePreferredOutfitId(outfitId)
-        }
+    suspend fun pinOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        ps2Settings.updatePreferredOutfitNamespace(namespace)
+        ps2Settings.updatePreferredOutfitId(outfitId)
+        refreshPreferredOutfitState()
     }
 
-    fun unpinOutfit() {
-        ioScope.launch {
-            ps2Settings.updatePreferredOutfitNamespace(null)
-            ps2Settings.updatePreferredOutfitId(null)
+    suspend fun unpinOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        ps2Settings.updatePreferredOutfitNamespace(null)
+        ps2Settings.updatePreferredOutfitId(null)
+        refreshPreferredOutfitState()
+    }
+
+    private suspend fun refreshPreferredOutfitState() {
+        val preferredNamespace = ps2Settings.getPreferredOutfitNamespace()
+        val preferredOutfit = ps2Settings.getPreferredOutfitId()
+
+        if (preferredNamespace == _outfit?.namespace && _outfit?.id == preferredOutfit) {
+            _displayPreferOutfit.value = false
+            _displayUnpreferOutfit.value = true
+        } else {
+            _displayPreferOutfit.value = true
+            _displayUnpreferOutfit.value = false
         }
     }
 }

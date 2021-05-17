@@ -59,7 +59,7 @@ class PS2LinkRepositoryImpl(
             return cachedCharacter
         }
         val profile = dbgCensus.getProfile(characterId, namespace, lang) ?: return null
-        dbgDAO.insertCharacter(profile)
+        dbgDAO.insertCharacter(profile.copy(cached = cachedCharacter?.cached ?: false))
         return profile
     }
 
@@ -154,6 +154,14 @@ class PS2LinkRepositoryImpl(
             }
             job
         }.awaitAll().filterNotNull().flatten().filterNotNull()
+    }
+
+    override suspend fun saveOutfit(outfit: Outfit) {
+        dbgDAO.insertOutfit(outfit)
+    }
+
+    override suspend fun removeOutfit(outfitId: String, namespace: Namespace) {
+        dbgDAO.removeOutfit(outfitId, namespace)
     }
 
     override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {

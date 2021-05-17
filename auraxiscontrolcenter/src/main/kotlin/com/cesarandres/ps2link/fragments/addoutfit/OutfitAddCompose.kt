@@ -90,6 +90,7 @@ fun OutfitAddComposePreview() {
                 timeCreated = Instant.fromEpochSeconds(1000000),
                 leader = Character("325354435", "Test", cached = false),
                 memberCount = 200,
+                cached = false,
                 namespace = Namespace.PS2PS4US,
             )
         ),

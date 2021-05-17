@@ -67,6 +67,10 @@ interface PS2LinkRepository {
         lang: CensusLang,
     ): List<Server>
 
+    suspend fun saveOutfit(outfit: Outfit)
+
+    suspend fun removeOutfit(outfitId: String, namespace: Namespace)
+
     fun getAllOutfitsAsFlow(): Flow<List<Outfit>>
 
     suspend fun getAllOutfits(): List<Outfit>
