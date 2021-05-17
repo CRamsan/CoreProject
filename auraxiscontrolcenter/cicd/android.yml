@@ -32,7 +32,7 @@ steps:
     
 - task: Gradle@2
   inputs:
-    options: '-Pps2linkConsumerSecret=$(ps2linkConsumerSecret) -Pps2linkConsumerKey=$(ps2linkConsumerKey) -Pps2linkAccessToken=$(ps2linkAccessToken) -Pps2linkAccessTokenSecret=$(ps2linkAccessTokenSecret)'
+    options: '-Pps2linkConsumerSecret=$(ps2linkConsumerSecret) -Pps2linkConsumerKey=$(ps2linkConsumerKey) -Pps2linkAccessToken=$(ps2linkAccessToken) -Pps2linkAccessTokenSecret=$(ps2linkAccessTokenSecret) -Pps2linkAppCenterId=$(ps2linkAppCenterId)'
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
