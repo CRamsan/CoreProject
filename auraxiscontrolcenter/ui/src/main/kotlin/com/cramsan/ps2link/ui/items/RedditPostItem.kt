@@ -13,6 +13,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -74,7 +75,9 @@ fun RedditPostItem(
                 )
             }
             Column(
-                modifier = Modifier.wrapContentWidth().padding(start = Padding.small)
+                modifier = Modifier.wrapContentWidth().padding(start = Padding.small).align(
+                    Alignment.CenterVertically
+                )
             ) {
                 Box(
                     modifier = Modifier.size(imageWidth, imageHeight).clickable {

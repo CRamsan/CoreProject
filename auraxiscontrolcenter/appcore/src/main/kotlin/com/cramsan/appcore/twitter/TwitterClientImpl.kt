@@ -21,6 +21,8 @@ class TwitterClientImpl(
     private val ACCESS_TOKEN_SECRET: String,
 ) : TwitterClient {
 
+    private val twitter: Twitter by lazy { configureTwitter() }
+
     /**
      * @param users an array with all the users to retrieve tweets from
      * @return the list of tweets retrieved
@@ -28,10 +30,7 @@ class TwitterClientImpl(
      * the twiter API
      */
     override fun getTweets(users: List<TwitterUser>): List<PS2Tweet> {
-        val twitter = configureTwitter()
-        val tweetsFound: List<PS2Tweet>
-        tweetsFound = retrieveTweets(twitter, users.map { it.handle })
-        return tweetsFound
+        return retrieveTweets(users.map { it.handle })
     }
 
     /**
@@ -41,18 +40,15 @@ class TwitterClientImpl(
      * the twiter API
      */
     override fun getTweets(user: TwitterUser): List<PS2Tweet> {
-        val twitter = configureTwitter()
-        val tweetsFound: List<PS2Tweet>
         val twitterUser = listOf(user.handle)
-        tweetsFound = retrieveTweets(twitter, twitterUser)
-        return tweetsFound
+        return retrieveTweets(twitterUser)
     }
 
     /**
      * @return the twitter object after being configured with the parameters to
      * contact the API
      */
-    fun configureTwitter(): Twitter {
+    private fun configureTwitter(): Twitter {
         val cb = ConfigurationBuilder()
         cb.setDebugEnabled(true).setOAuthConsumerKey(CONSUMER_KEY)
             .setOAuthConsumerSecret(CONSUMER_SECRET).setOAuthAccessToken(ACCESS_TOKEN)
@@ -68,7 +64,7 @@ class TwitterClientImpl(
      * @throws TwitterException this exception is thrown where there is an error
      * communicating with the twitter API
      */
-    private fun retrieveTweets(twitter: Twitter, users: List<String>): List<PS2Tweet> {
+    private fun retrieveTweets(users: List<String>): List<PS2Tweet> {
         if (users.isEmpty()) {
             return emptyList()
         }
@@ -85,12 +81,12 @@ class TwitterClientImpl(
                     if (status3.isRetweet || status3.isRetweetedByMe) {
                         name = status3.retweetedStatus.user.name
                         tag = status3.retweetedStatus.user.screenName
-                        imgUrl = status3.retweetedStatus.user.biggerProfileImageURL
+                        imgUrl = status3.retweetedStatus.user.biggerProfileImageURLHttps
                         text = status3.text + "\nRetweeted by " + status3.user.screenName
                     } else {
                         name = status3.user.name
                         tag = foundUser.screenName
-                        imgUrl = status3.user.biggerProfileImageURL
+                        imgUrl = status3.user.biggerProfileImageURLHttps
                         text = status3.text
                     }
                     tweetsFound.add(
