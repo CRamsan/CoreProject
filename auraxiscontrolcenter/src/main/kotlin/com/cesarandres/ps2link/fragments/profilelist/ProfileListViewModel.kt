@@ -5,7 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
-import com.cesarandres.ps2link.fragments.OpenProfileSearch
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
@@ -41,10 +40,6 @@ class ProfileListViewModel @Inject constructor(
         it.sortedBy { character -> character.name?.toLowerCase() }
     }.flowOn(dispatcherProvider.ioDispatcher())
     val profileList = _profileList.asLiveData()
-
-    override fun onSearchProfileClick() {
-        events.value = OpenProfileSearch
-    }
 
     override fun onProfileSelected(profileId: String, namespace: Namespace) {
         events.value = OpenProfile(profileId, namespace)

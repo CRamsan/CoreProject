@@ -1,5 +1,7 @@
 package com.cesarandres.ps2link.base
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import com.cesarandres.ps2link.fragments.OpenProfileList
 import com.cesarandres.ps2link.fragments.OpenReddit
 import com.cesarandres.ps2link.fragments.OpenServerList
 import com.cesarandres.ps2link.fragments.OpenTwitter
+import com.cesarandres.ps2link.fragments.OpenUrl
 import com.cramsan.framework.core.BaseEvent
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.ComposeBaseFragment
@@ -77,6 +80,11 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
             }
             is OpenAbout -> {
                 findNavController().navigate(R.id.fragmentAbout)
+            }
+            is OpenUrl -> {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(event.url)
+                startActivity(intent)
             }
         }
     }

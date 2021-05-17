@@ -27,7 +27,6 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion versions_tools.KotlinComposeVersion
         kotlinCompilerExtensionVersion versions_tools.JetpackCompose
     }
 
@@ -45,6 +44,7 @@ dependencies {
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx
     implementation packages.AndroidxFragmentKtx
+    implementation packages.AccompanistCoil
     implementation packages.Coil
     implementation packages.ConstraintLayout
     implementation packages.JetpackComposeUI

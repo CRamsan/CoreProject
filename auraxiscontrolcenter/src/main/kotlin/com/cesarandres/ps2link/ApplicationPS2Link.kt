@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link
 
 import android.app.Application
-import android.graphics.Bitmap
 import com.cramsan.framework.assert.AssertUtilInterface
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.halt.HaltUtil

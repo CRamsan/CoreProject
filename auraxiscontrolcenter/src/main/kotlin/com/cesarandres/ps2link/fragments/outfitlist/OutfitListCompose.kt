@@ -34,7 +34,6 @@ fun OutfitListCompose(
 
 @MainThread
 interface OutfitListEventHandler {
-    fun onSearchOutfitClick()
     fun onOutfitSelected(outfitId: String, namespace: Namespace)
 }
 
@@ -44,7 +43,6 @@ fun OutfitListComposePreview() {
     OutfitListCompose(
         outfitItems = emptyList(),
         eventHandler = object : OutfitListEventHandler {
-            override fun onSearchOutfitClick() = Unit
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
         }
     )

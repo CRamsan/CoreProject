@@ -16,7 +16,6 @@ val PS2Font = FontFamily(
 val typography = Typography(
     defaultFontFamily = PS2Font,
     body1 = TextStyle(
-        fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     )

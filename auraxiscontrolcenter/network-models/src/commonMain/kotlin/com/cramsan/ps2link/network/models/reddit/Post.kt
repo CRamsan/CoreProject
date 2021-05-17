@@ -18,4 +18,6 @@ data class Post(
     val num_comments: Int? = 0,
     val stickied: Boolean? = false,
     val url: String? = null,
+    val thumbnail: String? = null,
+    val permalink: String? = null,
 )

@@ -5,7 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
-import com.cesarandres.ps2link.fragments.OpenProfileSearch
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
@@ -42,10 +41,6 @@ class OutfitListViewModel @Inject constructor(
     }.flowOn(dispatcherProvider.ioDispatcher())
 
     val outfitList = _outfitList.asLiveData()
-
-    override fun onSearchOutfitClick() {
-        events.value = OpenProfileSearch
-    }
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
         events.value = OpenOutfit(outfitId, namespace)

@@ -11,8 +11,10 @@ data class OpenProfile(val characterId: String, val namespace: Namespace) : Base
 data class OpenOutfit(val outfitId: String, val namespace: Namespace) : BaseEvent() {
     val args = FragmentOutfitPagerArgs(outfitId, namespace)
 }
+// TODO: Enforce URL requirements
+data class OpenUrl(val url: String) : BaseEvent()
+
 object OpenProfileList : BaseEvent()
-object OpenProfileSearch : BaseEvent()
 object OpenOutfitList : BaseEvent()
 object OpenServerList : BaseEvent()
 object OpenTwitter : BaseEvent()

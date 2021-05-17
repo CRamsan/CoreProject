@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments.redditpager
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
+import com.cesarandres.ps2link.fragments.OpenUrl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -40,12 +41,22 @@ class RedditViewModel @Inject constructor(
     val redditContent = _redditContent.asStateFlow()
 
     fun setUp(redditPage: RedditPage) {
+        loadingStarted()
         ioScope.launch {
             _redditContent.value = redditRepository.getPosts(redditPage)
+            loadingCompleted()
         }
     }
 
     override fun onPostSelected(redditPost: RedditPost) {
-        // events.value = OpenProfile(profileId, namespace)
+        redditPost.postUrl?.let {
+            events.value = OpenUrl(it)
+        }
+    }
+
+    override fun onImageSelected(redditPost: RedditPost) {
+        redditPost.url?.let {
+            events.value = OpenUrl(it)
+        }
     }
 }

@@ -34,7 +34,6 @@ fun ProfileListCompose(
 
 @MainThread
 interface ProfileListEventHandler {
-    fun onSearchProfileClick()
     fun onProfileSelected(profileId: String, namespace: Namespace)
 }
 
@@ -44,7 +43,6 @@ fun NormalButtonPreview() {
     ProfileListCompose(
         profileItems = emptyList(),
         eventHandler = object : ProfileListEventHandler {
-            override fun onSearchProfileClick() = Unit
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         }
     )

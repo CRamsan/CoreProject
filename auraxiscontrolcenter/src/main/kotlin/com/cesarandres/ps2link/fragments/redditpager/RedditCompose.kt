@@ -26,14 +26,15 @@ fun RedditCompose(
             items(redditContent) {
                 RedditPostItem(
                     modifier = Modifier.fillParentMaxWidth(),
-                    url = it.url,
+                    imgUrl = it.imgUr,
                     title = it.title,
                     author = it.author,
                     upvotes = it.upvotes,
                     comments = it.comments,
                     createdTime = it.createdTime,
                     prettyTime = prettyTime,
-                    onClick = { eventHandler.onPostSelected(it) }
+                    onImageClick = { eventHandler.onImageSelected(it) },
+                    onPostClick = { eventHandler.onPostSelected(it) },
                 )
             }
         }
@@ -44,6 +45,7 @@ fun RedditCompose(
 @MainThread
 interface RedditEventHandler {
     fun onPostSelected(redditPost: RedditPost)
+    fun onImageSelected(redditPost: RedditPost)
 }
 
 @Preview
@@ -56,6 +58,7 @@ fun Preview() {
             prettyTime = PrettyTime(),
             eventHandler = object : RedditEventHandler {
                 override fun onPostSelected(redditPost: RedditPost) = Unit
+                override fun onImageSelected(redditPost: RedditPost) = Unit
             },
         )
     }

@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore
 
+import com.cramsan.ps2link.appcore.repository.RedditRepositoryImpl
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
@@ -143,14 +144,15 @@ fun StatNameType.toWeaponEventType(): WeaponEventType {
 
 fun Post.toCoreModel(): RedditPost {
     return RedditPost(
-        url = url ?: "",
+        url = url,
         title = title ?: "",
         author = author ?: "",
         label = selftext,
         upvotes = ((ups ?: 0) - (downs ?: 0)),
         comments = num_comments ?: 0,
         createdTime = created_utc?.times(1000)?.toLong() ?: 0,
-        imgUr = "",
+        imgUr = thumbnail,
+        postUrl = RedditRepositoryImpl.BASE_URL + permalink,
     )
 }
 
