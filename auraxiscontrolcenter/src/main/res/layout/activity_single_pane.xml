@@ -22,7 +22,7 @@
             android:id="@+id/imageViewBackground"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@color/BLACK"
+            android:background="@android:color/black"
             android:importantForAccessibility="no"
             android:scaleType="fitStart"
             android:src="@drawable/ps2_activity_background" />

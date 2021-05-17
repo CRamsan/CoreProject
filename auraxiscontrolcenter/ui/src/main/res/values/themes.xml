@@ -1,26 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="PS2Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="PS2Theme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryLightColor</item>
     </style>
 
-
     <!-- Base application theme. -->
-    <style name="AppTheme.NoActionBar" parent="PS2Theme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="PS2Theme" />
-
     <style name="BaseAppBarLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
-        <item name="android:background">@color/BLACK</item>
+        <item name="android:background">@android:color/black</item>
     </style>
 
     <style name="BaseToolBar" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
@@ -43,7 +34,4 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
     </style>
-
-    <color name="BLACK">#000000</color>
-    <color name="WHITE">#ffffff</color>
 </resources>
