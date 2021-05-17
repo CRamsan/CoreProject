@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +38,8 @@ class ProfilePagerViewModel @Inject constructor(
     // State
     private val _profile: MutableStateFlow<Character?> = MutableStateFlow(null)
     val profile = _profile.asStateFlow()
+    private val _preferredProfile: MutableStateFlow<String?> = MutableStateFlow(null)
+    val preferredProfile = _preferredProfile.asStateFlow()
     private lateinit var characterId: String
     private lateinit var namespace: Namespace
 
@@ -54,41 +57,37 @@ class ProfilePagerViewModel @Inject constructor(
         }
     }
 
-    fun addCharacter() {
-        ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
-            if (character == null) {
-                // TODO : Report error
-                return@launch
-            }
-            pS2LinkRepository.saveCharacter(character.copy(cached = true))
+    suspend fun addCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
+        if (character == null) {
+            // TODO : Report error
+            return@withContext
         }
+        pS2LinkRepository.saveCharacter(character.copy(cached = true))
+        _profile.value = _profile.value?.copy(cached = true)
     }
 
-    fun removeCharacter() {
-        ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
-            if (character == null) {
-                // TODO : Report error
-                return@launch
-            }
-            pS2LinkRepository.saveCharacter(character.copy(cached = false))
+    suspend fun removeCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
+        if (character == null) {
+            // TODO : Report error
+            return@withContext
         }
+        pS2LinkRepository.saveCharacter(character.copy(cached = false))
+        _profile.value = _profile.value?.copy(cached = false)
     }
 
-    fun pinCharacter() {
-        ioScope.launch {
-            ps2Settings.updatePreferredNamespace(namespace)
-            ps2Settings.updatePreferredCharacterId(characterId)
-        }
+    suspend fun pinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        ps2Settings.updatePreferredProfileNamespace(namespace)
+        ps2Settings.updatePreferredCharacterId(characterId)
+        _preferredProfile.value = characterId
     }
 
-    fun unpinCharacter() {
-        ioScope.launch {
-            ps2Settings.updatePreferredNamespace(null)
-            ps2Settings.updatePreferredCharacterId(null)
-        }
+    suspend fun unpinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        ps2Settings.updatePreferredProfileNamespace(null)
+        ps2Settings.updatePreferredCharacterId(null)
+        _preferredProfile.value = null
     }
 }

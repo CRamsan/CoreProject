@@ -21,9 +21,13 @@ interface PS2Settings {
 
     suspend fun getPreferredOutfitId(): String?
 
-    suspend fun updatePreferredNamespace(namespace: Namespace?)
+    suspend fun updatePreferredProfileNamespace(namespace: Namespace?)
 
-    suspend fun getPreferredNamespace(): Namespace?
+    suspend fun getPreferredProfileNamespace(): Namespace?
+
+    suspend fun updatePreferredOutfitNamespace(namespace: Namespace?)
+
+    suspend fun getPreferredOutfitNamespace(): Namespace?
 
     suspend fun updatePreferredLang(currentLang: CensusLang?)
 

@@ -58,7 +58,7 @@ class MainMenuViewModel @Inject constructor(
         }
 
         emit(Character(profileId, cached = false))
-        val namespace = ps2Settings.getPreferredNamespace()
+        val namespace = ps2Settings.getPreferredProfileNamespace()
 
         assertNotNull(namespace, logTag, "Namespace cannot be null")
 
@@ -77,7 +77,7 @@ class MainMenuViewModel @Inject constructor(
         }
 
         emit(Outfit(outfitId))
-        val namespace = ps2Settings.getPreferredNamespace()
+        val namespace = ps2Settings.getPreferredOutfitNamespace()
 
         assertNotNull(namespace, logTag, "Namespace cannot be null")
 

@@ -77,14 +77,14 @@ class OutfitPagerViewModel @Inject constructor(
 
     fun pinOutfit() {
         ioScope.launch {
-            ps2Settings.updatePreferredNamespace(namespace)
+            ps2Settings.updatePreferredOutfitNamespace(namespace)
             ps2Settings.updatePreferredOutfitId(outfitId)
         }
     }
 
     fun unpinOutfit() {
         ioScope.launch {
-            ps2Settings.updatePreferredNamespace(null)
+            ps2Settings.updatePreferredOutfitNamespace(null)
             ps2Settings.updatePreferredOutfitId(null)
         }
     }

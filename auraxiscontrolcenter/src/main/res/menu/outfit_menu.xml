@@ -19,8 +19,4 @@
         android:title="@string/text_unstar_profile"
         android:icon="@drawable/icon_star_selected"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_update"
-        android:title="@string/text_update"
-        app:showAsAction="ifRoom" />
 </menu>

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BasePS2FragmentPager
@@ -21,6 +22,7 @@ import com.cesarandres.ps2link.fragments.profilepager.weaponlist.FragmentCompose
 import com.cramsan.framework.core.requireAppCompatActivity
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 /**
  * This fragment holds a view pager for all the profile related fragments
@@ -72,25 +74,39 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.profile_menu, menu)
+        val preferredCharacter = viewModel.preferredProfile.value
+        val character = viewModel.profile.value
+        character?.let {
+            val addButton = menu.findItem(R.id.action_add)
+            val removeButton = menu.findItem(R.id.action_remove)
+            addButton.isVisible = !it.cached
+            removeButton.isVisible = it.cached
+        }
+
+        val starButton = menu.findItem(R.id.action_star)
+        val unstarButton = menu.findItem(R.id.action_unstar)
+        starButton.isVisible = preferredCharacter != character?.characterId
+        unstarButton.isVisible = preferredCharacter == character?.characterId
         return
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_add -> {
-                viewModel.addCharacter()
+        lifecycleScope.launch {
+            when (item.itemId) {
+                R.id.action_add -> {
+                    viewModel.addCharacter()
+                }
+                R.id.action_remove -> {
+                    viewModel.removeCharacter()
+                }
+                R.id.action_star -> {
+                    viewModel.pinCharacter()
+                }
+                R.id.action_unstar -> {
+                    viewModel.unpinCharacter()
+                }
             }
-            R.id.action_remove -> {
-                viewModel.removeCharacter()
-            }
-            R.id.action_star -> {
-                viewModel.pinCharacter()
-            }
-            R.id.action_unstar -> {
-                viewModel.unpinCharacter()
-            }
-            R.id.action_update -> {
-            }
+            requireActivity().invalidateOptionsMenu()
         }
         return true
     }

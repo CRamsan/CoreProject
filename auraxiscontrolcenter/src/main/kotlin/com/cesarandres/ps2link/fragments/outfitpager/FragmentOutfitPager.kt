@@ -77,8 +77,6 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
             R.id.action_unstar -> {
                 viewModel.unpinOutfit()
             }
-            R.id.action_update -> {
-            }
         }
         return true
     }
