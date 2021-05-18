@@ -21,6 +21,7 @@ import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
@@ -41,7 +42,7 @@ fun OutfitCompose(
     eventHandler: OutfitEventHandler,
 ) {
     FrameBottom {
-        Box(modifier = Modifier.padding(Padding.medium)) {
+        Box {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -113,9 +114,7 @@ fun OutfitCompose(
                     }
                 }
             }
-            if (isLoading) {
-                CircularProgressIndicator()
-            }
+            LoadingOverlay(enabled = isLoading)
         }
     }
 }

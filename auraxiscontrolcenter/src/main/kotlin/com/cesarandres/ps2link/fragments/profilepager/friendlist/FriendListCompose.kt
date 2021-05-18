@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.FriendItem
 
 @Composable
@@ -33,9 +34,7 @@ fun FriendListCompose(
                     )
                 }
             }
-            if (isLoading) {
-                CircularProgressIndicator()
-            }
+            LoadingOverlay(enabled = isLoading)
         }
     }
 }

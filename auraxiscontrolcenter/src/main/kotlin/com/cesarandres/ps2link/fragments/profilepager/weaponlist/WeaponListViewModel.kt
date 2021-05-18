@@ -52,9 +52,11 @@ class WeaponListViewModel @Inject constructor(
         }
 
         this.characterId = characterId
+        loadingStarted()
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             _weaponList.value = pS2LinkRepository.getWeaponList(characterId, namespace, currentLang)
+            loadingCompleted()
         }
     }
 }

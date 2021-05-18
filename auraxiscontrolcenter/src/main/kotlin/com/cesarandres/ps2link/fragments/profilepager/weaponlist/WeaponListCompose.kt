@@ -15,6 +15,7 @@ import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.WeaponItem
 
 @Composable
@@ -45,9 +46,7 @@ fun WeaponListCompose(
                     )
                 }
             }
-            if (isLoading) {
-                CircularProgressIndicator()
-            }
+            LoadingOverlay(enabled = isLoading)
         }
     }
 }

@@ -47,9 +47,11 @@ class FriendListViewModel @Inject constructor(
             return
         }
 
+        loadingStarted()
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             _friendList.value = pS2LinkRepository.getFriendList(characterId, namespace, currentLang)
+            loadingCompleted()
         }
     }
 

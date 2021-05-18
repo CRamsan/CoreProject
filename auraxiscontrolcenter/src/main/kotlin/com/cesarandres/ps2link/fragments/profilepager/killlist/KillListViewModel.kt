@@ -50,9 +50,11 @@ class KillListViewModel @Inject constructor(
         }
 
         this.characterId = characterId
+        loadingStarted()
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             _killList.value = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
+            loadingCompleted()
         }
     }
 

@@ -45,9 +45,11 @@ class OutfitViewModel @Inject constructor(
             return
         }
         outfit = pS2LinkRepository.getOutfitAsFlow(outfitId, namespace)
+        loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             pS2LinkRepository.getOutfit(outfitId, namespace, lang, forceUpdate = true)
+            loadingCompleted()
         }
     }
 

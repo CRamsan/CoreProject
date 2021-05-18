@@ -45,9 +45,11 @@ class ProfileViewModel @Inject constructor(
             return
         }
         profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
+        loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true)
+            loadingCompleted()
         }
     }
 

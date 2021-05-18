@@ -14,6 +14,7 @@ import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.StatItem
 
 @Composable
@@ -35,9 +36,7 @@ fun StatListCompose(
                     )
                 }
             }
-            if (isLoading) {
-                CircularProgressIndicator()
-            }
+            LoadingOverlay(enabled = isLoading)
         }
     }
 }

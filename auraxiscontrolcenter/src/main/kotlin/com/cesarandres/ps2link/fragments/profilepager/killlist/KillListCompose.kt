@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.KillItem
 
 @Composable
@@ -40,9 +41,7 @@ fun KillListCompose(
                     )
                 }
             }
-            if (isLoading) {
-                CircularProgressIndicator()
-            }
+            LoadingOverlay(enabled = isLoading)
         }
     }
 }

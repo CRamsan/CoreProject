@@ -47,9 +47,11 @@ class StatListViewModel @Inject constructor(
             return
         }
 
+        loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
             _statList.value = pS2LinkRepository.getStatList(characterId, namespace, lang)
+            loadingCompleted()
         }
     }
 
