@@ -3,6 +3,7 @@ package com.cramsan.ps2link.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.MedalType
@@ -59,6 +60,16 @@ fun MedalType?.toImageRes() = when (this) {
     MedalType.SILVER -> R.drawable.medal_silver
     MedalType.BRONCE -> R.drawable.medal_copper
     MedalType.NONE, null -> R.drawable.medal_empty
+}
+
+fun CharacterClass.toImageRes() = when (this) {
+    CharacterClass.LIGHT_ASSAULT -> R.drawable.icon_lia
+    CharacterClass.ENGINEER -> R.drawable.icon_eng
+    CharacterClass.MEDIC -> R.drawable.icon_med
+    CharacterClass.INFILTRATOR -> R.drawable.icon_inf
+    CharacterClass.HEAVY_ASSAULT -> R.drawable.icon_hea
+    CharacterClass.MAX -> R.drawable.icon_max
+    CharacterClass.UNKNOWN -> R.drawable.icon_lia
 }
 
 @Composable

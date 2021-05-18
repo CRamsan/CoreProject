@@ -1,3 +1,4 @@
+import com.cramsan.ps2link.db.models.CharacterClass;
 import com.cramsan.ps2link.db.models.Faction;
 import com.cramsan.ps2link.db.models.LoginStatus;
 import com.cramsan.ps2link.db.models.Namespace;
@@ -7,7 +8,7 @@ import kotlinx.datetime.Instant;
 CREATE TABLE Character (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     name TEXT,
-    activeProfileId TEXT,
+    activeProfileId INTEGER AS CharacterClass,
     loginStatus TEXT AS LoginStatus NOT NULL,
     currentPoints INTEGER,
     percentageToNextCert REAL,

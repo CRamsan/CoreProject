@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
@@ -129,7 +130,7 @@ fun NormalButtonPreview() {
             preferredProfile = Character(
                 "",
                 "CRamsan",
-                null,
+                CharacterClass.UNKNOWN,
                 LoginStatus.UNKNOWN,
                 null,
                 null,

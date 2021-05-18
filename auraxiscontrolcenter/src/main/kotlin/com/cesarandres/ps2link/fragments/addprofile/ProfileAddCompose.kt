@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Server
@@ -88,7 +89,7 @@ fun NormalButtonPreview() {
                     battleRank = 80,
                     faction = Faction.VS,
                     namespace = Namespace.PS2PS4US,
-                    activeProfileId = "1",
+                    activeProfileId = CharacterClass.UNKNOWN,
                     certs = 1,
                     lastLogin = Instant.DISTANT_PAST,
                     timePlayed = 10.days,

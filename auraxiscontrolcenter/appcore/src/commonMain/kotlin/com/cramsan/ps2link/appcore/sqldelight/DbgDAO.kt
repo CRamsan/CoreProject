@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
@@ -16,7 +17,7 @@ interface DbgDAO {
     fun insertCharacter(
         characterId: String,
         name: String?,
-        activeProfileId: String?,
+        activeProfileId: CharacterClass,
         loginStatus: LoginStatus,
         currentPoints: Long?,
         percentageToNextCert: Double?,

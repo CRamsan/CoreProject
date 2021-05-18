@@ -4,6 +4,7 @@ import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.toDBModel
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
@@ -35,6 +36,7 @@ class SQLDelightDAO(
             lastLoginAdapter = instantAdapter,
             lastUpdatedAdapter = instantAdapter,
             minutesPlayedAdapter = durationAdapter,
+            activeProfileIdAdapter = characterClassAdapter,
         ),
         OutfitAdapter = com.cramsan.ps2link.db.Outfit.Adapter(
             factionIdAdapter = factionAdapter,
@@ -48,7 +50,7 @@ class SQLDelightDAO(
     override fun insertCharacter(
         characterId: String,
         name: String?,
-        activeProfileId: String?,
+        activeProfileId: CharacterClass,
         loginStatus: LoginStatus,
         currentPoints: Long?,
         percentageToNextCert: Double?,
@@ -70,7 +72,7 @@ class SQLDelightDAO(
         return database.characterQueries.insertCharacter(
             characterId,
             name,
-            activeProfileId,
+            activeProfileId.toDBModel(),
             loginStatus.toDBModel(),
             currentPoints,
             percentageToNextCert,
@@ -219,7 +221,7 @@ private fun Character.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Ch
     return com.cramsan.ps2link.db.Character(
         id = characterId,
         name = name,
-        activeProfileId = activeProfileId,
+        activeProfileId = activeProfileId.toDBModel(),
         loginStatus = loginStatus.toDBModel(),
         currentPoints = certs,
         percentageToNextCert = percentageToNextCert,
@@ -303,7 +305,7 @@ private fun com.cramsan.ps2link.db.Character.toCoreModel(): Character {
     return Character(
         characterId = id,
         name = name,
-        activeProfileId = activeProfileId,
+        activeProfileId = activeProfileId.toCoreModel(),
         loginStatus = loginStatus?.toCoreModel(),
         certs = currentPoints,
         battleRank = rank,

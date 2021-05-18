@@ -7,6 +7,7 @@ import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.KillEvent
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
@@ -183,7 +184,7 @@ class PS2LinkRepositoryImpl(
             return cachedOutfit
         }
         val outfit = dbgCensus.getOutfit(outfitId, namespace, lang) ?: return null
-        dbgDAO.insertOutfit(outfit)
+        dbgDAO.insertOutfit(outfit.copy(cached = cachedOutfit?.cached ?: false))
         return outfit
     }
 
@@ -216,7 +217,7 @@ class PS2LinkRepositoryImpl(
     }
 
     override suspend fun getMembersOnline(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
-        return dbgCensus.getMembersOnline(outfitId, namespace, currentLang) ?: emptyList()
+        return dbgCensus.getMembersOnline(outfitId, namespace, currentLang)?.filter { it.loginStatus != LoginStatus.OFFLINE } ?: emptyList()
     }
 
     override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {

@@ -2,6 +2,7 @@ package com.cramsan.ps2link.appcore
 
 import com.cramsan.ps2link.appcore.repository.RedditRepositoryImpl
 import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Population
@@ -70,6 +71,36 @@ fun com.cramsan.ps2link.core.models.Namespace.toNetworkModel() = when (this) {
     com.cramsan.ps2link.core.models.Namespace.PS2PS4US -> com.cramsan.ps2link.network.models.Namespace.PS2PS4US
     com.cramsan.ps2link.core.models.Namespace.PS2PS4EU -> com.cramsan.ps2link.network.models.Namespace.PS2PS4EU
     com.cramsan.ps2link.core.models.Namespace.UNDETERMINED -> com.cramsan.ps2link.network.models.Namespace.UNDETERMINED
+}
+
+fun CharacterClass.toDBModel() = when (this) {
+    CharacterClass.LIGHT_ASSAULT -> com.cramsan.ps2link.db.models.CharacterClass.LIGHT_ASSAULT
+    CharacterClass.ENGINEER -> com.cramsan.ps2link.db.models.CharacterClass.ENGINEER
+    CharacterClass.MEDIC -> com.cramsan.ps2link.db.models.CharacterClass.MEDIC
+    CharacterClass.INFILTRATOR -> com.cramsan.ps2link.db.models.CharacterClass.INFILTRATOR
+    CharacterClass.HEAVY_ASSAULT -> com.cramsan.ps2link.db.models.CharacterClass.HEAVY_ASSAULT
+    CharacterClass.MAX -> com.cramsan.ps2link.db.models.CharacterClass.MAX
+    CharacterClass.UNKNOWN -> com.cramsan.ps2link.db.models.CharacterClass.UNKNOWN
+}
+
+fun com.cramsan.ps2link.db.models.CharacterClass?.toCoreModel() = when (this) {
+    com.cramsan.ps2link.db.models.CharacterClass.LIGHT_ASSAULT -> CharacterClass.LIGHT_ASSAULT
+    com.cramsan.ps2link.db.models.CharacterClass.ENGINEER -> CharacterClass.ENGINEER
+    com.cramsan.ps2link.db.models.CharacterClass.MEDIC -> CharacterClass.MEDIC
+    com.cramsan.ps2link.db.models.CharacterClass.INFILTRATOR -> CharacterClass.INFILTRATOR
+    com.cramsan.ps2link.db.models.CharacterClass.HEAVY_ASSAULT -> CharacterClass.HEAVY_ASSAULT
+    com.cramsan.ps2link.db.models.CharacterClass.MAX -> CharacterClass.MAX
+    com.cramsan.ps2link.db.models.CharacterClass.UNKNOWN, null -> CharacterClass.UNKNOWN
+}
+
+fun characterClassFromString(activeProfileId: String?) = when (activeProfileId) {
+    "2", "10", "17" -> CharacterClass.INFILTRATOR
+    "4", "12", "19" -> CharacterClass.LIGHT_ASSAULT
+    "5", "13", "20" -> CharacterClass.MEDIC
+    "6", "14", "21" -> CharacterClass.ENGINEER
+    "7", "15", "22" -> CharacterClass.HEAVY_ASSAULT
+    "8", "16", "23" -> CharacterClass.MAX
+    else -> CharacterClass.UNKNOWN
 }
 
 fun Name_Multi.localizedName(currentLang: CensusLang): String? {

@@ -46,9 +46,11 @@ class OnlineMembersViewModel @Inject constructor(
             // TODO: Provide some event that can be handled by the UI
             return
         }
+        loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            _memberList.value = pS2LinkRepository.getMembersOnline(outfitId, namespace, lang)
+            _memberList.value = pS2LinkRepository.getMembersOnline(outfitId, namespace, lang).sortedBy { it.name }
+            loadingCompleted()
         }
     }
 

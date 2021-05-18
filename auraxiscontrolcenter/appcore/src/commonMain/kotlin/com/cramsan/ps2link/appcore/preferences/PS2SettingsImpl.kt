@@ -39,14 +39,6 @@ class PS2SettingsImpl(
         return preferences.loadString(PREFERRED_OUTFIT_NAMESPACE)?.let { Namespace.valueOf(it) }
     }
 
-    override suspend fun updatePreferredLang(currentLang: CensusLang?) {
-        preferences.saveString(PREFERRED_CENSUS_LANG, currentLang?.name)
-    }
-
-    override suspend fun getPreferredLang(): CensusLang? {
-        return preferences.loadString(PREFERRED_CENSUS_LANG)?.let { CensusLang.valueOf(it) }
-    }
-
     override suspend fun updateCurrentNamespace(namespace: Namespace?) {
         preferences.saveString(CURRENT_NAMESPACE, namespace?.name)
     }
@@ -70,7 +62,6 @@ class PS2SettingsImpl(
         const val PREFERRED_OUTFIT_ID = "preferredOutfitId"
         const val PREFERRED_CHARACTER_NAMESPACE = "preferredCharacterNamespace"
         const val PREFERRED_OUTFIT_NAMESPACE = "preferredOutfitNamespace"
-        const val PREFERRED_CENSUS_LANG = "preferredCensusLang"
         const val CURRENT_NAMESPACE = "currentNamespace"
         const val CURRENT_CENSUS_LANG = "currentCensusLang"
     }

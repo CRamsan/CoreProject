@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.sqldelight
 
+import com.cramsan.ps2link.db.models.CharacterClass
 import com.cramsan.ps2link.db.models.Faction
 import com.cramsan.ps2link.db.models.LoginStatus
 import com.cramsan.ps2link.db.models.Namespace
@@ -38,4 +39,9 @@ val instantAdapter = object : ColumnAdapter<Instant, Long> {
 val durationAdapter = object : ColumnAdapter<Duration, Long> {
     override fun decode(databaseValue: Long) = databaseValue.milliseconds
     override fun encode(value: Duration) = value.toLongMilliseconds()
+}
+
+val characterClassAdapter = object : ColumnAdapter<CharacterClass, Long> {
+    override fun decode(databaseValue: Long) = CharacterClass.fromLong(databaseValue)
+    override fun encode(value: CharacterClass) = value.id
 }

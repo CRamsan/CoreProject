@@ -2,6 +2,7 @@ package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.appcore.census.DBGCensus.Companion.SERVICE_ID
+import com.cramsan.ps2link.appcore.characterClassFromString
 import com.cramsan.ps2link.appcore.getThisMonth
 import com.cramsan.ps2link.appcore.getThisWeek
 import com.cramsan.ps2link.appcore.getToday
@@ -403,12 +404,13 @@ private fun CharacterProfile.toCoreModel(
     return Character(
         characterId = character_id,
         name = name?.first,
-        activeProfileId = profile_id,
+        activeProfileId = characterClassFromString(profile_id),
         loginStatus = LoginStatus.fromString(online_status),
         certs = certs?.available_points?.toLong(),
         percentageToNextCert = certs?.percent_to_next?.toDouble()?.times(100),
         battleRank = battle_rank?.value?.toLong(),
         percentageToNextBattleRank = battle_rank?.percent_to_next?.toDouble(),
+        outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
         lastLogin = times?.last_login?.toLong()?.let {
             Instant.fromEpochSeconds(it)
         },
@@ -438,7 +440,7 @@ fun Member.toCoreModel(namespace: Namespace): Character? {
         Character(
             characterId = it,
             name = character?.name?.first,
-            activeProfileId = character?.active_profile_id,
+            activeProfileId = characterClassFromString(character?.active_profile_id),
             loginStatus = LoginStatus.fromString(online_status),
             outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
             namespace = namespace,

@@ -16,7 +16,11 @@ enum class LoginStatus(val code: String) {
         }
 
         fun fromString(code: String?): LoginStatus {
-            return enumMapping[code] ?: UNKNOWN
+            return when (code) {
+                OFFLINE.code -> OFFLINE
+                null -> UNKNOWN
+                else -> ONLINE
+            }
         }
     }
 }

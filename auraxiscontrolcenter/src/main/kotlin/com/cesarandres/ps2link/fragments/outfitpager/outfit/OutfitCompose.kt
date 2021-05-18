@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +32,7 @@ import java.util.Date
 @Composable
 fun OutfitCompose(
     name: String? = null,
+    tag: String? = null,
     leader: Character? = null,
     memberCount: Long = 0,
     creationTime: Instant? = null,
@@ -56,10 +58,16 @@ fun OutfitCompose(
                     .fillMaxWidth()
                     .padding(Padding.small)
 
+                val formattedTag = tag?.let { stringResource(R.string.text_outfit_tag, it) } ?: ""
+                val displayName = name ?: stringResource(id = R.string.text_unknown)
+
                 // Outfit name
                 FrameSlim(modifier = mediumModifier) {
-                    Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = name ?: stringResource(id = R.string.text_unknown))
+                    Row(modifier = smallModifier) {
+                        Text(
+                            text = "$formattedTag $displayName",
+                            style = MaterialTheme.typography.h5,
+                        )
                     }
                 }
 
@@ -94,7 +102,7 @@ fun OutfitCompose(
                         // Creation date
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_hours_played))
+                                Text(text = stringResource(R.string.text_created))
                                 Text(
                                     text = creationTime?.let {
                                         formatter.format(Date(it.toEpochMilliseconds()))
