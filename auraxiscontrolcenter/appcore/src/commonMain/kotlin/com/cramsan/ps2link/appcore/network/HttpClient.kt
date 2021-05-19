@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.network
 
 import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logW
 import com.cramsan.framework.metrics.logMetric
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
@@ -23,21 +24,29 @@ class HttpClient(
 ) {
 
     @OptIn(ExperimentalTime::class)
-    suspend inline fun <reified T> sendRequestWithRetry(url: Url): T? {
+    suspend inline fun <reified T> sendRequestWithRetry(url: Url): com.cramsan.ps2link.appcore.network.PS2HttpResponse<T> {
         for (retry in 0..3) {
             delay(retry.toDuration(DurationUnit.SECONDS))
-            val response = sendRequest(url, retry)
+            return try {
+                val response = sendRequest(url, retry)
 
-            return if (response.status.isSuccess()) {
-                response.receive()
-            } else if (response.status.value in 300..500) {
-                null
-            } else {
-                continue
+                if (response.status.isSuccess()) {
+                    val body = response.receive<T>()
+                    PS2HttpResponse.success(body, response)
+                } else if (response.status.value in 300..500) {
+                    PS2HttpResponse.failure(response, null)
+                } else {
+                    continue
+                }
+            } catch (exception: Exception) {
+                logW(TAG, "Unexpected Exception", exception)
+                PS2HttpResponse.failure(null, exception)
+            } catch (throwable: Throwable) {
+                logW(TAG, "Unexpected Throwable", throwable)
+                PS2HttpResponse.failure(null, throwable)
             }
         }
-
-        return null
+        return PS2HttpResponse.failure(null, null)
     }
 
     @OptIn(ExperimentalTime::class)

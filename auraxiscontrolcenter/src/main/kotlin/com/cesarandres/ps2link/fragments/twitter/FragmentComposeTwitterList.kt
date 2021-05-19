@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link.fragments.twitter
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
@@ -20,6 +21,11 @@ class FragmentComposeTwitterList : BaseComposePS2Fragment<TwitterListViewModel>(
 
     @Inject
     lateinit var prettyTime: PrettyTime
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setUp()
+    }
 
     @Composable
     override fun CreateComposeContent() {

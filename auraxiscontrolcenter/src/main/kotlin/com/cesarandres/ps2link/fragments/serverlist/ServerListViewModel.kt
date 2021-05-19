@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.thread.assertIsBackgroundThread
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -51,10 +52,14 @@ class ServerListViewModel @Inject constructor(
         assertIsBackgroundThread()
         loadingStarted()
         val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-        val serverList = pS2LinkRepository.getServerList(lang).sortedBy {
-            it.serverName?.toLowerCase()
+        val response = pS2LinkRepository.getServerList(lang)
+        if (response.isSuccessful) {
+            val serverList = response.requireBody().sortedBy {
+                it.serverName?.toLowerCase()
+            }
+            _serverList.value = serverList
+        } else {
         }
-        _serverList.value = serverList
         loadingCompleted()
     }
 }

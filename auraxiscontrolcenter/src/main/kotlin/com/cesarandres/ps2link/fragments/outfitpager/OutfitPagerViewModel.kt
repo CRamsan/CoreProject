@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -85,22 +86,24 @@ class OutfitPagerViewModel @Inject constructor(
 
     suspend fun addOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
         val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-        val outfit = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
-        if (outfit == null) {
-            // TODO : Report error
-            return@withContext
+        val response = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
+        if (response.isSuccessful) {
+            val outfit = response.requireBody()
+            pS2LinkRepository.saveOutfit(outfit.copy(cached = true))
+        } else {
+            // Add error handling
         }
-        pS2LinkRepository.saveOutfit(outfit.copy(cached = true))
     }
 
     suspend fun removeOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
         val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-        val outfit = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
-        if (outfit == null) {
-            // TODO : Report error
-            return@withContext
+        val response = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
+        if (response.isSuccessful) {
+            val outfit = response.requireBody()
+            pS2LinkRepository.saveOutfit(outfit.copy(cached = false))
+        } else {
+            // Add error handling
         }
-        pS2LinkRepository.saveOutfit(outfit.copy(cached = false))
     }
 
     suspend fun pinOutfit() = withContext(dispatcherProvider.ioDispatcher()) {

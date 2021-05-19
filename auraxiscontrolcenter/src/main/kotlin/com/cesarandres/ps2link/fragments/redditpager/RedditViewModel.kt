@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenUrl
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.RedditRepository
@@ -43,7 +44,11 @@ class RedditViewModel @Inject constructor(
     fun setUp(redditPage: RedditPage) {
         loadingStarted()
         ioScope.launch {
-            _redditContent.value = redditRepository.getPosts(redditPage)
+            val response = redditRepository.getPosts(redditPage)
+            if (response.isSuccessful) {
+                _redditContent.value = response.requireBody()
+            } else {
+            }
             loadingCompleted()
         }
     }

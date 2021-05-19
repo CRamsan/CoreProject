@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.repository
 
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.KillEvent
@@ -23,49 +24,49 @@ interface PS2LinkRepository {
 
     fun getAllCharactersAsFlow(): Flow<List<Character>>
 
-    suspend fun getAllCharacters(): List<Character>
+    suspend fun getAllCharacters(): PS2HttpResponse<List<Character>>
 
     suspend fun getCharacter(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
         forceUpdate: Boolean = false,
-    ): Character?
+    ): PS2HttpResponse<Character>
 
     fun getCharacterAsFlow(characterId: String, namespace: Namespace): Flow<Character?>
 
     suspend fun searchForCharacter(
         searchField: String,
         currentLang: CensusLang,
-    ): List<Character>
+    ): PS2HttpResponse<List<Character>>
 
     suspend fun getFriendList(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<Character>
+    ): PS2HttpResponse<List<Character>>
 
     suspend fun getKillList(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<KillEvent>
+    ): PS2HttpResponse<List<KillEvent>>
 
     suspend fun getStatList(
         characterId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<StatItem>
+    ): PS2HttpResponse<List<StatItem>>
 
     suspend fun getWeaponList(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<WeaponItem>
+    ): PS2HttpResponse<List<WeaponItem>>
 
     suspend fun getServerList(
         lang: CensusLang,
-    ): List<Server>
+    ): PS2HttpResponse<List<Server>>
 
     suspend fun saveOutfit(outfit: Outfit)
 
@@ -73,14 +74,14 @@ interface PS2LinkRepository {
 
     fun getAllOutfitsAsFlow(): Flow<List<Outfit>>
 
-    suspend fun getAllOutfits(): List<Outfit>
+    suspend fun getAllOutfits(): PS2HttpResponse<List<Outfit>>
 
     suspend fun getOutfit(
         outfitId: String,
         namespace: Namespace,
         lang: CensusLang,
         forceUpdate: Boolean = false,
-    ): Outfit?
+    ): PS2HttpResponse<Outfit>
 
     fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?>
 
@@ -88,17 +89,17 @@ interface PS2LinkRepository {
         tagSearchField: String,
         nameSearchField: String,
         currentLang: CensusLang,
-    ): List<Outfit>
+    ): PS2HttpResponse<List<Outfit>>
 
     suspend fun getMembersOnline(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang
-    ): List<Character>
+    ): PS2HttpResponse<List<Character>>
 
     suspend fun getMembers(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang
-    ): List<Character>
+    ): PS2HttpResponse<List<Character>>
 }

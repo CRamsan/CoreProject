@@ -9,7 +9,7 @@ import com.cramsan.ps2link.network.models.content.character.Times
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CharacterProfile(
+data class CharacterProfileJoin(
     var character_id: String,
     var name: Name? = null,
     var active_profile_id: String? = null,
@@ -27,4 +27,5 @@ data class CharacterProfile(
     var stats: Stats? = null,
     var server: Server? = null,
     var online_status: String? = null,
+    var character_id_join_character: CharacterProfile,
 )

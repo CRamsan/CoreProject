@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Server_response(
-    var world_list: List<World>? = null
+    var world_list: List<World>
 )

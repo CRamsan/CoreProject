@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.repository
 
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.core.models.RedditPage
 import com.cramsan.ps2link.core.models.RedditPost
 
@@ -12,5 +13,5 @@ interface RedditRepository {
 
     suspend fun getPosts(
         redditPage: RedditPage,
-    ): List<RedditPost>
+    ): PS2HttpResponse<List<RedditPost>>
 }

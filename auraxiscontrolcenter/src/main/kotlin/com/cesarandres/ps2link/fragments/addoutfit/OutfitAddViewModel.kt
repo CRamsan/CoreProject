@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -81,9 +82,13 @@ class OutfitAddViewModel @Inject constructor(
             // This means that there is a 1 extra second of UPL.
             delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            val outfits = pS2LinkRepository.searchForOutfits(tag, name, lang)
-            _outfitList.value = outfits.sortedBy {
-                it.name?.toLowerCase()
+            val response = pS2LinkRepository.searchForOutfits(tag, name, lang)
+            if (response.isSuccessful) {
+                _outfitList.value = response.requireBody().sortedBy {
+                    it.name?.toLowerCase()
+                }
+            } else {
+                // Add error handling
             }
             loadingCompleted()
         }

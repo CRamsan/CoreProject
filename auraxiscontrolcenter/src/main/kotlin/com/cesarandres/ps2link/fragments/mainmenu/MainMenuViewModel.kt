@@ -14,6 +14,7 @@ import com.cesarandres.ps2link.fragments.OpenServerList
 import com.cesarandres.ps2link.fragments.OpenTwitter
 import com.cramsan.framework.assert.assertNotNull
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -64,7 +65,12 @@ class MainMenuViewModel @Inject constructor(
 
         if (namespace != null) {
             // TODO: Fix wrong language
-            emit(pS2LinkRepository.getCharacter(profileId, namespace, CensusLang.EN))
+            val response = pS2LinkRepository.getCharacter(profileId, namespace, CensusLang.EN)
+            if (response.isSuccessful) {
+                emit(response.requireBody())
+            } else {
+                emit(null)
+            }
         } else {
             emit(null)
         }
@@ -83,7 +89,12 @@ class MainMenuViewModel @Inject constructor(
 
         if (namespace != null) {
             // TODO: Fix wrong language
-            emit(pS2LinkRepository.getOutfit(outfitId, namespace, CensusLang.EN))
+            val response = pS2LinkRepository.getOutfit(outfitId, namespace, CensusLang.EN)
+            if (response.isSuccessful) {
+                emit(response.requireBody())
+            } else {
+                emit(null)
+            }
         } else {
             emit(null)
         }

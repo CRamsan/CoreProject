@@ -2,6 +2,12 @@ package com.cramsan.ps2link.appcore.repository
 
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.localizedName
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
+import com.cramsan.ps2link.appcore.network.onSuccess
+import com.cramsan.ps2link.appcore.network.process
+import com.cramsan.ps2link.appcore.network.processList
+import com.cramsan.ps2link.appcore.network.requireBody
+import com.cramsan.ps2link.appcore.network.toFailure
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.core.models.CensusLang
@@ -16,12 +22,10 @@ import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.response.server.PS2
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
@@ -45,8 +49,8 @@ class PS2LinkRepositoryImpl(
         return dbgDAO.getAllCharactersAsFlow()
     }
 
-    override suspend fun getAllCharacters(): List<Character> {
-        return dbgDAO.getCharacters()
+    override suspend fun getAllCharacters(): PS2HttpResponse<List<Character>> {
+        return PS2HttpResponse.success(dbgDAO.getCharacters())
     }
 
     override suspend fun getCharacter(
@@ -54,14 +58,16 @@ class PS2LinkRepositoryImpl(
         namespace: Namespace,
         lang: CensusLang,
         forceUpdate: Boolean,
-    ): Character? {
+    ): PS2HttpResponse<Character> {
         val cachedCharacter = dbgDAO.getCharacter(characterId, namespace)
         if (!forceUpdate && (cachedCharacter != null && isCharacterValid(cachedCharacter))) {
-            return cachedCharacter
+            return PS2HttpResponse.success(cachedCharacter)
         }
-        val profile = dbgCensus.getProfile(characterId, namespace, lang) ?: return null
-        dbgDAO.insertCharacter(profile.copy(cached = cachedCharacter?.cached ?: false))
-        return profile
+        val response = dbgCensus.getProfile(characterId, namespace, lang)
+        response.onSuccess {
+            dbgDAO.insertCharacter(it.copy(cached = cachedCharacter?.cached ?: false))
+        }
+        return response
     }
 
     override fun getCharacterAsFlow(
@@ -74,9 +80,9 @@ class PS2LinkRepositoryImpl(
     override suspend fun searchForCharacter(
         searchField: String,
         currentLang: CensusLang,
-    ): List<Character> = coroutineScope {
+    ): PS2HttpResponse<List<Character>> = coroutineScope {
         if (searchField.length < 3) {
-            return@coroutineScope emptyList()
+            return@coroutineScope PS2HttpResponse.success(emptyList())
         }
         Namespace.validNamespaces.map { namespace ->
             val job = async {
@@ -88,73 +94,81 @@ class PS2LinkRepositoryImpl(
                 endpointProfileList
             }
             job
-        }.awaitAll().filterNotNull().flatten()
+        }.awaitAll().processList { it }.process { it.flatten() }
     }
 
     override suspend fun getFriendList(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<Character> {
-        val friendListResponse = dbgCensus.getFriendList(
+    ): PS2HttpResponse<List<Character>> {
+        return dbgCensus.getFriendList(
             character_id = characterId,
             namespace = namespace,
             currentLang = lang,
         )
-        return friendListResponse ?: emptyList()
     }
 
     override suspend fun getKillList(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<KillEvent> {
+    ): PS2HttpResponse<List<KillEvent>> {
         return dbgCensus.getKillList(
             character_id = characterId,
             namespace = namespace,
             currentLang = lang,
-        ) ?: emptyList()
+        )
     }
 
     override suspend fun getStatList(
         characterId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<StatItem> {
+    ): PS2HttpResponse<List<StatItem>> {
         return dbgCensus.getStatList(
             character_id = characterId,
             namespace = namespace,
             currentLang = currentLang,
-        ) ?: emptyList()
+        )
     }
 
     override suspend fun getWeaponList(
         characterId: String,
         namespace: Namespace,
         lang: CensusLang,
-    ): List<WeaponItem> {
-        val character = getCharacter(characterId, namespace, lang) ?: return emptyList()
-        return dbgCensus.getWeaponList(characterId, character.faction, namespace, CensusLang.EN) ?: emptyList()
+    ): PS2HttpResponse<List<WeaponItem>> {
+        val response = getCharacter(characterId, namespace, lang)
+        if (!response.isSuccessful) {
+            return response.toFailure()
+        }
+        val character = response.requireBody()
+        return dbgCensus.getWeaponList(characterId, character.faction, namespace, CensusLang.EN)
     }
 
-    override suspend fun getServerList(lang: CensusLang): List<Server> = coroutineScope {
-        val serverPopulation = withContext(Dispatchers.Default) { dbgCensus.getServerPopulation() }
+    override suspend fun getServerList(lang: CensusLang): PS2HttpResponse<List<Server>> = coroutineScope {
+        val serverPopulation = dbgCensus.getServerPopulation()
+        if (!serverPopulation.isSuccessful) {
+            return@coroutineScope serverPopulation.toFailure()
+        }
         Namespace.validNamespaces.map { namespace ->
             val job = async {
-                dbgCensus.getServerList(namespace, lang)?.map {
-                    it.world_id?.let { worldId ->
-                        val serverMetadata = getServerMetadata(it, serverPopulation, lang)
-                        Server(
-                            worldId = worldId,
-                            serverName = it.name?.localizedName(lang) ?: "",
-                            namespace = namespace,
-                            serverMetadata = serverMetadata
-                        )
-                    }
+                dbgCensus.getServerList(namespace, lang).process { list ->
+                    list.map { world ->
+                        world.world_id?.let {
+                            val serverMetadata = getServerMetadata(world, serverPopulation.requireBody(), lang)
+                            Server(
+                                worldId = it,
+                                serverName = world.name?.localizedName(lang) ?: "",
+                                namespace = namespace,
+                                serverMetadata = serverMetadata
+                            )
+                        }
+                    }.filterNotNull()
                 }
             }
             job
-        }.awaitAll().filterNotNull().flatten().filterNotNull()
+        }.awaitAll().processList { it }.process { it.flatten() }
     }
 
     override suspend fun saveOutfit(outfit: Outfit) {
@@ -169,8 +183,8 @@ class PS2LinkRepositoryImpl(
         return dbgDAO.getAllOutfitsAsFlow()
     }
 
-    override suspend fun getAllOutfits(): List<Outfit> {
-        return dbgDAO.getAllOutfits()
+    override suspend fun getAllOutfits(): PS2HttpResponse<List<Outfit>> {
+        return PS2HttpResponse.success(dbgDAO.getAllOutfits())
     }
 
     override suspend fun getOutfit(
@@ -178,14 +192,16 @@ class PS2LinkRepositoryImpl(
         namespace: Namespace,
         lang: CensusLang,
         forceUpdate: Boolean
-    ): Outfit? {
+    ): PS2HttpResponse<Outfit> {
         val cachedOutfit = dbgDAO.getOutfit(outfitId, namespace)
         if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit))) {
-            return cachedOutfit
+            return PS2HttpResponse.success(cachedOutfit)
         }
-        val outfit = dbgCensus.getOutfit(outfitId, namespace, lang) ?: return null
-        dbgDAO.insertOutfit(outfit.copy(cached = cachedOutfit?.cached ?: false))
-        return outfit
+        val response = dbgCensus.getOutfit(outfitId, namespace, lang)
+        response.onSuccess {
+            dbgDAO.insertOutfit(it.copy(cached = cachedOutfit?.cached ?: false))
+        }
+        return response
     }
 
     override fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?> {
@@ -196,12 +212,12 @@ class PS2LinkRepositoryImpl(
         tagSearchField: String,
         nameSearchField: String,
         currentLang: CensusLang,
-    ): List<Outfit> = coroutineScope {
+    ): PS2HttpResponse<List<Outfit>> = coroutineScope {
         if (tagSearchField.length < 3 && nameSearchField.length < 3) {
-            return@coroutineScope emptyList()
+            return@coroutineScope PS2HttpResponse.success(emptyList())
         }
 
-        val outfits = Namespace.validNamespaces.map { namespace ->
+        Namespace.validNamespaces.map { namespace ->
             val job = async {
                 val endpointOutfitList = dbgCensus.getOutfitList(
                     outfitTag = tagSearchField,
@@ -212,16 +228,21 @@ class PS2LinkRepositoryImpl(
                 endpointOutfitList
             }
             job
-        }.awaitAll().filterNotNull().flatten()
-        outfits
+        }.awaitAll().processList { it }.process { it.flatten() }
     }
 
-    override suspend fun getMembersOnline(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
-        return dbgCensus.getMembersOnline(outfitId, namespace, currentLang)?.filter { it.loginStatus != LoginStatus.OFFLINE } ?: emptyList()
+    override suspend fun getMembersOnline(outfitId: String, namespace: Namespace, currentLang: CensusLang): PS2HttpResponse<List<Character>> {
+        val response = dbgCensus.getMembersOnline(outfitId, namespace, currentLang)
+        if (!response.isSuccessful) {
+            return response.toFailure()
+        }
+        return response.process { members ->
+            members.filter { it.loginStatus != LoginStatus.OFFLINE }
+        }
     }
 
-    override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): List<Character> {
-        return dbgCensus.getMemberList(outfitId, namespace, currentLang) ?: emptyList()
+    override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): PS2HttpResponse<List<Character>> {
+        return dbgCensus.getMemberList(outfitId, namespace, currentLang)
     }
 
     @OptIn(ExperimentalTime::class)
@@ -252,7 +273,7 @@ class PS2LinkRepositoryImpl(
     }
 }
 
-private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata? {
+private fun getServerMetadata(world: World, ps2Metadata: PS2?, currentLang: CensusLang): ServerMetadata {
     val server = when (world.name?.localizedName(currentLang)) {
         "Ceres" -> ps2Metadata?.livePS4?.ceres
         "Genudine" -> ps2Metadata?.livePS4?.genudine

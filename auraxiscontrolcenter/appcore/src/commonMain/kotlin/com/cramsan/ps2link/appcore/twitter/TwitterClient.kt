@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.twitter
 
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.core.models.PS2Tweet
 
 /**
@@ -13,7 +14,7 @@ interface TwitterClient {
      * @throws TwitterException this exception will ocur when there is a problem contacting
      * the twiter API
      */
-    fun getTweets(users: List<TwitterUser>): List<PS2Tweet>
+    fun getTweets(users: List<TwitterUser>): PS2HttpResponse<List<PS2Tweet>>
 
     /**
      * @param users the user to retrieve tweets from
@@ -21,5 +22,5 @@ interface TwitterClient {
      * @throws TwitterException this exception will ocur when there is a problem contacting
      * the twiter API
      */
-    fun getTweets(user: TwitterUser): List<PS2Tweet>
+    fun getTweets(user: TwitterUser): PS2HttpResponse<List<PS2Tweet>>
 }

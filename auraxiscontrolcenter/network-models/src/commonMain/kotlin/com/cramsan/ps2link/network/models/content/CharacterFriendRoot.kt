@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class CharacterFriendRoot(
     var character_id: String? = null,
     var name: String? = null,
-    var friend_list: List<CharacterFriend>? = null,
+    var friend_list: List<CharacterFriend>
 )

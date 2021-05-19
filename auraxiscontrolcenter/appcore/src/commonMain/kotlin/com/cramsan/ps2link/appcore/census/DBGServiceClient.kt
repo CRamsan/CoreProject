@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.census
 
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
@@ -17,7 +18,7 @@ interface DBGServiceClient {
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): Character?
+    ): PS2HttpResponse<Character>
 
     /**
      * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/character_name/?name.first_lower=^cram&c:limit=25&c:join=character&c:lang=en
@@ -26,19 +27,19 @@ interface DBGServiceClient {
         searchField: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>?
+    ): PS2HttpResponse<List<Character>>
 
     suspend fun getFriendList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>?
+    ): PS2HttpResponse<List<Character>>
 
     suspend fun getKillList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<KillEvent>?
+    ): PS2HttpResponse<List<KillEvent>>
 
     /**
      * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/characters_weapon_stat_by_faction/?character_id=5428010618041058369&c%3Ajoin=item%5Eshow%3Aimage_path%27name.en&c%3Ajoin=vehicle%5Eshow%3Aimage_path%27name.en&c%3Alimit=10000&c%3Alang=en
@@ -48,49 +49,49 @@ interface DBGServiceClient {
         faction: Faction,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<WeaponItem>?
+    ): PS2HttpResponse<List<WeaponItem>>
 
     suspend fun getOutfitList(
         outfitTag: String,
         outfitName: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Outfit>?
+    ): PS2HttpResponse<List<Outfit>>
 
     suspend fun getOutfit(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): Outfit?
+    ): PS2HttpResponse<Outfit>
 
     suspend fun getMemberList(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>?
+    ): PS2HttpResponse<List<Character>>
 
     suspend fun getServerList(
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<World>?
+    ): PS2HttpResponse<List<World>>
 
-    suspend fun getServerPopulation(): PS2?
+    suspend fun getServerPopulation(): PS2HttpResponse<PS2>
 
     suspend fun getServerMetadata(
         serverId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<WorldEvent>?
+    ): PS2HttpResponse<List<WorldEvent>>
 
     suspend fun getStatList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<StatItem>?
+    ): PS2HttpResponse<List<StatItem>>
 
     suspend fun getMembersOnline(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>?
+    ): PS2HttpResponse<List<Character>>
 }

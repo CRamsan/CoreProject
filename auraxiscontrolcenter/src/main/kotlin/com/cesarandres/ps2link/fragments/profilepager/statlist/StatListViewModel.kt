@@ -6,6 +6,7 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -50,7 +51,11 @@ class StatListViewModel @Inject constructor(
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            _statList.value = pS2LinkRepository.getStatList(characterId, namespace, lang)
+            val response = pS2LinkRepository.getStatList(characterId, namespace, lang)
+            if (response.isSuccessful) {
+                _statList.value = response.requireBody()
+            } else {
+            }
             loadingCompleted()
         }
     }

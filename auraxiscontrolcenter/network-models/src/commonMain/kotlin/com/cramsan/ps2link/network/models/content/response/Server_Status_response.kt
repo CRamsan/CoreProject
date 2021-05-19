@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Server_Status_response(
-    var ps2: PS2? = null
+    var ps2: PS2
 )

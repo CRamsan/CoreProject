@@ -6,6 +6,7 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -53,7 +54,11 @@ class KillListViewModel @Inject constructor(
         loadingStarted()
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-            _killList.value = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
+            val response = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
+            if (response.isSuccessful) {
+                _killList.value = response.requireBody()
+            } else {
+            }
             loadingCompleted()
         }
     }

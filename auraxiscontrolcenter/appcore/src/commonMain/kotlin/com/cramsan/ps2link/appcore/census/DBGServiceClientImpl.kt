@@ -8,6 +8,8 @@ import com.cramsan.ps2link.appcore.getThisWeek
 import com.cramsan.ps2link.appcore.getToday
 import com.cramsan.ps2link.appcore.localizedName
 import com.cramsan.ps2link.appcore.network.HttpClient
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
+import com.cramsan.ps2link.appcore.network.process
 import com.cramsan.ps2link.appcore.setThisMonth
 import com.cramsan.ps2link.appcore.setThisWeek
 import com.cramsan.ps2link.appcore.setToday
@@ -45,6 +47,7 @@ import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.item.Weapon
 import com.cramsan.ps2link.network.models.content.response.Character_friend_list_response
 import com.cramsan.ps2link.network.models.content.response.Character_list_response
+import com.cramsan.ps2link.network.models.content.response.Character_name_list_response
 import com.cramsan.ps2link.network.models.content.response.Characters_event_list_response
 import com.cramsan.ps2link.network.models.content.response.Outfit_member_response
 import com.cramsan.ps2link.network.models.content.response.Outfit_response
@@ -87,7 +90,7 @@ class DBGServiceClientImpl(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): Character? {
+    ): PS2HttpResponse<Character> {
         logI(TAG, "Downloading Profile")
         val url = census.generateGameDataRequest(
             Verb.GET,
@@ -101,18 +104,20 @@ class DBGServiceClientImpl(
             namespace.toNetworkModel(),
             currentLang,
         )
-        val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
-        return body?.character_list?.first()?.toCoreModel(namespace, clock.now(), currentLang)
+        val response = http.sendRequestWithRetry<Character_list_response>(Url(url))
+        return response.process {
+            it.character_list.first().toCoreModel(namespace, clock.now(), currentLang)
+        }
     }
 
     override suspend fun getProfiles(
         searchField: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>? {
+    ): PS2HttpResponse<List<Character>> {
         logI(TAG, "Downloading Profile List")
         if (searchField.length < 3) {
-            return emptyList()
+            return PS2HttpResponse.success(emptyList())
         }
         val url = census.generateGameDataRequest(
             Verb.GET,
@@ -130,15 +135,17 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
-        return body?.character_name_list?.mapNotNull { it.character_id_join_character?.toCoreModel(namespace, clock.now(), currentLang) }
+        val response = http.sendRequestWithRetry<Character_name_list_response>(Url(url))
+        return response.process { characterList ->
+            characterList.character_name_list.map { it.character_id_join_character.toCoreModel(namespace, clock.now(), currentLang) }
+        }
     }
 
     override suspend fun getFriendList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>? {
+    ): PS2HttpResponse<List<Character>> {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTERS_FRIEND,
@@ -153,15 +160,17 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Character_friend_list_response>(Url(url))
-        return body?.characters_friend_list?.firstOrNull()?.friend_list?.map { it.toCoreModel(namespace) }
+        val response = http.sendRequestWithRetry<Character_friend_list_response>(Url(url))
+        return response.process { friendList ->
+            friendList.characters_friend_list.first().friend_list.map { it.toCoreModel(namespace) }
+        }
     }
 
     override suspend fun getKillList(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<KillEvent>? {
+    ): PS2HttpResponse<List<KillEvent>> {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTERS_EVENT,
@@ -180,8 +189,10 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Characters_event_list_response>(Url(url))
-        return formatKillList(character_id, body?.characters_event_list, namespace)
+        val response = http.sendRequestWithRetry<Characters_event_list_response>(Url(url))
+        return response.process {
+            formatKillList(character_id, it.characters_event_list, namespace)
+        }
     }
 
     override suspend fun getWeaponList(
@@ -189,7 +200,7 @@ class DBGServiceClientImpl(
         faction: com.cramsan.ps2link.core.models.Faction,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<WeaponItem>? {
+    ): PS2HttpResponse<List<WeaponItem>> {
         val url = census.generateGameDataRequest(
             "characters_weapon_stat_by_faction/?" +
                 "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.toLowerCase() +
@@ -198,8 +209,10 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Weapon_list_response>(Url(url))
-        return formatWeapons(body?.characters_weapon_stat_by_faction_list, faction, currentLang)
+        val response = http.sendRequestWithRetry<Weapon_list_response>(Url(url))
+        return response.process {
+            formatWeapons(it.characters_weapon_stat_by_faction_list, faction, currentLang)
+        }
     }
 
     override suspend fun getOutfitList(
@@ -207,7 +220,7 @@ class DBGServiceClientImpl(
         outfitName: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<com.cramsan.ps2link.core.models.Outfit>? {
+    ): PS2HttpResponse<List<com.cramsan.ps2link.core.models.Outfit>> {
         val query = QueryString.generateQeuryString().apply {
             if (outfitTag.length >= 3) {
                 AddComparison(
@@ -235,15 +248,17 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Outfit_response>(Url(url))
-        return body?.outfit_list?.map { it.toCoreModel(namespace, null, clock.now()) }
+        val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
+        return response.process { outfit ->
+            outfit.outfit_list.map { it.toCoreModel(namespace, null, clock.now()) }
+        }
     }
 
     override suspend fun getOutfit(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): com.cramsan.ps2link.core.models.Outfit? {
+    ): PS2HttpResponse<com.cramsan.ps2link.core.models.Outfit> {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.OUTFIT,
@@ -254,15 +269,17 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Outfit_response>(Url(url))
-        return body?.outfit_list?.first()?.toCoreModel(namespace, null, clock.now())
+        val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
+        return response.process {
+            it.outfit_list.first().toCoreModel(namespace, null, clock.now())
+        }
     }
 
     override suspend fun getMemberList(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>? {
+    ): PS2HttpResponse<List<Character>> {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.OUTFIT,
@@ -280,14 +297,16 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
-        return body?.outfit_list?.firstOrNull()?.members?.map { it.toCoreModel(namespace, clock.now(), currentLang) }
+        val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
+        return response.process { outfitMembers ->
+            outfitMembers.outfit_list.first().members?.map { it.toCoreModel(namespace, clock.now(), currentLang) } ?: emptyList()
+        }
     }
 
     override suspend fun getServerList(
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<World>? {
+    ): PS2HttpResponse<List<World>> {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.WORLD,
@@ -297,15 +316,20 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Server_response>(Url(url))
-        return body?.world_list
+        val response = http.sendRequestWithRetry<Server_response>(Url(url))
+        return response.process {
+            it.world_list
+        }
     }
 
-    override suspend fun getServerPopulation(): PS2? {
+    override suspend fun getServerPopulation(): PS2HttpResponse<PS2> {
         // This is not an standard API call
         val url = Url("https://census.daybreakgames.com/s:$SERVICE_ID/json/status/ps2")
 
-        return http.sendRequestWithRetry<Server_Status_response>(url)?.ps2
+        val response = http.sendRequestWithRetry<Server_Status_response>(url)
+        return response.process {
+            it.ps2
+        }
     }
 
     @OptIn(ExperimentalTime::class)
@@ -313,7 +337,7 @@ class DBGServiceClientImpl(
         serverId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<WorldEvent>? {
+    ): PS2HttpResponse<List<WorldEvent>> {
         // The URL looks like this:
         // http://census.daybreakgames.com/get/ps2:v2/world_event?
         // world_id=17&c:limit=1&type=METAGAME&c:join=metagame_event&c:lang=en
@@ -339,8 +363,10 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<World_event_list_response>(Url(url))
-        return body?.world_event_list
+        val response = http.sendRequestWithRetry<World_event_list_response>(Url(url))
+        return response.process {
+            it.world_event_list
+        }
     }
 
     @OptIn(ExperimentalTime::class)
@@ -348,7 +374,7 @@ class DBGServiceClientImpl(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<StatItem>? {
+    ): PS2HttpResponse<List<StatItem>> {
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTER,
@@ -363,24 +389,28 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val body = http.sendRequestWithRetry<Character_list_response>(Url(url))
-        val profile = body?.character_list?.firstOrNull()
-        return formatStats(profile?.stats?.stat_history)
+        val response = http.sendRequestWithRetry<Character_list_response>(Url(url))
+        return response.process {
+            val profile = it.character_list.first()
+            formatStats(profile.stats?.stat_history)
+        }
     }
 
     override suspend fun getMembersOnline(
         outfitId: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): List<Character>? {
+    ): PS2HttpResponse<List<Character>> {
         val url =
             census.generateGameDataRequest(
                 "outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + CensusLang.EN.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
                 namespace.toNetworkModel(),
                 CensusLang.EN
             )
-        val body = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
-        return body?.outfit_member_list?.mapNotNull { it.toCoreModel(namespace) }
+        val response = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
+        return response.process { outfitMembersOnline ->
+            outfitMembersOnline.outfit_member_list.mapNotNull { it.toCoreModel(namespace) }
+        }
     }
 
     companion object {

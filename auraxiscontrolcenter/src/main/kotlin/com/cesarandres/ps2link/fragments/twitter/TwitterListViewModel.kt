@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
@@ -35,19 +36,27 @@ class TwitterListViewModel @Inject constructor(
         get() = "TwitterListViewModel"
 
     // State
-    val tweetList = twitterRepository.getTweetsAsFlow().map { list ->
-        list.sortedByDescending { twit ->
-            twit.date
+    val tweetList = twitterRepository.getTweetsAsFlow().map { response ->
+        loadingCompleted()
+        if (response.isSuccessful) {
+            response.requireBody().sortedByDescending { twit ->
+                twit.date
+            }
+        } else {
+            emptyList()
         }
     }.asLiveData()
     val twitterUsers = twitterRepository.getTwitterUsersAsFlow().asLiveData()
 
+    fun setUp() {
+        loadingStarted()
+    }
+
     override fun onTwitterUserClicked(twitterUser: TwitterUser) {
+        loadingStarted()
         ioScope.launch {
-            loadingStarted()
             val following = twitterRepository.getTwitterUsers()[twitterUser] ?: true
             twitterRepository.setFollowStatus(twitterUser, !following)
-            loadingCompleted()
         }
     }
 }

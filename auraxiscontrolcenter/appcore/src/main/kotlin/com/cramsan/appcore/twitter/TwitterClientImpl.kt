@@ -1,5 +1,7 @@
 package com.cramsan.appcore.twitter
 
+import com.cramsan.ps2link.appcore.network.PS2HttpResponse
+import com.cramsan.ps2link.appcore.network.process
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.twitter.TwitterClient
 import com.cramsan.ps2link.appcore.twitter.TwitterUser
@@ -29,7 +31,7 @@ class TwitterClientImpl(
      * @throws TwitterException this exception will ocur when there is a problem contacting
      * the twiter API
      */
-    override fun getTweets(users: List<TwitterUser>): List<PS2Tweet> {
+    override fun getTweets(users: List<TwitterUser>): PS2HttpResponse<List<PS2Tweet>> {
         return retrieveTweets(users.map { it.handle })
     }
 
@@ -39,7 +41,7 @@ class TwitterClientImpl(
      * @throws TwitterException this exception will ocur when there is a problem contacting
      * the twiter API
      */
-    override fun getTweets(user: TwitterUser): List<PS2Tweet> {
+    override fun getTweets(user: TwitterUser): PS2HttpResponse<List<PS2Tweet>> {
         val twitterUser = listOf(user.handle)
         return retrieveTweets(twitterUser)
     }
@@ -64,44 +66,50 @@ class TwitterClientImpl(
      * @throws TwitterException this exception is thrown where there is an error
      * communicating with the twitter API
      */
-    private fun retrieveTweets(users: List<String>): List<PS2Tweet> {
+    private fun retrieveTweets(users: List<String>): PS2HttpResponse<List<PS2Tweet>> {
         if (users.isEmpty()) {
-            return emptyList()
+            return PS2HttpResponse.success(emptyList())
         }
         val usersFound = twitter.lookupUsers(*users.toTypedArray())
         val tweetsFound = ArrayList<com.cramsan.ps2link.network.models.twitter.PS2Tweet>()
-        for (foundUser in usersFound) {
-            if (foundUser.status != null) {
-                val statusess = twitter.getUserTimeline(foundUser.screenName)
-                var name: String
-                var tag: String
-                var imgUrl: String
-                var text: String
-                for (status3 in statusess) {
-                    if (status3.isRetweet || status3.isRetweetedByMe) {
-                        name = status3.retweetedStatus.user.name
-                        tag = status3.retweetedStatus.user.screenName
-                        imgUrl = status3.retweetedStatus.user.biggerProfileImageURLHttps
-                        text = status3.text + "\nRetweeted by " + status3.user.screenName
-                    } else {
-                        name = status3.user.name
-                        tag = foundUser.screenName
-                        imgUrl = status3.user.biggerProfileImageURLHttps
-                        text = status3.text
-                    }
-                    tweetsFound.add(
-                        com.cramsan.ps2link.network.models.twitter.PS2Tweet(
-                            java.lang.Long.toString(status3.id),
-                            name,
-                            status3.createdAt.time,
-                            text,
-                            tag,
-                            imgUrl
+        try {
+            for (foundUser in usersFound) {
+                if (foundUser.status != null) {
+                    val statusess = twitter.getUserTimeline(foundUser.screenName)
+                    var name: String
+                    var tag: String
+                    var imgUrl: String
+                    var text: String
+                    for (status3 in statusess) {
+                        if (status3.isRetweet || status3.isRetweetedByMe) {
+                            name = status3.retweetedStatus.user.name
+                            tag = status3.retweetedStatus.user.screenName
+                            imgUrl = status3.retweetedStatus.user.biggerProfileImageURLHttps
+                            text = status3.text + "\nRetweeted by " + status3.user.screenName
+                        } else {
+                            name = status3.user.name
+                            tag = foundUser.screenName
+                            imgUrl = status3.user.biggerProfileImageURLHttps
+                            text = status3.text
+                        }
+                        tweetsFound.add(
+                            com.cramsan.ps2link.network.models.twitter.PS2Tweet(
+                                java.lang.Long.toString(status3.id),
+                                name,
+                                status3.createdAt.time,
+                                text,
+                                tag,
+                                imgUrl
+                            )
                         )
-                    )
+                    }
                 }
             }
+            return PS2HttpResponse.success(tweetsFound).process {
+                tweetsFound.map { it.toCoreModel() }
+            }
+        } catch (throwable: Throwable) {
+            return PS2HttpResponse.failure(null, throwable)
         }
-        return tweetsFound.map { it.toCoreModel() }
     }
 }

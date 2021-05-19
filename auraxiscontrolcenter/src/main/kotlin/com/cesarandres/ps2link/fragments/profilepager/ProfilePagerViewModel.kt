@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.CensusLang
@@ -85,22 +86,20 @@ class ProfilePagerViewModel @Inject constructor(
 
     suspend fun addCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
         val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-        val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
-        if (character == null) {
-            // TODO : Report error
-            return@withContext
+        val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
+        if (response.isSuccessful) {
+            pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = true))
+        } else {
         }
-        pS2LinkRepository.saveCharacter(character.copy(cached = true))
     }
 
     suspend fun removeCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
         val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
-        val character = pS2LinkRepository.getCharacter(characterId, namespace, lang)
-        if (character == null) {
-            // TODO : Report error
-            return@withContext
+        val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
+        if (response.isSuccessful) {
+            pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = false))
+        } else {
         }
-        pS2LinkRepository.saveCharacter(character.copy(cached = false))
     }
 
     suspend fun pinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
