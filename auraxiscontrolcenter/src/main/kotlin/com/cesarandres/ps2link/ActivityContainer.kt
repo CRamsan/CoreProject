@@ -1,9 +1,9 @@
 package com.cesarandres.ps2link
 
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BasePS2Activity
-import com.cramsan.framework.core.NoopViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -19,10 +19,15 @@ import dagger.hilt.android.AndroidEntryPoint
  * has not been tested in tablets yet.
  */
 @AndroidEntryPoint
-class ActivityContainer : BasePS2Activity<NoopViewModel>() {
+class ActivityContainer : BasePS2Activity<ActivityContainerViewModel>() {
 
     override val contentViewLayout = R.layout.activity_single_pane
     override val toolbarViewId = R.id.main_menu_toolbar
     override val logTag = "ActivityContainer"
-    override val viewModel: NoopViewModel by viewModels()
+    override val viewModel: ActivityContainerViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setUp()
+    }
 }

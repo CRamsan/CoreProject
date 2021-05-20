@@ -53,7 +53,7 @@ class PS2SettingsImpl(
 
     override suspend fun getCurrentLang(): CensusLang? {
         return preferences.loadString(CURRENT_CENSUS_LANG)?.let {
-            CensusLang.valueOf(it)
+            CensusLang.fromString(it)
         }
     }
 

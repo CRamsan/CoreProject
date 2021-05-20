@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
+import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.thread.assertIsBackgroundThread
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Server
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +51,7 @@ class ServerListViewModel @Inject constructor(
     private suspend fun downloadServers() {
         assertIsBackgroundThread()
         loadingStarted()
-        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getServerList(lang)
         if (response.isSuccessful) {
             val serverList = response.requireBody().sortedBy {

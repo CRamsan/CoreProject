@@ -7,9 +7,5 @@ import kotlinx.serialization.Serializable
 data class World(
     var name: Name_Multi? = null,
     var world_id: String? = null,
-    var character_id: String? = null,
     var state: OnlineStatus? = null,
-    var population: String? = null,
-    var isRegistered: Boolean = false,
-    var lastAlert: WorldEvent? = null,
 )

@@ -4,11 +4,11 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenOutfit
+import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +47,7 @@ class ProfileViewModel @Inject constructor(
         profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
         loadingStarted()
         ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true)
             loadingCompleted()
         }

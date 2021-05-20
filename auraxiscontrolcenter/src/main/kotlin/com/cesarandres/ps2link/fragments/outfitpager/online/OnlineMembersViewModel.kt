@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.fragments.OpenProfile
+import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,7 +49,7 @@ class OnlineMembersViewModel @Inject constructor(
         }
         loadingStarted()
         ioScope.launch {
-            val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+            val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getMembersOnline(outfitId, namespace, lang)
             if (response.isSuccessful) {
                 _memberList.value = response.requireBody().sortedBy { it.name }

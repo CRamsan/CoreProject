@@ -9,10 +9,8 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.logMetric
 import com.cramsan.framework.thread.ThreadUtilInterface
-import com.cramsan.ps2link.core.models.CensusLang
 import com.microsoft.appcenter.AppCenter
 import dagger.hilt.android.HiltAndroidApp
-import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -55,15 +53,6 @@ class ApplicationPS2Link : Application() {
         // TODO: Hilt is not injecting the AssertUtils. This is a workaround for that
         assertUtil = PS2ApplicationModule.provideAssertUtil(eventLogger, haltUtil)
         logMetric(TAG, "Application Started")
-
-        val lang = Locale.getDefault().language
-        for (clang in CensusLang.values()) {
-            if (lang.equals(clang.name, ignoreCase = true)) {
-                //  TODO: Set this property app-wide
-                //   dbgCensus.currentLang = clang
-                logMetric(TAG, "Language Set", mapOf("Lang" to clang.name))
-            }
-        }
     }
 
     companion object {

@@ -3,12 +3,12 @@ package com.cesarandres.ps2link.fragments.outfitpager
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
+import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -85,7 +85,7 @@ class OutfitPagerViewModel @Inject constructor(
     }
 
     suspend fun addOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
-        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
         if (response.isSuccessful) {
             val outfit = response.requireBody()
@@ -96,7 +96,7 @@ class OutfitPagerViewModel @Inject constructor(
     }
 
     suspend fun removeOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
-        val lang = ps2Settings.getCurrentLang() ?: CensusLang.EN
+        val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
         if (response.isSuccessful) {
             val outfit = response.requireBody()

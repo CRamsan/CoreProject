@@ -40,10 +40,16 @@ class QueryString {
     }
 
     enum class QueryCommand private constructor(private val command: String) {
-        SHOW("c:show"), HIDE("c:hide"), SORT("c:sort"), HAS("c:has"), JOIN("c:join"), RESOLVE("c:resolve"), CASE(
+        SHOW("c:show"),
+        HIDE("c:hide"),
+        SORT("c:sort"),
+        HAS("c:has"),
+        JOIN("c:join"),
+        RESOLVE("c:resolve"), CASE(
             "c:case"
         ),
-        LIMIT("c:limit"), LIMITPERDB(
+        LIMIT("c:limit"),
+        LIMITPERDB(
             "c:limitPerDB"
         ),
         INCLUDENULL("c:includeNull"), START("c:start");

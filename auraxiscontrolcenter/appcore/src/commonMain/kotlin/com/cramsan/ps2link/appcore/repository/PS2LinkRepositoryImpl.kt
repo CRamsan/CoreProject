@@ -143,7 +143,7 @@ class PS2LinkRepositoryImpl(
             return response.toFailure()
         }
         val character = response.requireBody()
-        return dbgCensus.getWeaponList(characterId, character.faction, namespace, CensusLang.EN)
+        return dbgCensus.getWeaponList(characterId, character.faction, namespace, lang)
     }
 
     override suspend fun getServerList(lang: CensusLang): PS2HttpResponse<List<Server>> = coroutineScope {
@@ -154,9 +154,10 @@ class PS2LinkRepositoryImpl(
         Namespace.validNamespaces.map { namespace ->
             val job = async {
                 dbgCensus.getServerList(namespace, lang).process { list ->
-                    list.map { world ->
+                    list.mapNotNull { world ->
                         world.world_id?.let {
-                            val serverMetadata = getServerMetadata(world, serverPopulation.requireBody(), lang)
+                            val serverMetadata =
+                                getServerMetadata(world, serverPopulation.requireBody(), lang)
                             Server(
                                 worldId = it,
                                 serverName = world.name?.localizedName(lang) ?: "",
@@ -164,7 +165,7 @@ class PS2LinkRepositoryImpl(
                                 serverMetadata = serverMetadata
                             )
                         }
-                    }.filterNotNull()
+                    }
                 }
             }
             job

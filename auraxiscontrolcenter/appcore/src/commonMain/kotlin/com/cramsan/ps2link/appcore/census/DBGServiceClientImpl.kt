@@ -311,7 +311,7 @@ class DBGServiceClientImpl(
             Verb.GET,
             Collections.PS2Collection.WORLD,
             "",
-            QueryString.generateQeuryString().AddCommand(QueryString.QueryCommand.LIMIT, "10"),
+            QueryString.generateQeuryString().AddCommand(QueryString.QueryCommand.LIMITPERDB, "20"),
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -324,7 +324,7 @@ class DBGServiceClientImpl(
 
     override suspend fun getServerPopulation(): PS2HttpResponse<PS2> {
         // This is not an standard API call
-        val url = Url("https://census.daybreakgames.com/s:$SERVICE_ID/json/status/ps2")
+        val url = Url("https://census.daybreakgames.com/$SERVICE_ID/json/status/ps2")
 
         val response = http.sendRequestWithRetry<Server_Status_response>(url)
         return response.process {
@@ -403,9 +403,9 @@ class DBGServiceClientImpl(
     ): PS2HttpResponse<List<Character>> {
         val url =
             census.generateGameDataRequest(
-                "outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + CensusLang.EN.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
+                "outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
                 namespace.toNetworkModel(),
-                CensusLang.EN
+                currentLang
             )
         val response = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
         return response.process { outfitMembersOnline ->
@@ -525,7 +525,7 @@ private fun formatWeapons(weaponList: List<Weapon>?, faction: com.cramsan.ps2lin
         for (stat in weaponStats) {
             val weaponEventType = StatNameType.fromString(stat.stat_name)?.toWeaponEventType() ?: continue
             weaponName = stat.item_id_join_item?.name?.localizedName(currentLang)
-            vehicleName = stat.vehicle_id_join_vehicle?.name?.localizedName(CensusLang.EN)
+            vehicleName = stat.vehicle_id_join_vehicle?.name?.localizedName(currentLang)
             weaponUrl = if (stat.item_id_join_item != null) {
                 stat.item_id_join_item?.image_path
             } else if (stat.vehicle_id_join_vehicle != null) {
