@@ -58,12 +58,11 @@ class MainMenuViewModel @Inject constructor(
             return@transform
         }
 
-        emit(Character(profileId, cached = false))
         val namespace = ps2Settings.getPreferredProfileNamespace()
-
         assertNotNull(namespace, logTag, "Namespace cannot be null")
 
         if (namespace != null) {
+            emit(Character(profileId, cached = false, namespace = namespace))
             // TODO: Fix wrong language
             val response = pS2LinkRepository.getCharacter(profileId, namespace, CensusLang.EN)
             if (response.isSuccessful) {
@@ -82,12 +81,11 @@ class MainMenuViewModel @Inject constructor(
             return@transform
         }
 
-        emit(Outfit(outfitId, cached = false))
         val namespace = ps2Settings.getPreferredOutfitNamespace()
-
         assertNotNull(namespace, logTag, "Namespace cannot be null")
 
         if (namespace != null) {
+            emit(Outfit(outfitId, cached = false, namespace = namespace))
             // TODO: Fix wrong language
             val response = pS2LinkRepository.getOutfit(outfitId, namespace, CensusLang.EN)
             if (response.isSuccessful) {

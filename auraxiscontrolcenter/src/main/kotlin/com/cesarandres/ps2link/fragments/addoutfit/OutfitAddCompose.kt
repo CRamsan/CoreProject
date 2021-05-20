@@ -88,7 +88,7 @@ fun OutfitAddComposePreview() {
                 tag = "D3rp",
                 faction = Faction.VS,
                 timeCreated = Instant.fromEpochSeconds(1000000),
-                leader = Character("325354435", "Test", cached = false),
+                leader = Character("325354435", "Test", cached = false, namespace = Namespace.PS2PC),
                 memberCount = 200,
                 cached = false,
                 namespace = Namespace.PS2PS4US,

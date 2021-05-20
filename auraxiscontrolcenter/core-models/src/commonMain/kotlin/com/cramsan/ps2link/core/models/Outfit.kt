@@ -15,7 +15,7 @@ data class Outfit(
     val timeCreated: Instant? = null,
     val leader: Character? = null,
     val memberCount: Int = 0,
-    val namespace: Namespace = Namespace.UNDETERMINED,
+    val namespace: Namespace,
     val lastUpdate: Instant? = null,
     val cached: Boolean,
 )

@@ -273,6 +273,7 @@ private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): Outfit {
             Character(
                 characterId = it,
                 name = leaderCharacterName,
+                namespace = namespace.toCoreModel(),
                 cached = false,
             )
         },

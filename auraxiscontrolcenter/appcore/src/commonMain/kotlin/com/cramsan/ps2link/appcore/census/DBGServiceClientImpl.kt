@@ -495,8 +495,9 @@ fun Outfit.toCoreModel(
             leader_character_id?.let {
                 Character(
                     characterId = it,
-                    leader.name?.first,
-                    cached = false
+                    name = leader.name?.first,
+                    namespace = namespace,
+                    cached = false,
                 )
             }
         },
