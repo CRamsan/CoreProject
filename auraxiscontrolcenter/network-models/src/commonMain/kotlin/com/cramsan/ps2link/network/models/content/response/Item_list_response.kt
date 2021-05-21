@@ -1,14 +1,9 @@
 package com.cramsan.ps2link.network.models.content.response
 
-import com.cramsan.ps2link.network.models.content.Item
-import com.cramsan.ps2link.network.models.content.Vehicle
+import com.cramsan.ps2link.network.models.content.item.Item
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Item_list_response(
-    var item_list: List<Item>? = null,
-    var vehicle_list: List<Vehicle>? = null,
+    var item_list: List<Item>,
 )
-/*
-fun setEvent_list(vehicle_list: List<Vehicle>) {
-    this.vehicle_list = vehicle_list
-}
- */

@@ -32,6 +32,7 @@ fun KillListCompose(
                         attacker = it.attacker,
                         time = it.time,
                         weaponName = it.weaponName,
+                        weaponImage = it.weaponImage,
                         onClick = {
                             it.characterId?.let { characterId ->
                                 eventHandler.onProfileSelected(characterId, it.namespace)

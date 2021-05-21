@@ -8,6 +8,8 @@ import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.StatItem
+import com.cramsan.ps2link.core.models.Vehicle
+import com.cramsan.ps2link.core.models.Weapon
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.WorldEvent
@@ -94,4 +96,16 @@ interface DBGServiceClient {
         namespace: Namespace,
         currentLang: CensusLang,
     ): PS2HttpResponse<List<Character>>
+
+    suspend fun getWeapons(
+        weaponIds: List<String>,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<Weapon>>
+
+    suspend fun getVehicles(
+        vehicleIds: List<String>,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<Vehicle>>
 }

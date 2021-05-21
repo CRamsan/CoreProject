@@ -10,6 +10,8 @@ import com.cramsan.ps2link.appcore.localizedName
 import com.cramsan.ps2link.appcore.network.HttpClient
 import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.appcore.network.process
+import com.cramsan.ps2link.appcore.network.requireBody
+import com.cramsan.ps2link.appcore.network.toFailure
 import com.cramsan.ps2link.appcore.setThisMonth
 import com.cramsan.ps2link.appcore.setThisWeek
 import com.cramsan.ps2link.appcore.setToday
@@ -26,6 +28,7 @@ import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Rank
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.StatItem
+import com.cramsan.ps2link.core.models.Vehicle
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.core.models.WeaponStatItem
@@ -45,14 +48,17 @@ import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.character.Week
 import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.item.Weapon
+import com.cramsan.ps2link.network.models.content.item.WeaponStat
 import com.cramsan.ps2link.network.models.content.response.Character_friend_list_response
 import com.cramsan.ps2link.network.models.content.response.Character_list_response
 import com.cramsan.ps2link.network.models.content.response.Character_name_list_response
 import com.cramsan.ps2link.network.models.content.response.Characters_event_list_response
+import com.cramsan.ps2link.network.models.content.response.Item_list_response
 import com.cramsan.ps2link.network.models.content.response.Outfit_member_response
 import com.cramsan.ps2link.network.models.content.response.Outfit_response
 import com.cramsan.ps2link.network.models.content.response.Server_Status_response
 import com.cramsan.ps2link.network.models.content.response.Server_response
+import com.cramsan.ps2link.network.models.content.response.Vehicle_list_response
 import com.cramsan.ps2link.network.models.content.response.Weapon_list_response
 import com.cramsan.ps2link.network.models.content.response.World_event_list_response
 import com.cramsan.ps2link.network.models.content.response.server.PS2
@@ -137,7 +143,13 @@ class DBGServiceClientImpl(
 
         val response = http.sendRequestWithRetry<Character_name_list_response>(Url(url))
         return response.process { characterList ->
-            characterList.character_name_list.map { it.character_id_join_character.toCoreModel(namespace, clock.now(), currentLang) }
+            characterList.character_name_list.map {
+                it.character_id_join_character.toCoreModel(
+                    namespace,
+                    clock.now(),
+                    currentLang
+                )
+            }
         }
     }
 
@@ -190,8 +202,31 @@ class DBGServiceClientImpl(
         )
 
         val response = http.sendRequestWithRetry<Characters_event_list_response>(Url(url))
+        if (!response.isSuccessful) {
+            return response.toFailure()
+        }
+        val weaponIds = response.requireBody().characters_event_list?.mapNotNull { event ->
+            event.attacker_weapon_id
+        }?.distinct() ?: emptyList()
+        val vehicleIds = response.requireBody().characters_event_list?.mapNotNull { event ->
+            event.attacker_vehicle_id
+        }?.distinct() ?: emptyList()
+
+        val weaponResponse = getWeapons(weaponIds, namespace, currentLang)
+        val weaponMapping = if (weaponResponse.isSuccessful) {
+            weaponResponse.requireBody().map { it.id to it }.toMap()
+        } else {
+            emptyMap()
+        }
+        val vehicleResponse = getVehicles(vehicleIds, namespace, currentLang)
+        val vehicleMapping = if (vehicleResponse.isSuccessful) {
+            vehicleResponse.requireBody().map { it.id to it }.toMap()
+        } else {
+            emptyMap()
+        }
+
         return response.process {
-            formatKillList(character_id, it.characters_event_list, namespace)
+            formatKillList(character_id, it.characters_event_list, weaponMapping, vehicleMapping, namespace)
         }
     }
 
@@ -299,7 +334,13 @@ class DBGServiceClientImpl(
 
         val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
         return response.process { outfitMembers ->
-            outfitMembers.outfit_list.first().members?.map { it.toCoreModel(namespace, clock.now(), currentLang) } ?: emptyList()
+            outfitMembers.outfit_list.first().members?.map {
+                it.toCoreModel(
+                    namespace,
+                    clock.now(),
+                    currentLang
+                )
+            } ?: emptyList()
         }
     }
 
@@ -413,6 +454,66 @@ class DBGServiceClientImpl(
         }
     }
 
+    override suspend fun getWeapons(
+        weaponIds: List<String>,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<com.cramsan.ps2link.core.models.Weapon>> {
+        val queryBuilder = QueryString.generateQeuryString()
+        weaponIds.forEach {
+            queryBuilder.AddComparison("item_id", QueryString.SearchModifier.EQUALS, it)
+        }
+        val url = census.generateGameDataRequest(
+            Verb.GET,
+            Collections.PS2Collection.ITEM,
+            null,
+            queryBuilder,
+            namespace.toNetworkModel(),
+            currentLang,
+        )
+
+        val response = http.sendRequestWithRetry<Item_list_response>(Url(url))
+        return response.process {
+            it.item_list.map { item ->
+                com.cramsan.ps2link.core.models.Weapon(
+                    id = item.item_id ?: "",
+                    name = item.name?.localizedName(currentLang),
+                    imageUrl = item.image_path,
+                )
+            }
+        }
+    }
+
+    override suspend fun getVehicles(
+        vehicleIds: List<String>,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<Vehicle>> {
+        val queryBuilder = QueryString.generateQeuryString()
+        vehicleIds.forEach {
+            queryBuilder.AddComparison("vehicle_id", QueryString.SearchModifier.EQUALS, it)
+        }
+        val url = census.generateGameDataRequest(
+            Verb.GET,
+            Collections.PS2Collection.VEHICLE,
+            null,
+            queryBuilder,
+            namespace.toNetworkModel(),
+            currentLang,
+        )
+
+        val response = http.sendRequestWithRetry<Vehicle_list_response>(Url(url))
+        return response.process {
+            it.vehicle_list.map { item ->
+                Vehicle(
+                    id = item.vehicle_id ?: "",
+                    name = item.name?.localizedName(currentLang),
+                    imageUrl = item.image_path,
+                )
+            }
+        }
+    }
+
     companion object {
         val TAG = "DBGServiceClient"
     }
@@ -508,7 +609,11 @@ fun Outfit.toCoreModel(
     )
 }
 
-private fun formatWeapons(weaponList: List<Weapon>?, faction: com.cramsan.ps2link.core.models.Faction, currentLang: CensusLang): List<WeaponItem> {
+private fun formatWeapons(
+    weaponList: List<WeaponStat>?,
+    faction: com.cramsan.ps2link.core.models.Faction,
+    currentLang: CensusLang
+): List<WeaponItem> {
     if (weaponList == null) {
         return emptyList()
     }
@@ -523,7 +628,8 @@ private fun formatWeapons(weaponList: List<Weapon>?, faction: com.cramsan.ps2lin
         var weaponUrl: String? = null
         val statMapping = mutableMapOf<WeaponEventType, WeaponStatItem>()
         for (stat in weaponStats) {
-            val weaponEventType = StatNameType.fromString(stat.stat_name)?.toWeaponEventType() ?: continue
+            val weaponEventType =
+                StatNameType.fromString(stat.stat_name)?.toWeaponEventType() ?: continue
             weaponName = stat.item_id_join_item?.name?.localizedName(currentLang)
             vehicleName = stat.vehicle_id_join_vehicle?.name?.localizedName(currentLang)
             weaponUrl = if (stat.item_id_join_item != null) {
@@ -643,7 +749,12 @@ private fun formatStats(stats: List<Stat>?): List<StatItem> {
     // TODO: Replace this with a resource
     sph.stat_name = "Score/Hour"
     sph.all_time = (
-        (score?.all_time?.toFloatOrNull() ?: 0f) / ((time?.all_time?.toFloatOrNull() ?: 1f) / 3600f)
+        (score?.all_time?.toFloatOrNull() ?: 0f) / (
+            (
+                time?.all_time?.toFloatOrNull()
+                    ?: 1f
+                ) / 3600f
+            )
         ).toString()
     sph.setToday((score?.getToday() ?: 0f) / ((time?.getToday() ?: 3600f) / 3600f))
     sph.setThisWeek((score?.getThisWeek() ?: 0f) / ((time?.getThisWeek() ?: 3600f) / 3600f))
@@ -656,18 +767,34 @@ private fun formatStats(stats: List<Stat>?): List<StatItem> {
     }
 }
 
-fun formatKillList(characterId: String, characterEventList: List<CharacterEvent>?, namespace: Namespace): List<KillEvent> {
+fun formatKillList(
+    characterId: String,
+    characterEventList: List<CharacterEvent>?,
+    weaponMapping: Map<String, com.cramsan.ps2link.core.models.Weapon>,
+    vehicleMapping: Map<String, Vehicle>,
+    namespace: Namespace
+): List<KillEvent> {
     if (characterEventList == null) {
         return emptyList()
     }
 
     return characterEventList.map {
-        val weaponName = it.weapon_name
         val attackerName: String?
         val time = it.timestamp?.toLong()?.let { Instant.fromEpochSeconds(it) }
         val killType: KillType
         var eventCharacterId: String? = null
         val faction: Faction = Faction.fromString(it.attacker?.faction_id)
+
+        val weaponName: String?
+        val imageUrl: String?
+
+        if (it.attacker_weapon_id != null && !it.attacker_weapon_id.equals("0")) {
+            weaponName = weaponMapping[it.attacker_weapon_id]?.name
+            imageUrl = weaponMapping[it.attacker_weapon_id]?.imageUrl
+        } else {
+            weaponName = vehicleMapping[it.attacker_vehicle_id]?.name
+            imageUrl = vehicleMapping[it.attacker_vehicle_id]?.imageUrl
+        }
 
         if (it.attacker_character_id == characterId) {
             attackerName = it.character?.name?.first
@@ -696,6 +823,7 @@ fun formatKillList(characterId: String, characterEventList: List<CharacterEvent>
             attacker = attackerName,
             time = time,
             weaponName = weaponName,
+            weaponImage = DBGCensus.ENDPOINT_URL + "/" + imageUrl
         )
     }
 }
