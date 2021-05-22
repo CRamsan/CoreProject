@@ -669,7 +669,7 @@ private fun formatWeapons(
             weaponId = weaponId,
             weaponName = weaponName,
             vehicleName = vehicleName,
-            weaponImage = weaponUrl,
+            weaponImage = DBGCensus.ENDPOINT_URL + "/" + weaponUrl,
             statMapping = statMapping,
             medalType = kills?.toMedalType()
         )

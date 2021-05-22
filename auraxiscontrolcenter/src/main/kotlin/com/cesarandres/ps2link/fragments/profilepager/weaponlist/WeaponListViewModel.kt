@@ -11,6 +11,7 @@ import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +59,15 @@ class WeaponListViewModel @Inject constructor(
             val currentLang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getWeaponList(characterId, namespace, currentLang)
             if (response.isSuccessful) {
-                _weaponList.value = response.requireBody()
+                _weaponList.value = response.requireBody().filter {
+                    (
+                        it.statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
+                            ?: 0
+                        ) > 0
+                }.sortedByDescending {
+                    it.statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
+                        ?: 0
+                }
             } else {
             }
             loadingCompleted()
