@@ -11,6 +11,7 @@ import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,7 +54,17 @@ class FriendListViewModel @Inject constructor(
             val currentLang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getFriendList(characterId, namespace, currentLang)
             if (response.isSuccessful) {
-                _friendList.value = response.requireBody()
+                _friendList.value = response.requireBody().sortedWith { object1, object2 ->
+                    if (object1.loginStatus == object2.loginStatus) {
+                        (object1.name ?: "").compareTo(object2.name ?: "")
+                    } else {
+                        if (object1.loginStatus == LoginStatus.ONLINE) {
+                            -1
+                        } else {
+                            1
+                        }
+                    }
+                }
             } else {
             }
             loadingCompleted()

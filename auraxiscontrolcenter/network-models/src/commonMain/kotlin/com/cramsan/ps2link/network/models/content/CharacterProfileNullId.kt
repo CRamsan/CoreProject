@@ -12,7 +12,6 @@ import kotlinx.serialization.Serializable
 data class CharacterProfileNullId(
     var character_id: String? = null,
     var name: Name? = null,
-    var active_profile_id: String? = null,
     var certs: Certs? = null,
     var battle_rank: BattleRank? = null,
     var times: Times? = null,

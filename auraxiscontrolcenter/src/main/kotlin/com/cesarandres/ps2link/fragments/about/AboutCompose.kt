@@ -4,20 +4,20 @@ import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.MainMenuButton
+import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.theme.Padding
 
 @Composable
 fun AboutCompose(
@@ -25,18 +25,40 @@ fun AboutCompose(
 ) {
     FrameBottom(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.padding(horizontal = 50.dp)
-                .verticalScroll(rememberScrollState())
-                .wrapContentWidth()
+            modifier = Modifier
+                .padding(horizontal = Padding.xxlarge)
+                .wrapContentWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(50.dp))
-            val buttonModifier = Modifier.padding(10.dp).fillMaxWidth()
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(R.string.title_about),
-                star = false,
-            ) { eventHandler.onAboutClick() }
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(Padding.xxlarge))
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.h6,
+            )
+            Text(text = stringResource(R.string.text_developed_by))
+            Spacer(modifier = Modifier.height(Padding.xxlarge))
+            FrameSlim {
+                Text(
+                    text = stringResource(R.string.text_about_description),
+                    modifier = Modifier.padding(Padding.medium),
+                    style = MaterialTheme.typography.caption,
+                )
+            }
+            Spacer(modifier = Modifier.height(Padding.xlarge))
+            FrameSlim {
+                Text(
+                    text = stringResource(R.string.url_homepage),
+                    modifier = Modifier.padding(Padding.medium),
+                )
+            }
+            Spacer(modifier = Modifier.height(Padding.xlarge))
+            FrameSlim {
+                Text(
+                    text = stringResource(R.string.text_about_thanks),
+                    modifier = Modifier.padding(Padding.medium),
+                    style = MaterialTheme.typography.caption,
+                )
+            }
         }
     }
 }

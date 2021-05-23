@@ -571,7 +571,7 @@ fun Member.toCoreModel(namespace: Namespace): Character? {
         Character(
             characterId = it,
             name = character?.name?.first,
-            activeProfileId = characterClassFromString(character?.active_profile_id),
+            activeProfileId = characterClassFromString(character?.profile_id),
             loginStatus = LoginStatus.fromString(online_status),
             outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
             namespace = namespace,

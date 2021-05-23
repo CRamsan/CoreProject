@@ -24,6 +24,6 @@ object Padding {
 }
 
 object Opacity {
-    const val transparent = 0.20f
+    const val transparent = 0.10f
     const val translucent = 0.55f
 }
