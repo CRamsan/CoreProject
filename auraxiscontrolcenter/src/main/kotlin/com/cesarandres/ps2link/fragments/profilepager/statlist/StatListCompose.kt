@@ -22,7 +22,7 @@ fun StatListCompose(
     isLoading: Boolean,
     eventHandler: StatListEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(statList) {

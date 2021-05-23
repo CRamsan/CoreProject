@@ -36,7 +36,7 @@ fun TweetListCompose(
     prettyTime: PrettyTime,
     eventHandler: TweetListComposeEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column {
             FrameSlim {
                 Row(

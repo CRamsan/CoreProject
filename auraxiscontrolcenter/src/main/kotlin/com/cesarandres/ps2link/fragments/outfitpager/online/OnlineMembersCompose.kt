@@ -21,7 +21,7 @@ fun OnlineMembersCompose(
     isLoading: Boolean,
     eventHandler: OnlineMemberEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(memberList) {

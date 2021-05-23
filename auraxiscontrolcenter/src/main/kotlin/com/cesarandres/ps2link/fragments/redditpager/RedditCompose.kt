@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.fragments.redditpager
 
 import androidx.annotation.MainThread
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -21,7 +20,7 @@ fun RedditCompose(
     prettyTime: PrettyTime,
     eventHandler: RedditEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         LazyColumn {
             items(redditContent) {
                 RedditPostItem(

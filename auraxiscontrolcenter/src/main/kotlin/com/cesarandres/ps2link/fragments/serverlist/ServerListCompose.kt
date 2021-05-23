@@ -20,7 +20,7 @@ fun ServerListCompose(
     serverItems: List<Server>,
     isLoading: Boolean,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(serverItems) {

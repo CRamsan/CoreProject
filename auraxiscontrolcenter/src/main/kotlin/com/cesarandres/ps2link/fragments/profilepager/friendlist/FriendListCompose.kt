@@ -21,7 +21,7 @@ fun FriendListCompose(
     isLoading: Boolean,
     eventHandler: FriendListEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(friendList) {

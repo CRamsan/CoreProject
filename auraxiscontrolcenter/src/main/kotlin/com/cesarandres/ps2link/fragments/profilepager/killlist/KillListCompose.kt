@@ -21,7 +21,7 @@ fun KillListCompose(
     isLoading: Boolean,
     eventHandler: KillListEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(killList) {

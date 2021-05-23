@@ -1,9 +1,9 @@
 package com.cesarandres.ps2link.fragments.about
 
 import androidx.annotation.MainThread
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -23,7 +23,7 @@ import com.cramsan.ps2link.ui.theme.Padding
 fun AboutCompose(
     eventHandler: AboutEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(
             modifier = Modifier
                 .padding(horizontal = Padding.xxlarge)
@@ -45,7 +45,11 @@ fun AboutCompose(
                 )
             }
             Spacer(modifier = Modifier.height(Padding.xlarge))
-            FrameSlim {
+            FrameSlim(
+                modifier = Modifier.clickable {
+                    eventHandler.onAboutClick()
+                }
+            ) {
                 Text(
                     text = stringResource(R.string.url_homepage),
                     modifier = Modifier.padding(Padding.medium),
@@ -68,7 +72,11 @@ interface AboutEventHandler {
     fun onAboutClick()
 }
 
-@Preview
+@Preview(
+    widthDp = 900,
+    heightDp = 400,
+
+)
 @Composable
 fun AboutPreview() {
     AboutCompose(

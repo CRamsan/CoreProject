@@ -1,6 +1,7 @@
 package com.cesarandres.ps2link
 
 import android.content.Context
+import android.content.res.Resources
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_CENTER_ID
 import com.cramsan.appcore.twitter.TwitterClientImpl
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
@@ -289,4 +290,7 @@ object PS2ApplicationModule {
         preferences: Preferences,
         dispatcherProvider: DispatcherProvider,
     ): TwitterRepository = TwitterRepositoryImpl(twitterClient, preferences, dispatcherProvider)
+
+    @Provides
+    fun provideResources(@ApplicationContext appContext: Context): Resources = appContext.resources
 }

@@ -1,12 +1,15 @@
 package com.cramsan.ps2link.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
@@ -26,6 +29,7 @@ private fun Frame(
     shape: Shape,
     border: BorderStroke,
     marginPadding: Dp,
+    alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
     Surface(
@@ -35,7 +39,10 @@ private fun Frame(
         color = MaterialTheme.colors.primary.setAlpha(Opacity.transparent),
         contentColor = MaterialTheme.colors.onPrimary,
     ) {
-        Box(modifier = Modifier.padding(marginPadding)) {
+        Box(
+            modifier = Modifier.padding(marginPadding),
+            contentAlignment = alignment,
+        ) {
             content()
         }
     }
@@ -44,6 +51,7 @@ private fun Frame(
 @Composable
 fun FrameBottom(
     modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
     Frame(
@@ -51,6 +59,7 @@ fun FrameBottom(
         shape = Shapes.largeBottom,
         border = BorderStroke(Size.xsmall, MaterialTheme.colors.primary),
         marginPadding = Padding.medium,
+        alignment = alignment,
     ) {
         content()
     }
@@ -59,6 +68,7 @@ fun FrameBottom(
 @Composable
 fun FrameCenter(
     modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
     Frame(
@@ -66,6 +76,7 @@ fun FrameCenter(
         shape = RectangleShape,
         border = BorderStroke(Size.xsmall, MaterialTheme.colors.primary),
         marginPadding = Padding.medium,
+        alignment = alignment,
     ) {
         content()
     }
@@ -74,6 +85,7 @@ fun FrameCenter(
 @Composable
 fun FrameSlim(
     modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
     Frame(
@@ -81,6 +93,7 @@ fun FrameSlim(
         shape = MaterialTheme.shapes.medium,
         border = BorderStroke(Size.xmicro, MaterialTheme.colors.primary),
         marginPadding = Padding.xsmall,
+        alignment = alignment,
     ) {
         content()
     }

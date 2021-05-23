@@ -31,7 +31,7 @@ fun OutfitAddCompose(
     isLoading: Boolean,
     eventHandler: OutfitAddEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             Row {
                 SearchField(

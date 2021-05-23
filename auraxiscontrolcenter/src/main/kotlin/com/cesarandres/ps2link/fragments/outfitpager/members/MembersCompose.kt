@@ -21,7 +21,7 @@ fun MemberListCompose(
     isLoading: Boolean,
     eventHandler: MemberListEventHandler,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(memberList) {

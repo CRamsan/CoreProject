@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.fragments.OpenAbout
@@ -58,28 +59,28 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
         super.onViewModelEvent(event)
         when (event) {
             is OpenProfile -> {
-                findNavController().navigate(R.id.fragmentProfilePager, event.args.toBundle())
+                findNavController().navigate(R.id.fragmentProfilePager, event.args.toBundle(), navigationOptions)
             }
             is OpenOutfit -> {
-                findNavController().navigate(R.id.fragmentOutfitPager, event.args.toBundle())
+                findNavController().navigate(R.id.fragmentOutfitPager, event.args.toBundle(), navigationOptions)
             }
             is OpenProfileList -> {
-                findNavController().navigate(R.id.fragmentProfileList)
+                findNavController().navigate(R.id.fragmentProfileList, null, navigationOptions)
             }
             is OpenOutfitList -> {
-                findNavController().navigate(R.id.fragmentOutfitList)
+                findNavController().navigate(R.id.fragmentOutfitList, null, navigationOptions)
             }
             is OpenServerList -> {
-                findNavController().navigate(R.id.fragmentServerList)
+                findNavController().navigate(R.id.fragmentServerList, null, navigationOptions)
             }
             is OpenTwitter -> {
-                findNavController().navigate(R.id.fragmentTwitter)
+                findNavController().navigate(R.id.fragmentTwitter, null, navigationOptions)
             }
             is OpenReddit -> {
-                findNavController().navigate(R.id.fragmentReddit)
+                findNavController().navigate(R.id.fragmentReddit, null, navigationOptions)
             }
             is OpenAbout -> {
-                findNavController().navigate(R.id.fragmentAbout)
+                findNavController().navigate(R.id.fragmentAbout, null, navigationOptions)
             }
             is OpenUrl -> {
                 val intent = Intent(Intent.ACTION_VIEW)
@@ -88,6 +89,11 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
             }
         }
     }
+
+    val navigationOptions = NavOptions.Builder()
+        .setEnterAnim(R.anim.nav_default_enter_anim)
+        .setExitAnim(R.anim.nav_default_exit_anim)
+        .build()
 
     @Composable
     abstract fun CreateComposeContent()

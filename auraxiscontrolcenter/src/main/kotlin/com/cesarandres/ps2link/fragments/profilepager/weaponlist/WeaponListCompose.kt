@@ -23,7 +23,7 @@ fun WeaponListCompose(
     weaponList: List<WeaponItem>,
     isLoading: Boolean,
 ) {
-    FrameBottom(modifier = Modifier.fillMaxSize()) {
+    FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
                 items(weaponList) {

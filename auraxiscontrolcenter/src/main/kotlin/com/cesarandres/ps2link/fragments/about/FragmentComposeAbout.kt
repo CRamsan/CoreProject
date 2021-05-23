@@ -3,7 +3,6 @@ package com.cesarandres.ps2link.fragments.about
 import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
-import com.cramsan.framework.core.NoopViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -12,19 +11,15 @@ import dagger.hilt.android.AndroidEntryPoint
  * buttons if those have been set.
  */
 @AndroidEntryPoint
-class FragmentComposeAbout : BaseComposePS2Fragment<NoopViewModel>(), AboutEventHandler {
+class FragmentComposeAbout : BaseComposePS2Fragment<AboutViewModel>() {
 
     override val logTag = "FragmentComposeAbout"
-    override val viewModel: NoopViewModel by viewModels()
+    override val viewModel: AboutViewModel by viewModels()
 
     @Composable
     override fun CreateComposeContent() {
         AboutCompose(
-            eventHandler = this,
+            eventHandler = viewModel,
         )
-    }
-
-    override fun onAboutClick() {
-        TODO("Not yet implemented")
     }
 }
