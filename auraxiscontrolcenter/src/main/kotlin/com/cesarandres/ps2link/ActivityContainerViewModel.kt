@@ -3,16 +3,20 @@ package com.cesarandres.ps2link
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
+import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.metrics.logMetric
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.CensusLang
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ActivityContainerViewModel @Inject constructor(
+    private val objectDataSource: ObjectDataSource,
     application: Application,
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
@@ -34,6 +38,35 @@ class ActivityContainerViewModel @Inject constructor(
         ioScope.launch {
             ps2Settings.updateCurrentLang(lang)
             logMetric(logTag, "Language Set", mapOf("Lang" to lang.name))
+
+            migrateDatabase(lang)
         }
+    }
+
+    private suspend fun migrateDatabase(lang: CensusLang) {
+        // Perform migration
+        objectDataSource.open()
+        val profiles = objectDataSource.getAllCharacterProfiles(false)
+        val outfits = objectDataSource.getAllOutfits(false)
+        profiles.forEach {
+            val response = pS2LinkRepository.getCharacter(it.characterId, it.namespace, lang)
+            if (response.isSuccessful) {
+                pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = true))
+            }
+        }
+        outfits.forEach {
+            val response = pS2LinkRepository.getOutfit(it.id, it.namespace, lang)
+            if (response.isSuccessful) {
+                pS2LinkRepository.saveOutfit(response.requireBody().copy(cached = true))
+            }
+        }
+
+        if (profiles.isNotEmpty()) {
+            objectDataSource.deleteAllCharacterProfiles(true)
+        }
+        if (outfits.isNotEmpty()) {
+            objectDataSource.deleteAllOutfit(true)
+        }
+        objectDataSource.close()
     }
 }

@@ -3,6 +3,7 @@ package com.cesarandres.ps2link
 import android.content.Context
 import android.content.res.Resources
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_CENTER_ID
+import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.appcore.twitter.TwitterClientImpl
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN_SECRET
@@ -202,7 +203,7 @@ object PS2ApplicationModule {
         @ApplicationContext appContext: Context,
         schema: SqlDriver.Schema,
     ): SqlDriver {
-        return AndroidSqliteDriver(schema, appContext, "ps2link.db")
+        return AndroidSqliteDriver(schema, appContext, "ps2link2.db")
     }
 
     @Provides
@@ -293,4 +294,8 @@ object PS2ApplicationModule {
 
     @Provides
     fun provideResources(@ApplicationContext appContext: Context): Resources = appContext.resources
+
+    @Provides
+    @Singleton
+    fun provideObjectDataSource(@ApplicationContext appContext: Context) = ObjectDataSource(appContext)
 }
