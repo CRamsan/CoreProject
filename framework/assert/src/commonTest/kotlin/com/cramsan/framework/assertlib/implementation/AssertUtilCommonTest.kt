@@ -1,10 +1,11 @@
-package com.cramsan.framework.assert.implementation
+package com.cramsan.framework.assertlib.implementation
 
-import com.cramsan.framework.assert.assert
-import com.cramsan.framework.assert.assertFailure
-import com.cramsan.framework.assert.assertFalse
-import com.cramsan.framework.assert.assertNotNull
-import com.cramsan.framework.assert.assertNull
+import com.cramsan.framework.assertlib.AssertUtil
+import com.cramsan.framework.assertlib.assert
+import com.cramsan.framework.assertlib.assertFailure
+import com.cramsan.framework.assertlib.assertFalse
+import com.cramsan.framework.assertlib.assertNotNull
+import com.cramsan.framework.assertlib.assertNull
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
@@ -117,7 +118,7 @@ class AssertUtilCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure the singleton
-        assertEquals(assertUtil, com.cramsan.framework.assert.AssertUtil.instance(assertUtil))
+        assertEquals(assertUtil, AssertUtil.instance(assertUtil))
 
         assert(true, tag, message)
         verify { assertUtil.assert(true, tag, message) }

@@ -9,14 +9,15 @@ import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN_SECRET
 import com.cramsan.appcore.twitter.TwitterModuleConstants.CONSUMER_KEY
 import com.cramsan.appcore.twitter.TwitterModuleConstants.CONSUMER_SECRET
-import com.cramsan.framework.assert.AssertUtil
-import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.AssertUtil
+import com.cramsan.framework.assertlib.AssertUtilInterface
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
+import com.cramsan.framework.crashehandler.implementation.AppCenterErrorCallback
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.HaltUtilDelegate
@@ -33,7 +34,6 @@ import com.cramsan.framework.metrics.Metrics
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterMetrics
-import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
 import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
@@ -82,7 +82,6 @@ object PS2ApplicationModule {
         eventLoggerInterface: EventLoggerInterface,
         haltUtilInterface: HaltUtil,
     ): AssertUtilInterface {
-        // TODO: This is not working. I assume this is a Hilt bug
         val impl = AssertUtilImpl(
             BuildConfig.DEBUG,
             eventLoggerInterface,
@@ -94,16 +93,9 @@ object PS2ApplicationModule {
     @Provides
     @Singleton
     fun provideThreadUtilDelegate(
-        eventLoggerInterface: EventLoggerInterface,
-        haltUtilInterface: HaltUtil,
+        assertUtilInterface: AssertUtilInterface,
     ): ThreadUtilDelegate {
-        return ThreadUtilAndroid(
-            AssertUtilImpl(
-                BuildConfig.DEBUG,
-                eventLoggerInterface,
-                haltUtilInterface
-            )
-        )
+        return ThreadUtilAndroid(assertUtilInterface)
     }
 
     @Provides
@@ -128,8 +120,8 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideEventLoggerErrorCallbackInterface(metricsInterface: MetricsInterface): EventLoggerErrorCallbackInterface =
-        MetricsErrorCallback(metricsInterface)
+    fun provideEventLoggerErrorCallbackInterface(): EventLoggerErrorCallbackInterface =
+        AppCenterErrorCallback()
 
     @Provides
     @Singleton
@@ -152,7 +144,8 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideHaltUtilDelegate(@ApplicationContext appContext: Context): HaltUtilDelegate = HaltUtilAndroid(appContext)
+    fun provideHaltUtilDelegate(@ApplicationContext appContext: Context): HaltUtilDelegate =
+        HaltUtilAndroid(appContext)
 
     @Provides
     @Singleton
@@ -297,5 +290,6 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideObjectDataSource(@ApplicationContext appContext: Context) = ObjectDataSource(appContext)
+    fun provideObjectDataSource(@ApplicationContext appContext: Context) =
+        ObjectDataSource(appContext)
 }

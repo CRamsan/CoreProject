@@ -22,7 +22,7 @@ import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.scene.Scene
 import com.cramsan.awslib.scene.SceneConfig
 import com.cramsan.awslib.scene.SceneEventsCallback
-import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import kotlinx.coroutines.GlobalScope

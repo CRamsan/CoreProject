@@ -1,6 +1,6 @@
-package com.cramsan.framework.assert.implementation
+package com.cramsan.framework.assertlib.implementation
 
-import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity

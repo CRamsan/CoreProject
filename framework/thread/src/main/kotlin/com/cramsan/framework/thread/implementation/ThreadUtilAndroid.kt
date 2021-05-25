@@ -2,7 +2,7 @@ package com.cramsan.framework.thread.implementation
 
 import android.os.Handler
 import android.os.Looper
-import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import java.util.concurrent.Executors

@@ -6,6 +6,7 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -85,6 +86,7 @@ class OutfitPagerViewModel @Inject constructor(
     }
 
     suspend fun addOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "addOutfit")
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
         if (response.isSuccessful) {
@@ -96,6 +98,7 @@ class OutfitPagerViewModel @Inject constructor(
     }
 
     suspend fun removeOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "removeOutfit")
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getOutfit(outfitId, namespace, lang)
         if (response.isSuccessful) {
@@ -107,12 +110,14 @@ class OutfitPagerViewModel @Inject constructor(
     }
 
     suspend fun pinOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "pinOutfit")
         ps2Settings.updatePreferredOutfitNamespace(namespace)
         ps2Settings.updatePreferredOutfitId(outfitId)
         refreshPreferredOutfitState()
     }
 
     suspend fun unpinOutfit() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "unpinOutfit")
         ps2Settings.updatePreferredOutfitNamespace(null)
         ps2Settings.updatePreferredOutfitId(null)
         refreshPreferredOutfitState()

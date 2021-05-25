@@ -13,8 +13,9 @@ import com.cesarandres.ps2link.fragments.OpenReddit
 import com.cesarandres.ps2link.fragments.OpenServerList
 import com.cesarandres.ps2link.fragments.OpenTwitter
 import com.cesarandres.ps2link.getCurrentLang
-import com.cramsan.framework.assert.assertNotNull
+import com.cramsan.framework.assertlib.assertNotNull
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -55,8 +56,10 @@ class MainMenuViewModel @Inject constructor(
     val preferredProfile: Flow<Character?> = _preferredProfileId.transform { profileId ->
         if (profileId.isNullOrBlank()) {
             emit(null)
+            logMetric(logTag, EVENT_PREFERRED_PROFILE, mapOf(PARAMETER_PRESENT to false.toString()))
             return@transform
         }
+        logMetric(logTag, EVENT_PREFERRED_PROFILE, mapOf(PARAMETER_PRESENT to true.toString()))
 
         val namespace = ps2Settings.getPreferredProfileNamespace()
         assertNotNull(namespace, logTag, "Namespace cannot be null")
@@ -78,8 +81,10 @@ class MainMenuViewModel @Inject constructor(
     val preferredOutfit: Flow<Outfit?> = _preferredOutfitId.transform { outfitId ->
         if (outfitId.isNullOrBlank()) {
             emit(null)
+            logMetric(logTag, EVENT_PREFERRED_OUTFIT, mapOf(PARAMETER_PRESENT to false.toString()))
             return@transform
         }
+        logMetric(logTag, EVENT_PREFERRED_OUTFIT, mapOf(PARAMETER_PRESENT to true.toString()))
 
         val namespace = ps2Settings.getPreferredOutfitNamespace()
         assertNotNull(namespace, logTag, "Namespace cannot be null")
@@ -135,5 +140,11 @@ class MainMenuViewModel @Inject constructor(
 
     override fun onAboutClick() {
         events.value = OpenAbout
+    }
+
+    companion object {
+        const val EVENT_PREFERRED_PROFILE = "preferredProfile"
+        const val EVENT_PREFERRED_OUTFIT = "preferredOutfit"
+        const val PARAMETER_PRESENT = "present"
     }
 }

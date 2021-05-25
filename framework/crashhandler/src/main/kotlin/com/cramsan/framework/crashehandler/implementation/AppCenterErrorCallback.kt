@@ -1,11 +1,10 @@
-package com.cramsan.framework.metrics.implementation
+package com.cramsan.framework.crashehandler.implementation
 
 import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
+import com.microsoft.appcenter.crashes.Crashes
 
-class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
-    EventLoggerErrorCallbackInterface {
+class AppCenterErrorCallback : EventLoggerErrorCallbackInterface {
 
     override fun onWarning(tag: String, message: String, throwable: Throwable?) {
         logEvent(tag, message, throwable, Severity.WARNING)
@@ -16,18 +15,21 @@ class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
     }
 
     private fun logEvent(tag: String, message: String, throwable: Throwable?, severity: Severity) {
-        metricsInterface.log(
-            tag,
-            message,
+        val requiredThrowable = throwable ?: Throwable("")
+        Crashes.trackError(
+            requiredThrowable,
             mapOf(
-                THROWABLE_KEY to (throwable?.message ?: throwable.toString()),
-                SEVERITY_KEY to severity.name
-            )
+                TAG_KEY to tag,
+                SEVERITY_KEY to severity.name,
+                MESSAGE_KEY to message,
+            ),
+            null,
         )
     }
 
     companion object {
-        private const val THROWABLE_KEY = "Throwable"
+        private const val TAG_KEY = "Tag"
+        private const val MESSAGE_KEY = "Message"
         private const val SEVERITY_KEY = "Severity"
     }
 }

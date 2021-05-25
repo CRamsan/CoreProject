@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.appcore.network
 
-import com.cramsan.framework.assert.assert
+import com.cramsan.framework.assertlib.assert
 import io.ktor.client.statement.HttpResponse
 
 class PS2HttpResponse<Body> private constructor(

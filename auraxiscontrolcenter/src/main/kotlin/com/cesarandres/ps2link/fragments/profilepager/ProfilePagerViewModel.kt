@@ -6,6 +6,7 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -85,6 +86,7 @@ class ProfilePagerViewModel @Inject constructor(
     }
 
     suspend fun addCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "addCharacter")
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
         if (response.isSuccessful) {
@@ -94,6 +96,7 @@ class ProfilePagerViewModel @Inject constructor(
     }
 
     suspend fun removeCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "removeCharacter")
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
         if (response.isSuccessful) {
@@ -103,12 +106,14 @@ class ProfilePagerViewModel @Inject constructor(
     }
 
     suspend fun pinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "pinCharacter")
         ps2Settings.updatePreferredProfileNamespace(namespace)
         ps2Settings.updatePreferredCharacterId(characterId)
         refreshPreferredCharacterState()
     }
 
     suspend fun unpinCharacter() = withContext(dispatcherProvider.ioDispatcher()) {
+        logMetric(logTag, "unpinCharacter")
         ps2Settings.updatePreferredProfileNamespace(null)
         ps2Settings.updatePreferredCharacterId(null)
         refreshPreferredCharacterState()

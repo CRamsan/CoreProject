@@ -1,7 +1,7 @@
 package com.cramsan.petproject
 
 import android.content.Context
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandler

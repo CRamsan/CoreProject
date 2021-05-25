@@ -6,7 +6,7 @@ import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapLoader
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity

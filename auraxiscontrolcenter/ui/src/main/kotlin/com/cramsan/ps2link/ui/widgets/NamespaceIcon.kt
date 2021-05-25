@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.cramsan.framework.assert.assertFailure
+import com.cramsan.framework.assertlib.assertFailure
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.theme.PS2Theme

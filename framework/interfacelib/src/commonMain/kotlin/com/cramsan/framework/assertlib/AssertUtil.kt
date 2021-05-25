@@ -1,4 +1,4 @@
-package com.cramsan.framework.assert
+package com.cramsan.framework.assertlib
 
 /**
  * @Author cramsan

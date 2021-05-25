@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.NavOptions
@@ -23,6 +24,7 @@ import com.cesarandres.ps2link.fragments.OpenUrl
 import com.cramsan.framework.core.BaseEvent
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.ComposeBaseFragment
+import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import javax.inject.Inject
@@ -57,6 +59,7 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
 
     override fun onViewModelEvent(event: BaseEvent) {
         super.onViewModelEvent(event)
+        logMetric(logTag, event.javaClass.simpleName)
         when (event) {
             is OpenProfile -> {
                 findNavController().navigate(R.id.fragmentProfilePager, event.args.toBundle(), navigationOptions)
@@ -97,4 +100,35 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
 
     @Composable
     abstract fun CreateComposeContent()
+
+    @CallSuper
+    override fun onStart() {
+        super.onStart()
+        logMetric(logTag, EVENT_CREATED)
+    }
+
+    @CallSuper
+    override fun onResume() {
+        super.onResume()
+        logMetric(logTag, EVENT_DISPLAYED)
+    }
+
+    @CallSuper
+    override fun onPause() {
+        super.onPause()
+        logMetric(logTag, EVENT_HIDDEN)
+    }
+
+    @CallSuper
+    override fun onStop() {
+        super.onStop()
+        logMetric(logTag, EVENT_DESTROYED)
+    }
+
+    companion object {
+        private const val EVENT_CREATED = "Created"
+        private const val EVENT_DISPLAYED = "Displayed"
+        private const val EVENT_HIDDEN = "Hidden"
+        private const val EVENT_DESTROYED = "Destroyed"
+    }
 }

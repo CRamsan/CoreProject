@@ -1,4 +1,4 @@
-package com.cramsan.framework.assert
+package com.cramsan.framework.assertlib
 
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface

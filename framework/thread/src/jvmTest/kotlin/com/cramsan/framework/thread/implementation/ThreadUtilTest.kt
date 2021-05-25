@@ -1,6 +1,6 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.logging.EventLoggerInterface
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

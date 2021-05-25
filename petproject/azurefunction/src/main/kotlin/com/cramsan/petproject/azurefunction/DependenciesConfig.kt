@@ -1,6 +1,6 @@
 package com.cramsan.petproject.azurefunction
 
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity

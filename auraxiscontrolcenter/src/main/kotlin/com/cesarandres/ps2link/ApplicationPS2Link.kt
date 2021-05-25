@@ -1,7 +1,7 @@
 package com.cesarandres.ps2link
 
 import android.app.Application
-import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -50,8 +50,6 @@ class ApplicationPS2Link : Application() {
         AppCenter.start(this, appCenterId)
         crashHandler.initialize()
         metrics.initialize()
-        // TODO: Hilt is not injecting the AssertUtils. This is a workaround for that
-        assertUtil = PS2ApplicationModule.provideAssertUtil(eventLogger, haltUtil)
         logMetric(TAG, "Application Started")
     }
 

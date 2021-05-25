@@ -17,9 +17,9 @@ class EventLoggerImpl(
         platformDelegate.log(severity, tag, message, throwable)
         errorCallback?.let {
             if (severity == Severity.WARNING) {
-                it.onWarning(tag, message)
+                it.onWarning(tag, message, throwable)
             } else if (severity == Severity.ERROR) {
-                it.onError(tag, message)
+                it.onError(tag, message, throwable)
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.cramsan.framework.thread.implementation
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

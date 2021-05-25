@@ -58,9 +58,11 @@ class HttpClient(
             response = http.get(url)
         }
 
+        val normalizedLatency = (latency.toLong(DurationUnit.MILLISECONDS) / 200L) * 200
+
         val metadata = mapOf(
             RESPONSE_CODE to response.status.value,
-            LATENCY to latency,
+            LATENCY to normalizedLatency,
             RETRY to retry,
         ).mapValues { it.value.toString() }
         logMetric(TAG, "Request Completed", metadata)

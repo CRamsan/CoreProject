@@ -1,7 +1,7 @@
 package com.cramsan.petproject.webservice
 
-import com.cramsan.framework.assert.AssertUtilInterface
-import com.cramsan.framework.assert.implementation.AssertUtilImpl
+import com.cramsan.framework.assertlib.AssertUtilInterface
+import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM

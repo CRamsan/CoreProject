@@ -9,7 +9,7 @@ import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TurnActionType
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.map.MapGenerator
-import com.cramsan.framework.assert.AssertUtilInterface
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase

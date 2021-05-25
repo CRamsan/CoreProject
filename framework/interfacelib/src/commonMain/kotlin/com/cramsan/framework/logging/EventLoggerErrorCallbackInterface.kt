@@ -6,12 +6,12 @@ package com.cramsan.framework.logging
  */
 interface EventLoggerErrorCallbackInterface {
     /**
-     * The [tag] and [message] were logged with a [Severity] of [Severity.WARNING]
+     * The [tag], [message] and [throwable] were logged with a [Severity] of [Severity.WARNING]
      */
-    fun onWarning(tag: String, message: String)
+    fun onWarning(tag: String, message: String, throwable: Throwable? = null)
 
     /**
-     * The [tag] and [message] were logged with a [Severity] of [Severity.ERROR]
+     * The [tag], [message] and [throwable] were logged with a [Severity] of [Severity.ERROR]
      */
-    fun onError(tag: String, message: String)
+    fun onError(tag: String, message: String, throwable: Throwable? = null)
 }
