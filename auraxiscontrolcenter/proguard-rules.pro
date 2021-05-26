@@ -15,3 +15,12 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# Report all configurations applied
+-printconfiguration ./build/full-r8-config.txt
+
+# Report on all code that R8 removed
+-printusage ./build/r8-usage.txt
+
+-keep public class com.cramsan.*
+-keep public class com.cesarandres.ps2link.*
