@@ -21,9 +21,11 @@ import com.cesarandres.ps2link.fragments.OpenReddit
 import com.cesarandres.ps2link.fragments.OpenServerList
 import com.cesarandres.ps2link.fragments.OpenTwitter
 import com.cesarandres.ps2link.fragments.OpenUrl
+import com.cesarandres.ps2link.toMap
 import com.cramsan.framework.core.BaseEvent
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.ComposeBaseFragment
+import com.cramsan.framework.logging.logW
 import com.cramsan.framework.metrics.logMetric
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.ui.theme.PS2Theme
@@ -59,36 +61,47 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
 
     override fun onViewModelEvent(event: BaseEvent) {
         super.onViewModelEvent(event)
-        logMetric(logTag, event.javaClass.simpleName)
         when (event) {
             is OpenProfile -> {
+                logMetric(logTag, event.javaClass.simpleName, event.args.toBundle().toMap())
                 findNavController().navigate(R.id.fragmentProfilePager, event.args.toBundle(), navigationOptions)
             }
             is OpenOutfit -> {
+                logMetric(logTag, event.javaClass.simpleName, event.args.toBundle().toMap())
                 findNavController().navigate(R.id.fragmentOutfitPager, event.args.toBundle(), navigationOptions)
             }
             is OpenProfileList -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 findNavController().navigate(R.id.fragmentProfileList, null, navigationOptions)
             }
             is OpenOutfitList -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 findNavController().navigate(R.id.fragmentOutfitList, null, navigationOptions)
             }
             is OpenServerList -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 findNavController().navigate(R.id.fragmentServerList, null, navigationOptions)
             }
             is OpenTwitter -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 findNavController().navigate(R.id.fragmentTwitter, null, navigationOptions)
             }
             is OpenReddit -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 findNavController().navigate(R.id.fragmentReddit, null, navigationOptions)
             }
             is OpenAbout -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 findNavController().navigate(R.id.fragmentAbout, null, navigationOptions)
             }
             is OpenUrl -> {
+                logMetric(logTag, event.javaClass.simpleName)
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(event.url)
                 startActivity(intent)
+            }
+            else -> {
+                logW(logTag, "Unhandled event: $event")
             }
         }
     }
