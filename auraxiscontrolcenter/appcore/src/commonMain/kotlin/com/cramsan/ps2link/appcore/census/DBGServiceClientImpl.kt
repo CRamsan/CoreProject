@@ -591,7 +591,7 @@ fun Outfit.toCoreModel(
         tag = alias,
         faction = Faction.fromString(leader?.faction_id).toCoreModel(),
         server = server,
-        timeCreated = time_created?.let { Instant.fromEpochMilliseconds(it.toLong()) },
+        timeCreated = time_created?.let { Instant.fromEpochSeconds(it.toLong()) },
         leader = leader?.let { leader ->
             leader_character_id?.let {
                 Character(

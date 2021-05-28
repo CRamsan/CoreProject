@@ -41,15 +41,18 @@ class OutfitViewModel @Inject constructor(
     fun setUp(outfitId: String?, namespace: Namespace?) {
         if (outfitId == null || namespace == null) {
             logE(logTag, "Invalid arguments: outfitId=$outfitId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
         outfit = pS2LinkRepository.getOutfitAsFlow(outfitId, namespace)
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
-            pS2LinkRepository.getOutfit(outfitId, namespace, lang, forceUpdate = true)
-            loadingCompleted()
+            if (pS2LinkRepository.getOutfit(outfitId, namespace, lang, forceUpdate = true).isSuccessful) {
+                loadingCompleted()
+            } else {
+                loadingCompletedWithError()
+            }
         }
     }
 
