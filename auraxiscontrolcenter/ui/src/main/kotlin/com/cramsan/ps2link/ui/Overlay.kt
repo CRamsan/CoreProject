@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.ui.theme.Opacity
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import com.cramsan.ps2link.ui.widgets.UnexpectedError
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
 @Composable
@@ -40,6 +41,33 @@ fun LoadingOverlay(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
+@Composable
+fun ErrorOverlay(
+    modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    resourceId: Int? = null,
+) {
+    AnimatedVisibility(
+        visible = isError,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        Surface(
+            modifier.fillMaxSize(),
+            color = MaterialTheme.colors.primary.setAlpha(Opacity.transparent),
+        ) {
+            Box(modifier.fillMaxSize()) {
+                if (resourceId == null) {
+                    UnexpectedError(modifier = Modifier.align(Alignment.Center))
+                } else {
+                    UnexpectedError(modifier = Modifier.align(Alignment.Center), resourceId = resourceId)
+                }
+            }
+        }
+    }
+}
+
 @Preview(
     showBackground = true,
     backgroundColor = 0xFF000000,
@@ -50,6 +78,20 @@ fun LoadingOverlayPreview() {
         Column {
             SearchField(value = "cramsan", hint = "Player name", onValueChange = { /*TODO*/ })
             LoadingOverlay()
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    backgroundColor = 0xFF000000,
+)
+@Composable
+fun ErrorOverlayPreview() {
+    PS2Theme {
+        Column {
+            SearchField(value = "cramsan", hint = "Player name", onValueChange = { /*TODO*/ })
+            ErrorOverlay()
         }
     }
 }

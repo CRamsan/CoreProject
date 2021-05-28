@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.StatItem
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.StatItem
@@ -20,6 +21,7 @@ import com.cramsan.ps2link.ui.items.StatItem
 fun StatListCompose(
     statList: List<StatItem>,
     isLoading: Boolean,
+    isError: Boolean,
     eventHandler: StatListEventHandler,
 ) {
     FrameBottom {
@@ -36,6 +38,7 @@ fun StatListCompose(
                 }
             }
             LoadingOverlay(enabled = isLoading)
+            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -51,6 +54,7 @@ fun Preview() {
     StatListCompose(
         statList = emptyList(),
         isLoading = true,
+        isError = false,
         eventHandler = object : StatListEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         },

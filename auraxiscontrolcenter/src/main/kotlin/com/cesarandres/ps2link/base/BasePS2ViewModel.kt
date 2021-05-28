@@ -17,14 +17,24 @@ abstract class BasePS2ViewModel(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
-    private val _isLoading = MutableStateFlow<Boolean>(false)
+    private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
+
+    private val _isError = MutableStateFlow(false)
+    val isError = _isError.asStateFlow()
 
     fun loadingStarted() {
         _isLoading.value = true
+        _isError.value = false
     }
 
     fun loadingCompleted() {
         _isLoading.value = false
+        _isError.value = false
+    }
+
+    fun loadingCompletedWithError() {
+        _isLoading.value = false
+        _isError.value = true
     }
 }

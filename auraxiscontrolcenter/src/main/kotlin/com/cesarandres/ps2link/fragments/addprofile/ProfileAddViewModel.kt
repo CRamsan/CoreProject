@@ -64,10 +64,10 @@ class ProfileAddViewModel @Inject constructor(
                 _profileList.value = response.requireBody().sortedBy {
                     it.name?.toLowerCase()
                 }
+                loadingCompleted()
             } else {
-                // Add error handling
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

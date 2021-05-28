@@ -34,9 +34,11 @@ class FragmentComposeReddit : BaseComposePS2Fragment<RedditViewModel>() {
     override fun CreateComposeContent() {
         val redditContent = viewModel.redditContent.collectAsState(emptyList())
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         RedditCompose(
             redditContent = redditContent.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             prettyTime = prettyTime,
             eventHandler = viewModel,
         )

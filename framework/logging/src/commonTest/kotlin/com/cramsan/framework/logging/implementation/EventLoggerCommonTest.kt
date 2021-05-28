@@ -1,7 +1,7 @@
 package com.cramsan.framework.logging.implementation
 
 import com.cramsan.framework.logging.EventLoggerDelegate
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import com.cramsan.framework.logging.EventLoggerErrorCallback
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.logD
@@ -27,7 +27,7 @@ class EventLoggerCommonTest : TestBase() {
 
     @Test
     fun logWithVerboseSeverity() = runBlockingTest {
-        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        val errorCallback = mockk<EventLoggerErrorCallback>(relaxUnitFun = true)
         val eventLogger = EventLoggerImpl(Severity.VERBOSE, errorCallback, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
@@ -38,7 +38,7 @@ class EventLoggerCommonTest : TestBase() {
 
     @Test
     fun logWithDebugSeverity() = runBlockingTest {
-        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        val errorCallback = mockk<EventLoggerErrorCallback>(relaxUnitFun = true)
         val eventLogger = EventLoggerImpl(Severity.DEBUG, errorCallback, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
@@ -49,7 +49,7 @@ class EventLoggerCommonTest : TestBase() {
 
     @Test
     fun logWithInfoSeverity() = runBlockingTest {
-        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        val errorCallback = mockk<EventLoggerErrorCallback>(relaxUnitFun = true)
         val eventLogger = EventLoggerImpl(Severity.INFO, errorCallback, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
@@ -60,7 +60,7 @@ class EventLoggerCommonTest : TestBase() {
 
     @Test
     fun logWithWarningSeverity() = runBlockingTest {
-        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        val errorCallback = mockk<EventLoggerErrorCallback>(relaxUnitFun = true)
         val eventLogger = EventLoggerImpl(Severity.WARNING, errorCallback, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")
@@ -71,7 +71,7 @@ class EventLoggerCommonTest : TestBase() {
 
     @Test
     fun logWithErrorSeverity() = runBlockingTest {
-        val errorCallback = mockk<EventLoggerErrorCallbackInterface>(relaxUnitFun = true)
+        val errorCallback = mockk<EventLoggerErrorCallback>(relaxUnitFun = true)
         val eventLogger = EventLoggerImpl(Severity.ERROR, errorCallback, platformDelegate)
         eventLogger.log(Severity.VERBOSE, "Test", "Message-1")
         eventLogger.log(Severity.DEBUG, "Test", "Message-2")

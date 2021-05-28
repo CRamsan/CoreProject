@@ -32,9 +32,11 @@ class FragmentComposeMembers : BaseComposePS2Fragment<MembersViewModel>() {
     override fun CreateComposeContent() {
         val memberList = viewModel.memberList.collectAsState()
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         MemberListCompose(
             memberList = memberList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             eventHandler = viewModel
         )
     }

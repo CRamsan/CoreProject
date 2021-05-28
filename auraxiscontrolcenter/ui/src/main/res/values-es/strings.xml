@@ -145,4 +145,5 @@
     <string name="text_high_caps">ALTO</string>
     <string name="twitter_comments">%d comentarios</string>
     <string name="twitter_upload_by">%s por %s</string>
+    <string name="text_unkown_error">Ha ocurrido un error inesperado. Inténtelo de nuevo un unos momentos.</string>
 </resources>

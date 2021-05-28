@@ -46,7 +46,7 @@ class KillListViewModel @Inject constructor(
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
 
@@ -57,9 +57,10 @@ class KillListViewModel @Inject constructor(
             val response = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
             if (response.isSuccessful) {
                 _killList.value = response.requireBody()
+                loadingCompleted()
             } else {
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

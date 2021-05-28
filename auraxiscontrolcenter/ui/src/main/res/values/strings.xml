@@ -130,6 +130,7 @@
     <string name="toast_error_retrieving_data">Error retrieving data</string>
     <string name="toast_error_loading_image">Error while loading image</string>
     <string name="toast_error_unknown_profile">Unknown player</string>
+    <string name="text_unkown_error">There has been an unexpected error. Please try again soon.</string>
 
     <!-- This probably does not need to be translated -->
     <string name="title_twitter" translatable="false">TWITTER</string>

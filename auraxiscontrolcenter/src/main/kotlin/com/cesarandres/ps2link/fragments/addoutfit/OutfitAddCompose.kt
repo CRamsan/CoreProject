@@ -16,6 +16,7 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SearchField
@@ -29,6 +30,7 @@ fun OutfitAddCompose(
     nameSearchField: String,
     outfitItems: List<Outfit>,
     isLoading: Boolean,
+    isError: Boolean,
     eventHandler: OutfitAddEventHandler,
 ) {
     FrameBottom {
@@ -62,6 +64,7 @@ fun OutfitAddCompose(
                     }
                 }
                 LoadingOverlay(enabled = isLoading)
+                ErrorOverlay(isError = isError)
             }
         }
     }
@@ -95,6 +98,7 @@ fun OutfitAddComposePreview() {
             )
         ),
         isLoading = true,
+        isError = false,
         eventHandler = object : OutfitAddEventHandler {
             override fun onTagFieldUpdated(searchField: String) = Unit
             override fun onNameFieldUpdated(searchField: String) = Unit

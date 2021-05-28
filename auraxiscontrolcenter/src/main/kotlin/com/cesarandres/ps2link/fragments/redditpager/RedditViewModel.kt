@@ -47,9 +47,10 @@ class RedditViewModel @Inject constructor(
             val response = redditRepository.getPosts(redditPage)
             if (response.isSuccessful) {
                 _redditContent.value = response.requireBody()
+                loadingCompleted()
             } else {
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

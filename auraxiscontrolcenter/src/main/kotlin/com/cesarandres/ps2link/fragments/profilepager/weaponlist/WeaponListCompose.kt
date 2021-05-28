@@ -13,6 +13,7 @@ import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.WeaponItem
@@ -22,6 +23,7 @@ fun WeaponListCompose(
     faction: Faction,
     weaponList: List<WeaponItem>,
     isLoading: Boolean,
+    isError: Boolean,
 ) {
     FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -46,6 +48,7 @@ fun WeaponListCompose(
                 }
             }
             LoadingOverlay(enabled = isLoading)
+            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -57,5 +60,6 @@ fun Preview() {
         weaponList = emptyList(),
         faction = Faction.TR,
         isLoading = true,
+        isError = false,
     )
 }

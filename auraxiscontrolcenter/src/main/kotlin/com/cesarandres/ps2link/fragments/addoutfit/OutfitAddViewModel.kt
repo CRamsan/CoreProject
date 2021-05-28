@@ -87,10 +87,10 @@ class OutfitAddViewModel @Inject constructor(
                 _outfitList.value = response.requireBody().sortedBy {
                     it.name?.toLowerCase()
                 }
+                loadingCompleted()
             } else {
-                // Add error handling
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

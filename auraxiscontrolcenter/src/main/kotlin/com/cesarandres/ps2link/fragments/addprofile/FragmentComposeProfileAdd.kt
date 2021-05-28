@@ -20,10 +20,12 @@ class FragmentComposeProfileAdd : BaseComposePS2Fragment<ProfileAddViewModel>() 
         val searchQueryState = viewModel.searchQuery.collectAsState()
         val profileList = viewModel.profileList.collectAsState()
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         ProfileAddCompose(
             searchField = searchQueryState.value,
             profileItems = profileList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             eventHandler = viewModel
         )
     }

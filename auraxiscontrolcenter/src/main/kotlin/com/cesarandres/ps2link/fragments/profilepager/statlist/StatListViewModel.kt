@@ -44,7 +44,7 @@ class StatListViewModel @Inject constructor(
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
 
@@ -54,9 +54,10 @@ class StatListViewModel @Inject constructor(
             val response = pS2LinkRepository.getStatList(characterId, namespace, lang)
             if (response.isSuccessful) {
                 _statList.value = response.requireBody()
+                loadingCompleted()
             } else {
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

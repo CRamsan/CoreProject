@@ -45,7 +45,7 @@ class MembersViewModel @Inject constructor(
     fun setUp(outfitId: String?, namespace: Namespace?) {
         if (outfitId == null || namespace == null) {
             logE(logTag, "Invalid arguments: outfitId=$outfitId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
         loadingStarted()
@@ -64,9 +64,10 @@ class MembersViewModel @Inject constructor(
                         }
                     }
                 }
+                loadingCompleted()
             } else {
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

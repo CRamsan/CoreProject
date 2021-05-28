@@ -13,7 +13,7 @@ val secondaryLightColor = Color(0xFF6ff9ff)
 val secondaryDarkColor = Color(0xFF0095a8)
 val primaryTextColor = Color(0xFFFFFFFF)
 val secondaryTextColor = Color(0xFF000000)
-val errorColor = Color(0xFFE91E1E)
+val errorColor = Color(0xFFFF0000)
 
 /**
  * BattleRank colors
@@ -33,7 +33,7 @@ val certBackground = Color(0xFF381B12)
 /**
  * UI Colors
  */
-val negative = Color(0xFFE91E63)
-val positive = Color(0xFF4CAF50)
+val negative = Color(0xFFFF0000)
+val positive = Color(0xFF00FF0A)
 val warning = Color(0xFFFFC107)
 val undefined = Color(0xFFB9B9B9)

@@ -21,9 +21,11 @@ class FragmentComposeServerList : BaseComposePS2Fragment<ServerListViewModel>() 
     override fun CreateComposeContent() {
         val serverList = viewModel.serverList.observeAsState(emptyList())
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         ServerListCompose(
             serverItems = serverList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
         )
     }
 

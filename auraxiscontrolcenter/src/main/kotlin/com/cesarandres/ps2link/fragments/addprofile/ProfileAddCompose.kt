@@ -19,6 +19,7 @@ import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Server
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.LoadingOverlay
@@ -36,6 +37,7 @@ fun ProfileAddCompose(
     searchField: String,
     profileItems: List<Character>,
     isLoading: Boolean,
+    isError: Boolean,
     eventHandler: ProfileAddEventHandler,
 ) {
     FrameBottom {
@@ -64,6 +66,7 @@ fun ProfileAddCompose(
                 }
 
                 LoadingOverlay(enabled = isLoading)
+                ErrorOverlay(isError = isError)
             }
         }
     }
@@ -106,6 +109,7 @@ fun NormalButtonPreview() {
                 )
             ),
             isLoading = true,
+            isError = false,
             eventHandler = object : ProfileAddEventHandler {
                 override fun onSearchFieldUpdated(searchField: String) = Unit
                 override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit

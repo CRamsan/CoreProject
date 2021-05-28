@@ -21,7 +21,7 @@ interface EventLoggerInterface {
     /**
      * Optional callback to handle when logging events of severity [Severity.WARNING] or [Severity.ERROR]
      */
-    val errorCallback: EventLoggerErrorCallbackInterface?
+    val errorCallback: EventLoggerErrorCallback?
 
     /**
      * Delegate that will implement the logging logic based on the platform

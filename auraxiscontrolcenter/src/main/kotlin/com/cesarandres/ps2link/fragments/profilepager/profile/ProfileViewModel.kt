@@ -41,15 +41,18 @@ class ProfileViewModel @Inject constructor(
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
         profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
-            pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true)
-            loadingCompleted()
+            if (pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true).isSuccessful) {
+                loadingCompleted()
+            } else {
+                loadingCompletedWithError()
+            }
         }
     }
 

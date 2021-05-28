@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.RedditPost
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.RedditPostItem
@@ -17,6 +18,7 @@ import org.ocpsoft.prettytime.PrettyTime
 fun RedditCompose(
     redditContent: List<RedditPost>,
     isLoading: Boolean,
+    isError: Boolean,
     prettyTime: PrettyTime,
     eventHandler: RedditEventHandler,
 ) {
@@ -38,6 +40,7 @@ fun RedditCompose(
             }
         }
         LoadingOverlay(enabled = isLoading)
+        ErrorOverlay(isError = isError)
     }
 }
 
@@ -54,6 +57,7 @@ fun Preview() {
         RedditCompose(
             redditContent = emptyList(),
             isLoading = true,
+            isError = true,
             prettyTime = PrettyTime(),
             eventHandler = object : RedditEventHandler {
                 override fun onPostSelected(redditPost: RedditPost) = Unit

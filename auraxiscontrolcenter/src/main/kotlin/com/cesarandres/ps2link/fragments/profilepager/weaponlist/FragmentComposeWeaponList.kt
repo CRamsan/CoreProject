@@ -32,9 +32,11 @@ class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListViewModel>() 
         val weaponList = viewModel.weaponList.collectAsState(emptyList())
         val faction = viewModel.faction.collectAsState(Faction.UNKNOWN)
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         WeaponListCompose(
             faction = faction.value,
             weaponList = weaponList.value,
+            isError = isError.value,
             isLoading = isLoading.value,
         )
     }

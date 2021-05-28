@@ -25,9 +25,11 @@ import com.cramsan.framework.halt.implementation.HaltUtilAndroid
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerDelegate
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import com.cramsan.framework.logging.EventLoggerErrorCallback
+import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.implementation.EventLoggerErrorCallbackImpl
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.Metrics
@@ -113,15 +115,26 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideMetricsInterface(metricsDelegate: MetricsDelegate): MetricsInterface {
-        val instance = MetricsImpl(metricsDelegate)
+    fun provideMetricsInterface(
+        metricsDelegate: MetricsDelegate,
+        eventLoggerInterface: EventLoggerInterface,
+    ): MetricsInterface {
+        val instance = MetricsImpl(metricsDelegate, eventLoggerInterface)
         return Metrics.instance(instance)
     }
 
     @Provides
     @Singleton
-    fun provideEventLoggerErrorCallbackInterface(): EventLoggerErrorCallbackInterface =
+    fun provideEventLoggerErrorCallbackDelegate(): EventLoggerErrorCallbackDelegate =
         AppCenterErrorCallback()
+
+    @Provides
+    @Singleton
+    fun provideEventLoggerErrorCallback(
+        eventLoggerDelegate: EventLoggerDelegate,
+        delegate: EventLoggerErrorCallbackDelegate,
+    ): EventLoggerErrorCallback =
+        EventLoggerErrorCallbackImpl(eventLoggerDelegate, delegate)
 
     @Provides
     @Singleton
@@ -130,7 +143,7 @@ object PS2ApplicationModule {
     @Provides
     @Singleton
     fun provideEventLoggerInterface(
-        eventLoggerErrorCallbackInterface: EventLoggerErrorCallbackInterface,
+        eventLoggerErrorCallback: EventLoggerErrorCallback,
         eventLoggerDelegate: EventLoggerDelegate,
     ): EventLoggerInterface {
         val severity: Severity = when (BuildConfig.DEBUG) {
@@ -138,7 +151,7 @@ object PS2ApplicationModule {
             false -> Severity.INFO
         }
         val instance =
-            EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
+            EventLoggerImpl(severity, eventLoggerErrorCallback, eventLoggerDelegate)
         return EventLogger.instance(instance)
     }
 

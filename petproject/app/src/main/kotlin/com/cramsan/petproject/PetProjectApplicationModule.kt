@@ -7,6 +7,7 @@ import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
+import com.cramsan.framework.crashehandler.implementation.AppCenterErrorCallback
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.HaltUtilDelegate
@@ -14,15 +15,16 @@ import com.cramsan.framework.halt.implementation.HaltUtilAndroid
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerDelegate
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import com.cramsan.framework.logging.EventLoggerErrorCallback
+import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.implementation.EventLoggerErrorCallbackImpl
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterMetrics
-import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
 import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
@@ -100,13 +102,24 @@ object PetProjectApplicationModule {
 
     @Provides
     @Singleton
-    fun provideMetricsInterface(metricsDelegate: MetricsDelegate): MetricsInterface =
-        MetricsImpl(metricsDelegate)
+    fun provideMetricsInterface(
+        metricsDelegate: MetricsDelegate,
+        eventLoggerInterface: EventLoggerInterface,
+    ): MetricsInterface =
+        MetricsImpl(metricsDelegate, eventLoggerInterface)
 
     @Provides
     @Singleton
-    fun provideEventLoggerErrorCallbackInterface(metricsInterface: MetricsInterface): EventLoggerErrorCallbackInterface =
-        MetricsErrorCallback(metricsInterface)
+    fun provideEventLoggerErrorCallbackDelegate(): EventLoggerErrorCallbackDelegate =
+        AppCenterErrorCallback()
+
+    @Provides
+    @Singleton
+    fun provideEventLoggerErrorCallback(
+        eventLoggerDelegate: EventLoggerDelegate,
+        delegate: EventLoggerErrorCallbackDelegate,
+    ): EventLoggerErrorCallback =
+        EventLoggerErrorCallbackImpl(eventLoggerDelegate, delegate)
 
     @Provides
     @Singleton
@@ -115,7 +128,7 @@ object PetProjectApplicationModule {
     @Provides
     @Singleton
     fun provideEventLoggerInterface(
-        eventLoggerErrorCallbackInterface: EventLoggerErrorCallbackInterface,
+        eventLoggerErrorCallbackInterface: EventLoggerErrorCallback,
         eventLoggerDelegate: EventLoggerDelegate,
     ): EventLoggerInterface {
         val severity: Severity = when (BuildConfig.DEBUG) {

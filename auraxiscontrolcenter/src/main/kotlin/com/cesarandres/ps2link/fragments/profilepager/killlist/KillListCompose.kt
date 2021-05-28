@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.KillItem
@@ -19,6 +20,7 @@ import com.cramsan.ps2link.ui.items.KillItem
 fun KillListCompose(
     killList: List<KillEvent>,
     isLoading: Boolean,
+    isError: Boolean,
     eventHandler: KillListEventHandler,
 ) {
     FrameBottom {
@@ -42,6 +44,7 @@ fun KillListCompose(
                 }
             }
             LoadingOverlay(enabled = isLoading)
+            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -57,6 +60,7 @@ fun Preview() {
     KillListCompose(
         killList = emptyList(),
         isLoading = true,
+        isError = false,
         eventHandler = object : KillListEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         },

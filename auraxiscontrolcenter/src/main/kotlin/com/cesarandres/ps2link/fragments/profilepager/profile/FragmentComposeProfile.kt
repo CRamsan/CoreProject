@@ -37,6 +37,7 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
     override fun CreateComposeContent() {
         val profile = viewModel.profile.collectAsState(null)
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         ProfileCompose(
             faction = profile.value?.faction,
             br = profile.value?.battleRank?.toInt(),
@@ -50,7 +51,8 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
             timePlayed = profile.value?.timePlayed,
             prettyTime = prettyTime,
             eventHandler = viewModel,
-            isLoading = isLoading.value
+            isLoading = isLoading.value,
+            isError = isError.value,
         )
     }
 

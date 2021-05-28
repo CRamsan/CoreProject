@@ -1,21 +1,18 @@
 package com.cramsan.framework.metrics.implementation
 
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 
 class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
-    EventLoggerErrorCallbackInterface {
+    EventLoggerErrorCallbackDelegate {
 
-    override fun onWarning(tag: String, message: String, throwable: Throwable?) {
-        logEvent(tag, message, throwable, Severity.WARNING)
-    }
-
-    override fun onError(tag: String, message: String, throwable: Throwable?) {
-        logEvent(tag, message, throwable, Severity.ERROR)
-    }
-
-    private fun logEvent(tag: String, message: String, throwable: Throwable?, severity: Severity) {
+    override fun handleErrorEvent(
+        tag: String,
+        message: String,
+        throwable: Throwable,
+        severity: Severity
+    ) {
         metricsInterface.log(
             tag,
             message,

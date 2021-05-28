@@ -1,23 +1,14 @@
 package com.cramsan.framework.crashehandler.implementation
 
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
+import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.Severity
 import com.microsoft.appcenter.crashes.Crashes
 
-class AppCenterErrorCallback : EventLoggerErrorCallbackInterface {
+class AppCenterErrorCallback : EventLoggerErrorCallbackDelegate {
 
-    override fun onWarning(tag: String, message: String, throwable: Throwable?) {
-        logEvent(tag, message, throwable, Severity.WARNING)
-    }
-
-    override fun onError(tag: String, message: String, throwable: Throwable?) {
-        logEvent(tag, message, throwable, Severity.ERROR)
-    }
-
-    private fun logEvent(tag: String, message: String, throwable: Throwable?, severity: Severity) {
-        val requiredThrowable = throwable ?: Throwable("")
+    override fun handleErrorEvent(tag: String, message: String, throwable: Throwable, severity: Severity) {
         Crashes.trackError(
-            requiredThrowable,
+            throwable,
             mapOf(
                 TAG_KEY to tag,
                 SEVERITY_KEY to severity.name,

@@ -18,6 +18,7 @@ import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.LoadingOverlay
@@ -53,6 +54,7 @@ fun ProfileCompose(
     server: String?,
     timePlayed: Duration?,
     isLoading: Boolean,
+    isError: Boolean,
     prettyTime: PrettyTime,
     eventHandler: ProfileEventHandler,
 ) {
@@ -157,6 +159,7 @@ fun ProfileCompose(
                 }
             }
             LoadingOverlay(enabled = isLoading)
+            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -183,6 +186,7 @@ fun Preview() {
         timePlayed = 1000.minutes,
         prettyTime = PrettyTime(),
         isLoading = true,
+        isError = false,
         eventHandler = object : ProfileEventHandler {
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
         },

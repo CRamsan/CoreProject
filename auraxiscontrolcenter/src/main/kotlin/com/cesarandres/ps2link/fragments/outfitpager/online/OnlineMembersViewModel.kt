@@ -44,7 +44,7 @@ class OnlineMembersViewModel @Inject constructor(
     fun setUp(outfitId: String?, namespace: Namespace?) {
         if (outfitId == null || namespace == null) {
             logE(logTag, "Invalid arguments: outfitId=$outfitId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
         loadingStarted()
@@ -53,9 +53,10 @@ class OnlineMembersViewModel @Inject constructor(
             val response = pS2LinkRepository.getMembersOnline(outfitId, namespace, lang)
             if (response.isSuccessful) {
                 _memberList.value = response.requireBody().sortedBy { it.name }
+                loadingCompleted()
             } else {
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

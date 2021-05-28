@@ -4,7 +4,7 @@ package com.cramsan.framework.logging
  * Used by the [EventLoggerInterface] to provide a way to handle events logged with [Severity] of
  * [Severity.WARNING] or [Severity.ERROR]
  */
-interface EventLoggerErrorCallbackInterface {
+interface EventLoggerErrorCallback {
     /**
      * The [tag], [message] and [throwable] were logged with a [Severity] of [Severity.WARNING]
      */

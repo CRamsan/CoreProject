@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.OnlineMemberItem
@@ -19,6 +20,7 @@ import com.cramsan.ps2link.ui.items.OnlineMemberItem
 fun OnlineMembersCompose(
     memberList: List<Character>,
     isLoading: Boolean,
+    isError: Boolean,
     eventHandler: OnlineMemberEventHandler,
 ) {
     FrameBottom {
@@ -34,6 +36,7 @@ fun OnlineMembersCompose(
                 }
             }
             LoadingOverlay(enabled = isLoading)
+            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -49,6 +52,7 @@ fun Preview() {
     OnlineMembersCompose(
         memberList = emptyList(),
         isLoading = true,
+        isError = false,
         eventHandler = object : OnlineMemberEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         },

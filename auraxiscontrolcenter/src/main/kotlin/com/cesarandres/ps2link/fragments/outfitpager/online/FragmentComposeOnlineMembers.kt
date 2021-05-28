@@ -32,9 +32,11 @@ class FragmentComposeOnlineMembers : BaseComposePS2Fragment<OnlineMembersViewMod
     override fun CreateComposeContent() {
         val memberList = viewModel.memberList.collectAsState()
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         OnlineMembersCompose(
             memberList = memberList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             eventHandler = viewModel
         )
     }

@@ -45,7 +45,7 @@ class FriendListViewModel @Inject constructor(
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
-            // TODO: Provide some event that can be handled by the UI
+            loadingCompletedWithError()
             return
         }
 
@@ -65,9 +65,10 @@ class FriendListViewModel @Inject constructor(
                         }
                     }
                 }
+                loadingCompleted()
             } else {
+                loadingCompletedWithError()
             }
-            loadingCompleted()
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.ServerStatus
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.items.ServerItem
@@ -19,6 +20,7 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 fun ServerListCompose(
     serverItems: List<Server>,
     isLoading: Boolean,
+    isError: Boolean,
 ) {
     FrameBottom {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -33,6 +35,7 @@ fun ServerListCompose(
                 }
             }
             LoadingOverlay(enabled = isLoading)
+            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -44,6 +47,7 @@ fun ServerListPreview() {
         ServerListCompose(
             serverItems = emptyList(),
             isLoading = false,
+            isError = true,
         )
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.appcore.twitter.TwitterUser
 import com.cramsan.ps2link.core.models.PS2Tweet
+import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.LoadingOverlay
@@ -33,6 +34,7 @@ fun TweetListCompose(
     users: Map<TwitterUser, Boolean>,
     tweetItems: List<PS2Tweet>,
     isLoading: Boolean,
+    isError: Boolean,
     prettyTime: PrettyTime,
     eventHandler: TweetListComposeEventHandler,
 ) {
@@ -79,6 +81,7 @@ fun TweetListCompose(
                     }
                 }
                 LoadingOverlay(enabled = isLoading)
+                ErrorOverlay(isError = isError)
             }
         }
     }
@@ -97,6 +100,7 @@ fun ServerListPreview() {
             tweetItems = emptyList(),
             users = emptyMap(),
             isLoading = false,
+            isError = false,
             prettyTime = PrettyTime(),
             eventHandler = object : TweetListComposeEventHandler {
                 override fun onTwitterUserClicked(twitterUser: TwitterUser) = Unit

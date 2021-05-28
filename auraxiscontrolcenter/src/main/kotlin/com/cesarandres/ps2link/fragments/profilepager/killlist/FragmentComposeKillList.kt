@@ -30,9 +30,11 @@ class FragmentComposeKillList : BaseComposePS2Fragment<KillListViewModel>() {
     override fun CreateComposeContent() {
         val killList = viewModel.killList.collectAsState(emptyList())
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         KillListCompose(
             killList = killList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             eventHandler = viewModel
         )
     }

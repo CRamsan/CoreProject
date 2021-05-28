@@ -32,11 +32,13 @@ class FragmentComposeTwitterList : BaseComposePS2Fragment<TwitterListViewModel>(
         val tweetList = viewModel.tweetList.observeAsState(emptyList())
         val twitterUsers = viewModel.twitterUsers.observeAsState(emptyMap())
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
 
         TweetListCompose(
             tweetItems = tweetList.value,
             users = twitterUsers.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             prettyTime = prettyTime,
             eventHandler = viewModel,
         )

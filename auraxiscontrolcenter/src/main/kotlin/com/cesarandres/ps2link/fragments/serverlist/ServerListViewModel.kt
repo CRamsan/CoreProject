@@ -58,8 +58,9 @@ class ServerListViewModel @Inject constructor(
                 it.serverName?.toLowerCase()
             }
             _serverList.value = serverList
+            loadingCompleted()
         } else {
+            loadingCompletedWithError()
         }
-        loadingCompleted()
     }
 }

@@ -30,9 +30,11 @@ class FragmentComposeStatList : BaseComposePS2Fragment<StatListViewModel>() {
     override fun CreateComposeContent() {
         val statList = viewModel.statList.collectAsState(emptyList())
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         StatListCompose(
             statList = statList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             eventHandler = viewModel
         )
     }

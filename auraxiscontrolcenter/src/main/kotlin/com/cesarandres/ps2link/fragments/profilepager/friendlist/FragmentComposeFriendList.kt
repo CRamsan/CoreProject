@@ -30,9 +30,11 @@ class FragmentComposeFriendList : BaseComposePS2Fragment<FriendListViewModel>() 
     override fun CreateComposeContent() {
         val friendList = viewModel.friendList.collectAsState(emptyList())
         val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
         FriendListCompose(
             friendList = friendList.value,
             isLoading = isLoading.value,
+            isError = isError.value,
             eventHandler = viewModel
         )
     }

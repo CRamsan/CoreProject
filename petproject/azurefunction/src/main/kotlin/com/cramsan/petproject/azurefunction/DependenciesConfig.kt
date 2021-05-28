@@ -6,9 +6,6 @@ import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
-import com.cramsan.framework.metrics.MetricsDelegate
-import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
-import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
 import com.cramsan.petproject.appcore.storage.implementation.ModelStorage
@@ -19,22 +16,9 @@ import java.io.InputStream
 import java.io.OutputStream
 
 class DependenciesConfig {
-    val metrics by lazy {
-        MetricsImpl(
-            object : MetricsDelegate {
-                override fun initialize() {}
-                override fun log(tag: String, event: String) {}
-                override fun log(tag: String, event: String, metadata: Map<String, String>) {}
-            }
-        )
-    }
-
-    val errorCallback by lazy {
-        MetricsErrorCallback(metrics)
-    }
 
     val eventLogger by lazy {
-        EventLoggerImpl(Severity.INFO, errorCallback, LoggerJVM())
+        EventLoggerImpl(Severity.INFO, null, LoggerJVM())
     }
 
     val haltUtil by lazy {

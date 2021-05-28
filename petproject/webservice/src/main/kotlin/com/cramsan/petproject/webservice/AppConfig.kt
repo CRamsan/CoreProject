@@ -5,15 +5,10 @@ import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
-import com.cramsan.framework.logging.EventLoggerErrorCallbackInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
-import com.cramsan.framework.metrics.MetricsDelegate
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
-import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
 import com.cramsan.framework.thread.implementation.ThreadUtilJVM
@@ -28,24 +23,8 @@ import org.springframework.core.io.ClassPathResource
 class AppConfig {
 
     @Bean
-    fun metrics(): MetricsInterface {
-        return MetricsImpl(
-            object : MetricsDelegate {
-                override fun initialize() {}
-                override fun log(tag: String, event: String) {}
-                override fun log(tag: String, event: String, metadata: Map<String, String>) {}
-            }
-        )
-    }
-
-    @Bean
-    fun errorCallback(metrics: MetricsInterface): EventLoggerErrorCallbackInterface {
-        return MetricsErrorCallback(metrics)
-    }
-
-    @Bean
-    fun eventLogger(errorCallback: EventLoggerErrorCallbackInterface): EventLoggerInterface {
-        return EventLoggerImpl(Severity.INFO, errorCallback, LoggerJVM())
+    fun eventLogger(): EventLoggerInterface {
+        return EventLoggerImpl(Severity.INFO, null, LoggerJVM())
     }
 
     @Bean

@@ -37,12 +37,13 @@ class TwitterListViewModel @Inject constructor(
 
     // State
     val tweetList = twitterRepository.getTweetsAsFlow().map { response ->
-        loadingCompleted()
         if (response.isSuccessful) {
+            loadingCompleted()
             response.requireBody().sortedByDescending { twit ->
                 twit.date
             }
         } else {
+            loadingCompletedWithError()
             emptyList()
         }
     }.asLiveData()
