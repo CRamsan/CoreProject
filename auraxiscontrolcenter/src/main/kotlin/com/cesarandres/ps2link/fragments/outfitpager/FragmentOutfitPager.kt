@@ -67,7 +67,13 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
 
     override fun itemCount() = OutfitPage.values().size
 
-    override fun pageTitle(position: Int) = OutfitPage.values()[position].name
+    override fun pageTitle(position: Int): String {
+        return when (OutfitPage.values()[position]) {
+            OutfitPage.OUTFIT -> resources.getString(R.string.title_outfit)
+            OutfitPage.ONLINE -> resources.getString(R.string.text_online_caps)
+            OutfitPage.MEMBERS -> resources.getString(R.string.text_members)
+        }
+    }
 
     override fun createFragment(position: Int): Fragment {
         return when (OutfitPage.values()[position]) {

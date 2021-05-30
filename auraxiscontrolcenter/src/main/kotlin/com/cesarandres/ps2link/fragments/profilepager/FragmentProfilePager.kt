@@ -71,7 +71,15 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
 
     override fun itemCount() = ProfilePage.values().size
 
-    override fun pageTitle(position: Int) = ProfilePage.values()[position].name
+    override fun pageTitle(position: Int): String {
+        return when (ProfilePage.values()[position]) {
+            ProfilePage.PROFILE -> resources.getString(R.string.text_profile_pager_title_overview)
+            ProfilePage.FRIENDS -> resources.getString(R.string.text_profile_pager_title_friends)
+            ProfilePage.STATS -> resources.getString(R.string.text_profile_pager_title_stats)
+            ProfilePage.KILLBOARD -> resources.getString(R.string.text_profile_pager_title_killboard)
+            ProfilePage.WEAPONS -> resources.getString(R.string.text_profile_pager_title_weapons)
+        }
+    }
 
     override fun createFragment(position: Int): Fragment {
         return when (ProfilePage.values()[position]) {
