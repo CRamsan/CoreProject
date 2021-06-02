@@ -783,7 +783,7 @@ fun formatKillList(
         val time = it.timestamp?.toLong()?.let { Instant.fromEpochSeconds(it) }
         val killType: KillType
         var eventCharacterId: String? = null
-        val faction: Faction = Faction.fromString(it.attacker?.faction_id)
+        val faction: Faction
 
         val weaponName: String?
         val imageUrl: String?
@@ -797,6 +797,7 @@ fun formatKillList(
         }
 
         if (it.attacker_character_id == characterId) {
+            faction = Faction.fromString(it.character?.faction_id)
             attackerName = it.character?.name?.first
             it.important_character_id = it.character_id
             if (it.character_id == characterId) {
@@ -806,6 +807,7 @@ fun formatKillList(
                 eventCharacterId = it.character_id
             }
         } else if (it.character_id == characterId) {
+            faction = Faction.fromString(it.attacker?.faction_id)
             killType = KillType.KILLEDBY
             attackerName = it.attacker?.name?.first
             eventCharacterId = it.attacker_character_id
@@ -813,6 +815,7 @@ fun formatKillList(
         } else {
             killType = KillType.UNKNOWN
             attackerName = null
+            faction = Faction.UNKNOWN
         }
 
         KillEvent(
