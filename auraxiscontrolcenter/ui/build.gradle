@@ -40,6 +40,7 @@ dependencies {
     implementation project(":framework:assert")
     implementation project(":framework:interfacelib")
     implementation packages.AccompanistCoil
+    implementation packages.AccompanistSwipeRefresh
     implementation packages.AndroidMaterial
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx

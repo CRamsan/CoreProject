@@ -29,7 +29,8 @@ class ServerListViewModel @Inject constructor(
     pS2Settings,
     dispatcherProvider,
     savedStateHandle
-) {
+),
+    ServerListEventHandler {
 
     override val logTag: String
         get() = "ServerListViewModel"
@@ -39,9 +40,7 @@ class ServerListViewModel @Inject constructor(
     val serverList = _serverList.asLiveData()
 
     fun setUp() {
-        ioScope.launch {
-            downloadServers()
-        }
+        onRefreshRequested()
     }
 
     /**
@@ -61,6 +60,12 @@ class ServerListViewModel @Inject constructor(
             loadingCompleted()
         } else {
             loadingCompletedWithError()
+        }
+    }
+
+    override fun onRefreshRequested() {
+        ioScope.launch {
+            downloadServers()
         }
     }
 }

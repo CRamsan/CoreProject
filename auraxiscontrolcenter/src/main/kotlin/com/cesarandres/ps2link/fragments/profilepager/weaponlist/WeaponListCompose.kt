@@ -1,10 +1,10 @@
 package com.cesarandres.ps2link.fragments.profilepager.weaponlist
 
 import android.net.Uri
+import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +16,7 @@ import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.WeaponItem
 
 @Composable
@@ -24,10 +25,14 @@ fun WeaponListCompose(
     weaponList: List<WeaponItem>,
     isLoading: Boolean,
     isError: Boolean,
+    eventHandler: WeaponListEventHandler,
 ) {
     FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
-            LazyColumn {
+            SwipeToRefresh(
+                isLoading = isLoading,
+                onRefreshRequested = { eventHandler.onRefreshRequested() }
+            ) {
                 items(weaponList) {
                     val totalKills = it.statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
                     val totalVehiclesDestroyed = it.statMapping[WeaponEventType.VEHICLE_KILLS]?.stats?.values?.filterNotNull()?.sum()
@@ -53,6 +58,11 @@ fun WeaponListCompose(
     }
 }
 
+@MainThread
+interface WeaponListEventHandler {
+    fun onRefreshRequested()
+}
+
 @Preview
 @Composable
 fun Preview() {
@@ -61,5 +71,8 @@ fun Preview() {
         faction = Faction.TR,
         isLoading = true,
         isError = false,
+        eventHandler = object : WeaponListEventHandler {
+            override fun onRefreshRequested() = Unit
+        },
     )
 }

@@ -41,6 +41,9 @@ class StatListViewModel @Inject constructor(
     private val _statList = MutableStateFlow<List<StatItem>>(emptyList())
     val statList = _statList.asStateFlow()
 
+    private lateinit var characterId: String
+    private lateinit var namespace: Namespace
+
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
@@ -48,6 +51,16 @@ class StatListViewModel @Inject constructor(
             return
         }
 
+        this.characterId = characterId
+        this.namespace = namespace
+        onRefreshRequested()
+    }
+
+    override fun onProfileSelected(profileId: String, namespace: Namespace) {
+        events.value = OpenProfile(profileId, namespace)
+    }
+
+    override fun onRefreshRequested() {
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
@@ -59,9 +72,5 @@ class StatListViewModel @Inject constructor(
                 loadingCompletedWithError()
             }
         }
-    }
-
-    override fun onProfileSelected(profileId: String, namespace: Namespace) {
-        events.value = OpenProfile(profileId, namespace)
     }
 }

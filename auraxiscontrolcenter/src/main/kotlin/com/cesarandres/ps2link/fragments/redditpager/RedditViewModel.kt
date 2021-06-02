@@ -41,17 +41,11 @@ class RedditViewModel @Inject constructor(
     private val _redditContent = MutableStateFlow<List<RedditPost>>(emptyList())
     val redditContent = _redditContent.asStateFlow()
 
+    private lateinit var redditPage: RedditPage
+
     fun setUp(redditPage: RedditPage) {
-        loadingStarted()
-        ioScope.launch {
-            val response = redditRepository.getPosts(redditPage)
-            if (response.isSuccessful) {
-                _redditContent.value = response.requireBody()
-                loadingCompleted()
-            } else {
-                loadingCompletedWithError()
-            }
-        }
+        this.redditPage = redditPage
+        onRefreshRequested()
     }
 
     override fun onPostSelected(redditPost: RedditPost) {
@@ -63,6 +57,19 @@ class RedditViewModel @Inject constructor(
     override fun onImageSelected(redditPost: RedditPost) {
         redditPost.url?.let {
             events.value = OpenUrl(it)
+        }
+    }
+
+    override fun onRefreshRequested() {
+        loadingStarted()
+        ioScope.launch {
+            val response = redditRepository.getPosts(redditPage)
+            if (response.isSuccessful) {
+                _redditContent.value = response.requireBody()
+                loadingCompleted()
+            } else {
+                loadingCompletedWithError()
+            }
         }
     }
 }

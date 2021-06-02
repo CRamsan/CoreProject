@@ -26,6 +26,7 @@ class FragmentComposeServerList : BaseComposePS2Fragment<ServerListViewModel>() 
             serverItems = serverList.value,
             isLoading = isLoading.value,
             isError = isError.value,
+            eventHandler = viewModel,
         )
     }
 

@@ -11,7 +11,7 @@ def versions_tools = [
 ]
 
 def versions_packages = [
-    AccompanistCoil : "0.9.1",
+    Accompanist : "0.9.1",
     AndroidGradlePlugin : '7.0.0-alpha15',
     AndroidMaterial : "1.3.0",
     AndroidxActivityKtx : "1.2.3",
@@ -78,7 +78,8 @@ def versions_packages = [
 ]
 
 def packages = [
-        AccompanistCoil : "com.google.accompanist:accompanist-coil:$versions_packages.AccompanistCoil",
+        AccompanistCoil : "com.google.accompanist:accompanist-coil:$versions_packages.Accompanist",
+        AccompanistSwipeRefresh: "com.google.accompanist:accompanist-swiperefresh:$versions_packages.Accompanist",
         AndroidBuildGradle : "com.android.tools.build:gradle:$versions_packages.AndroidGradlePlugin",
         AndroidMaterial : "com.google.android.material:material:$versions_packages.AndroidMaterial",
         AndroidxActivityKtx : "androidx.activity:activity-ktx:$versions_packages.AndroidxActivityKtx",

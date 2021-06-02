@@ -42,12 +42,25 @@ class MembersViewModel @Inject constructor(
     private val _memberList = MutableStateFlow<List<Character>>(emptyList())
     val memberList = _memberList.asStateFlow()
 
+    private lateinit var outfitId: String
+    private lateinit var namespace: Namespace
+
     fun setUp(outfitId: String?, namespace: Namespace?) {
         if (outfitId == null || namespace == null) {
             logE(logTag, "Invalid arguments: outfitId=$outfitId namespace=$namespace")
             loadingCompletedWithError()
             return
         }
+        this.outfitId = outfitId
+        this.namespace = namespace
+        onRefreshRequested()
+    }
+
+    override fun onProfileSelected(profileId: String, namespace: Namespace) {
+        events.value = OpenProfile(profileId, namespace)
+    }
+
+    override fun onRefreshRequested() {
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
@@ -69,9 +82,5 @@ class MembersViewModel @Inject constructor(
                 loadingCompletedWithError()
             }
         }
-    }
-
-    override fun onProfileSelected(profileId: String, namespace: Namespace) {
-        events.value = OpenProfile(profileId, namespace)
     }
 }

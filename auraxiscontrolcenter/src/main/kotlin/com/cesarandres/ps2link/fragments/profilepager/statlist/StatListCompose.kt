@@ -3,7 +3,6 @@ package com.cesarandres.ps2link.fragments.profilepager.statlist
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +14,7 @@ import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.StatItem
 
 @Composable
@@ -26,7 +26,10 @@ fun StatListCompose(
 ) {
     FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
-            LazyColumn {
+            SwipeToRefresh(
+                isLoading = isLoading,
+                onRefreshRequested = { eventHandler.onRefreshRequested() }
+            ) {
                 items(statList) {
                     StatItem(
                         label = it.statName ?: stringResource(R.string.text_unknown),
@@ -46,6 +49,7 @@ fun StatListCompose(
 @MainThread
 interface StatListEventHandler {
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    fun onRefreshRequested()
 }
 
 @Preview
@@ -57,6 +61,7 @@ fun Preview() {
         isError = false,
         eventHandler = object : StatListEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
+            override fun onRefreshRequested() = Unit
         },
     )
 }

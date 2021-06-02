@@ -1,8 +1,8 @@
 package com.cesarandres.ps2link.fragments.serverlist
 
+import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +13,7 @@ import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.ServerItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
 
@@ -21,10 +22,14 @@ fun ServerListCompose(
     serverItems: List<Server>,
     isLoading: Boolean,
     isError: Boolean,
+    eventHandler: ServerListEventHandler,
 ) {
     FrameBottom {
         Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn {
+            SwipeToRefresh(
+                isLoading = isLoading,
+                onRefreshRequested = { eventHandler.onRefreshRequested() }
+            ) {
                 items(serverItems) {
                     ServerItem(
                         serverName = it.serverName ?: "",
@@ -40,6 +45,11 @@ fun ServerListCompose(
     }
 }
 
+@MainThread
+interface ServerListEventHandler {
+    fun onRefreshRequested()
+}
+
 @Preview
 @Composable
 fun ServerListPreview() {
@@ -48,6 +58,9 @@ fun ServerListPreview() {
             serverItems = emptyList(),
             isLoading = false,
             isError = true,
+            eventHandler = object : ServerListEventHandler {
+                override fun onRefreshRequested() = Unit
+            }
         )
     }
 }

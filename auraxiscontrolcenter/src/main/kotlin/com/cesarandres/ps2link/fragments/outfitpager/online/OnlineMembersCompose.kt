@@ -4,7 +4,6 @@ import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +13,7 @@ import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.OnlineMemberItem
 
 @Composable
@@ -25,7 +25,10 @@ fun OnlineMembersCompose(
 ) {
     FrameBottom {
         Column(modifier = Modifier.fillMaxSize()) {
-            LazyColumn {
+            SwipeToRefresh(
+                isLoading = isLoading,
+                onRefreshRequested = { eventHandler.onRefreshRequested() }
+            ) {
                 items(memberList) {
                     OnlineMemberItem(
                         modifier = Modifier.fillMaxWidth(),
@@ -44,6 +47,7 @@ fun OnlineMembersCompose(
 @MainThread
 interface OnlineMemberEventHandler {
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    fun onRefreshRequested()
 }
 
 @Preview
@@ -55,6 +59,7 @@ fun Preview() {
         isError = false,
         eventHandler = object : OnlineMemberEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
+            override fun onRefreshRequested() = Unit
         },
     )
 }

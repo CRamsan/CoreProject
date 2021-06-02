@@ -42,6 +42,9 @@ class FriendListViewModel @Inject constructor(
     private val _friendList = MutableStateFlow<List<Character>>(emptyList())
     val friendList = _friendList.asStateFlow()
 
+    lateinit var characterId: String
+    lateinit var namespace: Namespace
+
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
@@ -49,6 +52,16 @@ class FriendListViewModel @Inject constructor(
             return
         }
 
+        this.characterId = characterId
+        this.namespace = namespace
+        onRefreshRequested()
+    }
+
+    override fun onProfileSelected(profileId: String, namespace: Namespace) {
+        events.value = OpenProfile(profileId, namespace)
+    }
+
+    override fun onRefreshRequested() {
         loadingStarted()
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: getCurrentLang()
@@ -70,9 +83,5 @@ class FriendListViewModel @Inject constructor(
                 loadingCompletedWithError()
             }
         }
-    }
-
-    override fun onProfileSelected(profileId: String, namespace: Namespace) {
-        events.value = OpenProfile(profileId, namespace)
     }
 }

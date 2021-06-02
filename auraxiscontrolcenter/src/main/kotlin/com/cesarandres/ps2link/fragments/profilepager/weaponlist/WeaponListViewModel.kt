@@ -32,7 +32,8 @@ class WeaponListViewModel @Inject constructor(
     pS2Settings,
     dispatcherProvider,
     savedStateHandle
-) {
+),
+    WeaponListEventHandler {
 
     override val logTag: String
         get() = "WeaponListViewModel"
@@ -44,7 +45,8 @@ class WeaponListViewModel @Inject constructor(
     private val _faction = MutableStateFlow<Faction>(Faction.UNKNOWN)
     val faction = _faction.asStateFlow()
 
-    lateinit var characterId: String
+    private lateinit var characterId: String
+    private lateinit var namespace: Namespace
 
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
@@ -54,6 +56,11 @@ class WeaponListViewModel @Inject constructor(
         }
 
         this.characterId = characterId
+        this.namespace = namespace
+        onRefreshRequested()
+    }
+
+    override fun onRefreshRequested() {
         loadingStarted()
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: getCurrentLang()

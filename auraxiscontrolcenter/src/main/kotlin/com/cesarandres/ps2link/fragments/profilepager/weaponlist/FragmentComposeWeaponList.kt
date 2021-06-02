@@ -38,6 +38,7 @@ class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListViewModel>() 
             weaponList = weaponList.value,
             isError = isError.value,
             isLoading = isLoading.value,
+            eventHandler = viewModel,
         )
     }
 
