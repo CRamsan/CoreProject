@@ -11,7 +11,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
-
 @Composable
 fun SwipeToRefresh(
     modifier: Modifier = Modifier,
