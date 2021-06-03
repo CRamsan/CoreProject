@@ -1,7 +1,7 @@
 package com.cesarandres.ps2link.fragments.profilepager.statlist
 
 import androidx.annotation.MainThread
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -25,7 +25,7 @@ fun StatListCompose(
     eventHandler: StatListEventHandler,
 ) {
     FrameBottom {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
                 onRefreshRequested = { eventHandler.onRefreshRequested() }

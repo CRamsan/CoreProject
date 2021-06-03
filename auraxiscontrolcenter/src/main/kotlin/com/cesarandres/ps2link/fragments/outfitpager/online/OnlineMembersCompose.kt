@@ -1,7 +1,7 @@
 package com.cesarandres.ps2link.fragments.outfitpager.online
 
 import androidx.annotation.MainThread
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.items
@@ -24,7 +24,7 @@ fun OnlineMembersCompose(
     eventHandler: OnlineMemberEventHandler,
 ) {
     FrameBottom {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
                 onRefreshRequested = { eventHandler.onRefreshRequested() }

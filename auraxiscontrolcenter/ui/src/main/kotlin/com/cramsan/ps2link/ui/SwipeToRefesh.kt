@@ -35,6 +35,9 @@ fun SwipeToRefresh(
             )
         }
     ) {
-        LazyColumn(content = content)
+        LazyColumn(
+            modifier = Modifier.fillMaxHeight(),
+            content = content
+        )
     }
 }

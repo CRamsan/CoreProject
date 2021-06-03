@@ -13,6 +13,7 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -65,6 +66,7 @@ class KillListViewModel @Inject constructor(
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
+            delay(3000)
             if (response.isSuccessful) {
                 _killList.value = response.requireBody()
                 loadingCompleted()
