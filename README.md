@@ -15,9 +15,6 @@ A lot of the code is written in a shared module called **Framework** that abstra
  - [Framework](framework/)
  - [Root gradle file](/build.gradle), [properties](gradle.properties) and [settings](settings.gradle)
 
-# Documentation
-You can find detailed documentation in the [wiki](https://github.com/CRamsan/CoreProject/wiki/).
-
 ## Getting started
  
 ### Prerequisites
