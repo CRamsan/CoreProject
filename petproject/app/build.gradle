@@ -5,6 +5,9 @@ android {
     defaultConfig {
         applicationId "com.cramsan.petproject"
         versionName "0.12"
+
+        def appCenterId = findProperty("petProjectAppCenterId") ?: ""
+        buildConfigField("String", "APP_CENTER_ID", "\"${appCenterId}\"")
     }
 }
 

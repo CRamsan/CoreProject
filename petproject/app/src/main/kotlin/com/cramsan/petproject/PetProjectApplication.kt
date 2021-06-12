@@ -5,10 +5,12 @@ import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.petproject.PetProjectApplicationModule.APP_CENTER_ID
 import com.cramsan.petproject.work.ScheduledSyncManager
 import com.microsoft.appcenter.AppCenter
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltAndroidApp
 class PetProjectApplication : Application() {
@@ -25,11 +27,15 @@ class PetProjectApplication : Application() {
     @Inject
     lateinit var syncManager: ScheduledSyncManager
 
+    @Inject
+    @Named(APP_CENTER_ID)
+    lateinit var appCenterId: String
+
     override fun onCreate() {
         super.onCreate()
         internalInstance = this
         eventLogger.log(Severity.INFO, "PetProjectApplication", "onCreate called")
-        AppCenter.start(this, "1206f21f-1b20-483f-9385-9b8cbc0e504d")
+        AppCenter.start(this, appCenterId)
         crashHandler.initialize()
         metrics.initialize()
         // syncManager.startWork()

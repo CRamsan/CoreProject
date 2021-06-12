@@ -38,6 +38,7 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
+import com.cramsan.petproject.PetProjectApplicationModule.APP_CENTER_ID
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.ProviderConfig
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
@@ -55,6 +56,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -230,4 +232,10 @@ object PetProjectApplicationModule {
     @Provides
     @Singleton
     fun provideDispatcher(): DispatcherProvider = DispatcherProviderImpl()
+
+    @Provides
+    @Named(APP_CENTER_ID)
+    fun provideAppCenterId(): String = BuildConfig.APP_CENTER_ID
+
+    const val APP_CENTER_ID = "APP_CENTER_ID"
 }
