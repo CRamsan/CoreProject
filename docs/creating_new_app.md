@@ -90,7 +90,7 @@ To ensure that testers always have access to the latest changes, we will use our
 
 ### Configure build parameters
 
-The 
+The **ApplicationId** will be provided as a Pipeline argument. This will need to be done in the Azure pipeline web console. For the following example, you would need to create a variable named **newAppAppCenterId** and the value would be **1a0c860e-1c51-41a0-b176-051f813605da**. 
 
 ```
 - task: Gradle@2
