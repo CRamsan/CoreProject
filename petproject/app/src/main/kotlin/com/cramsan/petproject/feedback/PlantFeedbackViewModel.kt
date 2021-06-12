@@ -14,10 +14,12 @@ import com.cramsan.framework.metrics.logMetric
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.base.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class PlantFeedbackViewModel @Inject constructor(
     application: Application,
     eventLogger: EventLoggerInterface,

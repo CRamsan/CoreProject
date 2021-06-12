@@ -15,11 +15,13 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
 import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.StringEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@HiltViewModel
 class PlantDetailsViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,

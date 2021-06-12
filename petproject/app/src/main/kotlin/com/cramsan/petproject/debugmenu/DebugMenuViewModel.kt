@@ -7,11 +7,13 @@ import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class DebugMenuViewModel @Inject constructor(
     application: Application,
     dispatcherProvider: DispatcherProvider,

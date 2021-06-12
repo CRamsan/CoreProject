@@ -1,0 +1,21 @@
+apply plugin: "org.jetbrains.kotlin.js"
+
+group = 'com.cramsan.ps2link'
+version = '1.0-SNAPSHOT'
+
+kotlin {
+    js(LEGACY) {
+        binaries.executable()
+        nodejs {
+            
+        }
+    }
+}
+
+dependencies {
+    implementation project(":framework")
+    implementation project(":auraxiscontrolcenter:appcore")
+    implementation project(":auraxiscontrolcenter:core-models")
+
+    implementation packages.KotlinxDatetime
+}

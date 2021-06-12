@@ -1,17 +1,6 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.AndroidBuildGradle
-        classpath packages.KotlinGradle
-        classpath packages.KotlinxSerializationGradle
-    }
-}
-
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
+ext.disableJs = true
 
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 

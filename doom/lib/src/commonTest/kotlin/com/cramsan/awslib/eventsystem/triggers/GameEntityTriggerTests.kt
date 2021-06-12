@@ -23,6 +23,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.test.BeforeTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -115,6 +116,7 @@ class GameEntityTriggerTests : TestBase() {
     /**
      * Test GameEntityTrigger with Options
      */
+    @Ignore
     @Test
     fun gameEntityTriggerWithInteractiveEvent() = runBlockingTest {
         val map = GameMap(MapGenerator.createMap100x100())

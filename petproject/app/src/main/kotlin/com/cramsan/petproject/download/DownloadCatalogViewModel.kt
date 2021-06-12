@@ -9,11 +9,13 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@HiltViewModel
 class DownloadCatalogViewModel @Inject constructor(
     application: Application,
     val modelProvider: ModelProviderInterface,

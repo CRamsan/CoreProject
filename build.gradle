@@ -11,6 +11,10 @@ buildscript {
 
     dependencies {
         classpath packages.GradleVersions
+        classpath packages.AndroidBuildGradle
+        classpath packages.SqlDelightGradle
+        classpath packages.HiltGradle
+        classpath packages.AndroidXNavigationSafeArgsGradle
     }
 }
 
@@ -26,10 +30,11 @@ subprojects {
         jcenter()
     }
 }
-
+/*
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+ */
 
 tasks.register("release") {
     group = 'build'

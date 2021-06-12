@@ -15,6 +15,7 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
 import com.cramsan.petproject.base.LiveEvent
 import com.cramsan.petproject.base.SimpleEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.features.ServerResponseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@HiltViewModel
 class AllPlantListViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,

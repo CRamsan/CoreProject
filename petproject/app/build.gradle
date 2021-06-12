@@ -1,17 +1,3 @@
-buildscript {
-    repositories {
-        google()
-
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.AndroidBuildGradle
-        classpath packages.KotlinGradle
-        classpath packages.AndroidXNavigationSafeArgsGradle
-        classpath packages.HiltGradle
-    }
-}
-
 apply plugin: "com.android.application"
 apply from: "$rootDir/gradle/app.gradle"
 

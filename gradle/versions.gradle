@@ -1,8 +1,9 @@
 def versions_tools = [
     AndroidBuildToolsVersion : "30.0.2",
+    AndroidGradlePlugin : '7.0.0-alpha15',
     CompileSdkVersion : 30,
     KotlinComposeVersion : "1.4.32",
-    KotlinVersion : "1.5.0",
+    KotlinVersion : "1.5.10",
     MinSdkVersion : 26,
     TargetSdkVersion : 30,
     Jacoco: "0.8.7",
@@ -12,7 +13,6 @@ def versions_tools = [
 
 def versions_packages = [
     Accompanist : "0.9.1",
-    AndroidGradlePlugin : '7.0.0-alpha15',
     AndroidMaterial : "1.3.0",
     AndroidxActivityKtx : "1.2.3",
     AndroidXArchCore : "2.1.0",
@@ -33,7 +33,7 @@ def versions_packages = [
     AzureFunctionsJavaLibrary : "1.4.2",
     Coil : "1.2.1",
     ConstraintLayout : "2.0.4",
-    Coroutines : versions_tools.KotlinVersion,
+    Coroutines : "1.5.0",
     Espresso : "3.3.0",
     Firebase : "17.2.3",
     FirebaseCrashlytics : "2.0.0-beta02",
@@ -47,7 +47,7 @@ def versions_packages = [
     GradleVersions : "0.38.0",
     Gson : "2.8.6",
     Hamcrest : "2.2",
-    Hilt : "2.35.1",
+    Hilt : "2.37",
     HiltAndroidX : "1.0.0",
     JacksonDatabinding : "2.12.3",
     JUnit : "4.13.2",
@@ -76,11 +76,10 @@ def versions_packages = [
     UIAutomator : "2.2.0",
     Volley : "1.1.1",
 ]
-
 def packages = [
         AccompanistCoil : "com.google.accompanist:accompanist-coil:$versions_packages.Accompanist",
         AccompanistSwipeRefresh: "com.google.accompanist:accompanist-swiperefresh:$versions_packages.Accompanist",
-        AndroidBuildGradle : "com.android.tools.build:gradle:$versions_packages.AndroidGradlePlugin",
+        AndroidBuildGradle : "com.android.tools.build:gradle:$versions_tools.AndroidGradlePlugin",
         AndroidMaterial : "com.google.android.material:material:$versions_packages.AndroidMaterial",
         AndroidxActivityKtx : "androidx.activity:activity-ktx:$versions_packages.AndroidxActivityKtx",
         AndroidXAppCompat : "androidx.appcompat:appcompat:$versions_packages.AndroidXAppCompat",
@@ -118,6 +117,7 @@ def packages = [
         CoroutinesSwing : "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$versions_packages.Coroutines",
         CoroutinesAndroid : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions_packages.Coroutines",
         CoroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions_packages.Coroutines",
+        CoroutinesCoreJS : "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$versions_packages.Coroutines",
         CoroutinesTest : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions_packages.Coroutines",
         Espresso : "androidx.test.espresso:espresso-core:$versions_packages.Espresso",
         EspressoIdlingResource : "androidx.test.espresso:espresso-idling-resource:$versions_packages.Espresso",
@@ -163,6 +163,7 @@ def packages = [
         KotlinTest : "org.jetbrains.kotlin:kotlin-test:$versions_packages.Kotlin",
         KotlinTestAnnotationsCommon : "org.jetbrains.kotlin:kotlin-test-annotations-common:$versions_packages.Kotlin",
         KotlinTestCommon : "org.jetbrains.kotlin:kotlin-test-common:$versions_packages.Kotlin",
+        KotlinTestJS : "org.jetbrains.kotlin:kotlin-test-js:$versions_packages.Kotlin",
         KotlinTestJunit : "org.jetbrains.kotlin:kotlin-test-junit:$versions_packages.Kotlin",
         KotlinxDatetime : "org.jetbrains.kotlinx:kotlinx-datetime:$versions_packages.KotlinxDatetime",
         KotlinxSerialization : "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions_packages.KotlinxSerialization",
@@ -226,6 +227,7 @@ def packages = [
         Volley : "com.android.volley:volley:$versions_packages.Volley",
 ]
 
+
 def hilt_kapt = [
         packages.HiltCompiler,
         packages.HiltAndroidXCompiler,
@@ -268,9 +270,14 @@ def core_android_test_android = [
         packages.MockkAndroid,
         packages.Robolectric,
 ]
+
 def core_jvm = [
         packages.KotlinStdJdk8,
         packages.CoroutinesCore,
+]
+
+def core_js = [
+        packages.CoroutinesCoreJS,
 ]
 
 def core_test_jvm = [
@@ -279,6 +286,10 @@ def core_test_jvm = [
         packages.KotlinTest,
         packages.KotlinTestJunit,
         packages.Mockk,
+]
+
+def core_test_js = [
+        packages.KotlinTestJS,
 ]
 
 def core_common = [
@@ -323,10 +334,12 @@ def meta_packages = [
         CoreAndroid : core_android,
         CoreCommon : core_common,
         CoreJVM : core_jvm,
+        CoreJS : core_js,
         CoreAndrodTestAndroid: core_android_test_android,
         CoreTestAndroid : core_test_android,
         CoreTestCommon : core_test_common,
         CoreTestJVM : core_test_jvm,
+        CoreTestJS : core_test_js,
         LibKtx : lib_ktx,
 ]
 

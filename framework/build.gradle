@@ -1,15 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.AndroidBuildGradle
-        classpath packages.KotlinGradle
-        classpath packages.KotlinxSerializationGradle
-    }
-}
-
 subprojects {
     ext {
         libraryVersionCode = 1

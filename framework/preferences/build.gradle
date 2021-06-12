@@ -1,14 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.AndroidBuildGradle
-        classpath packages.KotlinGradle
-    }
-}
-
 apply from: "$rootDir/gradle/mpp-lib.gradle"
 
 kotlin {

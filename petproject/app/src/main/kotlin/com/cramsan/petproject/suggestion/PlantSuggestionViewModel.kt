@@ -19,10 +19,12 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.model.feedback.Feedback
 import com.cramsan.petproject.appcore.model.feedback.FeedbackType
 import com.cramsan.petproject.base.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class PlantSuggestionViewModel @Inject constructor(
     application: Application,
     eventLogger: EventLoggerInterface,

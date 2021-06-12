@@ -1,6 +1,8 @@
 package com.cramsan.petproject
 
 import android.content.Context
+import com.cramsan.framework.assertlib.AssertUtil
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.DispatcherProviderImpl
@@ -22,6 +24,7 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerErrorCallbackImpl
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerAndroid
+import com.cramsan.framework.metrics.Metrics
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.AppCenterMetrics
@@ -30,6 +33,7 @@ import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
 import com.cramsan.framework.preferences.implementation.PreferencesImpl
+import com.cramsan.framework.thread.ThreadUtil
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
@@ -57,34 +61,26 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object PetProjectApplicationModule {
 
-    /*
-    WTF: I don't know why this is not working
     @Provides
-    fun provideAssertUtilInterface(
+    @Singleton
+    fun provideAssertUtil(
         eventLoggerInterface: EventLoggerInterface,
-        haltUtilInterface: HaltUtilInterface
+        haltUtilInterface: HaltUtil,
     ): AssertUtilInterface {
-        return AssertUtil(
+        val impl = AssertUtilImpl(
             BuildConfig.DEBUG,
             eventLoggerInterface,
             haltUtilInterface
         )
+        return AssertUtil.instance(impl)
     }
-     */
 
     @Provides
     @Singleton
     fun provideThreadUtilDelegate(
-        eventLoggerInterface: EventLoggerInterface,
-        haltUtilInterface: HaltUtil
+        assertUtilInterface: AssertUtilInterface,
     ): ThreadUtilDelegate {
-        return ThreadUtilAndroid(
-            AssertUtilImpl(
-                BuildConfig.DEBUG,
-                eventLoggerInterface,
-                haltUtilInterface
-            )
-        )
+        return ThreadUtilAndroid(assertUtilInterface)
     }
 
     @Provides
@@ -105,8 +101,10 @@ object PetProjectApplicationModule {
     fun provideMetricsInterface(
         metricsDelegate: MetricsDelegate,
         eventLoggerInterface: EventLoggerInterface,
-    ): MetricsInterface =
-        MetricsImpl(metricsDelegate, eventLoggerInterface)
+    ): MetricsInterface {
+        val instance = MetricsImpl(metricsDelegate, eventLoggerInterface)
+        return Metrics.instance(instance)
+    }
 
     @Provides
     @Singleton
@@ -151,8 +149,10 @@ object PetProjectApplicationModule {
 
     @Provides
     @Singleton
-    fun provideThreadUtilInterface(threadUtilDelegate: ThreadUtilDelegate): ThreadUtilInterface =
-        ThreadUtilImpl(threadUtilDelegate)
+    fun provideThreadUtilInterface(threadUtilDelegate: ThreadUtilDelegate): ThreadUtilInterface {
+        val instance = ThreadUtilImpl(threadUtilDelegate)
+        return ThreadUtil.instance(instance)
+    }
 
     @Provides
     @Singleton

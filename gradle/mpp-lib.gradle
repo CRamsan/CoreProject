@@ -1,10 +1,12 @@
 /**
  * Plugin to create a kotlin MPP with safe defaults.
- * This plugin requires that the project set the values for libraryVersionCode and libraryVersionName.
+ * This plugin requires that the project set the values for:
+ * - libraryVersionCode
+ * - libraryVersionName
+ * - disableJs
  */
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.multiplatform"
-apply plugin: "kotlinx-serialization"
 apply plugin: "kotlin-kapt"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
 apply from: "$rootDir/gradle/ktlint.gradle"
@@ -97,6 +99,11 @@ kotlin {
             framework()
         }
     }
+    if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+        js(LEGACY) {
+            nodejs()
+        }
+    }
 
     sourceSets {
         commonMain {
@@ -114,7 +121,20 @@ kotlin {
                 meta_packages.CoreTestCommon.each { implementation it }
             }
         }
+        nonJsMain {
+            dependsOn(commonMain)
+        }
+        nonJsTest {
+            dependsOn(commonTest)
+        }
+        androidMain {
+            dependsOn(nonJsMain)
+        }
+        androidTest {
+            dependsOn(nonJsTest)
+        }
         jvmMain {
+            dependsOn(nonJsMain)
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
@@ -122,11 +142,18 @@ kotlin {
             }
         }
         jvmTest {
+            dependsOn(nonJsTest)
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
                 meta_packages.CoreTestJVM.each { implementation it }
             }
+        }
+        iosMain {
+            dependsOn(nonJsMain)
+        }
+        iosTest {
+            dependsOn(nonJsTest)
         }
     }
 }
@@ -138,6 +165,11 @@ tasks {
         }
     }
 }
+
+// TODO: Verify if this can be removed
+// https://youtrack.jetbrains.com/issue/KT-46165
+// https://youtrack.jetbrains.com/issue/KT-46978
+tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
 
 ext.registerDependency = { project ->
     releaseJvm.configure { dependsOn("${project}:releaseJvm") }

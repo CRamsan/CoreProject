@@ -4,12 +4,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath packages.KotlinGradle
         classpath packages.SpringBootGradle
         classpath packages.SpringDependencyManagement
         classpath packages.KotlinNoArg
         classpath packages.KotlinAllOpen
-
     }
 }
 
