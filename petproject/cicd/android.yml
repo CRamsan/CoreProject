@@ -33,7 +33,7 @@ steps:
 
 - task: Gradle@2
   inputs:
-    options: '-PpetProjectAppCenterId=$(ps2linkAppCenterId)'
+    options: '-PpetProjectAppCenterId=$(ps2linkAppCenterId) -PcommitId=$(build.sourceVersion)'
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
@@ -89,6 +89,6 @@ steps:
     appFile: 'petproject/app/build/outputs/apk/stage/app-stage-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
-    releaseNotesInput: 'Release Notes: TBD'
+    releaseNotesInput: '$(build.sourceVersionMessage)'
     destinationType: 'groups'
     distributionGroupId: '00000000-0000-0000-0000-000000000000'
