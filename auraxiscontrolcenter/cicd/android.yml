@@ -32,7 +32,7 @@ steps:
     
 - task: Gradle@2
   inputs:
-    options: '-Pps2linkConsumerSecret=$(ps2linkConsumerSecret) -Pps2linkConsumerKey=$(ps2linkConsumerKey) -Pps2linkAccessToken=$(ps2linkAccessToken) -Pps2linkAccessTokenSecret=$(ps2linkAccessTokenSecret) -Pps2linkAppCenterId=$(ps2linkAppCenterId)'
+    options: '-Pps2linkConsumerSecret=$(ps2linkConsumerSecret) -Pps2linkConsumerKey=$(ps2linkConsumerKey) -Pps2linkAccessToken=$(ps2linkAccessToken) -Pps2linkAccessTokenSecret=$(ps2linkAccessTokenSecret) -Pps2linkAppCenterId=$(ps2linkAppCenterId) -PcommitId=$(build.sourceVersion)'
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
@@ -88,7 +88,7 @@ steps:
     appFile: 'auraxiscontrolcenter/build/outputs/apk/stage/auraxiscontrolcenter-stage-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
-    releaseNotesInput: 'Release Notes: TBD'
+    releaseNotesInput: '$(build.sourceVersionMessage)'
     destinationType: 'groups'
     distributionGroupId: '00000000-0000-0000-0000-000000000000'
 
