@@ -16,8 +16,6 @@ trigger:
     - gradle.properties
     - settings.gradle
     - gradle/*
-    exclude:
-    - *.md
 
 pool:
   vmImage: 'ubuntu-latest'
