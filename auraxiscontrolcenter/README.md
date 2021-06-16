@@ -15,7 +15,9 @@ Now you can compile the app with `./gradlew auraxiscontrolcenter:release`
 
 # Build Status
 
-[![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
+Android: [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
+
+Service: [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControlCenter_NodeJs?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=14&branchName=master)
 
 # Documentation
 [Mocks](https://www.figma.com/files/project/30562182/Team-project?fuid=741159602862694256)
