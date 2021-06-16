@@ -240,6 +240,7 @@ def hilt = [
 
 def core_android = [
         packages.KotlinStdJdk8,
+        packages.CoroutinesCore,
         packages.CoroutinesAndroid,
 ]
 
@@ -273,7 +274,7 @@ def core_android_test_android = [
 
 def core_jvm = [
         packages.KotlinStdJdk8,
-]
+        packages.CoroutinesCore,]
 
 def core_js = [
         packages.CoroutinesCoreJS,
