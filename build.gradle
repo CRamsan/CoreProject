@@ -30,11 +30,6 @@ subprojects {
         jcenter()
     }
 }
-/*
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
- */
 
 tasks.register("release") {
     group = 'build'

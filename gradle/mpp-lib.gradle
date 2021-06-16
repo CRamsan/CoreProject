@@ -186,9 +186,7 @@ tasks {
 tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
 
 ext.registerDependency = { project ->
-    releaseJvm.configure { dependsOn("${project}:releaseJvm") }
-    releaseAndroid.configure { dependsOn("${project}:releaseAndroid") }
-    releaseJs.configure { dependsOn("${project}:releaseJs") }
+    release.configure { dependsOn("${project}:release") }
 }
 
 tasks.register("releaseJs") {
@@ -225,4 +223,5 @@ tasks.register("release") {
 
     dependsOn 'releaseJvm'
     dependsOn 'releaseAndroid'
+    dependsOn 'releaseJs'
 }
