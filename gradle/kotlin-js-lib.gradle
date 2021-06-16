@@ -1,0 +1,39 @@
+/**
+ * Configure a Kotlin-JVM project with safe defaults.
+ */
+
+apply plugin: "org.jetbrains.kotlin.js"
+apply from: "$rootDir/gradle/ktlint.gradle"
+
+kotlin {
+    js {
+
+    }
+}
+
+dependencies {
+    implementation meta_packages.CoreJS
+
+    testImplementation meta_packages.CoreTestJS
+}
+
+// Function to add a dependency to another JS project.
+ext.registerDependency = { project ->
+    release.configure { dependsOn("${project}:releaseJs") }
+}
+
+// Release task that will build and test the project.
+tasks.register("releaseJs") {
+    group = 'build'
+    description = 'Run all the steps to build a Js artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'compileKotlinJs'
+    dependsOn 'test'
+}
+
+tasks.register("release") {
+    group = 'build'
+
+    dependsOn "releaseJs"
+}

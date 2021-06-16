@@ -100,7 +100,7 @@ kotlin {
         }
     }
     if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
-        js(LEGACY) {
+        js("js") {
             nodejs()
         }
     }
@@ -149,6 +149,20 @@ kotlin {
                 meta_packages.CoreTestJVM.each { implementation it }
             }
         }
+        jsMain {
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreJS.each { implementation it }
+            }
+        }
+        jsTest {
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreTestJS.each { implementation it }
+            }
+        }
         iosMain {
             dependsOn(nonJsMain)
         }
@@ -174,6 +188,16 @@ tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrate
 ext.registerDependency = { project ->
     releaseJvm.configure { dependsOn("${project}:releaseJvm") }
     releaseAndroid.configure { dependsOn("${project}:releaseAndroid") }
+    releaseJs.configure { dependsOn("${project}:releaseJs") }
+}
+
+tasks.register("releaseJs") {
+    group = 'build'
+    description = 'Run all the steps to build a Js artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'compileKotlinJs'
+    dependsOn 'jsTest'
 }
 
 tasks.register("releaseJvm") {

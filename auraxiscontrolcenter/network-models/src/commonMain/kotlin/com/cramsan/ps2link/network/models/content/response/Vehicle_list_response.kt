@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Vehicle_list_response(
-    var vehicle_list: List<Vehicle>,
+    val vehicle_list: List<Vehicle>,
 )

@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Member(
-    var character_id: String? = null,
-    var online_status: String? = null,
-    var rank: String? = null,
-    var rank_ordinal: String? = null,
-    var outfit_id: String? = null,
-    var character: CharacterProfileNullId? = null,
-    var name: Name? = null,
+    val character_id: String? = null,
+    val online_status: String? = null,
+    val rank: String? = null,
+    val rank_ordinal: String? = null,
+    val outfit_id: String? = null,
+    val character: CharacterProfileNullId? = null,
+    val name: Name? = null,
 )

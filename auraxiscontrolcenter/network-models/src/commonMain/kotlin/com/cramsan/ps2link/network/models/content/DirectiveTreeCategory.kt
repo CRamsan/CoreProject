@@ -11,7 +11,7 @@ data class DirectiveTreeCategory(
     /**
      * @param name The name
      */
-    var name: Name_Multi? = null,
+    val name: Name_Multi? = null,
     /**
      * @return The directiveTreeCategoryId
      */
@@ -19,13 +19,13 @@ data class DirectiveTreeCategory(
      * @param directiveTreeCategoryId The directive_tree_category_id
      */
     @SerialName("directive_tree_category_id")
-    var directiveTreeCategoryId: String? = null,
+    val directiveTreeCategoryId: String? = null,
 
-    var characterDirectiveTreeList: List<CharacterDirectiveTree>? = null,
+    val characterDirectiveTreeList: List<CharacterDirectiveTree>? = null,
 
-    var maxValue: Int = 0,
+    val maxValue: Int = 0,
 
-    var currentValue: Int = 0,
+    val currentValue: Int = 0,
 
     /*
     fun registerCharacterDirectiveTreeList(

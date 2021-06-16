@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Name(
-    var first: String? = null,
-    var first_lower: String? = null,
+    val first: String? = null,
+    val first_lower: String? = null,
 )

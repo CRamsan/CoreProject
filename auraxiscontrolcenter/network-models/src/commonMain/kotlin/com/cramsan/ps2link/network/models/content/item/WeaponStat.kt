@@ -4,14 +4,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeaponStat(
-    var character_id: String? = null,
-    var item_id: String? = null,
-    var last_save: String? = null,
-    var last_save_date: String? = null,
-    var stat_name: String? = null,
-    var item_id_join_item: WeaponInfo? = null,
-    var vehicle_id_join_vehicle: WeaponInfo? = null,
-    var value_nc: Int = 0,
-    var value_tr: Int = 0,
-    var value_vs: Int = 0,
+    val character_id: String? = null,
+    val item_id: String? = null,
+    val last_save: String? = null,
+    val last_save_date: String? = null,
+    val stat_name: String? = null,
+    val item_id_join_item: WeaponInfo? = null,
+    val vehicle_id_join_vehicle: WeaponInfo? = null,
+    val value_nc: Int? = 0,
+    val value_tr: Int? = 0,
+    val value_vs: Int? = 0,
 )

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class World_event_list_response(
-    var world_event_list: List<WorldEvent>
+    val world_event_list: List<WorldEvent>
 )

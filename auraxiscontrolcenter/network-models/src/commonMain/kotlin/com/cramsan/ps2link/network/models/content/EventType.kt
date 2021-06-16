@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EventType(
-    var name: Name_Multi? = null,
-    var description: Description? = null,
+    val name: Name_Multi? = null,
+    val description: Description? = null,
 )

@@ -11,7 +11,7 @@ data class DirectiveTree(
     /**
      * @param name The name
      */
-    var name: Name_Multi? = null,
+    val name: Name_Multi? = null,
 
     /**
      * @return The directiveTreeCategoryId
@@ -20,7 +20,7 @@ data class DirectiveTree(
      * @param directiveTreeCategoryId The directive_tree_category_id
      */
     @SerialName("directive_tree_category_id")
-    var directiveTreeCategoryId: String? = null,
+    val directiveTreeCategoryId: String? = null,
 
     /**
      * @return The directiveTreeCategoryIdJoinDirectiveTreeCategory
@@ -29,7 +29,7 @@ data class DirectiveTree(
      * @param directiveTreeCategoryIdJoinDirectiveTreeCategory The directive_tree_category_id_join_directive_tree_category
      */
     @SerialName("directive_tree_category_id_join_directive_tree_category")
-    var directiveTreeCategoryIdJoinDirectiveTreeCategory: DirectiveTreeCategory? = null,
+    val directiveTreeCategoryIdJoinDirectiveTreeCategory: DirectiveTreeCategory? = null,
 
     /**
      * @return The directiveTreeId
@@ -38,7 +38,7 @@ data class DirectiveTree(
      * @param directiveTreeId The directive_tree_id
      */
     @SerialName("directive_tree_id")
-    var directiveTreeId: String? = null,
+    val directiveTreeId: String? = null,
 
     /**
      * @return The imageId
@@ -47,7 +47,7 @@ data class DirectiveTree(
      * @param imageId The image_id
      */
     @SerialName("image_id")
-    var imageId: String? = null,
+    val imageId: String? = null,
 
     /**
      * @return The imagePath
@@ -56,7 +56,7 @@ data class DirectiveTree(
      * @param imagePath The image_path
      */
     @SerialName("image_path")
-    var imagePath: String? = null,
+    val imagePath: String? = null,
 
     /**
      * @return The imageSetId
@@ -65,5 +65,5 @@ data class DirectiveTree(
      * @param imageSetId The image_set_id
      */
     @SerialName("image_set_id")
-    var imageSetId: String? = null,
+    val imageSetId: String? = null,
 )

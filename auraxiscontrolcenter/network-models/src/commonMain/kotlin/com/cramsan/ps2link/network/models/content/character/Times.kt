@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Times(
-    var last_login: String? = null,
-    var minutes_played: String? = null,
+    val last_login: String? = null,
+    val minutes_played: String? = null,
 )

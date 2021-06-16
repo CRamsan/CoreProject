@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Outfit_response(
-    var outfit_list: List<Outfit>
+    val outfit_list: List<Outfit>
 )

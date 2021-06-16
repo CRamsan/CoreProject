@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CharacterFriend(
-    var name: Name? = null,
-    var character_id: String? = null,
-    var last_login_time: String? = null,
-    var online: String? = null,
+    val name: Name? = null,
+    val character_id: String? = null,
+    val last_login_time: String? = null,
+    val online: String? = null,
 )

@@ -11,7 +11,7 @@ data class DirectiveTier(
     /**
      * @param name The name
      */
-    var name: Name_Multi? = null,
+    val name: Name_Multi? = null,
     /**
      * @return The completionCount
      */
@@ -19,7 +19,7 @@ data class DirectiveTier(
      * @param completionCount The completion_count
      */
     @SerialName("completion_count")
-    var completionCount: String? = null,
+    val completionCount: String? = null,
     /**
      * @return The directivePoints
      */
@@ -27,7 +27,7 @@ data class DirectiveTier(
      * @param directivePoints The directive_points
      */
     @SerialName("directive_points")
-    var directivePoints: String? = null,
+    val directivePoints: String? = null,
     /**
      * @return The directiveTierId
      */
@@ -35,7 +35,7 @@ data class DirectiveTier(
      * @param directiveTierId The directive_tier_id
      */
     @SerialName("directive_tier_id")
-    var directiveTierId: String? = null,
+    val directiveTierId: String? = null,
     /**
      * @return The directiveTreeId
      */
@@ -43,7 +43,7 @@ data class DirectiveTier(
      * @param directiveTreeId The directive_tree_id
      */
     @SerialName("directive_tree_id")
-    var directiveTreeId: String? = null,
+    val directiveTreeId: String? = null,
     /**
      * @return The imageId
      */
@@ -51,7 +51,7 @@ data class DirectiveTier(
      * @param imageId The image_id
      */
     @SerialName("image_id")
-    var imageId: String? = null,
+    val imageId: String? = null,
     /**
      * @return The imagePath
      */
@@ -59,7 +59,7 @@ data class DirectiveTier(
      * @param imagePath The image_path
      */
     @SerialName("image_path")
-    var imagePath: String? = null,
+    val imagePath: String? = null,
     /**
      * @return The imageSetId
      */
@@ -67,7 +67,7 @@ data class DirectiveTier(
      * @param imageSetId The image_set_id
      */
     @SerialName("image_set_id")
-    var imageSetId: String? = null,
+    val imageSetId: String? = null,
     /**
      * @return The rewardSetId
      */
@@ -75,9 +75,9 @@ data class DirectiveTier(
      * @param rewardSetId The reward_set_id
      */
     @SerialName("reward_set_id")
-    var rewardSetId: String? = null,
+    val rewardSetId: String? = null,
 
-    var directives: List<Directive>? = null,
+    val directives: List<Directive>? = null,
 
             /*
     fun registerDirective(directive: Directive) {

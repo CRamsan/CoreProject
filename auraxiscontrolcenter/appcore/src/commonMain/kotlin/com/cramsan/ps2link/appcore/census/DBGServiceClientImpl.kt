@@ -42,10 +42,7 @@ import com.cramsan.ps2link.network.models.content.Member
 import com.cramsan.ps2link.network.models.content.Outfit
 import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.WorldEvent
-import com.cramsan.ps2link.network.models.content.character.Day
-import com.cramsan.ps2link.network.models.content.character.Month
 import com.cramsan.ps2link.network.models.content.character.Stat
-import com.cramsan.ps2link.network.models.content.character.Week
 import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.item.Weapon
 import com.cramsan.ps2link.network.models.content.item.WeaponStat
@@ -602,7 +599,7 @@ fun Outfit.toCoreModel(
                 )
             }
         },
-        memberCount = member_count,
+        memberCount = member_count ?: 0,
         namespace = namespace,
         cached = false,
         lastUpdate = lastUpdate,
@@ -641,17 +638,17 @@ private fun formatWeapons(
             }
 
             val statTR = if (faction != com.cramsan.ps2link.core.models.Faction.TR) {
-                stat.value_tr.toLong()
+                stat.value_tr?.toLong()
             } else {
                 null
             }
             val statNC = if (faction != com.cramsan.ps2link.core.models.Faction.NC) {
-                stat.value_nc.toLong()
+                stat.value_nc?.toLong()
             } else {
                 null
             }
             val statVS = if (faction != com.cramsan.ps2link.core.models.Faction.VS) {
-                stat.value_vs.toLong()
+                stat.value_vs?.toLong()
             } else {
                 null
             }
@@ -696,7 +693,6 @@ private fun formatStats(stats: List<Stat>?): List<StatItem> {
             time = stat
         }
     }
-    val kdr = Stat()
     deaths?.let {
         if (deaths.all_time == "0") {
             deaths.all_time = "1"
@@ -711,23 +707,18 @@ private fun formatStats(stats: List<Stat>?): List<StatItem> {
             deaths.setThisMonth(1F)
         }
     }
-    kdr.day = Day()
-    kdr.week = Week()
-    kdr.month = Month()
 
-    kdr.stat_name = "kdr"
-    kdr.all_time = (
+    val stat_name = "kdr"
+    val all_time = (
         (kills?.all_time?.toFloatOrNull() ?: 0f) / (deaths?.all_time?.toFloatOrNull() ?: 1f)
         ).toString()
-
+    val results = mutableListOf<Stat>()
+    val kdr = Stat.newInstance(stat_name, all_time)
     kdr.setToday((kills?.getToday() ?: 0f) / (deaths?.getToday() ?: 1f))
     kdr.setThisWeek((kills?.getThisWeek() ?: 0f) / (deaths?.getThisWeek() ?: 1f))
     kdr.setThisMonth((kills?.getThisMonth() ?: 0f) / (deaths?.getThisMonth() ?: 1f))
-
-    val results = mutableListOf<Stat>()
     results.add(kdr)
 
-    val sph = Stat()
     time?.let {
         if (time.all_time == "0") {
             time.all_time = "1"
@@ -742,13 +733,10 @@ private fun formatStats(stats: List<Stat>?): List<StatItem> {
             time.setThisMonth(1F)
         }
     }
-    sph.day = Day()
-    sph.week = Week()
-    sph.month = Month()
 
     // TODO: Replace this with a resource
-    sph.stat_name = "Score/Hour"
-    sph.all_time = (
+    val stat_name_sph = "Score/Hour"
+    val all_time_sph = (
         (score?.all_time?.toFloatOrNull() ?: 0f) / (
             (
                 time?.all_time?.toFloatOrNull()
@@ -756,6 +744,7 @@ private fun formatStats(stats: List<Stat>?): List<StatItem> {
                 ) / 3600f
             )
         ).toString()
+    val sph = Stat.newInstance(stat_name_sph, all_time_sph)
     sph.setToday((score?.getToday() ?: 0f) / ((time?.getToday() ?: 3600f) / 3600f))
     sph.setThisWeek((score?.getThisWeek() ?: 0f) / ((time?.getThisWeek() ?: 3600f) / 3600f))
     sph.setThisMonth((score?.getThisMonth() ?: 0f) / ((time?.getThisMonth() ?: 3600f) / 3600f))
@@ -799,7 +788,6 @@ fun formatKillList(
         if (it.attacker_character_id == characterId) {
             faction = Faction.fromString(it.character?.faction_id)
             attackerName = it.character?.name?.first
-            it.important_character_id = it.character_id
             if (it.character_id == characterId) {
                 killType = KillType.SUICIDE
             } else {
@@ -811,7 +799,6 @@ fun formatKillList(
             killType = KillType.KILLEDBY
             attackerName = it.attacker?.name?.first
             eventCharacterId = it.attacker_character_id
-            it.important_character_id = it.attacker_character_id
         } else {
             killType = KillType.UNKNOWN
             attackerName = null

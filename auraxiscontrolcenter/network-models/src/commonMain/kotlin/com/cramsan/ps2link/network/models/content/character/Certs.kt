@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Certs(
-    var available_points: String? = null,
-    var percent_to_next: String? = null,
+    val available_points: String? = null,
+    val percent_to_next: String? = null,
 )

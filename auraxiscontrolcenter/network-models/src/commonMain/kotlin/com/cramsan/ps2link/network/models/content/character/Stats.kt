@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Stats(
-    var stat_history: List<Stat>? = null,
+    val stat_history: List<Stat>? = null,
 )

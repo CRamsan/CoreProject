@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Item_list_response(
-    var item_list: List<Item>,
+    val item_list: List<Item>,
 )

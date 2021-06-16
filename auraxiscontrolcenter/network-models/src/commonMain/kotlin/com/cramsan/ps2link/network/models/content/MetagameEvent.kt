@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class MetagameEvent(
-    var metagame_event_id: String? = null,
-    var type: String? = null,
-    var experience_bonus: String? = null,
-    var name: Name_Multi? = null,
-    var description: Name_Multi? = null,
+    val metagame_event_id: String? = null,
+    val type: String? = null,
+    val experience_bonus: String? = null,
+    val name: Name_Multi? = null,
+    val description: Name_Multi? = null,
 )

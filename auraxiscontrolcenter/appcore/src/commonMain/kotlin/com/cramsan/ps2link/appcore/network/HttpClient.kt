@@ -10,6 +10,8 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Url
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -21,6 +23,7 @@ import kotlin.time.toDuration
  */
 class HttpClient(
     private val http: HttpClient,
+    val json: Json,
 ) {
 
     @OptIn(ExperimentalTime::class)
@@ -31,8 +34,10 @@ class HttpClient(
                 val response = sendRequest(url, retry)
 
                 if (response.status.isSuccess()) {
-                    val body = response.receive<T>()
-                    PS2HttpResponse.success(body, response)
+                    val body = response.receive<String>()
+                    logD(TAG, "Response: $body")
+                    val parsedBody = json.decodeFromString<T>(body)
+                    PS2HttpResponse.success(parsedBody, response)
                 } else if (response.status.value in 300..500) {
                     PS2HttpResponse.failure(response, null)
                 } else {

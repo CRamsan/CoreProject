@@ -2,10 +2,10 @@ package com.cramsan.ps2link.network.models.content
 
 data class CharacterDirectiveObjective(
 
-    var character_id: String? = null,
-    var directive_id: String? = null,
-    var objective_group_id: String? = null,
-    var objective_id: String? = null,
-    var state_data: String? = null,
-    var status: String? = null,
+    val character_id: String? = null,
+    val directive_id: String? = null,
+    val objective_group_id: String? = null,
+    val objective_id: String? = null,
+    val state_data: String? = null,
+    val status: String? = null,
 )

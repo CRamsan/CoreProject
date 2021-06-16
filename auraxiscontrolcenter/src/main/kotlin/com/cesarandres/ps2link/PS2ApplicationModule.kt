@@ -70,6 +70,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
+import kotlinx.serialization.json.Json
 import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Named
 import javax.inject.Singleton
@@ -230,14 +231,14 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideKtorHttpClient(): io.ktor.client.HttpClient {
-        return buildHttpClient()
+    fun provideKtorHttpClient(json: Json): io.ktor.client.HttpClient {
+        return buildHttpClient(json)
     }
 
     @Provides
     @Singleton
-    fun provideHttpClient(httpClient: io.ktor.client.HttpClient): HttpClient {
-        return HttpClient(httpClient)
+    fun provideHttpClient(httpClient: io.ktor.client.HttpClient, json: Json): HttpClient {
+        return HttpClient(httpClient, json)
     }
 
     @Provides

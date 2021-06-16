@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 data class LiveServersPS4(
 
     @SerialName("Ceres (EU)")
-    var ceres: LiveServer? = null,
+    val ceres: LiveServer? = null,
 
     @SerialName("Genudine")
-    var genudine: LiveServer? = null,
+    val genudine: LiveServer? = null,
 )

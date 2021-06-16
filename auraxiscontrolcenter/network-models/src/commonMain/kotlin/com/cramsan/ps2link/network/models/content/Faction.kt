@@ -3,10 +3,10 @@ package com.cramsan.ps2link.network.models.content
 import com.cramsan.ps2link.network.models.content.world.Name_Multi
 
 data class Faction(
-    var id: String? = null,
-    var name: Name_Multi? = null,
-    var code: String? = null,
-    var icon: String? = null,
+    val id: String? = null,
+    val name: Name_Multi? = null,
+    val code: String? = null,
+    val icon: String? = null,
 ) {
     companion object {
         val VS = "1"

@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CharacterProfileLimited(
-    var character_Id: String? = null,
-    var name: Name? = null,
-    var faction_id: String? = null,
-    var battle_rank: BattleRank? = null,
+    val character_Id: String? = null,
+    val name: Name? = null,
+    val faction_id: String? = null,
+    val battle_rank: BattleRank? = null,
 )

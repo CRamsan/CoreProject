@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Vehicle(
-    var vehicle_id: String,
+    val vehicle_id: String,
     val name: Name_Multi? = null,
     val description: Description? = null,
-    var type_id: String? = null,
-    var type_name: String? = null,
-    var cost: String? = null,
-    var cost_resource_id: String? = null,
-    var image_set_id: String? = null,
-    var image_id: String? = null,
-    var image_path: String? = null,
+    val type_id: String? = null,
+    val type_name: String? = null,
+    val cost: String? = null,
+    val cost_resource_id: String? = null,
+    val image_set_id: String? = null,
+    val image_id: String? = null,
+    val image_path: String? = null,
 )

@@ -12,6 +12,7 @@ ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
 apply from: "$rootDir/gradle/mpp-lib.gradle"
+apply plugin: 'kotlinx-serialization'
 
 dependencies {
     kapt meta_packages.HiltKapt

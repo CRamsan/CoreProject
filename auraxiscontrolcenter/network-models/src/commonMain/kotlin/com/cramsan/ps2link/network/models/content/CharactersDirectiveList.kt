@@ -11,7 +11,7 @@ data class CharactersDirectiveList(
      * @param characterId The character_id
      */
     @SerialName("character_id")
-    var characterId: String? = null,
+    val characterId: String? = null,
     /**
      * @return The completionTime
      */
@@ -19,7 +19,7 @@ data class CharactersDirectiveList(
      * @param completionTime The completion_time
      */
     @SerialName("completion_time")
-    var completionTime: String? = null,
+    val completionTime: String? = null,
     /**
      * @return The completionTimeDate
      */
@@ -27,7 +27,7 @@ data class CharactersDirectiveList(
      * @param completionTimeDate The completion_time_date
      */
     @SerialName("completion_time_date")
-    var completionTimeDate: String? = null,
+    val completionTimeDate: String? = null,
     /**
      * @return The directiveId
      */
@@ -35,7 +35,7 @@ data class CharactersDirectiveList(
      * @param directiveId The directive_id
      */
     @SerialName("directive_id")
-    var directiveId: String? = null,
+    val directiveId: String? = null,
     /**
      * @return The directiveIdJoinDirective
      */
@@ -43,7 +43,7 @@ data class CharactersDirectiveList(
      * @param directiveIdJoinDirective The directive_id_join_directive
      */
     @SerialName("directive_id_join_directive")
-    var directiveIdJoinDirective: Directive? = null,
+    val directiveIdJoinDirective: Directive?,
     /**
      * @return The directiveTreeId
      */
@@ -51,5 +51,5 @@ data class CharactersDirectiveList(
      * @param directiveTreeId The directive_tree_id
      */
     @SerialName("directive_tree_id")
-    var directiveTreeId: String? = null,
+    val directiveTreeId: String? = null,
 )

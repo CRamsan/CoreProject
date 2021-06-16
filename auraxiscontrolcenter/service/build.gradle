@@ -1,13 +1,12 @@
-apply plugin: "org.jetbrains.kotlin.js"
+apply from: "$rootDir/gradle/kotlin-js-lib.gradle"
 
-group = 'com.cramsan.ps2link'
+group = 'com.cramsan.ps2link.service'
 version = '1.0-SNAPSHOT'
 
 kotlin {
-    js(LEGACY) {
+    js {
         binaries.executable()
         nodejs {
-            
         }
     }
 }
@@ -17,5 +16,16 @@ dependencies {
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
 
+    implementation packages.KtorJson
+    implementation packages.KtorClientJs
     implementation packages.KotlinxDatetime
+    implementation packages.KotlinxSerialization
 }
+
+release {
+    dependsOn 'nodeRun'
+}
+
+registerDependency(":framework")
+registerDependency(":auraxiscontrolcenter:appcore")
+registerDependency(":auraxiscontrolcenter:core-models")

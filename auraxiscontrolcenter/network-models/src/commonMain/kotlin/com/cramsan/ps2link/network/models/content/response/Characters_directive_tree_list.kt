@@ -3,5 +3,5 @@ package com.cramsan.ps2link.network.models.content.response
 import com.cramsan.ps2link.network.models.content.CharacterDirectiveTree
 
 data class Characters_directive_tree_list(
-    var characters_directive_tree_list: List<CharacterDirectiveTree>? = null
+    val characters_directive_tree_list: List<CharacterDirectiveTree>? = null
 )

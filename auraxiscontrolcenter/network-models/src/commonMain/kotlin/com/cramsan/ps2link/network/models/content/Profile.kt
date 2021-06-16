@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Profile(
-    var name: Name_Multi? = null
+    val name: Name_Multi? = null
 )

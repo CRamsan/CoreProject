@@ -5,16 +5,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Item(
-    var item_id: String,
-    var item_type_id: String? = null,
-    var item_category_id: String? = null,
-    var is_vehicle_weapon: String? = null,
+    val item_id: String,
+    val item_type_id: String? = null,
+    val item_category_id: String? = null,
+    val is_vehicle_weapon: String? = null,
     val name: Name_Multi? = null,
     val description: Description? = null,
-    var faction_id: String? = null,
-    var max_stack_size: String? = null,
-    var image_set_id: String? = null,
-    var image_id: String? = null,
-    var image_path: String? = null,
-    var is_default_attachment: String? = null,
+    val faction_id: String? = null,
+    val max_stack_size: String? = null,
+    val image_set_id: String? = null,
+    val image_id: String? = null,
+    val image_path: String? = null,
+    val is_default_attachment: String? = null,
 )

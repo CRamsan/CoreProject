@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Server(
-    var name: Name_Multi? = null,
-    var state: String? = null,
-    var world_id: Int = 0,
+    val name: Name_Multi? = null,
+    val state: String? = null,
+    val world_id: Int? = 0,
 )

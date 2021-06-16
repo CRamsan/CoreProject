@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeaponInfo(
-    var name: Name_Multi? = null,
-    var image_path: String? = null,
+    val name: Name_Multi? = null,
+    val image_path: String? = null,
 )

@@ -11,14 +11,14 @@ data class Directive(
     /**
      * @param name The name
      */
-    var name: Name_Multi? = null,
+    val name: Name_Multi? = null,
     /**
      * @return The description
      */
     /**
      * @param description The description
      */
-    var description: Description? = null,
+    val description: Description? = null,
     /**
      * @return The directiveId
      */
@@ -26,7 +26,7 @@ data class Directive(
      * @param directiveId The directive_id
      */
     @SerialName("directive_id")
-    var directiveId: String? = null,
+    val directiveId: String? = null,
     /**
      * @return The directiveTierId
      */
@@ -34,7 +34,7 @@ data class Directive(
      * @param directiveTierId The directive_tier_id
      */
     @SerialName("directive_tier_id")
-    var directiveTierId: String? = null,
+    val directiveTierId: String? = null,
     /**
      * @return The directiveTreeId
      */
@@ -42,7 +42,7 @@ data class Directive(
      * @param directiveTreeId The directive_tree_id
      */
     @SerialName("directive_tree_id")
-    var directiveTreeId: String? = null,
+    val directiveTreeId: String? = null,
     /**
      * @return The imageId
      */
@@ -50,7 +50,7 @@ data class Directive(
      * @param imageId The image_id
      */
     @SerialName("image_id")
-    var imageId: String? = null,
+    val imageId: String? = null,
     /**
      * @return The imagePath
      */
@@ -58,7 +58,7 @@ data class Directive(
      * @param imagePath The image_path
      */
     @SerialName("image_path")
-    var imagePath: String? = null,
+    val imagePath: String? = null,
     /**
      * @return The imageSetId
      */
@@ -66,7 +66,7 @@ data class Directive(
      * @param imageSetId The image_set_id
      */
     @SerialName("image_set_id")
-    var imageSetId: String? = null,
+    val imageSetId: String? = null,
     /**
      * @return The objectiveSetId
      */
@@ -74,7 +74,7 @@ data class Directive(
      * @param objectiveSetId The objective_set_id
      */
     @SerialName("objective_set_id")
-    var objectiveSetId: String? = null,
+    val objectiveSetId: String? = null,
 
-    var directive: CharacterDirective? = null,
+    val directive: CharacterDirective? = null,
 )

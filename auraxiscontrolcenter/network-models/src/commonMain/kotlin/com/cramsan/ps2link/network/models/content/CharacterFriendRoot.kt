@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CharacterFriendRoot(
-    var character_id: String? = null,
-    var name: String? = null,
-    var friend_list: List<CharacterFriend>
+    val character_id: String? = null,
+    val name: String? = null,
+    val friend_list: List<CharacterFriend>
 )
