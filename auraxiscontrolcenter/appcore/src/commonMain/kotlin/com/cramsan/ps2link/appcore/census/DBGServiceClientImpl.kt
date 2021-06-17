@@ -1,7 +1,6 @@
 package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.framework.logging.logI
-import com.cramsan.ps2link.appcore.census.DBGCensus.Companion.SERVICE_ID
 import com.cramsan.ps2link.appcore.characterClassFromString
 import com.cramsan.ps2link.appcore.getThisMonth
 import com.cramsan.ps2link.appcore.getThisWeek
@@ -44,7 +43,6 @@ import com.cramsan.ps2link.network.models.content.World
 import com.cramsan.ps2link.network.models.content.WorldEvent
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.item.StatNameType
-import com.cramsan.ps2link.network.models.content.item.Weapon
 import com.cramsan.ps2link.network.models.content.item.WeaponStat
 import com.cramsan.ps2link.network.models.content.response.Character_friend_list_response
 import com.cramsan.ps2link.network.models.content.response.Character_list_response
@@ -61,7 +59,6 @@ import com.cramsan.ps2link.network.models.content.response.World_event_list_resp
 import com.cramsan.ps2link.network.models.content.response.server.PS2
 import com.cramsan.ps2link.network.models.util.Collections
 import com.cramsan.ps2link.network.models.util.QueryString
-import io.ktor.http.Url
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
@@ -107,7 +104,7 @@ class DBGServiceClientImpl(
             namespace.toNetworkModel(),
             currentLang,
         )
-        val response = http.sendRequestWithRetry<Character_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Character_list_response>(url)
         return response.process {
             it.character_list.first().toCoreModel(namespace, clock.now(), currentLang)
         }
@@ -138,7 +135,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Character_name_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Character_name_list_response>(url)
         return response.process { characterList ->
             characterList.character_name_list.map {
                 it.character_id_join_character.toCoreModel(
@@ -169,7 +166,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Character_friend_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Character_friend_list_response>(url)
         return response.process { friendList ->
             friendList.characters_friend_list.first().friend_list.map { it.toCoreModel(namespace) }
         }
@@ -198,7 +195,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Characters_event_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Characters_event_list_response>(url)
         if (!response.isSuccessful) {
             return response.toFailure()
         }
@@ -223,7 +220,13 @@ class DBGServiceClientImpl(
         }
 
         return response.process {
-            formatKillList(character_id, it.characters_event_list, weaponMapping, vehicleMapping, namespace)
+            formatKillList(
+                character_id,
+                it.characters_event_list,
+                weaponMapping,
+                vehicleMapping,
+                namespace
+            )
         }
     }
 
@@ -234,14 +237,15 @@ class DBGServiceClientImpl(
         currentLang: CensusLang,
     ): PS2HttpResponse<List<WeaponItem>> {
         val url = census.generateGameDataRequest(
-            "characters_weapon_stat_by_faction/?" +
-                "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.toLowerCase() +
+            Verb.GET,
+            Collections.PS2Collection.CHARACTERS_WEAPON_STAT_BY_FACTION,
+            "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.toLowerCase() +
                 "&c:join=vehicle^show:image_path'name." + currentLang.name.toLowerCase() + "&c:limit=10000",
             namespace.toNetworkModel(),
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Weapon_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Weapon_list_response>(url)
         return response.process {
             formatWeapons(it.characters_weapon_stat_by_faction_list, faction, currentLang)
         }
@@ -280,7 +284,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
+        val response = http.sendRequestWithRetry<Outfit_response>(url)
         return response.process { outfit ->
             outfit.outfit_list.map { it.toCoreModel(namespace, null, clock.now()) }
         }
@@ -301,7 +305,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
+        val response = http.sendRequestWithRetry<Outfit_response>(url)
         return response.process {
             it.outfit_list.first().toCoreModel(namespace, null, clock.now())
         }
@@ -329,7 +333,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Outfit_response>(Url(url))
+        val response = http.sendRequestWithRetry<Outfit_response>(url)
         return response.process { outfitMembers ->
             outfitMembers.outfit_list.first().members?.map {
                 it.toCoreModel(
@@ -354,7 +358,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Server_response>(Url(url))
+        val response = http.sendRequestWithRetry<Server_response>(url)
         return response.process {
             it.world_list
         }
@@ -362,8 +366,7 @@ class DBGServiceClientImpl(
 
     override suspend fun getServerPopulation(): PS2HttpResponse<PS2> {
         // This is not an standard API call
-        val url = Url("https://census.daybreakgames.com/$SERVICE_ID/json/status/ps2")
-
+        val url = census.generateServerPopulationRequest()
         val response = http.sendRequestWithRetry<Server_Status_response>(url)
         return response.process {
             it.ps2
@@ -401,7 +404,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<World_event_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<World_event_list_response>(url)
         return response.process {
             it.world_event_list
         }
@@ -427,7 +430,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Character_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Character_list_response>(url)
         return response.process {
             val profile = it.character_list.first()
             formatStats(profile.stats?.stat_history)
@@ -441,11 +444,13 @@ class DBGServiceClientImpl(
     ): PS2HttpResponse<List<Character>> {
         val url =
             census.generateGameDataRequest(
-                "outfit_member?c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
+                Verb.GET,
+                Collections.PS2Collection.OUTFIT_MEMBER,
+                "c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
                 namespace.toNetworkModel(),
                 currentLang
             )
-        val response = http.sendRequestWithRetry<Outfit_member_response>(Url(url))
+        val response = http.sendRequestWithRetry<Outfit_member_response>(url)
         return response.process { outfitMembersOnline ->
             outfitMembersOnline.outfit_member_list.mapNotNull { it.toCoreModel(namespace) }
         }
@@ -469,7 +474,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Item_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Item_list_response>(url)
         return response.process {
             it.item_list.map { item ->
                 com.cramsan.ps2link.core.models.Weapon(
@@ -499,7 +504,7 @@ class DBGServiceClientImpl(
             currentLang,
         )
 
-        val response = http.sendRequestWithRetry<Vehicle_list_response>(Url(url))
+        val response = http.sendRequestWithRetry<Vehicle_list_response>(url)
         return response.process {
             it.vehicle_list.map { item ->
                 Vehicle(

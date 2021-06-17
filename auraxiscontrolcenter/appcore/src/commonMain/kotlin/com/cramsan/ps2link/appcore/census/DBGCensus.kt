@@ -5,6 +5,7 @@ import com.cramsan.ps2link.network.models.Namespace
 import com.cramsan.ps2link.network.models.Verb
 import com.cramsan.ps2link.network.models.util.Collections
 import com.cramsan.ps2link.network.models.util.QueryString
+import io.ktor.http.Url
 
 /**
  * This class will be in charge of formatting requests for DBG Census API and
@@ -37,9 +38,12 @@ class DBGCensus {
         query: QueryString? = QueryString(),
         namespace: Namespace,
         currentLang: CensusLang,
-    ): String {
-        return ENDPOINT_URL + "/" + SERVICE_ID + "/" + verb.toString() + "/" + namespace + "/" + collection.toString() + "/" +
-            (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()
+    ): UrlHolder {
+        val baseUrl = "$ENDPOINT_URL/$SERVICE_ID/$verb/$namespace/$collection/"
+        return UrlHolder(
+            urlIdentifier = baseUrl,
+            completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()),
+        )
     }
 
     /**
@@ -47,11 +51,27 @@ class DBGCensus {
      * @return url to retrieve the requested resource
      */
     fun generateGameDataRequest(
+        verb: Verb,
+        collection: Collections.PS2Collection,
         urlParams: String,
         namespace: Namespace,
         currentLang: CensusLang
-    ): String {
-        return ENDPOINT_URL + "/" + SERVICE_ID + "/" + Verb.GET + "/" + namespace + "/" + urlParams + "&c:lang=" + currentLang.name.toLowerCase()
+    ): UrlHolder {
+        val baseUrl = "$ENDPOINT_URL/$SERVICE_ID/$verb/$namespace/$collection/"
+        return UrlHolder(
+            urlIdentifier = baseUrl,
+            completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
+        )
+    }
+
+    /**
+     * @return url to get server population
+     */
+    fun generateServerPopulationRequest(): UrlHolder {
+        return UrlHolder(
+            urlIdentifier = "$ENDPOINT_URL/$SERVICE_ID/json/status/ps2",
+            completeUrl = Url("$ENDPOINT_URL/$SERVICE_ID/json/status/ps2"),
+        )
     }
 
     companion object {

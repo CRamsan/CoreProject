@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.repository
 
 import com.cramsan.framework.logging.logI
+import com.cramsan.ps2link.appcore.census.UrlHolder
 import com.cramsan.ps2link.appcore.network.HttpClient
 import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.appcore.network.process
@@ -17,7 +18,12 @@ class RedditRepositoryImpl(
     override suspend fun getPosts(redditPage: RedditPage): PS2HttpResponse<List<RedditPost>> {
         logI(TAG, "Downloading Reddit Posts")
         val url = "$BASE_URL/${redditPage.path}/$JSON_ENDPOINT"
-        val response = http.sendRequestWithRetry<RedditResponse>(Url(url))
+        val response = http.sendRequestWithRetry<RedditResponse>(
+            UrlHolder(
+                url,
+                Url(url)
+            )
+        )
 
         return response.process {
             it.data.children.map { post -> post.data.toCoreModel() }
