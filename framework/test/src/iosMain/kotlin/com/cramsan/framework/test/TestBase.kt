@@ -2,6 +2,7 @@ package com.cramsan.framework.test
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
+import kotlin.test.BeforeTest
 
 actual open class TestBase {
 
@@ -13,4 +14,7 @@ actual open class TestBase {
      */
     actual val testCoroutineScope: CoroutineScope
         get() = TODO("Not yet implemented")
+
+    @BeforeTest
+    actual open fun setupTest() { }
 }
