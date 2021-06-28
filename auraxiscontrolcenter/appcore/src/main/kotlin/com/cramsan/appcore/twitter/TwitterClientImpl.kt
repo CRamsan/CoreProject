@@ -70,9 +70,10 @@ class TwitterClientImpl(
         if (users.isEmpty()) {
             return PS2HttpResponse.success(emptyList())
         }
-        val usersFound = twitter.lookupUsers(*users.toTypedArray())
-        val tweetsFound = ArrayList<com.cramsan.ps2link.network.models.twitter.PS2Tweet>()
         try {
+            val usersFound = twitter.lookupUsers(*users.toTypedArray())
+            val tweetsFound = ArrayList<com.cramsan.ps2link.network.models.twitter.PS2Tweet>()
+
             for (foundUser in usersFound) {
                 if (foundUser.status != null) {
                     val statusess = twitter.getUserTimeline(foundUser.screenName)
