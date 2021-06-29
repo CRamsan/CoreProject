@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.fragments.profilepager.profile
 
 import androidx.annotation.MainThread
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,8 +20,8 @@ import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.SwipeToRefreshColumn
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toColor
@@ -59,7 +58,10 @@ fun ProfileCompose(
     eventHandler: ProfileEventHandler,
 ) {
     FrameBottom {
-        Box {
+        SwipeToRefreshColumn(
+            isLoading = isLoading,
+            onRefreshRequested = { eventHandler.onRefreshRequested() }
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -158,7 +160,6 @@ fun ProfileCompose(
                     }
                 }
             }
-            LoadingOverlay(enabled = isLoading)
             ErrorOverlay(isError = isError)
         }
     }
@@ -167,6 +168,7 @@ fun ProfileCompose(
 @MainThread
 interface ProfileEventHandler {
     fun onOutfitSelected(outfitId: String, namespace: Namespace)
+    fun onRefreshRequested()
 }
 
 @OptIn(ExperimentalTime::class)
@@ -189,6 +191,7 @@ fun Preview() {
         isError = false,
         eventHandler = object : ProfileEventHandler {
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
+            override fun onRefreshRequested() = Unit
         },
     )
 }

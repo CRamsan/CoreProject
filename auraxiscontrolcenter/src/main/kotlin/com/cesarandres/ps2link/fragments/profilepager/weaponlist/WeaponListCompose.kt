@@ -15,7 +15,6 @@ import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.WeaponItem
 
@@ -52,7 +51,6 @@ fun WeaponListCompose(
                     )
                 }
             }
-            LoadingOverlay(enabled = isLoading)
             ErrorOverlay(isError = isError)
         }
     }

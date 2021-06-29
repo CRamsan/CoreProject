@@ -12,7 +12,6 @@ import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.ServerItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
@@ -39,7 +38,6 @@ fun ServerListCompose(
                     )
                 }
             }
-            LoadingOverlay(enabled = isLoading)
             ErrorOverlay(isError = isError)
         }
     }

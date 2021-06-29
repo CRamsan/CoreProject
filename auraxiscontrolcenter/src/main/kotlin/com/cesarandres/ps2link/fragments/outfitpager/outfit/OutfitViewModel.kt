@@ -35,6 +35,9 @@ class OutfitViewModel @Inject constructor(
     override val logTag: String
         get() = "OutfitViewModel"
 
+    private lateinit var outfitId: String
+    private lateinit var namespace: Namespace
+
     // State
     lateinit var outfit: Flow<Outfit?>
 
@@ -44,7 +47,17 @@ class OutfitViewModel @Inject constructor(
             loadingCompletedWithError()
             return
         }
+        this.outfitId = outfitId
+        this.namespace = namespace
         outfit = pS2LinkRepository.getOutfitAsFlow(outfitId, namespace)
+        onRefreshRequested()
+    }
+
+    override fun onProfileSelected(profileId: String, namespace: Namespace) {
+        events.value = OpenProfile(profileId, namespace)
+    }
+
+    override fun onRefreshRequested() {
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
@@ -54,9 +67,5 @@ class OutfitViewModel @Inject constructor(
                 loadingCompletedWithError()
             }
         }
-    }
-
-    override fun onProfileSelected(profileId: String, namespace: Namespace) {
-        events.value = OpenProfile(profileId, namespace)
     }
 }

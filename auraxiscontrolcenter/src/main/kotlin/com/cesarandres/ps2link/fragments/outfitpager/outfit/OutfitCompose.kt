@@ -1,7 +1,6 @@
 package com.cesarandres.ps2link.fragments.outfitpager.outfit
 
 import androidx.annotation.MainThread
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,8 +19,8 @@ import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.SwipeToRefreshColumn
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.widgets.FactionIcon
@@ -41,7 +40,10 @@ fun OutfitCompose(
     eventHandler: OutfitEventHandler,
 ) {
     FrameBottom {
-        Box {
+        SwipeToRefreshColumn(
+            isLoading = isLoading,
+            onRefreshRequested = { eventHandler.onRefreshRequested() }
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -113,7 +115,6 @@ fun OutfitCompose(
                     }
                 }
             }
-            LoadingOverlay(enabled = isLoading)
         }
     }
 }
@@ -123,6 +124,7 @@ var formatter = SimpleDateFormat("MMMM dd, yyyy")
 @MainThread
 interface OutfitEventHandler {
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    fun onRefreshRequested()
 }
 
 @Preview
@@ -133,6 +135,7 @@ fun Preview() {
         isLoading = true,
         eventHandler = object : OutfitEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
+            override fun onRefreshRequested() = Unit
         },
     )
 }

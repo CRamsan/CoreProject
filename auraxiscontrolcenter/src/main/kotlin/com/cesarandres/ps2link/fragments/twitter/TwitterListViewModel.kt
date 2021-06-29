@@ -37,6 +37,9 @@ class TwitterListViewModel @Inject constructor(
 
     // State
     val tweetList = twitterRepository.getTweetsAsFlow().map { response ->
+        if (response == null) {
+            return@map emptyList()
+        }
         if (response.isSuccessful) {
             loadingCompleted()
             response.requireBody().sortedByDescending { twit ->
@@ -50,7 +53,7 @@ class TwitterListViewModel @Inject constructor(
     val twitterUsers = twitterRepository.getTwitterUsersAsFlow().asLiveData()
 
     fun setUp() {
-        loadingStarted()
+        onRefreshRequested()
     }
 
     override fun onTwitterUserClicked(twitterUser: TwitterUser) {
@@ -58,6 +61,15 @@ class TwitterListViewModel @Inject constructor(
         ioScope.launch {
             val following = twitterRepository.getTwitterUsers()[twitterUser] ?: true
             twitterRepository.setFollowStatus(twitterUser, !following)
+        }
+    }
+
+    override fun onRefreshRequested() {
+        loadingStarted()
+        ioScope.launch {
+            // This will trigger a new fetch for new tweets. The actual tweets will still be loaded
+            // through [getTweetsAsFlow].
+            twitterRepository.getTweets()
         }
     }
 }

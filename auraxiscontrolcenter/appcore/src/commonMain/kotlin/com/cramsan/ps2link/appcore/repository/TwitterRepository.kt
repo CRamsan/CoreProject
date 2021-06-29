@@ -17,7 +17,7 @@ interface TwitterRepository {
 
     suspend fun getTweets(): PS2HttpResponse<List<PS2Tweet>>
 
-    fun getTweetsAsFlow(): StateFlow<PS2HttpResponse<List<PS2Tweet>>>
+    fun getTweetsAsFlow(): StateFlow<PS2HttpResponse<List<PS2Tweet>>?>
 
     fun getTwitterUsersAsFlow(): StateFlow<Map<TwitterUser, Boolean>>
 }

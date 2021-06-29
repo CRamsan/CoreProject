@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
@@ -23,7 +22,7 @@ import com.cramsan.ps2link.core.models.PS2Tweet
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
-import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.TweetItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
@@ -68,7 +67,10 @@ fun TweetListCompose(
                 }
             }
             Box(modifier = Modifier.fillMaxSize()) {
-                LazyColumn {
+                SwipeToRefresh(
+                    isLoading = isLoading,
+                    onRefreshRequested = { eventHandler.onRefreshRequested() }
+                ) {
                     items(tweetItems) {
                         TweetItem(
                             username = it.user,
@@ -80,7 +82,6 @@ fun TweetListCompose(
                         )
                     }
                 }
-                LoadingOverlay(enabled = isLoading)
                 ErrorOverlay(isError = isError)
             }
         }
@@ -90,6 +91,7 @@ fun TweetListCompose(
 @MainThread
 interface TweetListComposeEventHandler {
     fun onTwitterUserClicked(twitterUser: TwitterUser)
+    fun onRefreshRequested()
 }
 
 @Preview
@@ -104,6 +106,7 @@ fun ServerListPreview() {
             prettyTime = PrettyTime(),
             eventHandler = object : TweetListComposeEventHandler {
                 override fun onTwitterUserClicked(twitterUser: TwitterUser) = Unit
+                override fun onRefreshRequested() = Unit
             }
         )
     }

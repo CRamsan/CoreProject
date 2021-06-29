@@ -8,7 +8,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.RedditPost
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.RedditPostItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
@@ -42,7 +41,6 @@ fun RedditCompose(
                 )
             }
         }
-        LoadingOverlay(enabled = isLoading)
         ErrorOverlay(isError = isError)
     }
 }

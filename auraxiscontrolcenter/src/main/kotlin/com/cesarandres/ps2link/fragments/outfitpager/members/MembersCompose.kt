@@ -12,7 +12,6 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.OutfitMemberItem
 
@@ -39,7 +38,6 @@ fun MemberListCompose(
                     )
                 }
             }
-            LoadingOverlay(enabled = isLoading)
             ErrorOverlay(isError = isError)
         }
     }

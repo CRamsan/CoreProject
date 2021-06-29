@@ -12,7 +12,6 @@ import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.KillItem
 
@@ -46,7 +45,6 @@ fun KillListCompose(
                     )
                 }
             }
-            LoadingOverlay(enabled = isLoading)
             ErrorOverlay(isError = isError)
         }
     }
