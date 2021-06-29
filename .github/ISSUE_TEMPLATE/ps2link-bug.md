@@ -2,7 +2,8 @@
 name: PS2Link Bug
 about: Task to fix a bug in the ACC/PS2Link app
 title: "[Bug] Title"
-labels: type_bug, project_acc
+labels: project_acc, type_bug
+assignees: ''
 
 ---
 

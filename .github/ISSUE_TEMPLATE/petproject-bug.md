@@ -2,7 +2,8 @@
 name: PetProject Bug
 about: Task to fix a bug in the PetProject app
 title: "[Bug] Title"
-labels: type_bug, project_petproject
+labels: project_petproject, type_bug
+assignees: ''
 
 ---
 
