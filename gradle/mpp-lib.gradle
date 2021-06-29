@@ -223,5 +223,7 @@ tasks.register("release") {
 
     dependsOn 'releaseJvm'
     dependsOn 'releaseAndroid'
-    dependsOn 'releaseJs'
+    if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+        dependsOn 'releaseJs'
+    }
 }
