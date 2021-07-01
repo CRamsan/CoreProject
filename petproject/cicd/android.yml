@@ -46,7 +46,7 @@ steps:
 
 - task: AndroidSigning@3
   inputs:
-    apkFiles: '**/app-release-unsigned.apk'
+    apkFiles: '**/app-prod-release-unsigned.apk'
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
