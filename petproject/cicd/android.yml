@@ -56,7 +56,7 @@ steps:
 
 - task: AndroidSigning@3
   inputs:
-    apkFiles: '**/app-stage-unsigned.apk'
+    apkFiles: '**/app-preprod-unsigned.apk'
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(StageKeyStoreFile)
@@ -75,7 +75,7 @@ steps:
   inputs:
     serverEndpoint: 'App Center'
     appSlug: 'cramsan/Pet-Project-1'
-    appFile: 'petproject/app/build/outputs/apk/release/app-release-unsigned.apk'
+    appFile: 'petproject/app/build/outputs/apk/prod/release/app-prod-release-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: 'Release Notes: TBD'
@@ -86,7 +86,7 @@ steps:
   inputs:
     serverEndpoint: 'App Center'
     appSlug: 'cramsan/PetProject-PreProd'
-    appFile: 'petproject/app/build/outputs/apk/stage/app-stage-unsigned.apk'
+    appFile: 'petproject/app/build/outputs/apk/preprod/release/app-preprod-release-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: '$(build.sourceVersionMessage)'

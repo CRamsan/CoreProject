@@ -26,17 +26,22 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-        // Pre-release build. Designed for early-access testing. It inherits all properties from
-        // release build type, but uses a separate applicationId.
-		stage {
-            initWith release
-            applicationIdSuffix ".stage"
-            matchingFallbacks = ['release']
-        }
         // Debug settings enabled.
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+        }
+    }
+    // Specifies one flavor dimension.
+    flavorDimensions "stage"
+    productFlavors {
+        preprod {
+            dimension "stage"
+            applicationIdSuffix ".preprod"
+            versionNameSuffix "-preprod"
+        }
+        prod {
+            dimension "stage"
         }
     }
 

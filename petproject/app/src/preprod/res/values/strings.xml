@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">(DEBUG)Safe for my Pets</string>
+    <string name="app_name">(PreProd)Safe for my Pets</string>
 
     <string name="provider_config_plants_url">https://petproject-api.azurewebsites.net/api/plants?code=YPRgK2Aw13tryQgemoSJFVSrHVgSajAhYZ3y2bKYgKb2uzmDZYo2bA==</string>
     <string name="provider_config_mainname_url">https://petproject-api.azurewebsites.net/api/name/main?code=MrCJgPbvCsHo9VDa856Y9sOo/Gc0Rq80tbucVt2u6c2hJbuIzy/0Fg==</string>
