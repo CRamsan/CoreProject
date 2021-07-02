@@ -52,6 +52,7 @@ class ProfileViewModel @Inject constructor(
         this.namespace = namespace
 
         profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
+        onRefreshRequested()
     }
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
