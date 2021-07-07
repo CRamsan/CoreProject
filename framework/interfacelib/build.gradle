@@ -1,8 +1,1 @@
 apply from: "$rootDir/gradle/mpp-lib.gradle"
-
-dependencies {
-    implementation packages.Okhttp
-    implementation packages.Gson
-    implementation packages.AppCenterSdkAnalytics
-    implementation packages.AppCenterSdkCrashes
-}

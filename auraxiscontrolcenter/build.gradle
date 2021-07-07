@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath packages.KotlinComposeGradle
+        classpath packages.KotlinGradle
     }
 }
 

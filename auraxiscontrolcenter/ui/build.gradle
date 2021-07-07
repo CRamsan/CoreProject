@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath packages.KotlinComposeGradle
+        classpath packages.KotlinGradle
     }
 }
 
@@ -12,9 +12,6 @@ apply plugin: "com.android.library"
 apply from: "$rootDir/gradle/applib.gradle"
 
 android {
-    defaultConfig {
-        versionName "1.0"
-    }
 
     buildFeatures {
         // Enables Jetpack Compose for this module
