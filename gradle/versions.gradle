@@ -1,13 +1,14 @@
 def versions_tools = [
     AndroidBuildToolsVersion : "30.0.2",
-    AndroidGradlePlugin : '7.0.0-beta03',
+    AndroidGradlePlugin : '7.0.0-alpha15',
     CompileSdkVersion : 30,
+    KotlinComposeVersion : "1.4.32",
     KotlinVersion : "1.5.10",
     MinSdkVersion : 26,
     TargetSdkVersion : 30,
     Jacoco: "0.8.7",
     JavaCompatibility : JavaVersion.VERSION_11,
-    JetpackCompose : "1.0.0-rc01",
+    JetpackCompose : "1.0.0-beta05",
 ]
 
 def versions_packages = [
@@ -55,6 +56,7 @@ def versions_packages = [
     OpenjfxGradle : "0.0.9",
     Kodein : "7.1.0",
     Kotlin : versions_tools.KotlinVersion,
+    KotlinCompose : versions_tools.KotlinComposeVersion,
     KotlinxDatetime : "0.2.1",
     KotlinxSerialization : "1.2.1",
     KtlintVerion : "0.41.0",
@@ -152,6 +154,7 @@ def packages = [
         Kodein : "org.kodein.di:kodein-di:$versions_packages.Kodein",
         KodeinAndroid : "org.kodein.di:kodein-di-framework-android-x:$versions_packages.Kodein",
         KotlinGradle : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions_packages.Kotlin",
+        KotlinComposeGradle : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions_packages.KotlinCompose",
         KotlinNoArg : "org.jetbrains.kotlin:kotlin-noarg:$versions_packages.Kotlin",
         KotlinAllOpen : "org.jetbrains.kotlin:kotlin-allopen:$versions_packages.Kotlin",
         KotlinReflect : "org.jetbrains.kotlin:kotlin-reflect:$versions_packages.Kotlin",
