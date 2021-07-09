@@ -1,4 +1,4 @@
-The framework module is a shared project that defines a common shared library that provides basic functionaility for mobile apps. This project is divided in a set of modules that can be consumed as needed.
+The framework module is a shared project that defines a common shared library that provides basic functionaility across all projects. This project is divided in a set of modules that can be consumed as needed.
 
 ## Module
 A module is the main unit of logic and it is composed of the public interface and the common-code implementation. Some modules also provide extended support for each platform.

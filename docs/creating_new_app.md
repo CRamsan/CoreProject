@@ -1,4 +1,4 @@
-Creating new app in AppCenter
+# Creating new app
 
 The main distribution mechanism we currently use is AppCenter. You can find all the projects in https://appcenter.ms/users/cramsan/. Here we will describe how to create a fully working app entry that tracks metrics and crashes. 
 
