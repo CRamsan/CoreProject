@@ -45,7 +45,7 @@ steps:
 
 - task: AndroidSigning@3
   inputs:
-    apkFiles: '**/auraxiscontrolcenter-prod-release-unsigned.apk'
+    apkFiles: '**/app-prod-release-unsigned.apk'
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(KeyStoreFile)
@@ -55,7 +55,7 @@ steps:
 
 - task: AndroidSigning@3
   inputs:
-    apkFiles: '**/auraxiscontrolcenter-preprod-release-unsigned.apk'
+    apkFiles: '**/app-preprod-release-unsigned.apk'
     apksign: true
     zipalign: false
     apksignerKeystoreFile: $(StageKeyStoreFile)
@@ -74,7 +74,7 @@ steps:
   inputs:
     serverEndpoint: 'App Center'
     appSlug: 'cramsan/AuraxisControlCenter'
-    appFile: 'auraxiscontrolcenter/app/build/outputs/apk/prod/release/auraxiscontrolcenter-prod-release-unsigned.apk'
+    appFile: 'auraxiscontrolcenter/app/build/outputs/apk/prod/release/app-prod-release-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: 'Release Notes: TBD'
@@ -85,7 +85,7 @@ steps:
   inputs:
     serverEndpoint: 'App Center'
     appSlug: 'cramsan/AuraxisControlCenter-Debug'
-    appFile: 'auraxiscontrolcenter/app/build/outputs/apk/preprod/release/auraxiscontrolcenter-preprod-release-unsigned.apk'
+    appFile: 'auraxiscontrolcenter/app/build/outputs/apk/preprod/release/app-preprod-release-unsigned.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: '$(build.sourceVersionMessage)'
