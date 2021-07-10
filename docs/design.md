@@ -4,7 +4,7 @@ This project aims to use a scalable design and good software patterns. A lot of 
 
 ## Target Platforms
 - For the mobile app I am targetting Android first with a possible iOS app in the future.
-- There will be other components such as a possible service to provide an API or a GUI to manage the databases. This components should run on Linux, Mac or Windows.
+- There will be other components such as a back-end services and GUIs. This components should run on Linux, Mac or Windows.
 
 ## Language and tools
 To be able to write my code once and run it on as many platforms as possible I decided to use Kotlin. Kotlin has the benefit of producing JVM code that can be run on most platforms(except iOS). For iOS we can use [Kotlin Native](https://kotlinlang.org/docs/reference/native-overview.html) to develop a solution that is native to iOS. To allow for reusable code between both iOS and JVM I am using [Kotlin Multiplatform](https://kotlinlang.org/docs/reference/multiplatform.html). For areas that target iOS specific use-cases(such as UI) we can use Swift or Objective-C.

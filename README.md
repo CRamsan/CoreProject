@@ -33,10 +33,10 @@ To just build the code, run `./grdlew assembleDebug` for Android projects or `./
 The code is configured to follow a pre-defined format style. This is enforced by the build process, so it is important to always follow the format otherwise the build process will fail. To automatlly fix any format issues, just run `./gradlew ktlintf`. If this task fails, you will have to manually fix the issue.
 
 ### Testing
-You can read more about testing in the [Testing](docs/testing) page.
+You can read more about testing in the [Testing](docs/testing.md) page.
 
 ### Create a new module
-If you want to start a new project and need a new module, look at the [New Module](docs/new_module) page for some examples about how to get started.
+If you want to start a new project and need a new module, look at the [New Module](docs/new_module.md) page for some examples about how to get started.
 
 ### More information
 To learn more about the project, please look at the [documentation](docs/).
