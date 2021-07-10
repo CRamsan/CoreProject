@@ -65,7 +65,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(system.defaultworkingdirectory)/auraxiscontrolcenter/build/outputs/apk/
+    sourceFolder: $(system.defaultworkingdirectory)/auraxiscontrolcenter/app/build/outputs/apk/
     contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
