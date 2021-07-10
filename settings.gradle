@@ -26,7 +26,7 @@ include 'doom:game:desktop'
 include 'doom:game:android'
 include 'doom:game:ios'
 
-include 'auraxiscontrolcenter'
+include 'auraxiscontrolcenter:app'
 include 'auraxiscontrolcenter:appcore'
 include 'auraxiscontrolcenter:core-models'
 include 'auraxiscontrolcenter:db-models'
