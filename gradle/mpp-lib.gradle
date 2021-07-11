@@ -100,7 +100,7 @@ kotlin {
         }
     }
     if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
-        js("js") {
+        js(IR) {
             nodejs()
         }
     }
