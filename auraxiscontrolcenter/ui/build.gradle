@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.KotlinComposeGradle
-    }
-}
-
 apply plugin: "com.android.library"
 apply from: "$rootDir/gradle/applib.gradle"
 

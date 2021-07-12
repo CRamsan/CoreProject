@@ -2,11 +2,13 @@ import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
+import com.jessecorbett.diskord.bot.bot
+import com.jessecorbett.diskord.bot.classicCommands
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
-fun main() {
+suspend fun main() {
     val haltUtil = PS2ServiceModule.provideHaltUtilInterface(PS2ServiceModule.provideHaltUtilDelegate())
     val eventLogger = PS2ServiceModule.provideEventLoggerInterface(PS2ServiceModule.provideEventLoggerDelegate())
     val assertUtil = PS2ServiceModule.provideAssertUtil(eventLogger, haltUtil)
@@ -40,6 +42,13 @@ fun main() {
         )
         console.log(profiles.requireBody())
         console.log("End")
+    }
+    bot("BOT_TOKEN") {
+        classicCommands {
+            command("ping") { message ->
+                message.respond("Pong!")
+            }
+        }
     }
 }
 

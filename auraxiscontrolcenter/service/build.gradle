@@ -16,6 +16,7 @@ dependencies {
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
 
+    implementation packages.DiskordBot
     implementation packages.KtorJson
     implementation packages.KtorClientJs
     implementation packages.KotlinxDatetime

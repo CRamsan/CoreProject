@@ -7,6 +7,9 @@ buildscript {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
@@ -16,6 +19,15 @@ buildscript {
         classpath packages.HiltGradle
         classpath packages.AndroidXNavigationSafeArgsGradle
         classpath packages.DependencyGraphGenerator
+        classpath packages.KotlinGradle
+        classpath packages.KotlinxSerializationGradle
+        classpath packages.RoboVMGradle
+        classpath packages.SpringBootGradle
+        classpath packages.SpringDependencyManagement
+        classpath packages.AzureFunctionsGradle
+        classpath packages.KotlinNoArg
+        classpath packages.KotlinAllOpen
+        classpath packages.OpenjfxGradle
     }
 }
 
@@ -35,7 +47,7 @@ subprojects {
     apply from: "$rootDir/gradle/dependency-graph.gradle"
 }
 
-tasks.register("release") {
+tasks.register("releaseAll") {
     group = 'build'
     description = 'Run all the steps to build all release artifact'
 
@@ -43,7 +55,7 @@ tasks.register("release") {
     dependsOn ':petproject:app:release'
     dependsOn ':petproject:webservice:release'
     dependsOn ':petproject:azurefunction:release'
-    dependsOn ':auraxiscontrolcenter:app:release'
+    //dependsOn ':auraxiscontrolcenter:app:release'
     dependsOn ':auraxiscontrolcenter:service:release'
     dependsOn ':doom:game:desktop:release'
     dependsOn ':doom:game:android:release'

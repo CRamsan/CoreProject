@@ -1,15 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.KotlinGradle
-        classpath packages.KotlinNoArg
-        classpath packages.KotlinAllOpen
-    }
-}
-
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
 sourceSets.main.java.srcDirs = [ "src/" ]

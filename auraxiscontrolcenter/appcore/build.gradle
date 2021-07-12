@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.KotlinxSerializationGradle
-    }
-}
-
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 

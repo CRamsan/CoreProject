@@ -1,16 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath packages.SpringBootGradle
-        classpath packages.SpringDependencyManagement
-        classpath packages.KotlinNoArg
-        classpath packages.KotlinAllOpen
-    }
-}
-
 plugins {
     id 'war'
 }
