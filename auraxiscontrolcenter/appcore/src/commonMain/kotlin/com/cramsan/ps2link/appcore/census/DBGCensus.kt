@@ -22,7 +22,9 @@ import io.ktor.http.Url
  * http://census.daybreakgames.com/.
  */
 
-class DBGCensus {
+class DBGCensus(
+    private val serviceId: String,
+) {
 
     /**
      * @param verb action to realize, count or get
@@ -39,7 +41,7 @@ class DBGCensus {
         namespace: Namespace,
         currentLang: CensusLang,
     ): UrlHolder {
-        val baseUrl = "$ENDPOINT_URL/$SERVICE_ID/$verb/$namespace/$collection/"
+        val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
             urlIdentifier = baseUrl,
             completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()),
@@ -57,7 +59,7 @@ class DBGCensus {
         namespace: Namespace,
         currentLang: CensusLang
     ): UrlHolder {
-        val baseUrl = "$ENDPOINT_URL/$SERVICE_ID/$verb/$namespace/$collection/"
+        val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
             urlIdentifier = baseUrl,
             completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
@@ -69,13 +71,12 @@ class DBGCensus {
      */
     fun generateServerPopulationRequest(): UrlHolder {
         return UrlHolder(
-            urlIdentifier = "$ENDPOINT_URL/$SERVICE_ID/json/status/ps2",
-            completeUrl = Url("$ENDPOINT_URL/$SERVICE_ID/json/status/ps2"),
+            urlIdentifier = "$ENDPOINT_URL/s:$serviceId/json/status/ps2",
+            completeUrl = Url("$ENDPOINT_URL/s:$serviceId/json/status/ps2"),
         )
     }
 
     companion object {
-        const val SERVICE_ID = "s:PS2Link"
         const val ENDPOINT_URL = "https://census.daybreakgames.com"
         const val IMG = "img"
         const val ITEM = "item"

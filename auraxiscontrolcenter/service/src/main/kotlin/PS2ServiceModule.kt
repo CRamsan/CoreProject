@@ -27,6 +27,8 @@ import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.census.buildHttpClient
 import com.cramsan.ps2link.appcore.network.HttpClient
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepositoryImpl
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 
@@ -137,27 +139,10 @@ object PS2ServiceModule {
 
     fun provideClock(): Clock = Clock.System
 
-    /*
-    fun provideDbgDao(
-        sqlDriver: SqlDriver,
-        clock: Clock,
-    ): DbgDAO = SQLDelightDAO(sqlDriver, clock)
-
-    fun provideSqlDelightDriver(
-        @ApplicationContext appContext: Context,
-        schema: SqlDriver.Schema,
-    ): SqlDriver {
-        return AndroidSqliteDriver(schema, appContext, "ps2link2.db")
-    }
-     */
-
-    /*
     fun providePS2LinkRepository(
         dbgServiceClient: DBGServiceClient,
-        dbgDAO: DbgDAO,
         clock: Clock,
-    ): PS2LinkRepository = PS2LinkRepositoryImpl(dbgServiceClient, dbgDAO, clock)
-     */
+    ): PS2LinkRepository = PS2LinkRepositoryImpl(dbgServiceClient, null, clock)
 
     fun provideDbgServiceClient(
         dbgCensus: DBGCensus,
@@ -173,5 +158,13 @@ object PS2ServiceModule {
         return HttpClient(httpClient, json)
     }
 
-    fun provideDbgCensus(): DBGCensus = DBGCensus()
+    fun provideServiceId(): String {
+        return process.env.CENSUS_SERVICE_ID.unsafeCast<String?>() ?: ""
+    }
+
+    fun provideDbgCensus(serviceId: String): DBGCensus = DBGCensus(serviceId)
+
+    fun provideBotToken(): String {
+        return process.env.BOT_TOKEN.unsafeCast<String?>() ?: ""
+    }
 }

@@ -1,7 +1,7 @@
 # Auraxis Control Center
 This is the source code for the Auraxis Control Center app.
 
-In order to build the application you will need to provide the following credentials. The recommended approach is to use your `gradle.properties` file. This is the file located in `~/.gradle/gradle.properties`, **NOT** the one checked into the repo.
+In order to build the app you will need to provide the following credentials. The recommended approach is to use your `gradle.properties` file. This is the file located in `~/.gradle/gradle.properties`, **NOT** the one checked into the repo.
 The following properties are required:
 ```
   ps2linkConsumerSecret=...
@@ -9,9 +9,17 @@ The following properties are required:
   ps2linkAccessToken=...
   ps2linkAccessTokenSecret=...
   ps2linkAppCenterId=...
+  ps2linkServiceId=...
 ```
 
-Now you can compile and test the app with `./gradlew auraxiscontrolcenter:release`
+Now you can compile and test the app with `./gradlew auraxiscontrolcenter:app:release`
+
+To build the bot you will need to provide some environment variables:
+```
+PS2LINK_BOT_SERVICE_ID="..."
+PS2LINK_BOT_TOKEN="..."
+```
+To build the bot you will do `./gradlew auraxiscontrolcenter:service:release`
 
 # Build Status
 

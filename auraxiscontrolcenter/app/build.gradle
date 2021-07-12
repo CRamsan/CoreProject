@@ -11,11 +11,14 @@ android {
         def accessToken = findProperty("ps2linkAccessToken") ?: ""
         def accessTokenSecret = findProperty("ps2linkAccessTokenSecret") ?: ""
         def appCenterId = findProperty("ps2linkAppCenterId") ?: ""
+        def serviceId = findProperty("ps2linkServiceId") ?: ""
+
         buildConfigField("String", "CONSUMER_SECRET", "\"${consumerSecret}\"")
         buildConfigField("String", "CONSUMER_KEY", "\"${consumerKey}\"")
         buildConfigField("String", "ACCESS_TOKEN", "\"${accessToken}\"")
         buildConfigField("String", "ACCESS_TOKEN_SECRET", "\"${accessTokenSecret}\"")
         buildConfigField("String", "APP_CENTER_ID", "\"${appCenterId}\"")
+        buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceId}\"")
     }
 
     buildFeatures {

@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.appcore.repository
 
+import com.cramsan.framework.assertlib.assertNotNull
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.localizedName
 import com.cramsan.ps2link.appcore.network.PS2HttpResponse
@@ -26,31 +27,36 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.datetime.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
 
 class PS2LinkRepositoryImpl(
     private val dbgCensus: DBGServiceClient,
-    private val dbgDAO: DbgDAO,
+    private val dbgDAO: DbgDAO?,
     private val clock: Clock,
 ) : PS2LinkRepository {
 
     @OptIn(ExperimentalTime::class)
     override suspend fun saveCharacter(character: Character) {
-        dbgDAO.insertCharacter(character)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        dbgDAO?.insertCharacter(character)
     }
 
     override suspend fun removeCharacter(characterId: String, namespace: Namespace) {
-        dbgDAO.removeCharacter(characterId, namespace)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        dbgDAO?.removeCharacter(characterId, namespace)
     }
 
     override fun getAllCharactersAsFlow(): Flow<List<Character>> {
-        return dbgDAO.getAllCharactersAsFlow()
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        return dbgDAO?.getAllCharactersAsFlow() ?: emptyFlow()
     }
 
     override suspend fun getAllCharacters(): PS2HttpResponse<List<Character>> {
-        return PS2HttpResponse.success(dbgDAO.getCharacters())
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        return PS2HttpResponse.success(dbgDAO?.getCharacters() ?: emptyList())
     }
 
     override suspend fun getCharacter(
@@ -59,13 +65,15 @@ class PS2LinkRepositoryImpl(
         lang: CensusLang,
         forceUpdate: Boolean,
     ): PS2HttpResponse<Character> {
-        val cachedCharacter = dbgDAO.getCharacter(characterId, namespace)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+
+        val cachedCharacter = dbgDAO?.getCharacter(characterId, namespace)
         if (!forceUpdate && (cachedCharacter != null && isCharacterValid(cachedCharacter))) {
             return PS2HttpResponse.success(cachedCharacter)
         }
         val response = dbgCensus.getProfile(characterId, namespace, lang)
         response.onSuccess {
-            dbgDAO.insertCharacter(it.copy(cached = cachedCharacter?.cached ?: false))
+            dbgDAO?.insertCharacter(it.copy(cached = cachedCharacter?.cached ?: false))
         }
         return response
     }
@@ -74,7 +82,8 @@ class PS2LinkRepositoryImpl(
         characterId: String,
         namespace: Namespace,
     ): Flow<Character?> {
-        return dbgDAO.getCharacterAsFlow(characterId, namespace)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        return dbgDAO?.getCharacterAsFlow(characterId, namespace) ?: emptyFlow()
     }
 
     override suspend fun searchForCharacter(
@@ -173,19 +182,23 @@ class PS2LinkRepositoryImpl(
     }
 
     override suspend fun saveOutfit(outfit: Outfit) {
-        dbgDAO.insertOutfit(outfit)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        dbgDAO?.insertOutfit(outfit)
     }
 
     override suspend fun removeOutfit(outfitId: String, namespace: Namespace) {
-        dbgDAO.removeOutfit(outfitId, namespace)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        dbgDAO?.removeOutfit(outfitId, namespace)
     }
 
     override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
-        return dbgDAO.getAllOutfitsAsFlow()
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        return dbgDAO?.getAllOutfitsAsFlow() ?: emptyFlow()
     }
 
     override suspend fun getAllOutfits(): PS2HttpResponse<List<Outfit>> {
-        return PS2HttpResponse.success(dbgDAO.getAllOutfits())
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        return PS2HttpResponse.success(dbgDAO?.getAllOutfits() ?: emptyList())
     }
 
     override suspend fun getOutfit(
@@ -194,19 +207,20 @@ class PS2LinkRepositoryImpl(
         lang: CensusLang,
         forceUpdate: Boolean
     ): PS2HttpResponse<Outfit> {
-        val cachedOutfit = dbgDAO.getOutfit(outfitId, namespace)
+        val cachedOutfit = dbgDAO?.getOutfit(outfitId, namespace)
         if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit))) {
             return PS2HttpResponse.success(cachedOutfit)
         }
         val response = dbgCensus.getOutfit(outfitId, namespace, lang)
         response.onSuccess {
-            dbgDAO.insertOutfit(it.copy(cached = cachedOutfit?.cached ?: false))
+            dbgDAO?.insertOutfit(it.copy(cached = cachedOutfit?.cached ?: false))
         }
         return response
     }
 
     override fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?> {
-        return dbgDAO.getOutfitAsFlow(outfitId, namespace)
+        assertNotNull(dbgDAO, TAG, "DbgDAO is null")
+        return dbgDAO?.getOutfitAsFlow(outfitId, namespace) ?: emptyFlow()
     }
 
     override suspend fun searchForOutfits(
@@ -271,6 +285,7 @@ class PS2LinkRepositoryImpl(
     companion object {
         @OptIn(ExperimentalTime::class)
         val EXPIRATION_TIME = 1.minutes
+        val TAG = "PS2LinkRepositoryImpl"
     }
 }
 
