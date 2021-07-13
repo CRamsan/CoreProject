@@ -18,7 +18,7 @@ trigger:
     - gradle/*
 
 pool:
-  vmImage: 'macOS-latest'
+  vmImage: 'windows-latest'
 
 steps:
 - task: android-manifest-version@1
