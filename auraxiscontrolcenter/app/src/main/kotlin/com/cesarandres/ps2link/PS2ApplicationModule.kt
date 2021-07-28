@@ -3,6 +3,7 @@ package com.cesarandres.ps2link
 import android.content.Context
 import android.content.res.Resources
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_CENTER_ID
+import com.cesarandres.ps2link.PS2ApplicationModuleConstants.CENSUS_SERVICE_ID
 import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.appcore.twitter.TwitterClientImpl
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
@@ -243,7 +244,13 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideDbgCensus(): DBGCensus = DBGCensus()
+    fun provideDbgCensus(@Named(CENSUS_SERVICE_ID) serviceId: String): DBGCensus = DBGCensus(serviceId)
+
+    @Provides
+    @Named(CENSUS_SERVICE_ID)
+    fun provideServiceId(): String {
+        return BuildConfig.CENSUS_SERVICE_ID
+    }
 
     @Provides
     @Named(CONSUMER_SECRET)
