@@ -1,10 +1,5 @@
-import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.core.models.CensusLang
-import com.jessecorbett.diskord.bot.bot
-import com.jessecorbett.diskord.bot.classicCommands
 import kotlinx.serialization.json.Json
-import ui.fullCharacter
 
 external val process: Process
 external interface Process {
@@ -36,6 +31,7 @@ fun configure() {
 
 suspend fun main() {
     configure()
+    /*
     bot(botToken) {
         classicCommands(".") { // "." is the default, but is provided here anyway for example purposes
             command("character") { message ->
@@ -67,4 +63,5 @@ suspend fun main() {
             }
         }
     }
+     */
 }

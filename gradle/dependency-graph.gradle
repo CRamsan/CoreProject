@@ -8,8 +8,6 @@ buildscript {
 }
 
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorPlugin
-import guru.nidi.graphviz.attribute.Color
-import guru.nidi.graphviz.attribute.Style
 
 plugins.apply(DependencyGraphGeneratorPlugin)
 

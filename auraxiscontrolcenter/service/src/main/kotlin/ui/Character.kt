@@ -1,9 +1,6 @@
 package ui
 
-import com.cramsan.ps2link.core.models.Character
-import com.jessecorbett.diskord.api.channel.Embed
-import com.jessecorbett.diskord.api.channel.EmbedField
-
+/*
 fun Embed.fullCharacter(
     character: Character
 ): Embed {
@@ -20,3 +17,4 @@ fun Embed.fullCharacter(
         )
     }
 }
+ */
