@@ -17,9 +17,30 @@ kotlin {
                 meta_packages.CoreTestCommon.each { implementation it }
             }
         }
+        jvmAndroidMain {
+
+        }
+        jvmAndroidTest {
+
+        }
         jvmMain {
+            dependsOn(jvmAndroidMain)
             dependencies {
                 meta_packages.CoreTestJVM.each { implementation it }
+            }
+        }
+        jvmTest {
+            dependsOn(jvmAndroidTest)
+        }
+        androidMain {
+            dependsOn(jvmAndroidMain)
+        }
+        androidTest {
+            dependsOn(jvmAndroidTest)
+        }
+        jsMain {
+            dependencies {
+                meta_packages.CoreTestJS.each { implementation it }
             }
         }
     }

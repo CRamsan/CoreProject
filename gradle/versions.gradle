@@ -58,7 +58,7 @@ def versions_packages = [
     Kodein : "7.1.0",
     Kotlin : versions_tools.KotlinVersion,
     KotlinxDatetime : "0.2.1",
-    KotlinxSerialization : "1.2.2",
+    KotlinxSerialization : "1.2.1",
     KtlintVerion : "0.41.0",
     Ktor : "1.6.1",
     Mockito : "3.5.10",

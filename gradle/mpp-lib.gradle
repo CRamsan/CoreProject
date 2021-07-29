@@ -109,20 +109,14 @@ kotlin {
                 meta_packages.CoreTestCommon.each { implementation it }
             }
         }
-        nonJsMain {
+        androidMain {
             dependsOn(commonMain)
         }
-        nonJsTest {
+        androidTest {
             dependsOn(commonTest)
         }
-        androidMain {
-            dependsOn(nonJsMain)
-        }
-        androidTest {
-            dependsOn(nonJsTest)
-        }
         jvmMain {
-            dependsOn(nonJsMain)
+            dependsOn(commonMain)
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
@@ -130,7 +124,7 @@ kotlin {
             }
         }
         jvmTest {
-            dependsOn(nonJsTest)
+            dependsOn(commonTest)
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
@@ -138,6 +132,7 @@ kotlin {
             }
         }
         jsMain {
+            dependsOn(commonMain)
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
@@ -145,6 +140,7 @@ kotlin {
             }
         }
         jsTest {
+            dependsOn(commonTest)
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
@@ -152,10 +148,10 @@ kotlin {
             }
         }
         iosMain {
-            dependsOn(nonJsMain)
+            dependsOn(commonMain)
         }
         iosTest {
-            dependsOn(nonJsTest)
+            dependsOn(commonTest)
         }
     }
 }
