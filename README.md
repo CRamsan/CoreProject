@@ -20,7 +20,7 @@ A lot of the code is kept in a shared module called **Framework** that abstract 
 ### Prerequisites
 - JDK 11
 - Gradle 7.0(installed from the wrapper)
-- Android Studio 2020.3.1 Canary 15 ([Download page](https://developer.android.com/studio/archive))
+- Android Studio 2020.3.1 ([Download page](https://developer.android.com/studio/archive))
 - ~~IntelliJ~~ Currently not supported (issue #139)
 
 ### Building the code
