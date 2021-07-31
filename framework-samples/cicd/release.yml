@@ -14,10 +14,12 @@ trigger:
     - build.gradle
     - gradle.properties
     - settings.gradle
-    - gradle/*
+    - gradtrue
 
 pool:
   vmImage: 'macOS-latest'
+
+continueOnError: true
 
 steps:
 
