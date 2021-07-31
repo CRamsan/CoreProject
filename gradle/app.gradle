@@ -127,5 +127,6 @@ tasks.register("release") {
     dependsOn 'ktlint' // Verifies the format
     dependsOn 'build' // Assembles and test this project
     dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results
-    dependsOn 'assembleAndroidTest' // Assemble the androidTest APK
+    // TODO: Reenable this step when BouncyCastle does not fail on Azure pipelines
+    //dependsOn 'assembleAndroidTest' // Assemble the androidTest APK
 }
