@@ -23,7 +23,7 @@ steps:
 
 - task: android-manifest-version@1
   inputs:
-    sourcePath: '$(system.defaultworkingdirectory)/doom/game/android/AndroidManifest.xml'
+    sourcePath: '$(system.defaultworkingdirectory)/framework-samples/android-app/src/main/AndroidManifest.xml'
     versionCodeOption: 'buildid'
     versionCode: '$(Build.BuildId)'
     versionName:
