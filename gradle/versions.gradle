@@ -30,7 +30,7 @@ def versions_packages = [
     AppCenterSdk : "4.2.0",
     AzureFunctionGradlePlugin : "1.5.1",
     AzureFunctionsJavaLibrary : "1.4.2",
-    BouncyCastle : "1.69",
+    BouncyCastle : "1.56",
     Coil : "1.2.2",
     ConstraintLayout : "2.0.4",
     Coroutines : "1.5.0",
