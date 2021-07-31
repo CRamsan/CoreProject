@@ -1,0 +1,4 @@
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"

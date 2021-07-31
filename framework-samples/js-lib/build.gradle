@@ -1,0 +1,9 @@
+apply from: "$rootDir/gradle/kotlin-js-lib.gradle"
+
+kotlin {
+    js {
+        binaries.executable()
+        nodejs {
+        }
+    }
+}

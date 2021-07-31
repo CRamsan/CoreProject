@@ -1,0 +1,14 @@
+apply plugin: "com.android.application"
+apply from: "$rootDir/gradle/app.gradle"
+
+android {
+    defaultConfig {
+        applicationId "com.cramsan.framework.sample.android_app"
+        versionName "0.1"
+    }
+}
+
+dependencies {
+    implementation packages.AndroidMaterial
+    implementation packages.AndroidXAppCompat
+}
