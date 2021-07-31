@@ -21,14 +21,6 @@ pool:
 
 steps:
 
-- task: android-manifest-version@1
-  inputs:
-    sourcePath: '$(system.defaultworkingdirectory)/framework-samples/android-app/src/main/AndroidManifest.xml'
-    versionCodeOption: 'buildid'
-    versionCode: '$(Build.BuildId)'
-    versionName:
-    printFile: true
-
 - task: Gradle@2
   inputs:
     workingDirectory: ''
