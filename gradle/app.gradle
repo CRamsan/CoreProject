@@ -103,6 +103,7 @@ dependencies {
 
     implementation meta_packages.CoreAndroid
     implementation meta_packages.Hilt
+    implementation(packages.BouncyCastle) { force = true }
 
     testImplementation meta_packages.CoreTestAndroid
 
