@@ -14,6 +14,7 @@ trigger:
     - gradle.properties
     - settings.gradle
     - gradle/*
+    - framework-samples/*
 
 pool:
   vmImage: 'macOS-latest'
