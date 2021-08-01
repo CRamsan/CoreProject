@@ -10,11 +10,10 @@ trigger:
     - master
   paths:
     include:
-    - framework-samples/*
     - build.gradle
     - gradle.properties
     - settings.gradle
-    - gradtrue
+    - gradle/*
 
 pool:
   vmImage: 'macOS-latest'
