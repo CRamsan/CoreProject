@@ -29,6 +29,10 @@ android {
     kotlinOptions {
         useIR = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions_tools.JetpackCompose
+    }
 }
 
 dependencies {
