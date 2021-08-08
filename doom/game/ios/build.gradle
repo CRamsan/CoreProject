@@ -1,3 +1,13 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath packages.RoboVMGradle
+    }
+}
+
 plugins {
     id 'java'
 }
