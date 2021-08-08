@@ -21,7 +21,6 @@ buildscript {
         classpath packages.DependencyGraphGenerator
         classpath packages.KotlinGradle
         classpath packages.KotlinxSerializationGradle
-        classpath packages.RoboVMGradle
         classpath packages.SpringBootGradle
         classpath packages.SpringDependencyManagement
         classpath packages.AzureFunctionsGradle
