@@ -16,8 +16,8 @@ Now you can compile and test the app with `./gradlew auraxiscontrolcenter:app:re
 
 To build the bot you will need to provide some environment variables:
 ```
-PS2LINK_BOT_SERVICE_ID="..."
-PS2LINK_BOT_TOKEN="..."
+PS2LINK_BOT_SERVICE_ID=...
+PS2LINK_BOT_TOKEN=...
 ```
 To build the bot you will do `./gradlew auraxiscontrolcenter:service:release`
 
