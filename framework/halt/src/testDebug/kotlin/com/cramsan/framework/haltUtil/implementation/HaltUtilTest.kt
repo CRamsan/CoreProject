@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cramsan.framework.halt.implementation.HaltUtilAndroid
-import com.cramsan.framework.halt.implementation.HaltUtilCommonTest
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test

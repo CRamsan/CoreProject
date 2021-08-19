@@ -1,12 +1,18 @@
-package com.cramsan.framework.halt.implementation
+package com.cramsan.framework.haltUtil.implementation
 
 import com.cramsan.framework.halt.HaltUtilDelegate
+import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.test.assertTrue
 
+/**
+ * This code is duplicated for Android and JVM. This is due to the plugin not supporting sharing
+ * across JVM+Android.
+ * https://kotlinlang.org/docs/mpp-share-on-platforms.html#share-code-in-libraries
+ */
 class HaltUtilCommonTest {
 
     suspend fun testStopThread(platformDelegate: HaltUtilDelegate) = coroutineScope {
