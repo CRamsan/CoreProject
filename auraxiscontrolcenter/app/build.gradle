@@ -10,15 +10,26 @@ android {
         def consumerKey = findProperty("ps2linkConsumerKey") ?: ""
         def accessToken = findProperty("ps2linkAccessToken") ?: ""
         def accessTokenSecret = findProperty("ps2linkAccessTokenSecret") ?: ""
-        def appCenterId = findProperty("ps2linkAppCenterId") ?: ""
-        def serviceId = findProperty("ps2linkServiceId") ?: ""
+        def appCenterIdPreProd = findProperty("ps2linkAppCenterIdPreProd") ?: ""
+        def appCenterIdProd = findProperty("ps2linkAppCenterIdProd") ?: ""
+        def serviceIdPreProd = findProperty("ps2linkServiceIdPreProd") ?: ""
+        def serviceIdProd = findProperty("ps2linkServiceIdProd") ?: ""
 
         buildConfigField("String", "CONSUMER_SECRET", "\"${consumerSecret}\"")
         buildConfigField("String", "CONSUMER_KEY", "\"${consumerKey}\"")
         buildConfigField("String", "ACCESS_TOKEN", "\"${accessToken}\"")
         buildConfigField("String", "ACCESS_TOKEN_SECRET", "\"${accessTokenSecret}\"")
-        buildConfigField("String", "APP_CENTER_ID", "\"${appCenterId}\"")
-        buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceId}\"")
+
+        productFlavors {
+            preprod {
+                buildConfigField("String", "APP_CENTER_ID", "\"${appCenterIdPreProd}\"")
+                buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceIdPreProd}\"")
+            }
+            prod {
+                buildConfigField("String", "APP_CENTER_ID", "\"${appCenterIdProd}\"")
+                buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceIdProd}\"")
+            }
+        }
     }
 
     buildFeatures {
