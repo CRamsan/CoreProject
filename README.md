@@ -1,6 +1,6 @@
 # Project Repo
 
-This mono-repo holds the code for several projects that I manage. The reason for going with a mono-repo was to make code-sharing easier and reducing maintenance cost. You can find more information about the projec's design on the [design](docs/design.md) page.
+This mono-repo holds the code for several projects that I manage. The reason for going with a mono-repo was to make code-sharing easier and reducing maintenance cost. You can find more information about the projec's design on the [design](https://dev.azure.com/CRamsan/Framework/_wiki/wikis/Framework.wiki/28/Design-Architecture) page.
 
 ## Current Projects
 | Project | Builds |
@@ -33,10 +33,10 @@ To just build the code, run `./grdlew assembleDebug` for Android projects or `./
 The code is configured to follow a pre-defined format style. This is enforced by the build process, so it is important to always follow the format otherwise the build process will fail. To automatlly fix any format issues, just run `./gradlew ktlintf`. If this task fails, you will have to manually fix the issue.
 
 ### Testing
-You can read more about testing in the [Testing](docs/testing.md) page.
+You can read more about testing in the [Testing](https://dev.azure.com/CRamsan/Framework/_wiki/wikis/Framework.wiki/31/Testing) page.
 
 ### Create a new module
-If you want to start a new project and need a new module, look at the [New Module](docs/new_module.md) page for some examples about how to get started.
+If you want to start a new project and need a new module, look at the [New Module](https://dev.azure.com/CRamsan/Framework/_wiki/wikis/Framework.wiki/30/Creating-a-new-module) page for some examples about how to get started.
 
 ### More information
-To learn more about the project, please look at the [documentation](docs/).
+To learn more about the project, please look at the [documentation](https://dev.azure.com/CRamsan/Framework/_wiki/wikis/Framework.wiki/22/Project-Wiki).
