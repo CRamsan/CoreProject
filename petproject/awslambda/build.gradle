@@ -1,0 +1,17 @@
+apply from: "$rootDir/gradle/kotlin-js-lib.gradle"
+
+kotlin {
+    js {
+        binaries.executable()
+        nodejs {
+        }
+    }
+}
+
+dependencies {
+    implementation project(":framework")
+    implementation project(":petproject:appcore")
+}
+
+registerDependency(":framework")
+registerDependency(":petproject:appcore")

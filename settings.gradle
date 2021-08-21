@@ -15,6 +15,7 @@ include 'petproject:app'
 include 'petproject:appcore'
 include 'petproject:webservice'
 include 'petproject:azurefunction'
+include 'petproject:awslambda'
 
 include 'doom:lib'
 include 'doom:lib:leveleditor'

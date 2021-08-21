@@ -41,15 +41,6 @@ kotlin {
                 implementation packages.SqlDelightDriver
             }
         }
-        jvmAndroidTest {
-
-        }
-        jvmTest {
-            dependsOn(jvmAndroidTest)
-        }
-        androidTest {
-            dependsOn(jvmAndroidTest)
-        }
     }
 }
 
