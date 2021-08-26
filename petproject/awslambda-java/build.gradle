@@ -1,0 +1,13 @@
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    implementation project(":framework")
+    implementation project(":petproject:appcore")
+    implementation packages.AwsLambda
+    implementation packages.AwsLambdaEvents
+    implementation packages.AwsLambdaLog4j2
+}
+
+registerDependency(":framework")
+registerDependency(":petproject:appcore")

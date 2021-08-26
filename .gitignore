@@ -32,3 +32,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### CDK ###
+cdk.out

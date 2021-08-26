@@ -4,7 +4,7 @@ import com.cramsan.petproject.appcore.storage.Description
 import com.cramsan.petproject.appcore.storage.PlantCommonName
 import com.cramsan.petproject.appcore.storage.PlantFamily
 
-class APIFunction {
+class APILambda {
 
     fun plants() = modelStorage.getPlants()
 
@@ -15,7 +15,7 @@ class APIFunction {
         return list.filter { it.plantId == plantId }
     }
 
-    fun familiy(plantId: Long): PlantFamily {
+    fun family(plantId: Long): PlantFamily {
         val list = modelStorage.getPlantsFamily()
         return list.first { it.plantId == plantId }
     }
@@ -28,7 +28,7 @@ class APIFunction {
     fun toxicities() = modelStorage.getToxicity()
 
     companion object {
-        private val dependenciesConfig = DependenciesConfig()
-        val modelStorage = dependenciesConfig.modelStorage
+        private val dependenciesConfig by lazy { DependenciesConfig() }
+        val modelStorage by lazy { dependenciesConfig.modelStorage }
     }
 }

@@ -1,0 +1,26 @@
+/**
+ * Plugin to configure an application using kotlin-jvm.
+ * This plugin expects that the project sets the value for mainClassTarget.
+ * For example: ext.mainClassTarget = "com.cramsan.awslib.editor.LoginApp"
+ */
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle" // Inherit the main configuration settings from the kotlin-jvm-lib plugin
+apply plugin: "application" // Enable this application to run as an application.
+
+// Export as a jar with the referenced main class to execute
+jar {
+    manifest {
+        attributes(
+                'Main-Class' : mainClassTarget
+        )
+    }
+}
+
+// Setting the main class to run when executing as an application.
+application {
+    mainClassName = mainClassTarget
+}
+
+java {
+    sourceCompatibility = versions_tools.JavaCompatibility
+    targetCompatibility = versions_tools.JavaCompatibility
+}

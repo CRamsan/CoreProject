@@ -11,6 +11,7 @@ kotlin {
 dependencies {
     implementation project(":framework")
     implementation project(":petproject:appcore")
+    implementation npm('@aws-sdk/client-dynamodb', '3.27.0', false)
 }
 
 registerDependency(":framework")

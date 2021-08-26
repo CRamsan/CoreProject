@@ -27,6 +27,7 @@ buildscript {
         classpath packages.KotlinNoArg
         classpath packages.KotlinAllOpen
         classpath packages.OpenjfxGradle
+        classpath packages.Shadow
     }
 }
 

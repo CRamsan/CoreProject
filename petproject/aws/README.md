@@ -1,6 +1,7 @@
 # Welcome to your CDK TypeScript project!
 
-This is a blank project for TypeScript development with CDK.
+This was an initial prototype to test CDK using Typescript. This module is not in use anymore and it is
+kep only for reference purposes. For new development, take a look at `aws-java`.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
