@@ -8,52 +8,23 @@ import software.amazon.awscdk.services.dynamodb.TableProps
 
 class Storage(scope: software.constructs.Construct, id: String) : Construct(scope, id) {
     init {
-        Table(
-            this,
-            "Description",
-            TableProps.Builder()
-                .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
-                .build()
-        )
-
-        Table(
-            this,
-            "Plants",
-            TableProps.Builder()
-                .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
-                .build()
-        )
-
-        Table(
-            this,
-            "CommonNames",
-            TableProps.Builder()
-                .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
-                .build()
-        )
-
-        Table(
-            this,
-            "Families",
-            TableProps.Builder()
-                .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
-                .build()
-        )
-
-        Table(
-            this,
-            "MainNames",
-            TableProps.Builder()
-                .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
-                .build()
-        )
-
-        Table(
-            this,
-            "Toxicities",
-            TableProps.Builder()
-                .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
-                .build()
-        )
+        Table.Builder.create(this, "Description")
+            .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
+            .build()
+        Table.Builder.create(this, "Plants")
+            .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
+            .build()
+        Table.Builder.create(this, "CommonNames")
+            .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
+            .build()
+        Table.Builder.create(this, "Families")
+            .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
+            .build()
+        Table.Builder.create(this, "MainNames")
+            .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
+            .build()
+        Table.Builder.create(this, "Toxicities")
+            .partitionKey(Attribute.builder().name("id").type(AttributeType.NUMBER).build())
+            .build()
     }
 }
