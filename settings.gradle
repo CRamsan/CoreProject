@@ -16,6 +16,7 @@ include 'petproject:appcore'
 include 'petproject:webservice'
 include 'petproject:azurefunction'
 include 'petproject:awslambda-java'
+include 'petproject:aws-common-java'
 include 'petproject:aws-java'
 
 include 'doom:lib'

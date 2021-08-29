@@ -20,7 +20,7 @@ class TestAwsJavaTest {
             JSON.valueToTree<JsonNode>(app.synth().getStackArtifact(stack.artifactId).template)
 
         // Update once resources have been added to the stack
-        assertTrue(actual["Resources"] == null)
+        assertTrue(actual["Resources"] != null)
     }
 
     companion object {
