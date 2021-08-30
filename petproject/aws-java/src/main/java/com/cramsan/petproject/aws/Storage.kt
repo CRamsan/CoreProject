@@ -28,11 +28,11 @@ class Storage(scope: software.constructs.Construct, id: String) : Construct(scop
         .build()
 
     fun grantReadWriteAccess(lambda: IFunction) {
-        plantsTable.grantReadWriteData(lambda)
-        commonNamesTable.grantReadWriteData(lambda)
-        mainNamesTable.grantReadWriteData(lambda)
-        familiesTable.grantReadWriteData(lambda)
-        descriptionsTable.grantReadWriteData(lambda)
-        toxicitiesTable.grantReadWriteData(lambda)
+        plantsTable.grantReadData(lambda)
+        commonNamesTable.grantReadData(lambda)
+        mainNamesTable.grantReadData(lambda)
+        familiesTable.grantReadData(lambda)
+        descriptionsTable.grantReadData(lambda)
+        toxicitiesTable.grantReadData(lambda)
     }
 }
