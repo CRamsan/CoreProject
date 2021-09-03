@@ -4,7 +4,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 dependencies {
     implementation project(":framework")
     implementation project(":petproject:appcore")
-    implementation project(":petproject:aws-common-java")
+    implementation project(":petproject:aws:common-jvm")
     implementation packages.AwsLambda
     implementation packages.AwsLambdaEvents
     implementation packages.AwsLambdaLog4j2
@@ -14,4 +14,4 @@ dependencies {
 
 registerDependency(":framework")
 registerDependency(":petproject:appcore")
-registerDependency(":petproject:aws-common-java")
+registerDependency(":petproject:aws:common-jvm")
