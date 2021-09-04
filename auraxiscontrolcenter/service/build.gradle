@@ -11,6 +11,11 @@ kotlin {
     }
 }
 
+// TODO: Review if we can remove this. Without this line, the IDE throws errors that some JS libraries are not found.
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")

@@ -88,7 +88,7 @@ kotlin {
         }
     }
     if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
-        js(IR) {
+        js {
             nodejs()
         }
     }
@@ -131,20 +131,22 @@ kotlin {
                 meta_packages.CoreTestJVM.each { implementation it }
             }
         }
-        jsMain {
-            dependsOn(commonMain)
-            dependencies {
-                // This syntax is used as the kotlin-mpp plugin does not support
-                // arrays as arguments.
-                meta_packages.CoreJS.each { implementation it }
+        if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+            jsMain {
+                dependsOn(commonMain)
+                dependencies {
+                    // This syntax is used as the kotlin-mpp plugin does not support
+                    // arrays as arguments.
+                    meta_packages.CoreJS.each { implementation it }
+                }
             }
-        }
-        jsTest {
-            dependsOn(commonTest)
-            dependencies {
-                // This syntax is used as the kotlin-mpp plugin does not support
-                // arrays as arguments.
-                meta_packages.CoreTestJS.each { implementation it }
+            jsTest {
+                dependsOn(commonTest)
+                dependencies {
+                    // This syntax is used as the kotlin-mpp plugin does not support
+                    // arrays as arguments.
+                    meta_packages.CoreTestJS.each { implementation it }
+                }
             }
         }
         iosMain {
@@ -170,18 +172,19 @@ tasks {
 tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
 
 ext.registerDependency = { project ->
-    release.configure { dependsOn("${project}:releaseJs") }
     release.configure { dependsOn("${project}:releaseJvm") }
     release.configure { dependsOn("${project}:releaseAndroid") }
+    release.configure { dependsOn("${project}:releaseJs") }
 }
 
 tasks.register("releaseJs") {
     group = 'build'
     description = 'Run all the steps to build a Js artifact'
-
-    dependsOn 'ktlint'
-    dependsOn 'compileKotlinJs'
-    dependsOn 'jsTest'
+    if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+        dependsOn 'ktlint'
+        dependsOn 'compileKotlinJs'
+        dependsOn 'jsTest'
+    }
 }
 
 tasks.register("releaseJvm") {

@@ -6,7 +6,7 @@ apply plugin: "org.jetbrains.kotlin.js"
 apply from: "$rootDir/gradle/ktlint.gradle"
 
 kotlin {
-    js(IR) {
+    js {
 
     }
 }
