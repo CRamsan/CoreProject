@@ -3,11 +3,19 @@
  * This plugin requires that the project set the values for:
  * - libraryVersionCode
  * - libraryVersionName
- * - disableJs
+ *
+ * By default, the JVM, JS and IOS targets are created. You can
+ * call the following functions to disable some of them:
+ * disableJvmTarget()
+ * disableIosTarget()
+ * disableJsTarget()
+ *
  */
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "kotlin-kapt"
+
+apply from: "$rootDir/gradle/helper-functions.gradle"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
 apply from: "$rootDir/gradle/ktlint.gradle"
 
@@ -87,7 +95,7 @@ kotlin {
             framework()
         }
     }
-    if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+    if (isJvmTargetEnabled()) {
         js {
             nodejs()
         }
@@ -131,7 +139,7 @@ kotlin {
                 meta_packages.CoreTestJVM.each { implementation it }
             }
         }
-        if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+        if (isJvmTargetEnabled()) {
             jsMain {
                 dependsOn(commonMain)
                 dependencies {
@@ -185,7 +193,7 @@ ext.registerJvmDependency = { project ->
 tasks.register("releaseJs") {
     group = 'build'
     description = 'Run all the steps to build a Js artifact'
-    if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+    if (isJvmTargetEnabled()) {
         dependsOn 'ktlint'
         dependsOn 'compileKotlinJs'
         dependsOn 'jsTest'
@@ -217,7 +225,7 @@ tasks.register("release") {
 
     dependsOn 'releaseJvm'
     dependsOn 'releaseAndroid'
-    if (!project.ext.has("disableJs") || project.ext.disableJs != true) {
+    if (isJvmTargetEnabled()) {
         dependsOn 'releaseJs'
     }
 }

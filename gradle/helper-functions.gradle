@@ -1,0 +1,37 @@
+/**
+ * Set of reusable helper functions.
+ */
+
+// Define the currently supported MPP targets.
+enum MPP_TARGET {
+    JVM,
+    IOS,
+    JS,
+    ANDROID,
+}
+
+// Define some variables to control if the targets are disabled or not.
+final String DISABLE_JVM = "disableJvm"
+final String DISABLE_IOS = "disableIos"
+final String DISABLE_JS = "disableJs"
+
+def isPlatformEnabled = { supportedPlatform ->
+    switch (supportedPlatform) {
+        case MPP_TARGET.JVM:
+            return !project.ext.has(DISABLE_JVM) || project.ext.get(DISABLE_JVM) != true
+        case MPP_TARGET.IOS:
+            return !project.ext.has(DISABLE_IOS) || project.ext.disableIos.get(DISABLE_IOS) != true
+        case MPP_TARGET.JS:
+            return !project.ext.has(DISABLE_JS) || project.ext.disableJs.get(DISABLE_JS) != true
+        default:
+            throw RuntimeException("Invalid platform: $supportedPlatform")
+            break;
+    }
+}
+
+ext.isJvmTargetEnabled = { return isPlatformEnabled(MPP_TARGET.JVM) }
+ext.isIosTargetEnabled = { return isPlatformEnabled(MPP_TARGET.IOS) }
+ext.isJsTargetEnabled = { return isPlatformEnabled(MPP_TARGET.JS) }
+ext.disableJvmTarget = { project.ext.set(DISABLE_JVM, true) }
+ext.disableIosTarget = { project.ext.set(DISABLE_IOS, true) }
+ext.disableJsTarget = { project.ext.set(DISABLE_JS, true) }

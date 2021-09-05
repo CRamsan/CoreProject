@@ -42,7 +42,7 @@ subprojects {
         }
     }
 
-
+    apply from: "$rootDir/gradle/helper-functions.gradle"
     apply from: "$rootDir/gradle/dependency-graph.gradle"
 }
 
