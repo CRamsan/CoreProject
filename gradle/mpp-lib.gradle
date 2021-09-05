@@ -177,6 +177,11 @@ ext.registerDependency = { project ->
     release.configure { dependsOn("${project}:releaseJs") }
 }
 
+// Register a dependency to a JVM library with the `releaseJVM` task
+ext.registerJvmDependency = { project ->
+    release.configure { dependsOn("${project}:releaseJvm") }
+}
+
 tasks.register("releaseJs") {
     group = 'build'
     description = 'Run all the steps to build a Js artifact'

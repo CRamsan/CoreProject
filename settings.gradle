@@ -19,7 +19,6 @@ include 'petproject:aws:lambda-jvm'
 include 'petproject:aws:backend-jvm'
 include 'petproject:aws:common-jvm'
 include 'petproject:aws:cdk-jvm'
-include 'petproject:aws:frontend'
 
 include 'doom:lib'
 include 'doom:lib:leveleditor'

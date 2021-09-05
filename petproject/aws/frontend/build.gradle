@@ -1,0 +1,141 @@
+apply plugin: "org.jetbrains.kotlin.multiplatform"
+apply plugin: 'kotlinx-serialization'
+apply from: "$rootDir/gradle/ktlint.gradle"
+
+kotlin {
+    jvm("jvm") {
+        withJava()
+        compilations.all {
+            kotlinOptions {
+               jvmTarget = versions_tools.JavaCompatibility
+            }
+        }
+    }
+    js {
+        browser {
+            binaries.executable()
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreCommon.each { implementation it }
+                implementation project(":framework")
+                implementation project(":petproject:appcore")
+
+                implementation packages.KotlinxSerialization
+                implementation packages.KtorCore
+            }
+        }
+        commonTest {
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                // implementation packages.KotlinTestCommon
+                meta_packages.CoreTestCommon.each { implementation it }
+            }
+        }
+        jvmMain {
+            dependsOn(commonMain)
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreJVM.each { implementation it }
+
+                implementation project(":petproject:aws:backend-jvm")
+                implementation project(":petproject:aws:common-jvm")
+
+                implementation packages.KtorBaseSerialization
+                implementation packages.KtorServerCore
+                implementation packages.KtorServerNetty
+                implementation packages.KtorServerGson
+            }
+        }
+        jvmTest {
+            dependsOn(commonTest)
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreTestJVM.each { implementation it }
+            }
+        }
+        jsMain {
+            dependsOn(commonMain)
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreJS.each { implementation it }
+
+                implementation packages.KtorClientJs
+                implementation packages.KtorJson
+                implementation packages.KtorSerialization
+            }
+        }
+        jsTest {
+            dependsOn(commonTest)
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                meta_packages.CoreTestJS.each { implementation it }
+            }
+        }
+    }
+}
+
+tasks {
+    jvmTest {
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
+
+// TODO: Verify if this can be removed
+// https://youtrack.jetbrains.com/issue/KT-46165
+// https://youtrack.jetbrains.com/issue/KT-46978
+tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
+
+ext.registerDependency = { project ->
+    release.configure { dependsOn("${project}:releaseJs") }
+    release.configure { dependsOn("${project}:releaseJvm") }
+}
+
+// Register a dependency to a JVM library with the `releaseJVM` task
+ext.registerJvmDependency = { project ->
+    release.configure { dependsOn("${project}:releaseJvm") }
+}
+
+tasks.register("releaseJs") {
+    group = 'build'
+    description = 'Run all the steps to build a Js artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'compileKotlinJs'
+    dependsOn 'jsTest'
+}
+
+tasks.register("releaseJvm") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseJvm artifact'
+
+    dependsOn 'ktlint'
+    dependsOn 'compileKotlinJvm'
+    dependsOn 'jvmTest'
+    dependsOn 'jacocoTestReport'
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact for Android and JVM targets'
+
+    dependsOn 'releaseJvm'
+    dependsOn 'releaseJs'
+}
+
+registerDependency(":framework")
+registerDependency(":petproject:appcore")
+registerJvmDependency(":petproject:aws:backend-jvm")
+registerJvmDependency(":petproject:aws:backend-jvm")

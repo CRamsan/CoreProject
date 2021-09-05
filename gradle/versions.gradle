@@ -211,6 +211,7 @@ def packages = [
         KtorClientJs: "io.ktor:ktor-client-js:$versions_packages.Ktor",
         KtorCore : "io.ktor:ktor-client-core:$versions_packages.Ktor",
         KtorGson : "io.ktor:ktor-client-gson:$versions_packages.Ktor",
+        KtorServerGson : "io.ktor:ktor-gson:$versions_packages.Ktor",
         KtorJson : "io.ktor:ktor-client-json:$versions_packages.Ktor",
         // TODO: We should rename this package from KtorSerialization to KtorClientSerialization
         KtorSerialization : "io.ktor:ktor-client-serialization:$versions_packages.Ktor",
