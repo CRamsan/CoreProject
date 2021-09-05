@@ -102,9 +102,11 @@ kotlin {
     }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
-    iosX64("ios") {
-        binaries {
-            framework()
+    if (disableIosTarget) {
+        iosX64("ios") {
+            binaries {
+                framework()
+            }
         }
     }
     if (isJsTargetEnabled()) {
@@ -173,11 +175,13 @@ kotlin {
                 }
             }
         }
-        iosMain {
-            dependsOn(commonMain)
-        }
-        iosTest {
-            dependsOn(commonTest)
+        if (isIosTargetEnabled()) {
+            iosMain {
+                dependsOn(commonMain)
+            }
+            iosTest {
+                dependsOn(commonTest)
+            }
         }
     }
 }

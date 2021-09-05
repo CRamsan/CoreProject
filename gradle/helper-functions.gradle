@@ -32,6 +32,7 @@ def isPlatformEnabled = { supportedPlatform ->
     }
 }
 
+// External functions that can be used to disable MPP targets
 ext.isJvmTargetEnabled = { return isPlatformEnabled(MPP_TARGET.JVM) }
 ext.isIosTargetEnabled = { return isPlatformEnabled(MPP_TARGET.IOS) }
 ext.isJsTargetEnabled = { return isPlatformEnabled(MPP_TARGET.JS) }
