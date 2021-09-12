@@ -7,7 +7,7 @@ import org.junit.Rule
 import kotlin.test.BeforeTest
 
 /**
- * This is a compy-paste of the Android version of this file. We are waiting for support of code sharing
+ * This is a copy-paste of the Android version of this file. We are waiting for support of code sharing
  * between Android and JVM so we can finally use a single file.
  */
 @ExperimentalCoroutinesApi

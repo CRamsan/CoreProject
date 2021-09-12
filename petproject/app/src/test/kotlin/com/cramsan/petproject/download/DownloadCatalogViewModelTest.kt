@@ -35,9 +35,9 @@ class DownloadCatalogViewModelTest : TestBase() {
     fun setUp() {
         application = mockk(relaxed = true)
         modelProvider = mockk(relaxed = true)
-        EventLogger.instance(mockk(relaxed = true))
-        ThreadUtil.instance(mockk(relaxed = true))
-        Metrics.instance(mockk(relaxed = true))
+        EventLogger.setInstance(mockk(relaxed = true))
+        ThreadUtil.setInstance(mockk(relaxed = true))
+        Metrics.setInstance(mockk(relaxed = true))
         testDispatcher = TestCoroutineDispatcher()
         observer = mockk(relaxed = true)
 

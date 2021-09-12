@@ -51,7 +51,7 @@ class DependenciesConfig(
     }
 
     init {
-        EventLogger.instance(eventLogger)
+        EventLogger.setInstance(eventLogger)
         logI(TAG, "plantsTableName = $plantsTableName")
         logI(TAG, "commonNamesTableName = $commonNamesTableName")
         logI(TAG, "mainNamesTableName = $mainNamesTableName")

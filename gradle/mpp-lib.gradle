@@ -12,6 +12,7 @@
  *
  */
 apply plugin: "org.jetbrains.kotlin.multiplatform"
+apply plugin: "org.jetbrains.dokka"
 
 apply from: "$rootDir/gradle/helper-functions.gradle"
 apply from: "$rootDir/gradle/ktlint.gradle"

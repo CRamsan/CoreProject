@@ -1,12 +1,16 @@
 package com.cramsan.framework.crashehandler
 
 /**
- * Implementation of the delegate to handle crashes
+ * Delegate to provide a specific implementation for the crash handler.
+ *
+ * @see [CrashHandler]
  */
 interface CrashHandlerDelegate {
 
     /**
-     * Initialize this delegate
+     * Initialize this delegate. This function will be called very early in the process's lifecycle.
+     *
+     * @see [CrashHandler.initialize]
      */
     fun initialize()
 }

@@ -4,6 +4,9 @@ import com.cramsan.framework.metrics.MetricsDelegate
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 
+/**
+ * Implementation of [MetricsDelegate] that logs events to AppCenter.
+ */
 class AppCenterMetrics : MetricsDelegate {
 
     override fun initialize() {
@@ -15,6 +18,6 @@ class AppCenterMetrics : MetricsDelegate {
     }
 
     override fun log(tag: String, event: String, metadata: Map<String, String>) {
-        Analytics.trackEvent("$tag-$event", metadata)
+        Analytics.trackEvent("$event-$tag", metadata)
     }
 }

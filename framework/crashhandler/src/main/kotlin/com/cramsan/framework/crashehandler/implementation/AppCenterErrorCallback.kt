@@ -4,6 +4,9 @@ import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.Severity
 import com.microsoft.appcenter.crashes.Crashes
 
+/**
+ * This class provides a mechanism to log internal errors and warnings to AppCenter.
+ */
 class AppCenterErrorCallback : EventLoggerErrorCallbackDelegate {
 
     override fun handleErrorEvent(tag: String, message: String, throwable: Throwable, severity: Severity) {

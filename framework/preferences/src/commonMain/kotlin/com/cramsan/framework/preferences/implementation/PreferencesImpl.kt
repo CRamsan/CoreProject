@@ -3,6 +3,9 @@ package com.cramsan.framework.preferences.implementation
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
 
+/**
+ * Simple implementation of [Preferences]. It delegates all it's operations to the [platformDelegate].
+ */
 class PreferencesImpl(private val platformDelegate: PreferencesDelegate) : Preferences {
 
     override fun saveString(key: String, value: String?) {

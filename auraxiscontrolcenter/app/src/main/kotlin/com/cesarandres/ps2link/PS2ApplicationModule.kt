@@ -91,7 +91,8 @@ object PS2ApplicationModule {
             eventLoggerInterface,
             haltUtilInterface
         )
-        return AssertUtil.instance(impl)
+        AssertUtil.setInstance(impl)
+        return AssertUtil.singleton
     }
 
     @Provides
@@ -122,7 +123,8 @@ object PS2ApplicationModule {
         eventLoggerInterface: EventLoggerInterface,
     ): MetricsInterface {
         val instance = MetricsImpl(metricsDelegate, eventLoggerInterface)
-        return Metrics.instance(instance)
+        Metrics.setInstance(instance)
+        return Metrics.singleton
     }
 
     @Provides
@@ -154,7 +156,8 @@ object PS2ApplicationModule {
         }
         val instance =
             EventLoggerImpl(severity, eventLoggerErrorCallback, eventLoggerDelegate)
-        return EventLogger.instance(instance)
+        EventLogger.setInstance(instance)
+        return EventLogger.singleton
     }
 
     @Provides
@@ -171,7 +174,8 @@ object PS2ApplicationModule {
     @Singleton
     fun provideThreadUtilInterface(threadUtilDelegate: ThreadUtilDelegate): ThreadUtilInterface {
         val instance = ThreadUtilImpl(threadUtilDelegate)
-        return ThreadUtil.instance(instance)
+        ThreadUtil.setInstance(instance)
+        return ThreadUtil.singleton
     }
 
     @Provides

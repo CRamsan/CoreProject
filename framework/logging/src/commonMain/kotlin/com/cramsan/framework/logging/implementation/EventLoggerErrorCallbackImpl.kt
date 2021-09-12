@@ -5,6 +5,9 @@ import com.cramsan.framework.logging.EventLoggerErrorCallback
 import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.Severity
 
+/**
+ * Handle the events with severity warning or error. It delegates any further action to the [delegate].
+ */
 class EventLoggerErrorCallbackImpl(
     private val eventLoggerDelegate: EventLoggerDelegate,
     private val delegate: EventLoggerErrorCallbackDelegate,

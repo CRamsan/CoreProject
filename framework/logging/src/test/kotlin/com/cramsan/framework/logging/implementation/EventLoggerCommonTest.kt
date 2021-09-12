@@ -87,7 +87,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
 
         logV(tag, message)
         verify { eventLogger.v(tag, message) }
@@ -100,7 +100,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
 
         logD(tag, message)
         verify { eventLogger.d(tag, message) }
@@ -113,7 +113,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
 
         logI(tag, message)
         verify { eventLogger.i(tag, message) }
@@ -127,7 +127,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
 
         logW(tag, message)
         verify { eventLogger.w(tag, message, null) }
@@ -144,7 +144,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.instance(eventLogger)
+        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
 
         logE(tag, message)
         verify { eventLogger.e(tag, message, null) }
@@ -158,6 +158,6 @@ class EventLoggerCommonTest : TestBase() {
         val eventLogger: EventLoggerInterface = mockk(relaxed = true)
 
         // Configure the singleton
-        assertEquals(eventLogger, com.cramsan.framework.logging.EventLogger.instance(eventLogger))
+        assertEquals(eventLogger, com.cramsan.framework.logging.EventLogger.setInstance(eventLogger))
     }
 }

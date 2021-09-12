@@ -1,11 +1,21 @@
 package com.cramsan.framework.core
 
+import android.app.ActionBar
+import android.app.Activity
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.cramsan.framework.logging.logD
 import com.google.android.material.appbar.MaterialToolbar
 
+/**
+ * This class provides some helpful defaults that should be generally used when implementing new
+ * classes that inherit from [Activity]. [viewModel] is considered a good pattern so it is required
+ * to specify which one will be used. If a viewModel is not required then [NoopViewModel] can be used.
+ * A [contentViewLayout] is required and it should be a valid layout file. The [toolbarViewId] is
+ * optional. If provided, this toolbar will be set as the [ActionBar] for this activity. [logTag] is
+ * required so we can identify the source of the events.
+ */
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     abstract val viewModel: T

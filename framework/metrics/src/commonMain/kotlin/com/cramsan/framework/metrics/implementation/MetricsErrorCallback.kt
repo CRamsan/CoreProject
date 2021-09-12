@@ -4,6 +4,9 @@ import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricsInterface
 
+/**
+ * This class provides a mechanism to log internal errors and warnings to a [MetricsInterface].
+ */
 class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
     EventLoggerErrorCallbackDelegate {
 

@@ -3,6 +3,9 @@ package com.cramsan.framework.logging.implementation
 import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.Severity
 
+/**
+ * Logger that prints to stdout.
+ */
 class LoggerJVM : EventLoggerDelegate {
     override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
         println("[${severity.name}][$tag]$message")

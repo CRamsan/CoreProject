@@ -79,7 +79,8 @@ object PS2ServiceModule {
     ): EventLoggerInterface {
         val instance =
             EventLoggerImpl(Severity.DEBUG, null, eventLoggerDelegate)
-        return EventLogger.instance(instance)
+        EventLogger.setInstance(instance)
+        return EventLogger.singleton
     }
 
     fun provideAssertUtil(
@@ -91,7 +92,8 @@ object PS2ServiceModule {
             eventLoggerInterface,
             haltUtilInterface
         )
-        return AssertUtil.instance(impl)
+        AssertUtil.setInstance(impl)
+        return AssertUtil.singleton
     }
 
     fun provideThreadUtilDelegate(
@@ -129,12 +131,14 @@ object PS2ServiceModule {
         eventLoggerInterface: EventLoggerInterface,
     ): MetricsInterface {
         val instance = MetricsImpl(metricsDelegate, eventLoggerInterface)
-        return Metrics.instance(instance)
+        Metrics.setInstance(instance)
+        return Metrics.singleton
     }
 
     fun provideThreadUtilInterface(threadUtilDelegate: ThreadUtilDelegate): ThreadUtilInterface {
         val instance = ThreadUtilImpl(threadUtilDelegate)
-        return ThreadUtil.instance(instance)
+        ThreadUtil.setInstance(instance)
+        return ThreadUtil.singleton
     }
 
     fun provideClock(): Clock = Clock.System

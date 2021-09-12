@@ -3,7 +3,6 @@ package com.cramsan.framework.thread.implementation
 import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilDelegate
 
 class ThreadUtilJVM constructor(
@@ -17,14 +16,6 @@ class ThreadUtilJVM constructor(
 
     override fun isBackgroundThread(): Boolean {
         return true
-    }
-
-    override fun dispatchToBackground(block: RunBlock) {
-        block()
-    }
-
-    override fun dispatchToUI(block: RunBlock) {
-        assertUtil.assert(false, "ThreadUtilJVM", "dispatchToUI: UIThread is not supported")
     }
 
     override fun assertIsUIThread() {

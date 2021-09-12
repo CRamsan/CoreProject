@@ -1,6 +1,7 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
+apply plugin: "org.jetbrains.dokka"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
 apply from: "$rootDir/gradle/ktlint.gradle"
 

@@ -1,11 +1,6 @@
 package com.cramsan.framework.logging
 
 /**
- * For convenience, typealias the [EventLoggerInterface] to [Log] to make calling it simpler
- */
-typealias Log = EventLoggerInterface
-
-/**
  * Module to log events. Only the events with severity higher or equal to [targetSeverity] will be logged.
  * There is an optional [errorCallback] that can be provided to handle when events with [Severity.WARNING]
  * or [Severity.ERROR]. There is a required [platformDelegate] that implements the logging based on the

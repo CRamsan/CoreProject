@@ -1,5 +1,9 @@
 package com.cramsan.framework.thread
 
+/**
+ * Delegate that will need to implement the platform logic to manage
+ * threading.
+ */
 interface ThreadUtilDelegate {
     /**
      * Return true is the current thread is the UI thread
@@ -10,18 +14,6 @@ interface ThreadUtilDelegate {
      * Return true if the current thread it a non-UI thread
      */
     fun isBackgroundThread(): Boolean
-
-    /**
-     * The [block] will be dispatched to be executed in a background thread
-     */
-    @Deprecated("Move to managing dispatching by using coroutines")
-    fun dispatchToBackground(block: RunBlock)
-
-    /**
-     * The [block] will be dispatched to be executed in the UI thread
-     */
-    @Deprecated("Move to managing dispatching by using coroutines")
-    fun dispatchToUI(block: RunBlock)
 
     /**
      * Assert that the current thread is the UI thread

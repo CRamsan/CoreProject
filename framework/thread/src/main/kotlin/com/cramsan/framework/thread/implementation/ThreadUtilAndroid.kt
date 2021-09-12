@@ -3,7 +3,6 @@ package com.cramsan.framework.thread.implementation
 import android.os.Handler
 import android.os.Looper
 import com.cramsan.framework.assertlib.AssertUtilInterface
-import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import java.util.concurrent.Executors
 
@@ -20,19 +19,6 @@ class ThreadUtilAndroid constructor(
 
     override fun isBackgroundThread(): Boolean {
         return !isUIThread()
-    }
-
-    override fun dispatchToUI(block: RunBlock) {
-        assertUtil.assert(false, "Test", "On Android we should not dispatch to the UI thread.")
-        if (isUIThread()) {
-            block()
-        } else {
-            mainHandler.post(block)
-        }
-    }
-
-    override fun dispatchToBackground(block: RunBlock) {
-        pool.execute(block)
     }
 
     override fun assertIsUIThread() {

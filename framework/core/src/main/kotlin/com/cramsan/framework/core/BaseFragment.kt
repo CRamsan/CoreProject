@@ -9,6 +9,13 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import com.cramsan.framework.logging.logD
 
+/**
+ * This class provides some helpful defaults that should be generally used when implementing new
+ * classes that inherit from [Fragment]. [logTag] is required so we can identify the source of the
+ * events.
+ *
+ * TODO: Refactor the viewModel from [ComposeBaseFragment] and [BaseDatabindingFragment] into this class.
+ */
 abstract class BaseFragment : Fragment() {
 
     abstract val logTag: String

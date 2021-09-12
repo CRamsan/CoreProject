@@ -1,6 +1,5 @@
 package com.cramsan.framework.thread.implementation
 
-import com.cramsan.framework.thread.RunBlock
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 
@@ -12,14 +11,6 @@ class ThreadUtilImpl(override val platformDelegate: ThreadUtilDelegate) : Thread
 
     override fun isBackgroundThread(): Boolean {
         return platformDelegate.isBackgroundThread()
-    }
-
-    override fun dispatchToBackground(block: RunBlock) {
-        return platformDelegate.dispatchToBackground(block)
-    }
-
-    override fun dispatchToUI(block: RunBlock) {
-        platformDelegate.dispatchToUI(block)
     }
 
     override fun assertIsUIThread() {

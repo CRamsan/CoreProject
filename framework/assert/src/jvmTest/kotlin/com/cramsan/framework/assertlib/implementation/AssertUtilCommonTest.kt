@@ -118,7 +118,8 @@ class AssertUtilCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure the singleton
-        assertEquals(assertUtil, AssertUtil.instance(assertUtil))
+        AssertUtil.setInstance(assertUtil)
+        assertEquals(assertUtil, AssertUtil.singleton)
 
         assert(true, tag, message)
         verify { assertUtil.assert(true, tag, message) }

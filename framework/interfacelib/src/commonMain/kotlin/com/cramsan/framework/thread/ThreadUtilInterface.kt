@@ -1,7 +1,5 @@
 package com.cramsan.framework.thread
 
-typealias RunBlock = () -> Unit
-
 /**
  * Module with utility functions around threads and dispatching blocks
  */
@@ -18,18 +16,6 @@ interface ThreadUtilInterface {
      * Return true if the current thread it a non-UI thread
      */
     fun isBackgroundThread(): Boolean
-
-    /**
-     * The [block] will be dispatched to be executed in a background thread
-     */
-    @Deprecated("Move to managing dispatching by using coroutines")
-    fun dispatchToBackground(block: RunBlock)
-
-    /**
-     * The [block] will be dispatched to be executed in the UI thread
-     */
-    @Deprecated("Move to managing dispatching by using coroutines")
-    fun dispatchToUI(block: RunBlock)
 
     /**
      * Assert that the current thread is the UI thread

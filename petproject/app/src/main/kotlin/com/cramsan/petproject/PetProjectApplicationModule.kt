@@ -38,7 +38,6 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
-import com.cramsan.petproject.PetProjectApplicationModule.APP_CENTER_ID
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.appcore.provider.ProviderConfig
 import com.cramsan.petproject.appcore.provider.implementation.ModelProvider
@@ -74,7 +73,8 @@ object PetProjectApplicationModule {
             eventLoggerInterface,
             haltUtilInterface
         )
-        return AssertUtil.instance(impl)
+        AssertUtil.setInstance(impl)
+        return AssertUtil.singleton
     }
 
     @Provides
@@ -105,7 +105,8 @@ object PetProjectApplicationModule {
         eventLoggerInterface: EventLoggerInterface,
     ): MetricsInterface {
         val instance = MetricsImpl(metricsDelegate, eventLoggerInterface)
-        return Metrics.instance(instance)
+        Metrics.setInstance(instance)
+        return Metrics.singleton
     }
 
     @Provides
@@ -137,7 +138,8 @@ object PetProjectApplicationModule {
         }
         val instance =
             EventLoggerImpl(severity, eventLoggerErrorCallbackInterface, eventLoggerDelegate)
-        return EventLogger.instance(instance)
+        EventLogger.setInstance(instance)
+        return EventLogger.singleton
     }
 
     @Provides
@@ -153,7 +155,8 @@ object PetProjectApplicationModule {
     @Singleton
     fun provideThreadUtilInterface(threadUtilDelegate: ThreadUtilDelegate): ThreadUtilInterface {
         val instance = ThreadUtilImpl(threadUtilDelegate)
-        return ThreadUtil.instance(instance)
+        ThreadUtil.setInstance(instance)
+        return ThreadUtil.singleton
     }
 
     @Provides

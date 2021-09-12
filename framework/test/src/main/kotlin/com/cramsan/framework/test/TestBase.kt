@@ -11,7 +11,7 @@ import kotlin.test.BeforeTest
 @ExperimentalCoroutinesApi
 actual open class TestBase {
     // This is needed so that we can run APIs that interface with the different Android Loopers.
-    // As a result all tasks that are dispathched to another looper, are executed instantaneously.
+    // As a result all tasks that are dispatched to another looper, are executed instantaneously.
     // A prime example is MutableLiveData.postValue.
     // https://proandroiddev.com/how-to-unit-test-code-with-coroutines-50c1640f6bef
     @get:Rule

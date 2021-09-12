@@ -14,10 +14,10 @@ class AssertUtilImpl(
     override val haltUtil: HaltUtil?
 ) : AssertUtilInterface {
 
-    /**
-     * Ensure that [haltOnFailure] is not true while [haltUtil] is null
-     */
     init {
+        /**
+         * Ensure that [haltOnFailure] is not true while [haltUtil] is null
+         */
         if (haltOnFailure && haltUtil == null) {
             throw RuntimeException("haltUtil cannot be null if haltOnFailure is set to true")
         }

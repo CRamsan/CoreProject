@@ -9,6 +9,9 @@ import androidx.core.app.NotificationManagerCompat
 import com.cramsan.framework.halt.HaltUtilDelegate
 import com.cramsan.framework.halt.R
 
+/**
+ * [HaltUtilDelegate] implementation for the debug target.
+ */
 class HaltUtilAndroid(private val appContext: Context) : HaltUtilDelegate {
 
     private var shouldStop = true

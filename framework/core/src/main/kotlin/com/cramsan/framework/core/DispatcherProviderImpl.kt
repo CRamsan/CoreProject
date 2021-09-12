@@ -2,6 +2,9 @@ package com.cramsan.framework.core
 
 import kotlinx.coroutines.Dispatchers
 
+/**
+ * Android implementation of [DispatcherProvider]. It uses [Dispatchers.IO] for [ioDispatcher].
+ */
 class DispatcherProviderImpl : DispatcherProvider {
 
     override fun ioDispatcher() = Dispatchers.IO

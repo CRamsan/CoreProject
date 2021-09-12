@@ -5,6 +5,11 @@ import com.cramsan.framework.logging.EventLoggerErrorCallback
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 
+/**
+ * Implement the [log] function that is used across all platforms. This class performs the severity
+ * check and then it delegates the logging implementation to [platformDelegate]. An [errorCallback]
+ * can be provided.
+ */
 class EventLoggerImpl(
     override val targetSeverity: Severity,
     override val errorCallback: EventLoggerErrorCallback?,

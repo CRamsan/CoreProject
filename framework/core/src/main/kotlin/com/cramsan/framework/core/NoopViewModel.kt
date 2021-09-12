@@ -5,6 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+/**
+ * Simple viewModel that is used a placeholder when there is no need for a viewModel, but one is required.
+ */
 @HiltViewModel
 class NoopViewModel @Inject constructor(
     application: Application,
