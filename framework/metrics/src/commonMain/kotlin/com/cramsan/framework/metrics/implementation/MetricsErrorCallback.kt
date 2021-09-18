@@ -20,7 +20,7 @@ class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
             tag,
             message,
             mapOf(
-                THROWABLE_KEY to (throwable?.message ?: throwable.toString()),
+                THROWABLE_KEY to (throwable.message ?: throwable.toString()),
                 SEVERITY_KEY to severity.name
             )
         )

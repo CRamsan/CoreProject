@@ -3,6 +3,7 @@ package com.cramsan.awsgame
 import com.cramsan.awsgame.screen.FPSGame
 import com.cramsan.awsgame.screen.GameScreen
 import com.cramsan.awsgame.screen.MainMenuScreen
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 object SceneManager {
     private var game: MyGdxGame? = null
@@ -28,6 +29,7 @@ object SceneManager {
     }
 
     private var parameterHolder: GameParameterManager? = null
+    @OptIn(DelicateCoroutinesApi::class)
     fun startGameScreen(newParameterHolder: GameParameterManager?) {
         if (game == null) {
             throw RuntimeException("Game parameter is null")

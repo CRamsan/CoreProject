@@ -81,18 +81,4 @@ class ThreadUtilTest {
         }
         semaphore.acquire()
     }
-
-    @Test
-    fun testDispatchToBackground() {
-        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
-        val eventLogger = mockk<EventLoggerInterface>(relaxUnitFun = true)
-        Thread {
-            run {
-                threadUtilTest.testDispatchToBackground(ThreadUtilJVM(eventLogger, haltUtil)) {
-                    semaphore.release()
-                }
-            }
-        }.start()
-        semaphore.acquire()
-    }
 }

@@ -81,7 +81,7 @@ internal class ModelProviderCommonTest {
         }
         job.join()
         assertNotNull(result)
-        assertEquals(result!!.size, 1)
+        assertEquals(result.size, 1)
     }
 
     private fun createEntries() = (1..100).map { i ->

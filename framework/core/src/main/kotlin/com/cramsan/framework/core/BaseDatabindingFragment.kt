@@ -18,7 +18,6 @@ import androidx.databinding.ViewDataBinding
  * should be the correct type for the layout, otherwise the fragment will throw an exception and the
  * app will most probably crash.
  */
-@Deprecated("Use ComposeBaseFragment for any new development.")
 abstract class BaseDatabindingFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseFragment() {
 
     abstract val viewModel: VM

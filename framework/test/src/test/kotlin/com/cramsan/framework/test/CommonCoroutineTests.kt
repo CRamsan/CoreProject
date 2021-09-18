@@ -30,7 +30,7 @@ class CommonCoroutineTests : TestBase() {
     fun `Test delays are executed instantly`() = runBlockingTest {
         // This method should run instantly
         // When upgrading to Kotlin 1.5 we can use the new Duration.hours API.
-        delay(1000 * 60 * 60)
+        delay((1000 * 60 * 60).toLong())
     }
 
     fun `Test for update in suspending function`() = runBlockingTest {

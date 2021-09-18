@@ -3,7 +3,6 @@ package com.cesarandres.ps2link
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.rule.ActivityTestRule
 import com.microsoft.appcenter.espresso.Factory
 import com.microsoft.appcenter.espresso.ReportHelper
 import org.junit.After
@@ -22,8 +21,9 @@ import org.junit.runner.RunWith
 @LargeTest
 class FragmentProfileTest {
 
+    @Suppress("DEPRECATION")
     @get:Rule
-    val activityScenarioRule = ActivityTestRule(ActivityContainer::class.java, false, false)
+    val activityScenarioRule = androidx.test.rule.ActivityTestRule(ActivityContainer::class.java, false, false)
 
     @get:Rule
     var reportHelper: ReportHelper = Factory.getReportHelper()
@@ -42,13 +42,13 @@ class FragmentProfileTest {
         clearPreferences(getInstrumentation().targetContext)
         clearAppData(getInstrumentation().targetContext)
         activityScenarioRule.launchActivity(null)
-        val application = activityScenarioRule.activity.application as ApplicationPS2Link
+        // val application = activityScenarioRule.activity.application as ApplicationPS2Link
         // IdlingRegistry.getInstance().register(application.idlingResource)
     }
 
     @After
     fun after() {
-        val application = activityScenarioRule.activity.application as ApplicationPS2Link
+        // val application = activityScenarioRule.activity.application as ApplicationPS2Link
         // IdlingRegistry.getInstance().unregister(application.idlingResource)
         reportHelper.label("Stopping App")
     }
@@ -66,7 +66,7 @@ class FragmentProfileTest {
 
         onView(withId(R.id.buttonCharacters)).perform(click())
         onView(withId(R.id.buttonFragmentAdd)).perform(click())
-        onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.toLowerCase()), closeSoftKeyboard())
+        onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.lowercase()), closeSoftKeyboard())
         onView(withId(R.id.imageButtonSearchProfile)).perform(click())
         onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
@@ -97,7 +97,7 @@ class FragmentProfileTest {
 
         onView(withId(R.id.buttonCharacters)).perform(click())
         onView(withId(R.id.buttonFragmentAdd)).perform(click())
-        onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.toLowerCase()), closeSoftKeyboard())
+        onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.lowercase()), closeSoftKeyboard())
         onView(withId(R.id.imageButtonSearchProfile)).perform(click())
         onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 
@@ -128,7 +128,7 @@ class FragmentProfileTest {
 
         onView(withId(R.id.buttonCharacters)).perform(click())
         onView(withId(R.id.buttonFragmentAdd)).perform(click())
-        onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.toLowerCase()), closeSoftKeyboard())
+        onView(withId(R.id.fieldSearchProfile)).perform(typeText(defaultProfile.lowercase()), closeSoftKeyboard())
         onView(withId(R.id.imageButtonSearchProfile)).perform(click())
         onData(anything()).inAdapterView(withId(R.id.listFoundProfiles)).atPosition(0).perform(click())
 

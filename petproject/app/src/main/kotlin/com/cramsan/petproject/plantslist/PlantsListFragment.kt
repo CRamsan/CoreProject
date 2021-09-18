@@ -54,8 +54,8 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
         animalType = animalTypeArg
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         var startingOffset: Int? = null
         viewModel.setAnimalType(animalType)
@@ -73,7 +73,7 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
 
         val linearLayoutManager = LinearLayoutManager(context)
         layoutManager = linearLayoutManager
-        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType, requireContext())
+        val plantsRecyclerAdapter = PlantsRecyclerViewAdapter(this, animalType)
         plantsAdapter = plantsRecyclerAdapter
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsRecyclerAdapter

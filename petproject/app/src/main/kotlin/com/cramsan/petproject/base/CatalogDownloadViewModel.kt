@@ -8,6 +8,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.core.LiveEvent
+import com.cramsan.framework.core.SimpleEvent
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.metrics.logMetric
 import com.cramsan.petproject.appcore.model.AnimalType
@@ -29,8 +31,11 @@ abstract class CatalogDownloadViewModel(
     private val observableDownloadingLoadingVisibility = MutableLiveData<Int>(View.GONE)
 
     // Events
+    @Suppress("DEPRECATION")
     protected val observableShowDataDownloaded = LiveEvent<SimpleEvent>()
+    @Suppress("DEPRECATION")
     protected val observableShowIsDownloadingData = LiveEvent<SimpleEvent>()
+    @Suppress("DEPRECATION")
     protected val observableStartDownload = LiveEvent<SimpleEvent>()
 
     fun observableDownloadingVisibility(): LiveData<Int> = observableDownloadingLoadingVisibility

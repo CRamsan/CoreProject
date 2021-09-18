@@ -8,11 +8,10 @@ import androidx.work.ListenableWorker.Result
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.cramsan.petproject.work.SyncWorker
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -31,7 +30,7 @@ class SyncWorkerTest {
         val worker = TestListenableWorkerBuilder<SyncWorker>(context).build()
         runBlocking {
             val result = worker.doWork()
-            assertThat(result, `is`(Result.success()))
+            assertEquals(result, Result.success())
         }
     }
 }

@@ -21,7 +21,7 @@ import com.cesarandres.ps2link.fragments.OpenReddit
 import com.cesarandres.ps2link.fragments.OpenServerList
 import com.cesarandres.ps2link.fragments.OpenTwitter
 import com.cesarandres.ps2link.fragments.OpenUrl
-import com.cesarandres.ps2link.toMap
+import com.cesarandres.ps2link.toMetadataMap
 import com.cramsan.framework.core.BaseEvent
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.ComposeBaseFragment
@@ -63,11 +63,11 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
         super.onViewModelEvent(event)
         when (event) {
             is OpenProfile -> {
-                logMetric(logTag, event.javaClass.simpleName, event.args.toBundle().toMap())
+                logMetric(logTag, event.javaClass.simpleName, event.args.toBundle().toMetadataMap())
                 findNavController().navigate(R.id.fragmentProfilePager, event.args.toBundle(), navigationOptions)
             }
             is OpenOutfit -> {
-                logMetric(logTag, event.javaClass.simpleName, event.args.toBundle().toMap())
+                logMetric(logTag, event.javaClass.simpleName, event.args.toBundle().toMetadataMap())
                 findNavController().navigate(R.id.fragmentOutfitPager, event.args.toBundle(), navigationOptions)
             }
             is OpenProfileList -> {

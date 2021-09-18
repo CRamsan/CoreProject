@@ -15,6 +15,7 @@ import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
+import java.util.Locale
 
 @Composable
 fun StatItem(
@@ -30,7 +31,7 @@ fun StatItem(
     ) {
         Column {
             Text(
-                text = label.replace("_", " ").toUpperCase(),
+                text = label.replace("_", " ").uppercase(Locale.getDefault()),
             )
 
             val statModifier = remember { Modifier.weight(1f).padding(vertical = Padding.small) }

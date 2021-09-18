@@ -36,6 +36,7 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 import kotlin.math.roundToInt
 import kotlin.time.Duration
+import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.minutes
 
@@ -153,7 +154,8 @@ fun ProfileCompose(
                             Column(modifier = smallModifier) {
                                 Text(text = stringResource(R.string.text_hours_played))
                                 Text(
-                                    text = timePlayed?.inHours?.roundToInt()?.toString() ?: stringResource(R.string.text_unknown)
+                                    text = timePlayed?.toDouble(DurationUnit.HOURS)?.roundToInt()
+                                        ?.toString() ?: stringResource(R.string.text_unknown)
                                 )
                             }
                         }
@@ -185,7 +187,7 @@ fun Preview() {
         lastLogin = Instant.DISTANT_FUTURE,
         outfit = null,
         server = "Genudine",
-        timePlayed = 1000.minutes,
+        timePlayed = Duration.minutes(1000),
         prettyTime = PrettyTime(),
         isLoading = true,
         isError = false,

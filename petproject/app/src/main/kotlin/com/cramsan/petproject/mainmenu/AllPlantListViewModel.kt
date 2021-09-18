@@ -7,14 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.core.LiveEvent
+import com.cramsan.framework.core.SimpleEvent
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.thread.assertIsUIThread
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
-import com.cramsan.petproject.base.LiveEvent
-import com.cramsan.petproject.base.SimpleEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.features.ServerResponseException
 import kotlinx.coroutines.Dispatchers
@@ -63,11 +63,11 @@ class AllPlantListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun goToCats(view: View) {
+    fun goToCats(@Suppress("UNUSED_PARAMETER") view: View) {
         goToNextActivity(AnimalType.CAT)
     }
 
-    fun goToDogs(view: View) {
+    fun goToDogs(@Suppress("UNUSED_PARAMETER") view: View) {
         goToNextActivity(AnimalType.DOG)
     }
 

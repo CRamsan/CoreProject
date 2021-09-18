@@ -7,14 +7,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.core.LiveEvent
+import com.cramsan.framework.core.StringEvent
 import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
-import com.cramsan.petproject.base.LiveEvent
-import com.cramsan.petproject.base.StringEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,7 +56,7 @@ class PlantDetailsViewModel @Inject constructor(
 
     fun observableOpenSourceLink() = observableOpenSourceLink
 
-    fun openSourceLink(view: View) {
+    fun openSourceLink(@Suppress("UNUSED_PARAMETER")view: View) {
         observableSource.value?.let {
             observableOpenSourceLink.value = StringEvent(it)
         }

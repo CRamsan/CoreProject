@@ -7,13 +7,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.core.LiveEvent
 import com.cramsan.framework.logging.logI
-import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.logMetric
-import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.petproject.appcore.model.AnimalType
-import com.cramsan.petproject.base.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,9 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class PlantFeedbackViewModel @Inject constructor(
     application: Application,
-    eventLogger: EventLoggerInterface,
-    metricsClient: MetricsInterface,
-    threadUtil: ThreadUtilInterface,
     dispatcherProvider: DispatcherProvider,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
@@ -40,16 +34,17 @@ class PlantFeedbackViewModel @Inject constructor(
     val link = MutableLiveData<Boolean>()
     val text = MutableLiveData<String>()
 
+    @Suppress("DEPRECATION")
     private val observableIsComplete = LiveEvent<CompletedEvent>()
 
     fun isComplete() = observableIsComplete
 
-    fun cancel(view: View) {
+    fun cancel(@Suppress("UNUSED_PARAMETER") view: View) {
         logI("PlantFeedbackViewModel", "cancel")
         observableIsComplete.value = CompletedEvent(false)
     }
 
-    fun sendFeedback(view: View) {
+    fun sendFeedback(@Suppress("UNUSED_PARAMETER") view: View) {
         logI("PlantFeedbackViewModel", "sendFeedback")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion = "Animal:${animal.value?.name} - " +

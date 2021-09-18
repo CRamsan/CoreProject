@@ -28,6 +28,7 @@ import com.cramsan.ps2link.ui.items.ProfileItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import kotlinx.datetime.Instant
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.days
 
@@ -95,7 +96,7 @@ fun NormalButtonPreview() {
                     activeProfileId = CharacterClass.UNKNOWN,
                     certs = 1,
                     lastLogin = Instant.DISTANT_PAST,
-                    timePlayed = 10.days,
+                    timePlayed = Duration.days(10),
                     outfit = null,
                     percentageToNextCert = 0.0,
                     percentageToNextBattleRank = 0.0,

@@ -61,6 +61,7 @@ import com.cramsan.ps2link.network.models.util.Collections
 import com.cramsan.ps2link.network.models.util.QueryString
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.hours
 import kotlin.time.minutes
@@ -127,7 +128,7 @@ class DBGServiceClientImpl(
                 .AddComparison(
                     "name.first_lower",
                     QueryString.SearchModifier.STARTSWITH,
-                    searchField.toLowerCase()
+                    searchField.lowercase()
                 )
                 .AddCommand(QueryString.QueryCommand.LIMIT, "25")
                 .AddCommand(QueryString.QueryCommand.JOIN, "character"),
@@ -239,8 +240,8 @@ class DBGServiceClientImpl(
         val url = census.generateGameDataRequest(
             Verb.GET,
             Collections.PS2Collection.CHARACTERS_WEAPON_STAT_BY_FACTION,
-            "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.toLowerCase() +
-                "&c:join=vehicle^show:image_path'name." + currentLang.name.toLowerCase() + "&c:limit=10000",
+            "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.lowercase() +
+                "&c:join=vehicle^show:image_path'name." + currentLang.name.lowercase() + "&c:limit=10000",
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -393,12 +394,12 @@ class DBGServiceClientImpl(
                 "type",
                 QueryString.SearchModifier.EQUALS,
                 "METAGAME"
-            ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId!!)
+            ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId)
                 .AddComparison(
                     "after",
                     QueryString.SearchModifier.EQUALS,
                     // Get metagame events that are newer than 2 hours
-                    Clock.System.now().minus(15.hours).epochSeconds.toString()
+                    Clock.System.now().minus(Duration.hours(15)).epochSeconds.toString()
                 ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
             namespace.toNetworkModel(),
             currentLang,
@@ -446,7 +447,7 @@ class DBGServiceClientImpl(
             census.generateGameDataRequest(
                 Verb.GET,
                 Collections.PS2Collection.OUTFIT_MEMBER,
-                "c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.toLowerCase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
+                "c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.lowercase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
                 namespace.toNetworkModel(),
                 currentLang
             )
@@ -478,7 +479,7 @@ class DBGServiceClientImpl(
         return response.process {
             it.item_list.map { item ->
                 com.cramsan.ps2link.core.models.Weapon(
-                    id = item.item_id ?: "",
+                    id = item.item_id,
                     name = item.name?.localizedName(currentLang),
                     imageUrl = item.image_path,
                 )
@@ -508,7 +509,7 @@ class DBGServiceClientImpl(
         return response.process {
             it.vehicle_list.map { item ->
                 Vehicle(
-                    id = item.vehicle_id ?: "",
+                    id = item.vehicle_id,
                     name = item.name?.localizedName(currentLang),
                     imageUrl = item.image_path,
                 )
@@ -547,7 +548,7 @@ private fun CharacterProfile.toCoreModel(
         lastLogin = times?.last_login?.toLong()?.let {
             Instant.fromEpochSeconds(it)
         },
-        timePlayed = times?.minutes_played?.toLong()?.minutes,
+        timePlayed = times?.minutes_played?.toLong()?.let { Duration.minutes(it) },
         faction = Faction.fromString(faction_id).toCoreModel(),
         server = server,
         outfit = outfit?.toCoreModel(namespace, server, lastUpdated),
@@ -604,7 +605,7 @@ fun Outfit.toCoreModel(
                 )
             }
         },
-        memberCount = member_count ?: 0,
+        memberCount = member_count,
         namespace = namespace,
         cached = false,
         lastUpdate = lastUpdate,
@@ -634,12 +635,22 @@ private fun formatWeapons(
                 StatNameType.fromString(stat.stat_name)?.toWeaponEventType() ?: continue
             weaponName = stat.item_id_join_item?.name?.localizedName(currentLang)
             vehicleName = stat.vehicle_id_join_vehicle?.name?.localizedName(currentLang)
-            weaponUrl = if (stat.item_id_join_item != null) {
-                stat.item_id_join_item?.image_path
-            } else if (stat.vehicle_id_join_vehicle != null) {
-                stat.vehicle_id_join_vehicle?.image_path
-            } else {
-                null
+
+            val item = stat.item_id_join_item
+            val itemImagePath = item?.image_path
+            val vehicle = stat.vehicle_id_join_vehicle
+            val vehicleImagePath = vehicle?.image_path
+
+            weaponUrl = when {
+                item != null -> {
+                    itemImagePath
+                }
+                vehicle != null -> {
+                    vehicleImagePath
+                }
+                else -> {
+                    null
+                }
             }
 
             val statTR = if (faction != com.cramsan.ps2link.core.models.Faction.TR) {

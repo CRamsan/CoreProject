@@ -8,7 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import kotlin.test.BeforeTest
 
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 actual open class TestBase {
     // This is needed so that we can run APIs that interface with the different Android Loopers.
     // As a result all tasks that are dispatched to another looper, are executed instantaneously.

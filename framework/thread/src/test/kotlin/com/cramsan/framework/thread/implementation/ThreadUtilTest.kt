@@ -87,35 +87,4 @@ class ThreadUtilTest {
         }
         semaphore.acquire()
     }
-
-    @Test
-    fun testIsUIThreadInDispatchToUI() {
-        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
-        threadUtilTest.testIsUIThreadInDispatchToUI(ThreadUtilAndroid(haltUtil)) {
-            semaphore.release()
-        }
-        semaphore.acquire()
-    }
-
-    @Test
-    fun testDispatchToBackground() {
-        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
-        Thread {
-            run {
-                threadUtilTest.testDispatchToBackground(ThreadUtilAndroid(haltUtil)) {
-                    semaphore.release()
-                }
-            }
-        }.start()
-        semaphore.acquire()
-    }
-
-    @Test
-    fun testDispatchToBackgroundFromUIThread() {
-        val haltUtil = mockk<AssertUtilImpl>(relaxUnitFun = true)
-        threadUtilTest.testDispatchToBackgroundFromUIThread(ThreadUtilAndroid(haltUtil)) {
-            semaphore.release()
-        }
-        semaphore.acquire()
-    }
 }

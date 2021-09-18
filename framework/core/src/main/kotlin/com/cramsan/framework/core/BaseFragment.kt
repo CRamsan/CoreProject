@@ -44,10 +44,9 @@ abstract class BaseFragment : Fragment() {
     }
 
     @CallSuper
-    @Deprecated("Use onViewCreated instead")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        logD(logTag, "onActivityCreated")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        logD(logTag, "onViewCreated")
     }
 
     @CallSuper

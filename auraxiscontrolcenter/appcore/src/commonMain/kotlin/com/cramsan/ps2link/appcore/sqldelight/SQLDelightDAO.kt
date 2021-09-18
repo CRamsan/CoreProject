@@ -307,7 +307,7 @@ private fun com.cramsan.ps2link.db.Character.toCoreModel(): Character {
         characterId = id,
         name = name,
         activeProfileId = activeProfileId.toCoreModel(),
-        loginStatus = loginStatus?.toCoreModel(),
+        loginStatus = loginStatus.toCoreModel(),
         certs = currentPoints,
         battleRank = rank,
         percentageToNextCert = percentageToNextCert,

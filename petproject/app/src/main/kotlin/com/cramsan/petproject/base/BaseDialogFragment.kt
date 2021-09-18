@@ -54,9 +54,9 @@ abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : Dial
     }
 
     @CallSuper
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        eventLogger.log(Severity.INFO, logTag, "onActivityCreated")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        eventLogger.log(Severity.INFO, logTag, "onViewCreated")
     }
 
     @CallSuper

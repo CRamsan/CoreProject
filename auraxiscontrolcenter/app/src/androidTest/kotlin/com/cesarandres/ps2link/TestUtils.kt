@@ -96,6 +96,7 @@ fun getVisibilityAmount(view: View): Int {
     return displayedPercentage
 }
 
+@Suppress("DEPRECATION")
 private fun getScreenWithoutStatusBarActionBar(view: View): Rect {
     val m = DisplayMetrics()
     (view.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)

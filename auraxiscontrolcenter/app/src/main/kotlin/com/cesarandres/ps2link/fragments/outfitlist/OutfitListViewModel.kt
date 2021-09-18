@@ -37,7 +37,7 @@ class OutfitListViewModel @Inject constructor(
     // State
     private val _outfitList = pS2LinkRepository.getAllOutfitsAsFlow().map {
         assertIsBackgroundThread()
-        it.sortedBy { outfit -> outfit.name?.toLowerCase() }
+        it.sortedBy { outfit -> outfit.name?.lowercase() }
     }.flowOn(dispatcherProvider.ioDispatcher())
 
     val outfitList = _outfitList.asLiveData()

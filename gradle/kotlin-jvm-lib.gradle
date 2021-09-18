@@ -19,11 +19,18 @@ dependencies {
 
 // Define the Kotlin jvm target
 compileKotlin {
-    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
+    kotlinOptions {
+        jvmTarget = versions_tools.JavaCompatibility
+        allWarningsAsErrors = true
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = versions_tools.JavaCompatibility
+    kotlinOptions {
+        jvmTarget = versions_tools.JavaCompatibility
+        allWarningsAsErrors = true
+    }
 }
 
 // Enable outputting the results of the tests

@@ -1,6 +1,7 @@
 package com.cramsan.petproject.feedback
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -25,8 +26,8 @@ class PlantFeedbackFragment : BaseDialogFragment<PlantFeedbackViewModel, Fragmen
 
     val args: PlantFeedbackFragmentArgs by navArgs()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         plantId = args.PlantId
         animalType = args.AnimalType
 

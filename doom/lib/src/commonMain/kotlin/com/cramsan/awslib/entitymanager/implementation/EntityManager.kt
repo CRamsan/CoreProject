@@ -321,6 +321,7 @@ class EntityManager(
                     ConsumableType.HEALTH -> player.health += item.ammount
                     ConsumableType.ARMOR -> TODO()
                     ConsumableType.CREDIT -> TODO()
+                    ConsumableType.INVALID -> TODO()
                 }
             }
             is KeyItem -> {

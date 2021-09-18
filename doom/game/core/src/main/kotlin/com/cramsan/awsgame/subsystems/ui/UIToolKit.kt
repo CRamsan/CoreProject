@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.ui.Value
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -43,6 +44,7 @@ object UIToolKit {
         return mainPane
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun createTextPane(
         skin: Skin,
         text: String,

@@ -40,7 +40,7 @@ fun SearchField(
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                keyboardController?.hideSoftwareKeyboard()
+                keyboardController?.hide()
             }
         ),
         onValueChange = onValueChange

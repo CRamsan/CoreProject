@@ -23,15 +23,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
-import com.google.accompanist.coil.rememberCoilPainter
-import com.google.accompanist.imageloading.ImageLoadState
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun RedditPostItem(
     modifier: Modifier = Modifier,
@@ -93,9 +95,12 @@ fun RedditPostItem(
                             contentDescription = null
                         )
                     } else {
-                        val painter = rememberCoilPainter(
-                            imgUrl,
-                            fadeIn = true,
+                        val painter = rememberImagePainter(
+                            data = imgUrl,
+                            builder = {
+                                crossfade(true)
+                                placeholder(R.drawable.image_not_found)
+                            }
                         )
                         Image(
                             modifier = Modifier.fillMaxSize(),
@@ -103,12 +108,12 @@ fun RedditPostItem(
                             contentScale = ContentScale.Crop,
                             contentDescription = null
                         )
-                        when (painter.loadState) {
-                            is ImageLoadState.Loading -> {
+                        when (painter.state) {
+                            is ImagePainter.State.Loading -> {
                                 // Display a circular progress indicator whilst loading
                                 CircularProgressIndicator(Modifier.align(Center))
                             }
-                            is ImageLoadState.Error, ImageLoadState.Empty -> {
+                            is ImagePainter.State.Error, ImagePainter.State.Empty -> {
                                 Image(
                                     modifier = Modifier.fillMaxSize(),
                                     painter = painterResource(id = R.drawable.image_not_found),
@@ -116,6 +121,7 @@ fun RedditPostItem(
                                     contentDescription = null
                                 )
                             }
+                            else -> Unit
                         }
                     }
                 }

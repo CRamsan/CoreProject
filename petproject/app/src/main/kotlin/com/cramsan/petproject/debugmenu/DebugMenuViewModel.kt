@@ -8,6 +8,7 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,6 +25,10 @@ class DebugMenuViewModel @Inject constructor(
     override val logTag: String
         get() = "DebugMenuViewModel"
 
+    /**
+     * We should remove the use of the [GlobalScope]
+     */
+    @OptIn(DelicateCoroutinesApi::class)
     fun cleanCache() {
         logI(logTag, "ClearCache")
         GlobalScope.launch(Dispatchers.IO) {

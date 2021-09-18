@@ -37,8 +37,8 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
 
     val args: PlantDetailsFragmentArgs by navArgs()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val plantId = args.PlantId
         animalType = args.AnimalType
 

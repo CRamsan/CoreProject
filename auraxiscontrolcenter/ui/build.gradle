@@ -25,14 +25,13 @@ dependencies {
     implementation project(":auraxiscontrolcenter:core-models")
     implementation project(":framework:assert")
     implementation project(":framework:interfacelib")
-    implementation packages.AccompanistCoil
     implementation packages.AccompanistSwipeRefresh
     implementation packages.AndroidMaterial
     implementation packages.AndroidXAppCompat
     implementation packages.AndroidxActivityKtx
     implementation packages.AndroidxFragmentKtx
-    implementation packages.AccompanistCoil
     implementation packages.Coil
+    implementation packages.CoilCompose
     implementation packages.ConstraintLayout
     implementation packages.JetpackComposeUI
     implementation packages.JetpackComposeTooling

@@ -12,3 +12,8 @@ abstract class BaseEvent
  * up to each [BaseFragment]/[BaseActivity] to define how this event will be handled.
  */
 class SimpleEvent : BaseEvent()
+
+/**
+ * Even that passes a single string argument.
+ */
+class StringEvent(val value: String) : BaseEvent()

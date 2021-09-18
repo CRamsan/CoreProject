@@ -26,12 +26,14 @@ import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
  * This code is based on the raycaster demo from https://github.com/walle/raycaster
  */
+@DelicateCoroutinesApi
 class FPSGame : GameScreen(), EntityManagerEventListener {
 
     private var stage: Stage? = null
@@ -153,7 +155,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         // val assert = AssertUtil(true, logger, haltUtil)
         val aiRepo = DummyAIRepoImpl(logger)
 
-        val entityManager = EntityManager(this.map.map, sceneConfig!!.triggerList, sceneConfig.eventList, sceneConfig.itemList, this, logger, aiRepo)
+        val entityManager = EntityManager(this.map.map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, this, logger, aiRepo)
         scene = Scene(entityManager, sceneConfig, logger)
 
         this.player = Player(sceneConfig.player)

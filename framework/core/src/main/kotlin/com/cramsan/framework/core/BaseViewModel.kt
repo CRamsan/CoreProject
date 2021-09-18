@@ -32,8 +32,9 @@ abstract class BaseViewModel(
     protected val ioScope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcherProvider.ioDispatcher())
 
     /**
-     *
+     * TODO: Replace this implementation with one that provides a Flow based solution.
      */
+    @Suppress("DEPRECATION")
     protected val events = LiveEvent<BaseEvent>()
     fun events() = events.asLiveData()
 

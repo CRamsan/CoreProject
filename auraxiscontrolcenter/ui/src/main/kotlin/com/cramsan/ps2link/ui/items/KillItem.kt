@@ -16,6 +16,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.ui.R
@@ -25,13 +28,12 @@ import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toColor
 import com.cramsan.ps2link.ui.widgets.FactionIcon
-import com.google.accompanist.coil.rememberCoilPainter
-import com.google.accompanist.imageloading.ImageLoadState
 import kotlinx.datetime.Instant
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun KillItem(
     modifier: Modifier = Modifier,
@@ -74,17 +76,20 @@ fun KillItem(
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(weaponName ?: stringResource(R.string.text_unknown))
-                val painter = rememberCoilPainter(
-                    weaponImage,
-                    fadeIn = true,
+                val painter = rememberImagePainter(
+                    data = weaponImage,
+                    builder = {
+                        crossfade(true)
+                        placeholder(R.drawable.image_not_found)
+                    }
                 )
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = painter,
                     contentDescription = null
                 )
-                when (painter.loadState) {
-                    is ImageLoadState.Loading, is ImageLoadState.Error, ImageLoadState.Empty -> {
+                when (painter.state) {
+                    is ImagePainter.State.Loading, is ImagePainter.State.Error, ImagePainter.State.Empty -> {
                         Image(
                             modifier = Modifier.fillMaxSize(),
                             painter = painterResource(id = R.drawable.image_not_found),
@@ -92,6 +97,7 @@ fun KillItem(
                             contentDescription = null
                         )
                     }
+                    else -> Unit
                 }
             }
         }

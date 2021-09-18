@@ -1,6 +1,5 @@
 package com.cramsan.petproject.plantslist
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.cramsan.petproject.appcore.model.ToxicityValue
 class PlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentAdapterListener?,
     private val animalType: AnimalType,
-    context: Context
 ) :
     RecyclerView.Adapter<PlantsRecyclerViewAdapter.ViewHolder>() {
 

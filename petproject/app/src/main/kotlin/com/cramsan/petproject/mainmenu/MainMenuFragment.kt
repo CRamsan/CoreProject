@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
@@ -46,9 +47,8 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
         setHasOptionsMenu(true)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         dataBinding.viewModel = viewModel
 
         viewModel.observableNextActivityCat().observe(
@@ -99,7 +99,7 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
             }
         )
         layoutManager = LinearLayoutManager(context)
-        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL, requireContext())
+        plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL)
         dataBinding.plantListRecycler.layoutManager = layoutManager
         dataBinding.plantListRecycler.adapter = plantsAdapter
     }

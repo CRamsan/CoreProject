@@ -1,5 +1,6 @@
 package com.cramsan.framework.logging.implementation
 
+import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallback
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -87,7 +88,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
+        EventLogger.setInstance(eventLogger)
 
         logV(tag, message)
         verify { eventLogger.v(tag, message) }
@@ -100,7 +101,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
+        EventLogger.setInstance(eventLogger)
 
         logD(tag, message)
         verify { eventLogger.d(tag, message) }
@@ -113,7 +114,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
+        EventLogger.setInstance(eventLogger)
 
         logI(tag, message)
         verify { eventLogger.i(tag, message) }
@@ -127,7 +128,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
+        EventLogger.setInstance(eventLogger)
 
         logW(tag, message)
         verify { eventLogger.w(tag, message, null) }
@@ -144,7 +145,7 @@ class EventLoggerCommonTest : TestBase() {
         val message = "Error message"
 
         // Configure singleton
-        com.cramsan.framework.logging.EventLogger.setInstance(eventLogger)
+        EventLogger.setInstance(eventLogger)
 
         logE(tag, message)
         verify { eventLogger.e(tag, message, null) }
@@ -157,7 +158,10 @@ class EventLoggerCommonTest : TestBase() {
     fun `test configuring singleton`() = runBlockingTest {
         val eventLogger: EventLoggerInterface = mockk(relaxed = true)
 
+        // Configure singleton
+        EventLogger.setInstance(eventLogger)
+
         // Configure the singleton
-        assertEquals(eventLogger, com.cramsan.framework.logging.EventLogger.singleton)
+        assertEquals(eventLogger, EventLogger.singleton)
     }
 }

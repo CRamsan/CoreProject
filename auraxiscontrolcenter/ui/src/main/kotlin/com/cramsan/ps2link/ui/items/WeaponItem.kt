@@ -18,6 +18,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.ui.R
@@ -25,9 +28,8 @@ import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.toImageRes
-import com.google.accompanist.coil.rememberCoilPainter
-import com.google.accompanist.imageloading.ImageLoadState
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun WeaponItem(
     modifier: Modifier = Modifier,
@@ -53,17 +55,20 @@ fun WeaponItem(
             Text(weaponName ?: stringResource(R.string.text_unknown))
             Row {
                 Column(modifier = Modifier.weight(1.5f)) {
-                    val painter = rememberCoilPainter(
-                        weaponImage.toString(),
-                        fadeIn = true,
+                    val painter = rememberImagePainter(
+                        data = weaponImage.toString(),
+                        builder = {
+                            crossfade(true)
+                            placeholder(R.drawable.image_not_found)
+                        }
                     )
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         painter = painter,
                         contentDescription = null
                     )
-                    when (painter.loadState) {
-                        is ImageLoadState.Loading, is ImageLoadState.Error, ImageLoadState.Empty -> {
+                    when (painter.state) {
+                        is ImagePainter.State.Loading, is ImagePainter.State.Error, ImagePainter.State.Empty -> {
                             Image(
                                 modifier = Modifier.fillMaxSize(),
                                 painter = painterResource(id = R.drawable.image_not_found),
@@ -71,6 +76,7 @@ fun WeaponItem(
                                 contentDescription = null
                             )
                         }
+                        else -> Unit
                     }
                 }
                 Column(

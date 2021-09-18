@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.cramsan.petproject.azurefunction
 
 import com.cramsan.petproject.appcore.storage.Plant

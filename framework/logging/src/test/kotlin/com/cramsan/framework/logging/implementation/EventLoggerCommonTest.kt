@@ -1,5 +1,6 @@
 package com.cramsan.framework.logging.implementation
 
+import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerDelegate
 import com.cramsan.framework.logging.EventLoggerErrorCallback
 import com.cramsan.framework.logging.EventLoggerInterface
@@ -157,7 +158,10 @@ class EventLoggerCommonTest : TestBase() {
     fun `test configuring singleton`() = runBlockingTest {
         val eventLogger: EventLoggerInterface = mockk(relaxed = true)
 
+        // Configure singleton
+        EventLogger.setInstance(eventLogger)
+
         // Configure the singleton
-        assertEquals(eventLogger, com.cramsan.framework.logging.EventLogger.setInstance(eventLogger))
+        assertEquals(eventLogger, com.cramsan.framework.logging.EventLogger.singleton)
     }
 }

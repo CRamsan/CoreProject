@@ -37,7 +37,7 @@ class ProfileListViewModel @Inject constructor(
     // State
     private val _profileList = pS2LinkRepository.getAllCharactersAsFlow().map {
         assertIsBackgroundThread()
-        it.sortedBy { character -> character.name?.toLowerCase() }
+        it.sortedBy { character -> character.name?.lowercase() }
     }.flowOn(dispatcherProvider.ioDispatcher())
     val profileList = _profileList.asLiveData()
 

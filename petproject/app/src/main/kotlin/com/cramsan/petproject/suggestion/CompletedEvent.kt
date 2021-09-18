@@ -1,5 +1,5 @@
 package com.cramsan.petproject.suggestion
 
-import com.cramsan.petproject.base.BaseEvent
+import com.cramsan.framework.core.BaseEvent
 
 class CompletedEvent(val suggestionSubmitted: Boolean) : BaseEvent()

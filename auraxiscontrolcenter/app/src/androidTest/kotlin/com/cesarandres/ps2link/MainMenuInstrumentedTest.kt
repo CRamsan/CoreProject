@@ -2,7 +2,6 @@ package com.cesarandres.ps2link
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.microsoft.appcenter.espresso.Factory
 import com.microsoft.appcenter.espresso.ReportHelper
 import org.junit.After
@@ -20,8 +19,9 @@ import org.junit.runner.RunWith
 @LargeTest
 class MainMenuInstrumentedTest {
 
+    @Suppress("DEPRECATION")
     @get:Rule
-    val activityScenarioRule = ActivityTestRule(ActivityContainer::class.java)
+    val activityScenarioRule = androidx.test.rule.ActivityTestRule(ActivityContainer::class.java)
 
     @get:Rule
     var reportHelper: ReportHelper = Factory.getReportHelper()

@@ -144,7 +144,7 @@ class ObjectDataSource(context: Context) {
         val profiles = mutableListOf<Character>()
 
         try {
-            var cursor: Cursor? = null
+            val cursor: Cursor?
             if (all) {
                 cursor = database!!.query(
                     SQLiteManager.TABLE_CHARACTERS_NAME,
@@ -214,7 +214,7 @@ class ObjectDataSource(context: Context) {
         val target = SQLiteManager.TABLE_OUTFITS_NAME
 
         try {
-            var cursor: Cursor? = null
+            val cursor: Cursor?
             if (all) {
                 cursor = database!!.query(target, allColumnsOutfit, null, null, null, null, null)
             } else {

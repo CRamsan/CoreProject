@@ -54,7 +54,7 @@ class ServerListViewModel @Inject constructor(
         val response = pS2LinkRepository.getServerList(lang)
         if (response.isSuccessful) {
             val serverList = response.requireBody().sortedBy {
-                it.serverName?.toLowerCase()
+                it.serverName?.lowercase()
             }
             _serverList.value = serverList
             loadingCompleted()

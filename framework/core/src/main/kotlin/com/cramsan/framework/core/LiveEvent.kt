@@ -9,15 +9,11 @@ import androidx.lifecycle.Observer
 /**
  * Based on https://medium.com/androiddevelopers/livedata-with-snackbar-navigation-and-other-events-the-singleliveevent-case-ac2622673150
  *
- *
+ * We should look to deprecate this implementation and instead look to use something based on Kotlin's flow or channel.
  *
  * https://medium.com/androiddevelopers/livedata-with-snackbar-navigation-and-other-events-the-singleliveevent-case-ac2622673150
  * https://proandroiddev.com/android-singleliveevent-redux-with-kotlin-flow-b755c70bb055
  */
-@Deprecated(
-    "There is no current alternative implemented. But we should move towards using Kotlin's" +
-        "channels or flows instead."
-)
 open class LiveEvent<T : BaseEvent> : MediatorLiveData<T>() {
 
     private val observers = ArraySet<ObserverWrapper<in T>>()

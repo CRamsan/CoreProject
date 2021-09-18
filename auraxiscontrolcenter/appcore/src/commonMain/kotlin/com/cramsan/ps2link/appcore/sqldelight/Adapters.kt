@@ -37,8 +37,8 @@ val instantAdapter = object : ColumnAdapter<Instant, Long> {
 
 @OptIn(ExperimentalTime::class)
 val durationAdapter = object : ColumnAdapter<Duration, Long> {
-    override fun decode(databaseValue: Long) = databaseValue.milliseconds
-    override fun encode(value: Duration) = value.toLongMilliseconds()
+    override fun decode(databaseValue: Long) = Duration.milliseconds(databaseValue)
+    override fun encode(value: Duration) = value.inWholeMilliseconds
 }
 
 val characterClassAdapter = object : ColumnAdapter<CharacterClass, Long> {

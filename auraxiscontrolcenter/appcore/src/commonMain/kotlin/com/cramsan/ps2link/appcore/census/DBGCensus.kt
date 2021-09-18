@@ -44,7 +44,7 @@ class DBGCensus(
         val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
             urlIdentifier = baseUrl,
-            completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.toLowerCase()),
+            completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.lowercase()),
         )
     }
 
@@ -62,7 +62,7 @@ class DBGCensus(
         val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
             urlIdentifier = baseUrl,
-            completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.toLowerCase())
+            completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.lowercase())
         )
     }
 
