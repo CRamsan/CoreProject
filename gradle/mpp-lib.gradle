@@ -211,26 +211,7 @@ tasks {
 // https://youtrack.jetbrains.com/issue/KT-46978
 tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
 
-ext.registerDependency = { project ->
-    if (isJvmTargetEnabled()) {
-        release.configure { dependsOn("${project}:releaseJvm") }
-    }
-    if (isAndroidTargetEnabled()) {
-        release.configure { dependsOn("${project}:releaseAndroid") }
-    }
-    if (isJsTargetEnabled()) {
-        release.configure { dependsOn("${project}:releaseJs") }
-    }
-}
-
-// Register a dependency to a JVM library with the `releaseJVM` task
-ext.registerJvmDependency = { project ->
-    if (isJvmTargetEnabled()) {
-        release.configure { dependsOn("${project}:releaseJvm") }
-    }
-}
-
-tasks.register("releaseJs") {
+def releaseJs = tasks.register("releaseJs") {
     group = 'build'
     description = 'Run all the steps to build a Js artifact'
     if (isJsTargetEnabled()) {
@@ -240,7 +221,7 @@ tasks.register("releaseJs") {
     }
 }
 
-tasks.register("releaseJvm") {
+def releaseJvm = tasks.register("releaseJvm") {
     group = 'build'
     description = 'Run all the steps to build a releaseJvm artifact'
     if (isJvmTargetEnabled()) {
@@ -251,7 +232,7 @@ tasks.register("releaseJvm") {
     }
 }
 
-tasks.register("releaseAndroid") {
+def releaseAndroid = tasks.register("releaseAndroid") {
     group = 'build'
     description = 'Run all the steps to build a releaseAndroid artifact'
     if (isAndroidTargetEnabled()) {
@@ -264,7 +245,7 @@ tasks.register("releaseAndroid") {
     }
 }
 
-tasks.register("release") {
+def release = tasks.register("release") {
     group = 'build'
     description = 'Run all the steps to build a release artifact for all enabled targets'
 
@@ -276,5 +257,32 @@ tasks.register("release") {
     }
     if (isJsTargetEnabled()) {
         dependsOn 'releaseJs'
+    }
+}
+
+ext.registerDependency = { project ->
+    if (isJvmTargetEnabled()) {
+        def dependency = "${project}:releaseJvm"
+        println("Adding dependency to $dependency")
+        releaseJvm.configure { dependsOn(dependency) }
+    }
+    if (isAndroidTargetEnabled()) {
+        def dependency = "${project}:releaseAndroid"
+        println("Adding dependency to $dependency")
+        releaseAndroid.configure { dependsOn(dependency) }
+    }
+    if (isJsTargetEnabled()) {
+        def dependency = "${project}:releaseJs"
+        println("Adding dependency to $dependency")
+        releaseJs.configure { dependsOn(dependency) }
+    }
+}
+
+// Register a dependency to a JVM library with the `releaseJVM` task
+ext.registerJvmDependency = { project ->
+    if (isJvmTargetEnabled()) {
+        def dependency = "${project}:releaseJvm"
+        println("Adding dependency to $dependency")
+        releaseJvm.configure { dependsOn(dependency) }
     }
 }

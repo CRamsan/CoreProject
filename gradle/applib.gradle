@@ -77,12 +77,16 @@ dependencies {
 
 // Register a dependency to a Android library with the `releaseAndroid` task
 ext.registerDependency = { project ->
-    release.configure { dependsOn("${project}:releaseAndroid") }
+    def dependency = "${project}:releaseAndroid"
+    println("Adding dependency to $dependency")
+    release.configure { dependsOn(dependency) }
 }
 
 // Register a dependency to a JVM library with the `releaseJVM` task
 ext.registerJvmDependency = { project ->
-    release.configure { dependsOn("${project}:releaseJvm") }
+    def dependency = "${project}:releaseJvm"
+    println("Adding dependency to $dependency")
+    release.configure { dependsOn(dependency) }
 }
 
 tasks.register("releaseAndroid") {

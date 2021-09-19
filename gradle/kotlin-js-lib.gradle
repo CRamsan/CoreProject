@@ -26,7 +26,9 @@ dependencies {
 
 // Function to add a dependency to another JS project.
 ext.registerDependency = { project ->
-    release.configure { dependsOn("${project}:releaseJs") }
+    def dependency = "${project}:releaseJs"
+    println("Adding dependency to $dependency")
+    release.configure { dependsOn(dependency) }
 }
 
 // Release task that will build and test the project.

@@ -42,7 +42,9 @@ test {
 
 // Function to add a dependency to another JVM project.
 ext.registerDependency = { project ->
-    release.configure { dependsOn("${project}:releaseJvm") }
+    def dependency = "${project}:releaseJvm"
+    println("Adding dependency to $dependency")
+    release.configure { dependsOn(dependency) }
 }
 
 // Release task that will build and test the project.

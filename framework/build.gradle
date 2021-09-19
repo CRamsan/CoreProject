@@ -15,8 +15,8 @@ kotlin {
         commonMain {
             dependencies {
                 api project(":framework:assert")
-                api project(":framework:crashhandler")
                 api project(":framework:core")
+                api project(":framework:crashhandler")
                 api project(":framework:halt")
                 api project(":framework:interfacelib")
                 api project(":framework:logging")
@@ -46,4 +46,3 @@ registerDependency(":framework:preferences")
 registerDependency(":framework:test")
 registerDependency(":framework:thread")
 registerDependency(":framework:utils")
-registerDependency(":framework:test")
