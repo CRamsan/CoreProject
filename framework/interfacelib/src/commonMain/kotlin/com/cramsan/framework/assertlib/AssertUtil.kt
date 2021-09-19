@@ -1,5 +1,7 @@
 package com.cramsan.framework.assertlib
 
+import kotlin.native.concurrent.ThreadLocal
+
 /**
  * @Author cramsan
  * @created 1/17/2021
@@ -9,6 +11,7 @@ package com.cramsan.framework.assertlib
  * instance is not set, then any calls to a method that tries to access it will result in a
  * [Throwable] being thrown.
  */
+@ThreadLocal
 object AssertUtil {
 
     private lateinit var _singleton: AssertUtilInterface

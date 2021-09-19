@@ -1,5 +1,7 @@
 package com.cramsan.framework.metrics
 
+import kotlin.native.concurrent.ThreadLocal
+
 /**
  * Singleton that manages an instance of an [MetricsInterface]. The [singleton] starts as
  * null and therefore the caller needs to ensure to provide an instance. If an
@@ -10,6 +12,7 @@ package com.cramsan.framework.metrics
  * @created 1/17/2021
  *
  */
+@ThreadLocal
 object Metrics {
 
     private lateinit var _singleton: MetricsInterface

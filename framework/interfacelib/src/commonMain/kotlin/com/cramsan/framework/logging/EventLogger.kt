@@ -1,5 +1,7 @@
 package com.cramsan.framework.logging
 
+import kotlin.native.concurrent.ThreadLocal
+
 /**
  * Singleton that manages an instance of an [EventLoggerInterface]. The [singleton] starts as
  * null and therefore the caller needs to ensure to provide an instance. If an
@@ -9,6 +11,7 @@ package com.cramsan.framework.logging
  * @Author cramsan
  * @created 1/17/2021
  */
+@ThreadLocal
 object EventLogger {
 
     private lateinit var _singleton: EventLoggerInterface
