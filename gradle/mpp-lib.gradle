@@ -112,7 +112,7 @@ kotlin {
     }
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
-    if (disableIosTarget) {
+    if (isIosTargetEnabled()) {
         iosX64("ios") {
             binaries {
                 framework()
@@ -256,7 +256,10 @@ tasks.register("releaseAndroid") {
     description = 'Run all the steps to build a releaseAndroid artifact'
     if (isAndroidTargetEnabled()) {
         dependsOn 'ktlint' // Verifies the format
-        dependsOn 'build' // Assembles and test this project
+        dependsOn 'assembleDebug'
+        dependsOn 'assembleRelease'
+        dependsOn 'testDebugUnitTest'
+        dependsOn 'testReleaseUnitTest'
         dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results
     }
 }
