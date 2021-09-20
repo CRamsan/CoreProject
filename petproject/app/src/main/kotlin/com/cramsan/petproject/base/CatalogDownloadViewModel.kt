@@ -11,7 +11,7 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.LiveEvent
 import com.cramsan.framework.core.SimpleEvent
 import com.cramsan.framework.logging.logI
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.framework.userevents.logEvent
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.provider.ModelProviderEventListenerInterface
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
@@ -56,9 +56,9 @@ abstract class CatalogDownloadViewModel(
         }
         hasStarted = true
         if (isCatalogReady()) {
-            logMetric(logTag, "start", mapOf("FromCache" to "True"))
+            logEvent(logTag, "start", mapOf("FromCache" to "True"))
         } else {
-            logMetric(logTag, "start", mapOf("FromCache" to "False"))
+            logEvent(logTag, "start", mapOf("FromCache" to "False"))
             observableStartDownload.value = SimpleEvent()
             inDownloadMode = true
         }

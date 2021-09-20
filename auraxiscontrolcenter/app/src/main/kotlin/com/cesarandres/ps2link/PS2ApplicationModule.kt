@@ -33,11 +33,6 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerErrorCallbackImpl
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerAndroid
-import com.cramsan.framework.metrics.Metrics
-import com.cramsan.framework.metrics.MetricsDelegate
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.metrics.implementation.AppCenterMetrics
-import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
@@ -47,6 +42,11 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.thread.implementation.ThreadUtilAndroid
 import com.cramsan.framework.thread.implementation.ThreadUtilImpl
+import com.cramsan.framework.userevents.UserEvents
+import com.cramsan.framework.userevents.UserEventsDelegate
+import com.cramsan.framework.userevents.UserEventsInterface
+import com.cramsan.framework.userevents.implementation.AppCenterUserEvents
+import com.cramsan.framework.userevents.implementation.UserEventsImpl
 import com.cramsan.ps2link.appcore.census.DBGCensus
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
@@ -114,17 +114,17 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideMetricsDelegate(): MetricsDelegate = AppCenterMetrics()
+    fun provideUserEventsDelegate(): UserEventsDelegate = AppCenterUserEvents()
 
     @Provides
     @Singleton
-    fun provideMetricsInterface(
-        metricsDelegate: MetricsDelegate,
+    fun provideUserEventsInterface(
+        userEventsDelegate: UserEventsDelegate,
         eventLoggerInterface: EventLoggerInterface,
-    ): MetricsInterface {
-        val instance = MetricsImpl(metricsDelegate, eventLoggerInterface)
-        Metrics.setInstance(instance)
-        return Metrics.singleton
+    ): UserEventsInterface {
+        val instance = UserEventsImpl(userEventsDelegate, eventLoggerInterface)
+        UserEvents.setInstance(instance)
+        return UserEvents.singleton
     }
 
     @Provides

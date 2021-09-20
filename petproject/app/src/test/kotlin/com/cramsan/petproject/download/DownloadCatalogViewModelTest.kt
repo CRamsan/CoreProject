@@ -2,9 +2,9 @@ package com.cramsan.petproject.download
 
 import androidx.lifecycle.Observer
 import com.cramsan.framework.logging.EventLogger
-import com.cramsan.framework.metrics.Metrics
 import com.cramsan.framework.test.TestBase
 import com.cramsan.framework.thread.ThreadUtil
+import com.cramsan.framework.userevents.UserEvents
 import com.cramsan.petproject.PetProjectApplication
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import io.mockk.coEvery
@@ -37,7 +37,7 @@ class DownloadCatalogViewModelTest : TestBase() {
         modelProvider = mockk(relaxed = true)
         EventLogger.setInstance(mockk(relaxed = true))
         ThreadUtil.setInstance(mockk(relaxed = true))
-        Metrics.setInstance(mockk(relaxed = true))
+        UserEvents.setInstance(mockk(relaxed = true))
         testDispatcher = TestCoroutineDispatcher()
         observer = mockk(relaxed = true)
 

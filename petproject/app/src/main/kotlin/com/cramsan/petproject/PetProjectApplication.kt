@@ -4,7 +4,7 @@ import android.app.Application
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.userevents.UserEventsInterface
 import com.cramsan.petproject.PetProjectApplicationModule.APP_CENTER_ID
 import com.cramsan.petproject.work.ScheduledSyncManager
 import com.microsoft.appcenter.AppCenter
@@ -22,7 +22,7 @@ class PetProjectApplication : Application() {
     lateinit var crashHandler: CrashHandler
 
     @Inject
-    lateinit var metrics: MetricsInterface
+    lateinit var userEvents: UserEventsInterface
 
     @Inject
     lateinit var syncManager: ScheduledSyncManager
@@ -37,7 +37,7 @@ class PetProjectApplication : Application() {
         eventLogger.log(Severity.INFO, "PetProjectApplication", "onCreate called")
         AppCenter.start(this, appCenterId)
         crashHandler.initialize()
-        metrics.initialize()
+        userEvents.initialize()
         // syncManager.startWork()
     }
 

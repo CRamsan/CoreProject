@@ -1,13 +1,13 @@
-package com.cramsan.framework.metrics.implementation
+package com.cramsan.framework.userevents.implementation
 
-import com.cramsan.framework.metrics.MetricsDelegate
+import com.cramsan.framework.userevents.UserEventsDelegate
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 
 /**
- * Implementation of [MetricsDelegate] that logs events to AppCenter.
+ * Implementation of [UserEventsDelegate] that logs events to AppCenter.
  */
-class AppCenterMetrics : MetricsDelegate {
+class AppCenterUserEvents : UserEventsDelegate {
 
     override fun initialize() {
         AppCenter.start(Analytics::class.java)

@@ -11,7 +11,7 @@ import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.LiveEvent
 import com.cramsan.framework.logging.logI
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.framework.userevents.logEvent
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.ToxicityValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -61,7 +61,7 @@ class PlantSuggestionViewModel @Inject constructor(
             val suggestion =
                 "${observableText.value}: Cats:${observableSelectedCatToxicity.value?.name} - Dogs:${observableSelectedDogToxicity.value?.name}"
             // val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
-            logMetric("PlantSuggestionViewModel", "suggestion", mapOf("Data" to suggestion))
+            logEvent("PlantSuggestionViewModel", "suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = CompletedEvent(true)
             }

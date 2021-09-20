@@ -2,7 +2,7 @@ package com.cramsan.ps2link.appcore.network
 
 import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logW
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.appcore.census.UrlHolder
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
@@ -71,7 +71,7 @@ class HttpClient(
             LATENCY to normalizedLatency,
             RETRY to retry,
         ).mapValues { it.value.toString() }
-        logMetric(TAG, "Request Completed", metadata)
+        logEvent(TAG, "Request Completed", metadata)
 
         return response
     }

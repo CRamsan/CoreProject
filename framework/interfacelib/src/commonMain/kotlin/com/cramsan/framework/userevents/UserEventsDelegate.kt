@@ -1,9 +1,9 @@
-package com.cramsan.framework.metrics
+package com.cramsan.framework.userevents
 
 /**
  * Delegate that will implement the metric collection and reporting
  */
-interface MetricsDelegate {
+interface UserEventsDelegate {
     /**
      * Initialize the module
      */

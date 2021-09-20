@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.framework.core.DispatcherProvider
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -37,7 +37,7 @@ class ActivityContainerViewModel @Inject constructor(
         val lang = getCurrentLang()
         ioScope.launch {
             ps2Settings.updateCurrentLang(lang)
-            logMetric(logTag, "Language Set", mapOf("Lang" to lang.name))
+            logEvent(logTag, "Language Set", mapOf("Lang" to lang.name))
 
             migrateDatabase(lang)
         }

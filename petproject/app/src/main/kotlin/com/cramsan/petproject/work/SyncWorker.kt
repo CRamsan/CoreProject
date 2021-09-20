@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.cramsan.framework.logging.logI
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.framework.userevents.logEvent
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
         modelProvider.downloadCatalog(startTime, true)
         val endTime = System.currentTimeMillis()
         val latency = (endTime - startTime).toString()
-        logMetric("SyncWorker", "syncLatency", mapOf("Latency" to latency))
+        logEvent("SyncWorker", "syncLatency", mapOf("Latency" to latency))
         // Indicate whether the work finished successfully with the Result
         Result.success()
     }

@@ -9,7 +9,7 @@ import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.LiveEvent
 import com.cramsan.framework.logging.logI
-import com.cramsan.framework.metrics.logMetric
+import com.cramsan.framework.userevents.logEvent
 import com.cramsan.petproject.appcore.model.AnimalType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +54,7 @@ class PlantFeedbackViewModel @Inject constructor(
                 "Name:${name.value} - " +
                 "Link:${link.value} - " +
                 "Text:${text.value}"
-            logMetric("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
+            logEvent("PlantFeedbackViewModel", "Suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {
                 observableIsComplete.value = CompletedEvent(true)
             }

@@ -1,13 +1,13 @@
-package com.cramsan.framework.metrics.implementation
+package com.cramsan.framework.userevents.implementation
 
 import com.cramsan.framework.logging.EventLoggerErrorCallbackDelegate
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.userevents.UserEventsInterface
 
 /**
- * This class provides a mechanism to log internal errors and warnings to a [MetricsInterface].
+ * This class provides a mechanism to log internal errors and warnings to a [UserEventsInterface].
  */
-class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
+class MetricsErrorCallback(private val userEventsInterface: UserEventsInterface) :
     EventLoggerErrorCallbackDelegate {
 
     override fun handleErrorEvent(
@@ -16,7 +16,7 @@ class MetricsErrorCallback(private val metricsInterface: MetricsInterface) :
         throwable: Throwable,
         severity: Severity
     ) {
-        metricsInterface.log(
+        userEventsInterface.log(
             tag,
             message,
             mapOf(

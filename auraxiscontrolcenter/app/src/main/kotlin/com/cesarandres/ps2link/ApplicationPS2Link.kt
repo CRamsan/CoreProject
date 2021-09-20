@@ -6,9 +6,9 @@ import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
-import com.cramsan.framework.metrics.logMetric
 import com.cramsan.framework.thread.ThreadUtilInterface
+import com.cramsan.framework.userevents.UserEventsInterface
+import com.cramsan.framework.userevents.logEvent
 import com.microsoft.appcenter.AppCenter
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class ApplicationPS2Link : Application() {
     lateinit var crashHandler: CrashHandler
 
     @Inject
-    lateinit var metrics: MetricsInterface
+    lateinit var userEvents: UserEventsInterface
 
     @Inject
     lateinit var threadUtil: ThreadUtilInterface
@@ -49,8 +49,8 @@ class ApplicationPS2Link : Application() {
         eventLogger.log(Severity.INFO, TAG, "onCreate called")
         AppCenter.start(this, appCenterId)
         crashHandler.initialize()
-        metrics.initialize()
-        logMetric(TAG, "Application Started")
+        userEvents.initialize()
+        logEvent(TAG, "Application Started")
     }
 
     companion object {

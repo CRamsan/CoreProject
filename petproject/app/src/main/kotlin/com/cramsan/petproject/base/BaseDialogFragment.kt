@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
-import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.userevents.UserEventsInterface
 import javax.inject.Inject
 
 abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : DialogFragment() {
@@ -21,7 +21,7 @@ abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : Dial
     lateinit var eventLogger: EventLoggerInterface
 
     @Inject
-    lateinit var metrics: MetricsInterface
+    lateinit var userEvents: UserEventsInterface
 
     abstract val logTag: String
     protected lateinit var viewModel: T
