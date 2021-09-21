@@ -2,7 +2,9 @@ package com.cramsan.ps2link.appcore.network
 
 import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logW
-import com.cramsan.framework.userevents.logEvent
+import com.cramsan.framework.metrics.MetricType
+import com.cramsan.framework.metrics.MetricUnit
+import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.ps2link.appcore.census.UrlHolder
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
@@ -24,6 +26,7 @@ import kotlin.time.toDuration
 class HttpClient(
     private val http: HttpClient,
     val json: Json,
+    private val metrics: MetricsInterface,
 ) {
 
     @OptIn(ExperimentalTime::class)
@@ -56,32 +59,30 @@ class HttpClient(
 
     @OptIn(ExperimentalTime::class)
     suspend fun sendRequest(url: UrlHolder, retry: Int): HttpResponse {
-        logD(TAG, "Url: ${url.completeUrl}")
+        logD(TAG, "Url: ${url.completeUrl} - retry: $retry")
 
         val response: HttpResponse
         val latency = measureTime {
             response = http.get(url.completeUrl)
         }
 
-        val normalizedLatency = (latency.toLong(DurationUnit.MILLISECONDS) / 200L) * 200
-
-        val metadata = mapOf(
-            URL_ID to url.urlIdentifier,
-            RESPONSE_CODE to response.status.value,
-            LATENCY to normalizedLatency,
-            RETRY to retry,
-        ).mapValues { it.value.toString() }
-        logEvent(TAG, "Request Completed", metadata)
+        if (response.status.isSuccess()) {
+            metrics.record(MetricType.SUCCESS, TAG, url.urlIdentifier)
+        } else {
+            metrics.record(MetricType.FAILURE, TAG, url.urlIdentifier)
+        }
+        metrics.record(
+            MetricType.LATENCY,
+            TAG,
+            url.urlIdentifier,
+            value = latency.toDouble(DurationUnit.MILLISECONDS),
+            unit = MetricUnit.MILLIS
+        )
 
         return response
     }
 
     companion object {
-        val TAG = "HttpClient"
-
-        val RESPONSE_CODE = "RESPONSE_CODE"
-        val URL_ID = "URL_ID"
-        val LATENCY = "LATENCY"
-        val RETRY = "RETRY"
+        const val TAG = "HttpClient"
     }
 }

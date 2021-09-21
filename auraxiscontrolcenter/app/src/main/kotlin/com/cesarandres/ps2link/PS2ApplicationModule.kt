@@ -3,6 +3,8 @@ package com.cesarandres.ps2link
 import android.content.Context
 import android.content.res.Resources
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_CENTER_ID
+import com.cesarandres.ps2link.PS2ApplicationModuleConstants.AWS_ACCESS_KEY
+import com.cesarandres.ps2link.PS2ApplicationModuleConstants.AWS_SECRET_KEY
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.CENSUS_SERVICE_ID
 import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.appcore.twitter.TwitterClientImpl
@@ -33,6 +35,10 @@ import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerErrorCallbackImpl
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerAndroid
+import com.cramsan.framework.metrics.MetricsDelegate
+import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.metrics.implementation.CloudwatchMetrics
+import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
@@ -242,8 +248,35 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(httpClient: io.ktor.client.HttpClient, json: Json): HttpClient {
-        return HttpClient(httpClient, json)
+    fun provideHttpClient(httpClient: io.ktor.client.HttpClient, json: Json, metricsInterface: MetricsInterface): HttpClient {
+        return HttpClient(httpClient, json, metricsInterface)
+    }
+
+    @Provides
+    @Named(AWS_ACCESS_KEY)
+    fun provideAwsAccessKey(): String = BuildConfig.AWS_ACCESS_KEY
+
+    @Provides
+    @Named(AWS_SECRET_KEY)
+    fun provideAwsSecretKey(): String = BuildConfig.AWS_SECRET_KEY
+
+    @Provides
+    @Singleton
+    fun provideMetricsDelegate(
+        @Named(AWS_ACCESS_KEY) accessKey: String,
+        @Named(AWS_SECRET_KEY) secretKey: String
+    ): MetricsDelegate {
+        return CloudwatchMetrics(accessKey, secretKey).apply {
+            initialize()
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideMetricsInterface(delegate: MetricsDelegate, eventLogger: EventLoggerInterface): MetricsInterface {
+        return MetricsImpl(delegate, eventLogger).apply {
+            initialize()
+        }
     }
 
     @Provides

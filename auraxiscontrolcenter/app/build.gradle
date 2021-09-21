@@ -14,6 +14,10 @@ android {
         def appCenterIdProd = findProperty("ps2linkAppCenterIdProd") ?: ""
         def serviceIdPreProd = findProperty("ps2linkServiceIdPreProd") ?: ""
         def serviceIdProd = findProperty("ps2linkServiceIdProd") ?: ""
+        def awsAccessKeyPreProd = findProperty("ps2linkAwsAccessKeyPreProd") ?: ""
+        def awsSecretKeyPreProd = findProperty("ps2linkAwsSecretKeyPreProd") ?: ""
+        def awsAccessKeyProd = findProperty("ps2linkAwsAccessKeyProd") ?: ""
+        def awsSecretKeyProd = findProperty("ps2linkAwsSecretKeyProd") ?: ""
 
         buildConfigField("String", "CONSUMER_SECRET", "\"${consumerSecret}\"")
         buildConfigField("String", "CONSUMER_KEY", "\"${consumerKey}\"")
@@ -24,12 +28,20 @@ android {
             preprod {
                 buildConfigField("String", "APP_CENTER_ID", "\"${appCenterIdPreProd}\"")
                 buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceIdPreProd}\"")
+                buildConfigField("String", "AWS_ACCESS_KEY", "\"${awsAccessKeyPreProd}\"")
+                buildConfigField("String", "AWS_SECRET_KEY", "\"${awsSecretKeyPreProd}\"")
             }
             prod {
                 buildConfigField("String", "APP_CENTER_ID", "\"${appCenterIdProd}\"")
                 buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceIdProd}\"")
+                buildConfigField("String", "AWS_ACCESS_KEY", "\"${awsAccessKeyProd}\"")
+                buildConfigField("String", "AWS_SECRET_KEY", "\"${awsSecretKeyProd}\"")
             }
         }
+    }
+
+    packagingOptions {
+        exclude 'software/amazon/awssdk/global/handlers/execution.interceptors'
     }
 
     buildFeatures {

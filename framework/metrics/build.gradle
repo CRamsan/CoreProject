@@ -1,0 +1,32 @@
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+
+dependencies {
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework:interfacelib")
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation packages.AwsSdkV2Auth
+                implementation packages.AwsSdkV2Cloudwatch
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation packages.AwsAndroidSdk
+}
+
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:test")

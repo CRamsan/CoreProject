@@ -38,6 +38,6 @@ class UserEventsImpl(
     }
 
     companion object {
-        const val TAG = "Metrics"
+        const val TAG = "UserEvents"
     }
 }

@@ -40,6 +40,10 @@ steps:
               -Pps2linkAppCenterIdProd=$(ps2linkAppCenterIdProd)
               -Pps2linkServiceIdPreProd=$(ps2linkServiceIdPreProd)
               -Pps2linkServiceIdProd=$(ps2linkServiceIdProd)
+              -Pps2linkAwsAccessKeyPreProd=$(ps2linkAwsAccessKeyPreProd)
+              -Pps2linkAwsSecretKeyPreProd=$(ps2linkAwsSecretKeyPreProd)
+              -Pps2linkAwsAccessKeyProd=$(ps2linkAwsAccessKeyProd)
+              -Pps2linkAwsSecretKeyProd=$(ps2linkAwsSecretKeyProd)
               -PcommitId=$(build.sourceVersion)'
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'

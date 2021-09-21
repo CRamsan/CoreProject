@@ -7,7 +7,7 @@ import com.cramsan.framework.userevents.UserEventsInterface
 /**
  * This class provides a mechanism to log internal errors and warnings to a [UserEventsInterface].
  */
-class MetricsErrorCallback(private val userEventsInterface: UserEventsInterface) :
+class UserEventsErrorCallback(private val userEventsInterface: UserEventsInterface) :
     EventLoggerErrorCallbackDelegate {
 
     override fun handleErrorEvent(
