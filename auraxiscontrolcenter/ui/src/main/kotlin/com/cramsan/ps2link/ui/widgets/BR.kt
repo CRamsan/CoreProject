@@ -72,19 +72,18 @@ fun BRBar(
             .background(BRGradient)
             .border(width = Size.micro, color = goldBackground, shape = CutCornerShape(Size.xsmall)),
     ) {
-        if (percentageToNextLevel <= 0) {
-            return@Row
+        if (percentageToNextLevel > 0) {
+            Spacer(
+                modifier = Modifier
+                    .weight(percentageToNextLevel)
+            )
+            Box(
+                modifier = Modifier
+                    .weight(100 - percentageToNextLevel)
+                    .fillMaxHeight()
+                    .background(goldBackground)
+            )
         }
-        Spacer(
-            modifier = Modifier
-                .weight(percentageToNextLevel)
-        )
-        Box(
-            modifier = Modifier
-                .weight(100 - percentageToNextLevel)
-                .fillMaxHeight()
-                .background(goldBackground)
-        )
     }
 }
 

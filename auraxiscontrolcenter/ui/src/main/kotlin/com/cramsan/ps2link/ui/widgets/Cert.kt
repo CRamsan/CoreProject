@@ -56,19 +56,18 @@ fun CertBar(
             .background(BRGradient)
             .border(width = Size.micro, color = certBackground, shape = CutCornerShape(Size.xsmall)),
     ) {
-        if (percentageToNextCert <= 0) {
-            return@Row
+        if (percentageToNextCert > 0) {
+            Spacer(
+                modifier = Modifier
+                    .weight(percentageToNextCert)
+            )
+            Box(
+                modifier = Modifier
+                    .weight(100 - percentageToNextCert)
+                    .fillMaxHeight()
+                    .background(certBackground)
+            )
         }
-        Spacer(
-            modifier = Modifier
-                .weight(percentageToNextCert)
-        )
-        Box(
-            modifier = Modifier
-                .weight(100 - percentageToNextCert)
-                .fillMaxHeight()
-                .background(certBackground)
-        )
     }
 }
 
