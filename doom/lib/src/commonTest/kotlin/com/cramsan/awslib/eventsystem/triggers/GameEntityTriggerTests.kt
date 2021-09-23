@@ -20,6 +20,7 @@ import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.test.BeforeTest
@@ -116,6 +117,7 @@ class GameEntityTriggerTests : TestBase() {
     /**
      * Test GameEntityTrigger with Options
      */
+    @OptIn(DelicateCoroutinesApi::class)
     @Ignore
     @Test
     fun gameEntityTriggerWithInteractiveEvent() = runBlockingTest {

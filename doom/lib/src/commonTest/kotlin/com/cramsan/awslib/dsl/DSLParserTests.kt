@@ -124,5 +124,6 @@ class DSLParserTests {
                 }
             }
         }
+        assertNotNull(scene)
     }
 }
