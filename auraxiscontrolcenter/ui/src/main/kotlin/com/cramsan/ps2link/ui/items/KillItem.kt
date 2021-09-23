@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.ui.items
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,14 +11,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.ui.R
@@ -28,6 +25,7 @@ import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toColor
 import com.cramsan.ps2link.ui.widgets.FactionIcon
+import com.cramsan.ps2link.ui.widgets.NetworkImage
 import kotlinx.datetime.Instant
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -49,8 +47,14 @@ fun KillItem(
         onClick = onClick,
         modifier = modifier
     ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(0.75f)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                modifier = Modifier.size(Size.xxxlarge),
+                verticalArrangement = Arrangement.Center,
+            ) {
                 Text(
                     text = stringResource(
                         when (killType) {
@@ -62,7 +66,10 @@ fun KillItem(
                     ),
                     color = killType.toColor(),
                 )
-                FactionIcon(modifier = Modifier.size(Size.xxlarge), faction = faction)
+                FactionIcon(
+                    modifier = Modifier.size(Size.xxlarge),
+                    faction = faction,
+                )
             }
             Column(modifier = Modifier.weight(1f).padding(horizontal = Padding.small)) {
                 Text(attacker ?: stringResource(R.string.text_unknown))
@@ -74,31 +81,14 @@ fun KillItem(
                     style = MaterialTheme.typography.caption,
                 )
             }
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier.size(Size.xxxlarge),
+            ) {
                 Text(weaponName ?: stringResource(R.string.text_unknown))
-                val painter = rememberImagePainter(
-                    data = weaponImage,
-                    builder = {
-                        crossfade(true)
-                        placeholder(R.drawable.image_not_found)
-                    }
-                )
-                Image(
+                NetworkImage(
                     modifier = Modifier.fillMaxSize(),
-                    painter = painter,
-                    contentDescription = null
+                    imageUrl = weaponImage,
                 )
-                when (painter.state) {
-                    is ImagePainter.State.Loading, is ImagePainter.State.Error, ImagePainter.State.Empty -> {
-                        Image(
-                            modifier = Modifier.fillMaxSize(),
-                            painter = painterResource(id = R.drawable.image_not_found),
-                            contentScale = ContentScale.Fit,
-                            contentDescription = null
-                        )
-                    }
-                    else -> Unit
-                }
             }
         }
     }

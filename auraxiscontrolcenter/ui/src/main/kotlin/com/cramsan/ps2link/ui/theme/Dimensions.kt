@@ -11,6 +11,7 @@ object Size {
     val large = 24.dp
     val xlarge = 36.dp
     val xxlarge = 48.dp
+    val xxxlarge = 84.dp
 }
 
 object Padding {

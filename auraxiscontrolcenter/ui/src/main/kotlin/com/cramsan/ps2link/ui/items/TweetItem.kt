@@ -1,35 +1,27 @@
 package com.cramsan.ps2link.ui.items
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
+import com.cramsan.ps2link.ui.widgets.NetworkImage
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun TweetItem(
     modifier: Modifier = Modifier,
@@ -62,38 +54,13 @@ fun TweetItem(
                 )
             }
             Row {
-                Box(
-                    modifier = Modifier.size(Size.xxlarge).padding(Padding.small).align(CenterVertically)
-                ) {
-                    val painter = rememberImagePainter(
-                        data = avatarUrl,
-                        builder = {
-                            crossfade(true)
-                            placeholder(R.drawable.image_not_found)
-                        }
-                    )
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painter,
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
-                    )
-                    when (painter.state) {
-                        is ImagePainter.State.Loading -> {
-                            // Display a circular progress indicator whilst loading
-                            CircularProgressIndicator(Modifier.align(Alignment.Center))
-                        }
-                        is ImagePainter.State.Error, ImagePainter.State.Empty -> {
-                            Image(
-                                modifier = Modifier.fillMaxSize(),
-                                painter = painterResource(id = R.drawable.image_not_found),
-                                contentScale = ContentScale.Fit,
-                                contentDescription = null
-                            )
-                        }
-                        else -> Unit
-                    }
-                }
+                NetworkImage(
+                    modifier = Modifier.height(Size.xxlarge)
+                        .padding(Padding.small)
+                        .wrapContentWidth()
+                        .align(CenterVertically),
+                    imageUrl = avatarUrl,
+                )
                 Text(
                     modifier = Modifier.padding(vertical = Padding.medium),
                     text = content,

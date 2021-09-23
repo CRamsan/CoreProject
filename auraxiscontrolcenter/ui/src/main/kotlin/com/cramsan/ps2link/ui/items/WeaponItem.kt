@@ -5,31 +5,30 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
+import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toImageRes
+import com.cramsan.ps2link.ui.widgets.NetworkImage
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun WeaponItem(
     modifier: Modifier = Modifier,
@@ -53,35 +52,17 @@ fun WeaponItem(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(weaponName ?: stringResource(R.string.text_unknown))
-            Row {
-                Column(modifier = Modifier.weight(1.5f)) {
-                    val painter = rememberImagePainter(
-                        data = weaponImage.toString(),
-                        builder = {
-                            crossfade(true)
-                            placeholder(R.drawable.image_not_found)
-                        }
-                    )
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painter,
-                        contentDescription = null
-                    )
-                    when (painter.state) {
-                        is ImagePainter.State.Loading, is ImagePainter.State.Error, ImagePainter.State.Empty -> {
-                            Image(
-                                modifier = Modifier.fillMaxSize(),
-                                painter = painterResource(id = R.drawable.image_not_found),
-                                contentScale = ContentScale.Fit,
-                                contentDescription = null
-                            )
-                        }
-                        else -> Unit
-                    }
-                }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                NetworkImage(
+                    modifier = Modifier
+                        .size(Size.xxxlarge, Size.xxlarge),
+                    imageUrl = weaponImage.toString(),
+                )
                 Column(
                     modifier = Modifier
-                        .weight(4f)
+                        .weight(1f)
                         .padding(Padding.small)
                 ) {
                     Text(stringResource(R.string.text_kills, totalKills))
@@ -116,13 +97,21 @@ fun WeaponItem(
                     }
                     Spacer(modifier = Modifier.height(Padding.xsmall))
                     Row {
-                        Text(stringResource(R.string.text_headshots_, totalHeadshotKills), style = MaterialTheme.typography.overline)
+                        Text(
+                            stringResource(R.string.text_headshots_, totalHeadshotKills),
+                            style = MaterialTheme.typography.overline
+                        )
                         Spacer(modifier = Modifier.width(Padding.small))
-                        Text(stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed), style = MaterialTheme.typography.overline)
+                        Text(
+                            stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed),
+                            style = MaterialTheme.typography.overline
+                        )
                     }
                 }
                 Image(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .size(Size.xxlarge)
+                        .align(CenterVertically),
                     painter = painterResource(medalType.toImageRes()),
                     contentDescription = null
                 )
