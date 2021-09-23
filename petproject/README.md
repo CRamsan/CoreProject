@@ -1,11 +1,13 @@
 # Safe For My Pet
 This is the source code for the Safe For My Pet app.
 
-# Build Status
+# Build & Deployment Status
 
 Android: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/build/status/PetProject-Android?branchName=master)](https://dev.azure.com/CRamsan/PetProject/_build/latest?definitionId=3&branchName=master)
 
 Webservice: [![Build Status](https://dev.azure.com/CRamsan/PetProject/_apis/build/status/PetProject-Webservice?branchName=master)](https://dev.azure.com/CRamsan/PetProject/_build/latest?definitionId=8&branchName=master)
+
+[Dashboard](https://dev.azure.com/CRamsan/PetProject/_dashboards/dashboard/077ec3a4-eee6-4d37-a7ab-df06988c8fc4)
 
 # Analytics
 
