@@ -1,9 +1,11 @@
 # Project Name
 *Project description*
 
-# Build Status
+# Build & Deployment Status
 
 [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master) *Replace with link to actual widget*
+
+[Dashboard](https://dev.azure.com/CRamsan/Framework/_dashboards/dashboard/261592ed-7e10-4c74-9f53-1039cfaa2ab6) *Replace with link to actual widget*
 
 # Documentation
 [Mocks](https://www.figma.com/files/project/30562182/Team-project?fuid=741159602862694256)
