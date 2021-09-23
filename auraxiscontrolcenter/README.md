@@ -29,9 +29,11 @@ To build the bot you will do `./gradlew auraxiscontrolcenter:service:release`
 
 ** The bot code is currently not enabled and it is not being maintained **
 
-# Build Status
+# Build & Deployment Status
 
 Android: [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
+
+[Dashboard](https://dev.azure.com/CRamsan/AuraxisControlCenter/_dashboards/dashboard/16d93367-f37f-454a-93a4-c0364ea351fa)
 
 # Documentation
 [Mocks](https://www.figma.com/files/project/30562182/Team-project?fuid=741159602862694256)
