@@ -254,11 +254,11 @@ object PS2ApplicationModule {
 
     @Provides
     @Named(AWS_ACCESS_KEY)
-    fun provideAwsAccessKey(): String = BuildConfig.AWS_ACCESS_KEY
+    fun provideAwsAccessKey(resources: Resources): String = resources.getString(R.string.aws_access_key)
 
     @Provides
     @Named(AWS_SECRET_KEY)
-    fun provideAwsSecretKey(): String = BuildConfig.AWS_SECRET_KEY
+    fun provideAwsSecretKey(resources: Resources): String = resources.getString(R.string.aws_secret_key)
 
     @Provides
     @Singleton

@@ -28,14 +28,14 @@ android {
             preprod {
                 buildConfigField("String", "APP_CENTER_ID", "\"${appCenterIdPreProd}\"")
                 buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceIdPreProd}\"")
-                buildConfigField("String", "AWS_ACCESS_KEY", "\"${awsAccessKeyPreProd}\"")
-                buildConfigField("String", "AWS_SECRET_KEY", "\"${awsSecretKeyPreProd}\"")
+                resValue("string", "aws_access_key", "${awsAccessKeyPreProd}")
+                resValue("string", "aws_secret_key", "${awsSecretKeyPreProd}")
             }
             prod {
                 buildConfigField("String", "APP_CENTER_ID", "\"${appCenterIdProd}\"")
                 buildConfigField("String", "CENSUS_SERVICE_ID", "\"${serviceIdProd}\"")
-                buildConfigField("String", "AWS_ACCESS_KEY", "\"${awsAccessKeyProd}\"")
-                buildConfigField("String", "AWS_SECRET_KEY", "\"${awsSecretKeyProd}\"")
+                resValue("string", "aws_access_key", "${awsAccessKeyProd}")
+                resValue("string", "aws_secret_key", "${awsSecretKeyProd}")
             }
         }
     }
