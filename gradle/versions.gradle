@@ -133,6 +133,7 @@ def packages = [
         AwsSdkV2Lambda : "software.amazon.awssdk:lambda:$versions_packages.AwsSdkV2",
         AwsSdkV2Cloudwatch : "software.amazon.awssdk:cloudwatch:$versions_packages.AwsSdkV2",
         BouncyCastle : "org.bouncycastle:bcpkix-jdk15on:$versions_packages.BouncyCastle",
+        CdkIam : "software.amazon.awscdk:iam:$versions_packages.Cdk",
         CdkCore : "software.amazon.awscdk:core:$versions_packages.Cdk",
         CdkRoute53 : "software.amazon.awscdk:route53:$versions_packages.Cdk",
         CdkRoute53Targets : "software.amazon.awscdk:route53-targets:$versions_packages.Cdk",
@@ -277,6 +278,7 @@ def packages = [
 ]
 
 def cdk_commons = [
+        packages.CdkIam,
         packages.CdkCore,
         packages.CdkRoute53,
         packages.CdkRoute53Targets,

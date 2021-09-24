@@ -33,6 +33,8 @@ include 'doom:game:ios'
 
 include 'auraxiscontrolcenter:app'
 include 'auraxiscontrolcenter:appcore'
+include 'auraxiscontrolcenter:aws:cdk-jvm'
+include 'auraxiscontrolcenter:aws:common-jvm'
 include 'auraxiscontrolcenter:core-models'
 include 'auraxiscontrolcenter:db-models'
 include 'auraxiscontrolcenter:network-models'

@@ -1,0 +1,9 @@
+ext.mainClassTarget = "com.cesarandres.ps2link.aws.PS2LinkApp"
+
+apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
+
+dependencies {
+    implementation meta_packages.CdkCommons
+    implementation project(":auraxiscontrolcenter:aws:common-jvm")
+}
+registerDependency(":auraxiscontrolcenter:aws:common-jvm")
