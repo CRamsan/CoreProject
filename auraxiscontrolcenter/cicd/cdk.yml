@@ -17,9 +17,10 @@ trigger:
     - gradle/*
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default'
 
 steps:
+- template: ../../cicd-templates/configure-local-jdk.yml
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(system.defaultworkingdirectory)'
