@@ -17,7 +17,7 @@ trigger:
     - framework-samples/*
 
 pool:
-  vmImage: 'macOS-latest'
+  name: 'Default'
 
 steps:
 - task: Gradle@2

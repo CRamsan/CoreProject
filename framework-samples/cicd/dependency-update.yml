@@ -14,7 +14,7 @@ schedules:
   always: true
 
 pool:
-  vmImage: 'macOS-latest'
+  name: 'Default'
 
 steps:
 - task: Gradle@2
