@@ -18,10 +18,9 @@ trigger:
     - gradle/*
 
 pool:
-  name: 'Default'
+  vmImage: 'ubuntu-latest'
 
 steps:
-- template: ../../cicd-templates/configure-local-jdk.yml
 - task: Gradle@2
   inputs:
     workingDirectory: ''
