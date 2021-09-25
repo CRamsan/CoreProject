@@ -36,7 +36,7 @@ def deploy = task deploy(type:Exec) {
 }
 
 releaseJvm {
-    dependsOn "synthesize"
+    dependsOn "run"
 }
 
 registerDependency(":auraxiscontrolcenter:aws:common-jvm")
