@@ -1,5 +1,5 @@
 {
-  "app": "run_app.sh",
+  "app": "chmod +x && ./run_app.sh",
   "context": {
     "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
     "@aws-cdk/core:enableStackNameDuplicates": "true",
