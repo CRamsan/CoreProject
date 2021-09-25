@@ -15,22 +15,22 @@ def synthesize = task synthesize(type:Exec) {
     workingDir "$projectDir"
 
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine 'cmd', '/c', 'cdk synthesize'
+        commandLine 'cmd', '/c', 'cdk', 'synthesize'
     } else {
         commandLine "cdk", "synthesize"
     }
 }
 
-def deploy = task deploy(type:Exec) {
+def forceDeploy = task deploy(type:Exec) {
     group = 'cdk'
     description = 'Deploy this stack to the AWS account'
 
     workingDir "$projectDir"
 
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine 'cmd', '/c', 'cdk deploy'
+        commandLine 'cmd', '/c', 'cdk', 'deploy', '--require-approval', 'never'
     } else {
-        commandLine "cdk", "deploy"
+        commandLine "cdk", "deploy", "--require-approval", "never"
     }
 }
 
