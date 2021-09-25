@@ -1,3 +1,3 @@
 #!/bin/bash
 
-../../../gradlew :auraxiscontrolcenter:aws:cdk-jvm:run
+./gradlew :auraxiscontrolcenter:aws:cdk-jvm:run

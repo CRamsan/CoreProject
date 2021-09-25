@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 ext.mainClassTarget = "com.cesarandres.ps2link.aws.PS2LinkApp"
 
 apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
@@ -6,4 +8,35 @@ dependencies {
     implementation meta_packages.CdkCommons
     implementation project(":auraxiscontrolcenter:aws:common-jvm")
 }
+
+def synthesize = task synthesize(type:Exec) {
+    group = 'cdk'
+    description = 'Synthesize the cloud formation'
+
+    workingDir "$projectDir"
+
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'cdk synthesize'
+    } else {
+        commandLine "cdk synthesize"
+    }
+}
+
+def deploy = task deploy(type:Exec) {
+    group = 'cdk'
+    description = 'Deploy this stack to the AWS account'
+
+    workingDir "$projectDir"
+
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'cdk deploy'
+    } else {
+        commandLine "cdk deploy"
+    }
+}
+
+releaseJvm {
+    dependsOn "synthesize"
+}
+
 registerDependency(":auraxiscontrolcenter:aws:common-jvm")
