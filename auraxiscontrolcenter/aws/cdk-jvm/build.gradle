@@ -17,7 +17,7 @@ def synthesize = task synthesize(type:Exec) {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         commandLine 'cmd', '/c', 'cdk synthesize'
     } else {
-        commandLine "cdk synthesize"
+        commandLine "cdk", "synthesize"
     }
 }
 
@@ -30,7 +30,7 @@ def deploy = task deploy(type:Exec) {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         commandLine 'cmd', '/c', 'cdk deploy'
     } else {
-        commandLine "cdk deploy"
+        commandLine "cdk", "deploy"
     }
 }
 
