@@ -20,6 +20,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(system.defaultworkingdirectory)'
+    includeRootFolder: false
+    archiveType: 'tar'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/source.zip'
+    replaceExistingArchive: true
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -31,9 +38,4 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'auraxiscontrolcenter:aws:cdk-jvm:release'
-- task: CopyFiles@2
-  inputs:
-    sourceFolder: $(system.defaultworkingdirectory)/
-    contents: '**/*'
-    targetFolder: '$(build.artifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
