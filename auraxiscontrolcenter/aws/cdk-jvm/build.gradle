@@ -21,7 +21,7 @@ def synthesize = task synthesize(type:Exec) {
     }
 }
 
-def forceDeploy = task deploy(type:Exec) {
+def forceDeploy = task forceDeploy(type:Exec) {
     group = 'cdk'
     description = 'Deploy this stack to the AWS account'
 
