@@ -27,7 +27,7 @@ steps:
     includeRootFolder: false
     archiveType: 'tar'
     tarCompression: 'gz'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/source.tag.gz'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/source.tar.gz'
     replaceExistingArchive: true
 - task: Gradle@2
   inputs:
