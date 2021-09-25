@@ -17,7 +17,7 @@ trigger:
     - framework-samples/*
 
 pool:
-  name: 'Default'
+  vmImage: 'macOS-latest'
 
 steps:
 - template: ../../cicd-templates/configure-local-jdk.yml
