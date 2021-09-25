@@ -31,3 +31,9 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'auraxiscontrolcenter:aws:cdk-jvm:release'
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(system.defaultworkingdirectory)/
+    contents: '**/*'
+    targetFolder: '$(build.artifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
