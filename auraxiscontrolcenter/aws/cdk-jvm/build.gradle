@@ -6,7 +6,6 @@ apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
 
 dependencies {
     implementation meta_packages.CdkCommons
-    implementation project(":auraxiscontrolcenter:aws:common-jvm")
 }
 
 def synthesize = task synthesize(type:Exec) {
@@ -38,5 +37,3 @@ def deploy = task deploy(type:Exec) {
 releaseJvm {
     dependsOn "run"
 }
-
-registerDependency(":auraxiscontrolcenter:aws:common-jvm")
