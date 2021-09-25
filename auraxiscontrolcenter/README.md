@@ -33,6 +33,8 @@ To build the bot you will do `./gradlew auraxiscontrolcenter:service:release`
 
 Android: [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControCenter?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=6&branchName=master)
 
+CDK: [![Build Status](https://dev.azure.com/CRamsan/AuraxisControlCenter/_apis/build/status/AuraxisControlCenter_Cdk?branchName=master)](https://dev.azure.com/CRamsan/AuraxisControlCenter/_build/latest?definitionId=20&branchName=master)
+
 [Dashboard](https://dev.azure.com/CRamsan/AuraxisControlCenter/_dashboards/dashboard/16d93367-f37f-454a-93a4-c0364ea351fa)
 
 # Documentation
