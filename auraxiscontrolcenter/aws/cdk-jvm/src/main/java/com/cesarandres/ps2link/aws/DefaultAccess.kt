@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link.aws
 
+import software.amazon.awscdk.core.CfnOutput
 import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.iam.CfnAccessKey
 import software.amazon.awscdk.services.iam.ManagedPolicy
@@ -28,8 +29,11 @@ class DefaultAccess(scope: software.constructs.Construct, id: String) : Construc
         cloudWatchMetricAccess.addManagedPolicy(
             ManagedPolicy.fromAwsManagedPolicyName("CloudWatchFullAccess")
         )
-        CfnAccessKey(this, "apiAccess") {
+        val accessKey = CfnAccessKey(this, "apiAccess") {
             cloudWatchMetricAccess.userName
         }
+
+        CfnOutput(this, "cloudWatchMetricAccess_AccessToken") { accessKey.ref }
+        CfnOutput(this, "cloudWatchMetricAccess_SecretAccessToken") { accessKey.attrSecretAccessKey }
     }
 }
