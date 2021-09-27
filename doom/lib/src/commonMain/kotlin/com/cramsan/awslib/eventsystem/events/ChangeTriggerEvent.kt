@@ -3,15 +3,14 @@ package com.cramsan.awslib.eventsystem.events
 /**
  *
  */
-class ChangeTriggerEvent(
-    id: String,
-    nextEventId: String,
-    enableEventId: String,
-    disableEventId: String
+data class ChangeTriggerEvent(
+    override val id: String,
+    override val nextEventId: String,
+    val enableEventId: String,
+    val disableEventId: String
 ) :
     NonInteractiveEvent(
         id,
-        EventType.CHANGETRIGGER,
         nextEventId,
         disableEventId,
         enableEventId

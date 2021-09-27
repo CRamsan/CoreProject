@@ -1,10 +1,12 @@
 package com.cramsan.awslib.scene
 
-import com.cramsan.awslib.entity.GameEntityInterface
+import com.cramsan.awslib.entity.CharacterInterface
+import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.map.Cell
 
 interface SceneEventsCallback {
-    fun onEntityChanged(entity: GameEntityInterface)
+    fun onItemChanged(entity: ItemInterface)
+    fun onCharacterChanged(entity: CharacterInterface)
     fun onCellChanged(cell: Cell)
     fun onSceneEnded(completed: Boolean)
 }

@@ -59,5 +59,7 @@ ext.registerDependency = { project ->
 }
 
 tasks.register("release") {
+    group = 'build'
+
     dependsOn "releaseJvm"
 }

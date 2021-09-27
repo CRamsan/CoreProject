@@ -2,6 +2,7 @@ package com.cramsan.awslib.scene
 
 import com.cramsan.awslib.entitymanager.TurnActionInterface
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
+import com.cramsan.awslib.enums.DebugAction
 import com.cramsan.framework.logging.EventLoggerInterface
 
 class Scene(
@@ -11,35 +12,40 @@ class Scene(
 ) {
 
     private val mainPlayer = sceneConfig.player
-    private var callback: SceneEventsCallback? = null
     private var isLoaded = false
     private val tag = "Scene"
 
-    fun loadScene() {
+    fun loadScene(listener: SceneEventsCallback? = null) {
         log.i(tag, "Loading mainPlayer: $mainPlayer")
         entityManager.register(mainPlayer)
         sceneConfig.characterList.forEach {
             log.i(tag, "Registering entity: $it")
-            if (!entityManager.register(it)) {
-                log.e(tag, "Could not register: $it")
-            }
+            entityManager.register(it)
         }
-
+        entityManager.callback = listener
         isLoaded = true
     }
 
-    suspend fun runTurn(turnAction: TurnActionInterface) {
+    fun debugAction(action: DebugAction) {
+        log.d(tag, "")
+        log.i(tag, "Debug Action: $action")
+        entityManager.debugAction(action)
+        log.i(tag, "Debug Action completed")
+        log.d(tag, "")
+    }
+
+    fun runTurn(turnAction: TurnActionInterface) {
         if (!isLoaded) {
             throw RuntimeException("Trying to play game but scene is not loaded")
         }
 
+        log.d(tag, "")
+        log.i(tag, "Starting Turn")
         log.i(tag, "Turn Action: $turnAction")
         mainPlayer.nextTurnAction = turnAction
-        entityManager.runTurns(callback)
+        entityManager.runTurns()
         entityManager.processGameEntityState()
-    }
-
-    fun setListener(listener: SceneEventsCallback) {
-        callback = listener
+        log.i(tag, "Turn completed")
+        log.d(tag, "")
     }
 }

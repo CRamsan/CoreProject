@@ -1,15 +1,14 @@
 package com.cramsan.awslib.eventsystem.events
 
-class SwapCharacterEvent(
-    id: String,
-    nextEventId: String,
-    enableEntityId: String,
-    disableEntityId: String
+data class SwapCharacterEvent(
+    override val id: String,
+    override val nextEventId: String,
+    override val enableId: String,
+    override val disableId: String
 ) :
     NonInteractiveEvent(
         id,
-        EventType.SWAPIDENTITY,
         nextEventId,
-        enableEntityId,
-        disableEntityId
+        enableId,
+        disableId,
     )

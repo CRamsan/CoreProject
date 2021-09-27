@@ -1,14 +1,16 @@
 package com.cramsan.awslib.entitymanager
 
+import com.cramsan.awslib.enums.DebugAction
 import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
-import com.cramsan.awslib.scene.SceneEventsCallback
 
 /**
  *
  */
 interface EntityManagerInterface {
 
-    suspend fun runTurns(callback: SceneEventsCallback?)
+    fun debugAction(debugAction: DebugAction)
 
-    suspend fun selectOption(option: InteractiveEventOption?)
+    fun runTurns()
+
+    fun selectOption(option: InteractiveEventOption?)
 }

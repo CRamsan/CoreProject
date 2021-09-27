@@ -94,7 +94,7 @@ class CellTriggerTests : TestBase() {
         val player = sceneConfig.player
 
         val scene = Scene(entityManager, sceneConfig, log)
-        scene.loadScene()
+        scene.loadScene(null)
 
         scene.runTurn(TurnAction(TurnActionType.MOVE, Direction.NORTH))
         assertEquals(5, player.posX)

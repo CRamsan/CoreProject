@@ -15,6 +15,7 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
 import kotlin.test.BeforeTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -176,6 +177,7 @@ class SceneTests : TestBase() {
     /**
      * Test Basic Scene
      */
+    @Ignore
     @Test
     fun testDuplicateIds() {
         val map = GameMap(MapGenerator.createMap100x100())

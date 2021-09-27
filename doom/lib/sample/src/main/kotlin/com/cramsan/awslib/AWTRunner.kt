@@ -2,17 +2,19 @@ package com.cramsan.awslib
 
 import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
 import com.cramsan.awslib.dsl.scene
+import com.cramsan.awslib.entity.implementation.ConsumableType
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.map.GameMap
 import com.cramsan.awslib.utils.constants.InitialValues
 import com.cramsan.awslib.utils.map.MapLoader
+import com.cramsan.framework.assertlib.AssertUtil
 import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
+import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
 import com.cramsan.framework.logging.implementation.LoggerJVM
-import kotlinx.coroutines.runBlocking
 import java.awt.EventQueue
 
 class AWTRunner {
@@ -23,6 +25,11 @@ class AWTRunner {
         }
 
         private fun createAndShowGUI() {
+            val eventLogger = EventLoggerImpl(Severity.VERBOSE, null, LoggerJVM())
+            EventLogger.setInstance(eventLogger)
+            val haltUtil = HaltUtilImpl(HaltUtilJVM())
+            val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)
+            AssertUtil.setInstance(assertUtil)
 
             val map = GameMap(MapLoader().loadCSVMap("map1.txt"))
 
@@ -70,6 +77,7 @@ class AWTRunner {
                 itemBuilders {
                     consumable {
                         id = "health"
+                        type = ConsumableType.HEALTH
                     }
                 }
 
@@ -110,17 +118,12 @@ class AWTRunner {
                 }
             } ?: return
 
-            val eventLogger = EventLoggerImpl(Severity.VERBOSE, null, LoggerJVM())
-            val haltUtil = HaltUtilImpl(HaltUtilJVM())
-            val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)
             val aiRepo = DummyAIRepoImpl(eventLogger)
 
             val renderer = AWTRenderer(eventLogger, haltUtil, assertUtil)
             val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, renderer, eventLogger, aiRepo)
 
-            runBlocking {
-                renderer.startScene(entityManager, sceneConfig, map)
-            }
+            renderer.startScene(entityManager, sceneConfig, map)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.cramsan.awslib.entity.implementation
 
-import com.cramsan.awslib.entity.GameEntityInterface
 import com.cramsan.awslib.utils.constants.InitialValues
 
 /**
@@ -21,8 +20,7 @@ class Player(
         speed,
         true,
         true
-    ),
-    GameEntityInterface {
+    ) {
     val equipableItemList = mutableListOf<EquippableItem>()
     val keyItemList = mutableListOf<KeyItem>()
 }

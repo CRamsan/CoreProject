@@ -1,7 +1,7 @@
 package com.cramsan.awslib
 
 import com.cramsan.awslib.entity.CharacterInterface
-import com.cramsan.awslib.entity.GameEntityInterface
+import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.entity.implementation.Ally
 import com.cramsan.awslib.entity.implementation.ConsumableItem
 import com.cramsan.awslib.entity.implementation.Enemy
@@ -12,6 +12,7 @@ import com.cramsan.awslib.entitymanager.EntityManagerEventListener
 import com.cramsan.awslib.entitymanager.EntityManagerInteractionReceiver
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction
+import com.cramsan.awslib.enums.DebugAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TerrainType
 import com.cramsan.awslib.enums.TurnActionType
@@ -26,7 +27,6 @@ import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.awt.Color
 import java.awt.Graphics
@@ -54,113 +54,112 @@ class AWTRenderer(
         isAlwaysOnTop = true
     }
 
-    suspend fun startScene(manager: EntityManager, sceneConfig: SceneConfig, map: GameMap) {
+    fun startScene(manager: EntityManager, sceneConfig: SceneConfig, map: GameMap) {
         add(RendererCanvas(manager, map))
         val mainPlayer = sceneConfig.player
-        val gameLoop = GlobalScope.async {
-            val scene = Scene(manager, sceneConfig, eventLoggerInterface)
-            scene.setListener(
-                object : SceneEventsCallback {
-                    override fun onEntityChanged(entity: GameEntityInterface) {
-                        when (entity) {
-                            is CharacterInterface -> {
-                                if (entity == mainPlayer) {
-                                    if (!entity.enabled) {
-                                        println("Player is dead")
-                                        isGameRunning = false
-                                    }
-                                }
-                            }
-                        }
-                        repaint()
-                    }
+        val scene = Scene(manager, sceneConfig, eventLoggerInterface)
+        val listener = object : SceneEventsCallback {
+            override fun onItemChanged(entity: ItemInterface) {
+                repaint()
+            }
 
-                    override fun onCellChanged(cell: Cell) {
-                        repaint()
-                    }
-
-                    override fun onSceneEnded(completed: Boolean) {
-                        exitProcess(0)
+            override fun onCharacterChanged(entity: CharacterInterface) {
+                if (entity == mainPlayer) {
+                    if (!entity.enabled) {
+                        println("Player is dead")
+                        isGameRunning = false
                     }
                 }
-            )
+                repaint()
+            }
 
-            this@AWTRenderer.addKeyListener(
-                object : KeyAdapter() {
-                    override fun keyReleased(e: KeyEvent?) {
-                        if (!isGameRunning) {
-                            return
-                        }
+            override fun onCellChanged(cell: Cell) {
+                repaint()
+            }
 
-                        when (e?.keyCode) {
-                            KeyEvent.VK_UP -> {
-                                mainPlayer.heading = Direction.NORTH
-                                return
-                            }
-                            KeyEvent.VK_DOWN -> {
-                                mainPlayer.heading = Direction.SOUTH
-                                return
-                            }
-                            KeyEvent.VK_LEFT -> {
-                                mainPlayer.heading = Direction.WEST
-                                return
-                            }
-                            KeyEvent.VK_RIGHT -> {
-                                mainPlayer.heading = Direction.EAST
-                                return
-                            }
-                            else -> return
-                        }
-                    }
-                    override fun keyTyped(e: KeyEvent?) {
-                        if (!isGameRunning) {
-                            return
-                        }
-
-                        val action = when (e?.keyChar) {
-                            'w' -> {
-                                mainPlayer.heading = Direction.NORTH
-                                TurnAction(TurnActionType.MOVE, Direction.NORTH)
-                            }
-                            's' -> {
-                                mainPlayer.heading = Direction.SOUTH
-                                TurnAction(TurnActionType.MOVE, Direction.SOUTH)
-                            }
-                            'a' -> {
-                                mainPlayer.heading = Direction.WEST
-                                TurnAction(TurnActionType.MOVE, Direction.WEST)
-                            }
-                            'd' -> {
-                                mainPlayer.heading = Direction.EAST
-                                TurnAction(TurnActionType.MOVE, Direction.EAST)
-                            }
-                            ' ' -> TurnAction(TurnActionType.ATTACK, Direction.KEEP)
-                            else -> TurnAction(TurnActionType.NONE, Direction.KEEP)
-                        }
-                        GlobalScope.launch {
-                            scene.runTurn(action)
-                            repaint()
-                        }
-                    }
-                }
-            )
-            scene.loadScene()
+            override fun onSceneEnded(completed: Boolean) {
+                exitProcess(0)
+            }
         }
-        gameLoop.await()
+
+        this@AWTRenderer.addKeyListener(
+            object : KeyAdapter() {
+                override fun keyReleased(e: KeyEvent?) {
+                    when (e?.keyCode) {
+                        KeyEvent.VK_UP -> {
+                            mainPlayer.heading = Direction.NORTH
+                            return
+                        }
+                        KeyEvent.VK_DOWN -> {
+                            mainPlayer.heading = Direction.SOUTH
+                            return
+                        }
+                        KeyEvent.VK_LEFT -> {
+                            mainPlayer.heading = Direction.WEST
+                            return
+                        }
+                        KeyEvent.VK_RIGHT -> {
+                            mainPlayer.heading = Direction.EAST
+                            return
+                        }
+                        else -> return
+                    }
+                }
+
+                override fun keyTyped(e: KeyEvent?) {
+                    val action = when (e?.keyChar) {
+                        'w' -> {
+                            mainPlayer.heading = Direction.NORTH
+                            TurnAction(TurnActionType.MOVE, Direction.NORTH)
+                        }
+                        's' -> {
+                            mainPlayer.heading = Direction.SOUTH
+                            TurnAction(TurnActionType.MOVE, Direction.SOUTH)
+                        }
+                        'a' -> {
+                            mainPlayer.heading = Direction.WEST
+                            TurnAction(TurnActionType.MOVE, Direction.WEST)
+                        }
+                        'd' -> {
+                            mainPlayer.heading = Direction.EAST
+                            TurnAction(TurnActionType.MOVE, Direction.EAST)
+                        }
+                        'q' -> {
+                            scene.debugAction(DebugAction.REWIND_TURN)
+                            return
+                        }
+                        'e' -> {
+                            scene.debugAction(DebugAction.FF_TURN)
+                            return
+                        }
+                        ' ' -> TurnAction(TurnActionType.ATTACK, Direction.KEEP)
+                        else -> TurnAction(TurnActionType.NONE, Direction.KEEP)
+                    }
+                    scene.runTurn(action)
+                    repaint()
+                }
+            }
+        )
+        scene.loadScene(listener)
     }
 
     override fun onGameReady(eventReceiver: EntityManagerInteractionReceiver) {
     }
+
     override fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver) {
     }
-    override fun onInteractionRequired(text: String, options: List<InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver) {
+
+    override fun onInteractionRequired(
+        text: String,
+        options: List<InteractiveEventOption>,
+        eventReceiver: EntityManagerInteractionReceiver
+    ) {
         System.out.println("Options: ")
         options.forEachIndexed { index, interactiveEventOption ->
             System.out.println("$index) $interactiveEventOption")
         }
 
         val possibilities = Array(options.size) { i -> options[i].label }
-
         if (possibilities.size > 0) {
             val resultOption = showInputDialog(
                 this@AWTRenderer,
@@ -184,15 +183,11 @@ class AWTRenderer(
             selectedOption = options[selection]
 
             System.out.println("You selected $selectedOption")
-            GlobalScope.launch {
-                eventReceiver.selectOption(selectedOption)
-            }
+            eventReceiver.selectOption(selectedOption)
         } else {
             showInputDialog(text)
             System.out.println("Continuing")
-            GlobalScope.launch {
-                eventReceiver.selectOption(null)
-            }
+            eventReceiver.selectOption(null)
         }
     }
 

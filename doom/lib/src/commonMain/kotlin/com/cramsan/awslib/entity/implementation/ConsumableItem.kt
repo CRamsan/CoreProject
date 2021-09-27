@@ -5,7 +5,7 @@ import com.cramsan.awslib.entity.ItemInterface
 /**
  * Class that represents an item that is used instantly on contact
  */
-class ConsumableItem(
+data class ConsumableItem(
     override val id: String,
     override var posX: Int,
     override var posY: Int,
