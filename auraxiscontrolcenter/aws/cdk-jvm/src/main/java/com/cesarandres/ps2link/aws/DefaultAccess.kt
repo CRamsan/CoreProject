@@ -5,7 +5,6 @@ import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.iam.CfnAccessKey
 import software.amazon.awscdk.services.iam.ManagedPolicy
 import software.amazon.awscdk.services.iam.User
-import software.amazon.awscdk.services.iam.UserProps
 
 class DefaultAccess(scope: software.constructs.Construct, id: String) : Construct(scope, id) {
 
