@@ -211,20 +211,22 @@ tasks {
 // https://youtrack.jetbrains.com/issue/KT-46978
 tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
 
-def releaseJs = tasks.register("releaseJs") {
-    group = 'build'
-    description = 'Run all the steps to build a Js artifact'
-    if (isJsTargetEnabled()) {
+def releaseJs = null
+if (isJsTargetEnabled()) {
+    releaseJs = tasks.register("releaseJs") {
+        group = 'build'
+        description = 'Run all the steps to build a Js artifact'
         dependsOn 'ktlint'
         dependsOn 'compileKotlinJs'
         dependsOn 'jsTest'
     }
 }
 
-def releaseJvm = tasks.register("releaseJvm") {
-    group = 'build'
-    description = 'Run all the steps to build a releaseJvm artifact'
-    if (isJvmTargetEnabled()) {
+def releaseJvm = null
+if (isJvmTargetEnabled()) {
+    releaseJvm = tasks.register("releaseJvm") {
+        group = 'build'
+        description = 'Run all the steps to build a releaseJvm artifact'
         dependsOn 'ktlint'
         dependsOn 'compileKotlinJvm'
         dependsOn 'jvmTest'
@@ -232,10 +234,11 @@ def releaseJvm = tasks.register("releaseJvm") {
     }
 }
 
-def releaseAndroid = tasks.register("releaseAndroid") {
-    group = 'build'
-    description = 'Run all the steps to build a releaseAndroid artifact'
-    if (isAndroidTargetEnabled()) {
+def releaseAndroid = null
+if (isAndroidTargetEnabled()) {
+    releaseAndroid = tasks.register("releaseAndroid") {
+        group = 'build'
+        description = 'Run all the steps to build a releaseAndroid artifact'
         dependsOn 'ktlint' // Verifies the format
         dependsOn 'assembleDebug'
         dependsOn 'assembleRelease'

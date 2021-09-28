@@ -40,4 +40,4 @@ ext.isAndroidTargetEnabled = { return isPlatformEnabled(MPP_TARGET.ANDROID) }
 ext.disableJvmTarget = { project.ext.set(DISABLE_JVM, true) }
 ext.disableIosTarget = { project.ext.set(DISABLE_IOS, true) }
 ext.disableJsTarget = { project.ext.set(DISABLE_JS, true) }
-ext.disableJsTarget = { project.ext.set(DISABLE_ANDROID, true) }
+ext.disableAndroidTarget = { project.ext.set(DISABLE_ANDROID, true) }
