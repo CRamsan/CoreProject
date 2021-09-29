@@ -23,7 +23,7 @@ actual class KotlinPriorityQueue<T> actual constructor(comparator: Comparator<T>
         return queue.remove()
     }
 
-    actual fun poll(): T {
+    actual fun poll(): T? {
         return queue.poll()
     }
 
@@ -31,7 +31,7 @@ actual class KotlinPriorityQueue<T> actual constructor(comparator: Comparator<T>
         return queue.element()
     }
 
-    actual fun peek(): T {
+    actual fun peek(): T? {
         return queue.peek()
     }
 

@@ -5,9 +5,9 @@ expect class KotlinPriorityQueue<T>(comparator: Comparator<T>) {
     fun offer(e: T): Boolean
     fun remove(): T
     fun remove(e: T): Boolean
-    fun poll(): T
+    fun poll(): T?
     fun element(): T
-    fun peek(): T
+    fun peek(): T?
     fun size(): Int
     operator fun contains(e: T): Boolean
 }
