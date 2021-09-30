@@ -12,6 +12,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.time.DurationUnit
@@ -29,7 +30,7 @@ class HttpClient(
     private val metrics: MetricsInterface,
 ) {
 
-    @OptIn(ExperimentalTime::class)
+    @OptIn(ExperimentalSerializationApi::class, ExperimentalTime::class)
     suspend inline fun <reified T> sendRequestWithRetry(url: UrlHolder): com.cramsan.ps2link.appcore.network.PS2HttpResponse<T> {
         for (retry in 0..3) {
             delay(retry.toDuration(DurationUnit.SECONDS))

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @HiltViewModel
 class ProfilePagerViewModel @Inject constructor(
@@ -90,8 +91,8 @@ class ProfilePagerViewModel @Inject constructor(
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
         if (response.isSuccessful) {
+            @OptIn(ExperimentalTime::class)
             pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = true))
-        } else {
         }
     }
 
@@ -100,8 +101,8 @@ class ProfilePagerViewModel @Inject constructor(
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
         if (response.isSuccessful) {
+            @OptIn(ExperimentalTime::class)
             pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = false))
-        } else {
         }
     }
 

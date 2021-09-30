@@ -74,6 +74,7 @@ class PS2LinkRepositoryImpl(
         }
         val response = dbgCensus.getProfile(characterId, namespace, lang)
         response.onSuccess {
+            @OptIn(ExperimentalTime::class)
             dbgDAO?.insertCharacter(it.copy(cached = cachedCharacter?.cached ?: false))
         }
         return response

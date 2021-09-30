@@ -55,7 +55,7 @@ class ModelProvider(
     private val mutex = Mutex()
     private val LAST_UPDATE = "LastUpdate"
 
-    @ExperimentalTime
+    @OptIn(ExperimentalTime::class)
     override fun isCatalogAvailable(currentTime: Long): Boolean {
         if (isCatalogReady)
             return true

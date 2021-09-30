@@ -13,6 +13,7 @@ import com.cramsan.ps2link.core.models.CensusLang
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @HiltViewModel
 class ActivityContainerViewModel @Inject constructor(
@@ -51,6 +52,7 @@ class ActivityContainerViewModel @Inject constructor(
         profiles.forEach {
             val response = pS2LinkRepository.getCharacter(it.characterId, it.namespace, lang)
             if (response.isSuccessful) {
+                @OptIn(ExperimentalTime::class)
                 pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = true))
             }
         }

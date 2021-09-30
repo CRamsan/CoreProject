@@ -27,6 +27,7 @@ class SQLDelightDAO(
     private val clock: Clock,
 ) : DbgDAO {
 
+    @OptIn(ExperimentalTime::class)
     private var database: PS2LinkDB = PS2LinkDB(
         driver = sqlDriver,
         CharacterAdapter = com.cramsan.ps2link.db.Character.Adapter(

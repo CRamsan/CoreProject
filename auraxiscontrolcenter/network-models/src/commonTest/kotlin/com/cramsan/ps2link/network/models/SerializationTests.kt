@@ -5,6 +5,7 @@ import com.cramsan.ps2link.network.models.content.response.Character_name_list_r
 import com.cramsan.ps2link.network.models.content.response.Server_Status_response
 import com.cramsan.ps2link.network.models.content.response.Server_response
 import com.cramsan.ps2link.network.models.content.response.server.PopulationStatus
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.test.BeforeTest
@@ -27,6 +28,7 @@ class SerializationTests {
      * Test getting all the server's population. This is not a regular Census API call so use it with care.
      * https://census.daybreakgames.com/s:PS2Link/json/status/ps2
      */
+    @OptIn(ExperimentalSerializationApi::class)
     @Test
     fun testServerPopulationJson() {
         val response = "{\"ps2\":{\"Live\":{\"Cobalt (EU)\":{\"region_code\":\"live\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":62,\"age\":\"00:01:02\"},\"Connery (US West)\":{\"region_code\":\"live\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":97,\"age\":\"00:01:37\"},\"Emerald (US East)\":{\"region_code\":\"live\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":92,\"age\":\"00:01:32\"},\"Miller (EU)\":{\"region_code\":\"live\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":97,\"age\":\"00:01:37\"},\"SolTech (Asia)\":{\"region_code\":\"live\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":67,\"age\":\"00:01:07\"}},\"Live PS4\":{\"Ceres (EU)\":{\"region_code\":\"live_ps4\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":94,\"age\":\"00:01:34\"},\"Genudine\":{\"region_code\":\"live_ps4\",\"title\":\"PlanetSide 2\",\"status\":\"low\",\"ageSeconds\":61,\"age\":\"00:01:01\"}}}}"
@@ -45,6 +47,7 @@ class SerializationTests {
      * Test getting all servers within a namespace.
      * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/world/?c%3AlimitPerDB=20&c%3Alang=en
      */
+    @OptIn(ExperimentalSerializationApi::class)
     @Test
     fun testServerStatusJson() {
         val response = "{\"world_list\":[{\"world_id\":\"1\",\"state\":\"online\",\"name\":{\"en\":\"Connery\"}},{\"world_id\":\"13\",\"state\":\"online\",\"name\":{\"en\":\"Cobalt\"}},{\"world_id\":\"10\",\"state\":\"online\",\"name\":{\"en\":\"Miller\"}},{\"world_id\":\"17\",\"state\":\"online\",\"name\":{\"en\":\"Emerald\"}},{\"world_id\":\"40\",\"state\":\"online\",\"name\":{\"en\":\"SolTech\"}},{\"world_id\":\"19\",\"state\":\"online\",\"name\":{\"en\":\"Jaeger\"}},{\"world_id\":\"24\",\"state\":\"locked\",\"name\":{\"en\":\"Apex\"}},{\"world_id\":\"25\",\"state\":\"locked\",\"name\":{\"en\":\"Briggs\"},\"description\":{\"en\":\"AUS\"}}],\"returned\":8}"
@@ -60,6 +63,7 @@ class SerializationTests {
      * Test getting a list of characters matching a name.
      * https://census.daybreakgames.com/s:PS2Link/get/ps2ps4us:v2/character_name/?name.first_lower=%5Ecramsan&c%3Alimit=25&c%3Ajoin=character&c%3Alang=en
      */
+    @OptIn(ExperimentalSerializationApi::class)
     @Test
     fun testSearchingCharacterUSJson() {
         val response = "{\"character_name_list\":[{\"character_id\":\"5428356399611664305\",\"name\":{\"first\":\"CRamsan\",\"first_lower\":\"cramsan\"},\"character_id_join_character\":{\"character_id\":\"5428356399611664305\",\"name\":{\"first\":\"CRamsan\",\"first_lower\":\"cramsan\"},\"faction_id\":\"1\",\"head_id\":\"4\",\"title_id\":\"37\",\"times\":{\"creation\":\"1436243249\",\"creation_date\":\"2015-07-07 04:27:29.0\",\"last_save\":\"1584167881\",\"last_save_date\":\"2020-03-14 06:38:01.0\",\"last_login\":\"1584165426\",\"last_login_date\":\"2020-03-14 05:57:06.0\",\"login_count\":\"87\",\"minutes_played\":\"3054\"},\"certs\":{\"earned_points\":\"2167\",\"gifted_points\":\"1532\",\"spent_points\":\"3353\",\"available_points\":\"346\",\"percent_to_next\":\"0.34\"},\"battle_rank\":{\"percent_to_next\":\"76\",\"value\":\"26\"},\"profile_id\":\"19\",\"daily_ribbon\":{\"count\":\"0\",\"time\":\"1584144000\",\"date\":\"2020-03-14 00:00:00.0\"}}},{\"character_id\":\"5428387482490675569\",\"name\":{\"first\":\"CRamsanTR\",\"first_lower\":\"cramsantr\"},\"character_id_join_character\":{\"character_id\":\"5428387482490675569\",\"name\":{\"first\":\"CRamsanTR\",\"first_lower\":\"cramsantr\"},\"faction_id\":\"2\",\"head_id\":\"1\",\"title_id\":\"0\",\"times\":{\"creation\":\"1443917728\",\"creation_date\":\"2015-10-04 00:15:28.0\",\"last_save\":\"1443920148\",\"last_save_date\":\"2015-10-04 00:55:48.0\",\"last_login\":\"1443918387\",\"last_login_date\":\"2015-10-04 00:26:27.0\",\"login_count\":\"2\",\"minutes_played\":\"29\"},\"certs\":{\"earned_points\":\"14\",\"gifted_points\":\"210\",\"spent_points\":\"105\",\"available_points\":\"119\",\"percent_to_next\":\"0.72\"},\"battle_rank\":{\"percent_to_next\":\"96\",\"value\":\"3\"},\"profile_id\":\"7\",\"daily_ribbon\":{\"count\":\"0\",\"time\":\"1443855600\",\"date\":\"2015-10-03 07:00:00.0\"}}}],\"returned\":2}"
