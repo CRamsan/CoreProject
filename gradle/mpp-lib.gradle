@@ -110,15 +110,15 @@ kotlin {
             }
         }
     }
-    // This is for iPhone emulator
-    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
+
     if (isIosTargetEnabled()) {
-        iosX64("ios") {
-            binaries {
-                framework()
-            }
+        // TODO: This target should be determined at configuration time since it depends on the
+        // architecture of the host.
+        iosSimulatorArm64("ios") {
+
         }
     }
+
     if (isJsTargetEnabled()) {
         js {
             nodejs()
