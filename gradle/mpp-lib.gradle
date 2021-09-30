@@ -9,7 +9,7 @@
  * disableJvmTarget()
  * disableIosTarget()
  * disableJsTarget()
- *
+ * disableAndroidTarget()
  */
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "org.jetbrains.dokka"
@@ -18,7 +18,7 @@ apply from: "$rootDir/gradle/helper-functions.gradle"
 apply from: "$rootDir/gradle/ktlint.gradle"
 
 if (isJvmTargetEnabled()) {
-// Set the task name for the jacoco-mpp-jvm plugin
+    // Set the task name for the jacoco-mpp-jvm plugin
     ext {
         jvmTestTaskName = "jvmTest"
     }
@@ -30,7 +30,6 @@ if (isAndroidTargetEnabled()) {
     apply plugin: "kotlin-kapt"
 
     apply from: "$rootDir/gradle/jacoco-android.gradle"
-
 
     android {
         buildToolsVersion versions_tools.AndroidBuildToolsVersion
@@ -47,19 +46,6 @@ if (isAndroidTargetEnabled()) {
             targetCompatibility versions_tools.JavaCompatibility
         }
 
-        sourceSets {
-            main {
-                // Changes the directory for Java sources. The default directory is
-                // 'src/main/java'.
-                java.srcDirs += ['src/main/kotlin']
-            }
-            test {
-                java.srcDirs += ['src/test/kotlin']
-            }
-            androidTest {
-                java.srcDirs += ['src/androidTest/kotlin']
-            }
-        }
         testOptions {
             unitTests {
                 includeAndroidResources = true

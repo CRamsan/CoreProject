@@ -15,19 +15,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets {
-        main {
-            // Add 'kotlin' as a valid source folder. The default directory is onyl 'src/main/java'.
-            java.srcDirs += ['src/main/kotlin']
-        }
-        test {
-            java.srcDirs += ['src/test/kotlin']
-        }
-        androidTest {
-            java.srcDirs += ['src/androidTest/kotlin']
-        }
-    }
-
     compileOptions {
         // Set the compile options for Java source
         sourceCompatibility versions_tools.JavaCompatibility

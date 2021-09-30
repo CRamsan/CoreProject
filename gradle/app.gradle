@@ -46,19 +46,6 @@ android {
         }
     }
 
-    sourceSets {
-        // Add 'kotlin' as a valid source folder. The default directory is onyl 'src/main/java'.
-        main {
-            java.srcDirs += ['src/main/kotlin']
-        }
-        test {
-            java.srcDirs += ['src/test/kotlin']
-        }
-        androidTest {
-            java.srcDirs += ['src/androidTest/kotlin']
-        }
-    }
-
     buildFeatures {
         dataBinding true // Enable databinding https://developer.android.com/topic/libraries/data-binding
     }
