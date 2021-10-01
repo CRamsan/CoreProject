@@ -234,6 +234,17 @@ if (isAndroidTargetEnabled()) {
     }
 }
 
+def releaseIos = null
+if (isIosTargetEnabled()) {
+    releaseIos = tasks.register("releaseIos") {
+        group = 'build'
+        description = 'Run all the steps to build a releaseIos artifact'
+        dependsOn 'ktlint'
+        dependsOn 'compileKotlinIos'
+        dependsOn 'iosTest'
+    }
+}
+
 def release = tasks.register("release") {
     group = 'build'
     description = 'Run all the steps to build a release artifact for all enabled targets'
@@ -246,6 +257,9 @@ def release = tasks.register("release") {
     }
     if (isJsTargetEnabled()) {
         dependsOn 'releaseJs'
+    }
+    if (isIosTargetEnabled()) {
+        dependsOn 'releaseIos'
     }
 }
 
