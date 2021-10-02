@@ -62,6 +62,7 @@ dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
+    implementation project(":auraxiscontrolcenter:metrics")
     implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
@@ -91,6 +92,7 @@ dependencies {
     implementation packages.KotlinxDatetime
     implementation packages.KotlinxSerialization
     implementation packages.AppCenterSdk
+    implementation packages.AppCenterSdkCrashes
     implementation packages.KtorAndroid
     implementation packages.PrettyTime
     implementation packages.SqlDelightAndroidDriver
@@ -107,4 +109,5 @@ dependencies {
 registerDependency(":framework")
 registerDependency(":auraxiscontrolcenter:appcore")
 registerDependency(":auraxiscontrolcenter:core-models")
+registerDependency(":auraxiscontrolcenter:metrics")
 registerDependency(":auraxiscontrolcenter:ui")

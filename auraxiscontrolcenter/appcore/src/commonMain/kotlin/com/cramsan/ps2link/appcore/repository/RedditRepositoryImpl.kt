@@ -8,6 +8,7 @@ import com.cramsan.ps2link.appcore.network.process
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.core.models.RedditPage
 import com.cramsan.ps2link.core.models.RedditPost
+import com.cramsan.ps2link.metric.HttpNamespace
 import com.cramsan.ps2link.network.models.reddit.RedditResponse
 import io.ktor.http.Url
 
@@ -20,7 +21,7 @@ class RedditRepositoryImpl(
         val url = "$BASE_URL/${redditPage.path}/$JSON_ENDPOINT"
         val response = http.sendRequestWithRetry<RedditResponse>(
             UrlHolder(
-                url,
+                HttpNamespace.Api.REDDIT,
                 Url(url)
             )
         )

@@ -5,4 +5,5 @@ object PS2ApplicationModuleConstants {
     const val CENSUS_SERVICE_ID = "CENSUS_SERVICE_ID"
     const val AWS_ACCESS_KEY = "AWS_ACCESS_KEY"
     const val AWS_SECRET_KEY = "AWS_SECRET_KEY"
+    const val APP_SCOPE = "APP_SCOPE"
 }

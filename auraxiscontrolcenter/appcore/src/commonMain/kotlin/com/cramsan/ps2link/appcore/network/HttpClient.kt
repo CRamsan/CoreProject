@@ -6,6 +6,7 @@ import com.cramsan.framework.metrics.MetricType
 import com.cramsan.framework.metrics.MetricUnit
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.ps2link.appcore.census.UrlHolder
+import com.cramsan.ps2link.metric.HttpNamespace
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
 import io.ktor.client.request.get
@@ -31,7 +32,7 @@ class HttpClient(
 ) {
 
     @OptIn(ExperimentalSerializationApi::class, ExperimentalTime::class)
-    suspend inline fun <reified T> sendRequestWithRetry(url: UrlHolder): com.cramsan.ps2link.appcore.network.PS2HttpResponse<T> {
+    suspend inline fun <reified T> sendRequestWithRetry(url: UrlHolder): PS2HttpResponse<T> {
         for (retry in 0..3) {
             delay(retry.toDuration(DurationUnit.SECONDS))
             return try {
@@ -68,14 +69,14 @@ class HttpClient(
         }
 
         if (response.status.isSuccess()) {
-            metrics.record(MetricType.SUCCESS, TAG, url.urlIdentifier)
+            metrics.record(MetricType.SUCCESS, HttpNamespace, url.urlIdentifier.name)
         } else {
-            metrics.record(MetricType.FAILURE, TAG, url.urlIdentifier)
+            metrics.record(MetricType.FAILURE, HttpNamespace, url.urlIdentifier.name)
         }
         metrics.record(
             MetricType.LATENCY,
-            TAG,
-            url.urlIdentifier,
+            HttpNamespace,
+            url.urlIdentifier.name,
             value = latency.toDouble(DurationUnit.MILLISECONDS),
             unit = MetricUnit.MILLIS
         )

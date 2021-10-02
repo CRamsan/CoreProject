@@ -19,7 +19,7 @@ interface MetricsInterface {
      */
     fun record(
         type: MetricType,
-        namespace: String,
+        namespace: MetricNamespace,
         tag: String,
         metadata: Map<String, String>? = null,
         value: Double = 1.0,

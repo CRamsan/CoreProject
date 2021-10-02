@@ -3,6 +3,7 @@ package com.cesarandres.ps2link
 import android.content.Context
 import android.content.res.Resources
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_CENTER_ID
+import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_SCOPE
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.AWS_ACCESS_KEY
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.AWS_SECRET_KEY
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.CENSUS_SERVICE_ID
@@ -76,6 +77,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import org.ocpsoft.prettytime.PrettyTime
@@ -200,6 +204,14 @@ object PS2ApplicationModule {
     @Singleton
     fun provideDispatcher(): DispatcherProvider = DispatcherProviderImpl()
 
+    @Singleton
+    @Provides
+    @Named(APP_SCOPE)
+    fun providesCoroutineScope(): CoroutineScope {
+        // Run this code when providing an instance of CoroutineScope
+        return CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    }
+
     @Provides
     @Singleton
     fun provideClock(): Clock = Clock.System
@@ -264,9 +276,16 @@ object PS2ApplicationModule {
     @Singleton
     fun provideMetricsDelegate(
         @Named(AWS_ACCESS_KEY) accessKey: String,
-        @Named(AWS_SECRET_KEY) secretKey: String
+        @Named(AWS_SECRET_KEY) secretKey: String,
+        dispatcherProvider: DispatcherProvider,
+        @Named(APP_SCOPE) scope: CoroutineScope,
     ): MetricsDelegate {
-        return CloudwatchMetrics(accessKey, secretKey).apply {
+        return CloudwatchMetrics(
+            accessKey,
+            secretKey,
+            dispatcherProvider,
+            scope,
+        ).apply {
             initialize()
         }
     }

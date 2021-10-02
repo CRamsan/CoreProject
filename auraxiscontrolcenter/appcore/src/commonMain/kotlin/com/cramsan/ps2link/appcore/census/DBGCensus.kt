@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.census
 
 import com.cramsan.ps2link.core.models.CensusLang
+import com.cramsan.ps2link.metric.HttpNamespace
 import com.cramsan.ps2link.network.models.Namespace
 import com.cramsan.ps2link.network.models.Verb
 import com.cramsan.ps2link.network.models.util.Collections
@@ -38,12 +39,13 @@ class DBGCensus(
         collection: Collections.PS2Collection,
         identifier: String? = null,
         query: QueryString? = QueryString(),
+        urlIdentifier: HttpNamespace.Api,
         namespace: Namespace,
         currentLang: CensusLang,
     ): UrlHolder {
         val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
-            urlIdentifier = baseUrl,
+            urlIdentifier = urlIdentifier,
             completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.lowercase()),
         )
     }
@@ -56,12 +58,13 @@ class DBGCensus(
         verb: Verb,
         collection: Collections.PS2Collection,
         urlParams: String,
+        urlIdentifier: HttpNamespace.Api,
         namespace: Namespace,
         currentLang: CensusLang
     ): UrlHolder {
         val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
-            urlIdentifier = baseUrl,
+            urlIdentifier = urlIdentifier,
             completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.lowercase())
         )
     }
@@ -71,7 +74,7 @@ class DBGCensus(
      */
     fun generateServerPopulationRequest(): UrlHolder {
         return UrlHolder(
-            urlIdentifier = "$ENDPOINT_URL/s:$serviceId/json/status/ps2",
+            urlIdentifier = HttpNamespace.Api.SERVER_POP,
             completeUrl = Url("$ENDPOINT_URL/s:$serviceId/json/status/ps2"),
         )
     }

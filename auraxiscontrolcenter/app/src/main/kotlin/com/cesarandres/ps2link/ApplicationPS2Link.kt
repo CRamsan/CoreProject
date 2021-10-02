@@ -6,10 +6,14 @@ import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.metrics.MetricType
+import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.userevents.UserEventsInterface
 import com.cramsan.framework.userevents.logEvent
+import com.cramsan.ps2link.metric.ApplicationNamespace
 import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.crashes.Crashes
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 import javax.inject.Named
@@ -39,6 +43,9 @@ class ApplicationPS2Link : Application() {
     @Named(PS2ApplicationModuleConstants.APP_CENTER_ID)
     lateinit var appCenterId: String
 
+    @Inject
+    lateinit var metrics: MetricsInterface
+
     /*
      * (non-Javadoc)
      *
@@ -50,6 +57,14 @@ class ApplicationPS2Link : Application() {
         AppCenter.start(this, appCenterId)
         crashHandler.initialize()
         userEvents.initialize()
+        Crashes.hasCrashedInLastSession().thenAccept {
+            val eventType = if (it) {
+                MetricType.FAILURE
+            } else {
+                MetricType.SUCCESS
+            }
+            metrics.record(eventType, ApplicationNamespace, ApplicationNamespace.Event.LAUNCH.name)
+        }
         logEvent(TAG, "Application Started")
     }
 

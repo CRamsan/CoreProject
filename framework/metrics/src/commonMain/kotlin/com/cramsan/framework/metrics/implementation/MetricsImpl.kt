@@ -1,6 +1,7 @@
 package com.cramsan.framework.metrics.implementation
 
 import com.cramsan.framework.logging.EventLoggerInterface
+import com.cramsan.framework.metrics.MetricNamespace
 import com.cramsan.framework.metrics.MetricType
 import com.cramsan.framework.metrics.MetricUnit
 import com.cramsan.framework.metrics.MetricsDelegate
@@ -21,14 +22,14 @@ class MetricsImpl(
 
     override fun record(
         type: MetricType,
-        namespace: String,
+        namespace: MetricNamespace,
         tag: String,
         metadata: Map<String, String>?,
         value: Double,
         unit: MetricUnit
     ) {
         eventLoggerInterface.i(TAG, "Metric of type: $type, Namespace: $namespace, Tag: $tag, Metadata: $metadata, Value: $value, Unit: $unit")
-        platformDelegate.record(type, namespace, tag, metadata, value, unit)
+        platformDelegate.record(type, namespace.identifier, tag, metadata, value, unit)
     }
 
     companion object {

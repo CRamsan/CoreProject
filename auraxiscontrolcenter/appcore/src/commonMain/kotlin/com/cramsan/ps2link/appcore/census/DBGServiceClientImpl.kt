@@ -33,6 +33,7 @@ import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.core.models.WeaponStatItem
 import com.cramsan.ps2link.core.models.toMedalType
 import com.cramsan.ps2link.db.models.Faction
+import com.cramsan.ps2link.metric.HttpNamespace
 import com.cramsan.ps2link.network.models.Verb
 import com.cramsan.ps2link.network.models.content.CharacterEvent
 import com.cramsan.ps2link.network.models.content.CharacterFriend
@@ -63,8 +64,6 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.hours
-import kotlin.time.minutes
 
 /**
  * This class will be in charge of formatting requests for DBG Census API and
@@ -102,6 +101,7 @@ class DBGServiceClientImpl(
                 "outfit,world,online_status"
             )
                 .AddCommand(QueryString.QueryCommand.JOIN, "type:world^inject_at:server"),
+            HttpNamespace.Api.PROFILE,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -132,6 +132,7 @@ class DBGServiceClientImpl(
                 )
                 .AddCommand(QueryString.QueryCommand.LIMIT, "25")
                 .AddCommand(QueryString.QueryCommand.JOIN, "character"),
+            HttpNamespace.Api.PROFILE_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -163,6 +164,7 @@ class DBGServiceClientImpl(
                 character_id
             )
                 .AddCommand(QueryString.QueryCommand.RESOLVE, "character_name"),
+            HttpNamespace.Api.FRIEND_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -192,6 +194,7 @@ class DBGServiceClientImpl(
                     "character,attacker"
                 ).AddCommand(QueryString.QueryCommand.LIMIT, "100")
                 .AddComparison("type", QueryString.SearchModifier.EQUALS, "DEATH,KILL"),
+            HttpNamespace.Api.KILL_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -242,6 +245,7 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.CHARACTERS_WEAPON_STAT_BY_FACTION,
             "character_id=" + character_id + "&c:join=item^show:image_path'name." + currentLang.name.lowercase() +
                 "&c:join=vehicle^show:image_path'name." + currentLang.name.lowercase() + "&c:limit=10000",
+            HttpNamespace.Api.WEAPON_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -281,6 +285,7 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.OUTFIT,
             "",
             query,
+            HttpNamespace.Api.OUTFIT_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -302,6 +307,7 @@ class DBGServiceClientImpl(
             outfitId,
             QueryString.generateQeuryString()
                 .AddCommand(QueryString.QueryCommand.RESOLVE, "leader"),
+            HttpNamespace.Api.OUTFIT,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -330,6 +336,7 @@ class DBGServiceClientImpl(
                     QueryString.QueryCommand.RESOLVE,
                     "member_online_status,member,member_character(name,type.faction)"
                 ),
+            HttpNamespace.Api.OUTFIT_MEMBER_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -355,6 +362,7 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.WORLD,
             "",
             QueryString.generateQeuryString().AddCommand(QueryString.QueryCommand.LIMITPERDB, "20"),
+            HttpNamespace.Api.SERVER_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -401,6 +409,7 @@ class DBGServiceClientImpl(
                     // Get metagame events that are newer than 2 hours
                     Clock.System.now().minus(Duration.hours(15)).epochSeconds.toString()
                 ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
+            HttpNamespace.Api.SERVER_METADATA,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -427,6 +436,7 @@ class DBGServiceClientImpl(
                     QueryString.QueryCommand.HIDE,
                     "name,battle_rank,certs,times,daily_ribbon"
                 ),
+            HttpNamespace.Api.STAT_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -448,6 +458,7 @@ class DBGServiceClientImpl(
                 Verb.GET,
                 Collections.PS2Collection.OUTFIT_MEMBER,
                 "c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.lowercase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
+                HttpNamespace.Api.OUTFIT_MEMBERS_ONLINE,
                 namespace.toNetworkModel(),
                 currentLang
             )
@@ -471,6 +482,7 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.ITEM,
             null,
             queryBuilder,
+            HttpNamespace.Api.WEAPONS_FOR_KILL_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )
@@ -501,6 +513,7 @@ class DBGServiceClientImpl(
             Collections.PS2Collection.VEHICLE,
             null,
             queryBuilder,
+            HttpNamespace.Api.VEHICLES_FOR_KILL_LIST,
             namespace.toNetworkModel(),
             currentLang,
         )

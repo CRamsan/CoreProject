@@ -26,8 +26,6 @@ import com.cramsan.awslib.scene.SceneEventsCallback
 import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D

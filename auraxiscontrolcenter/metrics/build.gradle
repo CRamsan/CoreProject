@@ -1,0 +1,19 @@
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
+apply from: "$rootDir/gradle/mpp-lib.gradle"
+
+dependencies {
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework:interfacelib")
+            }
+        }
+    }
+}
+
+registerDependency(":framework:interfacelib")
