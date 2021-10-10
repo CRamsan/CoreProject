@@ -78,20 +78,6 @@ steps:
     tasks: ':framework-samples:js-lib:release --stacktrace'
 
 - task: Gradle@2
-  displayName: 'JVM-GUI'
-  condition: succeededOrFailed()
-  inputs:
-    workingDirectory: ''
-    gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: ':framework-samples:jvm-gui:release --stacktrace'
-
-- task: Gradle@2
   displayName: 'Android-App'
   condition: succeededOrFailed()
   inputs:

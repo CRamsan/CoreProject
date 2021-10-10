@@ -63,7 +63,6 @@ tasks.register("releaseAll") {
     dependsOn ':framework-samples:mpp-lib:release'
     dependsOn ':framework-samples:jvm-lib:release'
     dependsOn ':framework-samples:js-lib:release'
-    dependsOn ':framework-samples:jvm-gui:release'
     dependsOn ':framework-samples:android-app:release'
 
 }
