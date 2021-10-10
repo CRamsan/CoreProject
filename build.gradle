@@ -58,7 +58,6 @@ tasks.register("releaseAll") {
     dependsOn ':auraxiscontrolcenter:app:release'
     dependsOn ':auraxiscontrolcenter:aws:cdk-jvm:release'
     dependsOn ':doom:game:desktop:release'
-    dependsOn ':doom:game:android:release'
     dependsOn ':framework-samples:android-app:release'
     dependsOn ':framework-samples:android-lib:release'
     dependsOn ':framework-samples:mpp-lib:release'

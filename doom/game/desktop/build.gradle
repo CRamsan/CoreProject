@@ -1,9 +1,9 @@
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 
-sourceSets.main.java.srcDirs = [ "src/" ]
+project.ext.mainClassName = "com.cramsan.awsgame.desktop.DesktopLauncherKt"
+project.ext.assetsDir = new File("../core/assets")
 
-project.ext.mainClassName = "com.cramsan.awsgame.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../android/src/main/assets")
+sourceSets.main.resources.srcDirs = ["../core/assets"]
 
 dependencies {
     implementation project(":doom:game:core")
@@ -29,14 +29,14 @@ task debug(dependsOn: classes, type: JavaExec) {
 }
 
 task dist(type: Jar) {
-    from files(sourceSets.main.output.getClassesDirs())
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
-    from files(project.assetsDir)
- 
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
 }
 
 dist.dependsOn classes

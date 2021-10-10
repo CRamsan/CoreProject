@@ -25,11 +25,8 @@ include 'doom:lib'
 include 'doom:lib:leveleditor'
 include 'doom:lib:sample'
 
-include 'doom:game'
 include 'doom:game:core'
 include 'doom:game:desktop'
-include 'doom:game:android'
-include 'doom:game:ios'
 
 include 'auraxiscontrolcenter:app'
 include 'auraxiscontrolcenter:appcore'
