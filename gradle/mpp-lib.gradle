@@ -216,7 +216,7 @@ if (isJvmTargetEnabled()) {
         dependsOn 'ktlint'
         dependsOn 'compileKotlinJvm'
         dependsOn 'jvmTest'
-        dependsOn 'jacocoTestReport'
+        dependsOn 'jacocoJvmKMMTestReport'
     }
 }
 

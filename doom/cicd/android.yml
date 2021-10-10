@@ -24,7 +24,7 @@ steps:
 - template: ../../cicd-templates/configure-local-jdk.yml
 - task: android-manifest-version@1
   inputs:
-    sourcePath: '$(system.defaultworkingdirectory)/doom/game/android/AndroidManifest.xml'
+    sourcePath: '$(system.defaultworkingdirectory)/doom/game/android/src/main/AndroidManifest.xml'
     versionCodeOption: 'buildid'
     versionCode: '$(Build.BuildId)'
     versionName:

@@ -11,9 +11,9 @@ jacoco {
 
 project.afterEvaluate {
 
-    task "jacocoTestReport" (type:JacocoReport, dependsOn: "$jvmTestTaskName") {
+    task "jacocoJvmKMMTestReport" (type:JacocoReport, dependsOn: "$jvmTestTaskName") {
         group = 'verification'
-        description = "Generate Jacoco JVM coverage report."
+        description = "Generate Jacoco JVM in KMM coverage report."
 
         classDirectories.setFrom(files([
                 fileTree(dir: "${project.buildDir}/classes/kotlin/jvm/")
