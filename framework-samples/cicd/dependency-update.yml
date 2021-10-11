@@ -3,18 +3,8 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-# run on a daily basis
-
-schedules:
-- cron: "0 0 * * *"
-  displayName: Daily package update report
-  branches:
-    include:
-    - main
-  always: true
-
 pool:
-  name: 'Default'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - template: ../../cicd-templates/configure-local-jdk.yml
