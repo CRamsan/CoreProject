@@ -53,7 +53,6 @@ tasks.register("releaseAll") {
 
     // List all build targets
     dependsOn ':petproject:app:release'
-    dependsOn ':petproject:webservice:release'
     dependsOn ':petproject:azurefunction:release'
     dependsOn ':auraxiscontrolcenter:app:release'
     dependsOn ':auraxiscontrolcenter:aws:cdk-jvm:release'
