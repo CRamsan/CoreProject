@@ -1,0 +1,42 @@
+/**
+ * Plugin to create a JVM based CDK package.
+ * This plugin expects that the project sets the value for mainClassTarget.
+ * For example: ext.mainClassTarget = "com.cramsan.awslib.aws.PS2LinkApp"
+ */
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
+
+dependencies {
+    implementation meta_packages.CdkCommons
+}
+
+task synthesize(type:Exec) {
+    group = 'cdk'
+    description = 'Synthesize the cloud formation'
+
+    workingDir "$projectDir"
+
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'cdk', 'synthesize'
+    } else {
+        commandLine "cdk", "synthesize"
+    }
+}
+
+task forceDeploy(type:Exec) {
+    group = 'cdk'
+    description = 'Deploy this stack to the AWS account'
+
+    workingDir "$projectDir"
+
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'cdk', 'deploy', '--require-approval', 'never'
+    } else {
+        commandLine "cdk", "deploy", "--require-approval", "never"
+    }
+}
+
+releaseJvm {
+    dependsOn "run"
+}

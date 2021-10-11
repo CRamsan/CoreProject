@@ -1,7 +1,7 @@
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
-apply from: "$rootDir/gradle/mpp-lib.gradle"
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 apply plugin: "com.squareup.sqldelight"
 
 sqldelight {

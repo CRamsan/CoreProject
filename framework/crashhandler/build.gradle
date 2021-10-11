@@ -1,4 +1,4 @@
-apply from: "$rootDir/gradle/mpp-lib.gradle"
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 
 dependencies {
     implementation packages.AppCenterSdkCrashes

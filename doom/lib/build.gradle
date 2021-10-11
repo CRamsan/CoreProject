@@ -2,7 +2,7 @@ ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 disableJsTarget()
 
-apply from: "$rootDir/gradle/mpp-lib.gradle"
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 
 /**
  * Configure multiplatform project
