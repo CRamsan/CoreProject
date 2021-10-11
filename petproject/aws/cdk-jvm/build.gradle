@@ -1,9 +1,0 @@
-ext.mainClassTarget = "com.cramsan.petproject.aws.TestAwsJavaApp"
-
-apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
-
-dependencies {
-    implementation meta_packages.CdkCommons
-    implementation project(":petproject:aws:common-jvm")
-}
-registerDependency(":petproject:aws:common-jvm")
