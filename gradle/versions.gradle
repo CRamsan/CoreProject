@@ -132,6 +132,7 @@ def packages = [
         AwsSdkV2DynamoDBEnhanced : "software.amazon.awssdk:dynamodb-enhanced:$versions_packages.AwsSdkV2",
         AwsSdkV2Lambda : "software.amazon.awssdk:lambda:$versions_packages.AwsSdkV2",
         AwsSdkV2Cloudwatch : "software.amazon.awssdk:cloudwatch:$versions_packages.AwsSdkV2",
+        // TODO: Remove this dependency
         BouncyCastle : "org.bouncycastle:bcpkix-jdk15on:$versions_packages.BouncyCastle",
         CdkIam : "software.amazon.awscdk:iam:$versions_packages.Cdk",
         CdkCore : "software.amazon.awscdk:core:$versions_packages.Cdk",
