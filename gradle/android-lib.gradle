@@ -55,7 +55,6 @@ android {
 
 dependencies {
     implementation meta_packages.CoreAndroid
-    implementation(packages.BouncyCastle) { force = true }
 
     testImplementation meta_packages.CoreTestAndroid
 
