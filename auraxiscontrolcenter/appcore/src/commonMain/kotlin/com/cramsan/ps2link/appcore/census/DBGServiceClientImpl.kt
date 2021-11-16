@@ -90,7 +90,7 @@ class DBGServiceClientImpl(
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): PS2HttpResponse<Character> {
+    ): PS2HttpResponse<Character?> {
         logI(TAG, "Downloading Profile")
         val url = census.generateGameDataRequest(
             Verb.GET,
@@ -107,7 +107,7 @@ class DBGServiceClientImpl(
         )
         val response = http.sendRequestWithRetry<Character_list_response>(url)
         return response.process {
-            it.character_list.first().toCoreModel(namespace, clock.now(), currentLang)
+            it.character_list?.firstOrNull()?.toCoreModel(namespace, clock.now(), currentLang)
         }
     }
 
@@ -139,13 +139,13 @@ class DBGServiceClientImpl(
 
         val response = http.sendRequestWithRetry<Character_name_list_response>(url)
         return response.process { characterList ->
-            characterList.character_name_list.map {
-                it.character_id_join_character.toCoreModel(
+            characterList.character_name_list?.map {
+                it.character_id_join_character?.toCoreModel(
                     namespace,
                     clock.now(),
                     currentLang
                 )
-            }
+            }?.filterNotNull() ?: emptyList()
         }
     }
 
@@ -443,8 +443,8 @@ class DBGServiceClientImpl(
 
         val response = http.sendRequestWithRetry<Character_list_response>(url)
         return response.process {
-            val profile = it.character_list.first()
-            formatStats(profile.stats?.stat_history)
+            val profile = it.character_list?.first()
+            formatStats(profile?.stats?.stat_history)
         }
     }
 
@@ -464,7 +464,7 @@ class DBGServiceClientImpl(
             )
         val response = http.sendRequestWithRetry<Outfit_member_response>(url)
         return response.process { outfitMembersOnline ->
-            outfitMembersOnline.outfit_member_list.mapNotNull { it.toCoreModel(namespace) }
+            outfitMembersOnline.outfit_member_list?.mapNotNull { it.toCoreModel(namespace) } ?: emptyList()
         }
     }
 

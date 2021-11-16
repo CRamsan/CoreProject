@@ -68,23 +68,23 @@ class SerializationTests {
     fun testSearchingCharacterUSJson() {
         val response = "{\"character_name_list\":[{\"character_id\":\"5428356399611664305\",\"name\":{\"first\":\"CRamsan\",\"first_lower\":\"cramsan\"},\"character_id_join_character\":{\"character_id\":\"5428356399611664305\",\"name\":{\"first\":\"CRamsan\",\"first_lower\":\"cramsan\"},\"faction_id\":\"1\",\"head_id\":\"4\",\"title_id\":\"37\",\"times\":{\"creation\":\"1436243249\",\"creation_date\":\"2015-07-07 04:27:29.0\",\"last_save\":\"1584167881\",\"last_save_date\":\"2020-03-14 06:38:01.0\",\"last_login\":\"1584165426\",\"last_login_date\":\"2020-03-14 05:57:06.0\",\"login_count\":\"87\",\"minutes_played\":\"3054\"},\"certs\":{\"earned_points\":\"2167\",\"gifted_points\":\"1532\",\"spent_points\":\"3353\",\"available_points\":\"346\",\"percent_to_next\":\"0.34\"},\"battle_rank\":{\"percent_to_next\":\"76\",\"value\":\"26\"},\"profile_id\":\"19\",\"daily_ribbon\":{\"count\":\"0\",\"time\":\"1584144000\",\"date\":\"2020-03-14 00:00:00.0\"}}},{\"character_id\":\"5428387482490675569\",\"name\":{\"first\":\"CRamsanTR\",\"first_lower\":\"cramsantr\"},\"character_id_join_character\":{\"character_id\":\"5428387482490675569\",\"name\":{\"first\":\"CRamsanTR\",\"first_lower\":\"cramsantr\"},\"faction_id\":\"2\",\"head_id\":\"1\",\"title_id\":\"0\",\"times\":{\"creation\":\"1443917728\",\"creation_date\":\"2015-10-04 00:15:28.0\",\"last_save\":\"1443920148\",\"last_save_date\":\"2015-10-04 00:55:48.0\",\"last_login\":\"1443918387\",\"last_login_date\":\"2015-10-04 00:26:27.0\",\"login_count\":\"2\",\"minutes_played\":\"29\"},\"certs\":{\"earned_points\":\"14\",\"gifted_points\":\"210\",\"spent_points\":\"105\",\"available_points\":\"119\",\"percent_to_next\":\"0.72\"},\"battle_rank\":{\"percent_to_next\":\"96\",\"value\":\"3\"},\"profile_id\":\"7\",\"daily_ribbon\":{\"count\":\"0\",\"time\":\"1443855600\",\"date\":\"2015-10-03 07:00:00.0\"}}}],\"returned\":2}"
         val parsedResponse = json.decodeFromString<Character_name_list_response>(response)
-        assertEquals(2, parsedResponse.character_name_list.size)
-        val baseCharacter = parsedResponse.character_name_list[0]
-        val character = baseCharacter.character_id_join_character
-        assertEquals("5428356399611664305", baseCharacter.character_id)
-        assertEquals("5428356399611664305", character.character_id)
-        assertEquals("CRamsan", baseCharacter.name?.first)
-        assertEquals("cramsan", baseCharacter.name?.first_lower)
-        assertEquals("CRamsan", character.name?.first)
-        assertEquals("cramsan", character.name?.first_lower)
-        assertEquals("1", character.faction_id)
-        assertEquals("1584165426", character.times?.last_login)
-        assertEquals("3054", character.times?.minutes_played)
-        assertEquals("346", character.certs?.available_points)
-        assertEquals("0.34", character.certs?.percent_to_next)
-        assertEquals(26, character.battle_rank?.value)
-        assertEquals(76, character.battle_rank?.percent_to_next)
-        assertEquals("19", character.profile_id)
+        assertEquals(2, parsedResponse.character_name_list?.size)
+        val baseCharacter = parsedResponse.character_name_list?.get(0)
+        val character = baseCharacter?.character_id_join_character
+        assertEquals("5428356399611664305", baseCharacter?.character_id)
+        assertEquals("5428356399611664305", character?.character_id)
+        assertEquals("CRamsan", baseCharacter?.name?.first)
+        assertEquals("cramsan", baseCharacter?.name?.first_lower)
+        assertEquals("CRamsan", character?.name?.first)
+        assertEquals("cramsan", character?.name?.first_lower)
+        assertEquals("1", character?.faction_id)
+        assertEquals("1584165426", character?.times?.last_login)
+        assertEquals("3054", character?.times?.minutes_played)
+        assertEquals("346", character?.certs?.available_points)
+        assertEquals("0.34", character?.certs?.percent_to_next)
+        assertEquals(26, character?.battle_rank?.value)
+        assertEquals(76, character?.battle_rank?.percent_to_next)
+        assertEquals("19", character?.profile_id)
     }
 
     /**

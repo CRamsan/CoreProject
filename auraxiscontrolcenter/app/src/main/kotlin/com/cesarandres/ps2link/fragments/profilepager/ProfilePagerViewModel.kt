@@ -91,8 +91,11 @@ class ProfilePagerViewModel @Inject constructor(
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
         if (response.isSuccessful) {
+            val character = response.requireBody()
             @OptIn(ExperimentalTime::class)
-            pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = true))
+            character?.let {
+                pS2LinkRepository.saveCharacter(character.copy(cached = true))
+            }
         }
     }
 
@@ -101,8 +104,11 @@ class ProfilePagerViewModel @Inject constructor(
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
         if (response.isSuccessful) {
+            val character = response.requireBody()
             @OptIn(ExperimentalTime::class)
-            pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = false))
+            character?.let {
+                pS2LinkRepository.saveCharacter(character.copy(cached = false))
+            }
         }
     }
 

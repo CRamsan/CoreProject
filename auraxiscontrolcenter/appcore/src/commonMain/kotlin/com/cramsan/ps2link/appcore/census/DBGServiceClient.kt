@@ -20,7 +20,7 @@ interface DBGServiceClient {
         character_id: String,
         namespace: Namespace,
         currentLang: CensusLang,
-    ): PS2HttpResponse<Character>
+    ): PS2HttpResponse<Character?>
 
     /**
      * https://census.daybreakgames.com/s:PS2Link/get/ps2:v2/character_name/?name.first_lower=^cram&c:limit=25&c:join=character&c:lang=en

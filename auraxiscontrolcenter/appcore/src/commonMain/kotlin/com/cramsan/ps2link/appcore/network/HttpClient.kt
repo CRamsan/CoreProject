@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -48,6 +49,9 @@ class HttpClient(
                 } else {
                     continue
                 }
+            } catch (exception: CancellationException) {
+                logD(TAG, "Job was cancelled")
+                throw exception
             } catch (exception: Exception) {
                 logW(TAG, "Unexpected Exception", exception)
                 PS2HttpResponse.failure(null, exception)

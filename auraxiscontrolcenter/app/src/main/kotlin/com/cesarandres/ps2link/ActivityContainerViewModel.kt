@@ -49,11 +49,13 @@ class ActivityContainerViewModel @Inject constructor(
         objectDataSource.open()
         val profiles = objectDataSource.getAllCharacterProfiles(false)
         val outfits = objectDataSource.getAllOutfits(false)
-        profiles.forEach {
-            val response = pS2LinkRepository.getCharacter(it.characterId, it.namespace, lang)
+        profiles.forEach { cachedProfiles ->
+            val response = pS2LinkRepository.getCharacter(cachedProfiles.characterId, cachedProfiles.namespace, lang)
             if (response.isSuccessful) {
                 @OptIn(ExperimentalTime::class)
-                pS2LinkRepository.saveCharacter(response.requireBody().copy(cached = true))
+                response.requireBody()?.let {
+                    pS2LinkRepository.saveCharacter(it.copy(cached = true))
+                }
             }
         }
         outfits.forEach {

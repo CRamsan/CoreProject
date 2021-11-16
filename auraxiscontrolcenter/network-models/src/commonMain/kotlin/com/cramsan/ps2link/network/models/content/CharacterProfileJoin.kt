@@ -27,5 +27,5 @@ data class CharacterProfileJoin(
     val stats: Stats? = null,
     val server: Server? = null,
     val online_status: String? = null,
-    val character_id_join_character: CharacterProfile,
+    val character_id_join_character: CharacterProfile? = null,
 )

@@ -1,6 +1,7 @@
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
+apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 apply plugin: 'kotlinx-serialization'
 

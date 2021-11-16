@@ -31,7 +31,7 @@ interface PS2LinkRepository {
         namespace: Namespace,
         lang: CensusLang,
         forceUpdate: Boolean = false,
-    ): PS2HttpResponse<Character>
+    ): PS2HttpResponse<Character?>
 
     fun getCharacterAsFlow(characterId: String, namespace: Namespace): Flow<Character?>
 

@@ -13,6 +13,7 @@ import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
@@ -65,7 +66,7 @@ class PS2LinkRepositoryImpl(
         namespace: Namespace,
         lang: CensusLang,
         forceUpdate: Boolean,
-    ): PS2HttpResponse<Character> {
+    ): PS2HttpResponse<Character?> {
         assertNotNull(dbgDAO, TAG, "DbgDAO is null")
 
         val cachedCharacter = dbgDAO?.getCharacter(characterId, namespace)
@@ -75,7 +76,9 @@ class PS2LinkRepositoryImpl(
         val response = dbgCensus.getProfile(characterId, namespace, lang)
         response.onSuccess {
             @OptIn(ExperimentalTime::class)
-            dbgDAO?.insertCharacter(it.copy(cached = cachedCharacter?.cached ?: false))
+            it?.let {
+                dbgDAO?.insertCharacter(it.copy(cached = cachedCharacter?.cached ?: false))
+            }
         }
         return response
     }
@@ -154,7 +157,7 @@ class PS2LinkRepositoryImpl(
             return response.toFailure()
         }
         val character = response.requireBody()
-        return dbgCensus.getWeaponList(characterId, character.faction, namespace, lang)
+        return dbgCensus.getWeaponList(characterId, character?.faction ?: Faction.UNKNOWN, namespace, lang)
     }
 
     override suspend fun getServerList(lang: CensusLang): PS2HttpResponse<List<Server>> = coroutineScope {
