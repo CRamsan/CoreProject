@@ -30,9 +30,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.datetime.Clock
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
-import kotlin.time.minutes
 
 class PS2LinkRepositoryImpl(
     private val dbgCensus: DBGServiceClient,
@@ -289,7 +288,7 @@ class PS2LinkRepositoryImpl(
 
     companion object {
         @OptIn(ExperimentalTime::class)
-        val EXPIRATION_TIME = Duration.minutes(1)
+        val EXPIRATION_TIME = 1.minutes
         val TAG = "PS2LinkRepositoryImpl"
     }
 }

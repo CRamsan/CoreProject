@@ -7,8 +7,8 @@ import com.cramsan.ps2link.db.models.Namespace
 import com.squareup.sqldelight.ColumnAdapter
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
 /**
  * @Author cramsan
@@ -37,7 +37,7 @@ val instantAdapter = object : ColumnAdapter<Instant, Long> {
 
 @OptIn(ExperimentalTime::class)
 val durationAdapter = object : ColumnAdapter<Duration, Long> {
-    override fun decode(databaseValue: Long) = Duration.milliseconds(databaseValue)
+    override fun decode(databaseValue: Long) = databaseValue.milliseconds
     override fun encode(value: Duration) = value.inWholeMilliseconds
 }
 
