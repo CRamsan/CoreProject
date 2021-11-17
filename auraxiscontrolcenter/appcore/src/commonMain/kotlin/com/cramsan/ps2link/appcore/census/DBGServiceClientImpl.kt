@@ -62,7 +62,8 @@ import com.cramsan.ps2link.network.models.util.Collections
 import com.cramsan.ps2link.network.models.util.QueryString
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
 
 /**
@@ -407,7 +408,7 @@ class DBGServiceClientImpl(
                     "after",
                     QueryString.SearchModifier.EQUALS,
                     // Get metagame events that are newer than 2 hours
-                    Clock.System.now().minus(Duration.hours(15)).epochSeconds.toString()
+                    Clock.System.now().minus(15.hours).epochSeconds.toString()
                 ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
             HttpNamespace.Api.SERVER_METADATA,
             namespace.toNetworkModel(),
@@ -561,7 +562,7 @@ private fun CharacterProfile.toCoreModel(
         lastLogin = times?.last_login?.toLong()?.let {
             Instant.fromEpochSeconds(it)
         },
-        timePlayed = times?.minutes_played?.toLong()?.let { Duration.minutes(it) },
+        timePlayed = times?.minutes_played?.toLong()?.let { it.minutes },
         faction = Faction.fromString(faction_id).toCoreModel(),
         server = server,
         outfit = outfit?.toCoreModel(namespace, server, lastUpdated),

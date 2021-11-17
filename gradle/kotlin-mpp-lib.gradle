@@ -106,7 +106,7 @@ kotlin {
     }
 
     if (isJsTargetEnabled()) {
-        js {
+        js(IR) {
             nodejs()
         }
     }
