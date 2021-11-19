@@ -32,6 +32,10 @@ include 'auraxiscontrolcenter:metrics'
 include 'auraxiscontrolcenter:network-models'
 include 'auraxiscontrolcenter:ui'
 
+include 'stranded:lib'
+include 'stranded:gdx:core'
+include 'stranded:gdx:desktop'
+
 include 'framework-samples:android-app'
 include 'framework-samples:android-lib'
 include 'framework-samples:mpp-lib'

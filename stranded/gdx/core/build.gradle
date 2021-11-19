@@ -1,0 +1,10 @@
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+
+dependencies {
+    implementation packages.Gdx
+    implementation meta_packages.LibKtx
+
+    implementation project(":stranded:lib")
+}
+
+registerDependency(":stranded:lib")
