@@ -18,9 +18,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 @HiltViewModel
 class ProfileAddViewModel @Inject constructor(
@@ -58,7 +57,7 @@ class ProfileAddViewModel @Inject constructor(
             loadingStarted()
             // Add this delay to allow for fast typing to cancel previous requests without hitting the API.
             // This means that there is a 1 extra second of UPL.
-            delay(Duration.seconds(1))
+            delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.searchForCharacter(searchField, lang)
             if (response.isSuccessful) {

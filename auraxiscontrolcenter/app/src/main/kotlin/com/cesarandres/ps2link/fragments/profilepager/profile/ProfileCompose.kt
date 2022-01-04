@@ -36,9 +36,9 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 import kotlin.math.roundToInt
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
-import kotlin.time.minutes
 
 @OptIn(ExperimentalTime::class)
 @Composable
@@ -187,7 +187,7 @@ fun Preview() {
         lastLogin = Instant.DISTANT_FUTURE,
         outfit = null,
         server = "Genudine",
-        timePlayed = Duration.minutes(1000),
+        timePlayed = 1000.minutes,
         prettyTime = PrettyTime(),
         isLoading = true,
         isError = false,
