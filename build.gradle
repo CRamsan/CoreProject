@@ -38,9 +38,6 @@ subprojects {
     repositories {
         mavenCentral()
         google()
-        maven {
-            url "https://kotlin.bintray.com/kotlinx/"
-        }
     }
 
     apply from: "$rootDir/gradle/helper-functions.gradle"
