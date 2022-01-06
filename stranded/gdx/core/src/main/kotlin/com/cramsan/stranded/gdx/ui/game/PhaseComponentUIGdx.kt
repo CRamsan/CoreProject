@@ -15,8 +15,6 @@ import ktx.scene2d.table
 
 class PhaseComponentUIGdx : BaseUIComponent(), PhaseComponentWidget {
 
-    var evenHandler: PhaseComponentAnimationHandler? = null
-
     private val label = scene2d.label("")
     private var phase: Phase = Phase.NIGHT
 
@@ -47,7 +45,5 @@ class PhaseComponentUIGdx : BaseUIComponent(), PhaseComponentWidget {
                 Actions.moveBy(0F, -100F, Theme.Transtion.fast, Interpolation.fade),
             )
         )
-
-        evenHandler?.onPhaseChange(phase)
     }
 }

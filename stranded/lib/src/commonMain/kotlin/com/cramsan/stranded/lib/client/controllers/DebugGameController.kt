@@ -7,6 +7,7 @@ import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHeartsWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerListWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.ShelterWidget
+import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.GameState
 import com.cramsan.stranded.lib.game.logic.MutableGameState
@@ -67,6 +68,7 @@ open class DebugGameController(
     lateinit var nightCardUI: NightCardWidget
     lateinit var pauseMenu: UIComponent
     lateinit var gameControllerEventHandler: GameControllerEventHandler
+    lateinit var backgroundWidget: BackgroundWidget
 
     override lateinit var game: Game
 
@@ -82,6 +84,7 @@ open class DebugGameController(
         nightCardUI: NightCardWidget,
         pauseMenu: UIComponent,
         gameControllerEventHandler: GameControllerEventHandler,
+        backgroundWidget: BackgroundWidget,
     ) {
         this.playerListUI = playerListUI
         this.playerHeartsWidget = playerHeartsWidget
@@ -91,6 +94,7 @@ open class DebugGameController(
         this.nightCardUI = nightCardUI
         this.pauseMenu = pauseMenu
         this.gameControllerEventHandler = gameControllerEventHandler
+        this.backgroundWidget = backgroundWidget
 
         game = Game(gameScope.scope)
         game.gameEventHandler = this
@@ -181,6 +185,7 @@ open class DebugGameController(
             is SetPhase -> {
                 phase = change.gamePhase
                 phaseUI.setPhase(change.gamePhase)
+                backgroundWidget.setPhase(change.gamePhase)
                 if (change.gamePhase == Phase.FORAGING) {
                     nightCardUI.hideCard()
                     playerHeartsWidget.setEnabled(true)

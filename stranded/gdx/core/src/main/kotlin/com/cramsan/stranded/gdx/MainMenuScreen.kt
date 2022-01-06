@@ -1,8 +1,10 @@
 package com.cramsan.stranded.gdx
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.cramsan.stranded.gdx.ui.BackgroundGdx
 import com.cramsan.stranded.gdx.ui.Theme
 import com.cramsan.stranded.gdx.ui.mainmenu.CreateLobbyMenu
 import com.cramsan.stranded.gdx.ui.mainmenu.LobbyListMenuGdx
@@ -18,6 +20,7 @@ import ktx.actors.stage
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.async.KtxAsync
+import ktx.graphics.use
 import ktx.scene2d.actors
 import ktx.scene2d.stack
 
@@ -29,6 +32,10 @@ class MainMenuScreen(
     private val stage: Stage = stage(viewport = ScreenViewport())
 
     private var controller: DefaultMainMenuController
+
+    private val shapeRenderer = ShapeRenderer()
+
+    val background: BackgroundGdx = BackgroundGdx(shapeRenderer)
 
     init {
         val playerNameMenu = PlayerNameMenu()
@@ -92,15 +99,14 @@ class MainMenuScreen(
     }
 
     override fun render(delta: Float) {
-        clearScreen(
-            Theme.backgroundColor.r,
-            Theme.backgroundColor.g,
-            Theme.backgroundColor.b
-        )
-        stage.act(Gdx.graphics.deltaTime)
+        // Draw background
+        background.act(delta)
+        background.draw(stage.width, stage.height ,stage.camera)
+
+        stage.act(delta)
         stage.draw()
-        stage.batch.begin()
-        stage.batch.end()
+        stage.batch.use {
+        }
     }
 
     override fun resize(width: Int, height: Int) {

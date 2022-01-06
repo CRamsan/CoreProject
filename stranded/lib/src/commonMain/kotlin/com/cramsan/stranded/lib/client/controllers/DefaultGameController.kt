@@ -8,6 +8,7 @@ import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHeartsWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerListWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.ShelterWidget
+import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.intent.Consume
 import com.cramsan.stranded.lib.game.intent.Craft
 import com.cramsan.stranded.lib.game.intent.EndTurn
@@ -73,6 +74,7 @@ class DefaultGameController(
     lateinit var pauseMenu: UIComponent
     lateinit var nightCardUI: NightCardWidget
     lateinit var gameControllerEventHandler: GameControllerEventHandler
+    lateinit var backgroundWidget: BackgroundWidget
 
     lateinit var playerId: String
     lateinit var playerList: List<Player>
@@ -95,6 +97,7 @@ class DefaultGameController(
         nightCardUI: NightCardWidget,
         pauseMenu: UIComponent,
         gameControllerEventHandler: GameControllerEventHandler,
+        backgroundWidget: BackgroundWidget,
     ) {
         this.playerListUI = playerListUI
         this.playerHeartsWidget = playerHeartsWidget
@@ -104,6 +107,7 @@ class DefaultGameController(
         this.nightCardUI = nightCardUI
         this.pauseMenu = pauseMenu
         this.gameControllerEventHandler = gameControllerEventHandler
+        this.backgroundWidget = backgroundWidget
 
         this.playerId = playerId
         this.playerList = playerList
@@ -210,6 +214,7 @@ class DefaultGameController(
             SelectTargetQuantityAll -> Unit
             is SetPhase -> {
                 phaseUI.setPhase(change.gamePhase)
+                backgroundWidget.setPhase(change.gamePhase)
                 if (change.gamePhase == Phase.FORAGING) {
                     nightCardUI.hideCard()
                     startingHealth = game.gameState.gamePlayers.findPlayer().health

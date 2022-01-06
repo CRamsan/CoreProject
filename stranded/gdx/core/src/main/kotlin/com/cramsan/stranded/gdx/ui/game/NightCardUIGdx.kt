@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.cramsan.stranded.gdx.ui.BaseUIComponent
 import com.cramsan.stranded.gdx.ui.Theme
-import com.cramsan.stranded.gdx.ui.game.actors.CardUI
+import com.cramsan.stranded.gdx.ui.game.actors.BaseCardUI
 import com.cramsan.stranded.lib.client.ui.game.widget.NightCardWidget
 import com.cramsan.stranded.lib.game.models.common.Card
 import ktx.scene2d.scene2d
@@ -18,7 +18,7 @@ class NightCardUIGdx(
 
     override val widget: Table
 
-    private var cardsUI: CardUI? = null
+    private var cardsUI: BaseCardUI? = null
     private val contentHolder: Table
 
     init {
@@ -28,14 +28,20 @@ class NightCardUIGdx(
     }
 
     override fun displayCard(card: Card) {
-        val baseCard = CardUI(card, cardTexture) { }
+        val baseCard = BaseCardUI(
+            card,
+            cardTexture,
+            Theme.Scale.xlarge,
+            Theme.Scale.xxlarge,
+        ) {
+
+        }
         baseCard.actor.let {
             contentHolder.addActor(it)
             cardsUI = baseCard
 
-            it.setPosition(it.stage.width, it.stage.height / 2)
-            it.setScale(1.2F)
-            it.addAction(Actions.moveBy(it.stage.width / -2, 0F, Theme.Transtion.fast, Interpolation.fade))
+            it.setPosition(it.stage.width, it.stage.height / 2 - it.height / 2)
+            it.addAction(Actions.moveBy((it.stage.width / -2) - (it.width / 2), 0F, Theme.Transtion.fast, Interpolation.fade))
         }
     }
 

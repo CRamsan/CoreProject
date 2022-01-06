@@ -12,6 +12,7 @@ import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHeartsWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerListWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.ReadyWidgetEventHandler
 import com.cramsan.stranded.lib.client.ui.game.widget.ShelterWidget
+import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.GameEventHandler
 import com.cramsan.stranded.lib.game.logic.GameState
@@ -39,6 +40,7 @@ interface GameController :
         nightCardUI: NightCardWidget,
         pauseMenu: UIComponent,
         gameControllerEventHandler: GameControllerEventHandler,
+        backgroundWidget: BackgroundWidget,
     )
 
     fun onShow()

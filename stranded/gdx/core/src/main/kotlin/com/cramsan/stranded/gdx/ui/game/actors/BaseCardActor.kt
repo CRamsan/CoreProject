@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 
-class BaseCard(
+class BaseCardActor(
     private val textureRegion: TextureRegion,
 ) : Actor() {
 

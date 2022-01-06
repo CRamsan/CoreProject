@@ -6,7 +6,7 @@ import com.cramsan.stranded.gdx.StrandedGame
 
 fun main() {
     val config = Lwjgl3ApplicationConfiguration().apply {
-        setWindowedMode(1440, 900)
+        setWindowedMode(1080, 1920)
     }
     Lwjgl3Application(StrandedGame(), config)
 }
