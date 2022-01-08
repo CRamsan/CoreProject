@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.cramsan.stranded.gdx.ui.BackgroundGdx
-import com.cramsan.stranded.gdx.ui.Theme
 import com.cramsan.stranded.gdx.ui.mainmenu.CreateLobbyMenu
 import com.cramsan.stranded.gdx.ui.mainmenu.LobbyListMenuGdx
 import com.cramsan.stranded.gdx.ui.mainmenu.LobbyMenuGdx
@@ -18,7 +17,6 @@ import com.cramsan.stranded.lib.client.controllers.MainMenuEventHandler
 import com.cramsan.stranded.lib.repository.Player
 import ktx.actors.stage
 import ktx.app.KtxScreen
-import ktx.app.clearScreen
 import ktx.async.KtxAsync
 import ktx.graphics.use
 import ktx.scene2d.actors
@@ -101,7 +99,7 @@ class MainMenuScreen(
     override fun render(delta: Float) {
         // Draw background
         background.act(delta)
-        background.draw(stage.width, stage.height ,stage.camera)
+        background.draw(stage.width, stage.height, stage.camera)
 
         stage.act(delta)
         stage.draw()

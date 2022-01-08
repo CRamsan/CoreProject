@@ -1,6 +1,5 @@
 package com.cramsan.stranded.gdx.ui
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -28,11 +27,11 @@ class BackgroundGdx(private val shapeRenderer: ShapeRenderer) : BackgroundWidget
                 targetColorBottom = Theme.Color.dayBottom
                 targetColorTop = Theme.Color.dayTop
             }
-            Phase.NIGHT_PREPARE ->  {
+            Phase.NIGHT_PREPARE -> {
                 targetColorBottom = Theme.Color.sunsetBottom
                 targetColorTop = Theme.Color.sunsetTop
             }
-            Phase.NIGHT ->  {
+            Phase.NIGHT -> {
                 targetColorBottom = Theme.Color.nightBottom
                 targetColorTop = Theme.Color.nightTop
             }

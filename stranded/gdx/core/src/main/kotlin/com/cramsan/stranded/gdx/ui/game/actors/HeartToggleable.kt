@@ -13,8 +13,8 @@ import com.cramsan.stranded.gdx.ui.Theme
 class HeartToggleable(
     private val enabledTextureRegion: TextureRegion,
     private val disabledTextureRegion: TextureRegion,
-    baseWidth: Float = 16F,
-    baseHeight: Float = 16F,
+    baseWidth: Float,
+    baseHeight: Float,
     initialToggleState: Boolean = false,
 ) : Actor() {
 

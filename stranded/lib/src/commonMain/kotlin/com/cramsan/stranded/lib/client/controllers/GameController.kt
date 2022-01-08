@@ -3,6 +3,7 @@ package com.cramsan.stranded.lib.client.controllers
 import com.cramsan.stranded.lib.client.ClientEventHandler
 import com.cramsan.stranded.lib.client.UIComponent
 import com.cramsan.stranded.lib.client.ui.game.PauseMenuEventHandler
+import com.cramsan.stranded.lib.client.ui.game.widget.CraftingUIWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.CraftingWidgetEventHandler
 import com.cramsan.stranded.lib.client.ui.game.widget.NightCardWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PhaseComponentWidget
@@ -38,6 +39,7 @@ interface GameController :
         shelterUI: ShelterWidget,
         phaseUI: PhaseComponentWidget,
         nightCardUI: NightCardWidget,
+        craftingUI: CraftingUIWidget,
         pauseMenu: UIComponent,
         gameControllerEventHandler: GameControllerEventHandler,
         backgroundWidget: BackgroundWidget,

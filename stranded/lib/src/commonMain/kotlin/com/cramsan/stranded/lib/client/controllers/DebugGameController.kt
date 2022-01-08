@@ -1,6 +1,7 @@
 package com.cramsan.stranded.lib.client.controllers
 
 import com.cramsan.stranded.lib.client.UIComponent
+import com.cramsan.stranded.lib.client.ui.game.widget.CraftingUIWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.NightCardWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PhaseComponentWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandWidget
@@ -69,6 +70,7 @@ open class DebugGameController(
     lateinit var pauseMenu: UIComponent
     lateinit var gameControllerEventHandler: GameControllerEventHandler
     lateinit var backgroundWidget: BackgroundWidget
+    lateinit var craftingUI: CraftingUIWidget
 
     override lateinit var game: Game
 
@@ -82,9 +84,10 @@ open class DebugGameController(
         shelterUI: ShelterWidget,
         phaseUI: PhaseComponentWidget,
         nightCardUI: NightCardWidget,
+        craftingUI: CraftingUIWidget,
         pauseMenu: UIComponent,
         gameControllerEventHandler: GameControllerEventHandler,
-        backgroundWidget: BackgroundWidget,
+        backgroundWidget: BackgroundWidget
     ) {
         this.playerListUI = playerListUI
         this.playerHeartsWidget = playerHeartsWidget
@@ -95,6 +98,7 @@ open class DebugGameController(
         this.pauseMenu = pauseMenu
         this.gameControllerEventHandler = gameControllerEventHandler
         this.backgroundWidget = backgroundWidget
+        this.craftingUI = craftingUI
 
         game = Game(gameScope.scope)
         game.gameEventHandler = this
@@ -185,6 +189,7 @@ open class DebugGameController(
             is SetPhase -> {
                 phase = change.gamePhase
                 phaseUI.setPhase(change.gamePhase)
+                craftingUI.setPhase(change.gamePhase)
                 backgroundWidget.setPhase(change.gamePhase)
                 if (change.gamePhase == Phase.FORAGING) {
                     nightCardUI.hideCard()
@@ -196,6 +201,7 @@ open class DebugGameController(
                     }
                     playerHeartsWidget.setEnabled(false)
                 }
+                handUI.setPhase(change.gamePhase)
             }
             is UserCard -> Unit
             is CraftCard -> Unit

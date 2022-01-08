@@ -2,6 +2,7 @@ package com.cramsan.stranded.lib.client.controllers
 
 import com.cramsan.stranded.lib.client.Client
 import com.cramsan.stranded.lib.client.UIComponent
+import com.cramsan.stranded.lib.client.ui.game.widget.CraftingUIWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.NightCardWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PhaseComponentWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandWidget
@@ -75,6 +76,7 @@ class DefaultGameController(
     lateinit var nightCardUI: NightCardWidget
     lateinit var gameControllerEventHandler: GameControllerEventHandler
     lateinit var backgroundWidget: BackgroundWidget
+    lateinit var craftingUI: CraftingUIWidget
 
     lateinit var playerId: String
     lateinit var playerList: List<Player>
@@ -95,9 +97,10 @@ class DefaultGameController(
         shelterUI: ShelterWidget,
         phaseUI: PhaseComponentWidget,
         nightCardUI: NightCardWidget,
+        craftingUI: CraftingUIWidget,
         pauseMenu: UIComponent,
         gameControllerEventHandler: GameControllerEventHandler,
-        backgroundWidget: BackgroundWidget,
+        backgroundWidget: BackgroundWidget
     ) {
         this.playerListUI = playerListUI
         this.playerHeartsWidget = playerHeartsWidget
@@ -108,6 +111,7 @@ class DefaultGameController(
         this.pauseMenu = pauseMenu
         this.gameControllerEventHandler = gameControllerEventHandler
         this.backgroundWidget = backgroundWidget
+        this.craftingUI = craftingUI
 
         this.playerId = playerId
         this.playerList = playerList
@@ -214,6 +218,7 @@ class DefaultGameController(
             SelectTargetQuantityAll -> Unit
             is SetPhase -> {
                 phaseUI.setPhase(change.gamePhase)
+                craftingUI.setPhase(change.gamePhase)
                 backgroundWidget.setPhase(change.gamePhase)
                 if (change.gamePhase == Phase.FORAGING) {
                     nightCardUI.hideCard()

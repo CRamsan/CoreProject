@@ -28,17 +28,38 @@
      showgrid="false"
      units="px"
      width="720px"
-     inkscape:zoom="4.3994184"
-     inkscape:cx="119.90221"
-     inkscape:cy="192.52545"
+     inkscape:zoom="2.1997092"
+     inkscape:cx="228.43929"
+     inkscape:cy="359.59299"
      inkscape:window-width="1918"
      inkscape:window-height="2088"
-     inkscape:window-x="-7"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs2" />
+     id="defs2">
+    <linearGradient
+       id="linearGradient998"
+       inkscape:swatch="gradient">
+      <stop
+         style="stop-color:#800000;stop-opacity:1;"
+         offset="0"
+         id="stop994" />
+      <stop
+         style="stop-color:#800000;stop-opacity:0;"
+         offset="1"
+         id="stop996" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient8385"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#0f1722;stop-opacity:1;"
+         offset="0"
+         id="stop8383" />
+    </linearGradient>
+  </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
@@ -51,16 +72,50 @@
        x="3.7438731"
        y="4.7048936"
        ry="3.3821647"
-       inkscape:export-filename="C:\Users\cesar\git\CoreProject\stranded\assets\night_card.jpg"
+       inkscape:export-filename="C:\Users\cesar\git\CoreProject\stranded\assets\night_card.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
        style="fill:none;stroke:#ffffff;stroke-width:0.265368px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 3.668572,17.921876 H 45.472739"
-       id="path5925" />
+       id="path5925"
+       inkscape:export-filename="C:\Users\cesar\git\CoreProject\stranded\assets\night_card.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <path
        style="fill:none;stroke:#ffffff;stroke-width:0.265368px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 3.6684479,18.884125 H 45.472615"
-       id="path5925-8" />
+       id="path5925-8"
+       inkscape:export-filename="C:\Users\cesar\git\CoreProject\stranded\assets\night_card.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:#fafaf6;fill-opacity:1;fill-rule:evenodd;stroke:#eeeeee;stroke-width:0.396875;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:18.3;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect31-0"
+       width="41.408829"
+       height="86.03775"
+       x="56.8018"
+       y="4.9501972"
+       ry="3.3821647"
+       inkscape:export-filename="C:\Users\cesar\git\CoreProject\stranded\assets\hand_card.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#9f9f9f;stroke-width:0.182588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:18.3;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect31-0-1"
+       width="37.951984"
+       height="82.430794"
+       x="58.530228"
+       y="6.5906706"
+       ry="3.2403743"
+       inkscape:export-filename="C:\Users\cesar\git\CoreProject\stranded\assets\hand_card.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:#deaaaa;fill-opacity:1;fill-rule:evenodd;stroke:#8e4848;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:18.3;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path850"
+       r="9.3217812"
+       cy="107.83196"
+       cx="15.335835" />
   </g>
 </svg>

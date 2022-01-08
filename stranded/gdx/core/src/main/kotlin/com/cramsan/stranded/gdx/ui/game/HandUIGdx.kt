@@ -11,6 +11,10 @@ import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandEventHandler
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandWidget
 import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
+import com.cramsan.stranded.lib.game.models.common.Food
+import com.cramsan.stranded.lib.game.models.common.Phase
+import com.cramsan.stranded.lib.game.models.common.Weapon
+import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import kotlin.random.Random
@@ -46,8 +50,8 @@ class HandUIGdx(
         val baseCard = BaseCardUI(
             card,
             cardTexture,
-            Theme.Scale.medium,
             Theme.Scale.large,
+            Theme.Scale.xlarge,
         ) {
             eventHandler.onCardSelected(card)
         }
@@ -74,5 +78,41 @@ class HandUIGdx(
                 }
             )
         )
+    }
+
+    override fun setPhase(gamePhase: Phase) {
+        val usableCards = mutableListOf<BaseCardUI>()
+        val unusableCards = mutableListOf<BaseCardUI>()
+        when (gamePhase) {
+            Phase.FORAGING -> {
+                cardsUI.forEach {
+                    unusableCards.add(it)
+                }
+            }
+            Phase.NIGHT_PREPARE -> {
+                cardsUI.forEach {
+                    if (it.card is Food || it.card is Resource) {
+                        usableCards.add(it)
+                    } else {
+                        unusableCards.add(it)
+                    }
+                }
+            }
+            Phase.NIGHT -> {
+                cardsUI.forEach {
+                    if (it.card is Weapon) {
+                        usableCards.add(it)
+                    } else {
+                        unusableCards.add(it)
+                    }
+                }
+            }
+        }
+        usableCards.forEach {
+            it.enable()
+        }
+        unusableCards.forEach {
+            it.disable()
+        }
     }
 }

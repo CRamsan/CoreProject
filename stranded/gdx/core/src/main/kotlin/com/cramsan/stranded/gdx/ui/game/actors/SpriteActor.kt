@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 
-class BaseCardActor(
-    private val textureRegion: TextureRegion,
+open class SpriteActor(
+    protected val textureRegion: TextureRegion,
 ) : Actor() {
 
     override fun draw(batch: Batch, parentAlpha: Float) {

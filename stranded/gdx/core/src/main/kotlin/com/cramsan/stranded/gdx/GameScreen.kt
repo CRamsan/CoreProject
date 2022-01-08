@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.cramsan.stranded.gdx.ui.BackgroundGdx
 import com.cramsan.stranded.gdx.ui.Theme
 import com.cramsan.stranded.gdx.ui.game.CraftingUIGdx
@@ -59,8 +58,9 @@ class GameScreen(
         val spearTexture = getTextureRegion("craft_spear.png")
         val fullHeartTexture = getTextureRegion("heart_full.png")
         val emptyHeartTexture = getTextureRegion("heart_empty.png")
-        val cardTexture = getTextureRegion("card.png")
+        val cardTexture = getTextureRegion("hand_card.png")
         val nightCardTexture = getTextureRegion("night_card.png")
+        val buttonTexture = getTextureRegion("button.png")
 
         pauseMenu = PauseMenu()
         playerListUI = PlayerListUIGdx()
@@ -70,7 +70,11 @@ class GameScreen(
         nightCardUI = NightCardUIGdx(nightCardTexture)
         shelterUI = ShelterUIGdx()
         phaseUI = PhaseComponentUIGdx()
-        readyButton = ReadyButtonUIGdx()
+        readyButton = ReadyButtonUIGdx(
+            buttonTexture,
+            Theme.Scale.medium,
+            Theme.Scale.medium,
+        )
 
         stage.actors {
             stack {
@@ -110,6 +114,14 @@ class GameScreen(
             scene2d.table {
                 setFillParent(true)
                 add(playerHearts.widget)
+                bottom()
+                left()
+            }
+        )
+
+        stage.addActor(
+            scene2d.table {
+                setFillParent(true)
                 add(crafting.widget)
                 bottom()
                 left()
@@ -126,12 +138,6 @@ class GameScreen(
             }
         )
 
-        stage.actors {
-            stack {
-                add(pauseMenu.widget)
-            }
-        }
-
         stage.isDebugAll = true
     }
 
@@ -146,6 +152,7 @@ class GameScreen(
             shelterUI,
             phaseUI,
             nightCardUI,
+            crafting,
             pauseMenu,
             object : GameControllerEventHandler {
                 override fun onExitGameSelected() {
@@ -174,7 +181,7 @@ class GameScreen(
 
         // Draw background
         background.act(delta)
-        background.draw(stage.width, stage.height ,stage.camera)
+        background.draw(stage.width, stage.height, stage.camera)
 
         stage.act(delta)
         stage.draw()

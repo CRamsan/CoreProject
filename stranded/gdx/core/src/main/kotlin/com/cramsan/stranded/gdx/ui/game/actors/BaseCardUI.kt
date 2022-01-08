@@ -1,6 +1,5 @@
 package com.cramsan.stranded.gdx.ui.game.actors
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -11,7 +10,6 @@ import com.badlogic.gdx.utils.Align
 import com.cramsan.stranded.gdx.ui.Theme
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
-import ktx.scene2d.actor
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.stack
@@ -29,9 +27,10 @@ open class BaseCardUI(
     private var initialTouchX = 0F
     private var initialTouchY = 0F
     private var wasDragged = false
+    private var enabled = true
 
     init {
-        val baseCardActor = BaseCardActor(textureRegion).apply {
+        val baseCardActor = SpriteActor(textureRegion).apply {
             width = baseWidth
             height = baseHeight
         }
@@ -83,5 +82,21 @@ open class BaseCardUI(
                 }
             })
         }
+    }
+
+    fun enable() {
+        if (enabled)
+            return
+
+        enabled = true
+        actor.addAction(Actions.moveBy(0f, actor.stage.height, Theme.Transtion.normal, Interpolation.fade))
+    }
+
+    fun disable() {
+        if (!enabled)
+            return
+
+        enabled = false
+        actor.addAction(Actions.moveBy(0f, -actor.stage.height, Theme.Transtion.normal, Interpolation.fade))
     }
 }

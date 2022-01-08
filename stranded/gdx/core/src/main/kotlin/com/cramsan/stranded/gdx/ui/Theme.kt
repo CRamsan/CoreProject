@@ -1,7 +1,6 @@
 package com.cramsan.stranded.gdx.ui
 
 import com.badlogic.gdx.graphics.Color
-import ktx.graphics.color
 
 object Theme {
 
@@ -59,7 +58,6 @@ object Theme {
         val xlarge = unit * 4
 
         val xxlarge = unit * 8
-
     }
 
     object Color {
@@ -75,7 +73,6 @@ object Theme {
 
         val sunsetTop = Color(0x010916FF)
 
-        val sunsetBottom = Color(0xFD2E00FF.toInt())
-
+        val sunsetBottom = Color(0x751500FF)
     }
 }

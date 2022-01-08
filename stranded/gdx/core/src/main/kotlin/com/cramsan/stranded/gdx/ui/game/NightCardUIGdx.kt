@@ -18,7 +18,7 @@ class NightCardUIGdx(
 
     override val widget: Table
 
-    private var cardsUI: BaseCardUI? = null
+    private var cardUI: BaseCardUI? = null
     private val contentHolder: Table
 
     init {
@@ -28,17 +28,15 @@ class NightCardUIGdx(
     }
 
     override fun displayCard(card: Card) {
-        val baseCard = BaseCardUI(
+        val newCard = BaseCardUI(
             card,
             cardTexture,
             Theme.Scale.xlarge,
             Theme.Scale.xxlarge,
-        ) {
-
-        }
-        baseCard.actor.let {
+        )
+        cardUI = newCard
+        newCard.actor.let {
             contentHolder.addActor(it)
-            cardsUI = baseCard
 
             it.setPosition(it.stage.width, it.stage.height / 2 - it.height / 2)
             it.addAction(Actions.moveBy((it.stage.width / -2) - (it.width / 2), 0F, Theme.Transtion.fast, Interpolation.fade))
@@ -46,15 +44,14 @@ class NightCardUIGdx(
     }
 
     override fun hideCard() {
-        cardsUI?.let {
-            it.actor.addAction(
-                Actions.sequence(
-                    Actions.moveBy(it.actor.stage.width * -2, 0F, Theme.Transtion.fast, Interpolation.fade),
-                    Actions.run {
-                        contentHolder.removeActor(it.actor)
-                    }
-                )
+        val cardUI = cardUI ?: return
+        cardUI.actor.addAction(
+            Actions.sequence(
+                Actions.moveBy(cardUI.actor.stage.width * -2, 0F, Theme.Transtion.fast, Interpolation.fade),
+                Actions.run {
+                    contentHolder.removeActor(cardUI.actor)
+                }
             )
-        }
+        )
     }
 }
