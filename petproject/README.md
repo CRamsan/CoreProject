@@ -1,5 +1,12 @@
 # Safe For My Pet
+
 This is the source code for the Safe For My Pet app.
+
+## Getting started
+
+Now you can compile and test the app with `./gradlew petproject:app:release`
+
+To compile the back-end service, run `./gradlew petproject:azurefunction:release`
 
 # Build & Deployment Status
 

@@ -1,5 +1,10 @@
 # Project Name
+
 *Project description*
+
+## Getting started
+
+*Instructions to compile and test the project* 
 
 # Build & Deployment Status
 

@@ -1,4 +1,4 @@
-# Auraxis Control Center
+# PetProject Android App
 This is the source code for the PetProject app
 
 # Build Status

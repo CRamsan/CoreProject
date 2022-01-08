@@ -165,13 +165,18 @@ class Game(
 
         val eventChannel = playerIntents.getValue(player.id)
 
-        val playerEvent: PlayerIntent = eventChannel.receive()
+        var playerEvent: PlayerIntent
 
-        val forageEvent = playerEvent as Forage
-        processEvent(SingleHealthChange(player.id, -forageEvent.amount))
-        println("Player: ${player.id}: Player paid ${forageEvent.amount}")
+        do {
+            println("Player: ${player.id}: Waiting for payment")
+            playerEvent = eventChannel.receive()
+            println("Player: ${player.id}: Payment received")
+        } while (playerEvent !is Forage)
 
-        (0 until forageEvent.amount).forEach {
+        processEvent(SingleHealthChange(player.id, -playerEvent.amount))
+        println("Player: ${player.id}: Player paid ${playerEvent.amount}")
+
+        (0 until playerEvent.amount).forEach {
             processEvent(DrawScavengeCard(player.id))
         }
     }

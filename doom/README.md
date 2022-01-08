@@ -1,5 +1,12 @@
 # Doom 
+
 This is the source code for the Doom project. A game that tries to replicate the [Doom RPG](https://doom.fandom.com/wiki/Doom_RPG) experience.
+
+## Getting started
+
+Now you can compile the app with `./gradlew doom:game:desktop:release`. 
+
+This will only compile the app for the desktop target. There are other targets that can be supported, but they are disabled for now as the Desktop(JVM) target is the easier to develop for.
 
 # Build & Deployment Status
 
