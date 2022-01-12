@@ -32,7 +32,7 @@ A lot of the code is kept in a shared module called **Framework** that abstract 
 - ~~Android Studio~~ *Waiting until AS is updated to use IDEA 2021.3.1 as platform*
 
 ### Building the code
-To build all the projects and execute all tests run: `./grdlew releaseAll`.
+To build all the projects and execute all tests run: `./gradlew releaseAll`.
 
 ### Build
 This is a monorepo, so there are multiple types of targets within this project. For more information about how to build and run each project is found within each project's page.
