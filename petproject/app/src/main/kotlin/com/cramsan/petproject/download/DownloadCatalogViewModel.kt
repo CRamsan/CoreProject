@@ -73,7 +73,7 @@ class DownloadCatalogViewModel @Inject constructor(
 
     override fun onCatalogUpdate(isReady: Boolean) {
         ioScope.launch {
-            mutableIsDownloadComplete.value = !isReady
+            mutableIsDownloadComplete.postValue(!isReady)
         }
     }
 }
