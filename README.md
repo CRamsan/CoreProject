@@ -31,6 +31,9 @@ A lot of the code is kept in a shared module called **Framework** that abstract 
 - IDEA 2021.3.1 CE
 - ~~Android Studio~~ *Waiting until AS is updated to use IDEA 2021.3.1 as platform*
 
+### SDK Package
+Make sure you have SDK downloaded. You can do this manually or through the IDE.
+
 ### Building the code
 To build all the projects and execute all tests run: `./gradlew releaseAll`.
 
