@@ -5,6 +5,7 @@
 build/
 /buildSrc/build/
 /captures
+yarn.lock
 
 ### STS ###
 .apt_generated

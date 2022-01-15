@@ -1,0 +1,23 @@
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: "org.jetbrains.compose"
+apply plugin: 'kotlinx-serialization'
+
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
+dependencies {
+    implementation compose.desktop.currentOs
+
+    implementation project(":stranded:lib")
+    implementation packages.KotlinxSerialization
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "CardManager"
+            packageVersion = "1.0.0"
+        }
+    }
+}

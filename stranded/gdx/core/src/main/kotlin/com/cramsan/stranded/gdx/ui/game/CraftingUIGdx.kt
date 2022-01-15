@@ -56,7 +56,7 @@ class CraftingUIGdx(
 
         enabled = newState
         if (enabled) {
-            widget.addAction(Actions.moveTo(0f, Theme.Scale.large, Theme.Transtion.normal, Interpolation.fade))
+            widget.addAction(Actions.moveTo(0f, Theme.Scale.medium, Theme.Transtion.normal, Interpolation.fade))
         } else {
             widget.addAction(Actions.moveTo(0f, -100f, Theme.Transtion.normal, Interpolation.fade))
         }

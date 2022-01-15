@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
  * This class represents a type of [Belongings] that the player can use as a [Weapon].
  */
 @Serializable
-data class Equippable(
+class Equippable(
+    val __title: String,
     override var remainingUses: Int,
-) : Belongings(), Weapon
+) : Belongings(__title), Weapon

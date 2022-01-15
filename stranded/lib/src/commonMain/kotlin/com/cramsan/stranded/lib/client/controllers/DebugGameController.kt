@@ -52,10 +52,7 @@ open class DebugGameController(
     private val gameScope: GameScope,
 ) : GameController {
 
-    var mode: GameMode = GameMode.Game
-        set(value) {
-            setMenuMode(value)
-        }
+    private var mode: GameMode = GameMode.Game
 
     var phase = Phase.NIGHT
 
@@ -109,11 +106,11 @@ open class DebugGameController(
             5,
         ).apply {
             belongings = mutableListOf(
-                Equippable(1),
+                Equippable("Test item", 1),
             )
             scavengeResults = mutableListOf(
                 Resource(ResourceType.FIBER),
-                Consumable(1, 1, Status.NORMAL, 3),
+                Consumable("Test", 1, 1, Status.NORMAL, 3),
             )
             craftables = mutableListOf()
         }
@@ -153,7 +150,10 @@ open class DebugGameController(
 
     override fun handleGameStateMessage(gameState: GameState) = Unit
 
-    override fun setMenuMode(mode: GameMode) = Unit
+    override fun setMenuMode(mode: GameMode) {
+        pauseMenu.setVisible(mode == GameMode.Pause)
+        this.mode = mode
+    }
 
     override fun exitGame() = Unit
 
@@ -196,7 +196,10 @@ open class DebugGameController(
                     playerHeartsWidget.setEnabled(true)
                 } else {
                     if (change.gamePhase == Phase.NIGHT) {
-                        nightCard = NightEvent(emptyList())
+                        nightCard = NightEvent(
+                            "Bad event",
+                            emptyList(),
+                        )
                         nightCardUI.displayCard(nightCard!!)
                     }
                     playerHeartsWidget.setEnabled(false)
@@ -214,9 +217,13 @@ open class DebugGameController(
 
     override fun onCardRemoved(playerId: String, card: Card) = Unit
 
-    override fun onResumeGameSelected() = Unit
+    override fun onResumeGameSelected() {
+        setMenuMode(GameMode.Game)
+    }
 
-    override fun onExitGameSelected() = Unit
+    override fun onExitGameSelected() {
+        gameControllerEventHandler.onExitGameSelected()
+    }
 
     override fun onReadyButtonPressed() {
         val newPhase = when (phase) {

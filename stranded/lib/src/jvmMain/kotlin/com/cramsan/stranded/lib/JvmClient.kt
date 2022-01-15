@@ -43,6 +43,8 @@ class JvmClient : Client {
     override var lobbyId: String? = null
         private set
 
+    override fun isConnected() = player.id.isNotEmpty()
+
     override fun start() {
         client = HttpClient(CIO) {
             install(WebSockets)

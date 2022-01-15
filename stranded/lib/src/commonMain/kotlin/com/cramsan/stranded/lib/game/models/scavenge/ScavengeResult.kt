@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
  * phase.
  */
 @Serializable
-sealed class ScavengeResult : Card()
+sealed class ScavengeResult(val _title: String) : Card(title = _title)

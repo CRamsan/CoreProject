@@ -7,4 +7,4 @@ import kotlinx.serialization.Serializable
  * This is the parent class to all cards that can be crafted.
  */
 @Serializable
-sealed class Craftable : Card()
+sealed class Craftable(val _title: String) : Card(title = _title)

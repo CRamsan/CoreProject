@@ -14,6 +14,8 @@ interface Client {
 
     val lobbyId: String?
 
+    fun isConnected(): Boolean
+
     fun start()
 
     fun stop()

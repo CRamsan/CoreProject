@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Shelter(
     val playerList: MutableList<String>
-) : Craftable() {
+) : Craftable("Shelter") {
 
     companion object {
         const val MAX_OCCUPANCY = 3

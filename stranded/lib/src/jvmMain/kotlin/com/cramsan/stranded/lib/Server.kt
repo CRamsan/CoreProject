@@ -315,13 +315,13 @@ fun startGame(lobbyId: String, lobbyRepository: LobbyRepository, gameRepository:
             Resource(ResourceType.FIBER),
         ),
         listOf(
-            NightEvent(emptyList()),
-            NightEvent(emptyList()),
-            NightEvent(emptyList()),
+            NightEvent("1", emptyList()),
+            NightEvent("2", emptyList()),
+            NightEvent("3", emptyList()),
         ),
         listOf(
-            Equippable(1),
-            StartingFood(1, 1, Status.NORMAL, 1),
+            Equippable("4", 1),
+            StartingFood("5", 1, 1, Status.NORMAL, 1),
         ),
     )
     gameRepository.configureGame(lobbyId)

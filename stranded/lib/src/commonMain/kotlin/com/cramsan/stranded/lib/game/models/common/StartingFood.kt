@@ -8,9 +8,10 @@ import kotlinx.serialization.Serializable
  * This class represents a type of [Belongings] of type [Food].
  */
 @Serializable
-data class StartingFood(
+class StartingFood(
+    val __title: String,
     override var remainingDays: Int,
     override var healthModifier: Int,
     override var statusModifier: Status,
-    override var remainingUses: Int
-) : Food, Belongings()
+    override var remainingUses: Int,
+) : Food, Belongings(__title)

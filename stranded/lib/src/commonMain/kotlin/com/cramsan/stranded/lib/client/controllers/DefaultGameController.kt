@@ -62,10 +62,7 @@ class DefaultGameController(
     private val gameScope: GameScope,
 ) : GameController {
 
-    var mode: GameMode = GameMode.Game
-        set(value) {
-            setMenuMode(value)
-        }
+    private var mode: GameMode = GameMode.Game
 
     lateinit var playerListUI: PlayerListWidget
     lateinit var playerHeartsWidget: PlayerHeartsWidget
@@ -161,6 +158,7 @@ class DefaultGameController(
 
     override fun setMenuMode(mode: GameMode) {
         pauseMenu.setVisible(mode == GameMode.Pause)
+        this.mode = mode
     }
 
     override fun exitGame() {
@@ -267,7 +265,7 @@ class DefaultGameController(
     }
 
     override fun onResumeGameSelected() {
-        TODO("Not yet implemented")
+        setMenuMode(GameMode.Game)
     }
 
     override fun onExitGameSelected() {

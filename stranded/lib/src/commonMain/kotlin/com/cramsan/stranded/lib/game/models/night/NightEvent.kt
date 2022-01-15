@@ -9,4 +9,7 @@ import kotlinx.serialization.Serializable
  * of the [com.cramsan.stranded.lib.game.logic.Phase.NIGHT] phase.
  */
 @Serializable
-data class NightEvent(val statements: List<Change>) : Card()
+data class NightEvent(
+    val _title: String,
+    val statements: List<Change>
+) : Card(title = _title)

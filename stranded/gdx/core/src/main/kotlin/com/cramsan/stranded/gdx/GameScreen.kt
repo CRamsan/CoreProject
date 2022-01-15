@@ -15,10 +15,11 @@ import com.cramsan.stranded.gdx.ui.game.PauseMenu
 import com.cramsan.stranded.gdx.ui.game.PhaseComponentUIGdx
 import com.cramsan.stranded.gdx.ui.game.PlayerHeartsUIGdx
 import com.cramsan.stranded.gdx.ui.game.PlayerListUIGdx
-import com.cramsan.stranded.gdx.ui.game.ReadyButtonUIGdx
 import com.cramsan.stranded.gdx.ui.game.ShelterUIGdx
+import com.cramsan.stranded.gdx.ui.game.actors.SpriteButton
 import com.cramsan.stranded.lib.client.controllers.GameController
 import com.cramsan.stranded.lib.client.controllers.GameControllerEventHandler
+import com.cramsan.stranded.lib.client.controllers.GameMode
 import com.cramsan.stranded.lib.client.ui.game.GameScreenEventHandler
 import com.cramsan.stranded.lib.repository.Player
 import ktx.actors.stage
@@ -49,7 +50,8 @@ class GameScreen(
     val shelterUI: ShelterUIGdx
     val phaseUI: PhaseComponentUIGdx
     val nightCardUI: NightCardUIGdx
-    val readyButton: ReadyButtonUIGdx
+    val readyButton: SpriteButton
+    val pauseButton: SpriteButton
 
     init {
         // TODO: Move to the asset manager
@@ -70,11 +72,20 @@ class GameScreen(
         nightCardUI = NightCardUIGdx(nightCardTexture)
         shelterUI = ShelterUIGdx()
         phaseUI = PhaseComponentUIGdx()
-        readyButton = ReadyButtonUIGdx(
+        readyButton = SpriteButton(
             buttonTexture,
             Theme.Scale.medium,
             Theme.Scale.medium,
-        )
+        ) {
+            controller?.onReadyButtonPressed()
+        }
+        pauseButton = SpriteButton(
+            buttonTexture,
+            Theme.Scale.medium,
+            Theme.Scale.medium,
+        ) {
+            controller?.setMenuMode(GameMode.Pause)
+        }
 
         stage.actors {
             stack {
@@ -131,9 +142,27 @@ class GameScreen(
         stage.addActor(
             scene2d.table {
                 setFillParent(true)
-                add(readyButton.widget).apply {
+                add(readyButton).apply {
                 }
                 bottom()
+                right()
+            }
+        )
+
+        stage.addActor(
+            scene2d.table {
+                setFillParent(true)
+                add(pauseMenu.widget)
+                center()
+            }
+        )
+
+        stage.addActor(
+            scene2d.table {
+                setFillParent(true)
+                add(pauseButton).apply {
+                }
+                top()
                 right()
             }
         )
@@ -166,7 +195,6 @@ class GameScreen(
             crafting.eventHandler = it
             hand.eventHandler = it
             pauseMenu.eventHandler = it
-            readyButton.eventHandler = it
         }
     }
 

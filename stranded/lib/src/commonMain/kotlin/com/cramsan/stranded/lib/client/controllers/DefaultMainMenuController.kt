@@ -49,13 +49,17 @@ class DefaultMainMenuController(
 
     private var mode: MainMenuMode = MainMenuMode.None
         set(value) {
-            setMenuMode(value)
             field = value
+            handleMenuModeChange(value)
         }
 
     override fun onShow() {
-        client.registerListener(this)
-        mode = MainMenuMode.None
+        if (!client.isConnected()) {
+            client.registerListener(this)
+            mode = MainMenuMode.None
+        } else {
+            mode = MainMenuMode.MainMenu
+        }
     }
 
     override fun onDispose() {
@@ -158,7 +162,7 @@ class DefaultMainMenuController(
         }
     }
 
-    private fun setMenuMode(mode: MainMenuMode) {
+    private fun handleMenuModeChange(mode: MainMenuMode) {
         playerNameMenu.setVisible(mode == MainMenuMode.PlayerName)
         mainMenu.setVisible(mode == MainMenuMode.MainMenu)
         createLobbyMenu.setVisible(mode == MainMenuMode.CreateLobby)

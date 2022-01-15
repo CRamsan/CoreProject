@@ -18,6 +18,12 @@ class PauseMenu : BaseUIComponent() {
     init {
         widget = scene2d {
             table {
+                textButton("Resume") {
+                    onClick {
+                        eventHandler.onResumeGameSelected()
+                    }
+                }
+                row()
                 textButton("Quit") {
                     onClick {
                         eventHandler.onExitGameSelected()

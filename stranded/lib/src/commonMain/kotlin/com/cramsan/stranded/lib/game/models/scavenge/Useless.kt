@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
  * This is a [ScavengeResult] that has not use to the player. Upon receiving, this card can be discarded.s
  */
 @Serializable
-class Useless : ScavengeResult()
+class Useless(val __title: String) : ScavengeResult(__title)
