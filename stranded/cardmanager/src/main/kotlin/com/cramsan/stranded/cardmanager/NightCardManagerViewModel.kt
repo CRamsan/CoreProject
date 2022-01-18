@@ -1,39 +1,21 @@
 package com.cramsan.stranded.cardmanager
 
 import com.cramsan.stranded.lib.game.models.night.NightEvent
+import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineScope
 
 class NightCardManagerViewModel(
     cardRepository: CardRepository,
-) : BaseCardManagerViewModel<NightEvent>(cardRepository) {
+    scope: CoroutineScope,
+) : BaseCardManagerViewModel<NightEvent>(cardRepository, scope) {
 
-    override fun onShow() = runBlocking {
-        withContext(Dispatchers.IO) {
-            _deck.value = cardRepository.readNightCards().toMutableCardHolderList()
-        }
-        initializeDeck()
+    override fun readDeckFromRepository(): List<CardHolder<NightEvent>> {
+        return cardRepository.readNightCards()
     }
 
-    override fun onSave() = runBlocking {
-        refreshSelectedCard()
-        withContext(Dispatchers.IO) {
-            cardRepository.saveNightCards(_deck.value)
-            _deck.value = cardRepository.readNightCards().toMutableCardHolderList()
-        }
-        onCardSelected(selectedCardIndex.value)
-    }
-
-    override fun onNew() {
-        super.onNew()
-    }
-
-    override fun refreshSelectedCard() {
-        cleanInput()
-        selectedCard.value.content = instanciateNewCard()
-        selectedCard.value.quantity = cardQuantity.value.toInt()
+    override fun writeDeckToRepository(deck: List<CardHolder<NightEvent>>) {
+        cardRepository.saveNightCards(deck)
     }
 
     override fun instanciateNewCard(): NightEvent {
@@ -42,4 +24,8 @@ class NightCardManagerViewModel(
             emptyList(),
         )
     }
+
+    override fun loadCardAtIndex(index: Int) = Unit
+
+    override fun sanitizeInput() = Unit
 }

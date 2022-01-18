@@ -4,90 +4,125 @@ import com.cramsan.stranded.cardmanager.base.CardEventHandler
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
-import com.cramsan.stranded.lib.storage.MutableCardHolder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 abstract class BaseCardManagerViewModel<T : Card>(
     protected val cardRepository: CardRepository,
+    protected val scope: CoroutineScope,
 ) : CardEventHandler {
 
-    protected val _deck = MutableStateFlow<MutableList<MutableCardHolder<T>>>(mutableListOf())
+    protected val _deck = MutableStateFlow<List<CardHolder<T>>>(listOf())
     val deck: StateFlow<List<CardHolder<T>>> = _deck
-
-    protected val selectedCard = MutableStateFlow<MutableCardHolder<T>>(MutableCardHolder(null, 0))
 
     private val _selectedCardIndex = MutableStateFlow(0)
     val selectedCardIndex: StateFlow<Int> = _selectedCardIndex
 
-    private val _cardQuantity = MutableStateFlow("")
-    val cardQuantity: StateFlow<String> = _cardQuantity
+    private val _cardQuantity = MutableStateFlow(0)
+    val cardQuantity: StateFlow<Int> = _cardQuantity
 
-    protected val _cardTitle = MutableStateFlow("")
+    private val _cardTitle = MutableStateFlow("")
     val cardTitle: StateFlow<String> = _cardTitle
 
-    abstract fun onShow()
-
-    override fun onNew() {
-        _cardQuantity.value = "0"
-        _cardTitle.value = "New title"
-
-        selectedCard.value = MutableCardHolder(instanciateNewCard(), 0)
-
-        _deck.value.add(selectedCard.value)
-
-        _selectedCardIndex.value = _deck.value.lastIndex
-        onCardSelected(selectedCardIndex.value)
+    fun onShow() = runBlocking {
+        withContext(Dispatchers.IO) {
+            _deck.value = readDeckFromRepository()
+        }
+        initializeDeck()
     }
 
-    override fun onRemove() {
-        _deck.value.removeAt(selectedCardIndex.value)
-        _selectedCardIndex.value = minOf(_deck.value.lastIndex, selectedCardIndex.value)
-        onCardSelected(selectedCardIndex.value)
+    abstract fun readDeckFromRepository(): List<CardHolder<T>>
+
+    protected val onSelectedCardIndexChange = {
+        val newSelectedCard = _deck.value.elementAtOrNull(_selectedCardIndex.value)
+        _cardTitle.value = newSelectedCard?.content?.title ?: "New title"
+        _cardQuantity.value = newSelectedCard?.quantity ?: 0
+        if (newSelectedCard == null) {
+            _deck.value = _deck.value + CardHolder(null, 0)
+        }
+        loadCardAtIndex(_selectedCardIndex.value)
     }
 
-    abstract fun instanciateNewCard(): T
-
-    open fun cleanInput() {
-        _cardTitle.value = _cardTitle.value.trim()
-        _cardQuantity.value = try {
-            _cardQuantity.value.toInt()
-        } catch (throwable: Throwable) {
-            0
-        }.toString()
+    init {
+        _selectedCardIndex.onEach {
+            onSelectedCardIndexChange()
+        }.launchIn(scope)
     }
 
-    protected fun initializeDeck() {
-        if (_deck.value.isEmpty()) {
-            onNew()
+    override fun saveDeck() = runBlocking {
+        saveCardToDeck()
+        withContext(Dispatchers.IO) {
+            writeDeckToRepository(_deck.value)
+            _deck.value = readDeckFromRepository()
+        }
+        selectedCardAtIndex(selectedCardIndex.value)
+    }
+
+    abstract fun writeDeckToRepository(deck: List<CardHolder<T>>)
+
+    override fun newCard() {
+        saveCardToDeck()
+        _selectedCardIndex.value = _deck.value.size
+    }
+
+    override fun removeCard() {
+        val newDeck = _deck.value.toMutableList()
+        newDeck.removeAt(selectedCardIndex.value)
+        _deck.value = newDeck
+        if (_deck.value.isNotEmpty() && selectedCardIndex.value > _deck.value.lastIndex) {
+            _selectedCardIndex.value = selectedCardIndex.value - 1
+        } else {
+            onSelectedCardIndexChange()
         }
     }
 
-    override fun onCardSelected(index: Int) {
-        refreshSelectedCard()
-
-        _selectedCardIndex.value = index
-
-        val newSelectedCard = _deck.value[index]
-
-        selectedCard.value = newSelectedCard
-        onTitleUpdated(newSelectedCard.content?.title ?: "New title")
-        onQuantityUpdated(newSelectedCard.quantity.toString())
+    protected fun saveCardToDeck() {
+        val newDeck = _deck.value.toMutableList()
+        newDeck[_selectedCardIndex.value] =
+            CardHolder(
+                instanciateNewCard(),
+                _cardQuantity.value,
+            )
+        _deck.value = newDeck
     }
 
-    abstract fun refreshSelectedCard()
+    protected abstract fun instanciateNewCard(): T
 
-    override fun onTitleUpdated(title: String) {
+    private fun sanitizeBaseInput() {
+        _cardTitle.value = _cardTitle.value.trim()
+        sanitizeInput()
+    }
+
+    abstract fun sanitizeInput()
+
+    protected fun initializeDeck() {
+        onSelectedCardIndexChange()
+    }
+
+    override fun selectedCardAtIndex(index: Int) {
+        saveCardToDeck()
+        _selectedCardIndex.value = index
+    }
+
+    protected abstract fun loadCardAtIndex(index: Int)
+
+    override fun updateTitle(title: String) {
         _cardTitle.value = title
     }
 
-    override fun onQuantityUpdated(quantity: String) {
+    override fun updateQuantity(quantity: String) {
         val newQuantity: Int = try {
             quantity.toInt()
         } catch (throwable: Throwable) {
             return
         }
 
-        _cardQuantity.value = newQuantity.toString()
+        _cardQuantity.value = newQuantity
     }
 }

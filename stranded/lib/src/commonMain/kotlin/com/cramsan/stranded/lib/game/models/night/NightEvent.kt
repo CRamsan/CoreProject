@@ -10,6 +10,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class NightEvent(
-    val _title: String,
+    override val title: String,
     val statements: List<Change>
-) : Card(title = _title)
+) : Card()

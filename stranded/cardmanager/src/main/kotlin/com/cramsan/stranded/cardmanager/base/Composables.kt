@@ -69,8 +69,9 @@ fun <T : Card> CardList(
         ) {
             itemsIndexed(cardDeck) { index, item ->
                 val selected = index == selectedIndex
+                val title = item.content?.title ?: "New title"
                 Text(
-                    text = "${item.content?.title}x${item.quantity}",
+                    text = "$title x ${item.quantity}",
                     fontWeight = if (selected) { FontWeight.Bold } else { FontWeight.Normal },
                     overflow = TextOverflow.Ellipsis,
                     softWrap = false,
@@ -102,16 +103,16 @@ fun <T : Card> Content(
             CardList(
                 selectedIndex = selectedIndex,
                 cardDeck = cardDeck,
-                onCardSelected = { index -> handler.onCardSelected(index) },
+                onCardSelected = { index -> handler.selectedCardAtIndex(index) },
             )
             Box {
                 content()
             }
         }
         BottomBar(
-            onNew = { handler.onNew() },
-            onSave = { handler.onSave() },
-            onDelete = { handler.onRemove() },
+            onNew = { handler.newCard() },
+            onSave = { handler.saveDeck() },
+            onDelete = { handler.removeCard() },
         )
     }
 }
@@ -149,10 +150,10 @@ fun BottomBar(
 }
 
 interface CardEventHandler {
-    fun onCardSelected(index: Int)
-    fun onNew()
-    fun onSave()
-    fun onRemove()
-    fun onTitleUpdated(title: String)
-    fun onQuantityUpdated(quantity: String)
+    fun selectedCardAtIndex(index: Int)
+    fun newCard()
+    fun saveDeck()
+    fun removeCard()
+    fun updateTitle(title: String)
+    fun updateQuantity(quantity: String)
 }

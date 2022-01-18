@@ -6,63 +6,131 @@ import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.scavenge.Useless
+import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class ForageCardManagerViewModel(
     cardRepository: CardRepository,
-) : BaseCardManagerViewModel<ScavengeResult>(cardRepository) {
+    scope: CoroutineScope,
+) : BaseCardManagerViewModel<ScavengeResult>(cardRepository, scope) {
 
-    override fun onShow() = runBlocking {
-        withContext(Dispatchers.IO) {
-            _deck.value = cardRepository.readForageCards().toMutableCardHolderList()
+    private val _cartType = MutableStateFlow(CARD_TYPES.first())
+    val cardType: StateFlow<String> = _cartType
+
+    private val _resourceType = MutableStateFlow<ResourceType?>(null)
+    val resourceType: StateFlow<ResourceType?> = _resourceType
+
+    private val _remainingDays = MutableStateFlow<Int?>(null)
+    val remainingDays: StateFlow<Int?> = _remainingDays
+
+    private val _healthModifier = MutableStateFlow<Int?>(null)
+    val healthModifier: StateFlow<Int?> = _healthModifier
+
+    private val _remainingUses = MutableStateFlow<Int?>(null)
+    val remainingUses: StateFlow<Int?> = _remainingUses
+
+    override fun readDeckFromRepository(): List<CardHolder<ScavengeResult>> {
+        return cardRepository.readForageCards()
+    }
+
+    override fun writeDeckToRepository(deck: List<CardHolder<ScavengeResult>>) {
+        cardRepository.saveForageCards(deck)
+    }
+
+    fun setCardType(cardType: String) {
+        _cartType.value = cardType
+        saveCardToDeck()
+        onSelectedCardIndexChange()
+    }
+
+    fun setResourceType(resourceType: ResourceType) {
+        if (_cartType.value != CARD_TYPES[1]) {
+            return
         }
-        initializeDeck()
+
+        _resourceType.value = resourceType
+        updateTitle(resourceType.name)
     }
 
-    override fun onSave() = runBlocking {
-        cleanInput()
-        refreshSelectedCard()
-        withContext(Dispatchers.IO) {
-            cardRepository.saveForageCards(_deck.value)
-            _deck.value = cardRepository.readForageCards().toMutableCardHolderList()
+    fun onRemainingUsesUpdated(quantity: String) {
+        val newQuantity: Int = try {
+            quantity.toInt()
+        } catch (throwable: Throwable) {
+            return
         }
-        onCardSelected(selectedCardIndex.value)
+
+        _remainingUses.value = newQuantity
     }
 
-    override fun onNew() {
-        super.onNew()
+    fun onRemainingDaysUpdated(quantity: String) {
+        val newQuantity: Int = try {
+            quantity.toInt()
+        } catch (throwable: Throwable) {
+            return
+        }
 
-        refreshSelectedCard()
+        _remainingDays.value = newQuantity
     }
 
-    fun setConsumableType() {
-        selectedCard.value.content = Consumable("", 0, 0, Status.NORMAL, 0)
+    fun onHealthModifierUpdated(quantity: String) {
+        val newQuantity: Int = try {
+            quantity.toInt()
+        } catch (throwable: Throwable) {
+            return
+        }
+
+        _healthModifier.value = newQuantity
     }
 
-    fun setResourceType() {
-        selectedCard.value.content = Resource(ResourceType.BONE)
-    }
-
-    fun setUselessType() {
-        selectedCard.value.content = Useless("")
-    }
-
-    override fun refreshSelectedCard() {
-        cleanInput()
-        selectedCard.value.content = instanciateNewCard()
-        selectedCard.value.quantity = cardQuantity.value.toInt()
-    }
+    override fun sanitizeInput() = Unit
 
     override fun instanciateNewCard(): ScavengeResult {
-        return selectedCard.value.content?.let {
-            when (it) {
-                is Consumable -> Consumable(cardTitle.value, 0, 0, Status.NORMAL, 0)
-                is Resource -> Resource(ResourceType.BONE)
-                is Useless -> Useless(cardTitle.value)
+        return when (cardType.value) {
+            CARD_TYPES[0] -> Consumable(
+                cardTitle.value,
+                _remainingDays.value ?: 0,
+                _healthModifier.value ?: 0,
+                Status.NORMAL,
+                _remainingUses.value ?: 0
+            )
+            CARD_TYPES[1] -> Resource(
+                _resourceType.value ?: ResourceType.BONE
+            )
+            CARD_TYPES[2] -> Useless(cardTitle.value)
+            else -> TODO()
+        }
+    }
+
+    override fun loadCardAtIndex(index: Int) {
+        val selectedCard = deck.value[selectedCardIndex.value].content
+        _cartType.value = when (selectedCard) {
+            is Consumable, null -> CARD_TYPES[0]
+            is Resource -> CARD_TYPES[1]
+            is Useless -> CARD_TYPES[2]
+        }
+
+        when (selectedCard) {
+            is Resource, is Useless, null -> {
+                _remainingDays.value = null
+                _healthModifier.value = null
+                _remainingUses.value = null
             }
-        } ?: TODO()
+            is Consumable -> {
+                _remainingDays.value = selectedCard.remainingDays
+                _healthModifier.value = selectedCard.healthModifier
+                _remainingUses.value = selectedCard.remainingUses
+            }
+        }
+    }
+
+    companion object {
+        val CARD_TYPES = listOf(
+            "Consumable",
+            "Resource",
+            "Useless",
+        )
     }
 }

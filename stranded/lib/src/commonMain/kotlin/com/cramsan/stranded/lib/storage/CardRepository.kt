@@ -8,13 +8,13 @@ interface CardRepository {
 
     fun readForageCards(): List<CardHolder<ScavengeResult>>
 
-    fun saveForageCards(list: List<MutableCardHolder<ScavengeResult>>)
+    fun saveForageCards(list: List<CardHolder<ScavengeResult>>)
 
     fun readNightCards(): List<CardHolder<NightEvent>>
 
-    fun saveNightCards(list: List<MutableCardHolder<NightEvent>>)
+    fun saveNightCards(list: List<CardHolder<NightEvent>>)
 
     fun readBelongingCards(): List<CardHolder<Belongings>>
 
-    fun saveBelongingCards(list: List<MutableCardHolder<Belongings>>)
+    fun saveBelongingCards(list: List<CardHolder<Belongings>>)
 }

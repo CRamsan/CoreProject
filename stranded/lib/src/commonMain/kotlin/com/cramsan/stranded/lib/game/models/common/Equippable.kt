@@ -9,6 +9,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 class Equippable(
-    val __title: String,
+    override val title: String,
     override var remainingUses: Int,
-) : Belongings(__title), Weapon
+) : Belongings(), Weapon

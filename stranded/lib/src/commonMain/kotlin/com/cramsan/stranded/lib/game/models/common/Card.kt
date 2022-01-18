@@ -9,4 +9,7 @@ import kotlinx.serialization.Serializable
  * The default value for the [id] is UUID string.
  */
 @Serializable
-abstract class Card(val id: String = generateUUID(), val title: String)
+abstract class Card {
+    val id: String = generateUUID()
+    abstract val title: String
+}

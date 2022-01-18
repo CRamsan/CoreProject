@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DeckHolder(
-    val forageCards: List<MutableCardHolder<ScavengeResult>>,
-    val nightCards: List<MutableCardHolder<NightEvent>>,
-    val belongingsCards: List<MutableCardHolder<Belongings>>,
+    val forageCards: List<CardHolder<ScavengeResult>>,
+    val nightCards: List<CardHolder<NightEvent>>,
+    val belongingsCards: List<CardHolder<Belongings>>,
 )

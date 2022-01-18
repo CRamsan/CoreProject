@@ -6,7 +6,6 @@ import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
 import com.cramsan.stranded.lib.storage.DeckHolder
-import com.cramsan.stranded.lib.storage.MutableCardHolder
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -61,7 +60,7 @@ class FileBasedCardRepository(
         return deck.forageCards
     }
 
-    override fun saveForageCards(list: List<MutableCardHolder<ScavengeResult>>) {
+    override fun saveForageCards(list: List<CardHolder<ScavengeResult>>) {
         if (!initialized) TODO()
 
         deck = deck.copy(forageCards = list)
@@ -74,7 +73,7 @@ class FileBasedCardRepository(
         return deck.nightCards
     }
 
-    override fun saveNightCards(list: List<MutableCardHolder<NightEvent>>) {
+    override fun saveNightCards(list: List<CardHolder<NightEvent>>) {
         if (!initialized) TODO()
 
         deck = deck.copy(nightCards = list)
@@ -87,7 +86,7 @@ class FileBasedCardRepository(
         return deck.belongingsCards
     }
 
-    override fun saveBelongingCards(list: List<MutableCardHolder<Belongings>>) {
+    override fun saveBelongingCards(list: List<CardHolder<Belongings>>) {
         if (!initialized) TODO()
 
         deck = deck.copy(belongingsCards = list)

@@ -8,4 +8,6 @@ import kotlinx.serialization.Serializable
  * phase.
  */
 @Serializable
-class Basket : Craftable("Basket")
+class Basket : Craftable() {
+    override val title = "Basket"
+}

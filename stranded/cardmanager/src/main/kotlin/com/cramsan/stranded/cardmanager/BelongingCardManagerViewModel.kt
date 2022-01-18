@@ -1,114 +1,47 @@
 package com.cramsan.stranded.cardmanager
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Equippable
 import com.cramsan.stranded.lib.game.models.common.StartingFood
 import com.cramsan.stranded.lib.game.models.common.Status
+import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class BelongingCardManagerViewModel(
     cardRepository: CardRepository,
-) : BaseCardManagerViewModel<Belongings>(cardRepository) {
+    scope: CoroutineScope,
+) : BaseCardManagerViewModel<Belongings>(cardRepository, scope) {
 
     private val _cartType = MutableStateFlow(CARD_TYPES.first())
     val cardType: StateFlow<String> = _cartType
 
-    private val _remainingDays = MutableStateFlow("0")
-    val remainingDays: StateFlow<String> = _remainingDays
+    private val _remainingDays = MutableStateFlow<Int?>(null)
+    val remainingDays: StateFlow<Int?> = _remainingDays
 
-    private val _healthModifier = MutableStateFlow("0")
-    val healthModifier: StateFlow<String> = _healthModifier
+    private val _healthModifier = MutableStateFlow<Int?>(null)
+    val healthModifier: StateFlow<Int?> = _healthModifier
 
-    private val _remainingUses = MutableStateFlow("0")
-    val remainingUses: StateFlow<String> = _remainingUses
+    private val _remainingUses = MutableStateFlow(0)
+    val remainingUses: StateFlow<Int> = _remainingUses
 
-    override fun onShow() = runBlocking {
-        withContext(Dispatchers.IO) {
-            _deck.value = cardRepository.readBelongingCards().toMutableCardHolderList()
-        }
-        initializeDeck()
+    override fun readDeckFromRepository(): List<CardHolder<Belongings>> {
+        return cardRepository.readBelongingCards()
     }
 
-    override fun onSave() = runBlocking {
-        refreshSelectedCard()
-        withContext(Dispatchers.IO) {
-            cardRepository.saveBelongingCards(_deck.value)
-            _deck.value = cardRepository.readBelongingCards().toMutableCardHolderList()
-        }
-        onCardSelected(selectedCardIndex.value)
-    }
-
-    override fun onNew() {
-        _cartType.value = CARD_TYPES.first()
-        _remainingUses.value = "0"
-        _remainingDays.value = "0"
-        _healthModifier.value = "0"
-
-        super.onNew()
-
-        refreshSelectedCard()
+    override fun writeDeckToRepository(deck: List<CardHolder<Belongings>>) {
+        cardRepository.saveBelongingCards(deck)
     }
 
     fun setCardType(cardType: String) {
-        when (cardType) {
-            CARD_TYPES[0] -> {
-                selectedCard.value.content = Equippable("", 0)
-            }
-            CARD_TYPES[1] -> {
-                selectedCard.value.content = StartingFood("", 0, 0, Status.NORMAL, 0)
-            }
-        }
         _cartType.value = cardType
+        saveCardToDeck()
+        onSelectedCardIndexChange()
     }
 
-    override fun onCardSelected(index: Int) {
-        super.onCardSelected(index)
-        _cartType.value = when (selectedCard.value.content) {
-            is Equippable -> CARD_TYPES[0]
-            is StartingFood -> CARD_TYPES[1]
-            null -> TODO()
-        }
-
-        val selectedCard = selectedCard.value.content
-        when (selectedCard) {
-            is Equippable -> Unit
-            is StartingFood -> {
-                onRemainingDaysUpdated(selectedCard.remainingDays.toString())
-                onHealthModifierUpdated(selectedCard.remainingUses.toString())
-            }
-            null -> TODO()
-        }
-        onRemainingUsesUpdated(selectedCard.remainingUses.toString())
-    }
-
-    override fun cleanInput() {
-        super.cleanInput()
-        if (!CARD_TYPES.contains(_cartType.value)) {
-            _cartType.value = CARD_TYPES[0]
-        }
-        _remainingUses.value = try {
-            _remainingUses.value.toInt()
-        } catch (throwable: Throwable) {
-            0
-        }.toString()
-        _remainingDays.value = try {
-            _remainingDays.value.toInt()
-        } catch (throwable: Throwable) {
-            0
-        }.toString()
-        _healthModifier.value = try {
-            _healthModifier.value.toInt()
-        } catch (throwable: Throwable) {
-            0
-        }.toString()
-    }
+    override fun sanitizeInput() = Unit
 
     fun onRemainingUsesUpdated(quantity: String) {
         val newQuantity: Int = try {
@@ -117,7 +50,7 @@ class BelongingCardManagerViewModel(
             return
         }
 
-        _remainingUses.value = newQuantity.toString()
+        _remainingUses.value = newQuantity
     }
 
     fun onRemainingDaysUpdated(quantity: String) {
@@ -127,7 +60,7 @@ class BelongingCardManagerViewModel(
             return
         }
 
-        _remainingDays.value = newQuantity.toString()
+        _remainingDays.value = newQuantity
     }
 
     fun onHealthModifierUpdated(quantity: String) {
@@ -137,31 +70,45 @@ class BelongingCardManagerViewModel(
             return
         }
 
-        _healthModifier.value = newQuantity.toString()
-    }
-
-    override fun refreshSelectedCard() {
-        cleanInput()
-        selectedCard.value.content = instanciateNewCard()
-        selectedCard.value.quantity = cardQuantity.value.toInt()
+        _healthModifier.value = newQuantity
     }
 
     override fun instanciateNewCard(): Belongings {
         return when (cardType.value) {
             CARD_TYPES[0] -> {
-                Equippable(cardTitle.value, _remainingUses.value.toInt())
+                Equippable(cardTitle.value, _remainingUses.value)
             }
             CARD_TYPES[1] -> {
                 StartingFood(
                     cardTitle.value,
-                    _remainingDays.value.toInt(),
-                    _healthModifier.value.toInt(),
+                    _remainingDays.value ?: 0,
+                    _healthModifier.value ?: 0,
                     Status.NORMAL,
-                    _remainingUses.value.toInt()
+                    _remainingUses.value
                 )
             }
             else -> TODO()
         }
+    }
+
+    override fun loadCardAtIndex(index: Int) {
+        val selectedCard = deck.value[selectedCardIndex.value].content
+        _cartType.value = when (selectedCard) {
+            is Equippable, null -> CARD_TYPES[0]
+            is StartingFood -> CARD_TYPES[1]
+        }
+
+        when (selectedCard) {
+            is Equippable, null -> {
+                _remainingDays.value = null
+                _healthModifier.value = null
+            }
+            is StartingFood -> {
+                _remainingDays.value = selectedCard.remainingDays
+                _healthModifier.value = selectedCard.healthModifier
+            }
+        }
+        _remainingUses.value = selectedCard?.remainingUses ?: 0
     }
 
     companion object {
