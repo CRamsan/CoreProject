@@ -62,7 +62,7 @@ dependencies {
     implementation project(":framework")
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
-    implementation project(":auraxiscontrolcenter:metrics")
+    implementation project(':auraxiscontrolcenter:deployable-models')
     implementation project(":auraxiscontrolcenter:ui")
 
     implementation packages.AndroidXAppCompat
@@ -109,5 +109,5 @@ dependencies {
 registerDependency(":framework")
 registerDependency(":auraxiscontrolcenter:appcore")
 registerDependency(":auraxiscontrolcenter:core-models")
-registerDependency(":auraxiscontrolcenter:metrics")
+registerDependency(":auraxiscontrolcenter:deployable-models")
 registerDependency(":auraxiscontrolcenter:ui")

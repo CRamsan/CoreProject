@@ -2,6 +2,7 @@ ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
 apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
+apply plugin: 'kotlinx-serialization'
 
 dependencies {
 }
@@ -11,6 +12,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework:interfacelib")
+                implementation packages.KotlinxSerialization
             }
         }
     }

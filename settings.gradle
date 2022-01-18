@@ -28,7 +28,7 @@ include 'auraxiscontrolcenter:appcore'
 include 'auraxiscontrolcenter:aws:cdk-jvm'
 include 'auraxiscontrolcenter:core-models'
 include 'auraxiscontrolcenter:db-models'
-include 'auraxiscontrolcenter:metrics'
+include 'auraxiscontrolcenter:deployable-models'
 include 'auraxiscontrolcenter:network-models'
 include 'auraxiscontrolcenter:ui'
 

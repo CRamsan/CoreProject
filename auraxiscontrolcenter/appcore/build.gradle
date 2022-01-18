@@ -22,7 +22,7 @@ kotlin {
                 implementation project(":framework")
                 implementation project(":auraxiscontrolcenter:core-models")
                 implementation project(":auraxiscontrolcenter:db-models")
-                implementation project(":auraxiscontrolcenter:metrics")
+                implementation project(":auraxiscontrolcenter:deployable-models")
                 implementation project(":auraxiscontrolcenter:network-models")
                 implementation packages.KtorCore
                 implementation packages.KtorJson
@@ -44,4 +44,4 @@ registerDependency(":framework")
 registerDependency(":auraxiscontrolcenter:db-models")
 registerDependency(":auraxiscontrolcenter:core-models")
 registerDependency(":auraxiscontrolcenter:network-models")
-registerDependency(":auraxiscontrolcenter:metrics")
+registerDependency(":auraxiscontrolcenter:deployable-models")

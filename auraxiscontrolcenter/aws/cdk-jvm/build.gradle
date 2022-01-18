@@ -1,3 +1,11 @@
 ext.mainClassTarget = "com.cesarandres.ps2link.aws.PS2LinkApp"
 
 apply from: "$rootDir/gradle/kotlin-jvm-cdk.gradle"
+apply plugin: 'kotlinx-serialization'
+
+dependencies {
+    implementation packages.KotlinxSerialization
+    implementation project(":auraxiscontrolcenter:deployable-models")
+}
+
+registerDependency(":auraxiscontrolcenter:deployable-models")
