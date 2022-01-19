@@ -39,5 +39,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'auraxiscontrolcenter:aws:release'
+    tasks: 'auraxiscontrolcenter:cdk:release'
 - task: PublishBuildArtifacts@1
+ 
