@@ -1,0 +1,7 @@
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: 'kotlinx-serialization'
+
+dependencies {
+    implementation packages.KotlinxSerialization
+    implementation meta_packages.CdkCommons
+}

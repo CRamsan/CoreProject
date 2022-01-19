@@ -1,5 +1,6 @@
-package com.cesarandres.ps2link.aws
+package com.cramsan.cdkrepo.remoteconfig
 
+import com.cramsan.cdkrepo.common.PublicReadOnlyBucket
 import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.s3.assets.AssetOptions
 import software.amazon.awscdk.services.s3.deployment.BucketDeployment
@@ -7,21 +8,26 @@ import software.amazon.awscdk.services.s3.deployment.BucketDeploymentProps
 import software.amazon.awscdk.services.s3.deployment.Source
 import java.io.File
 
+/**
+ * Upload a local file [payloadFile] to a target S3 bucket created referenced in [targetBucket].
+ * This construct uses the Asset capabilities of CDK and therefore it needs an AWS account that
+ * has been bootstrapped.
+ */
 class RemoteConfigUploader(
-    bucket: PublicReadOnlyBucket,
-    file: File,
+    targetBucket: PublicReadOnlyBucket,
+    payloadFile: File,
     scope: software.constructs.Construct,
     id: String
 ) : Construct(scope, id) {
 
     init {
         val asset = Source.asset(
-            file.parentFile.absolutePath,
+            payloadFile.parentFile.absolutePath,
             AssetOptions.builder()
                 .exclude(
                     listOf(
                         "**",
-                        "!${file.name}"
+                        "!${payloadFile.name}"
                     )
                 )
                 .build()
@@ -32,7 +38,7 @@ class RemoteConfigUploader(
             "RemoteConfig-$id",
             BucketDeploymentProps.builder()
                 .sources(listOf(asset))
-                .destinationBucket(bucket.bucket)
+                .destinationBucket(targetBucket.bucket)
                 .build()
         )
     }

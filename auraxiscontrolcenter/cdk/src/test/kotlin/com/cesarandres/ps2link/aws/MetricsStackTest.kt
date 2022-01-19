@@ -1,5 +1,6 @@
 package com.cesarandres.ps2link.aws
 
+import com.cramsan.cdkrepo.metrics.MetricsStack
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature

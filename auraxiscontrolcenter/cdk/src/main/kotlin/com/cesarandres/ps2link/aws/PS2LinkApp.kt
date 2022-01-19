@@ -1,6 +1,10 @@
 package com.cesarandres.ps2link.aws
 
+import com.cramsan.cdkrepo.metrics.MetricsStack
+import com.cramsan.cdkrepo.remoteconfig.RemoteConfigStack
+import com.cramsan.cdkrepo.remoteconfig.initializePayload
 import com.cramsan.ps2link.remoteconfig.remoteConfigJson
+import com.cramsan.ps2link.remoteconfig.remoteConfigPayload
 import software.amazon.awscdk.core.App
 import software.amazon.awscdk.core.StackProps
 
@@ -35,10 +39,12 @@ object PS2LinkApp {
             "PS2LinkApp",
             props,
         )
+
+        val payload = initializePayload(remoteConfigJson, "ps2Link", remoteConfigPayload)
         RemoteConfigStack(
             app,
             "PS2LinkRemoteConfig",
-            remoteConfigJson,
+            payload,
             props,
         )
         app.synth()
