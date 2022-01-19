@@ -25,7 +25,7 @@ include 'doom:game:desktop'
 
 include 'auraxiscontrolcenter:app'
 include 'auraxiscontrolcenter:appcore'
-include 'auraxiscontrolcenter:aws:cdk-jvm'
+include 'auraxiscontrolcenter:cdk'
 include 'auraxiscontrolcenter:core-models'
 include 'auraxiscontrolcenter:db-models'
 include 'auraxiscontrolcenter:deployable-models'
