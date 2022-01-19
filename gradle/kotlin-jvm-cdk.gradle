@@ -31,9 +31,9 @@ task forceDeploy(type:Exec) {
     workingDir "$projectDir"
 
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine 'cmd', '/c', 'cdk', 'deploy', '--require-approval', 'never'
+        commandLine 'cmd', '/c', 'cdk', 'deploy', "--all", '--require-approval', 'never'
     } else {
-        commandLine "cdk", "deploy", "--require-approval", "never"
+        commandLine "cdk", "deploy", "--all", "--require-approval", "never"
     }
 }
 
