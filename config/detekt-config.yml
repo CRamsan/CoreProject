@@ -1,0 +1,65 @@
+build:
+  maxIssues: 1
+  weights:
+    comments: 100
+
+complexity:
+  active: true
+  LongParameterList:
+    active: true
+    functionThreshold: 10
+    constructorThreshold: 8
+    ignoreDefaultParameters: false
+    ignoreDataClasses: true
+    ignoreAnnotatedParameter: []
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+    exceptionNames:
+      - 'ArrayIndexOutOfBoundsException'
+      - 'Error'
+      - 'Exception'
+      - 'IllegalMonitorStateException'
+      - 'IndexOutOfBoundsException'
+      - 'NullPointerException'
+      - 'RuntimeException'
+
+comments:
+  AbsentOrWrongFileLicense:
+    active: false
+    licenseTemplateFile: 'license.template'
+    licenseTemplateIsRegex: false
+  CommentOverPrivateFunction:
+    active: false
+  CommentOverPrivateProperty:
+    active: false
+  DeprecatedBlockTag:
+    active: false
+  EndOfSentenceFormat:
+    active: false
+    endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
+  OutdatedDocumentation:
+    active: false
+    matchTypeParameters: true
+    matchDeclarationsOrder: true
+  UndocumentedPublicClass:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    searchInNestedClass: true
+    searchInInnerClass: true
+    searchInInnerObject: true
+    searchInInnerInterface: true
+  UndocumentedPublicFunction:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  UndocumentedPublicProperty:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+
+style:
+  active: true
+  MaxLineLength:
+    active: false
+  ForbiddenComment:
+    active: false

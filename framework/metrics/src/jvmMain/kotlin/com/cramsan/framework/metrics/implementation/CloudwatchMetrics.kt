@@ -26,7 +26,7 @@ class CloudwatchMetrics(
     private val secretKey: String,
 ) : MetricsDelegate {
 
-    lateinit var client: CloudWatchClient
+    private lateinit var client: CloudWatchClient
 
     override fun initialize() {
         val awsCreds = AwsBasicCredentials.create(accessKey, secretKey)
@@ -77,7 +77,7 @@ class CloudwatchMetrics(
     }
 
     companion object {
-        const val IDENTIFIER = "IDENTIFIER"
-        const val TAG = "CloudwatchMetrics"
+        private const val IDENTIFIER = "IDENTIFIER"
+        private const val TAG = "CloudwatchMetrics"
     }
 }

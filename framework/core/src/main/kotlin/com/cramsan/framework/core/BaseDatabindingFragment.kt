@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 
 /**
  * This class extends [BaseFragment] with the capabilities to render a View based screen. The [viewModel]
@@ -20,9 +22,22 @@ import androidx.databinding.ViewDataBinding
  */
 abstract class BaseDatabindingFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseFragment() {
 
-    abstract val viewModel: VM
+    /**
+     * ViewModel instance that will be used to manage this [Fragment]. The class that extends [BaseFragment] is in
+     * charge of providing the implementation.
+     */
+    protected abstract val viewModel: VM
+
+    /**
+     * DataBinding instance that will be used to access the layout [contentViewLayout].
+     */
     protected lateinit var dataBinding: DB
-    abstract val contentViewLayout: Int
+        private set
+
+    /**
+     * Id of the [MaterialToolbar] in the layout [contentViewLayout].
+     */
+    protected abstract val contentViewLayout: Int
 
     @CallSuper
     override fun onCreateView(

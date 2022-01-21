@@ -1,5 +1,7 @@
 package com.cramsan.framework.userevents
 
+import com.cramsan.framework.assertlib.AssertUtil.singleton
+import com.cramsan.framework.logging.EventLogger.singleton
 import kotlin.native.concurrent.ThreadLocal
 
 /**
@@ -16,9 +18,16 @@ import kotlin.native.concurrent.ThreadLocal
 object UserEvents {
 
     private lateinit var _singleton: UserEventsInterface
+
+    /**
+     * Global [UserEventsInterface] singleton
+     */
     val singleton: UserEventsInterface
         get() = _singleton
 
+    /**
+     * Set the instance to be used for the [singleton].
+     */
     fun setInstance(assertUtil: UserEventsInterface) {
         _singleton = assertUtil
     }

@@ -23,7 +23,10 @@ abstract class BaseViewModel(
     protected val savedStateHandle: SavedStateHandle,
 ) : AndroidViewModel(application) {
 
-    protected abstract val logTag: String
+    /**
+     * String that identifies this class. Used for logging and telemetry.
+     */
+    abstract val logTag: String
 
     /**
      * This scope is tied to the viewModel's lifecycle and it uses [DispatcherProvider.ioDispatcher]
@@ -36,6 +39,10 @@ abstract class BaseViewModel(
      */
     @Suppress("DEPRECATION")
     protected val events = LiveEvent<BaseEvent>()
+
+    /**
+     * LiveData that produce events of type [BaseEvent].
+     */
     fun events() = events.asLiveData()
 
     @CallSuper

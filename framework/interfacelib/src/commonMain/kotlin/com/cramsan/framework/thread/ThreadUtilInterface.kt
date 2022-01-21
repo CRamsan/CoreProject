@@ -5,6 +5,9 @@ package com.cramsan.framework.thread
  */
 interface ThreadUtilInterface {
 
+    /**
+     * [ThreadUtilDelegate] that will be used for this instance of [ThreadUtilInterface].
+     */
     val platformDelegate: ThreadUtilDelegate
 
     /**

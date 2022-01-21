@@ -5,6 +5,11 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.thread.ThreadUtilDelegate
 
+/**
+ * JVM implementation of [ThreadUtilDelegate].
+ *
+ * @see [ThreadUtilDelegate]
+ */
 class ThreadUtilJVM constructor(
     private val eventLogger: EventLoggerInterface,
     private val assertUtil: AssertUtilInterface

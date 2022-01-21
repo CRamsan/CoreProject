@@ -5,7 +5,7 @@ package com.cramsan.framework.core
  * [BaseActivity]. This class by itself does not provide anything. For different uses-cases, this
  * class can be inherited as to define the specific use-case.
  */
-abstract class BaseEvent
+sealed class BaseEvent
 
 /**
  * Simple event to be used for cases when a viewModel will only send a single type of signal. It is
@@ -14,6 +14,6 @@ abstract class BaseEvent
 class SimpleEvent : BaseEvent()
 
 /**
- * Even that passes a single string argument.
+ * Event that passes a single [value] argument.
  */
 class StringEvent(val value: String) : BaseEvent()

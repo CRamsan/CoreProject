@@ -1,5 +1,7 @@
 package com.cramsan.framework.thread
 
+import com.cramsan.framework.assertlib.AssertUtil.singleton
+import com.cramsan.framework.logging.EventLogger.singleton
 import kotlin.native.concurrent.ThreadLocal
 
 /**
@@ -15,9 +17,16 @@ import kotlin.native.concurrent.ThreadLocal
 object ThreadUtil {
 
     private lateinit var _singleton: ThreadUtilInterface
+
+    /**
+     * Global [ThreadUtilInterface] singleton
+     */
     val singleton: ThreadUtilInterface
         get() = _singleton
 
+    /**
+     * Set the instance to be used for the [singleton].
+     */
     fun setInstance(assertUtil: ThreadUtilInterface) {
         _singleton = assertUtil
     }

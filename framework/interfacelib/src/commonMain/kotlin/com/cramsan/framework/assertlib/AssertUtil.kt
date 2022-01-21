@@ -15,9 +15,16 @@ import kotlin.native.concurrent.ThreadLocal
 object AssertUtil {
 
     private lateinit var _singleton: AssertUtilInterface
+
+    /**
+     * Global [AssertUtilInterface] singleton
+     */
     val singleton: AssertUtilInterface
         get() = _singleton
 
+    /**
+     * Set the instance to be used for the [singleton].
+     */
     fun setInstance(assertUtil: AssertUtilInterface) {
         _singleton = assertUtil
     }

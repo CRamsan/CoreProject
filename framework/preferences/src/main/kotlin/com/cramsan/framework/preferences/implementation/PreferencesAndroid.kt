@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.cramsan.framework.preferences.PreferencesDelegate
 
 /**
- * This implementation of [PreferencesDelegate] uses the [context] to manage a [SharedPreferences]
+ * This implementation of [PreferencesDelegate] uses the [context] to manage a [SharedPreferences].
  *
  * TODO: Remove the hardcoded file name. Preferably make it injectable.
  * TODO: Keep a reference to the [SharedPreferences] after initialization to prevent excessive IO.

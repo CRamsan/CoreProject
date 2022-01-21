@@ -33,6 +33,7 @@ buildscript {
         classpath packages.Shadow
         classpath packages.DokkaGradle
         classpath packages.JetBrainsCompose
+        classpath packages.Detekt
     }
 }
 

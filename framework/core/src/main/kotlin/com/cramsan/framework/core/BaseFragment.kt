@@ -16,23 +16,30 @@ import com.cramsan.framework.logging.logD
  *
  * TODO: Refactor the viewModel from [ComposeBaseFragment] and [BaseDatabindingFragment] into this class.
  */
+@Suppress("TooManyFunctions")
 abstract class BaseFragment : Fragment() {
 
+    /**
+     * String that identifies this class. Used for logging and telemetry.
+     */
     abstract val logTag: String
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onAttach(context: Context) {
         super.onAttach(context)
         logD(logTag, "onAttach")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logD(logTag, "onCreate")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,60 +51,70 @@ abstract class BaseFragment : Fragment() {
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         logD(logTag, "onViewCreated")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onStart() {
         super.onStart()
         logD(logTag, "onStart")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onResume() {
         super.onResume()
         logD(logTag, "onResume")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onPause() {
         super.onPause()
         logD(logTag, "onPause")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onStop() {
         super.onStop()
         logD(logTag, "onStop")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onDestroyView() {
         super.onDestroyView()
         logD(logTag, "onDestroyView")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onDestroy() {
         super.onDestroy()
         logD(logTag, "onDestroy")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onDetach() {
         super.onDetach()
         logD(logTag, "onDetach")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         logD(logTag, "onSaveInstanceState")
     }
 
     @CallSuper
+    @Suppress("UndocumentedPublicProperty")
     protected open fun onViewModelEvent(event: BaseEvent) {
         logD(logTag, "Event: $event")
     }

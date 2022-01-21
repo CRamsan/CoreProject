@@ -33,6 +33,6 @@ class MetricsImpl(
     }
 
     companion object {
-        const val TAG = "Metrics"
+        private const val TAG = "Metrics"
     }
 }

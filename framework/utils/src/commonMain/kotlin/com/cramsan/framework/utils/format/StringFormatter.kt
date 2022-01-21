@@ -1,8 +1,7 @@
 package com.cramsan.framework.utils.format
 
 /**
- * Simple String formatter. Not much to say.
- * TODO: Should we remove this class?
+ * Simple String formatter.
  */
 expect class StringFormatter() {
 

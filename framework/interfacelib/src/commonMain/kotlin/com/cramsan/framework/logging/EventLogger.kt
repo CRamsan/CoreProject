@@ -1,5 +1,6 @@
 package com.cramsan.framework.logging
 
+import com.cramsan.framework.assertlib.AssertUtil.singleton
 import kotlin.native.concurrent.ThreadLocal
 
 /**
@@ -15,9 +16,16 @@ import kotlin.native.concurrent.ThreadLocal
 object EventLogger {
 
     private lateinit var _singleton: EventLoggerInterface
+
+    /**
+     * Global [EventLoggerInterface] singleton
+     */
     val singleton: EventLoggerInterface
         get() = _singleton
 
+    /**
+     * Set the instance to be used for the [singleton].
+     */
     fun setInstance(assertUtil: EventLoggerInterface) {
         _singleton = assertUtil
     }

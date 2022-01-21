@@ -36,7 +36,7 @@ class HaltUtilAndroid(private val appContext: Context) : HaltUtilDelegate {
 
     private fun getStacktrace() =
         Thread.currentThread().stackTrace
-            .drop(9)
+            .drop(STACK_TRACE_HEAD_EXTRA_LINES)
             .joinToString(separator = "\n") { "at ${it.methodName}(${it.fileName}:${it.lineNumber})" }
 
     private fun displayNotification() {
@@ -51,8 +51,10 @@ class HaltUtilAndroid(private val appContext: Context) : HaltUtilDelegate {
             )
             .setPriority(NotificationCompat.PRIORITY_MAX)
         with(NotificationManagerCompat.from(appContext)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(999, builder.build())
+            // NotificationId is a unique int for each notification that you must define
+            // Setting notification ID to MAX_VALUE as to reduce the risk
+            // of collision with other actual notification ids.
+            notify(Int.MAX_VALUE, builder.build())
         }
     }
 
@@ -74,6 +76,7 @@ class HaltUtilAndroid(private val appContext: Context) : HaltUtilDelegate {
     }
 
     companion object {
+        private const val STACK_TRACE_HEAD_EXTRA_LINES = 90
         private const val sleepTime = 1000L
         private const val CHANNEL_ID = "com.cramsan.framework.halt.implementation"
     }

@@ -5,6 +5,9 @@ package com.cramsan.framework.userevents
  */
 interface UserEventsInterface {
 
+    /**
+     * [UserEventsDelegate] that will work with this instance of [UserEventsInterface].
+     */
     val platformDelegate: UserEventsDelegate
 
     /**

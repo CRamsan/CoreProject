@@ -11,7 +11,14 @@ import kotlinx.coroutines.CoroutineScope
  */
 interface LifecycleAwareComponent {
 
+    /**
+     * Coroutine scope that is managed by this instance. Calls to [endScope] should
+     * stop the scope. The scope is not expected to be able to restart the scope.
+     */
     val scope: CoroutineScope
 
+    /**
+     * End the [scope]. This function should be called when this component is being disposed.
+     */
     fun endScope()
 }

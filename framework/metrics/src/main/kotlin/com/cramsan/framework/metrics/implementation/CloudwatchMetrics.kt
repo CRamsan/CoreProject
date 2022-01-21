@@ -33,7 +33,7 @@ class CloudwatchMetrics(
     private val scope: CoroutineScope,
 ) : MetricsDelegate {
 
-    lateinit var client: AmazonCloudWatchClient
+    private lateinit var client: AmazonCloudWatchClient
 
     override fun initialize() {
         val awsCreds = BasicAWSCredentials(accessKey, secretKey)
@@ -92,15 +92,15 @@ class CloudwatchMetrics(
             when (throwable) {
                 is InvalidParameterValueException, is MissingRequiredParameterException,
                 is InvalidParameterCombinationException, is InternalServiceException,
-                is AmazonClientException -> logE(TAG, "AWS client failure while uploading metric", throwable)
                 is AmazonServiceException -> logE(TAG, "AWS service failure while uploading metric", throwable)
+                is AmazonClientException -> logE(TAG, "AWS client failure while uploading metric", throwable)
                 else -> logE(TAG, "Undetermined failure while uploading metric", throwable)
             }
         }
     }
 
     companion object {
-        const val IDENTIFIER = "IDENTIFIER"
-        const val TAG = "CloudwatchMetrics"
+        private const val IDENTIFIER = "IDENTIFIER"
+        private const val TAG = "CloudwatchMetrics"
     }
 }
