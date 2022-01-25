@@ -15,6 +15,9 @@ import software.amazon.awscdk.services.cloudwatch.AlarmProps
 import software.amazon.awscdk.services.cloudwatch.Metric
 import software.amazon.awscdk.services.cloudwatch.MetricProps
 import software.amazon.awscdk.services.cloudwatch.Statistic
+import software.amazon.awscdk.services.cloudwatch.actions.SnsAction
+import software.amazon.awscdk.services.sns.Topic
+import software.amazon.awscdk.services.sns.subscriptions.EmailSubscription
 
 object PS2LinkApp {
     @JvmStatic
@@ -47,6 +50,10 @@ object PS2LinkApp {
             "PS2LinkApp",
             props,
         ) {
+            val emailTopic = Topic(this, "emailComms").apply {
+                addSubscription(EmailSubscription("alerts@cramsan.com"))
+            }
+
             val launchMetric = Metric(
                 MetricProps.builder()
                     .namespace(ApplicationNamespace.identifier)
@@ -68,7 +75,9 @@ object PS2LinkApp {
                     .evaluationPeriods(2)
                     .datapointsToAlarm(2)
                     .build()
-            )
+            ).apply {
+                addAlarmAction(SnsAction(emailTopic))
+            }
 
             val crashMetric = Metric(
                 MetricProps.builder()
@@ -92,7 +101,9 @@ object PS2LinkApp {
                     .evaluationPeriods(1)
                     .datapointsToAlarm(1)
                     .build()
-            )
+            ).apply {
+                addAlarmAction(SnsAction(emailTopic))
+            }
         }
 
         val payload = initializePayload(remoteConfigJson, "ps2Link", remoteConfigPayload)

@@ -136,6 +136,8 @@ def packages = [
         AwsSdkV2Cloudwatch : "software.amazon.awssdk:cloudwatch:$versions_packages.AwsSdkV2",
         CdkIam : "software.amazon.awscdk:iam:$versions_packages.Cdk",
         CdkCore : "software.amazon.awscdk:core:$versions_packages.Cdk",
+        CdkCloudwatch : "software.amazon.awscdk:cloudwatch:$versions_packages.Cdk",
+        CdkCloudwatchActions : "software.amazon.awscdk:cloudwatch-actions:$versions_packages.Cdk",
         CdkRoute53 : "software.amazon.awscdk:route53:$versions_packages.Cdk",
         CdkRoute53Targets : "software.amazon.awscdk:route53-targets:$versions_packages.Cdk",
         CdkRoute53Patterns : "software.amazon.awscdk:route53-patterns:$versions_packages.Cdk",
@@ -285,6 +287,8 @@ def packages = [
 def cdk_commons = [
         packages.CdkIam,
         packages.CdkCore,
+        packages.CdkCloudwatch,
+        packages.CdkCloudwatchActions,
         packages.CdkRoute53,
         packages.CdkRoute53Targets,
         packages.CdkRoute53Patterns,
