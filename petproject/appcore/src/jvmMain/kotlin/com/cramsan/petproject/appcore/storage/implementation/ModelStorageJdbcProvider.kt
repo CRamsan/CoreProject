@@ -7,7 +7,11 @@ import com.cramsan.petproject.db.PetProjectDB
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import java.sql.SQLException
 
-class ModelStorageJdbcProvider(val dbPath: String) :
+/**
+ * JVM Implementation that uses the JdbcSqliteDriver to provide SQLite
+ * storage on JVM platforms.
+ */
+class ModelStorageJdbcProvider(private val dbPath: String) :
     ModelStoragePlatformProvider {
     override fun provide(): ModelStorageDAO {
         val sqlDriver = JdbcSqliteDriver("jdbc:sqlite:$dbPath")
@@ -15,6 +19,7 @@ class ModelStorageJdbcProvider(val dbPath: String) :
         try {
             PetProjectDB.Schema.create(sqlDriver)
         } catch (e: SQLException) {
+            throw e
         }
         return dao
     }

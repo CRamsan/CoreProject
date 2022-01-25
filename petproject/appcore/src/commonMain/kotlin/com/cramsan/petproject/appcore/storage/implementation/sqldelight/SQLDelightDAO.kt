@@ -10,6 +10,9 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+/**
+ * Implementation of [ModelStorageDAO] that uses sqldelight.
+ */
 class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
     private var database: PetProjectDB = PetProjectDB(

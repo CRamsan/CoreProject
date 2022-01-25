@@ -36,6 +36,13 @@ import kotlin.coroutines.coroutineContext
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 
+/**
+ * Implementation of [ModelProviderInterface] that fetches models from an
+ * internally created HTTP client. This implementation caches the instances.
+ * The [modelStorage] is use for caching. The [preferences] are used to keep
+ * track of when the catalog was last updated. The API endpoints that will be
+ * reached are provided from the [config].
+ */
 class ModelProvider(
     private val eventLogger: EventLoggerInterface,
     private val threadUtil: ThreadUtilInterface,
@@ -51,15 +58,14 @@ class ModelProvider(
     }
 
     private val listeners = mutableSetOf<ModelProviderEventListenerInterface>()
-    var isCatalogReady = false
+    private var isCatalogReady = false
     private val mutex = Mutex()
-    private val LAST_UPDATE = "LastUpdate"
 
     @OptIn(ExperimentalTime::class)
     override fun isCatalogAvailable(currentTime: Long): Boolean {
         if (isCatalogReady)
             return true
-        val lastSave = preferences.loadLong(LAST_UPDATE)
+        val lastSave = preferences.loadLong(Companion.LAST_UPDATE)
         if (lastSave != null) {
             val now = Instant.fromEpochMilliseconds(currentTime)
             val lastSaveTime = Instant.fromEpochMilliseconds(lastSave)
@@ -82,7 +88,7 @@ class ModelProvider(
         threadUtil.assertIsBackgroundThread()
 
         mutex.withLock {
-            val lastSave = preferences.loadLong(LAST_UPDATE)
+            val lastSave = preferences.loadLong(Companion.LAST_UPDATE)
             if (!force && lastSave != null && currentTime - lastSave < 259200) {
                 eventLogger.log(Severity.INFO, "ModelProvider", "Using cached data")
                 setIsCatalogReady(true)
@@ -110,7 +116,7 @@ class ModelProvider(
 
             setIsCatalogReady(true)
             eventLogger.log(Severity.INFO, "ModelProvider", "Data downloaded")
-            preferences.saveLong(LAST_UPDATE, currentTime)
+            preferences.saveLong(Companion.LAST_UPDATE, currentTime)
         }
         return true
     }
@@ -305,7 +311,11 @@ class ModelProvider(
         threadUtil.assertIsBackgroundThread()
 
         modelStorage.deleteAll()
-        preferences.saveLong(LAST_UPDATE, 0)
+        preferences.saveLong(Companion.LAST_UPDATE, 0)
         isCatalogReady = false
+    }
+
+    companion object {
+        private const val LAST_UPDATE = "LastUpdate"
     }
 }

@@ -12,6 +12,10 @@ import com.cramsan.petproject.db.PlantFamily
 import com.cramsan.petproject.db.PlantMainName
 import com.cramsan.petproject.db.Toxicity
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.Description] that internally uses the
+ * provided [plantDescription] from sqldelight.
+ */
 class Description(private val plantDescription: Description) : com.cramsan.petproject.appcore.storage.Description {
     override val id: Long
         get() = plantDescription.id
@@ -25,6 +29,10 @@ class Description(private val plantDescription: Description) : com.cramsan.petpr
         get() = plantDescription.locale
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.Plant] that internally uses the
+ * provided [plant] from sqldelight.
+ */
 class Plant(private val plant: Plant) : com.cramsan.petproject.appcore.storage.Plant {
     override val id: Long
         get() = plant.id
@@ -34,6 +42,10 @@ class Plant(private val plant: Plant) : com.cramsan.petproject.appcore.storage.P
         get() = plant.image_url
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.PlantCommonName] that internally uses the
+ * provided [plantCommonName] from sqldelight.
+ */
 class PlantCommonName(
     private val plantCommonName: PlantCommonName
 ) : com.cramsan.petproject.appcore.storage.PlantCommonName {
@@ -47,6 +59,10 @@ class PlantCommonName(
         get() = plantCommonName.locale
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.PlantFamily] that internally uses the
+ * provided [plantFamily] from sqldelight.
+ */
 class PlantFamily(
     private val plantFamily: PlantFamily
 ) : com.cramsan.petproject.appcore.storage.PlantFamily {
@@ -60,6 +76,10 @@ class PlantFamily(
         get() = plantFamily.locale
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.PlantMainName] that internally uses the
+ * provided [plantMainName] from sqldelight.
+ */
 class PlantMainName(
     private val plantMainName: PlantMainName
 ) : com.cramsan.petproject.appcore.storage.PlantMainName {
@@ -73,6 +93,10 @@ class PlantMainName(
         get() = plantMainName.locale
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.Toxicity] that internally uses the
+ * provided [toxicity] from sqldelight.
+ */
 class Toxicity(
     private val toxicity: Toxicity
 ) : com.cramsan.petproject.appcore.storage.Toxicity {
@@ -88,6 +112,10 @@ class Toxicity(
         get() = toxicity.is_toxic
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId] that internally uses a
+ * [GetAllPlantsWithAnimalId] from sqldelight.
+ */
 class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId {
     private val getAllPlantsWithAnimalId: GetAllPlantsWithAnimalId
 
@@ -117,6 +145,10 @@ class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPl
         get() = getAllPlantsWithAnimalId.is_toxic
 }
 
+/**
+ * Implementation of [com.cramsan.petproject.appcore.storage.GetPlantWithPlantIdAndAnimalId] that internally uses a
+ * [GetPlantWithPlantIdAndAnimalId] from sqldelight.
+ */
 class GetPlantWithPlantIdAndAnimalId(
     private val getPlantWithPlantIdAndAnimalId: GetPlantWithPlantIdAndAnimalId
 ) : com.cramsan.petproject.appcore.storage.GetPlantWithPlantIdAndAnimalId {

@@ -3,6 +3,9 @@ package com.cramsan.petproject.appcore.storage.implementation
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.storage.Description
 
+/**
+ * Simple implementation of [Description].
+ */
 data class DescriptionImpl(
     override val id: Long,
     override val plantId: Long,

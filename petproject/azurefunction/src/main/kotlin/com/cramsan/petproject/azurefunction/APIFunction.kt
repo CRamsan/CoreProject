@@ -14,9 +14,13 @@ import com.microsoft.azure.functions.annotation.BindingName
 import com.microsoft.azure.functions.annotation.FunctionName
 import com.microsoft.azure.functions.annotation.HttpTrigger
 
+/**
+ * This class is the entry point for the Azure function.
+ */
 class APIFunction {
 
     @FunctionName("plants")
+    @Suppress("UndocumentedPublicFunction")
     fun plants(
         @HttpTrigger(
             name = "req",
@@ -35,6 +39,7 @@ class APIFunction {
     }
 
     @FunctionName("mainnames")
+    @Suppress("UndocumentedPublicFunction")
     fun mainNames(
         @HttpTrigger(
             name = "req",
@@ -53,6 +58,7 @@ class APIFunction {
     }
 
     @FunctionName("commonNames")
+    @Suppress("UndocumentedPublicFunction")
     fun commonNames(
         @HttpTrigger(
             name = "req",
@@ -73,6 +79,7 @@ class APIFunction {
     }
 
     @FunctionName("familiy")
+    @Suppress("UndocumentedPublicFunction")
     fun familiy(
         @HttpTrigger(
             name = "req",
@@ -93,6 +100,7 @@ class APIFunction {
     }
 
     @FunctionName("description")
+    @Suppress("UndocumentedPublicFunction")
     fun description(
         @HttpTrigger(
             name = "req",
@@ -114,6 +122,7 @@ class APIFunction {
     }
 
     @FunctionName("toxicities")
+    @Suppress("UndocumentedPublicFunction")
     fun toxicities(
         @HttpTrigger(
             name = "req",
@@ -133,7 +142,7 @@ class APIFunction {
 
     companion object {
         private val dependenciesConfig = DependenciesConfig()
-        val modelStorage = dependenciesConfig.modelStorage
-        val mapper = ObjectMapper()
+        private val modelStorage = dependenciesConfig.modelStorage
+        private val mapper = ObjectMapper()
     }
 }

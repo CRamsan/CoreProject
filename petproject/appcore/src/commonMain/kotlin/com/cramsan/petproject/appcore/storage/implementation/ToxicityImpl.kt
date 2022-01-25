@@ -2,8 +2,12 @@ package com.cramsan.petproject.appcore.storage.implementation
 
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.ToxicityValue
+import com.cramsan.petproject.appcore.storage.Description
 import com.cramsan.petproject.appcore.storage.Toxicity
 
+/**
+ * Simple implementation of [Toxicity].
+ */
 data class ToxicityImpl(
     override val id: Long,
     override val plantId: Long,

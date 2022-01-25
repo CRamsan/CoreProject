@@ -7,7 +7,11 @@ import com.cramsan.petproject.appcore.storage.implementation.sqldelight.SQLDelig
 import com.cramsan.petproject.db.PetProjectDB
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 
-class ModelStorageAndroidProvider(val context: Context) :
+/**
+ * Android implementation of [ModelStoragePlatformProvider]. Internally
+ * it uses SQLite throught the [AndroidSqliteDriver] of SQLDelight.
+ */
+class ModelStorageAndroidProvider(private val context: Context) :
     ModelStoragePlatformProvider {
     override fun provide(): ModelStorageDAO {
         val sqlDriver = AndroidSqliteDriver(PetProjectDB.Schema, context, "petproject.db")
