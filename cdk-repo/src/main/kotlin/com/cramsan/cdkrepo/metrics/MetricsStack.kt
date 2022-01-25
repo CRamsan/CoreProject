@@ -10,9 +10,11 @@ import software.amazon.awscdk.core.StackProps
 class MetricsStack @JvmOverloads constructor(
     scope: Construct?,
     id: String?,
-    props: StackProps? = null
+    props: StackProps? = null,
+    apply: (MetricsStack.() -> Unit)? = null
 ) : Stack(scope, id, props) {
     init {
         MetricsDefaultAccess(this, "DefaultAccess")
+        apply?.let { it() }
     }
 }

@@ -3,10 +3,18 @@ package com.cesarandres.ps2link.aws
 import com.cramsan.cdkrepo.metrics.MetricsStack
 import com.cramsan.cdkrepo.remoteconfig.RemoteConfigStack
 import com.cramsan.cdkrepo.remoteconfig.initializePayload
+import com.cramsan.framework.metrics.MetricType
+import com.cramsan.ps2link.metric.ApplicationNamespace
 import com.cramsan.ps2link.remoteconfig.remoteConfigJson
 import com.cramsan.ps2link.remoteconfig.remoteConfigPayload
 import software.amazon.awscdk.core.App
+import software.amazon.awscdk.core.Duration
 import software.amazon.awscdk.core.StackProps
+import software.amazon.awscdk.services.cloudwatch.Alarm
+import software.amazon.awscdk.services.cloudwatch.AlarmProps
+import software.amazon.awscdk.services.cloudwatch.Metric
+import software.amazon.awscdk.services.cloudwatch.MetricProps
+import software.amazon.awscdk.services.cloudwatch.Statistic
 
 object PS2LinkApp {
     @JvmStatic
@@ -38,7 +46,54 @@ object PS2LinkApp {
             app,
             "PS2LinkApp",
             props,
-        )
+        ) {
+            val launchMetric = Metric(
+                MetricProps.builder()
+                    .namespace(ApplicationNamespace.identifier)
+                    .metricName(MetricType.SUCCESS.name)
+                    .statistic(Statistic.SUM.name)
+                    .period(Duration.hours(6))
+                    .dimensionsMap(
+                        mapOf(
+                            "IDENTIFIER" to ApplicationNamespace.Event.LAUNCH.name
+                        )
+                    )
+                    .build()
+            )
+            Alarm(
+                this, "LaunchUnderflow",
+                AlarmProps.builder()
+                    .metric(launchMetric)
+                    .threshold(4.0)
+                    .evaluationPeriods(2)
+                    .datapointsToAlarm(2)
+                    .build()
+            )
+
+            val crashMetric = Metric(
+                MetricProps.builder()
+                    .namespace(ApplicationNamespace.identifier)
+                    .metricName(MetricType.FAILURE.name)
+                    .statistic(Statistic.SUM.name)
+                    .period(Duration.hours(6))
+                    .dimensionsMap(
+                        mapOf(
+                            "IDENTIFIER" to ApplicationNamespace.Event.LAUNCH.name
+                        )
+                    )
+                    .build()
+            )
+
+            Alarm(
+                this, "LaunchCrash",
+                AlarmProps.builder()
+                    .metric(crashMetric)
+                    .threshold(5.0)
+                    .evaluationPeriods(1)
+                    .datapointsToAlarm(1)
+                    .build()
+            )
+        }
 
         val payload = initializePayload(remoteConfigJson, "ps2Link", remoteConfigPayload)
         RemoteConfigStack(

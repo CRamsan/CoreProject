@@ -7,6 +7,9 @@ dependencies {
     implementation packages.KotlinxSerialization
     implementation project(":auraxiscontrolcenter:deployable-models")
     implementation project(":cdk-repo")
+    implementation project(":framework:interfacelib")
 }
 
+registerDependency(":auraxiscontrolcenter:deployable-models")
 registerDependency(":cdk-repo")
+registerDependency(":framework:interfacelib")
