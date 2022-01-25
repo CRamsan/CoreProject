@@ -12,6 +12,7 @@ import software.amazon.awscdk.core.Duration
 import software.amazon.awscdk.core.StackProps
 import software.amazon.awscdk.services.cloudwatch.Alarm
 import software.amazon.awscdk.services.cloudwatch.AlarmProps
+import software.amazon.awscdk.services.cloudwatch.ComparisonOperator
 import software.amazon.awscdk.services.cloudwatch.Metric
 import software.amazon.awscdk.services.cloudwatch.MetricProps
 import software.amazon.awscdk.services.cloudwatch.Statistic
@@ -71,6 +72,7 @@ object PS2LinkApp {
                 this, "LaunchUnderflow",
                 AlarmProps.builder()
                     .metric(launchMetric)
+                    .comparisonOperator(ComparisonOperator.LESS_THAN_THRESHOLD)
                     .threshold(4.0)
                     .evaluationPeriods(2)
                     .datapointsToAlarm(2)
@@ -97,6 +99,7 @@ object PS2LinkApp {
                 this, "LaunchCrash",
                 AlarmProps.builder()
                     .metric(crashMetric)
+                    .comparisonOperator(ComparisonOperator.GREATER_THAN_THRESHOLD)
                     .threshold(5.0)
                     .evaluationPeriods(1)
                     .datapointsToAlarm(1)
