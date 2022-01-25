@@ -16,6 +16,11 @@ import com.cramsan.petproject.appcore.storage.PlantMainName
 import com.cramsan.petproject.appcore.storage.Toxicity
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Common implementation of [ModelStorageInterface]. This implementation provides several
+ * CRUDI operations. The [platformDelegate] provides the actual low-level storage.
+ */
+@Suppress("TooManyFunctions")
 class ModelStorage(
     private val platformDelegate: ModelStorageDAO,
     private val eventLogger: EventLoggerInterface,

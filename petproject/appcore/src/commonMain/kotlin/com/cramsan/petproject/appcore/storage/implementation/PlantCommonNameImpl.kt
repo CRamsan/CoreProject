@@ -1,6 +1,5 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
-import com.cramsan.petproject.appcore.storage.Description
 import com.cramsan.petproject.appcore.storage.PlantCommonName
 
 /**

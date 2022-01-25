@@ -1,5 +1,6 @@
 package com.cramsan.petproject.appcore.storage.implementation
 
+import com.cramsan.framework.logging.logE
 import com.cramsan.petproject.appcore.storage.ModelStorageDAO
 import com.cramsan.petproject.appcore.storage.ModelStoragePlatformProvider
 import com.cramsan.petproject.appcore.storage.implementation.sqldelight.SQLDelightDAO
@@ -19,6 +20,7 @@ class ModelStorageJdbcProvider(private val dbPath: String) :
         try {
             PetProjectDB.Schema.create(sqlDriver)
         } catch (e: SQLException) {
+            logE("ModelStorageJdbcProvider", "Exception while opening SQLDriver", e)
             throw e
         }
         return dao

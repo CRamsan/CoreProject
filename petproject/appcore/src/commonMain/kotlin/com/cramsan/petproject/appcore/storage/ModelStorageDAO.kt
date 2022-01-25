@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
  * This class is a DAO with the only purpose of providing a mechanism to store
  * and retrieve all the required data for this app.
  */
+@Suppress("TooManyFunctions")
 interface ModelStorageDAO {
 
     /**

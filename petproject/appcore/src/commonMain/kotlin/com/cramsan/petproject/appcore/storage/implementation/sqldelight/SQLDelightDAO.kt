@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.map
 /**
  * Implementation of [ModelStorageDAO] that uses sqldelight.
  */
+@Suppress("TooManyFunctions")
 class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
     private var database: PetProjectDB = PetProjectDB(

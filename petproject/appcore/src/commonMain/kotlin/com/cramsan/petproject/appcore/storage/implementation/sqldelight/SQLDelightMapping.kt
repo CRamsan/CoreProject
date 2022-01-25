@@ -116,6 +116,7 @@ class Toxicity(
  * Implementation of [com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId] that internally uses a
  * [GetAllPlantsWithAnimalId] from sqldelight.
  */
+@Suppress("MemberNameEqualsClassName")
 class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPlantsWithAnimalId {
     private val getAllPlantsWithAnimalId: GetAllPlantsWithAnimalId
 

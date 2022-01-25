@@ -8,6 +8,7 @@ import com.cramsan.framework.logging.Severity
 /**
  * Standard implementation of [AssertUtilInterface].
  */
+@Suppress("TooGenericExceptionThrown")
 class AssertUtilImpl(
     override val haltOnFailure: Boolean,
     override val eventLogger: EventLoggerInterface?,
