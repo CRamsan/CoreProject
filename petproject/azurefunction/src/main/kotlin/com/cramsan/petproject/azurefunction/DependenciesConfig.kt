@@ -5,6 +5,7 @@ import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
+import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.logging.implementation.EventLoggerImpl
@@ -30,7 +31,9 @@ class DependenciesConfig {
      * Instance of [EventLoggerInterface]
      */
     val eventLogger: EventLoggerInterface by lazy {
-        EventLoggerImpl(Severity.INFO, null, LoggerJVM())
+        val impl = EventLoggerImpl(Severity.INFO, null, LoggerJVM())
+        EventLogger.setInstance(impl)
+        impl
     }
 
     /**

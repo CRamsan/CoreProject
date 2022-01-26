@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicClass:CensusLang.kt$CensusLang</ID>
+    <ID>UndocumentedPublicClass:CharacterClass.kt$CharacterClass</ID>
+    <ID>UndocumentedPublicClass:Namespace.kt$Namespace</ID>
+    <ID>UndocumentedPublicClass:Rank.kt$Rank</ID>
+    <ID>UndocumentedPublicClass:RedditPage.kt$RedditPage</ID>
+    <ID>UndocumentedPublicClass:Vehicle.kt$Vehicle</ID>
+    <ID>UndocumentedPublicClass:Weapon.kt$Weapon</ID>
+    <ID>UndocumentedPublicFunction:CensusLang.kt$CensusLang.Companion$fun fromString(code: String?): CensusLang</ID>
+    <ID>UndocumentedPublicFunction:LoginStatus.kt$LoginStatus.Companion$fun fromString(code: String?): LoginStatus</ID>
+    <ID>UndocumentedPublicFunction:MedalType.kt$fun Long.toMedalType()</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val activeProfileId: CharacterClass = CharacterClass.UNKNOWN</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val battleRank: Long? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val cached: Boolean</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val certs: Long? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val characterId: String</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val faction: Faction = Faction.UNKNOWN</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val lastLogin: Instant? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val lastUpdate: Instant? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val loginStatus: LoginStatus = LoginStatus.UNKNOWN</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val name: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val outfit: Outfit? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val outfitRank: Rank? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val percentageToNextBattleRank: Double? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val percentageToNextCert: Double? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val server: Server? = null</ID>
+    <ID>UndocumentedPublicProperty:Character.kt$Character$val timePlayed: Duration? = null</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val attacker: String? = null</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val characterId: String?</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val faction: Faction = Faction.UNKNOWN</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val killType: KillType = KillType.UNKNOWN</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val time: Instant? = null</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val weaponImage: String? = null</ID>
+    <ID>UndocumentedPublicProperty:KillEvent.kt$KillEvent$val weaponName: String? = null</ID>
+    <ID>UndocumentedPublicProperty:LoginStatus.kt$LoginStatus$val code: String</ID>
+    <ID>UndocumentedPublicProperty:MedalType.kt$MedalType$val goal: Int</ID>
+    <ID>UndocumentedPublicProperty:Namespace.kt$Namespace.Companion$val validNamespaces = listOf(PS2PC, PS2PS4EU, PS2PS4US)</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val cached: Boolean</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val faction: Faction = Faction.UNKNOWN</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val id: String</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val lastUpdate: Instant? = null</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val leader: Character? = null</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val memberCount: Int = 0</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val name: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val server: Server? = null</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val tag: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Outfit.kt$Outfit$val timeCreated: Instant? = null</ID>
+    <ID>UndocumentedPublicProperty:PS2Tweet.kt$PS2Tweet$val content: String</ID>
+    <ID>UndocumentedPublicProperty:PS2Tweet.kt$PS2Tweet$val date: Long</ID>
+    <ID>UndocumentedPublicProperty:PS2Tweet.kt$PS2Tweet$val id: String</ID>
+    <ID>UndocumentedPublicProperty:PS2Tweet.kt$PS2Tweet$val imgUrl: String</ID>
+    <ID>UndocumentedPublicProperty:PS2Tweet.kt$PS2Tweet$val tag: String</ID>
+    <ID>UndocumentedPublicProperty:PS2Tweet.kt$PS2Tweet$val user: String</ID>
+    <ID>UndocumentedPublicProperty:Rank.kt$Rank$val name: String?</ID>
+    <ID>UndocumentedPublicProperty:Rank.kt$Rank$val ordinal: Long?</ID>
+    <ID>UndocumentedPublicProperty:RedditPage.kt$RedditPage$val path: String</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val author: String</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val comments: Int</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val createdTime: Long</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val imgUr: String?</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val label: String?</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val postUrl: String?</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val title: String</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val upvotes: Int</ID>
+    <ID>UndocumentedPublicProperty:RedditPost.kt$RedditPost$val url: String?</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$val namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$val serverMetadata: ServerMetadata? = null</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$val serverName: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$val worldId: String</ID>
+    <ID>UndocumentedPublicProperty:ServerMetadata.kt$ServerMetadata$val population: Population</ID>
+    <ID>UndocumentedPublicProperty:ServerMetadata.kt$ServerMetadata$val status: ServerStatus</ID>
+    <ID>UndocumentedPublicProperty:StatItem.kt$StatItem$var allTime: Double? = null</ID>
+    <ID>UndocumentedPublicProperty:StatItem.kt$StatItem$var statName: String? = null</ID>
+    <ID>UndocumentedPublicProperty:StatItem.kt$StatItem$var thisMonth: Double? = null</ID>
+    <ID>UndocumentedPublicProperty:StatItem.kt$StatItem$var thisWeek: Double? = null</ID>
+    <ID>UndocumentedPublicProperty:StatItem.kt$StatItem$var today: Double? = null</ID>
+    <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val id: String</ID>
+    <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val imageUrl: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val name: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val id: String</ID>
+    <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val imageUrl: String? = null</ID>
+    <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val name: String? = null</ID>
+    <ID>UndocumentedPublicProperty:WeaponItem.kt$WeaponItem$val medalType: MedalType? = MedalType.NONE</ID>
+    <ID>UndocumentedPublicProperty:WeaponItem.kt$WeaponItem$val statMapping: Map&lt;WeaponEventType, WeaponStatItem> = hashMapOf()</ID>
+    <ID>UndocumentedPublicProperty:WeaponItem.kt$WeaponItem$val vehicleName: String? = null</ID>
+    <ID>UndocumentedPublicProperty:WeaponItem.kt$WeaponItem$val weaponId: String</ID>
+    <ID>UndocumentedPublicProperty:WeaponItem.kt$WeaponItem$val weaponImage: String? = null</ID>
+    <ID>UndocumentedPublicProperty:WeaponItem.kt$WeaponItem$val weaponName: String? = null</ID>
+    <ID>UndocumentedPublicProperty:WeaponStatItem.kt$WeaponStatItem$val stats: Map&lt;Faction, Long?></ID>
+  </CurrentIssues>
+</SmellBaseline>

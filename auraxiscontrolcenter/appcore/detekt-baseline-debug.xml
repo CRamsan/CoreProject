@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ConstructorParameterNaming:TwitterClientImpl.kt$TwitterClientImpl$private val ACCESS_TOKEN: String</ID>
+    <ID>ConstructorParameterNaming:TwitterClientImpl.kt$TwitterClientImpl$private val ACCESS_TOKEN_SECRET: String</ID>
+    <ID>ConstructorParameterNaming:TwitterClientImpl.kt$TwitterClientImpl$private val CONSUMER_KEY: String</ID>
+    <ID>ConstructorParameterNaming:TwitterClientImpl.kt$TwitterClientImpl$private val CONSUMER_SECRET: String</ID>
+    <ID>NestedBlockDepth:TwitterClientImpl.kt$TwitterClientImpl$ private fun retrieveTweets(users: List&lt;String>): PS2HttpResponse&lt;List&lt;PS2Tweet>></ID>
+    <ID>SpreadOperator:TwitterClientImpl.kt$TwitterClientImpl$(*users.toTypedArray())</ID>
+    <ID>UndocumentedPublicClass:PS2AppCoreModule.kt$PS2AppCoreModule</ID>
+    <ID>UndocumentedPublicClass:TwitterModuleConstants.kt$TwitterModuleConstants</ID>
+    <ID>UndocumentedPublicFunction:PS2AppCoreModule.kt$PS2AppCoreModule$// TODO: This code is duplicated in a few places. We need to centralize these into a single function // in common code. @Provides @Singleton fun provideKotlinxSerializer()</ID>
+    <ID>UndocumentedPublicFunction:PS2AppCoreModule.kt$PS2AppCoreModule$@Provides @Singleton fun provideSqlDelightSchema(): SqlDriver.Schema</ID>
+    <ID>UndocumentedPublicProperty:TwitterModuleConstants.kt$TwitterModuleConstants$const val ACCESS_TOKEN = "ACCESS_TOKEN"</ID>
+    <ID>UndocumentedPublicProperty:TwitterModuleConstants.kt$TwitterModuleConstants$const val ACCESS_TOKEN_SECRET = "ACCESS_TOKEN_SECRET"</ID>
+    <ID>UndocumentedPublicProperty:TwitterModuleConstants.kt$TwitterModuleConstants$const val CONSUMER_KEY = "CONSUMER_KEY"</ID>
+    <ID>UndocumentedPublicProperty:TwitterModuleConstants.kt$TwitterModuleConstants$const val CONSUMER_SECRET = "CONSUMER_SECRET"</ID>
+  </CurrentIssues>
+</SmellBaseline>

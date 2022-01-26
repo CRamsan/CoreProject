@@ -1,0 +1,359 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:EntityManager.kt$EntityManager$posX &lt; 0 || posX > entityMap.lastIndex || posY &lt; 0 || posY > entityMap.first().lastIndex</ID>
+    <ID>ComplexCondition:GameMap.kt$GameMap$posX >= map.size || posY >= map.first().size || posX &lt; 0 || posY &lt; 0</ID>
+    <ID>ComplexMethod:EntityManager.kt$EntityManager$override fun executeTransition(transition: Transition)</ID>
+    <ID>LongParameterList:Character.kt$Character$( id: String, override var health: Int, override var group: String, posX: Int, posY: Int, speed: Int, enabled: Boolean, shouldMove: Boolean )</ID>
+    <ID>LongParameterList:Enemy.kt$Enemy$( id: String, posX: Int, posY: Int, priority: Int, enabled: Boolean, health: Int, val enemyType: EnemyType, var range: Int, var damage: Double, var accuracy: Double, var move: Int, val vision: Int )</ID>
+    <ID>LongParameterList:EnemyBuilder.kt$EnemyBuilder$( templateName: String, private val enemyType: EnemyType, private var range: Int, private var damage: Double, private var accuracy: Double, private var move: Int, private var vision: Int, private val health: Int, private val priority: Int, private val enabled: Boolean, )</ID>
+    <ID>LongParameterList:Placeable.kt$Placeable$( id: String, posX: Int, posY: Int, priority: Int, enabled: Boolean, health: Int, group: String, val placeableType: PlaceableType, )</ID>
+    <ID>TooGenericExceptionThrown:EntityDSL.kt$EntityInstanceBuilder$throw RuntimeException("Could not find template for $template")</ID>
+    <ID>TooGenericExceptionThrown:EntityDSL.kt$EntityInstanceBuilder$throw RuntimeException("Template for entity with ID $id is not defined")</ID>
+    <ID>TooGenericExceptionThrown:EntityManager.kt$EntityManager$throw RuntimeException("Cell door already closed")</ID>
+    <ID>TooGenericExceptionThrown:EntityManager.kt$EntityManager$throw RuntimeException("Cell door already open")</ID>
+    <ID>TooGenericExceptionThrown:EntityManager.kt$EntityManager$throw RuntimeException("Entity already registered at location: $item")</ID>
+    <ID>TooGenericExceptionThrown:EntityManager.kt$EntityManager$throw RuntimeException("Unexpected cell type: $cell")</ID>
+    <ID>TooGenericExceptionThrown:ItemDSL.kt$ItemInstanceBuilder$throw RuntimeException("Could not find template for $template")</ID>
+    <ID>TooGenericExceptionThrown:ItemDSL.kt$ItemInstanceBuilder$throw RuntimeException("Template for entity with ID $id is not defined")</ID>
+    <ID>TooGenericExceptionThrown:Scene.kt$Scene$throw RuntimeException("Trying to play game but scene is not loaded")</ID>
+    <ID>TooManyFunctions:EntityManager.kt$EntityManager : EntityManagerInterfaceEntityManagerInteractionReceiverTransitionHandler</ID>
+    <ID>UndocumentedPublicClass:AStarAlgorithm.kt$AStarAlgorithm</ID>
+    <ID>UndocumentedPublicClass:AStarFunctionProvider.kt$AStarFunctionProvider</ID>
+    <ID>UndocumentedPublicClass:Cell.kt$Cell : NodeGridPositionableInterface</ID>
+    <ID>UndocumentedPublicClass:Cell.kt$DoorCell : Cell</ID>
+    <ID>UndocumentedPublicClass:Cell.kt$EndCell : Cell</ID>
+    <ID>UndocumentedPublicClass:Cell.kt$OpenCell : Cell</ID>
+    <ID>UndocumentedPublicClass:Cell.kt$WallCell : Cell</ID>
+    <ID>UndocumentedPublicClass:CellFactory.kt$CellFactory</ID>
+    <ID>UndocumentedPublicClass:CharacterInterface.kt$CharacterInterface : GameEntityInterface</ID>
+    <ID>UndocumentedPublicClass:EntityDSL.kt$AllyBuilderBuilder</ID>
+    <ID>UndocumentedPublicClass:EntityDSL.kt$EnemyBuilderBuilder</ID>
+    <ID>UndocumentedPublicClass:EntityDSL.kt$EntityBuildersBuilder</ID>
+    <ID>UndocumentedPublicClass:EntityDSL.kt$EntityInstanceBuilder</ID>
+    <ID>UndocumentedPublicClass:EntityDSL.kt$EntityListBuilder</ID>
+    <ID>UndocumentedPublicClass:EntityDSL.kt$PlaceableBuilderBuilder</ID>
+    <ID>UndocumentedPublicClass:EntityManager.kt$EntityManager : EntityManagerInterfaceEntityManagerInteractionReceiverTransitionHandler</ID>
+    <ID>UndocumentedPublicClass:EntityManagerEventListener.kt$EntityManagerEventListener</ID>
+    <ID>UndocumentedPublicClass:EventDSL.kt$ChangeTriggerEventBuilder</ID>
+    <ID>UndocumentedPublicClass:EventDSL.kt$EventListBuilder</ID>
+    <ID>UndocumentedPublicClass:EventDSL.kt$InteractiveEventBuilder</ID>
+    <ID>UndocumentedPublicClass:EventDSL.kt$InteractiveEventOptionBuilder</ID>
+    <ID>UndocumentedPublicClass:EventDSL.kt$SwapCharacterInteractiveEventBuilder</ID>
+    <ID>UndocumentedPublicClass:GameMap.kt$GameMap</ID>
+    <ID>UndocumentedPublicClass:GameMapAStarFunctionProvider.kt$GameMapAStarFunctionProvider : AStarFunctionProvider</ID>
+    <ID>UndocumentedPublicClass:InitialValues.kt$InitialValues</ID>
+    <ID>UndocumentedPublicClass:InteractiveEvent.kt$InteractiveEvent : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:InteractiveEventOption.kt$InteractiveEventOption</ID>
+    <ID>UndocumentedPublicClass:ItemDSL.kt$ConsumableItemBuilderBuilder</ID>
+    <ID>UndocumentedPublicClass:ItemDSL.kt$EquippableItemBuilderBuilder</ID>
+    <ID>UndocumentedPublicClass:ItemDSL.kt$ItemBuildersBuilder</ID>
+    <ID>UndocumentedPublicClass:ItemDSL.kt$ItemInstanceBuilder</ID>
+    <ID>UndocumentedPublicClass:ItemDSL.kt$ItemListBuilder</ID>
+    <ID>UndocumentedPublicClass:ItemDSL.kt$KeyItemBuilderBuilder</ID>
+    <ID>UndocumentedPublicClass:KotlinPriorityQueue.kt$KotlinPriorityQueue&lt;T></ID>
+    <ID>UndocumentedPublicClass:MapLoader.kt$MapLoader</ID>
+    <ID>UndocumentedPublicClass:Node.kt$Node</ID>
+    <ID>UndocumentedPublicClass:NonInteractiveEvent.kt$NonInteractiveEvent : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:NoopEvent.kt$NoopEvent : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:Scene.kt$Scene</ID>
+    <ID>UndocumentedPublicClass:SceneConfig.kt$SceneConfig</ID>
+    <ID>UndocumentedPublicClass:SceneConfigDSL.kt$SceneConfigBuilder</ID>
+    <ID>UndocumentedPublicClass:SceneEventsCallback.kt$SceneEventsCallback</ID>
+    <ID>UndocumentedPublicClass:SwapCharacterEvent.kt$SwapCharacterEvent : NonInteractiveEvent</ID>
+    <ID>UndocumentedPublicClass:TerrainIds.kt$TerrainIds</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$CloseDoor : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$ConsumeItem : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$DamageEntity : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$Disable : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$DisplayInteractiveEvent : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$DropItem : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$Enable : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$EndTurn : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$EquipItem : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$HideInteractiveEvent : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$Move : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$OpenDoor : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$PickUpItem : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$ReconstructItem : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$StartTurn : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$SwapCharacter : Transition</ID>
+    <ID>UndocumentedPublicClass:Transition.kt$UnequiptItem : Transition</ID>
+    <ID>UndocumentedPublicClass:TransitionStack.kt$TransitionStack</ID>
+    <ID>UndocumentedPublicClass:TransitionStack.kt$TransitionStack$TransitionHandler</ID>
+    <ID>UndocumentedPublicClass:TriggerDSL.kt$CellTriggerBuilder</ID>
+    <ID>UndocumentedPublicClass:TriggerDSL.kt$CharacterTriggerBuilder</ID>
+    <ID>UndocumentedPublicClass:TriggerDSL.kt$TriggerListBuilder</ID>
+    <ID>UndocumentedPublicClass:TurnAction.kt$TurnAction : TurnActionInterface</ID>
+    <ID>UndocumentedPublicClass:TurnActionInterface.kt$TurnActionInterface</ID>
+    <ID>UndocumentedPublicFunction:AStarAlgorithm.kt$AStarAlgorithm.Companion$fun findPath(start: Node, goal: Node, maxCost: Int, functionProvider: AStarFunctionProvider): List&lt;Node></ID>
+    <ID>UndocumentedPublicFunction:AStarFunctionProvider.kt$AStarFunctionProvider$fun distanceBetween(current: Node, neighbor: Node): Float</ID>
+    <ID>UndocumentedPublicFunction:AStarFunctionProvider.kt$AStarFunctionProvider$fun heuristicCostEstimate(neighbor: Node, goal: Node): Float</ID>
+    <ID>UndocumentedPublicFunction:AllyBuilder.kt$AllyBuilder$fun build( entityId: String, posX: Int, posY: Int, priority: Int?, enabled: Boolean? ): Ally</ID>
+    <ID>UndocumentedPublicFunction:Cell.kt$Cell$abstract fun blocksMovement(): Boolean</ID>
+    <ID>UndocumentedPublicFunction:CellFactory.kt$CellFactory$fun createCell(terrainType: TerrainType): Cell</ID>
+    <ID>UndocumentedPublicFunction:ConsumableItemBuilder.kt$ConsumableItemBuilder$fun build(entityId: String, posX: Int, posY: Int)</ID>
+    <ID>UndocumentedPublicFunction:EnemyBuilder.kt$EnemyBuilder$fun build( entityId: String, posX: Int, posY: Int, priority: Int?, enabled: Boolean?, ): Enemy</ID>
+    <ID>UndocumentedPublicFunction:EntityDSL.kt$EntityBuildersBuilder$fun ally(block: AllyBuilderBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EntityDSL.kt$EntityBuildersBuilder$fun enemy(block: EnemyBuilderBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EntityDSL.kt$EntityBuildersBuilder$fun placeable(block: PlaceableBuilderBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EntityDSL.kt$EntityListBuilder$fun ally(block: EntityInstanceBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EntityDSL.kt$EntityListBuilder$fun enemy(block: EntityInstanceBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EntityDSL.kt$EntityListBuilder$fun placeable(block: EntityInstanceBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerEventListener.kt$EntityManagerEventListener$fun onGameReady(eventReceiver: EntityManagerInteractionReceiver)</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerEventListener.kt$EntityManagerEventListener$fun onInteractionRequired(text: String, options: List&lt;InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver)</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerEventListener.kt$EntityManagerEventListener$fun onTurnCompleted(eventReceiver: EntityManagerInteractionReceiver)</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerInteractionReceiver.kt$EntityManagerInteractionReceiver$fun selectOption(option: InteractiveEventOption?)</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerInterface.kt$EntityManagerInterface$fun debugAction(debugAction: DebugAction)</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerInterface.kt$EntityManagerInterface$fun runTurns()</ID>
+    <ID>UndocumentedPublicFunction:EntityManagerInterface.kt$EntityManagerInterface$fun selectOption(option: InteractiveEventOption?)</ID>
+    <ID>UndocumentedPublicFunction:EquippableItemBuilder.kt$EquippableItemBuilder$fun build(entityId: String, posX: Int, posY: Int)</ID>
+    <ID>UndocumentedPublicFunction:EventDSL.kt$EventListBuilder$fun changeTrigger(block: ChangeTriggerEventBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EventDSL.kt$EventListBuilder$fun interactive(block: InteractiveEventBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EventDSL.kt$EventListBuilder$fun swapCharacter(block: SwapCharacterInteractiveEventBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:EventDSL.kt$InteractiveEventBuilder$fun option(block: InteractiveEventOptionBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:GameMap.kt$GameMap$fun cellAt(posX: Int, posY: Int): Cell</ID>
+    <ID>UndocumentedPublicFunction:GameMap.kt$GameMap$fun isBlocked(posX: Int, posY: Int): Boolean</ID>
+    <ID>UndocumentedPublicFunction:ItemDSL.kt$ItemBuildersBuilder$fun consumable(block: ConsumableItemBuilderBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:ItemDSL.kt$ItemBuildersBuilder$fun equippable(block: EquippableItemBuilderBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:ItemDSL.kt$ItemBuildersBuilder$fun keyItem(block: KeyItemBuilderBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:ItemDSL.kt$ItemListBuilder$fun consumable(block: ItemInstanceBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:ItemDSL.kt$ItemListBuilder$fun equipabble(block: ItemInstanceBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:ItemDSL.kt$ItemListBuilder$fun keyItem(block: ItemInstanceBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:KeyItemBuilder.kt$KeyItemBuilder$fun build(entityId: String, posX: Int, posY: Int)</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun add(e: T): Boolean</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun element(): T</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun offer(e: T): Boolean</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun peek(): T?</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun poll(): T?</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun remove(): T</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun remove(e: T): Boolean</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$fun size(): Int</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$operator fun contains(e: T): Boolean</ID>
+    <ID>UndocumentedPublicFunction:MapLoader.kt$MapLoader$fun loadCSVMap(resourceName: String): Array&lt;Array&lt;Cell>></ID>
+    <ID>UndocumentedPublicFunction:Node.kt$Node$fun getCost(): Float</ID>
+    <ID>UndocumentedPublicFunction:Node.kt$Node$fun getNeighbours(): List&lt;Node></ID>
+    <ID>UndocumentedPublicFunction:Node.kt$Node$fun getX(): Int</ID>
+    <ID>UndocumentedPublicFunction:Node.kt$Node$fun getY(): Int</ID>
+    <ID>UndocumentedPublicFunction:PlaceableBuilder.kt$PlaceableBuilder$fun build( entityId: String, posX: Int, posY: Int, priority: Int?, enabled: Boolean?, health: Int?, group: String?, ): GameEntity</ID>
+    <ID>UndocumentedPublicFunction:Scene.kt$Scene$fun debugAction(action: DebugAction)</ID>
+    <ID>UndocumentedPublicFunction:Scene.kt$Scene$fun loadScene(listener: SceneEventsCallback? = null)</ID>
+    <ID>UndocumentedPublicFunction:Scene.kt$Scene$fun runTurn(turnAction: TurnActionInterface)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun entity(block: EntityListBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun entityBuilders(block: EntityBuildersBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun events(block: EventListBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun itemBuilders(block: ItemBuildersBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun items(block: ItemListBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun player(block: PlayerBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneConfigDSL.kt$SceneConfigBuilder$fun triggers(block: TriggerListBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:SceneEventsCallback.kt$SceneEventsCallback$fun onCellChanged(cell: Cell)</ID>
+    <ID>UndocumentedPublicFunction:SceneEventsCallback.kt$SceneEventsCallback$fun onCharacterChanged(entity: CharacterInterface)</ID>
+    <ID>UndocumentedPublicFunction:SceneEventsCallback.kt$SceneEventsCallback$fun onItemChanged(entity: ItemInterface)</ID>
+    <ID>UndocumentedPublicFunction:SceneEventsCallback.kt$SceneEventsCallback$fun onSceneEnded(completed: Boolean)</ID>
+    <ID>UndocumentedPublicFunction:TransitionStack.kt$TransitionStack$fun executeNewTransition(transition: Transition)</ID>
+    <ID>UndocumentedPublicFunction:TransitionStack.kt$TransitionStack$fun fastForwardTurn()</ID>
+    <ID>UndocumentedPublicFunction:TransitionStack.kt$TransitionStack$fun rewindTurn()</ID>
+    <ID>UndocumentedPublicFunction:TransitionStack.kt$TransitionStack$fun stepBack()</ID>
+    <ID>UndocumentedPublicFunction:TransitionStack.kt$TransitionStack$fun stepForward()</ID>
+    <ID>UndocumentedPublicFunction:TransitionStack.kt$TransitionStack.TransitionHandler$fun executeTransition(transition: Transition)</ID>
+    <ID>UndocumentedPublicFunction:TriggerDSL.kt$TriggerListBuilder$fun cell(block: CellTriggerBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:TriggerDSL.kt$TriggerListBuilder$fun character(block: CharacterTriggerBuilder.() -> Unit)</ID>
+    <ID>UndocumentedPublicProperty:Ally.kt$Ally$val allyType: AllyType</ID>
+    <ID>UndocumentedPublicProperty:BaseEvent.kt$BaseEvent$open val id: String</ID>
+    <ID>UndocumentedPublicProperty:Cell.kt$Cell$var eastCell: Cell? = null</ID>
+    <ID>UndocumentedPublicProperty:Cell.kt$Cell$var northCell: Cell? = null</ID>
+    <ID>UndocumentedPublicProperty:Cell.kt$Cell$var southCell: Cell? = null</ID>
+    <ID>UndocumentedPublicProperty:Cell.kt$Cell$var terrain: TerrainType</ID>
+    <ID>UndocumentedPublicProperty:Cell.kt$Cell$var westCell: Cell? = null</ID>
+    <ID>UndocumentedPublicProperty:Cell.kt$DoorCell$var opened: Boolean = false</ID>
+    <ID>UndocumentedPublicProperty:ChangeTriggerEvent.kt$ChangeTriggerEvent$val disableEventId: String</ID>
+    <ID>UndocumentedPublicProperty:ChangeTriggerEvent.kt$ChangeTriggerEvent$val enableEventId: String</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var attack: Int</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var enabled: Boolean</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var group: String</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var heading: Direction</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var health: Int</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var nextTurnAction: TurnActionInterface</ID>
+    <ID>UndocumentedPublicProperty:CharacterInterface.kt$CharacterInterface$var shouldMove: Boolean</ID>
+    <ID>UndocumentedPublicProperty:ConsumableItem.kt$ConsumableItem$val ammount: Int</ID>
+    <ID>UndocumentedPublicProperty:ConsumableItem.kt$ConsumableItem$val type: ConsumableType</ID>
+    <ID>UndocumentedPublicProperty:Enemy.kt$Enemy$val enemyType: EnemyType</ID>
+    <ID>UndocumentedPublicProperty:Enemy.kt$Enemy$val vision: Int</ID>
+    <ID>UndocumentedPublicProperty:Enemy.kt$Enemy$var accuracy: Double</ID>
+    <ID>UndocumentedPublicProperty:Enemy.kt$Enemy$var damage: Double</ID>
+    <ID>UndocumentedPublicProperty:Enemy.kt$Enemy$var move: Int</ID>
+    <ID>UndocumentedPublicProperty:Enemy.kt$Enemy$var range: Int</ID>
+    <ID>UndocumentedPublicProperty:EntityBuilder.kt$EntityBuilder$val templateName: String</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$AllyBuilderBuilder$var enable = true</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$AllyBuilderBuilder$var health = INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$AllyBuilderBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$AllyBuilderBuilder$var name = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$AllyBuilderBuilder$var priority = InitialValues.PRIORITY_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$AllyBuilderBuilder$var type = AllyType.INVALID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var accuracy: Double = INVALID_AMOUNT.toDouble()</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var damage: Double = INVALID_AMOUNT.toDouble()</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var enable = true</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var health = INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var move = INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var name = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var priority = InitialValues.PRIORITY_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var range = INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var type = EnemyType.INVALID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EnemyBuilderBuilder$var vision = INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$val entityBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var enabled = InitialValues.ENABLED_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var group = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var health = InitialValues.INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var posX = InitialValues.POS_X_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var posY = InitialValues.POS_Y_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var priority = InitialValues.PRIORITY_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityInstanceBuilder$var template = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityListBuilder$val allyBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityListBuilder$val enemyBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$EntityListBuilder$val placeableBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var destructible = false</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var enabled = true</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var health = PLACEABLE_HEALTH</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var name = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var priority = InitialValues.PRIORITY_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:EntityDSL.kt$PlaceableBuilderBuilder$var type = PlaceableType.INVALID</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val characterSet = mutableSetOf&lt;CharacterInterface>()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val entityTriggerMap: HashMap&lt;String, CharacterTrigger> = HashMap()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val eventMap: HashMap&lt;String, BaseEvent> = HashMap()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val globalEntitySet = mutableSetOf&lt;CharacterInterface>()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val itemSet = mutableSetOf&lt;ItemInterface>()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val queue = mutableListOf&lt;CharacterInterface>()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$val triggerIdMap: HashMap&lt;String, Trigger> = HashMap()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$var callback: SceneEventsCallback? = null</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$var entityIdMap: MutableMap&lt;String, CharacterInterface> = mutableMapOf()</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$var entityMap: Array&lt;Array&lt;CharacterInterface?>> = Array(map.width) { arrayOfNulls&lt;CharacterInterface?>(map.height) }</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$var itemMap: Array&lt;Array&lt;ItemInterface?>> = Array(map.width) { arrayOfNulls&lt;ItemInterface?>(map.height) }</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$var tmpInteractiveEvent: InteractiveEvent? = null</ID>
+    <ID>UndocumentedPublicProperty:EntityManager.kt$EntityManager$var triggerMap: Array&lt;Array&lt;CellTrigger?>> = Array(map.width) { arrayOfNulls&lt;CellTrigger?>(map.height) }</ID>
+    <ID>UndocumentedPublicProperty:EquippableItem.kt$EquippableItem$val accuracy: Double</ID>
+    <ID>UndocumentedPublicProperty:EquippableItem.kt$EquippableItem$val damage: Double</ID>
+    <ID>UndocumentedPublicProperty:EquippableItem.kt$EquippableItem$val range: Int</ID>
+    <ID>UndocumentedPublicProperty:EquippableItem.kt$EquippableItem$val type: EquippableType</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$ChangeTriggerEventBuilder$var disableEventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$ChangeTriggerEventBuilder$var enableEventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$ChangeTriggerEventBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$ChangeTriggerEventBuilder$var nextEventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$InteractiveEventBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$InteractiveEventBuilder$var text = InitialValues.INVALID_TEXT_EVENT</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$InteractiveEventOptionBuilder$var eventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$InteractiveEventOptionBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$InteractiveEventOptionBuilder$var label = InitialValues.INVALID_LABEL_OPTION</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$SwapCharacterInteractiveEventBuilder$var disableCharacterId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$SwapCharacterInteractiveEventBuilder$var enableCharacterId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$SwapCharacterInteractiveEventBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:EventDSL.kt$SwapCharacterInteractiveEventBuilder$var nextEventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:GameEntity.kt$GameEntity$var speed: Int</ID>
+    <ID>UndocumentedPublicProperty:GameEntityInterface.kt$GameEntityInterface$val id: String</ID>
+    <ID>UndocumentedPublicProperty:GameMap.kt$GameMap$val height: Int</ID>
+    <ID>UndocumentedPublicProperty:GameMap.kt$GameMap$val map: Array&lt;Array&lt;Cell>></ID>
+    <ID>UndocumentedPublicProperty:GameMap.kt$GameMap$val width: Int</ID>
+    <ID>UndocumentedPublicProperty:GridPositionableInterface.kt$GridPositionableInterface$var posX: Int</ID>
+    <ID>UndocumentedPublicProperty:GridPositionableInterface.kt$GridPositionableInterface$var posY: Int</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val ATTACK_DOCTOR = 1</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val ATTACK_DOG = 5</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val CHARACTER_ATTACK = 0</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val ENABLED_ENTITY = true</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val ENABLED_TRIGGER = false</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val ENEMY_GROUP = "1"</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val GROUP_PLAYER = "0"</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val HEALTH_PLAYER = 10</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val INVALID_AMOUNT = Int.MIN_VALUE</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val INVALID_ID = "UNDEFINED"</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val INVALID_LABEL_OPTION = ""</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val INVALID_TEXT_EVENT = ""</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val NOOP_ID = "NOOP"</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val PLACEABLE_HEALTH = 10</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val PLAYER_ID = "player"</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val POS_X_ENTITY = 0</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val POS_X_TRIGGER = 0</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val POS_Y_ENTITY = 0</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val POS_Y_TRIGGER = 0</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val PRIORITY_ENTITY = 10</ID>
+    <ID>UndocumentedPublicProperty:InitialValues.kt$InitialValues$const val SPEED_PLAYER = 10</ID>
+    <ID>UndocumentedPublicProperty:InteractiveEvent.kt$InteractiveEvent$val options: List&lt;InteractiveEventOption></ID>
+    <ID>UndocumentedPublicProperty:InteractiveEvent.kt$InteractiveEvent$val text: String</ID>
+    <ID>UndocumentedPublicProperty:InteractiveEventOption.kt$InteractiveEventOption$val eventId: String</ID>
+    <ID>UndocumentedPublicProperty:InteractiveEventOption.kt$InteractiveEventOption$val id: String</ID>
+    <ID>UndocumentedPublicProperty:InteractiveEventOption.kt$InteractiveEventOption$val label: String</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ConsumableItemBuilderBuilder$var ammount = InitialValues.INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ConsumableItemBuilderBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ConsumableItemBuilderBuilder$var type = ConsumableType.INVALID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$EquippableItemBuilderBuilder$var accuracy: Double = InitialValues.INVALID_AMOUNT.toDouble()</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$EquippableItemBuilderBuilder$var damage: Double = InitialValues.INVALID_AMOUNT.toDouble()</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$EquippableItemBuilderBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$EquippableItemBuilderBuilder$var range = InitialValues.INVALID_AMOUNT</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$EquippableItemBuilderBuilder$var type = EquippableType.INVALID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemInstanceBuilder$val itemBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemInstanceBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemInstanceBuilder$var posX = InitialValues.POS_X_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemInstanceBuilder$var posY = InitialValues.POS_Y_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemInstanceBuilder$var template = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemListBuilder$val consumableBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemListBuilder$val equippableBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$ItemListBuilder$val keyItemBuilders: Map&lt;String, EntityBuilder></ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$KeyItemBuilderBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:ItemDSL.kt$KeyItemBuilderBuilder$var name = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:NonInteractiveEvent.kt$NonInteractiveEvent$open val disableId: String</ID>
+    <ID>UndocumentedPublicProperty:NonInteractiveEvent.kt$NonInteractiveEvent$open val enableId: String</ID>
+    <ID>UndocumentedPublicProperty:NonInteractiveEvent.kt$NonInteractiveEvent$open val nextEventId: String</ID>
+    <ID>UndocumentedPublicProperty:Placeable.kt$Placeable$val placeableType: PlaceableType</ID>
+    <ID>UndocumentedPublicProperty:Player.kt$Player$val equipableItemList = mutableListOf&lt;EquippableItem>()</ID>
+    <ID>UndocumentedPublicProperty:Player.kt$Player$val keyItemList = mutableListOf&lt;KeyItem>()</ID>
+    <ID>UndocumentedPublicProperty:SceneConfig.kt$SceneConfig$val characterList: List&lt;CharacterInterface></ID>
+    <ID>UndocumentedPublicProperty:SceneConfig.kt$SceneConfig$val eventList: List&lt;BaseEvent></ID>
+    <ID>UndocumentedPublicProperty:SceneConfig.kt$SceneConfig$val itemList: List&lt;ItemInterface></ID>
+    <ID>UndocumentedPublicProperty:SceneConfig.kt$SceneConfig$val player: Player</ID>
+    <ID>UndocumentedPublicProperty:SceneConfig.kt$SceneConfig$val triggerList: List&lt;Trigger></ID>
+    <ID>UndocumentedPublicProperty:SceneConfigDSL.kt$PlayerBuilder$var posX = InitialValues.POS_X_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:SceneConfigDSL.kt$PlayerBuilder$var posY = InitialValues.POS_Y_ENTITY</ID>
+    <ID>UndocumentedPublicProperty:SceneConfigDSL.kt$PlayerBuilder$var speed = InitialValues.SPEED_PLAYER</ID>
+    <ID>UndocumentedPublicProperty:TerrainIds.kt$TerrainIds$const val DOOR = 2</ID>
+    <ID>UndocumentedPublicProperty:TerrainIds.kt$TerrainIds$const val END = 3</ID>
+    <ID>UndocumentedPublicProperty:TerrainIds.kt$TerrainIds$const val OPEN = 0</ID>
+    <ID>UndocumentedPublicProperty:TerrainIds.kt$TerrainIds$const val WALL = 1</ID>
+    <ID>UndocumentedPublicProperty:TerrainType.kt$TerrainType$val value: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$CloseDoor$val posX: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$CloseDoor$val posY: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$ConsumeItem$val consumableItem: ConsumableItem</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$DamageEntity$val damage: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$DamageEntity$val target: CharacterInterface</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$Disable$val target: CharacterInterface</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$DisplayInteractiveEvent$val event: InteractiveEvent</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$DropItem$val consumableItem: KeyItem</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$Enable$val target: CharacterInterface</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$EquipItem$val consumableItem: EquippableItem</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$HideInteractiveEvent$val originEvent: InteractiveEvent</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$Move$val dx: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$Move$val dy: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$OpenDoor$val posX: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$OpenDoor$val posY: Int</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$PickUpItem$val consumableItem: KeyItem</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$ReconstructItem$val consumableItem: ConsumableItem</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$SwapCharacter$val event: SwapCharacterEvent</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$SwapCharacter$val originEventId: String</ID>
+    <ID>UndocumentedPublicProperty:Transition.kt$UnequiptItem$val consumableItem: EquippableItem</ID>
+    <ID>UndocumentedPublicProperty:TransitionStack.kt$TransitionStack.Companion$const val TAG = "TransitionStack"</ID>
+    <ID>UndocumentedPublicProperty:Trigger.kt$Trigger$val id: String</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CellTriggerBuilder$var enabled = InitialValues.ENABLED_TRIGGER</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CellTriggerBuilder$var eventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CellTriggerBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CellTriggerBuilder$var posX = InitialValues.POS_X_TRIGGER</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CellTriggerBuilder$var posY = InitialValues.POS_Y_TRIGGER</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CharacterTriggerBuilder$var enabled = InitialValues.ENABLED_TRIGGER</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CharacterTriggerBuilder$var eventId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CharacterTriggerBuilder$var id = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:TriggerDSL.kt$CharacterTriggerBuilder$var targetId = InitialValues.INVALID_ID</ID>
+    <ID>UndocumentedPublicProperty:TurnAction.kt$TurnAction.Companion$val NOOP: TurnActionInterface = TurnAction(TurnActionType.NONE, Direction.KEEP)</ID>
+    <ID>UndocumentedPublicProperty:TurnActionInterface.kt$TurnActionInterface$val direction: Direction</ID>
+    <ID>UndocumentedPublicProperty:TurnActionInterface.kt$TurnActionInterface$val turnActionType: TurnActionType</ID>
+  </CurrentIssues>
+</SmellBaseline>

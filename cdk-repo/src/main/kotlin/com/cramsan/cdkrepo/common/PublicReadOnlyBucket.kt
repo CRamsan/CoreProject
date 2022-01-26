@@ -9,6 +9,9 @@ import software.amazon.awscdk.services.s3.Bucket
  */
 class PublicReadOnlyBucket(scope: software.constructs.Construct, id: String) : Construct(scope, id) {
 
+    /**
+     * [Bucket] that will be created.
+     */
     val bucket: Bucket
 
     init {

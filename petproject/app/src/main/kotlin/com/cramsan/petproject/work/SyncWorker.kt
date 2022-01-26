@@ -16,8 +16,9 @@ import javax.inject.Inject
 class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
+    @Suppress("UndocumentedPublicProperty")
     @Inject
-    private lateinit var modelProvider: ModelProviderInterface
+    lateinit var modelProvider: ModelProviderInterface
 
     override suspend fun doWork(): Result = coroutineScope {
         logI("SyncWorker", "Starting to sync")

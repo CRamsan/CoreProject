@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MatchingDeclarationName:RemoteConfig.kt$RemoteConfigData</ID>
+    <ID>UndocumentedPublicClass:AppCoreNamespace.kt$AppCoreNamespace : MetricNamespace</ID>
+    <ID>UndocumentedPublicClass:AppCoreNamespace.kt$ApplicationNamespace : AppCoreNamespace</ID>
+    <ID>UndocumentedPublicClass:AppCoreNamespace.kt$ApplicationNamespace$Event</ID>
+    <ID>UndocumentedPublicClass:AppCoreNamespace.kt$HttpNamespace : AppCoreNamespace</ID>
+    <ID>UndocumentedPublicClass:AppCoreNamespace.kt$HttpNamespace$Api</ID>
+    <ID>UndocumentedPublicClass:RemoteConfig.kt$RemoteConfigData</ID>
+    <ID>UndocumentedPublicProperty:RemoteConfig.kt$RemoteConfigData$val twitterUsernames: List&lt;String></ID>
+    <ID>UndocumentedPublicProperty:RemoteConfig.kt$val remoteConfigJson = Json { ignoreUnknownKeys = true }</ID>
+    <ID>UndocumentedPublicProperty:RemoteConfig.kt$val remoteConfigPayload = RemoteConfigData( listOf( "planetside2", "PS2DailyDeals", "WrelPlays", ) )</ID>
+  </CurrentIssues>
+</SmellBaseline>

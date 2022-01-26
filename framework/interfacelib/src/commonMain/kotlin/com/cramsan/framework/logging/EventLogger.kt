@@ -26,8 +26,8 @@ object EventLogger {
     /**
      * Set the instance to be used for the [singleton].
      */
-    fun setInstance(assertUtil: EventLoggerInterface) {
-        _singleton = assertUtil
+    fun setInstance(eventLogger: EventLoggerInterface) {
+        _singleton = eventLogger
     }
 }
 

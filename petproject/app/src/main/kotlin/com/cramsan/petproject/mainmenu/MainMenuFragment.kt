@@ -22,7 +22,6 @@ import com.cramsan.framework.logging.logI
 import com.cramsan.petproject.R
 import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.databinding.FragmentMainMenuBinding
-import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -118,7 +117,7 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
 
     override fun onSaveInstanceState(outState: Bundle) {
         layoutManager?.let {
-            outState.putInt(PlantsListFragment.SCROLL_POS, it.findFirstVisibleItemPosition())
+            outState.putInt(SCROLL_POS, it.findFirstVisibleItemPosition())
         }
         super.onSaveInstanceState(outState)
     }

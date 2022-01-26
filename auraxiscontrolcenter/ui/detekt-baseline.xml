@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>FunctionNaming:BR.kt$@Composable fun BR( modifier: Modifier = Modifier, level: Int, enabled: Boolean = true, )</ID>
+    <ID>FunctionNaming:BR.kt$@Composable fun BRBar( modifier: Modifier = Modifier, percentageToNextLevel: Float, )</ID>
+    <ID>FunctionNaming:BR.kt$@Preview( widthDp = 200, heightDp = 25, ) @Composable fun ProfileItemPreview()</ID>
+    <ID>FunctionNaming:Buttons.kt$@Composable fun BoldButton( modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit = {}, content: @Composable () -> Unit )</ID>
+    <ID>FunctionNaming:Buttons.kt$@Composable fun SlimButton( modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit = {}, content: @Composable () -> Unit )</ID>
+    <ID>FunctionNaming:Buttons.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun MainMenuButton( modifier: Modifier = Modifier, enabled: Boolean = true, label: String? = null, star: Boolean = false, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:Buttons.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun BoldButtonPreview()</ID>
+    <ID>FunctionNaming:Cert.kt$@Composable fun Cert(certs: Int)</ID>
+    <ID>FunctionNaming:Cert.kt$@Composable fun CertBar( modifier: Modifier = Modifier, percentageToNextCert: Float, )</ID>
+    <ID>FunctionNaming:Cert.kt$@Preview( widthDp = 200, heightDp = 25, ) @Composable fun CertBarPreview()</ID>
+    <ID>FunctionNaming:CircularProgressIndicator.kt$ @Composable fun CustomCircularProgressIndicator( modifier: Modifier = Modifier, color: Color = MaterialTheme.colors.primary, diameter: Dp = CircularIndicatorDiameter, strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth )</ID>
+    <ID>FunctionNaming:FactionIcon.kt$@Composable fun FactionIcon( modifier: Modifier = Modifier, faction: Faction, )</ID>
+    <ID>FunctionNaming:FactionIcon.kt$@Preview @Composable fun FactionIconPreview()</ID>
+    <ID>FunctionNaming:Frames.kt$@Composable fun FrameBottom( modifier: Modifier = Modifier, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>FunctionNaming:Frames.kt$@Composable fun FrameCenter( modifier: Modifier = Modifier, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>FunctionNaming:Frames.kt$@Composable fun FrameSlim( modifier: Modifier = Modifier, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>FunctionNaming:Frames.kt$@Composable private fun Frame( modifier: Modifier, shape: Shape, border: BorderStroke, marginPadding: Dp, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>FunctionNaming:Frames.kt$@Preview(name = "Bottom Frame") @Composable fun FrameBottomPreview()</ID>
+    <ID>FunctionNaming:Frames.kt$@Preview(name = "Frame Center") @Composable fun FrameCenterPreview()</ID>
+    <ID>FunctionNaming:Frames.kt$@Preview(name = "Frame Slim") @Composable fun FrameSlimPreview()</ID>
+    <ID>FunctionNaming:FriendItem.kt$@Composable fun FriendItem( modifier: Modifier = Modifier, label: String, loginStatus: LoginStatus = LoginStatus.UNKNOWN, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:FriendItem.kt$@Preview @Composable fun FriendItemPreview()</ID>
+    <ID>FunctionNaming:KillItem.kt$@OptIn(ExperimentalCoilApi::class) @Composable fun KillItem( modifier: Modifier = Modifier, killType: KillType = KillType.UNKNOWN, faction: Faction = Faction.UNKNOWN, attacker: String? = null, time: Instant? = null, weaponName: String? = null, weaponImage: String? = null, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:KillItem.kt$@Preview @Composable fun ProfileKillPreview()</ID>
+    <ID>FunctionNaming:NamespaceIcon.kt$@Composable fun NamespaceIcon( modifier: Modifier = Modifier, namespace: Namespace, )</ID>
+    <ID>FunctionNaming:NamespaceIcon.kt$@Preview @Composable fun NamespaceIconPreview()</ID>
+    <ID>FunctionNaming:NetworkImage.kt$@Suppress("UNUSED_PARAMETER") @OptIn(ExperimentalCoilApi::class) @Composable fun NetworkImage( modifier: Modifier = Modifier, imageUrl: String? = null, contentDescription: String? = null, placeHolder: Int = R.drawable.image_not_found )</ID>
+    <ID>FunctionNaming:OnlineMemberItem.kt$@Composable fun OnlineMemberItem( modifier: Modifier = Modifier, label: String, characterClass: CharacterClass, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:OnlineMemberItem.kt$@Preview @Composable fun OnlineMemberItemPreview()</ID>
+    <ID>FunctionNaming:OutfitItem.kt$@Composable fun OutfitItem( modifier: Modifier = Modifier, tag: String? = null, name: String? = null, memberCount: Int, namespace: Namespace, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:OutfitItem.kt$@Preview @Composable fun OutfitItemPreview()</ID>
+    <ID>FunctionNaming:OutfitMemberItem.kt$@Composable fun OutfitMemberItem( modifier: Modifier = Modifier, label: String, outfitRank: String, loginStatus: LoginStatus, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:OutfitMemberItem.kt$@Preview @Composable fun OutfitMemberItemPreview()</ID>
+    <ID>FunctionNaming:Overlay.kt$@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class) @Composable fun ErrorOverlay( modifier: Modifier = Modifier, isError: Boolean = false, resourceId: Int? = null, )</ID>
+    <ID>FunctionNaming:Overlay.kt$@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class) @Composable fun LoadingOverlay( modifier: Modifier = Modifier, enabled: Boolean = false, )</ID>
+    <ID>FunctionNaming:Overlay.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun ErrorOverlayPreview()</ID>
+    <ID>FunctionNaming:Overlay.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun LoadingOverlayPreview()</ID>
+    <ID>FunctionNaming:ProfileItem.kt$@Composable fun ProfileItem( modifier: Modifier = Modifier, label: String, faction: Faction, namespace: Namespace, level: Int, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:ProfileItem.kt$@Preview @Composable fun ProfileItemPreview()</ID>
+    <ID>FunctionNaming:RedditPostItem.kt$@Composable fun RedditPostItem( modifier: Modifier = Modifier, imgUrl: String?, title: String, author: String, upvotes: Int, comments: Int, createdTime: Long, prettyTime: PrettyTime, onImageClick: () -> Unit = {}, onPostClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:RedditPostItem.kt$@Preview @Composable fun RedditPostItemPreview()</ID>
+    <ID>FunctionNaming:SearchField.kt$@OptIn(ExperimentalComposeUiApi::class) @Composable fun SearchField( modifier: Modifier = Modifier, value: String, hint: String, onValueChange: (String) -> Unit, )</ID>
+    <ID>FunctionNaming:SearchField.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun SearchFieldPreview()</ID>
+    <ID>FunctionNaming:ServerItem.kt$@Composable fun ServerItem( modifier: Modifier = Modifier, serverName: String, population: Population, status: ServerStatus, namespace: Namespace, )</ID>
+    <ID>FunctionNaming:ServerItem.kt$@Preview @Composable fun ServerItemPreview()</ID>
+    <ID>FunctionNaming:StatItem.kt$@Composable fun StatItem( modifier: Modifier = Modifier, label: String, allTime: Float?, today: Float?, thisWeek: Float?, thisMonth: Float?, )</ID>
+    <ID>FunctionNaming:StatItem.kt$@Preview @Composable fun StatItemPreview()</ID>
+    <ID>FunctionNaming:SwipeToRefesh.kt$@Composable fun SwipeToRefresh( modifier: Modifier = Modifier, isLoading: Boolean, onRefreshRequested: () -> Unit, content: LazyListScope.() -> Unit, )</ID>
+    <ID>FunctionNaming:SwipeToRefesh.kt$@Composable fun SwipeToRefreshColumn( modifier: Modifier = Modifier, isLoading: Boolean, onRefreshRequested: () -> Unit, content: @Composable ColumnScope.() -> Unit )</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun PS2Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit)</ID>
+    <ID>FunctionNaming:TweetItem.kt$@Composable fun TweetItem( modifier: Modifier = Modifier, username: String, handle: String, content: String, avatarUrl: String, creationTime: Long, prettyTime: PrettyTime, )</ID>
+    <ID>FunctionNaming:TweetItem.kt$@Preview @Composable fun TweetItemPreview()</ID>
+    <ID>FunctionNaming:UnexpectedError.kt$@Composable fun UnexpectedError( modifier: Modifier = Modifier, message: String, )</ID>
+    <ID>FunctionNaming:UnexpectedError.kt$@Composable fun UnexpectedError( modifier: Modifier = Modifier, resourceId: Int = R.string.text_unkown_error, )</ID>
+    <ID>FunctionNaming:UnexpectedError.kt$@Preview( widthDp = 300, heightDp = 350, ) @Composable fun UnexpectedErrorPreview()</ID>
+    <ID>FunctionNaming:WeaponItem.kt$@Composable fun WeaponItem( modifier: Modifier = Modifier, faction: Faction = Faction.UNKNOWN, weaponImage: Uri = Uri.EMPTY, weaponName: String? = null, medalType: MedalType = MedalType.NONE, totalKills: Long = 0, totalVehiclesDestroyed: Long = 0, totalHeadshotKills: Long = 0, VSKills: Long? = null, TRKills: Long? = null, NCKills: Long? = null, onClick: () -> Unit = {}, )</ID>
+    <ID>FunctionNaming:WeaponItem.kt$@Preview @Composable fun WeaponItemPreview()</ID>
+    <ID>FunctionParameterNaming:WeaponItem.kt$NCKills: Long? = null</ID>
+    <ID>FunctionParameterNaming:WeaponItem.kt$TRKills: Long? = null</ID>
+    <ID>FunctionParameterNaming:WeaponItem.kt$VSKills: Long? = null</ID>
+    <ID>LongMethod:CircularProgressIndicator.kt$ @Composable fun CustomCircularProgressIndicator( modifier: Modifier = Modifier, color: Color = MaterialTheme.colors.primary, diameter: Dp = CircularIndicatorDiameter, strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth )</ID>
+    <ID>LongMethod:WeaponItem.kt$@Composable fun WeaponItem( modifier: Modifier = Modifier, faction: Faction = Faction.UNKNOWN, weaponImage: Uri = Uri.EMPTY, weaponName: String? = null, medalType: MedalType = MedalType.NONE, totalKills: Long = 0, totalVehiclesDestroyed: Long = 0, totalHeadshotKills: Long = 0, VSKills: Long? = null, TRKills: Long? = null, NCKills: Long? = null, onClick: () -> Unit = {}, )</ID>
+    <ID>LongParameterList:RedditPostItem.kt$( modifier: Modifier = Modifier, imgUrl: String?, title: String, author: String, upvotes: Int, comments: Int, createdTime: Long, prettyTime: PrettyTime, onImageClick: () -> Unit = {}, onPostClick: () -> Unit = {}, )</ID>
+    <ID>LongParameterList:WeaponItem.kt$( modifier: Modifier = Modifier, faction: Faction = Faction.UNKNOWN, weaponImage: Uri = Uri.EMPTY, weaponName: String? = null, medalType: MedalType = MedalType.NONE, totalKills: Long = 0, totalVehiclesDestroyed: Long = 0, totalHeadshotKills: Long = 0, VSKills: Long? = null, TRKills: Long? = null, NCKills: Long? = null, onClick: () -> Unit = {}, )</ID>
+    <ID>MatchingDeclarationName:Buttons.kt$BoldButtonColors : ButtonColors</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// Each rotation is 1 and 1/3 seconds, but 1332ms divides more evenly private const val RotationDuration = 1332</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// Each rotation we want to offset the start position by this much, so we continue where // the previous rotation ended. This is the maximum angle covered during one rotation. private const val RotationAngleOffset = (BaseRotationAngle + JumpRotationAngle) % 360f</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// How far the base point moves around the circle private const val BaseRotationAngle = 286f</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// How far the head and tail should jump forward during one rotation past the base point private const val JumpRotationAngle = 290f</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// The animation comprises of 5 rotations around the circle forming a 5 pointed star. // After the 5th rotation, we are back at the beginning of the circle. private const val RotationsPerCycle = 5</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// The head animates for the first half of a rotation, then is static for the second half // The tail is static for the first half and then animates for the second half private const val HeadAndTailAnimationDuration = (RotationDuration * 0.5).toInt()</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$// When the rotation is at its beginning (0 or 360 degrees) we want it to be drawn at 12 o clock, // which means 270 degrees when drawing. private const val StartAngleOffset = -90f</ID>
+    <ID>TopLevelPropertyNaming:CircularProgressIndicator.kt$private const val HeadAndTailDelayDuration = HeadAndTailAnimationDuration</ID>
+    <ID>UndocumentedPublicClass:Buttons.kt$BoldButtonColors : ButtonColors</ID>
+    <ID>UndocumentedPublicClass:Dimensions.kt$Opacity</ID>
+    <ID>UndocumentedPublicClass:Dimensions.kt$Padding</ID>
+    <ID>UndocumentedPublicClass:Dimensions.kt$Size</ID>
+    <ID>UndocumentedPublicClass:Shapes.kt$Shapes</ID>
+    <ID>UndocumentedPublicFunction:BR.kt$@Composable fun BR( modifier: Modifier = Modifier, level: Int, enabled: Boolean = true, )</ID>
+    <ID>UndocumentedPublicFunction:BR.kt$@Composable fun BRBar( modifier: Modifier = Modifier, percentageToNextLevel: Float, )</ID>
+    <ID>UndocumentedPublicFunction:BR.kt$@Preview( widthDp = 200, heightDp = 25, ) @Composable fun ProfileItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:Buttons.kt$@Composable fun BoldButton( modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit = {}, content: @Composable () -> Unit )</ID>
+    <ID>UndocumentedPublicFunction:Buttons.kt$@Composable fun SlimButton( modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit = {}, content: @Composable () -> Unit )</ID>
+    <ID>UndocumentedPublicFunction:Buttons.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun MainMenuButton( modifier: Modifier = Modifier, enabled: Boolean = true, label: String? = null, star: Boolean = false, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:Buttons.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun BoldButtonPreview()</ID>
+    <ID>UndocumentedPublicFunction:Cert.kt$@Composable fun Cert(certs: Int)</ID>
+    <ID>UndocumentedPublicFunction:Cert.kt$@Composable fun CertBar( modifier: Modifier = Modifier, percentageToNextCert: Float, )</ID>
+    <ID>UndocumentedPublicFunction:Cert.kt$@Preview( widthDp = 200, heightDp = 25, ) @Composable fun CertBarPreview()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$@Composable fun LoginStatus.toStringResource()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$@Composable fun Population.toColor()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$@Composable fun Population.toStringResource(): String</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$@Composable fun ServerStatus.toStringResource()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun CharacterClass.toImageRes()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun KillType?.toColor()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun LoginStatus?.toColor()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun MedalType?.toImageRes()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun ServerStatus?.toColor()</ID>
+    <ID>UndocumentedPublicFunction:FactionIcon.kt$@Composable fun FactionIcon( modifier: Modifier = Modifier, faction: Faction, )</ID>
+    <ID>UndocumentedPublicFunction:FactionIcon.kt$@Preview @Composable fun FactionIconPreview()</ID>
+    <ID>UndocumentedPublicFunction:Frames.kt$@Composable fun FrameBottom( modifier: Modifier = Modifier, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>UndocumentedPublicFunction:Frames.kt$@Composable fun FrameCenter( modifier: Modifier = Modifier, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>UndocumentedPublicFunction:Frames.kt$@Composable fun FrameSlim( modifier: Modifier = Modifier, alignment: Alignment = Alignment.TopCenter, content: @Composable() () -> Unit, )</ID>
+    <ID>UndocumentedPublicFunction:Frames.kt$@Preview(name = "Bottom Frame") @Composable fun FrameBottomPreview()</ID>
+    <ID>UndocumentedPublicFunction:Frames.kt$@Preview(name = "Frame Center") @Composable fun FrameCenterPreview()</ID>
+    <ID>UndocumentedPublicFunction:Frames.kt$@Preview(name = "Frame Slim") @Composable fun FrameSlimPreview()</ID>
+    <ID>UndocumentedPublicFunction:FriendItem.kt$@Composable fun FriendItem( modifier: Modifier = Modifier, label: String, loginStatus: LoginStatus = LoginStatus.UNKNOWN, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:FriendItem.kt$@Preview @Composable fun FriendItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:KillItem.kt$@OptIn(ExperimentalCoilApi::class) @Composable fun KillItem( modifier: Modifier = Modifier, killType: KillType = KillType.UNKNOWN, faction: Faction = Faction.UNKNOWN, attacker: String? = null, time: Instant? = null, weaponName: String? = null, weaponImage: String? = null, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:KillItem.kt$@Preview @Composable fun ProfileKillPreview()</ID>
+    <ID>UndocumentedPublicFunction:NamespaceIcon.kt$@Composable fun NamespaceIcon( modifier: Modifier = Modifier, namespace: Namespace, )</ID>
+    <ID>UndocumentedPublicFunction:NamespaceIcon.kt$@Preview @Composable fun NamespaceIconPreview()</ID>
+    <ID>UndocumentedPublicFunction:NetworkImage.kt$@Suppress("UNUSED_PARAMETER") @OptIn(ExperimentalCoilApi::class) @Composable fun NetworkImage( modifier: Modifier = Modifier, imageUrl: String? = null, contentDescription: String? = null, placeHolder: Int = R.drawable.image_not_found )</ID>
+    <ID>UndocumentedPublicFunction:OnlineMemberItem.kt$@Composable fun OnlineMemberItem( modifier: Modifier = Modifier, label: String, characterClass: CharacterClass, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:OnlineMemberItem.kt$@Preview @Composable fun OnlineMemberItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:OutfitItem.kt$@Composable fun OutfitItem( modifier: Modifier = Modifier, tag: String? = null, name: String? = null, memberCount: Int, namespace: Namespace, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:OutfitItem.kt$@Preview @Composable fun OutfitItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:OutfitMemberItem.kt$@Composable fun OutfitMemberItem( modifier: Modifier = Modifier, label: String, outfitRank: String, loginStatus: LoginStatus, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:OutfitMemberItem.kt$@Preview @Composable fun OutfitMemberItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:Overlay.kt$@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class) @Composable fun ErrorOverlay( modifier: Modifier = Modifier, isError: Boolean = false, resourceId: Int? = null, )</ID>
+    <ID>UndocumentedPublicFunction:Overlay.kt$@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class) @Composable fun LoadingOverlay( modifier: Modifier = Modifier, enabled: Boolean = false, )</ID>
+    <ID>UndocumentedPublicFunction:Overlay.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun ErrorOverlayPreview()</ID>
+    <ID>UndocumentedPublicFunction:Overlay.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun LoadingOverlayPreview()</ID>
+    <ID>UndocumentedPublicFunction:ProfileItem.kt$@Composable fun ProfileItem( modifier: Modifier = Modifier, label: String, faction: Faction, namespace: Namespace, level: Int, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:ProfileItem.kt$@Preview @Composable fun ProfileItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:RedditPostItem.kt$@Composable fun RedditPostItem( modifier: Modifier = Modifier, imgUrl: String?, title: String, author: String, upvotes: Int, comments: Int, createdTime: Long, prettyTime: PrettyTime, onImageClick: () -> Unit = {}, onPostClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:RedditPostItem.kt$@Preview @Composable fun RedditPostItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:SearchField.kt$@OptIn(ExperimentalComposeUiApi::class) @Composable fun SearchField( modifier: Modifier = Modifier, value: String, hint: String, onValueChange: (String) -> Unit, )</ID>
+    <ID>UndocumentedPublicFunction:SearchField.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun SearchFieldPreview()</ID>
+    <ID>UndocumentedPublicFunction:ServerItem.kt$@Composable fun ServerItem( modifier: Modifier = Modifier, serverName: String, population: Population, status: ServerStatus, namespace: Namespace, )</ID>
+    <ID>UndocumentedPublicFunction:ServerItem.kt$@Preview @Composable fun ServerItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:StatItem.kt$@Composable fun StatItem( modifier: Modifier = Modifier, label: String, allTime: Float?, today: Float?, thisWeek: Float?, thisMonth: Float?, )</ID>
+    <ID>UndocumentedPublicFunction:StatItem.kt$@Preview @Composable fun StatItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:SwipeToRefesh.kt$@Composable fun SwipeToRefresh( modifier: Modifier = Modifier, isLoading: Boolean, onRefreshRequested: () -> Unit, content: LazyListScope.() -> Unit, )</ID>
+    <ID>UndocumentedPublicFunction:SwipeToRefesh.kt$@Composable fun SwipeToRefreshColumn( modifier: Modifier = Modifier, isLoading: Boolean, onRefreshRequested: () -> Unit, content: @Composable ColumnScope.() -> Unit )</ID>
+    <ID>UndocumentedPublicFunction:Theme.kt$@Composable fun PS2Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit)</ID>
+    <ID>UndocumentedPublicFunction:TweetItem.kt$@Composable fun TweetItem( modifier: Modifier = Modifier, username: String, handle: String, content: String, avatarUrl: String, creationTime: Long, prettyTime: PrettyTime, )</ID>
+    <ID>UndocumentedPublicFunction:TweetItem.kt$@Preview @Composable fun TweetItemPreview()</ID>
+    <ID>UndocumentedPublicFunction:UnexpectedError.kt$@Composable fun UnexpectedError( modifier: Modifier = Modifier, message: String, )</ID>
+    <ID>UndocumentedPublicFunction:UnexpectedError.kt$@Composable fun UnexpectedError( modifier: Modifier = Modifier, resourceId: Int = R.string.text_unkown_error, )</ID>
+    <ID>UndocumentedPublicFunction:UnexpectedError.kt$@Preview( widthDp = 300, heightDp = 350, ) @Composable fun UnexpectedErrorPreview()</ID>
+    <ID>UndocumentedPublicFunction:WeaponItem.kt$@Composable fun WeaponItem( modifier: Modifier = Modifier, faction: Faction = Faction.UNKNOWN, weaponImage: Uri = Uri.EMPTY, weaponName: String? = null, medalType: MedalType = MedalType.NONE, totalKills: Long = 0, totalVehiclesDestroyed: Long = 0, totalHeadshotKills: Long = 0, VSKills: Long? = null, TRKills: Long? = null, NCKills: Long? = null, onClick: () -> Unit = {}, )</ID>
+    <ID>UndocumentedPublicFunction:WeaponItem.kt$@Preview @Composable fun WeaponItemPreview()</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val certBackground = Color(0xFF381B12)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val certWhite = Color(0xFFFF7D5A)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val errorColor = Color(0xFFFF0000)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val goldBackground = Color(0xFF2C290D)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val goldDisabled = Color(0xFF69611B)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val goldWhite = Color(0xFFFFF7B1)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val positive = Color(0xFF00FF0A)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val primaryDarkColor = Color(0xFF00363a)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val primaryLightColor = Color(0xFF428e92)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val primaryTextColor = Color(0xFFFFFFFF)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val secondaryColor = Color(0xFF26c6da)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val secondaryDarkColor = Color(0xFF0095a8)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val secondaryLightColor = Color(0xFF6ff9ff)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val secondaryTextColor = Color(0xFF000000)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val undefined = Color(0xFFB9B9B9)</ID>
+    <ID>UndocumentedPublicProperty:Color.kt$val warning = Color(0xFFFFC107)</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Opacity$const val translucent = 0.55f</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Opacity$const val transparent = 0.10f</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val large = 16.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val medium = 8.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val micro = 1.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val small = 4.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val xlarge = 24.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val xsmall = 2.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Padding$val xxlarge = 36.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val large = 24.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val medium = 12.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val micro = 2.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val small = 6.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val xlarge = 36.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val xmicro = 1.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val xsmall = 3.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val xxlarge = 48.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$Size$val xxxlarge = 84.dp</ID>
+    <ID>UndocumentedPublicProperty:Dimensions.kt$val MaxDialogSize = 250.dp</ID>
+    <ID>UndocumentedPublicProperty:KillItem.kt$var formatter = SimpleDateFormat("MMM dd hh:mm:ss a", Locale.getDefault())</ID>
+    <ID>UndocumentedPublicProperty:Shapes.kt$Shapes$val large = CutCornerShape(topEnd = 16.dp, bottomStart = 16.dp)</ID>
+    <ID>UndocumentedPublicProperty:Shapes.kt$Shapes$val largeBottom = CutCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)</ID>
+    <ID>UndocumentedPublicProperty:Shapes.kt$Shapes$val medium = CutCornerShape(topEnd = 12.dp, bottomStart = 12.dp)</ID>
+    <ID>UndocumentedPublicProperty:Shapes.kt$Shapes$val small = CutCornerShape(topEnd = 10.dp, bottomStart = 10.dp)</ID>
+    <ID>UndocumentedPublicProperty:Shapes.kt$val shapes = Shapes( small = small, medium = medium, large = large )</ID>
+    <ID>UndocumentedPublicProperty:Theme.kt$val ps2Palette = Colors( primary = primaryColor, primaryVariant = primaryLightColor, secondary = secondaryColor, secondaryVariant = secondaryLightColor, background = primaryDarkColor, surface = primaryDarkColor, onPrimary = primaryTextColor, onSecondary = secondaryTextColor, onBackground = primaryTextColor, onSurface = primaryTextColor, error = errorColor, onError = primaryTextColor, isLight = false, )</ID>
+    <ID>UndocumentedPublicProperty:Type.kt$// Set of Material typography styles to start with val typography = Typography( defaultFontFamily = PS2Font, body1 = TextStyle( fontWeight = FontWeight.Normal, fontSize = 16.sp ) /* Other default text styles to override button = TextStyle( fontFamily = FontFamily.Default, fontWeight = FontWeight.W500, fontSize = 14.sp ), caption = TextStyle( fontFamily = FontFamily.Default, fontWeight = FontWeight.Normal, fontSize = 12.sp ) */ )</ID>
+    <ID>UndocumentedPublicProperty:Type.kt$val PS2Font = FontFamily( Font(resId = R.font.planetside2) )</ID>
+  </CurrentIssues>
+</SmellBaseline>

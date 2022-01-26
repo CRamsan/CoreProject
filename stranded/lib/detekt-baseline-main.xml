@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>TooGenericExceptionCaught:JvmClient.kt$JvmClient$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Server.kt$Server$e: Exception</ID>
+    <ID>UndocumentedPublicClass:Connection.kt$Connection</ID>
+    <ID>UndocumentedPublicClass:ConnectionRepository.kt$ConnectionRepository</ID>
+    <ID>UndocumentedPublicClass:GameScope.kt$GameScope</ID>
+    <ID>UndocumentedPublicClass:JvmClient.kt$JvmClient : Client</ID>
+    <ID>UndocumentedPublicClass:Server.kt$Server</ID>
+    <ID>UndocumentedPublicFunction:ConnectionRepository.kt$ConnectionRepository$fun deregisterConnection(connection: Connection)</ID>
+    <ID>UndocumentedPublicFunction:ConnectionRepository.kt$ConnectionRepository$fun getConnection(playerId: String): Connection</ID>
+    <ID>UndocumentedPublicFunction:ConnectionRepository.kt$ConnectionRepository$fun registerConnection(connection: Connection)</ID>
+    <ID>UndocumentedPublicFunction:ConnectionRepository.kt$ConnectionRepository$suspend fun broadcastToAll(serverEvent: ServerEvent)</ID>
+    <ID>UndocumentedPublicFunction:ConnectionRepository.kt$ConnectionRepository$suspend fun broadcastToLobby(lobbyId: String, serverEvent: ServerEvent)</ID>
+    <ID>UndocumentedPublicFunction:GameScope.kt$GameScope$actual fun endScope()</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$fun start()</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$fun startServerJob()</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$fun stop()</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$suspend fun handleEvent( playerId: String, session: DefaultWebSocketSession, clientEvent: ClientEvent, )</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$fun startGame(lobbyId: String, lobbyRepository: LobbyRepository, gameRepository: GameRepository, playerRepository: PlayerRepository)</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$suspend inline fun &lt;reified T : ServerEvent> DefaultWebSocketSession.sendEvent(event: T)</ID>
+    <ID>UndocumentedPublicFunction:UUID.kt$actual fun generateUUID(): String</ID>
+    <ID>UndocumentedPublicProperty:Connection.kt$Connection$val playerId: String</ID>
+    <ID>UndocumentedPublicProperty:Connection.kt$Connection$val session: DefaultWebSocketSession</ID>
+    <ID>UndocumentedPublicProperty:GameScope.kt$GameScope$actual val scope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)</ID>
+    <ID>UndocumentedPublicProperty:JvmClient.kt$JvmClient$lateinit var client: HttpClient</ID>
+    <ID>UndocumentedPublicProperty:JvmClient.kt$JvmClient$lateinit var clientJob: Job</ID>
+    <ID>UndocumentedPublicProperty:JvmClient.kt$JvmClient$lateinit var defaultClientWebSocketSession: DefaultWebSocketSession</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$lateinit var connectionRepository: ConnectionRepository</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$lateinit var gameRepository: GameRepository</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$lateinit var lobbyRepository: LobbyRepository</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$lateinit var playerRepository: PlayerRepository</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$lateinit var serverJob: Job</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$var scope: CoroutineScope? = null</ID>
+  </CurrentIssues>
+</SmellBaseline>

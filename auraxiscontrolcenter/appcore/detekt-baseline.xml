@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexMethod:DBGServiceClientImpl.kt$private fun formatStats(stats: List&lt;Stat>?): List&lt;StatItem></ID>
+    <ID>FunctionParameterNaming:DBGServiceClient.kt$DBGServiceClient$character_id: String</ID>
+    <ID>FunctionParameterNaming:DBGServiceClient.kt$DBGServiceClient$character_id: String?</ID>
+    <ID>LongMethod:DBGServiceClientImpl.kt$private fun formatStats(stats: List&lt;Stat>?): List&lt;StatItem></ID>
+    <ID>LongMethod:DBGServiceClientImpl.kt$private fun formatWeapons( weaponList: List&lt;WeaponStat>?, faction: com.cramsan.ps2link.core.models.Faction, currentLang: CensusLang ): List&lt;WeaponItem></ID>
+    <ID>LongParameterList:DbgDAO.kt$DbgDAO$( characterId: String, name: String?, activeProfileId: CharacterClass, loginStatus: LoginStatus, currentPoints: Long?, percentageToNextCert: Double?, percentageToNextRank: Double?, rank: Long?, outfitRank: Long?, lastLogin: Instant?, minutesPlayed: Duration?, factionId: Faction, worldId: String?, worldName: String?, outfitId: String?, outfitName: String?, namespace: Namespace, cached: Boolean, lastUpdated: Instant, )</ID>
+    <ID>LongParameterList:DbgDAO.kt$DbgDAO$( outfitId: String, name: String?, alias: String?, leaderCharacterId: String?, leaderCharacterName: String?, memberCount: Long?, timeCreated: Instant?, worldId: String?, worldName: String?, factionId: Faction, namespace: Namespace, cached: Boolean, lastUpdated: Instant, )</ID>
+    <ID>TooGenericExceptionCaught:HttpClient.kt$HttpClient$exception: Exception</ID>
+    <ID>TooManyFunctions:Extensions.kt$com.cramsan.ps2link.appcore.Extensions.kt</ID>
+    <ID>TooManyFunctions:PS2LinkRepository.kt$PS2LinkRepository</ID>
+    <ID>TooManyFunctions:PS2LinkRepositoryImpl.kt$PS2LinkRepositoryImpl : PS2LinkRepository</ID>
+    <ID>UndocumentedPublicClass:DBGServiceClient.kt$DBGServiceClient</ID>
+    <ID>UndocumentedPublicClass:DbgDAO.kt$DbgDAO</ID>
+    <ID>UndocumentedPublicClass:PS2HttpResponse.kt$PS2HttpResponse&lt;Body></ID>
+    <ID>UndocumentedPublicClass:PS2LinkRepositoryImpl.kt$PS2LinkRepositoryImpl : PS2LinkRepository</ID>
+    <ID>UndocumentedPublicClass:PS2SettingsImpl.kt$PS2SettingsImpl : PS2Settings</ID>
+    <ID>UndocumentedPublicClass:RedditRepositoryImpl.kt$RedditRepositoryImpl : RedditRepository</ID>
+    <ID>UndocumentedPublicClass:SQLDelightDAO.kt$SQLDelightDAO : DbgDAO</ID>
+    <ID>UndocumentedPublicClass:TwitterRepositoryImpl.kt$TwitterRepositoryImpl : TwitterRepositoryLifecycleAwareComponent</ID>
+    <ID>UndocumentedPublicClass:UrlHolder.kt$UrlHolder</ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getFriendList( character_id: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getKillList( character_id: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;KillEvent>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getMemberList( outfitId: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getMembersOnline( outfitId: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getOutfit( outfitId: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;Outfit></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getOutfitList( outfitTag: String, outfitName: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Outfit>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getProfile( character_id: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;Character?></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getServerList( namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;World>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getServerMetadata( serverId: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;WorldEvent>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getServerPopulation(): PS2HttpResponse&lt;PS2></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getStatList( character_id: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;StatItem>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getVehicles( vehicleIds: List&lt;String>, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Vehicle>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClient.kt$DBGServiceClient$suspend fun getWeapons( weaponIds: List&lt;String>, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Weapon>></ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClientImpl.kt$fun CharacterFriend.toCoreModel( namespace: Namespace, ): Character</ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClientImpl.kt$fun Member.toCoreModel(namespace: Namespace): Character?</ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClientImpl.kt$fun Outfit.toCoreModel( namespace: Namespace, server: Server?, lastUpdate: Instant ): com.cramsan.ps2link.core.models.Outfit</ID>
+    <ID>UndocumentedPublicFunction:DBGServiceClientImpl.kt$fun formatKillList( characterId: String, characterEventList: List&lt;CharacterEvent>?, weaponMapping: Map&lt;String, com.cramsan.ps2link.core.models.Weapon>, vehicleMapping: Map&lt;String, Vehicle>, namespace: Namespace ): List&lt;KillEvent></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$@OptIn(ExperimentalTime::class) fun insertCharacter( characterId: String, name: String?, activeProfileId: CharacterClass, loginStatus: LoginStatus, currentPoints: Long?, percentageToNextCert: Double?, percentageToNextRank: Double?, rank: Long?, outfitRank: Long?, lastLogin: Instant?, minutesPlayed: Duration?, factionId: Faction, worldId: String?, worldName: String?, outfitId: String?, outfitName: String?, namespace: Namespace, cached: Boolean, lastUpdated: Instant, )</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun deleteAll()</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getAllCharactersAsFlow(): Flow&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getAllOutfits(): List&lt;Outfit></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getAllOutfitsAsFlow(): Flow&lt;List&lt;Outfit>></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getCharacter( characterId: String, namespace: Namespace, ): Character?</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getCharacterAsFlow( characterId: String, namespace: Namespace, ): Flow&lt;Character?></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getCharacters(): List&lt;Character></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getOutfit( outfitId: String, namespace: Namespace, ): Outfit?</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun getOutfitAsFlow( outfitId: String, namespace: Namespace, ): Flow&lt;Outfit?></ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun insertCharacter(character: Character)</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun insertOutfit( outfitId: String, name: String?, alias: String?, leaderCharacterId: String?, leaderCharacterName: String?, memberCount: Long?, timeCreated: Instant?, worldId: String?, worldName: String?, factionId: Faction, namespace: Namespace, cached: Boolean, lastUpdated: Instant, )</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun insertOutfit(outfit: Outfit)</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun removeCharacter( characterId: String, namespace: Namespace, )</ID>
+    <ID>UndocumentedPublicFunction:DbgDAO.kt$DbgDAO$fun removeOutfit( outfitId: String, namespace: Namespace, )</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun CharacterClass.toDBModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Faction.toDBModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun LoginStatus.toDBModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Name_Multi.localizedName(currentLang: CensusLang): String?</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Namespace.toCoreModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun OnlineStatus?.toCoreModel(): ServerStatus</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun PS2Tweet.toCoreModel(): com.cramsan.ps2link.core.models.PS2Tweet</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun PopulationStatus?.toCoreModel(): Population</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Post.toCoreModel(): RedditPost</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.getThisMonth(): Float</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.getThisWeek(): Float</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.getToday(): Float</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.setThisMonth(value: Float)</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.setThisWeek(value: Float)</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.setToday(value: Float)</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun Stat.toStatItem(): StatItem</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun StatNameType.toWeaponEventType(): WeaponEventType</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun characterClassFromString(activeProfileId: String?)</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun com.cramsan.ps2link.core.models.Namespace.toDBModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun com.cramsan.ps2link.core.models.Namespace.toNetworkModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun com.cramsan.ps2link.db.models.CharacterClass?.toCoreModel()</ID>
+    <ID>UndocumentedPublicFunction:Extensions.kt$fun com.cramsan.ps2link.db.models.LoginStatus.toCoreModel()</ID>
+    <ID>UndocumentedPublicFunction:HttpClient.kt$HttpClient$@OptIn(ExperimentalSerializationApi::class, ExperimentalTime::class) suspend inline fun &lt;reified T> sendRequestWithRetry(url: UrlHolder): PS2HttpResponse&lt;T></ID>
+    <ID>UndocumentedPublicFunction:HttpClient.kt$HttpClient$@OptIn(ExperimentalTime::class) suspend fun sendRequest(url: UrlHolder, retry: Int): HttpResponse</ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$PS2HttpResponse.Companion$fun &lt;Body> failure(rawResponse: HttpResponse?, throwable: Throwable?): PS2HttpResponse&lt;Body></ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$PS2HttpResponse.Companion$fun &lt;Body> failure(rawResponse: HttpResponse?, throwableList: List&lt;Throwable>): PS2HttpResponse&lt;Body></ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$PS2HttpResponse.Companion$fun &lt;Body> success(body: Body, rawResponse: HttpResponse? = null): PS2HttpResponse&lt;Body></ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$PS2HttpResponse.Companion$fun &lt;Orig, Result> process(response: PS2HttpResponse&lt;Orig>, process: (Orig) -> Result): PS2HttpResponse&lt;Result></ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Body> PS2HttpResponse&lt;Body>.requireBody(): Body</ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Orig, Result> List&lt;PS2HttpResponse&lt;Orig>>.processList(process: (Orig) -> Result): PS2HttpResponse&lt;List&lt;Result>></ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Orig, Result> PS2HttpResponse&lt;Orig>.process(process: (Orig) -> Result): PS2HttpResponse&lt;Result></ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Orig, Result> PS2HttpResponse&lt;Orig>.toFailure()</ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Orig, Result> PS2HttpResponse&lt;Orig>.toFailure(throwable: Throwable?)</ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Orig, Result> PS2HttpResponse&lt;Orig>.toSuccess(body: Result)</ID>
+    <ID>UndocumentedPublicFunction:PS2HttpResponse.kt$fun &lt;Orig, Unit> PS2HttpResponse&lt;Orig>.onSuccess(process: (Orig) -> Unit): PS2HttpResponse&lt;Orig></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$fun getAllCharactersAsFlow(): Flow&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$fun getAllOutfitsAsFlow(): Flow&lt;List&lt;Outfit>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$fun getCharacterAsFlow(characterId: String, namespace: Namespace): Flow&lt;Character?></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow&lt;Outfit?></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getAllCharacters(): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getAllOutfits(): PS2HttpResponse&lt;List&lt;Outfit>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getCharacter( characterId: String, namespace: Namespace, lang: CensusLang, forceUpdate: Boolean = false, ): PS2HttpResponse&lt;Character?></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getFriendList( characterId: String, namespace: Namespace, lang: CensusLang, ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getKillList( characterId: String, namespace: Namespace, lang: CensusLang, ): PS2HttpResponse&lt;List&lt;KillEvent>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getMembers( outfitId: String, namespace: Namespace, currentLang: CensusLang ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getMembersOnline( outfitId: String, namespace: Namespace, currentLang: CensusLang ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getOutfit( outfitId: String, namespace: Namespace, lang: CensusLang, forceUpdate: Boolean = false, ): PS2HttpResponse&lt;Outfit></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getServerList( lang: CensusLang, ): PS2HttpResponse&lt;List&lt;Server>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getStatList( characterId: String, namespace: Namespace, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;StatItem>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun getWeaponList( characterId: String, namespace: Namespace, lang: CensusLang, ): PS2HttpResponse&lt;List&lt;WeaponItem>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun removeCharacter(characterId: String, namespace: Namespace)</ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun removeOutfit(outfitId: String, namespace: Namespace)</ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun saveCharacter(character: Character)</ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun saveOutfit(outfit: Outfit)</ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun searchForCharacter( searchField: String, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Character>></ID>
+    <ID>UndocumentedPublicFunction:PS2LinkRepository.kt$PS2LinkRepository$suspend fun searchForOutfits( tagSearchField: String, nameSearchField: String, currentLang: CensusLang, ): PS2HttpResponse&lt;List&lt;Outfit>></ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun getCurrentLang(): CensusLang?</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun getCurrentNamespace(): Namespace?</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun getPreferredCharacterId(): String?</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun getPreferredOutfitId(): String?</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun getPreferredOutfitNamespace(): Namespace?</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun getPreferredProfileNamespace(): Namespace?</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updateCurrentLang(currentLang: CensusLang?)</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updateCurrentNamespace(namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updatePreferredCharacterId(characterId: String?)</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updatePreferredOutfitId(outfitId: String?)</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updatePreferredOutfitNamespace(namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updatePreferredProfileNamespace(namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:RedditRepository.kt$RedditRepository$suspend fun getPosts( redditPage: RedditPage, ): PS2HttpResponse&lt;List&lt;RedditPost>></ID>
+    <ID>UndocumentedPublicFunction:TwitterRepository.kt$TwitterRepository$fun getTweetsAsFlow(): StateFlow&lt;PS2HttpResponse&lt;List&lt;PS2Tweet>>?></ID>
+    <ID>UndocumentedPublicFunction:TwitterRepository.kt$TwitterRepository$fun getTwitterUsersAsFlow(): StateFlow&lt;Map&lt;TwitterUser, Boolean>></ID>
+    <ID>UndocumentedPublicFunction:TwitterRepository.kt$TwitterRepository$suspend fun getTweets(): PS2HttpResponse&lt;List&lt;PS2Tweet>></ID>
+    <ID>UndocumentedPublicFunction:TwitterRepository.kt$TwitterRepository$suspend fun getTwitterUsers(): Map&lt;TwitterUser, Boolean></ID>
+    <ID>UndocumentedPublicFunction:TwitterRepository.kt$TwitterRepository$suspend fun setFollowStatus(user: TwitterUser, follow: Boolean)</ID>
+    <ID>UndocumentedPublicFunction:TwitterUser.kt$TwitterUser.Companion$fun fromString(code: String?): TwitterUser?</ID>
+    <ID>UndocumentedPublicProperty:Adapters.kt$@OptIn(ExperimentalTime::class) val durationAdapter = object : ColumnAdapter&lt;Duration, Long> { override fun decode(databaseValue: Long) = databaseValue.milliseconds override fun encode(value: Duration) = value.inWholeMilliseconds }</ID>
+    <ID>UndocumentedPublicProperty:Adapters.kt$val characterClassAdapter = object : ColumnAdapter&lt;CharacterClass, Long> { override fun decode(databaseValue: Long) = CharacterClass.fromLong(databaseValue) override fun encode(value: CharacterClass) = value.id }</ID>
+    <ID>UndocumentedPublicProperty:Adapters.kt$val instantAdapter = object : ColumnAdapter&lt;Instant, Long> { override fun decode(databaseValue: Long) = Instant.fromEpochMilliseconds(databaseValue) override fun encode(value: Instant) = value.toEpochMilliseconds() }</ID>
+    <ID>UndocumentedPublicProperty:Adapters.kt$val loginStatusAdapter = object : ColumnAdapter&lt;LoginStatus, String> { override fun decode(databaseValue: String) = LoginStatus.fromString(databaseValue) override fun encode(value: LoginStatus) = value.code }</ID>
+    <ID>UndocumentedPublicProperty:Adapters.kt$val namespaceAdapter = object : ColumnAdapter&lt;Namespace, String> { override fun decode(databaseValue: String) = Namespace.fromString(databaseValue) override fun encode(value: Namespace) = value.namespace }</ID>
+    <ID>UndocumentedPublicProperty:DBGCensus.kt$DBGCensus.Companion$const val ENDPOINT_URL = "https://census.daybreakgames.com"</ID>
+    <ID>UndocumentedPublicProperty:DBGCensus.kt$DBGCensus.Companion$const val IMG = "img"</ID>
+    <ID>UndocumentedPublicProperty:DBGCensus.kt$DBGCensus.Companion$const val ITEM = "item"</ID>
+    <ID>UndocumentedPublicProperty:DBGServiceClientImpl.kt$DBGServiceClientImpl.Companion$val TAG = "DBGServiceClient"</ID>
+    <ID>UndocumentedPublicProperty:HttpClient.kt$HttpClient$val json: Json</ID>
+    <ID>UndocumentedPublicProperty:HttpClient.kt$HttpClient.Companion$const val TAG = "HttpClient"</ID>
+    <ID>UndocumentedPublicProperty:PS2HttpResponse.kt$PS2HttpResponse$val body: Body?</ID>
+    <ID>UndocumentedPublicProperty:PS2HttpResponse.kt$PS2HttpResponse$val code = rawResponse?.status?.value ?: 200</ID>
+    <ID>UndocumentedPublicProperty:PS2HttpResponse.kt$PS2HttpResponse$val isSuccessful = throwable == null &amp;&amp; code in 200..299</ID>
+    <ID>UndocumentedPublicProperty:PS2HttpResponse.kt$PS2HttpResponse$val rawResponse: HttpResponse? = null</ID>
+    <ID>UndocumentedPublicProperty:PS2HttpResponse.kt$PS2HttpResponse$val throwable: Throwable? = null</ID>
+    <ID>UndocumentedPublicProperty:PS2LinkRepositoryImpl.kt$PS2LinkRepositoryImpl.Companion$@OptIn(ExperimentalTime::class) val EXPIRATION_TIME = 1.minutes</ID>
+    <ID>UndocumentedPublicProperty:PS2LinkRepositoryImpl.kt$PS2LinkRepositoryImpl.Companion$val TAG = "PS2LinkRepositoryImpl"</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl$val preferences: Preferences</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl.Companion$const val CURRENT_CENSUS_LANG = "currentCensusLang"</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl.Companion$const val CURRENT_NAMESPACE = "currentNamespace"</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl.Companion$const val PREFERRED_CHARACTER_ID = "preferredCharacterId"</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl.Companion$const val PREFERRED_CHARACTER_NAMESPACE = "preferredCharacterNamespace"</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl.Companion$const val PREFERRED_OUTFIT_ID = "preferredOutfitId"</ID>
+    <ID>UndocumentedPublicProperty:PS2SettingsImpl.kt$PS2SettingsImpl.Companion$const val PREFERRED_OUTFIT_NAMESPACE = "preferredOutfitNamespace"</ID>
+    <ID>UndocumentedPublicProperty:RedditRepositoryImpl.kt$RedditRepositoryImpl.Companion$const val BASE_URL = "https://www.reddit.com"</ID>
+    <ID>UndocumentedPublicProperty:RedditRepositoryImpl.kt$RedditRepositoryImpl.Companion$const val JSON_ENDPOINT = "hot.json"</ID>
+    <ID>UndocumentedPublicProperty:RedditRepositoryImpl.kt$RedditRepositoryImpl.Companion$const val TAG = "RedditRepositoryImpl"</ID>
+    <ID>UndocumentedPublicProperty:TwitterRepositoryImpl.kt$TwitterRepositoryImpl.Companion$const val SUBSCRIBED_USER_LIST_PREF = "SUBSCRIBED_USER_LIST_PREF"</ID>
+    <ID>UndocumentedPublicProperty:TwitterUser.kt$TwitterUser$val handle: String</ID>
+    <ID>UndocumentedPublicProperty:UrlHolder.kt$UrlHolder$val completeUrl: Url</ID>
+    <ID>UndocumentedPublicProperty:UrlHolder.kt$UrlHolder$val urlIdentifier: HttpNamespace.Api</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val all_time = ( (kills?.all_time?.toFloatOrNull() ?: 0f) / (deaths?.all_time?.toFloatOrNull() ?: 1f) ).toString()</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val all_time_sph = ( (score?.all_time?.toFloatOrNull() ?: 0f) / ( ( time?.all_time?.toFloatOrNull() ?: 1f ) / 3600f ) ).toString()</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val stat_name = "kdr"</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val stat_name_sph = "Score/Hour"</ID>
+  </CurrentIssues>
+</SmellBaseline>

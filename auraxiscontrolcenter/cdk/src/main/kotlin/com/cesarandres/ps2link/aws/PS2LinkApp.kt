@@ -20,7 +20,13 @@ import software.amazon.awscdk.services.cloudwatch.actions.SnsAction
 import software.amazon.awscdk.services.sns.Topic
 import software.amazon.awscdk.services.sns.subscriptions.EmailSubscription
 
+/**
+ * PS2Link App for CDK
+ */
 object PS2LinkApp {
+    /**
+     * Entry point.
+     */
     @JvmStatic
     fun main(args: Array<String>) {
         val app = App()

@@ -17,7 +17,11 @@ import com.microsoft.azure.functions.annotation.HttpTrigger
 /**
  * This class is the entry point for the Azure function.
  */
-class APIFunction {
+class APIFunction(
+    dependenciesConfig: DependenciesConfig = DependenciesConfig(),
+) {
+
+    private val modelStorage = dependenciesConfig.modelStorage
 
     @FunctionName("plants")
     @Suppress("UndocumentedPublicFunction")
@@ -141,8 +145,6 @@ class APIFunction {
     }
 
     companion object {
-        private val dependenciesConfig = DependenciesConfig()
-        private val modelStorage = dependenciesConfig.modelStorage
         private val mapper = ObjectMapper()
     }
 }
