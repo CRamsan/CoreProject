@@ -19,6 +19,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel that manages the suggestion screen.
+ */
 @HiltViewModel
 class PlantSuggestionViewModel @Inject constructor(
     application: Application,
@@ -26,9 +29,21 @@ class PlantSuggestionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
+    /**
+     * 2-way databinding. Allows for a user to input a string to suggest a new plant.
+     */
     val observableText = MutableLiveData<String>()
+    /**
+     * Observable [LiveData] that emits a [CompletedEvent] to close this screen.
+     */
     val observableIsComplete = LiveEvent<CompletedEvent>()
+    /**
+     * Represents the toxicity value for cats selected by the user.
+     */
     val observableSelectedCatToxicityRes = MutableLiveData<Int>()
+    /**
+     * Represents the toxicity value for dogs selected by the user.
+     */
     val observableSelectedDogToxicityRes = MutableLiveData<Int>()
 
     private val observableSelectedCatToxicity: LiveData<ToxicityValue> =
@@ -51,10 +66,16 @@ class PlantSuggestionViewModel @Inject constructor(
     override val logTag: String
         get() = "PlantSuggestionViewModel"
 
+    /**
+     * Callback to be called when the cancel button is pressed.
+     */
     fun cancel(@Suppress("UNUSED_PARAMETER") view: View) {
         observableIsComplete.value = CompletedEvent(false)
     }
 
+    /**
+     * Callback to be called when the save button is pressed.
+     */
     fun save(@Suppress("UNUSED_PARAMETER") view: View) {
         logI("PlantSuggestionViewModel", "savePlant")
         viewModelScope.launch(Dispatchers.IO) {

@@ -15,11 +15,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * ViewModel that manages the [DownloadCatalogDialogFragment].
+ */
 @HiltViewModel
 class DownloadCatalogViewModel @Inject constructor(
     application: Application,
-    val modelProvider: ModelProviderInterface,
-    val IODispatcher: CoroutineDispatcher,
+    private val modelProvider: ModelProviderInterface,
+    private val ioDispatcher: CoroutineDispatcher,
     dispatcherProvider: DispatcherProvider,
     savedStateHandle: SavedStateHandle,
 ) :
@@ -30,6 +33,10 @@ class DownloadCatalogViewModel @Inject constructor(
         get() = "DownloadCatalogViewModel"
 
     private val mutableIsDownloadComplete = MutableLiveData<Boolean>()
+
+    /**
+     * Observable that emits an event when the catalog has been downloaded.
+     */
     val observableIsDownloadComplete: LiveData<Boolean> = mutableIsDownloadComplete
 
     init {
@@ -42,6 +49,9 @@ class DownloadCatalogViewModel @Inject constructor(
         modelProvider.deregisterForCatalogEvents(this)
     }
 
+    /**
+     * Return true if the catalog is downloaded and valid. False otherwise.
+     */
     fun isCatalogReady(): Boolean {
         logI("DownloadCatalogViewModel", "isCatalogReady")
         val unixTime = System.currentTimeMillis()
@@ -50,6 +60,9 @@ class DownloadCatalogViewModel @Inject constructor(
         return isReady
     }
 
+    /**
+     * Function that will try to download the catalog if needed.
+     */
     fun downloadCatalog() {
         logI("DownloadCatalogViewModel", "downloadCatalog")
         val unixTime = System.currentTimeMillis()
@@ -63,7 +76,7 @@ class DownloadCatalogViewModel @Inject constructor(
         }
     }
 
-    private suspend fun downloadCatalogOnBackground() = withContext(IODispatcher) {
+    private suspend fun downloadCatalogOnBackground() = withContext(ioDispatcher) {
         val unixTime = System.currentTimeMillis()
         ioScope.launch {
             modelProvider.downloadCatalog(unixTime)

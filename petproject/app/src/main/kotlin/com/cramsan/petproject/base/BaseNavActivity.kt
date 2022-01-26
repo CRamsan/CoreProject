@@ -11,6 +11,9 @@ import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.petproject.R
 import com.google.android.material.appbar.MaterialToolbar
 
+/**
+ * Activity that extends [BaseActivity] by automatically setting up the nav controller.
+ */
 abstract class BaseNavActivity<T : BaseViewModel> : BaseActivity<T>() {
 
     @CallSuper

@@ -24,6 +24,9 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.databinding.FragmentPlantDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ *
+ */
 @AndroidEntryPoint
 class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, FragmentPlantDetailsBinding>() {
 
@@ -35,7 +38,7 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
     override val logTag: String
         get() = "PlantDetailsFragment"
 
-    val args: PlantDetailsFragmentArgs by navArgs()
+    private val args: PlantDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -114,10 +117,5 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
         }
 
         viewModel.reloadPlant(animalType, plantId)
-    }
-
-    companion object {
-        const val PLANT_ID = "plantId"
-        const val ANIMAL_TYPE = "animalType"
     }
 }

@@ -2,6 +2,7 @@ package com.cramsan.petproject.plantdetails
 
 import android.app.Application
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
@@ -21,6 +22,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * ViewModel that manages the plant details page.
+ */
 @HiltViewModel
 class PlantDetailsViewModel @Inject constructor(
     application: Application,
@@ -33,15 +37,46 @@ class PlantDetailsViewModel @Inject constructor(
         get() = "PlantDetailsViewModel"
 
     // State
+
+    /**
+     * Observable that represents the plant name.
+     */
     val observablePlantName = MutableLiveData<String>()
+    /**
+     * Observable that represents the scientific name.
+     */
     val observablePlantScientificName = MutableLiveData<String>()
+    /**
+     * Observable that represents the plant family.
+     */
     val observablePlantFamily = MutableLiveData<String>()
+    /**
+     * Observable that represents the plant image as a URL.
+     */
     val observablePlantImageSource = MutableLiveData<String>()
+    /**
+     * Observable that represents the plant name common names.
+     */
     val observablePlantCommonNames = MutableLiveData<String>()
+    /**
+     * Observable that represents the plant description.
+     */
     val observablePlantDescription = MutableLiveData<String>()
+    /**
+     * Observable that represents the URL to the source.
+     */
     val observableSource = MutableLiveData<String>()
+    /**
+     * Observable that represents the text for danger.
+     */
     val observableDangerousText = MutableLiveData<Int>(R.string.string_empty)
+    /**
+     * Observable that represents the color to represent the danger.
+     */
     val observableDangerousColor = MutableLiveData<Int>(R.color.colorUndetermined)
+    /**
+     * Observable that represents the visibility of the common names.
+     */
     val observablePlantCommonNamesVisibility =
         Transformations.map(observablePlantCommonNames) { commonName ->
             if (commonName.isEmpty()) {
@@ -54,14 +89,23 @@ class PlantDetailsViewModel @Inject constructor(
     // Events
     private val observableOpenSourceLink = LiveEvent<StringEvent>()
 
-    fun observableOpenSourceLink() = observableOpenSourceLink
+    /**
+     * Observable that emits a URL. A fragment/activity is expected to observe this URL and handle it.
+     */
+    fun observableOpenSourceLink(): LiveData<StringEvent> = observableOpenSourceLink
 
+    /**
+     * Callback for when the user taps on the source link with the intent to open it.
+     */
     fun openSourceLink(@Suppress("UNUSED_PARAMETER")view: View) {
         observableSource.value?.let {
             observableOpenSourceLink.value = StringEvent(it)
         }
     }
 
+    /**
+     * Load the information for the plant with id [plantId] and for animal [animalType].
+     */
     fun reloadPlant(animalType: AnimalType, plantId: Int) {
         logI("PlantDetailsViewModel", "reloadPlant")
         viewModelScope.launch {
@@ -69,6 +113,7 @@ class PlantDetailsViewModel @Inject constructor(
         }
     }
 
+    @Suppress("ComplexMethod")
     private suspend fun loadPlant(animalType: AnimalType, plantId: Int) =
         withContext(Dispatchers.IO) {
             val plant = modelProvider.getPlant(animalType, plantId, "en")

@@ -12,7 +12,11 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 import javax.inject.Named
 
+/**
+ * PetProject application.
+ */
 @HiltAndroidApp
+@Suppress("UndocumentedPublicProperty")
 class PetProjectApplication : Application() {
 
     @Inject
@@ -33,16 +37,10 @@ class PetProjectApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        internalInstance = this
         eventLogger.log(Severity.INFO, "PetProjectApplication", "onCreate called")
         AppCenter.start(this, appCenterId)
         crashHandler.initialize()
         userEvents.initialize()
         // syncManager.startWork()
-    }
-
-    companion object {
-        private lateinit var internalInstance: PetProjectApplication
-        fun getInstance(): PetProjectApplication = internalInstance
     }
 }

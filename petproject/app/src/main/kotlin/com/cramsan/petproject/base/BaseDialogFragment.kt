@@ -9,24 +9,31 @@ import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import com.cramsan.framework.core.BaseActivity
+import com.cramsan.framework.core.BaseFragment
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.userevents.UserEventsInterface
 import javax.inject.Inject
 
+/**
+ * Base [DialogFragment] that provides basic wiring, similar to [BaseActivity] or [BaseFragment].
+ */
 abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : DialogFragment() {
 
     @Inject
+    @Suppress("UndocumentedPublicProperty")
     lateinit var eventLogger: EventLoggerInterface
 
     @Inject
+    @Suppress("UndocumentedPublicProperty")
     lateinit var userEvents: UserEventsInterface
 
-    abstract val logTag: String
+    protected abstract val logTag: String
     protected lateinit var viewModel: T
     protected lateinit var dataBinding: U
-    abstract val contentViewLayout: Int
+    protected abstract val contentViewLayout: Int
 
     @CallSuper
     override fun onAttach(context: Context) {

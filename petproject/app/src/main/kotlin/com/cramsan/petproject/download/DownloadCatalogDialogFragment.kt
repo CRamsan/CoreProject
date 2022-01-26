@@ -9,6 +9,9 @@ import com.cramsan.petproject.base.BaseDialogFragment
 import com.cramsan.petproject.databinding.FragmentDownloadDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Dialog fragment that appears when the catalog is being downloaded.
+ */
 @AndroidEntryPoint
 class DownloadCatalogDialogFragment : BaseDialogFragment<DownloadCatalogViewModel, FragmentDownloadDialogBinding>() {
     override val contentViewLayout: Int

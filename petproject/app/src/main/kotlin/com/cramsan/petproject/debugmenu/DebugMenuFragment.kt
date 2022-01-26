@@ -7,10 +7,13 @@ import androidx.preference.PreferenceFragmentCompat
 import com.cramsan.petproject.R
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Debug menu screen. This screen will only be accessible on debug builds.
+ */
 @AndroidEntryPoint
 class DebugMenuFragment : PreferenceFragmentCompat() {
 
-    lateinit var viewModel: DebugMenuViewModel
+    private lateinit var viewModel: DebugMenuViewModel
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val model: DebugMenuViewModel by viewModels()

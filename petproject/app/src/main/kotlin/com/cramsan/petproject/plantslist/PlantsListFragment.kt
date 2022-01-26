@@ -35,7 +35,7 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
         get() = R.layout.fragment_plants_list
     override val logTag: String
         get() = "PlantsListFragment"
-    val args: PlantsListFragmentArgs by navArgs()
+    private val args: PlantsListFragmentArgs by navArgs()
 
     private var plantsAdapter: PlantsRecyclerViewAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
@@ -54,6 +54,7 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
         animalType = animalTypeArg
     }
 
+    @Suppress("LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -188,7 +189,7 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
     }
 
     companion object {
-        const val ANIMAL_TYPE = "animalType"
-        const val SCROLL_POS = "scrollPosition"
+        private const val ANIMAL_TYPE = "animalType"
+        private const val SCROLL_POS = "scrollPosition"
     }
 }

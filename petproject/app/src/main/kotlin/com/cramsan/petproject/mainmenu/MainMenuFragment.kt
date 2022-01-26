@@ -26,6 +26,9 @@ import com.cramsan.petproject.plantslist.PlantsListFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Fragment that manages the main menu.
+ */
 @AndroidEntryPoint
 class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, FragmentMainMenuBinding>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
@@ -202,5 +205,9 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
             logD("MainMenuActivity", "Action item not handled")
             super.onOptionsItemSelected(item)
         }
+    }
+
+    companion object {
+        private const val SCROLL_POS = "scrollPosition"
     }
 }

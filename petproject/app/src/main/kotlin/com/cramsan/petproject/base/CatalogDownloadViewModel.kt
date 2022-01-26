@@ -18,10 +18,13 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * Base class for ViewModels that need to implement downloading the catalog.
+ */
 abstract class CatalogDownloadViewModel(
     application: Application,
     dispatcherProvider: DispatcherProvider,
-    val modelProvider: ModelProviderInterface,
+    protected val modelProvider: ModelProviderInterface,
     savedStateHandle: SavedStateHandle,
 ) :
     BaseViewModel(application, dispatcherProvider, savedStateHandle),
@@ -38,9 +41,24 @@ abstract class CatalogDownloadViewModel(
     @Suppress("DEPRECATION")
     protected val observableStartDownload = LiveEvent<SimpleEvent>()
 
+    /**
+     * Observable the represents the visibility status of a view or dialog.
+     */
     fun observableDownloadingVisibility(): LiveData<Int> = observableDownloadingLoadingVisibility
+
+    /**
+     * Observable that emits an event to notify when the catalog data has been downloaded.
+     */
     fun observableShowDataDownloaded(): LiveData<SimpleEvent> = observableShowDataDownloaded
+
+    /**
+     * Observable that emits an event to notify when the catalog data is being downloaded.
+     */
     fun observableShowIsDownloadingData(): LiveData<SimpleEvent> = observableShowIsDownloadingData
+
+    /**
+     * Observable that emits an event to notify when the catalog data is starting to download.
+     */
     fun observableStartDownload(): LiveData<SimpleEvent> = observableStartDownload
 
     private var inDownloadMode = false
@@ -50,6 +68,10 @@ abstract class CatalogDownloadViewModel(
         modelProvider.registerForCatalogEvents(this)
     }
 
+    /**
+     * Call this function to start a download of the catalog if it is needed.
+     * If the local cache is valid, then no download operation will need to happen.
+     */
     open fun tryStartDownload() {
         if (hasStarted) {
             return
@@ -84,6 +106,9 @@ abstract class CatalogDownloadViewModel(
         }
     }
 
+    /**
+     * Return true if the catalog is downloaded and valid. False otherwise.
+     */
     fun isCatalogReady(): Boolean {
         logI("AllPlantListViewModel", "isCatalogReady")
         val unixTime = System.currentTimeMillis()

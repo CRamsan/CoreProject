@@ -9,11 +9,15 @@ import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
+/**
+ * Worker that tries to sync on the background.
+ * TODO: This does not work.
+ */
 class SyncWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
     @Inject
-    lateinit var modelProvider: ModelProviderInterface
+    private lateinit var modelProvider: ModelProviderInterface
 
     override suspend fun doWork(): Result = coroutineScope {
         logI("SyncWorker", "Starting to sync")

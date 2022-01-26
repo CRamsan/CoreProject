@@ -58,8 +58,12 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Named
 import javax.inject.Singleton
 
+/**
+ * Module for dependency injection.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
+@Suppress("TooManyFunctions", "UndocumentedPublicFunction")
 object PetProjectApplicationModule {
 
     @Provides
@@ -240,5 +244,8 @@ object PetProjectApplicationModule {
     @Named(APP_CENTER_ID)
     fun provideAppCenterId(): String = BuildConfig.APP_CENTER_ID
 
+    /**
+     * Identifier for the App Center Id.
+     */
     const val APP_CENTER_ID = "APP_CENTER_ID"
 }

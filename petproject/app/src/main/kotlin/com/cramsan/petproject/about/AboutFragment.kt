@@ -9,6 +9,9 @@ import com.cramsan.framework.core.NoopViewModel
 import com.cramsan.petproject.R
 import com.cramsan.petproject.databinding.FragmentAboutBinding
 
+/**
+ * Represents the About screen.
+ */
 class AboutFragment : BaseDatabindingFragment<NoopViewModel, FragmentAboutBinding>() {
 
     override val contentViewLayout: Int

@@ -13,6 +13,9 @@ import com.cramsan.petproject.base.BaseDialogFragment
 import com.cramsan.petproject.databinding.FragmentPlantFeedbackBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Fragment that manages the Feedback screen.
+ */
 @AndroidEntryPoint
 class PlantFeedbackFragment : BaseDialogFragment<PlantFeedbackViewModel, FragmentPlantFeedbackBinding>() {
 
@@ -24,7 +27,7 @@ class PlantFeedbackFragment : BaseDialogFragment<PlantFeedbackViewModel, Fragmen
     override val contentViewLayout: Int
         get() = R.layout.fragment_plant_feedback
 
-    val args: PlantFeedbackFragmentArgs by navArgs()
+    private val args: PlantFeedbackFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,10 +51,5 @@ class PlantFeedbackFragment : BaseDialogFragment<PlantFeedbackViewModel, Fragmen
     private fun closeDialog() {
         val action = PlantFeedbackFragmentDirections.actionPlantFeedbackFragmentPop()
         findNavController().navigate(action)
-    }
-
-    companion object {
-        const val ANIMAL_TYPE = "animalType"
-        const val PLANT_ID = "plantId"
     }
 }

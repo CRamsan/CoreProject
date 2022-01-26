@@ -14,11 +14,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for the [DebugMenuFragment].
+ */
 @HiltViewModel
 class DebugMenuViewModel @Inject constructor(
     application: Application,
     dispatcherProvider: DispatcherProvider,
-    val modelProvider: ModelProviderInterface,
+    private val modelProvider: ModelProviderInterface,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
@@ -36,6 +39,9 @@ class DebugMenuViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Stops the current activity.
+     */
     fun killApp(activity: Activity) {
         logI(logTag, "KillApp")
         activity.finishAffinity()

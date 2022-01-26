@@ -11,6 +11,9 @@ import com.cramsan.petproject.base.BaseDialogFragment
 import com.cramsan.petproject.databinding.FragmentPlantSuggestionBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Fragment that manages the suggestion screen.
+ */
 @AndroidEntryPoint
 class PlantSuggestionFragment : BaseDialogFragment<PlantSuggestionViewModel, FragmentPlantSuggestionBinding>() {
 
@@ -40,9 +43,5 @@ class PlantSuggestionFragment : BaseDialogFragment<PlantSuggestionViewModel, Fra
     private fun closeDialog() {
         val action = PlantSuggestionFragmentDirections.actionPlantSuggestionFragmentPop()
         findNavController().navigate(action)
-    }
-
-    companion object {
-        const val ANIMAL_TYPE = "animalType"
     }
 }

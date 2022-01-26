@@ -8,7 +8,10 @@ import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DailySyncManager @Inject constructor(val context: Context) : ScheduledSyncManager {
+/**
+ * Implementation of [ScheduledSyncManager].
+ */
+class DailySyncManager @Inject constructor(private val context: Context) : ScheduledSyncManager {
 
     override fun startWork() {
         val constraints = Constraints.Builder()

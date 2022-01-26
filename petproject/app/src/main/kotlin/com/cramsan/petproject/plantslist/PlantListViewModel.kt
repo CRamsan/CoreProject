@@ -23,6 +23,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * ViewModel that manages the plant-list screen.
+ */
 @HiltViewModel
 class PlantListViewModel @Inject constructor(
     application: Application,
@@ -40,11 +43,21 @@ class PlantListViewModel @Inject constructor(
     private val observableLoadingVisibility = MutableLiveData<Int>(View.GONE)
     private val observablePlantListVisibility = MutableLiveData<Int>(View.GONE)
 
+    /**
+     * Observable value for the visibility of the loading view.
+     */
     fun observableLoadingVisibility(): LiveData<Int> = observableLoadingVisibility
+    /**
+     * Observable value for the visibility of the list of plants.
+     */
     fun observablePlantListVisibility(): LiveData<Int> = observablePlantListVisibility
+    /**
+     * Observable that holds the list of plants to display.
+     */
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
-    fun observableAnimalType(): LiveData<AnimalType> = observableAnimalType
-
+    /**
+     * Allow for the fragment to set the value of the search query.
+     */
     var queryString = MutableStateFlow("")
 
     init {
@@ -59,6 +72,9 @@ class PlantListViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Set the [animalType] that will be used for this screen.
+     */
     fun setAnimalType(animalType: AnimalType) {
         observableAnimalType.value = animalType
         viewModelScope.launch {
@@ -66,6 +82,9 @@ class PlantListViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Set the loading mode of this ViewModel.
+     */
     fun setLoadingMode(isSearchMode: Boolean) {
         if (isSearchMode) {
             observableLoadingVisibility.value = View.VISIBLE

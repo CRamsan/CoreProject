@@ -13,6 +13,9 @@ import com.cramsan.petproject.appcore.model.AnimalType
 import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.model.ToxicityValue
 
+/**
+ * Adapter that displays the list of all Plants.
+ */
 class AllPlantsRecyclerViewAdapter(
     private val mListener: OnListFragmentAdapterListener?,
     private val animalType: AnimalType,
@@ -32,6 +35,9 @@ class AllPlantsRecyclerViewAdapter(
         }
     }
 
+    /**
+     * Set the content of this adapter.
+     */
     fun updateValues(values: List<PresentablePlant>) {
         logV("AllPlantsRecyclerViewAdapter", "updateValues")
         mValues = values
@@ -85,11 +91,34 @@ class AllPlantsRecyclerViewAdapter(
 
     override fun getItemCount(): Int = mValues.size
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    /**
+     * ViewHolder that keeps a reference to the view that will be recycled.
+     */
+    inner class ViewHolder(
+        /**
+         * View that is tied to this holder.
+         */
+        val mView: View
+    ) : RecyclerView.ViewHolder(mView) {
+        /**
+         * Reference to the header text.
+         */
         val mViewHeader: TextView = mView.findViewById(R.id.plant_list_view_header)
+        /**
+         * Reference to the subheader text.
+         */
         val mViewSubHeader: TextView = mView.findViewById(R.id.plant_list_view_sub_header)
+        /**
+         * Reference to the thumbnail of the cat.
+         */
         val mViewIconCat: ImageView = mView.findViewById(R.id.plant_list_view_icon_cat)
+        /**
+         * Reference to the thumbnail of the dog.
+         */
         val mViewIconDog: ImageView = mView.findViewById(R.id.plant_list_view_icon_dog)
+        /**
+         * Reference to the container layout.
+         */
         val mContainerView: View = mView.findViewById(R.id.plant_list_view_layout)
 
         override fun toString(): String {
@@ -97,7 +126,13 @@ class AllPlantsRecyclerViewAdapter(
         }
     }
 
+    /**
+     * Listener for events from [AllPlantsRecyclerViewAdapter].
+     */
     interface OnListFragmentAdapterListener {
+        /**
+         * New item selected.
+         */
         fun onNewItemSelected(plantId: Int, animalType: AnimalType)
     }
 }

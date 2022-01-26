@@ -25,6 +25,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * ViewModel that manages the list of all plants.
+ */
 @HiltViewModel
 class AllPlantListViewModel @Inject constructor(
     application: Application,
@@ -47,13 +50,39 @@ class AllPlantListViewModel @Inject constructor(
     private val observableNextActivityCat = LiveEvent<SimpleEvent>()
     private val observableNextActivityDog = LiveEvent<SimpleEvent>()
 
+    /**
+     * Observable value for the visibility of the loading view.
+     */
     fun observableLoadingVisibility(): LiveData<Int> = observableLoadingVisibility
+
+    /**
+     * Observable value for the visibility of the list of plants.
+     */
     fun observablePlantListVisibility(): LiveData<Int> = observablePlantListVisibility
+
+    /**
+     * Observable value for the visibility of the main menu.
+     */
     fun observableMenuVisibility(): LiveData<Int> = observableMenuVisibility
+
+    /**
+     * Observable list of all Plants.
+     */
     fun observablePlants(): LiveData<List<PresentablePlant>> = observablePlants
+
+    /**
+     * Observable event to navigate to the Cat page.
+     */
     fun observableNextActivityCat(): LiveData<SimpleEvent> = observableNextActivityCat
+
+    /**
+     * Observable event to navigate to the Dog page.
+     */
     fun observableNextActivityDog(): LiveData<SimpleEvent> = observableNextActivityDog
 
+    /**
+     * Allow for the fragment to set the value of the search query.
+     */
     var queryString = MutableStateFlow("")
 
     init {
@@ -63,10 +92,16 @@ class AllPlantListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Navigate to the Cat page of plant list.
+     */
     fun goToCats(@Suppress("UNUSED_PARAMETER") view: View) {
         goToNextActivity(AnimalType.CAT)
     }
 
+    /**
+     * Navigate to the Dog page of plant list.
+     */
     fun goToDogs(@Suppress("UNUSED_PARAMETER") view: View) {
         goToNextActivity(AnimalType.DOG)
     }
@@ -98,6 +133,12 @@ class AllPlantListViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             modelProvider.getPlantsWithToxicity(AnimalType.ALL, "en")
         }
+        pingAPI()
+        super.tryStartDownload()
+    }
+
+    @Suppress("SwallowedException")
+    private fun pingAPI() {
         viewModelScope.launch(Dispatchers.IO) {
             // Hit the plant API to warm up the endpoint
             try {
@@ -106,7 +147,6 @@ class AllPlantListViewModel @Inject constructor(
                 // This failure is expected. We can safely ignore it.
             }
         }
-        super.tryStartDownload()
     }
 
     private fun searchPlants(query: String) {
