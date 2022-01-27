@@ -8,10 +8,12 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricType
 import com.cramsan.framework.metrics.MetricsInterface
+import com.cramsan.framework.remoteconfig.RemoteConfig
 import com.cramsan.framework.thread.ThreadUtilInterface
 import com.cramsan.framework.userevents.UserEventsInterface
 import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.metric.ApplicationNamespace
+import com.cramsan.ps2link.remoteconfig.RemoteConfigData
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.crashes.Crashes
 import dagger.hilt.android.HiltAndroidApp
@@ -19,6 +21,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltAndroidApp
+@Suppress("UndocumentedPublicProperty")
 class ApplicationPS2Link : Application() {
 
     @Inject
@@ -46,6 +49,9 @@ class ApplicationPS2Link : Application() {
     @Inject
     lateinit var metrics: MetricsInterface
 
+    @Inject
+    lateinit var remoteConfig: RemoteConfig<RemoteConfigData>
+
     /*
      * (non-Javadoc)
      *
@@ -56,7 +62,6 @@ class ApplicationPS2Link : Application() {
         eventLogger.log(Severity.INFO, TAG, "onCreate called")
         AppCenter.start(this, appCenterId)
         crashHandler.initialize()
-        userEvents.initialize()
         Crashes.hasCrashedInLastSession().thenAccept {
             val eventType = if (it) {
                 MetricType.FAILURE
@@ -65,6 +70,8 @@ class ApplicationPS2Link : Application() {
             }
             metrics.record(eventType, ApplicationNamespace, ApplicationNamespace.Event.LAUNCH.name)
         }
+        remoteConfig.downloadConfigPayloadAsync()
+        userEvents.initialize()
         logEvent(TAG, "Application Started")
     }
 

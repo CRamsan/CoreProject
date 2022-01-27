@@ -11,11 +11,3 @@ data class RemoteConfigData(
 val remoteConfigJson = Json {
     ignoreUnknownKeys = true
 }
-
-val remoteConfigPayload = RemoteConfigData(
-    listOf(
-        "planetside2",
-        "PS2DailyDeals",
-        "WrelPlays",
-    )
-)

@@ -4,9 +4,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.promise
 import kotlin.test.BeforeTest
 
-actual open class TestBase {
+actual abstract class TestBase {
 
-    actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit): dynamic = testCoroutineScope.promise { block() }
+    actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit): dynamic =
+        testCoroutineScope.promise { block() }
 
     /**
      * Reference to the Scope used to run the tests. This scope can be injected into
@@ -16,5 +17,8 @@ actual open class TestBase {
         get() = TODO("Not yet implemented")
 
     @BeforeTest
-    actual open fun setupTest() { }
+    fun internalSetupTest() {
+    }
+
+    actual abstract fun setupTest()
 }

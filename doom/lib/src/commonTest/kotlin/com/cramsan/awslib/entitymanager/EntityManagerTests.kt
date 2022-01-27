@@ -21,7 +21,6 @@ import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
-import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -67,8 +66,7 @@ class EntityManagerTests : TestBase() {
         }
     }
 
-    @BeforeTest
-    fun prepareTest() {
+    override fun setupTest() {
         log = mockk(relaxed = true)
         aiRepo = mockk()
         EventLogger.setInstance(log)

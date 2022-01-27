@@ -4,7 +4,6 @@ import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.appcore.network.process
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.twitter.TwitterClient
-import com.cramsan.ps2link.appcore.twitter.TwitterUser
 import com.cramsan.ps2link.core.models.PS2Tweet
 import twitter4j.Twitter
 import twitter4j.TwitterException
@@ -31,8 +30,8 @@ class TwitterClientImpl(
      * @throws TwitterException this exception will ocur when there is a problem contacting
      * the twiter API
      */
-    override fun getTweets(users: List<TwitterUser>): PS2HttpResponse<List<PS2Tweet>> {
-        return retrieveTweets(users.map { it.handle })
+    override fun getTweets(users: List<String>): PS2HttpResponse<List<PS2Tweet>> {
+        return retrieveTweets(users)
     }
 
     /**
@@ -41,8 +40,8 @@ class TwitterClientImpl(
      * @throws TwitterException this exception will ocur when there is a problem contacting
      * the twiter API
      */
-    override fun getTweets(user: TwitterUser): PS2HttpResponse<List<PS2Tweet>> {
-        val twitterUser = listOf(user.handle)
+    override fun getTweets(user: String): PS2HttpResponse<List<PS2Tweet>> {
+        val twitterUser = listOf(user)
         return retrieveTweets(twitterUser)
     }
 

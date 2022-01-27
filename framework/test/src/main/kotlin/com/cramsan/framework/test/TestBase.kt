@@ -9,7 +9,7 @@ import org.junit.Rule
 import kotlin.test.BeforeTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
-actual open class TestBase {
+actual abstract class TestBase {
     // This is needed so that we can run APIs that interface with the different Android Loopers.
     // As a result all tasks that are dispatched to another looper, are executed instantaneously.
     // A prime example is MutableLiveData.postValue.
@@ -23,9 +23,12 @@ actual open class TestBase {
     actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) = testCoroutineRule.runBlockingTest { block() }
 
     @BeforeTest
-    actual open fun setupTest() {
+    fun internalSetupTest() {
         MockKAnnotations.init(this)
+        setupTest()
     }
+
+    actual abstract fun setupTest()
 
     /**
      * Reference to the Scope used to run the tests. This scope can be injected into

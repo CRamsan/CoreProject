@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
-import com.cramsan.ps2link.appcore.twitter.TwitterUser
 import com.cramsan.ps2link.core.models.PS2Tweet
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
@@ -28,9 +27,10 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import org.ocpsoft.prettytime.PrettyTime
 
+@Suppress("FunctionNaming", "UndocumentedPublicFunction")
 @Composable
 fun TweetListCompose(
-    users: Map<TwitterUser, Boolean>,
+    users: Map<String, Boolean>,
     tweetItems: List<PS2Tweet>,
     isLoading: Boolean,
     isError: Boolean,
@@ -58,7 +58,7 @@ fun TweetListCompose(
                                 Text(
                                     text = stringResource(
                                         id = R.string.title_twitter_handle,
-                                        formatArgs = arrayOf(pair.first.handle)
+                                        formatArgs = arrayOf(pair.first)
                                     )
                                 )
                             }
@@ -90,7 +90,8 @@ fun TweetListCompose(
 
 @MainThread
 interface TweetListComposeEventHandler {
-    fun onTwitterUserClicked(twitterUser: TwitterUser)
+    @Suppress("UndocumentedPublicFunction")
+    fun onTwitterUserClicked(twitterUser: String)
     fun onRefreshRequested()
 }
 
@@ -105,7 +106,7 @@ fun ServerListPreview() {
             isError = false,
             prettyTime = PrettyTime(),
             eventHandler = object : TweetListComposeEventHandler {
-                override fun onTwitterUserClicked(twitterUser: TwitterUser) = Unit
+                override fun onTwitterUserClicked(twitterUser: String) = Unit
                 override fun onRefreshRequested() = Unit
             }
         )

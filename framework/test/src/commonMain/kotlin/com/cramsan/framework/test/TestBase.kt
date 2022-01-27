@@ -1,13 +1,12 @@
 package com.cramsan.framework.test
 
 import kotlinx.coroutines.CoroutineScope
-import kotlin.test.BeforeTest
 
 /**
  * Base class that should handle running unit tests. This class will be implemented on each platform
  * to provide the right approach for each one of them.
  */
-expect open class TestBase() {
+expect abstract class TestBase() {
 
     /**
      * Reference to the Scope used to run the tests. This scope can be injected into
@@ -24,6 +23,5 @@ expect open class TestBase() {
      */
     fun runBlockingTest(block: suspend CoroutineScope.() -> Unit)
 
-    @BeforeTest
-    open fun setupTest()
+    abstract fun setupTest()
 }

@@ -14,6 +14,8 @@ import kotlin.test.assertEquals
  */
 class BugTest : TestBase() {
 
+    override fun setupTest() { }
+
     @Test
     fun `Test for LiveData to be update in scope launch`() = runBlockingTest {
         val viewModel = TestViewModel(testCoroutineScope)

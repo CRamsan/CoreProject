@@ -8,7 +8,6 @@ import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -17,8 +16,7 @@ class TransitionStackTests : TestBase() {
 
     private lateinit var transitionStack: TransitionStack
 
-    @BeforeTest
-    fun prepareTest() {
+    override fun setupTest() {
         val log: EventLoggerInterface = mockk(relaxed = true)
         EventLogger.setInstance(log)
         val transitionHandler: TransitionStack.TransitionHandler = mockk(relaxed = true)

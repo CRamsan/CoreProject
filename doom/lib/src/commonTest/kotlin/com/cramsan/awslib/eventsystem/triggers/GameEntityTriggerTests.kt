@@ -24,7 +24,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -37,8 +36,7 @@ class GameEntityTriggerTests : TestBase() {
     private lateinit var halt: HaltUtil
     private lateinit var aiRepo: AIRepo
 
-    @BeforeTest
-    fun prepareTest() {
+    override fun setupTest() {
         log = mockk(relaxed = true)
         EventLogger.setInstance(log)
         assert = mockk(relaxed = true)

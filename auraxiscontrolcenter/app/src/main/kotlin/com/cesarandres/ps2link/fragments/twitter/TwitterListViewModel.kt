@@ -9,7 +9,6 @@ import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
-import com.cramsan.ps2link.appcore.twitter.TwitterUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -56,7 +55,7 @@ class TwitterListViewModel @Inject constructor(
         onRefreshRequested()
     }
 
-    override fun onTwitterUserClicked(twitterUser: TwitterUser) {
+    override fun onTwitterUserClicked(twitterUser: String) {
         loadingStarted()
         ioScope.launch {
             val following = twitterRepository.getTwitterUsers()[twitterUser] ?: true

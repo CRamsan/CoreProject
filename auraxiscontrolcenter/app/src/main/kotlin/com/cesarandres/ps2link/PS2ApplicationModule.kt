@@ -7,6 +7,7 @@ import com.cesarandres.ps2link.PS2ApplicationModuleConstants.APP_SCOPE
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.AWS_ACCESS_KEY
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.AWS_SECRET_KEY
 import com.cesarandres.ps2link.PS2ApplicationModuleConstants.CENSUS_SERVICE_ID
+import com.cesarandres.ps2link.PS2ApplicationModuleConstants.REMOTE_CONFIG_ENDPOINT
 import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.appcore.twitter.TwitterClientImpl
 import com.cramsan.appcore.twitter.TwitterModuleConstants.ACCESS_TOKEN
@@ -44,6 +45,8 @@ import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
 import com.cramsan.framework.preferences.implementation.PreferencesAndroid
 import com.cramsan.framework.preferences.implementation.PreferencesImpl
+import com.cramsan.framework.remoteconfig.RemoteConfig
+import com.cramsan.framework.remoteconfig.implementation.RemoteConfigImpl
 import com.cramsan.framework.thread.ThreadUtil
 import com.cramsan.framework.thread.ThreadUtilDelegate
 import com.cramsan.framework.thread.ThreadUtilInterface
@@ -70,6 +73,8 @@ import com.cramsan.ps2link.appcore.repository.TwitterRepositoryImpl
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
 import com.cramsan.ps2link.appcore.twitter.TwitterClient
+import com.cramsan.ps2link.remoteconfig.RemoteConfigData
+import com.cramsan.ps2link.remoteconfig.defaultConfigPayload
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import dagger.Module
@@ -81,12 +86,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.datetime.Clock
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
 import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
+@Suppress("UndocumentedPublicFunction")
 @InstallIn(SingletonComponent::class)
 object PS2ApplicationModule {
 
@@ -358,9 +366,9 @@ object PS2ApplicationModule {
     @Singleton
     fun provideTwitterRepository(
         twitterClient: TwitterClient,
-        preferences: Preferences,
         dispatcherProvider: DispatcherProvider,
-    ): TwitterRepository = TwitterRepositoryImpl(twitterClient, preferences, dispatcherProvider)
+        remoteConfig: RemoteConfig<RemoteConfigData>,
+    ): TwitterRepository = TwitterRepositoryImpl(twitterClient, remoteConfig, dispatcherProvider)
 
     @Provides
     fun provideResources(@ApplicationContext appContext: Context): Resources = appContext.resources
@@ -369,4 +377,31 @@ object PS2ApplicationModule {
     @Singleton
     fun provideObjectDataSource(@ApplicationContext appContext: Context) =
         ObjectDataSource(appContext)
+
+    @Provides
+    @Named(REMOTE_CONFIG_ENDPOINT)
+    fun provideRemoteConfigEndpoint(@ApplicationContext context: Context) = context.resources.getString(R.string.remote_config_url)
+
+    @OptIn(InternalSerializationApi::class)
+    @Provides
+    @Singleton
+    fun provideRemoteConfig(
+        @Named(REMOTE_CONFIG_ENDPOINT) remoteConfigEndpoint: String,
+        http: io.ktor.client.HttpClient,
+        json: Json,
+        threadUtil: ThreadUtilInterface,
+        eventLogger: EventLoggerInterface,
+        dispatcherProvider: DispatcherProvider,
+        @Named(APP_SCOPE) scope: CoroutineScope,
+    ): RemoteConfig<RemoteConfigData> = RemoteConfigImpl(
+        remoteConfigEndpoint,
+        http,
+        json,
+        defaultConfigPayload,
+        RemoteConfigData::class.serializer(),
+        threadUtil,
+        eventLogger,
+        dispatcherProvider,
+        scope,
+    )
 }

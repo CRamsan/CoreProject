@@ -1,0 +1,27 @@
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
+apply plugin: 'kotlinx-serialization'
+
+dependencies {
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework:interfacelib")
+                implementation packages.KtorCore
+                implementation packages.KtorJson
+                implementation packages.KtorSerialization
+                implementation packages.KotlinxSerialization
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
+    }
+}
+
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:test")

@@ -16,7 +16,6 @@ import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -28,8 +27,7 @@ class CellTriggerTests : TestBase() {
     private lateinit var halt: HaltUtil
     private lateinit var aiRepo: AIRepo
 
-    @BeforeTest
-    fun prepareTest() {
+    override fun setupTest() {
         log = mockk(relaxed = true)
         assert = mockk(relaxed = true)
         halt = mockk(relaxed = true)

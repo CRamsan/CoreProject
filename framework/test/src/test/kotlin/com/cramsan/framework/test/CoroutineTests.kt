@@ -1,7 +1,6 @@
 package com.cramsan.framework.test
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -9,8 +8,7 @@ class CoroutineTests : TestBase() {
 
     lateinit var commonCoroutineTests: CommonCoroutineTests
 
-    @BeforeTest
-    fun setUp() {
+    override fun setupTest() {
         commonCoroutineTests = CommonCoroutineTests()
         commonCoroutineTests.setUp(RepositoryImpl())
     }

@@ -14,7 +14,6 @@ import io.mockk.verify
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -30,9 +29,7 @@ class DownloadCatalogViewModelTest : TestBase() {
 
     lateinit var observer: Observer<Boolean>
 
-    @ExperimentalCoroutinesApi
-    @Before
-    fun setUp() {
+    override fun setupTest() {
         application = mockk(relaxed = true)
         modelProvider = mockk(relaxed = true)
         EventLogger.setInstance(mockk(relaxed = true))

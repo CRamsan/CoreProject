@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest
 
-actual open class TestBase {
+actual abstract class TestBase {
 
     actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) = runBlocking { block() }
 
@@ -16,5 +16,7 @@ actual open class TestBase {
         get() = TODO("Not yet implemented")
 
     @BeforeTest
-    actual open fun setupTest() { }
+    fun internalSetupTest() { }
+
+    actual abstract fun setupTest()
 }

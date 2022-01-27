@@ -25,6 +25,8 @@ import kotlin.test.assertEquals
  */
 class AssertUtilCommonTest : TestBase() {
 
+    override fun setupTest() { }
+
     @Test
     fun assertTrueWithHaltEnabled() = runBlockingTest {
         val eventLogger = mockkClass(EventLoggerImpl::class)

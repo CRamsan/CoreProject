@@ -17,7 +17,6 @@ class PreferencesTest : TestBase() {
     lateinit var preferences: Preferences
 
     override fun setupTest() {
-        super.setupTest()
         val preferencesDelegate = MockPreferencesDelegate()
         preferences = PreferencesImpl(preferencesDelegate)
     }

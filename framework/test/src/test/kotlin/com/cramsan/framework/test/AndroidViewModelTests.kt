@@ -2,7 +2,6 @@ package com.cramsan.framework.test
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -19,8 +18,7 @@ class AndroidViewModelTests : TestBase() {
     lateinit var viewModel: AndroidViewModel
     lateinit var repository: Repository
 
-    @BeforeTest
-    fun setUp() {
+    override fun setupTest() {
         repository = RepositoryImpl()
         viewModel = AndroidViewModel(testCoroutineScope, repository)
     }

@@ -8,7 +8,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -20,8 +19,7 @@ class BaseCardManagerViewModelTest : TestBase() {
     @MockK
     lateinit var cardRepository: CardRepository
 
-    @BeforeTest
-    fun setUp() {
+    override fun setupTest() {
         MockKAnnotations.init(this, relaxUnitFun = true)
 
         every { cardRepository.readNightCards() } returns listOf(CARD_HOLDER_1, CARD_HOLDER_2, CARD_HOLDER_3)

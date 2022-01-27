@@ -14,6 +14,8 @@ class CommonCoroutineTests : TestBase() {
     lateinit var viewModel: SimpleViewModel
     lateinit var repository: Repository
 
+    override fun setupTest() { }
+
     fun setUp(repository: Repository) {
         this.repository = repository
         this.viewModel = SimpleViewModel(testCoroutineScope, repository)

@@ -11,7 +11,7 @@ import kotlin.test.BeforeTest
  * between Android and JVM so we can finally use a single file.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-actual open class TestBase {
+actual abstract class TestBase {
 
     @get:Rule
     var testCoroutineRule: TestCoroutineRule = TestCoroutineRule()
@@ -26,7 +26,10 @@ actual open class TestBase {
         get() = testCoroutineRule.testCoroutineScope
 
     @BeforeTest
-    actual open fun setupTest() {
+    fun internalSetupTest() {
         MockKAnnotations.init(this)
+        setupTest()
     }
+
+    actual abstract fun setupTest()
 }
