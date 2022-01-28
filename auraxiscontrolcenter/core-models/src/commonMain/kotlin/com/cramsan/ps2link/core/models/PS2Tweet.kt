@@ -10,4 +10,5 @@ data class PS2Tweet(
     val date: Long,
     val imgUrl: String,
     val id: String,
+    val sourceUrl: String,
 )

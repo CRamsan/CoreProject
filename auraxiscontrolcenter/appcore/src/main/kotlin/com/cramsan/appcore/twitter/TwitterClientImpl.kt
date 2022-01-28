@@ -92,6 +92,7 @@ class TwitterClientImpl(
                             imgUrl = status3.user.biggerProfileImageURLHttps
                             text = status3.text
                         }
+                        val tweetUrl = "https://twitter.com/${status3.user.screenName}/status/${status3.id}"
                         tweetsFound.add(
                             com.cramsan.ps2link.network.models.twitter.PS2Tweet(
                                 java.lang.Long.toString(status3.id),
@@ -99,7 +100,8 @@ class TwitterClientImpl(
                                 status3.createdAt.time,
                                 text,
                                 tag,
-                                imgUrl
+                                imgUrl,
+                                tweetUrl,
                             )
                         )
                     }

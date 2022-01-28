@@ -71,14 +71,15 @@ fun TweetListCompose(
                     isLoading = isLoading,
                     onRefreshRequested = { eventHandler.onRefreshRequested() }
                 ) {
-                    items(tweetItems) {
+                    items(tweetItems) { tweet ->
                         TweetItem(
-                            username = it.user,
-                            handle = it.tag,
-                            content = it.content,
-                            avatarUrl = it.imgUrl,
+                            username = tweet.user,
+                            handle = tweet.tag,
+                            content = tweet.content,
+                            avatarUrl = tweet.imgUrl,
                             prettyTime = prettyTime,
-                            creationTime = it.date,
+                            creationTime = tweet.date,
+                            onClick = { eventHandler.onTweetSelected(tweet) }
                         )
                     }
                 }
@@ -92,6 +93,13 @@ fun TweetListCompose(
 interface TweetListComposeEventHandler {
     @Suppress("UndocumentedPublicFunction")
     fun onTwitterUserClicked(twitterUser: String)
+
+    /**
+     * User has clicked on tweet.
+     */
+    fun onTweetSelected(tweet: PS2Tweet)
+
+
     fun onRefreshRequested()
 }
 
@@ -107,6 +115,7 @@ fun ServerListPreview() {
             prettyTime = PrettyTime(),
             eventHandler = object : TweetListComposeEventHandler {
                 override fun onTwitterUserClicked(twitterUser: String) = Unit
+                override fun onTweetSelected(tweet: PS2Tweet) = Unit
                 override fun onRefreshRequested() = Unit
             }
         )

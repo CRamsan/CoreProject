@@ -195,5 +195,6 @@ fun PS2Tweet.toCoreModel(): com.cramsan.ps2link.core.models.PS2Tweet {
         date = date ?: 0,
         imgUrl = imgUrl ?: "",
         id = id ?: "",
+        sourceUrl = sourceUrl ?: "",
     )
 }

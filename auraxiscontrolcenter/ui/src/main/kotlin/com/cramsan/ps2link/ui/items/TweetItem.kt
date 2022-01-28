@@ -31,9 +31,11 @@ fun TweetItem(
     avatarUrl: String,
     creationTime: Long,
     prettyTime: PrettyTime,
+    onClick: () -> Unit = {},
 ) {
     SlimButton(
-        modifier = modifier
+        modifier = modifier,
+        onClick = onClick,
     ) {
         Column {
             Row {

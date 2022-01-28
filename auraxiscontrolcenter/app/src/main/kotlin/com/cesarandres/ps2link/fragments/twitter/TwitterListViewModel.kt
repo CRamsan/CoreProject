@@ -4,11 +4,14 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
+import com.cesarandres.ps2link.fragments.OpenUrl
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.framework.logging.logW
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
+import com.cramsan.ps2link.core.models.PS2Tweet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -70,5 +73,13 @@ class TwitterListViewModel @Inject constructor(
             // through [getTweetsAsFlow].
             twitterRepository.getTweets()
         }
+    }
+
+    override fun onTweetSelected(tweet: PS2Tweet) {
+        if (tweet.sourceUrl.isBlank()) {
+            logW(logTag, "Source Url is empty and cannot be opened")
+            return
+        }
+        events.value = OpenUrl(tweet.sourceUrl)
     }
 }
