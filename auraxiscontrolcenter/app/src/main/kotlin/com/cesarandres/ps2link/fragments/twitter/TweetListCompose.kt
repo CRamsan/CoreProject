@@ -99,7 +99,6 @@ interface TweetListComposeEventHandler {
      */
     fun onTweetSelected(tweet: PS2Tweet)
 
-
     fun onRefreshRequested()
 }
 

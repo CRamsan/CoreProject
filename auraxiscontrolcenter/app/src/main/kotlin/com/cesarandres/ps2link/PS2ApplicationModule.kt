@@ -22,7 +22,6 @@ import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
-import com.cramsan.framework.crashehandler.implementation.AppCenterErrorCallback
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.HaltUtilDelegate
@@ -40,6 +39,7 @@ import com.cramsan.framework.logging.implementation.LoggerAndroid
 import com.cramsan.framework.metrics.MetricsDelegate
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.framework.metrics.implementation.CloudwatchMetrics
+import com.cramsan.framework.metrics.implementation.MetricsErrorCallback
 import com.cramsan.framework.metrics.implementation.MetricsImpl
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.framework.preferences.PreferencesDelegate
@@ -147,8 +147,18 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideEventLoggerErrorCallbackDelegate(): EventLoggerErrorCallbackDelegate =
-        AppCenterErrorCallback()
+    fun provideEventLoggerErrorCallbackDelegate(
+        metrics: MetricsInterface,
+        eventLogger: EventLoggerInterface,
+        ioDispatcherProvider: DispatcherProvider,
+        @Named(APP_SCOPE)
+        scope: CoroutineScope,
+    ): EventLoggerErrorCallbackDelegate = MetricsErrorCallback(
+        metrics,
+        eventLogger,
+        ioDispatcherProvider,
+        scope,
+    )
 
     @Provides
     @Singleton
@@ -165,7 +175,6 @@ object PS2ApplicationModule {
     @Provides
     @Singleton
     fun provideEventLoggerInterface(
-        eventLoggerErrorCallback: EventLoggerErrorCallback,
         eventLoggerDelegate: EventLoggerDelegate,
     ): EventLoggerInterface {
         val severity: Severity = when (BuildConfig.DEBUG) {
@@ -173,7 +182,7 @@ object PS2ApplicationModule {
             false -> Severity.INFO
         }
         val instance =
-            EventLoggerImpl(severity, eventLoggerErrorCallback, eventLoggerDelegate)
+            EventLoggerImpl(severity, null, eventLoggerDelegate)
         EventLogger.setInstance(instance)
         return EventLogger.singleton
     }

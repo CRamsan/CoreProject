@@ -10,5 +10,8 @@ data class PS2Tweet(
     val date: Long,
     val imgUrl: String,
     val id: String,
+    /**
+     * Url that opens the tweet in the Twitter website.
+     */
     val sourceUrl: String,
 )

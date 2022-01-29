@@ -4,6 +4,7 @@ import android.app.Application
 import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.halt.HaltUtil
+import com.cramsan.framework.logging.EventLoggerErrorCallback
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
 import com.cramsan.framework.metrics.MetricType
@@ -52,6 +53,9 @@ class ApplicationPS2Link : Application() {
     @Inject
     lateinit var remoteConfig: RemoteConfig<RemoteConfigData>
 
+    @Inject
+    lateinit var errorCallback: EventLoggerErrorCallback
+
     /*
      * (non-Javadoc)
      *
@@ -61,6 +65,7 @@ class ApplicationPS2Link : Application() {
         super.onCreate()
         eventLogger.log(Severity.INFO, TAG, "onCreate called")
         AppCenter.start(this, appCenterId)
+        eventLogger.setErrorCallback(errorCallback)
         crashHandler.initialize()
         Crashes.hasCrashedInLastSession().thenAccept {
             val eventType = if (it) {

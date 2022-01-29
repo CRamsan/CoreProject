@@ -12,9 +12,17 @@ import com.cramsan.framework.logging.Severity
  */
 class EventLoggerImpl(
     override val targetSeverity: Severity,
-    override val errorCallback: EventLoggerErrorCallback?,
+    errorCallback: EventLoggerErrorCallback?,
     override val platformDelegate: EventLoggerDelegate
 ) : EventLoggerInterface {
+
+    private var _errorCallback = errorCallback
+    override val errorCallback: EventLoggerErrorCallback?
+        get() = _errorCallback
+
+    override fun setErrorCallback(newErrorCallback: EventLoggerErrorCallback?) {
+        _errorCallback = newErrorCallback
+    }
 
     override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
         if (severity < targetSeverity)

@@ -22,7 +22,11 @@ import com.cramsan.ps2link.ui.widgets.NetworkImage
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 
+/**
+ * Renders a single tweet.
+ */
 @Composable
+@Suppress("FunctionNaming")
 fun TweetItem(
     modifier: Modifier = Modifier,
     username: String,
