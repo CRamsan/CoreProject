@@ -24,10 +24,15 @@ class EventLoggerImpl(
         _errorCallback = newErrorCallback
     }
 
-    override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
+    override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?, ignoreErrorCallback: Boolean) {
         if (severity < targetSeverity)
             return
+
         platformDelegate.log(severity, tag, message, throwable)
+
+        if (ignoreErrorCallback) {
+            return
+        }
         errorCallback?.let {
             if (severity == Severity.WARNING) {
                 it.onWarning(tag, message, throwable)

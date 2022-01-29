@@ -32,8 +32,12 @@ interface EventLoggerInterface {
     /**
      * Log a [message] and [tag]. If the [severity] is less than [targetSeverity], the message is not logged.
      * There is an optional [throwable] that can be logged.
+     *
+     * The caller can pass a [ignoreErrorCallback] if they want to skip the [EventLoggerErrorCallback] for calls with
+     * severity [Severity.ERROR] or [Severity.WARNING]. This is useful when the caller may be in the path of the
+     * [EventLoggerErrorCallback] itself.
      */
-    fun log(severity: Severity, tag: String, message: String, throwable: Throwable? = null)
+    fun log(severity: Severity, tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false)
 
     /**
      * Log a message with [Severity.DEBUG] severity
@@ -53,10 +57,10 @@ interface EventLoggerInterface {
     /**
      * Log a message with [Severity.WARNING] message
      */
-    fun w(tag: String, message: String, throwable: Throwable? = null) = log(Severity.WARNING, tag, message, throwable)
+    fun w(tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false) = log(Severity.WARNING, tag, message, throwable, ignoreErrorCallback)
 
     /**
      * Log a message with [Severity.ERROR] message
      */
-    fun e(tag: String, message: String, throwable: Throwable? = null) = log(Severity.ERROR, tag, message, throwable)
+    fun e(tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false) = log(Severity.ERROR, tag, message, throwable, ignoreErrorCallback)
 }

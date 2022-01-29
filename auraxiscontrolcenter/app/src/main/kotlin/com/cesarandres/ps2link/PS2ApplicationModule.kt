@@ -295,12 +295,14 @@ object PS2ApplicationModule {
         @Named(AWS_ACCESS_KEY) accessKey: String,
         @Named(AWS_SECRET_KEY) secretKey: String,
         dispatcherProvider: DispatcherProvider,
+        eventLogger: EventLoggerInterface,
         @Named(APP_SCOPE) scope: CoroutineScope,
     ): MetricsDelegate {
-        return CloudwatchMetrics(
+        return CloudwatchMetrics.createInstance(
             accessKey,
             secretKey,
             dispatcherProvider,
+            eventLogger,
             scope,
         ).apply {
             initialize()
