@@ -13,4 +13,5 @@ object PS2ApplicationModuleConstants {
     const val AWS_SECRET_KEY = "AWS_SECRET_KEY"
     const val APP_SCOPE = "APP_SCOPE"
     const val REMOTE_CONFIG_ENDPOINT = "REMOTE_CONFIG_ENDPOINT"
+    const val ERROR_CALLBACK_METRICS_IMPL = "ERROR_CALLBACK_METRICS_IMPL"
 }

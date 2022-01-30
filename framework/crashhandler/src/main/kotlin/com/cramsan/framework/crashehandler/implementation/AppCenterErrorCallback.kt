@@ -6,8 +6,12 @@ import com.microsoft.appcenter.crashes.Crashes
 
 /**
  * This class provides a mechanism to log internal errors and warnings to AppCenter.
+ *
+ * An optional [EventLoggerErrorCallbackDelegate] is allowed.
  */
-class AppCenterErrorCallback : EventLoggerErrorCallbackDelegate {
+class AppCenterErrorCallback(
+    private val passthroughDelegate: EventLoggerErrorCallbackDelegate? = null
+) : EventLoggerErrorCallbackDelegate {
 
     override fun handleErrorEvent(tag: String, message: String, throwable: Throwable, severity: Severity) {
         Crashes.trackError(
@@ -19,6 +23,7 @@ class AppCenterErrorCallback : EventLoggerErrorCallbackDelegate {
             ),
             null,
         )
+        passthroughDelegate?.handleErrorEvent(tag, message, throwable, severity)
     }
 
     companion object {

@@ -22,6 +22,7 @@ import com.cramsan.framework.core.DispatcherProviderImpl
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
+import com.cramsan.framework.crashehandler.implementation.AppCenterErrorCallback
 import com.cramsan.framework.crashehandler.implementation.CrashHandlerImpl
 import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.halt.HaltUtilDelegate
@@ -147,7 +148,8 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideEventLoggerErrorCallbackDelegate(
+    @Named(PS2ApplicationModuleConstants.ERROR_CALLBACK_METRICS_IMPL)
+    fun provideMetricsBasedEventLoggerErrorCallbackDelegate(
         metrics: MetricsInterface,
         eventLogger: EventLoggerInterface,
         ioDispatcherProvider: DispatcherProvider,
@@ -159,6 +161,14 @@ object PS2ApplicationModule {
         ioDispatcherProvider,
         scope,
     )
+
+    @Provides
+    @Singleton
+    fun provideEventLoggerErrorCallbackDelegate(
+        @Named(PS2ApplicationModuleConstants.ERROR_CALLBACK_METRICS_IMPL)
+        errorCallback: EventLoggerErrorCallbackDelegate
+    ): EventLoggerErrorCallbackDelegate =
+        AppCenterErrorCallback(errorCallback)
 
     @Provides
     @Singleton

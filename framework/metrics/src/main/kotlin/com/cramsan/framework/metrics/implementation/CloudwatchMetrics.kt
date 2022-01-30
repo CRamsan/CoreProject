@@ -61,8 +61,7 @@ class CloudwatchMetrics(
     }
 
     /**
-     * Method that performs the actual call to upload metrics. This method will ensure to dispatch
-     * the work into the [scope] and using the [DispatcherProvider.ioDispatcher].
+     * Queue up an upload request into the [uploadRequestBuffer].
      */
     private fun queueUploadRecord(
         type: MetricType,
