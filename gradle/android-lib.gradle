@@ -16,6 +16,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildTypes {
+        release {
+            kotlinOptions {
+                allWarningsAsErrors = true
+            }
+        }
+        debug {
+            kotlinOptions {
+                allWarningsAsErrors = false
+            }
+        }
+    }
+
     compileOptions {
         // Set the compile options for Java source
         sourceCompatibility versions_tools.JavaCompatibility
@@ -25,7 +38,6 @@ android {
     kotlinOptions {
         // Set the compile target for Kotlin source
         jvmTarget = versions_tools.JavaCompatibility
-        allWarningsAsErrors = true
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 

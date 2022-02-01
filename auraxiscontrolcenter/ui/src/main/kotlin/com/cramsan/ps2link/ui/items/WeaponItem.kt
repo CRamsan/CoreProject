@@ -96,17 +96,15 @@ fun WeaponItem(
                         }
                     }
                     Spacer(modifier = Modifier.height(Padding.xsmall))
-                    Row {
-                        Text(
-                            stringResource(R.string.text_headshots_, totalHeadshotKills),
-                            style = MaterialTheme.typography.overline
-                        )
-                        Spacer(modifier = Modifier.width(Padding.small))
-                        Text(
-                            stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed),
-                            style = MaterialTheme.typography.overline
-                        )
-                    }
+                    Text(
+                        stringResource(R.string.text_headshots_, totalHeadshotKills),
+                        style = MaterialTheme.typography.overline
+                    )
+                    Spacer(modifier = Modifier.width(Padding.xsmall))
+                    Text(
+                        stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed),
+                        style = MaterialTheme.typography.overline
+                    )
                 }
                 Image(
                     modifier = Modifier

@@ -27,11 +27,17 @@ android {
             // Minify is currently disabled. Maybe I should look into enabling this in the future?
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            kotlinOptions {
+                allWarningsAsErrors = true
+            }
         }
         // Debug settings enabled.
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+            kotlinOptions {
+                allWarningsAsErrors = false
+            }
         }
     }
     // Specifies one flavor dimension.
@@ -67,7 +73,6 @@ android {
     kotlinOptions {
         // Set the compile target for Kotlin source
         jvmTarget = versions_tools.JavaCompatibility
-        allWarningsAsErrors = true
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 

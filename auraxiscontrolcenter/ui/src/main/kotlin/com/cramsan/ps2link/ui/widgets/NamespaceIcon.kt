@@ -2,14 +2,17 @@ package com.cramsan.ps2link.ui.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.framework.assertlib.assertFailure
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import com.cramsan.ps2link.ui.theme.Padding
 
 @Composable
 fun NamespaceIcon(
@@ -26,12 +29,16 @@ fun NamespaceIcon(
         }
     }
 
-    // TODO: Add content description
-    Image(
-        modifier = modifier,
-        painter = painterResource(id = resourceId),
-        contentDescription = null
-    )
+    FrameSlim(
+        modifier = Modifier.padding(Padding.small)
+    ) {
+        // TODO: Add content description
+        Image(
+            modifier = modifier,
+            painter = painterResource(id = resourceId),
+            contentDescription = null
+        )
+    }
 }
 
 @Preview
