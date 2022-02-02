@@ -6,7 +6,6 @@ package com.cramsan.ps2link.remoteconfig
 val defaultConfigPayload = RemoteConfigData(
     listOf(
         "planetside2",
-        "PS2DailyDeals",
         "WrelPlays",
     )
 )
