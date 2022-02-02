@@ -130,6 +130,9 @@ class ObjectDataSource(context: Context) {
         return Character(
             characterId = character_id,
             name = name,
+            prestige = null,
+            creationTime = null,
+            sessionCount = null,
             namespace = namespace.toCoreModel(),
             cached = cached,
         )

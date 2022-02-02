@@ -68,6 +68,9 @@
     <string name="text_outfit_name_too_short">Outfit name is too short</string>
     <string name="text_profile_name_too_short">Name is too short</string>
     <string name="text_problem_encoding">There was a problem trying to read the input</string>
+    <string name="text_prestige">PRESTIGE: %d</string>
+    <string name="text_member_since">MEMBER SINCE</string>
+    <string name="text_sessions_played">SESSIONS PLAYED</string>
 
     <string name="text_Background">Background</string>
     <string name="text_search_button">Search Button</string>
@@ -109,7 +112,7 @@
     <string name="text_vs_">VS: %d</string>
     <string name="text_headshots_">Headshots: %d</string>
     <string name="text_stat_all">All Time: %s</string>
-    <string name="text_stat_today">Today: %s</string>
+    <string name="text_stat_today">Last session: %s</string>
     <string name="text_stat_week">This week: %s</string>
     <string name="text_stat_month">This month: %s</string>
     <string name="text_server_population">Population: %s</string>

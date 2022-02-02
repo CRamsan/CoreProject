@@ -13,6 +13,10 @@ import kotlin.time.ExperimentalTime
 
 interface DbgDAO {
 
+    /**
+     * Create a character in the DAO with all the information in the parameters.
+     */
+    @Suppress("LongParameterList")
     @OptIn(ExperimentalTime::class)
     fun insertCharacter(
         characterId: String,
@@ -23,8 +27,11 @@ interface DbgDAO {
         percentageToNextCert: Double?,
         percentageToNextRank: Double?,
         rank: Long?,
+        prestige: Long?,
         outfitRank: Long?,
         lastLogin: Instant?,
+        creationTime: Instant?,
+        sessionCount: Long?,
         minutesPlayed: Duration?,
         factionId: Faction,
         worldId: String?,

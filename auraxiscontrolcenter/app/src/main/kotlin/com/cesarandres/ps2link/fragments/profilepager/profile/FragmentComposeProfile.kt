@@ -41,6 +41,7 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
         ProfileCompose(
             faction = profile.value?.faction,
             br = profile.value?.battleRank?.toInt(),
+            prestige = profile.value?.prestige?.toInt(),
             percentToNextBR = profile.value?.percentageToNextBattleRank?.toFloat(),
             certs = profile.value?.certs?.toInt(),
             percentToNextCert = profile.value?.percentageToNextCert?.toFloat(),
@@ -49,6 +50,8 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
             outfit = profile.value?.outfit,
             server = profile.value?.server?.serverName,
             timePlayed = profile.value?.timePlayed,
+            creationTime = profile.value?.creationTime,
+            sessionCount = profile.value?.sessionCount,
             prettyTime = prettyTime,
             eventHandler = viewModel,
             isLoading = isLoading.value,

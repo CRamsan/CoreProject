@@ -151,8 +151,9 @@ complexity:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+      - '**/**Compose.kt'
   LongParameterList:
-    active: true
+    active: false
     functionThreshold: 10
     constructorThreshold: 8
     ignoreDefaultParameters: false
@@ -990,6 +991,7 @@ naming:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+      - '**/**Compose.kt'
   FunctionParameterNaming:
     excludes:
       - '**/build/generated/**'

@@ -24,7 +24,10 @@ CREATE TABLE Character (
     outfitName TEXT,
     namespace TEXT AS Namespace NOT NULL,
     cached INTEGER AS Boolean NOT NULL,
-    lastUpdated INTEGER AS Instant NOT NULL
+    lastUpdated INTEGER AS Instant NOT NULL,
+    prestige INTEGER,
+    creationTime INTEGER AS Instant,
+    sessionCount INTEGER
 );
 
 getCharacter:
@@ -53,8 +56,11 @@ INSERT OR REPLACE INTO Character(
     outfitName,
     namespace,
     cached,
-    lastUpdated
- ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    lastUpdated,
+    prestige,
+    creationTime,
+    sessionCount
+ ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertCharacterInstance:
 INSERT OR REPLACE INTO Character(
@@ -76,7 +82,10 @@ INSERT OR REPLACE INTO Character(
     outfitName,
     namespace,
     cached,
-    lastUpdated
+    lastUpdated,
+    prestige,
+    creationTime,
+    sessionCount
  ) VALUES ?;
 
 deleteCharacter:

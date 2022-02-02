@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,19 +41,26 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 
+/**
+ * Render the Profile page with the provided arguments.
+ */
+@Suppress("ComplexMethod")
 @OptIn(ExperimentalTime::class)
 @Composable
 fun ProfileCompose(
     faction: Faction?,
     br: Int?,
+    prestige: Int?,
     percentToNextBR: Float?,
     certs: Int?,
     percentToNextCert: Float?,
     loginStatus: LoginStatus?,
     lastLogin: Instant?,
+    creationTime: Instant?,
     outfit: Outfit?,
     server: String?,
     timePlayed: Duration?,
+    sessionCount: Long?,
     isLoading: Boolean,
     isError: Boolean,
     prettyTime: PrettyTime,
@@ -77,13 +85,25 @@ fun ProfileCompose(
 
                 // BR Progress bar
                 FrameSlim(modifier = mediumModifier) {
-                    Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
-                        BR(level = br ?: 0)
-                        BRBar(
-                            modifier = Modifier.weight(1f),
-                            percentageToNextLevel = percentToNextBR ?: 0f
-                        )
-                        BR(level = (br ?: 0) + 1, enabled = false)
+                    Column {
+                        Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
+                            BR(level = br ?: 0)
+                            BRBar(
+                                modifier = Modifier.weight(1f),
+                                percentageToNextLevel = percentToNextBR ?: 0f
+                            )
+                            BR(level = (br ?: 0) + 1, enabled = false)
+                        }
+
+                        // Prestige
+                        if (prestige != null) {
+                            FrameSlim(modifier = smallModifier.padding(horizontal = Padding.large)) {
+                                Text(
+                                    text = stringResource(R.string.text_prestige, prestige),
+                                    style = MaterialTheme.typography.caption,
+                                )
+                            }
+                        }
                     }
                 }
 
@@ -159,6 +179,25 @@ fun ProfileCompose(
                                 )
                             }
                         }
+
+                        // Account created
+                        val accountCreatedString = creationTime?.let {
+                            prettyTime.format(Date(it.toEpochMilliseconds()))
+                        } ?: stringResource(R.string.text_unknown)
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
+                                Text(text = stringResource(R.string.text_member_since))
+                                Text(text = accountCreatedString)
+                            }
+                        }
+
+                        // Session count
+                        FrameSlim(modifier = smallModifier) {
+                            Column(modifier = smallModifier) {
+                                Text(text = stringResource(R.string.text_sessions_played))
+                                Text(text = sessionCount?.toString() ?: stringResource(R.string.text_unknown))
+                            }
+                        }
                     }
                 }
             }
@@ -180,6 +219,7 @@ fun Preview() {
     ProfileCompose(
         faction = Faction.VS,
         br = 80,
+        prestige = 2,
         percentToNextBR = 75f,
         certs = 1000,
         percentToNextCert = 50f,
@@ -188,6 +228,8 @@ fun Preview() {
         outfit = null,
         server = "Genudine",
         timePlayed = 1000.minutes,
+        creationTime = Instant.DISTANT_PAST,
+        sessionCount = 100,
         prettyTime = PrettyTime(),
         isLoading = true,
         isError = false,

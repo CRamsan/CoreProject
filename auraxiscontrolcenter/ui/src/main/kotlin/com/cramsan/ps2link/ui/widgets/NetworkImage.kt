@@ -12,14 +12,22 @@ import coil.compose.rememberImagePainter
 import coil.size.Scale
 import com.cramsan.ps2link.ui.R
 
-@Suppress("UNUSED_PARAMETER")
+/**
+ *
+ * Display an image that is loaded from the [imageUrl]. Provide a [contentDescription]
+ * to ensure the image is readable by accessibility services. The [placeHolder] will be
+ * displayed while the image is not loaded. Provide a [contentScale] to change how the
+ * image fits within it's bounds.
+ */
+@Suppress("FunctionNaming")
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun NetworkImage(
     modifier: Modifier = Modifier,
     imageUrl: String? = null,
     contentDescription: String? = null,
-    placeHolder: Int = R.drawable.image_not_found
+    placeHolder: Int = R.drawable.image_not_found,
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     Box(
         modifier = modifier,
@@ -39,8 +47,9 @@ fun NetworkImage(
             )
         }
         Image(
+            modifier = Modifier.matchParentSize(),
             painter = painter,
-            contentScale = ContentScale.Inside,
+            contentScale = contentScale,
             contentDescription = contentDescription
         )
     }

@@ -3,21 +3,17 @@ package com.cramsan.ps2link.ui.widgets
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.cramsan.framework.assertlib.assertFailure
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameSlim
 import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Shapes
-import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.theme.undefined
 
 @Composable

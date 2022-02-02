@@ -53,6 +53,9 @@ class MainMenuViewModel @Inject constructor(
     private val _preferredProfileId = MutableStateFlow<String?>(null)
     private val _preferredOutfitId = MutableStateFlow<String?>(null)
 
+    /**
+     * Flow that emits a nullable [Character] that represents the preferred/starred account selected by the user.
+     */
     val preferredProfile: Flow<Character?> = _preferredProfileId.transform { profileId ->
         if (profileId.isNullOrBlank()) {
             emit(null)
@@ -65,7 +68,16 @@ class MainMenuViewModel @Inject constructor(
         assertNotNull(namespace, logTag, "Namespace cannot be null")
 
         if (namespace != null) {
-            emit(Character(profileId, cached = false, namespace = namespace))
+            emit(
+                Character(
+                    profileId,
+                    creationTime = null,
+                    sessionCount = null,
+                    prestige = null,
+                    cached = false,
+                    namespace = namespace,
+                )
+            )
             // TODO: Fix wrong language
             val response = pS2LinkRepository.getCharacter(profileId, namespace, getCurrentLang())
             if (response.isSuccessful) {
@@ -78,6 +90,9 @@ class MainMenuViewModel @Inject constructor(
         }
     }.flowOn(dispatcherProvider.ioDispatcher())
 
+    /**
+     * Flow that emits a nullable [Outfit] that represents the preferred/starred outfit selected by the user.
+     */
     val preferredOutfit: Flow<Outfit?> = _preferredOutfitId.transform { outfitId ->
         if (outfitId.isNullOrBlank()) {
             emit(null)

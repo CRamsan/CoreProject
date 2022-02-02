@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -76,6 +77,7 @@ fun RedditPostItem(
                         onImageClick()
                     },
                     imageUrl = imgUrl,
+                    contentScale = ContentScale.Fit,
                 )
                 Text(
                     modifier = Modifier.align(CenterHorizontally),

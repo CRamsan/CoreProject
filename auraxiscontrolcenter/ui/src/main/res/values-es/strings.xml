@@ -102,7 +102,7 @@
     <string name="text_vs_">SV: %d</string>
     <string name="text_headshots_">Headshots: %d</string>
     <string name="text_stat_all">Total: %s</string>
-    <string name="text_stat_today">Hoy: %s</string>
+    <string name="text_stat_today">Ultima sessión: %s</string>
     <string name="text_stat_week">Esta semana: %s</string>
     <string name="text_stat_month">Este mes: %s</string>
     <string name="text_server_population">Población: %s</string>
@@ -146,4 +146,7 @@
     <string name="twitter_comments">%d comentarios</string>
     <string name="twitter_upload_by">%s por %s</string>
     <string name="text_unkown_error">Ha ocurrido un error inesperado. Inténtelo de nuevo un unos momentos.</string>
+    <string name="text_member_since">MIEMBRO DESDE</string>
+    <string name="text_sessions_played">SESSIONES JUGADAS</string>
+    <string name="text_prestige">PRESTIGIO: %d</string>
 </resources>

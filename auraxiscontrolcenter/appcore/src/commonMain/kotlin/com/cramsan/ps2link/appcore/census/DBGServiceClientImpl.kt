@@ -557,6 +557,11 @@ private fun CharacterProfile.toCoreModel(
         certs = certs?.available_points?.toLong(),
         percentageToNextCert = certs?.percent_to_next?.toDouble()?.times(100),
         battleRank = battle_rank?.value?.toLong(),
+        prestige = prestige_level?.toLongOrNull(),
+        creationTime = times?.creation?.toLongOrNull()?.let {
+            Instant.fromEpochSeconds(it)
+        },
+        sessionCount = times?.login_count?.toLongOrNull(),
         percentageToNextBattleRank = battle_rank?.percent_to_next?.toDouble(),
         outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
         lastLogin = times?.last_login?.toLong()?.let {
@@ -577,6 +582,9 @@ fun CharacterFriend.toCoreModel(
     return Character(
         characterId = character_id ?: "",
         name = name?.first,
+        prestige = null,
+        creationTime = null,
+        sessionCount = null,
         loginStatus = LoginStatus.fromString(online),
         namespace = namespace,
         cached = false,
@@ -588,9 +596,12 @@ fun Member.toCoreModel(namespace: Namespace): Character? {
         Character(
             characterId = it,
             name = character?.name?.first,
+            prestige = null,
             activeProfileId = characterClassFromString(character?.profile_id),
             loginStatus = LoginStatus.fromString(online_status),
             outfitRank = Rank(rank, rank_ordinal?.toLongOrNull()),
+            creationTime = null,
+            sessionCount = null,
             namespace = namespace,
             cached = false,
         )
@@ -614,6 +625,9 @@ fun Outfit.toCoreModel(
                 Character(
                     characterId = it,
                     name = leader.name?.first,
+                    prestige = null,
+                    creationTime = null,
+                    sessionCount = null,
                     namespace = namespace,
                     cached = false,
                 )

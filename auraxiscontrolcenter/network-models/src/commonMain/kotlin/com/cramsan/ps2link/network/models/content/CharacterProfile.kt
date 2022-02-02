@@ -8,6 +8,7 @@ import com.cramsan.ps2link.network.models.content.character.Stats
 import com.cramsan.ps2link.network.models.content.character.Times
 import kotlinx.serialization.Serializable
 
+@Suppress("UndocumentedPublicProperty", "ConstructorParameterNaming")
 @Serializable
 data class CharacterProfile(
     val character_id: String,
@@ -15,6 +16,7 @@ data class CharacterProfile(
     val active_profile_id: String? = null,
     val certs: Certs? = null,
     val battle_rank: BattleRank? = null,
+    val prestige_level: String? = null,
     val times: Times? = null,
     val faction_id: String? = null,
     val world_id: String? = null,

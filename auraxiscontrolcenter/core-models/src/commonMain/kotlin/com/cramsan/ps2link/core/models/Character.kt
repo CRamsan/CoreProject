@@ -9,6 +9,7 @@ import kotlin.time.ExperimentalTime
  * @created 1/30/2021
  */
 @OptIn(ExperimentalTime::class)
+@Suppress("UndocumentedPublicProperty")
 data class Character(
     val characterId: String,
     val name: String? = null,
@@ -16,8 +17,11 @@ data class Character(
     val loginStatus: LoginStatus = LoginStatus.UNKNOWN,
     val certs: Long? = null,
     val battleRank: Long? = null,
+    val prestige: Long?,
     val percentageToNextCert: Double? = null,
     val percentageToNextBattleRank: Double? = null,
+    val creationTime: Instant?,
+    val sessionCount: Long?,
     val lastLogin: Instant? = null,
     val timePlayed: Duration? = null,
     val faction: Faction = Faction.UNKNOWN,

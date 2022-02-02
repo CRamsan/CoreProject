@@ -38,6 +38,7 @@ class SQLDelightDAO(
             lastUpdatedAdapter = instantAdapter,
             minutesPlayedAdapter = durationAdapter,
             activeProfileIdAdapter = characterClassAdapter,
+            creationTimeAdapter = instantAdapter,
         ),
         OutfitAdapter = com.cramsan.ps2link.db.Outfit.Adapter(
             factionIdAdapter = factionAdapter,
@@ -57,8 +58,11 @@ class SQLDelightDAO(
         percentageToNextCert: Double?,
         percentageToNextRank: Double?,
         rank: Long?,
+        prestige: Long?,
         outfitRank: Long?,
         lastLogin: Instant?,
+        creationTime: Instant?,
+        sessionCount: Long?,
         minutesPlayed: Duration?,
         factionId: Faction,
         worldId: String?,
@@ -90,6 +94,9 @@ class SQLDelightDAO(
             namespace.toDBModel(),
             cached,
             lastUpdated,
+            prestige,
+            creationTime,
+            sessionCount,
         )
     }
 
@@ -228,6 +235,7 @@ private fun Character.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Ch
         percentageToNextCert = percentageToNextCert,
         percentageToNextRank = percentageToNextBattleRank,
         rank = battleRank,
+        prestige = prestige,
         outfitRank = null,
         lastLogin = lastLogin,
         minutesPlayed = timePlayed,
@@ -239,6 +247,8 @@ private fun Character.toDBModel(lastUpdated: Instant): com.cramsan.ps2link.db.Ch
         namespace = namespace.toDBModel(),
         cached = cached,
         lastUpdated = lastUpdated,
+        creationTime = creationTime,
+        sessionCount = sessionCount,
     )
 }
 
@@ -274,6 +284,9 @@ private fun com.cramsan.ps2link.db.Outfit.toCoreModel(server: Server?): Outfit {
             Character(
                 characterId = it,
                 name = leaderCharacterName,
+                prestige = null,
+                creationTime = null,
+                sessionCount = null,
                 namespace = namespace.toCoreModel(),
                 cached = false,
             )
@@ -311,9 +324,12 @@ private fun com.cramsan.ps2link.db.Character.toCoreModel(): Character {
         loginStatus = loginStatus.toCoreModel(),
         certs = currentPoints,
         battleRank = rank,
+        prestige = prestige,
         percentageToNextCert = percentageToNextCert,
         percentageToNextBattleRank = percentageToNextRank,
         lastLogin = lastLogin,
+        creationTime = creationTime,
+        sessionCount = sessionCount,
         timePlayed = minutesPlayed,
         faction = factionId.toCoreModel(),
         server = server,
