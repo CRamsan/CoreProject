@@ -2,9 +2,8 @@ package com.cramsan.ps2link.ui.items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -54,21 +53,21 @@ fun TweetItem(
                 )
                 val updateTime = prettyTime.format(Date(creationTime))
                 Text(
-                    modifier = Modifier.align(Alignment.CenterVertically),
+                    modifier = Modifier.align(CenterVertically),
                     text = updateTime,
                     style = MaterialTheme.typography.overline,
                 )
             }
             Row {
                 NetworkImage(
-                    modifier = Modifier.height(Size.xxlarge)
+                    modifier = Modifier.size(Size.xxlarge)
                         .padding(Padding.small)
-                        .wrapContentWidth()
                         .align(CenterVertically),
                     imageUrl = avatarUrl,
                 )
                 Text(
-                    modifier = Modifier.padding(vertical = Padding.medium),
+                    modifier = Modifier.weight(1f)
+                        .padding(vertical = Padding.medium),
                     text = content,
                 )
             }
@@ -84,7 +83,7 @@ fun TweetItemPreview() {
             username = "Planetside",
             handle = "planetside",
             content = "This is an example of content\nin multiple lines\nbye",
-            avatarUrl = "",
+            avatarUrl = "https://census.daybreakgames.com/files/ps2/images/static/88685.png",
             prettyTime = PrettyTime(),
             creationTime = 19993932,
         )
