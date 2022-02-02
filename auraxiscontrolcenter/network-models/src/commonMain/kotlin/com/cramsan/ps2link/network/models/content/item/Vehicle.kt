@@ -1,12 +1,12 @@
 package com.cramsan.ps2link.network.models.content.item
 
-import com.cramsan.ps2link.network.models.content.world.Name_Multi
+import com.cramsan.ps2link.network.models.content.world.NameMultiLang
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Vehicle(
     val vehicle_id: String,
-    val name: Name_Multi? = null,
+    val name: NameMultiLang? = null,
     val description: Description? = null,
     val type_id: String? = null,
     val type_name: String? = null,

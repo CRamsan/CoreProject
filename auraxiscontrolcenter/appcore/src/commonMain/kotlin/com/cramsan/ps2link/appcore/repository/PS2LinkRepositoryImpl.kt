@@ -13,6 +13,7 @@ import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.ExperienceRank
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.LoginStatus
@@ -262,6 +263,29 @@ class PS2LinkRepositoryImpl(
 
     override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): PS2HttpResponse<List<Character>> {
         return dbgCensus.getMemberList(outfitId, namespace, currentLang)
+    }
+
+    override suspend fun getExperienceRank(
+        rank: Int,
+        filterPrestige: Int?,
+        faction: Faction,
+        namespace: Namespace,
+        currentLang: CensusLang
+    ): PS2HttpResponse<ExperienceRank?> {
+        val response = dbgCensus.getExperienceRanks(
+            listOf(rank),
+            filterPrestige,
+            faction,
+            namespace,
+            currentLang,
+        )
+        if (!response.isSuccessful) {
+            return response.toFailure()
+        }
+
+        return response.process {
+            it.firstOrNull()
+        }
     }
 
     @OptIn(ExperimentalTime::class)

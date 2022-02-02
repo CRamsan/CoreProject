@@ -41,12 +41,13 @@ class DBGCensus(
         query: QueryString? = QueryString(),
         urlIdentifier: HttpNamespace.Api,
         namespace: Namespace,
-        currentLang: CensusLang,
+        currentLang: CensusLang?,
     ): UrlHolder {
         val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
+        val langParam = currentLang?.name?.lowercase()?.let { "&c:lang=$it" }
         return UrlHolder(
             urlIdentifier = urlIdentifier,
-            completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + "&c:lang=" + currentLang.name.lowercase()),
+            completeUrl = Url("$baseUrl/" + (identifier ?: "") + "?" + query.toString() + (langParam ?: "")),
         )
     }
 

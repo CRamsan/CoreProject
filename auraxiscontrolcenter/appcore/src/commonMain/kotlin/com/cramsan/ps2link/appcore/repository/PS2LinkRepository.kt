@@ -3,6 +3,8 @@ package com.cramsan.ps2link.appcore.repository
 import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.ExperienceRank
+import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
@@ -102,4 +104,16 @@ interface PS2LinkRepository {
         namespace: Namespace,
         currentLang: CensusLang
     ): PS2HttpResponse<List<Character>>
+
+    /**
+     * Retrieve a single [ExperienceRank] based on the provided arguments.
+     * The [filterPrestige] can be used to filter results to only the requested prestige level.
+     */
+    suspend fun getExperienceRank(
+        rank: Int,
+        filterPrestige: Int?,
+        faction: Faction,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<ExperienceRank?>
 }

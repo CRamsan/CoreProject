@@ -20,6 +20,7 @@ import com.cramsan.ps2link.appcore.toStatItem
 import com.cramsan.ps2link.appcore.toWeaponEventType
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.ExperienceRank
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
@@ -49,6 +50,7 @@ import com.cramsan.ps2link.network.models.content.response.Character_friend_list
 import com.cramsan.ps2link.network.models.content.response.Character_list_response
 import com.cramsan.ps2link.network.models.content.response.Character_name_list_response
 import com.cramsan.ps2link.network.models.content.response.Characters_event_list_response
+import com.cramsan.ps2link.network.models.content.response.ExperienceRankResponse
 import com.cramsan.ps2link.network.models.content.response.Item_list_response
 import com.cramsan.ps2link.network.models.content.response.Outfit_member_response
 import com.cramsan.ps2link.network.models.content.response.Outfit_response
@@ -526,6 +528,64 @@ class DBGServiceClientImpl(
                     id = item.vehicle_id,
                     name = item.name?.localizedName(currentLang),
                     imageUrl = item.image_path,
+                )
+            }
+        }
+    }
+
+    override suspend fun getExperienceRanks(
+        ranks: List<Int>,
+        filterPrestige: Int?,
+        faction: com.cramsan.ps2link.core.models.Faction,
+        namespace: Namespace,
+        currentLang: CensusLang
+    ): PS2HttpResponse<List<ExperienceRank>> {
+        val queryBuilder = QueryString.generateQeuryString()
+
+        // Apply filters to select the right experience rank
+        filterPrestige?.let {
+            when (it) {
+                0 -> {
+                    queryBuilder.AddComparison("vs.title.en", QueryString.SearchModifier.NOTCONTAIN, "A.S.P.%20Operative")
+                }
+                else -> Unit
+            }
+        }
+
+        ranks.forEach {
+            queryBuilder.AddComparison("rank", QueryString.SearchModifier.EQUALS, it.toString())
+        }
+        val url = census.generateGameDataRequest(
+            Verb.GET,
+            Collections.PS2Collection.EXPERIENCE_RANK,
+            null,
+            queryBuilder,
+            HttpNamespace.Api.EXPERIENCE_RANK,
+            namespace.toNetworkModel(),
+            null,
+        )
+
+        val response = http.sendRequestWithRetry<ExperienceRankResponse>(url)
+        return response.process {
+            it.experience_rank_list.map { rank ->
+                val imageId = when (faction) {
+                    com.cramsan.ps2link.core.models.Faction.VS -> rank.vs?.image_id
+                    com.cramsan.ps2link.core.models.Faction.NC -> rank.nc?.image_id
+                    com.cramsan.ps2link.core.models.Faction.TR -> rank.tr?.image_id
+                    com.cramsan.ps2link.core.models.Faction.NS, com.cramsan.ps2link.core.models.Faction.UNKNOWN -> null
+                }
+                val imagePath = when (faction) {
+                    com.cramsan.ps2link.core.models.Faction.VS -> rank.vs_image_path
+                    com.cramsan.ps2link.core.models.Faction.NC -> rank.nc_image_path
+                    com.cramsan.ps2link.core.models.Faction.TR -> rank.tr_image_path
+                    com.cramsan.ps2link.core.models.Faction.NS, com.cramsan.ps2link.core.models.Faction.UNKNOWN -> null
+                }
+
+                ExperienceRank(
+                    rank = rank.rank?.toLongOrNull(),
+                    xpMax = rank.xp_max?.toLongOrNull(),
+                    imageId = imageId,
+                    imagePath = DBGCensus.ENDPOINT_URL + "/" + imagePath,
                 )
             }
         }

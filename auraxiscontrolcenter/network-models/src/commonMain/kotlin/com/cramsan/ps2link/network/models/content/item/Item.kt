@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.network.models.content.item
 
-import com.cramsan.ps2link.network.models.content.world.Name_Multi
+import com.cramsan.ps2link.network.models.content.world.NameMultiLang
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,7 +9,7 @@ data class Item(
     val item_type_id: String? = null,
     val item_category_id: String? = null,
     val is_vehicle_weapon: String? = null,
-    val name: Name_Multi? = null,
+    val name: NameMultiLang? = null,
     val description: Description? = null,
     val faction_id: String? = null,
     val max_stack_size: String? = null,

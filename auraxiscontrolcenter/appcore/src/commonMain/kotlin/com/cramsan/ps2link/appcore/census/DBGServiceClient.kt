@@ -3,6 +3,7 @@ package com.cramsan.ps2link.appcore.census
 import com.cramsan.ps2link.appcore.network.PS2HttpResponse
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.ExperienceRank
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
@@ -108,4 +109,17 @@ interface DBGServiceClient {
         namespace: Namespace,
         currentLang: CensusLang,
     ): PS2HttpResponse<List<Vehicle>>
+
+    /**
+     * Retrieve a list of [ExperienceRank] based on the list of rank provided. The [faction] is needed as the resources
+     * are different based on the [Faction]. The [filterPrestige] is used to filter the results only to the requested
+     * level of prestige.
+     */
+    suspend fun getExperienceRanks(
+        ranks: List<Int>,
+        filterPrestige: Int?,
+        faction: Faction,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<ExperienceRank>>
 }

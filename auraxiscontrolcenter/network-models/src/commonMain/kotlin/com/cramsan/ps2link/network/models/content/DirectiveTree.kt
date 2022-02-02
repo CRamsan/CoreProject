@@ -1,6 +1,6 @@
 package com.cramsan.ps2link.network.models.content
 
-import com.cramsan.ps2link.network.models.content.world.Name_Multi
+import com.cramsan.ps2link.network.models.content.world.NameMultiLang
 import kotlinx.serialization.SerialName
 
 data class DirectiveTree(
@@ -11,7 +11,7 @@ data class DirectiveTree(
     /**
      * @param name The name
      */
-    val name: Name_Multi? = null,
+    val name: NameMultiLang? = null,
 
     /**
      * @return The directiveTreeCategoryId

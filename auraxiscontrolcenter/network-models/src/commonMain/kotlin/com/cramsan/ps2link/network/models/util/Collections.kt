@@ -26,6 +26,7 @@ class Collections {
         CHARACTER_NAME("character_name"),
         CURRENCY("currency"),
         ESAMIRMAP("esamirmap"),
+        EXPERIENCE_RANK("experience_rank"),
         EVENT("event"),
         FACTION("faction"),
         ICONATTACHMENT("icon.attachment"),

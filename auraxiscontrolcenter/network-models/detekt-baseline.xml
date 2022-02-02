@@ -16,7 +16,6 @@
     <ID>ClassNaming:Directive_tree_category_list.kt$Directive_tree_category_list</ID>
     <ID>ClassNaming:Directive_tree_list.kt$Directive_tree_list</ID>
     <ID>ClassNaming:Item_list_response.kt$Item_list_response</ID>
-    <ID>ClassNaming:Name_Multi.kt$Name_Multi</ID>
     <ID>ClassNaming:Outfit_member_response.kt$Outfit_member_response</ID>
     <ID>ClassNaming:Outfit_response.kt$Outfit_response</ID>
     <ID>ClassNaming:Server_Status_response.kt$Server_Status_response</ID>
@@ -65,14 +64,6 @@
     <ID>ConstructorParameterNaming:CharacterFriend.kt$CharacterFriend$val last_login_time: String? = null</ID>
     <ID>ConstructorParameterNaming:CharacterFriendRoot.kt$CharacterFriendRoot$val character_id: String? = null</ID>
     <ID>ConstructorParameterNaming:CharacterFriendRoot.kt$CharacterFriendRoot$val friend_list: List&lt;CharacterFriend></ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val active_profile_id: String? = null</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val battle_rank: BattleRank? = null</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val character_id: String</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val faction_id: String? = null</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val online_status: String? = null</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val profile_id: String? = null</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val rank_ordinal: String? = null</ID>
-    <ID>ConstructorParameterNaming:CharacterProfile.kt$CharacterProfile$val world_id: String? = null</ID>
     <ID>ConstructorParameterNaming:CharacterProfileJoin.kt$CharacterProfileJoin$val active_profile_id: String? = null</ID>
     <ID>ConstructorParameterNaming:CharacterProfileJoin.kt$CharacterProfileJoin$val battle_rank: BattleRank? = null</ID>
     <ID>ConstructorParameterNaming:CharacterProfileJoin.kt$CharacterProfileJoin$val character_id: String</ID>
@@ -105,6 +96,13 @@
     <ID>ConstructorParameterNaming:Directive_tier_list.kt$Directive_tier_list$val directive_tier_list: List&lt;DirectiveTier>? = null</ID>
     <ID>ConstructorParameterNaming:Directive_tree_category_list.kt$Directive_tree_category_list$val directive_tree_category_list: List&lt;DirectiveTreeCategory>? = null</ID>
     <ID>ConstructorParameterNaming:Directive_tree_list.kt$Directive_tree_list$val directive_tree_list: List&lt;CharacterDirectiveTree>? = null</ID>
+    <ID>ConstructorParameterNaming:ExperienceRank.kt$ExperienceRank$val nc_image_path: String? = null</ID>
+    <ID>ConstructorParameterNaming:ExperienceRank.kt$ExperienceRank$val tr_image_path: String? = null</ID>
+    <ID>ConstructorParameterNaming:ExperienceRank.kt$ExperienceRank$val vs_image_path: String? = null</ID>
+    <ID>ConstructorParameterNaming:ExperienceRank.kt$ExperienceRank$val xp_max: String? = null</ID>
+    <ID>ConstructorParameterNaming:ExperienceRankResponse.kt$ExperienceRankResponse$val experience_rank_list: List&lt;ExperienceRank></ID>
+    <ID>ConstructorParameterNaming:ExperienceRankTitle.kt$ExperienceRankTitle$val image_id: String? = null</ID>
+    <ID>ConstructorParameterNaming:ExperienceRankTitle.kt$ExperienceRankTitle$val image_set_id: String? = null</ID>
     <ID>ConstructorParameterNaming:Item.kt$Item$val faction_id: String? = null</ID>
     <ID>ConstructorParameterNaming:Item.kt$Item$val image_id: String? = null</ID>
     <ID>ConstructorParameterNaming:Item.kt$Item$val image_path: String? = null</ID>
@@ -145,8 +143,6 @@
     <ID>ConstructorParameterNaming:Stat.kt$Stat$val stat_name: String? = null</ID>
     <ID>ConstructorParameterNaming:Stat.kt$Stat$var all_time: String? = null</ID>
     <ID>ConstructorParameterNaming:Stats.kt$Stats$val stat_history: List&lt;Stat>? = null</ID>
-    <ID>ConstructorParameterNaming:Times.kt$Times$val last_login: String? = null</ID>
-    <ID>ConstructorParameterNaming:Times.kt$Times$val minutes_played: String? = null</ID>
     <ID>ConstructorParameterNaming:Vehicle.kt$Vehicle$val cost_resource_id: String? = null</ID>
     <ID>ConstructorParameterNaming:Vehicle.kt$Vehicle$val image_id: String? = null</ID>
     <ID>ConstructorParameterNaming:Vehicle.kt$Vehicle$val image_path: String? = null</ID>
@@ -155,7 +151,7 @@
     <ID>ConstructorParameterNaming:Vehicle.kt$Vehicle$val type_name: String? = null</ID>
     <ID>ConstructorParameterNaming:Vehicle.kt$Vehicle$val vehicle_id: String</ID>
     <ID>ConstructorParameterNaming:Vehicle_list_response.kt$Vehicle_list_response$val vehicle_list: List&lt;Vehicle></ID>
-    <ID>ConstructorParameterNaming:Weapon.kt$Weapon$val equip_ms: Name_Multi? = null</ID>
+    <ID>ConstructorParameterNaming:Weapon.kt$Weapon$val equip_ms: NameMultiLang? = null</ID>
     <ID>ConstructorParameterNaming:Weapon.kt$Weapon$val from_iron_sights_ms: String? = null</ID>
     <ID>ConstructorParameterNaming:Weapon.kt$Weapon$val melee_detect_height: String? = null</ID>
     <ID>ConstructorParameterNaming:Weapon.kt$Weapon$val melee_detect_width: String? = null</ID>
@@ -239,7 +235,6 @@
     <ID>UndocumentedPublicClass:Member.kt$Member</ID>
     <ID>UndocumentedPublicClass:Month.kt$Month</ID>
     <ID>UndocumentedPublicClass:Name.kt$Name</ID>
-    <ID>UndocumentedPublicClass:Name_Multi.kt$Name_Multi</ID>
     <ID>UndocumentedPublicClass:Namespace.kt$Namespace</ID>
     <ID>UndocumentedPublicClass:Objective.kt$Objective</ID>
     <ID>UndocumentedPublicClass:OnlineStatus.kt$OnlineStatus</ID>
@@ -258,7 +253,6 @@
     <ID>UndocumentedPublicClass:Server_response.kt$Server_response</ID>
     <ID>UndocumentedPublicClass:Stat.kt$Stat</ID>
     <ID>UndocumentedPublicClass:Stats.kt$Stats</ID>
-    <ID>UndocumentedPublicClass:Times.kt$Times</ID>
     <ID>UndocumentedPublicClass:Vehicle.kt$Vehicle</ID>
     <ID>UndocumentedPublicClass:Vehicle_list_response.kt$Vehicle_list_response</ID>
     <ID>UndocumentedPublicClass:Verb.kt$Verb</ID>
@@ -331,23 +325,6 @@
     <ID>UndocumentedPublicProperty:CharacterFriendRoot.kt$CharacterFriendRoot$val character_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:CharacterFriendRoot.kt$CharacterFriendRoot$val friend_list: List&lt;CharacterFriend></ID>
     <ID>UndocumentedPublicProperty:CharacterFriendRoot.kt$CharacterFriendRoot$val name: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val active_profile_id: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val battle_rank: BattleRank? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val certs: Certs? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val character_id: String</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val faction_id: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val name: Name? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val online_status: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val outfit: Outfit? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val outfitName: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val profile: Profile? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val profile_id: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val rank: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val rank_ordinal: String? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val server: Server? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val stats: Stats? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val times: Times? = null</ID>
-    <ID>UndocumentedPublicProperty:CharacterProfile.kt$CharacterProfile$val world_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:CharacterProfileJoin.kt$CharacterProfileJoin$val active_profile_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:CharacterProfileJoin.kt$CharacterProfileJoin$val battle_rank: BattleRank? = null</ID>
     <ID>UndocumentedPublicProperty:CharacterProfileJoin.kt$CharacterProfileJoin$val certs: Certs? = null</ID>
@@ -441,11 +418,24 @@
     <ID>UndocumentedPublicProperty:Directive_tree_category_list.kt$Directive_tree_category_list$val directive_tree_category_list: List&lt;DirectiveTreeCategory>? = null</ID>
     <ID>UndocumentedPublicProperty:Directive_tree_list.kt$Directive_tree_list$val directive_tree_list: List&lt;CharacterDirectiveTree>? = null</ID>
     <ID>UndocumentedPublicProperty:EventType.kt$EventType$val description: Description? = null</ID>
-    <ID>UndocumentedPublicProperty:EventType.kt$EventType$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:EventType.kt$EventType$val name: NameMultiLang? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val nc: ExperienceRankTitle? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val nc_image_path: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val rank: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val tr: ExperienceRankTitle? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val tr_image_path: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val vs: ExperienceRankTitle? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val vs_image_path: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRank.kt$ExperienceRank$val xp_max: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRankResponse.kt$ExperienceRankResponse$val experience_rank_list: List&lt;ExperienceRank></ID>
+    <ID>UndocumentedPublicProperty:ExperienceRankResponse.kt$ExperienceRankResponse$val returned: Int? = 0</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRankTitle.kt$ExperienceRankTitle$val image_id: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRankTitle.kt$ExperienceRankTitle$val image_set_id: String? = null</ID>
+    <ID>UndocumentedPublicProperty:ExperienceRankTitle.kt$ExperienceRankTitle$val title: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:Faction.kt$Faction$val code: String? = null</ID>
     <ID>UndocumentedPublicProperty:Faction.kt$Faction$val icon: String? = null</ID>
     <ID>UndocumentedPublicProperty:Faction.kt$Faction$val id: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Faction.kt$Faction$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:Faction.kt$Faction$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:Faction.kt$Faction.Companion$val NC = "2"</ID>
     <ID>UndocumentedPublicProperty:Faction.kt$Faction.Companion$val TR = "3"</ID>
     <ID>UndocumentedPublicProperty:Faction.kt$Faction.Companion$val VS = "1"</ID>
@@ -460,7 +450,7 @@
     <ID>UndocumentedPublicProperty:Item.kt$Item$val item_id: String</ID>
     <ID>UndocumentedPublicProperty:Item.kt$Item$val item_type_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:Item.kt$Item$val max_stack_size: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Item.kt$Item$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:Item.kt$Item$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:Item_list_response.kt$Item_list_response$val item_list: List&lt;Item></ID>
     <ID>UndocumentedPublicProperty:LiveServer.kt$LiveServer$@Contextual val status: PopulationStatus? = null</ID>
     <ID>UndocumentedPublicProperty:LiveServer.kt$LiveServer$val age: String? = null</ID>
@@ -478,10 +468,10 @@
     <ID>UndocumentedPublicProperty:Member.kt$Member$val outfit_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:Member.kt$Member$val rank: String? = null</ID>
     <ID>UndocumentedPublicProperty:Member.kt$Member$val rank_ordinal: String? = null</ID>
-    <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val description: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val description: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val experience_bonus: String? = null</ID>
     <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val metagame_event_id: String? = null</ID>
-    <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:MetagameEvent.kt$MetagameEvent$val type: String? = null</ID>
     <ID>UndocumentedPublicProperty:Month.kt$Month$val m02: String? = null</ID>
     <ID>UndocumentedPublicProperty:Month.kt$Month$val m03: String? = null</ID>
@@ -496,12 +486,12 @@
     <ID>UndocumentedPublicProperty:Month.kt$Month$var m01: String? = null</ID>
     <ID>UndocumentedPublicProperty:Name.kt$Name$val first: String? = null</ID>
     <ID>UndocumentedPublicProperty:Name.kt$Name$val first_lower: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Name_Multi.kt$Name_Multi$val de: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Name_Multi.kt$Name_Multi$val en: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Name_Multi.kt$Name_Multi$val es: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Name_Multi.kt$Name_Multi$val fr: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Name_Multi.kt$Name_Multi$val it: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Name_Multi.kt$Name_Multi$val tr: String? = null</ID>
+    <ID>UndocumentedPublicProperty:NameMultiLang.kt$NameMultiLang$val de: String? = null</ID>
+    <ID>UndocumentedPublicProperty:NameMultiLang.kt$NameMultiLang$val en: String? = null</ID>
+    <ID>UndocumentedPublicProperty:NameMultiLang.kt$NameMultiLang$val es: String? = null</ID>
+    <ID>UndocumentedPublicProperty:NameMultiLang.kt$NameMultiLang$val fr: String? = null</ID>
+    <ID>UndocumentedPublicProperty:NameMultiLang.kt$NameMultiLang$val it: String? = null</ID>
+    <ID>UndocumentedPublicProperty:NameMultiLang.kt$NameMultiLang$val tr: String? = null</ID>
     <ID>UndocumentedPublicProperty:Namespace.kt$Namespace$val namespace: String</ID>
     <ID>UndocumentedPublicProperty:Objective.kt$Objective$val objective_group_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:Objective.kt$Objective$val objective_id: String? = null</ID>
@@ -538,10 +528,10 @@
     <ID>UndocumentedPublicProperty:Post.kt$Post$val ups: Int? = 0</ID>
     <ID>UndocumentedPublicProperty:Post.kt$Post$val url: String? = null</ID>
     <ID>UndocumentedPublicProperty:PostData.kt$PostData$val data: Post</ID>
-    <ID>UndocumentedPublicProperty:Profile.kt$Profile$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:Profile.kt$Profile$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:QueryString.kt$QueryString.Companion$val QUESTION_MARK = "?"</ID>
     <ID>UndocumentedPublicProperty:RedditResponse.kt$RedditResponse$val data: Data</ID>
-    <ID>UndocumentedPublicProperty:Server.kt$Server$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:Server.kt$Server$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:Server.kt$Server$val state: String? = null</ID>
     <ID>UndocumentedPublicProperty:Server.kt$Server$val world_id: Int? = 0</ID>
     <ID>UndocumentedPublicProperty:Server_Status_response.kt$Server_Status_response$val ps2: PS2</ID>
@@ -556,20 +546,18 @@
     <ID>UndocumentedPublicProperty:Stat.kt$Stat$var all_time: String? = null</ID>
     <ID>UndocumentedPublicProperty:StatNameType.kt$StatNameType$val statName: String</ID>
     <ID>UndocumentedPublicProperty:Stats.kt$Stats$val stat_history: List&lt;Stat>? = null</ID>
-    <ID>UndocumentedPublicProperty:Times.kt$Times$val last_login: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Times.kt$Times$val minutes_played: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val cost: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val cost_resource_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val description: Description? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val image_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val image_path: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val image_set_id: String? = null</ID>
-    <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val type_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val type_name: String? = null</ID>
     <ID>UndocumentedPublicProperty:Vehicle.kt$Vehicle$val vehicle_id: String</ID>
     <ID>UndocumentedPublicProperty:Vehicle_list_response.kt$Vehicle_list_response$val vehicle_list: List&lt;Vehicle></ID>
-    <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val equip_ms: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val equip_ms: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val from_iron_sights_ms: String? = null</ID>
     <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val melee_detect_height: String? = null</ID>
     <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val melee_detect_width: String? = null</ID>
@@ -580,7 +568,7 @@
     <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val unequip_ms: Description? = null</ID>
     <ID>UndocumentedPublicProperty:Weapon.kt$Weapon$val weapon_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:WeaponInfo.kt$WeaponInfo$val image_path: String? = null</ID>
-    <ID>UndocumentedPublicProperty:WeaponInfo.kt$WeaponInfo$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:WeaponInfo.kt$WeaponInfo$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:WeaponStat.kt$WeaponStat$val character_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:WeaponStat.kt$WeaponStat$val item_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:WeaponStat.kt$WeaponStat$val item_id_join_item: WeaponInfo? = null</ID>
@@ -605,7 +593,7 @@
     <ID>UndocumentedPublicProperty:Week.kt$Week$val w13: String? = null</ID>
     <ID>UndocumentedPublicProperty:Week.kt$Week$var w01: String? = null</ID>
     <ID>UndocumentedPublicProperty:World.kt$World$@Contextual val state: OnlineStatus? = null</ID>
-    <ID>UndocumentedPublicProperty:World.kt$World$val name: Name_Multi? = null</ID>
+    <ID>UndocumentedPublicProperty:World.kt$World$val name: NameMultiLang? = null</ID>
     <ID>UndocumentedPublicProperty:World.kt$World$val world_id: String? = null</ID>
     <ID>UndocumentedPublicProperty:WorldEvent.kt$WorldEvent$val event: EventType? = null</ID>
     <ID>UndocumentedPublicProperty:WorldEvent.kt$WorldEvent$val event_type: String? = null</ID>

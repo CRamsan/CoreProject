@@ -15,7 +15,7 @@ import com.cramsan.ps2link.network.models.content.OnlineStatus
 import com.cramsan.ps2link.network.models.content.character.Stat
 import com.cramsan.ps2link.network.models.content.item.StatNameType
 import com.cramsan.ps2link.network.models.content.response.server.PopulationStatus
-import com.cramsan.ps2link.network.models.content.world.Name_Multi
+import com.cramsan.ps2link.network.models.content.world.NameMultiLang
 import com.cramsan.ps2link.network.models.reddit.Post
 import com.cramsan.ps2link.network.models.twitter.PS2Tweet
 
@@ -103,7 +103,10 @@ fun characterClassFromString(activeProfileId: String?) = when (activeProfileId) 
     else -> CharacterClass.UNKNOWN
 }
 
-fun Name_Multi.localizedName(currentLang: CensusLang): String? {
+/**
+ * Retrieve the string from this [NameMultiLang] based on the provided [currentLang].
+ */
+fun NameMultiLang.localizedName(currentLang: CensusLang): String? {
     return when (currentLang) {
         CensusLang.DE -> this.de
         CensusLang.ES -> this.es

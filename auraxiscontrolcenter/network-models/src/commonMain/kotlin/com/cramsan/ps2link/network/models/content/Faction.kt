@@ -1,10 +1,10 @@
 package com.cramsan.ps2link.network.models.content
 
-import com.cramsan.ps2link.network.models.content.world.Name_Multi
+import com.cramsan.ps2link.network.models.content.world.NameMultiLang
 
 data class Faction(
     val id: String? = null,
-    val name: Name_Multi? = null,
+    val name: NameMultiLang? = null,
     val code: String? = null,
     val icon: String? = null,
 ) {

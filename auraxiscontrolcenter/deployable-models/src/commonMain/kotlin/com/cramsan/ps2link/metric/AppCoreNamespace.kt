@@ -24,6 +24,7 @@ object HttpNamespace : AppCoreNamespace() {
         SERVER_METADATA,
         SERVER_LIST,
         SERVER_POP,
+        EXPERIENCE_RANK,
     }
 }
 

@@ -36,6 +36,7 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
     @Composable
     override fun CreateComposeContent() {
         val profile = viewModel.profile.collectAsState(null)
+        val prestigeIcon = viewModel.prestigeIcon.collectAsState()
         val isLoading = viewModel.isLoading.collectAsState()
         val isError = viewModel.isError.collectAsState()
         ProfileCompose(
@@ -52,6 +53,7 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
             timePlayed = profile.value?.timePlayed,
             creationTime = profile.value?.creationTime,
             sessionCount = profile.value?.sessionCount,
+            prestigeIcon = prestigeIcon.value,
             prettyTime = prettyTime,
             eventHandler = viewModel,
             isLoading = isLoading.value,

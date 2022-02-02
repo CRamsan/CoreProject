@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cesarandres.ps2link.R
@@ -32,6 +33,7 @@ import com.cramsan.ps2link.ui.widgets.BRBar
 import com.cramsan.ps2link.ui.widgets.Cert
 import com.cramsan.ps2link.ui.widgets.CertBar
 import com.cramsan.ps2link.ui.widgets.FactionIcon
+import com.cramsan.ps2link.ui.widgets.NetworkImage
 import kotlinx.datetime.Instant
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
@@ -60,6 +62,7 @@ fun ProfileCompose(
     outfit: Outfit?,
     server: String?,
     timePlayed: Duration?,
+    prestigeIcon: String?,
     sessionCount: Long?,
     isLoading: Boolean,
     isError: Boolean,
@@ -93,6 +96,17 @@ fun ProfileCompose(
                                 percentageToNextLevel = percentToNextBR ?: 0f
                             )
                             BR(level = (br ?: 0) + 1, enabled = false)
+                        }
+
+                        // Prestige Icon
+                        if (prestigeIcon != null) {
+                            NetworkImage(
+                                modifier = Modifier
+                                    .size(Size.xxlarge, Size.xxlarge)
+                                    .align(Alignment.CenterHorizontally),
+                                imageUrl = prestigeIcon,
+                                contentScale = ContentScale.Fit,
+                            )
                         }
 
                         // Prestige
@@ -230,6 +244,7 @@ fun Preview() {
         timePlayed = 1000.minutes,
         creationTime = Instant.DISTANT_PAST,
         sessionCount = 100,
+        prestigeIcon = null,
         prettyTime = PrettyTime(),
         isLoading = true,
         isError = false,

@@ -7,12 +7,17 @@ import com.cesarandres.ps2link.fragments.OpenOutfit
 import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +46,12 @@ class ProfileViewModel @Inject constructor(
     // State
     lateinit var profile: Flow<Character?>
 
+    private val _prestigeIcon = MutableStateFlow<String?>(null)
+    /**
+     * Flow that emits the URL for the prestige badge image.
+     */
+    val prestigeIcon: StateFlow<String?> = _prestigeIcon
+
     fun setUp(characterId: String?, namespace: Namespace?) {
         if (characterId == null || namespace == null) {
             logE(logTag, "Invalid arguments: characterId=$characterId namespace=$namespace")
@@ -52,7 +63,27 @@ class ProfileViewModel @Inject constructor(
         this.namespace = namespace
 
         profile = pS2LinkRepository.getCharacterAsFlow(characterId, namespace)
+        profile.onEach {
+            it ?: return@onEach
+
+            onCharacterUpdated(it)
+        }.launchIn(ioScope)
+
         onRefreshRequested()
+    }
+
+    private suspend fun onCharacterUpdated(character: Character) {
+        character.battleRank?.let {
+            val rankResponse = pS2LinkRepository.getExperienceRank(
+                it.toInt(),
+                0, // We are going to only render the ranks for pre-prestige.
+                character.faction,
+                namespace,
+                ps2Settings.getCurrentLang() ?: getCurrentLang(),
+            )
+            val rank = rankResponse.requireBody() ?: return@let
+            _prestigeIcon.value = rank.imagePath
+        }
     }
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
