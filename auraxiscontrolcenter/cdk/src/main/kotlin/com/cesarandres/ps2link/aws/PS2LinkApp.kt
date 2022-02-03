@@ -102,7 +102,7 @@ object PS2LinkApp {
                 AlarmProps.builder()
                     .metric(crashMetric)
                     .comparisonOperator(ComparisonOperator.GREATER_THAN_THRESHOLD)
-                    .threshold(5.0)
+                    .threshold(4.0)
                     .evaluationPeriods(1)
                     .datapointsToAlarm(1)
                     .build()

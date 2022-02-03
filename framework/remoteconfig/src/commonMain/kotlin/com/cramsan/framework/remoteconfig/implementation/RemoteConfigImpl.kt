@@ -52,6 +52,9 @@ class RemoteConfigImpl<T>(
         } catch (e: ResponseException) {
             eventLogger.w(TAG, "Exception when trying to make network call", e)
             false
+        } catch (e: Throwable) {
+            eventLogger.w(TAG, "Throwable when trying to reach endpoint", e)
+            false
         }
     }
 
