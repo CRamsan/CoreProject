@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -81,6 +82,11 @@ fun ProfileCompose(
                 FactionIcon(
                     modifier = Modifier.size(Size.xxlarge),
                     faction = faction ?: Faction.UNKNOWN
+                )
+
+                ErrorOverlay(
+                    modifier = Modifier.wrapContentHeight(),
+                    isError = isError
                 )
 
                 val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)
@@ -215,7 +221,6 @@ fun ProfileCompose(
                     }
                 }
             }
-            ErrorOverlay(isError = isError)
         }
     }
 }

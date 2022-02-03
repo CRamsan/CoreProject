@@ -41,10 +41,14 @@ fun LoadingOverlay(
     }
 }
 
+/**
+ * Display a semi-translucent overlay with [resourceId] as an error message.
+ */
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
 @Composable
+@Suppress("FunctionNaming")
 fun ErrorOverlay(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     isError: Boolean = false,
     resourceId: Int? = null,
 ) {
@@ -54,7 +58,7 @@ fun ErrorOverlay(
         exit = fadeOut()
     ) {
         Surface(
-            modifier.fillMaxSize(),
+            modifier,
             color = MaterialTheme.colors.primary.setAlpha(Opacity.transparent),
         ) {
             Box(modifier.fillMaxSize()) {
