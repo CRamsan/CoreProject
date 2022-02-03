@@ -4,7 +4,7 @@ apply from: "$rootDir/gradle/android-app.gradle"
 android {
     defaultConfig {
         applicationId "com.cesarandres.ps2link"
-        versionName "5.7.0"
+        versionName "5.7.1"
 
         def consumerSecret = findProperty("ps2linkConsumerSecret") ?: ""
         def consumerKey = findProperty("ps2linkConsumerKey") ?: ""
