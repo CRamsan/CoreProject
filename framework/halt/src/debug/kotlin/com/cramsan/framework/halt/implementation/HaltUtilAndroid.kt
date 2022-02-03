@@ -42,7 +42,7 @@ class HaltUtilAndroid(private val appContext: Context) : HaltUtilDelegate {
     private fun displayNotification() {
         createNotificationChannel()
         val builder = NotificationCompat.Builder(appContext, CHANNEL_ID)
-            .setContentTitle("Process has been halted")
+            .setContentTitle("Thread has been halted")
             .setSmallIcon(R.drawable.debug_icon)
             .setContentText(getStacktrace())
             .setStyle(

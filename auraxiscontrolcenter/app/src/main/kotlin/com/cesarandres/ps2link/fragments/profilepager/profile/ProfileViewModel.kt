@@ -81,8 +81,12 @@ class ProfileViewModel @Inject constructor(
                 namespace,
                 ps2Settings.getCurrentLang() ?: getCurrentLang(),
             )
-            val rank = rankResponse.requireBody() ?: return@let
-            _prestigeIcon.value = rank.imagePath
+            if (!rankResponse.isSuccessful) {
+                _prestigeIcon.value = null
+                return@let
+            }
+            val rank = rankResponse.requireBody()
+            _prestigeIcon.value = rank?.imagePath
         }
     }
 
