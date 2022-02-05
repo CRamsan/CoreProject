@@ -21,12 +21,12 @@ import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.game.models.scavenge.Consumable
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
-import com.cramsan.stranded.lib.game.models.state.AllHealthChange
 import com.cramsan.stranded.lib.game.models.state.CancellableByFire
 import com.cramsan.stranded.lib.game.models.state.CancellableByFood
 import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
 import com.cramsan.stranded.lib.game.models.state.Change
 import com.cramsan.stranded.lib.game.models.state.CraftCard
+import com.cramsan.stranded.lib.game.models.state.DamageToDo
 import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
@@ -180,7 +180,7 @@ open class DebugGameController(
             is FireModification -> Unit
             is SingleHealthChange -> Unit
             is MultiHealthChange -> Unit
-            is AllHealthChange -> Unit
+            is DamageToDo -> Unit
             Survived -> Unit
             is DrawBelongingCard -> Unit
             is DrawScavengeCard -> Unit

@@ -49,18 +49,18 @@ object FiberLost : Change(70)
 class FireModification(val change: Int) : Change(80)
 
 @Serializable
-class SingleHealthChange(val playerId: String, val healthChange: Int) : Change(90)
-
-@Serializable
-class MultiHealthChange(val playerList: List<String>, val healthChange: Int) : Change(90)
-
-@Serializable
-class AllHealthChange(val healthChange: Int) : Change(90)
+class DamageToDo(val healthChange: Int) : Change(90)
 
 @Serializable
 object Survived : Change(100)
 
 // This section is for changes around gameplay. The changes below should not be used for card effects.
+
+@Serializable
+class SingleHealthChange(val playerId: String, val healthChange: Int) : Change(90)
+
+@Serializable
+class MultiHealthChange(val playerList: List<String>, val healthChange: Int) : Change(90)
 
 @Serializable
 data class DrawBelongingCard(val playerId: String) : Change(110)

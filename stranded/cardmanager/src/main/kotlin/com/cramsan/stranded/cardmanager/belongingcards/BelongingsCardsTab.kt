@@ -3,6 +3,8 @@ package com.cramsan.stranded.cardmanager.belongingcards
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.RadioButton
@@ -32,13 +34,15 @@ fun BelongingsCardsTab(
     val remainingDays = viewModel.remainingDays.collectAsState()
 
     TabFrame(selectedIndex.value, cardDeck.value, viewModel) {
-        Column {
+        Column(modifier = Modifier.fillMaxSize()) {
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = title.value,
                 label = { Text(text = "Card title") },
                 onValueChange = { viewModel.onTitleFieldUpdated(it) }
             )
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = quantity.value.toString(),
                 label = { Text(text = "Card quantity") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -64,12 +68,14 @@ fun BelongingsCardsTab(
             }
 
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = remainingUses.value.toString(),
                 label = { Text(text = "Remaining uses") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 onValueChange = { viewModel.onRemainingUsesUpdated(it) }
             )
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = healthModifier.value?.toString() ?: "-",
                 label = { Text(text = "Health modifier") },
                 enabled = healthModifier.value != null,
@@ -77,6 +83,7 @@ fun BelongingsCardsTab(
                 onValueChange = { viewModel.onHealthModifierUpdated(it) }
             )
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = remainingDays.value?.toString() ?: "-",
                 label = { Text(text = "Remaining days") },
                 enabled = remainingDays.value != null,

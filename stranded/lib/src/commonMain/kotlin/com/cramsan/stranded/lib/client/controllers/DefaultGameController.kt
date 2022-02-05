@@ -23,12 +23,12 @@ import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.crafting.Spear
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
-import com.cramsan.stranded.lib.game.models.state.AllHealthChange
 import com.cramsan.stranded.lib.game.models.state.CancellableByFire
 import com.cramsan.stranded.lib.game.models.state.CancellableByFood
 import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
 import com.cramsan.stranded.lib.game.models.state.Change
 import com.cramsan.stranded.lib.game.models.state.CraftCard
+import com.cramsan.stranded.lib.game.models.state.DamageToDo
 import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
@@ -198,7 +198,7 @@ class DefaultGameController(
 
     override fun onEventHandled(change: Change) {
         when (change) {
-            is AllHealthChange -> Unit
+            is DamageToDo -> Unit
             CancellableByFire -> Unit
             is CancellableByFood -> Unit
             is CancellableByWeapon -> Unit

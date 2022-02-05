@@ -15,12 +15,12 @@ import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.scavenge.Useless
-import com.cramsan.stranded.lib.game.models.state.AllHealthChange
 import com.cramsan.stranded.lib.game.models.state.CancellableByFire
 import com.cramsan.stranded.lib.game.models.state.CancellableByFood
 import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
 import com.cramsan.stranded.lib.game.models.state.Change
 import com.cramsan.stranded.lib.game.models.state.CraftCard
+import com.cramsan.stranded.lib.game.models.state.DamageToDo
 import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
@@ -78,6 +78,8 @@ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEve
         is MultiHealthChange -> {
             TODO()
         }
+        is DamageToDo -> TODO()
+        /*
         is AllHealthChange -> {
             val damage = change.healthChange + fireDamageMod
 
@@ -85,6 +87,7 @@ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEve
                 player.changeHealth(damage, eventHandler)
             }
         }
+         */
         is DrawBelongingCard -> {
             val player = getPlayer(change.playerId)
             val card = drawBelongingCard()

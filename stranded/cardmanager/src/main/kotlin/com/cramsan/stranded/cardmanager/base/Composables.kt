@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.cramsan.stranded.lib.game.models.common.Card
+import com.cramsan.stranded.lib.game.models.state.Change
 import com.cramsan.stranded.lib.storage.CardHolder
 
 /**
@@ -69,11 +70,14 @@ fun <T : Card> TabFrame(
             modifier = Modifier.weight(1f)
         ) {
             CardList(
+                modifier = Modifier.weight(1f),
                 selectedIndex = selectedIndex,
                 cardDeck = cardDeck,
                 onCardSelected = { index -> handler.onCardAtIndexSelected(index) },
             )
-            Box {
+            Box(
+                modifier = Modifier.weight(3f),
+            ) {
                 content()
             }
         }
@@ -96,14 +100,15 @@ fun <T : Card> CardList(
     onCardSelected: (index: Int) -> Unit,
 ) {
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Text(
             text = "Card list",
             modifier = Modifier.padding(10.dp),
         )
         LazyColumn(
-            modifier = modifier
-                .width(200.dp)
+            modifier = modifier.fillMaxWidth()
                 .weight(1f)
         ) {
             itemsIndexed(cardDeck) { index, item ->
@@ -140,6 +145,67 @@ fun <T : Card> CardHolderItem(
             .selectable(
                 selected = selected,
                 onClick = { onCardSelected(cardIndex) }
+            )
+            .fillMaxWidth()
+            .padding(5.dp)
+    )
+}
+
+/**
+ * Render a list of Change statements.
+ */
+@Composable
+fun <T : Change> ChangeList(
+    selectedIndex: Int,
+    changeList: List<T>,
+    modifier: Modifier = Modifier,
+    onChangeSelected: (index: Int) -> Unit,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = "Statements",
+            modifier = Modifier.padding(10.dp),
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()
+                .weight(1f)
+        ) {
+            itemsIndexed(changeList) { index, item ->
+                val selected = index == selectedIndex
+                ChangeItem(
+                    item,
+                    index,
+                    selected,
+                    onChangeSelected,
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Render a [Change] statement.
+ */
+@Composable
+fun <T : Change> ChangeItem(
+    change: T,
+    cardIndex: Int,
+    selected: Boolean,
+    onItemSelected: (index: Int) -> Unit,
+) {
+    val title = change.javaClass.simpleName
+    Text(
+        text = "$title",
+        fontWeight = if (selected) { FontWeight.Bold } else { FontWeight.Normal },
+        overflow = TextOverflow.Ellipsis,
+        softWrap = false,
+        maxLines = 1,
+        modifier = Modifier
+            .selectable(
+                selected = selected,
+                onClick = { onItemSelected(cardIndex) }
             )
             .fillMaxWidth()
             .padding(5.dp)

@@ -1,8 +1,11 @@
 package com.cramsan.stranded.cardmanager.foragecards
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.RadioButton
@@ -11,6 +14,7 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.cramsan.stranded.cardmanager.base.TabFrame
@@ -34,14 +38,16 @@ fun ForageCardsTab(
     val remainingDays = viewModel.remainingDays.collectAsState()
 
     TabFrame(selectedIndex.value, cardDeck.value, viewModel) {
-        Column {
+        Column(modifier = Modifier.fillMaxSize()) {
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = title.value,
                 enabled = cardType.value != ForageCardManagerViewModel.CARD_TYPES[1],
                 label = { Text(text = "Card title") },
                 onValueChange = { viewModel.onTitleFieldUpdated(it) }
             )
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = quantity.value.toString(),
                 label = { Text(text = "Card quantity") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -90,6 +96,7 @@ fun ForageCardsTab(
             }
 
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = remainingUses.value?.toString() ?: "-",
                 label = { Text(text = "Remaining uses") },
                 enabled = remainingUses.value != null,
@@ -97,6 +104,7 @@ fun ForageCardsTab(
                 onValueChange = { viewModel.onRemainingUsesUpdated(it) }
             )
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = healthModifier.value?.toString() ?: "-",
                 label = { Text(text = "Health modifier") },
                 enabled = healthModifier.value != null,
@@ -104,6 +112,7 @@ fun ForageCardsTab(
                 onValueChange = { viewModel.onHealthModifierUpdated(it) }
             )
             TextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = remainingDays.value?.toString() ?: "-",
                 label = { Text(text = "Remaining days") },
                 enabled = remainingDays.value != null,
