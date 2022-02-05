@@ -1,11 +1,8 @@
-package com.cramsan.stranded.cardmanager
+package com.cramsan.stranded.lib.storage
 
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
-import com.cramsan.stranded.lib.storage.CardHolder
-import com.cramsan.stranded.lib.storage.CardRepository
-import com.cramsan.stranded.lib.storage.DeckHolder
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

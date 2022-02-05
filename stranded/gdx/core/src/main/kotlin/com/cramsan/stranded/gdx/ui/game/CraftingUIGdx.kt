@@ -47,7 +47,7 @@ class CraftingUIGdx(
         }
     }
 
-    override fun setPhase(gamePhase: Phase) {
+    override fun setPhaseForCrafting(gamePhase: Phase) {
         val newState = gamePhase == Phase.NIGHT_PREPARE
 
         if (enabled == newState) {

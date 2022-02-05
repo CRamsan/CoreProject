@@ -36,6 +36,7 @@ include 'auraxiscontrolcenter:ui'
 include 'stranded:lib'
 include 'stranded:gdx:core'
 include 'stranded:gdx:desktop'
+include 'stranded:cli'
 include 'stranded:cardmanager'
 
 include 'framework-samples:android-app'

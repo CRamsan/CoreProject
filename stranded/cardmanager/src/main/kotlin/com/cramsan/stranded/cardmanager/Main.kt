@@ -19,6 +19,7 @@ import com.cramsan.stranded.cardmanager.base.CardManager
 import com.cramsan.stranded.cardmanager.base.Content
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.messages.module
+import com.cramsan.stranded.lib.storage.FileBasedCardRepository
 import kotlinx.coroutines.MainScope
 import kotlinx.serialization.json.Json
 

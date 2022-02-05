@@ -17,7 +17,7 @@ class BackgroundGdx(private val shapeRenderer: ShapeRenderer) : BackgroundWidget
         color = Theme.Color.background.copy()
     }
 
-    override fun setPhase(phase: Phase) {
+    override fun setPhaseForBackground(phase: Phase) {
         val startingColorBottom = colorActionBottom.color
         val startingColorTop = colorActionTop.color
         val targetColorBottom: Color

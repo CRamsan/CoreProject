@@ -151,8 +151,8 @@ class DefaultGameController(
         // TODO: Fix this, we are creating a copy every time.
         game.setGameState(gameState)
         playerListUI.setPlayerList(gameState.gamePlayers)
-        playerHeartsWidget.setContent(gameState.gamePlayers.first())
-        handUI.setContent(gameState.gamePlayers.first())
+        playerHeartsWidget.setHeartsContent(gameState.gamePlayers.first())
+        handUI.setHandContent(gameState.gamePlayers.first())
         // shelterUI.setContent(gameState.shelters)
     }
 
@@ -216,8 +216,8 @@ class DefaultGameController(
             SelectTargetQuantityAll -> Unit
             is SetPhase -> {
                 phaseUI.setPhase(change.gamePhase)
-                craftingUI.setPhase(change.gamePhase)
-                backgroundWidget.setPhase(change.gamePhase)
+                craftingUI.setPhaseForCrafting(change.gamePhase)
+                backgroundWidget.setPhaseForBackground(change.gamePhase)
                 if (change.gamePhase == Phase.FORAGING) {
                     nightCardUI.hideCard()
                     startingHealth = game.gameState.gamePlayers.findPlayer().health
@@ -248,7 +248,7 @@ class DefaultGameController(
     override fun onPlayerHealthChange(playerId: String, health: Int) {
         playerListUI.setPlayerList(game.gameState.gamePlayers)
         if (playerId == client.player.id) {
-            playerHeartsWidget.setContent(game.gameState.getPlayer(playerId))
+            playerHeartsWidget.setHeartsContent(game.gameState.getPlayer(playerId))
         }
     }
 

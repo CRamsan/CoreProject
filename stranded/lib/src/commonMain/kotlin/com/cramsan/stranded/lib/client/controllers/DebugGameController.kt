@@ -134,10 +134,10 @@ open class DebugGameController(
         )
 
         phaseUI.setPhase(Phase.NIGHT)
-        playerHeartsWidget.setContent(currentPlayer)
+        playerHeartsWidget.setHeartsContent(currentPlayer)
         playerHeartsWidget.setEnabled(true)
         playerListUI.setPlayerList(game.gameState.gamePlayers)
-        handUI.setContent(currentPlayer)
+        handUI.setHandContent(currentPlayer)
 
         game.processEvent(SetPhase(Phase.NIGHT))
     }
@@ -189,8 +189,8 @@ open class DebugGameController(
             is SetPhase -> {
                 phase = change.gamePhase
                 phaseUI.setPhase(change.gamePhase)
-                craftingUI.setPhase(change.gamePhase)
-                backgroundWidget.setPhase(change.gamePhase)
+                craftingUI.setPhaseForCrafting(change.gamePhase)
+                backgroundWidget.setPhaseForBackground(change.gamePhase)
                 if (change.gamePhase == Phase.FORAGING) {
                     nightCardUI.hideCard()
                     playerHeartsWidget.setEnabled(true)
@@ -204,7 +204,7 @@ open class DebugGameController(
                     }
                     playerHeartsWidget.setEnabled(false)
                 }
-                handUI.setPhase(change.gamePhase)
+                handUI.setPhaseForHand(change.gamePhase)
             }
             is UserCard -> Unit
             is CraftCard -> Unit

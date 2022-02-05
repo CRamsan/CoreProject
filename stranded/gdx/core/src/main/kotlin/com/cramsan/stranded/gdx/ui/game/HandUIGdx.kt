@@ -36,7 +36,7 @@ class HandUIGdx(
         }
     }
 
-    override fun setContent(player: GamePlayer) {
+    override fun setHandContent(player: GamePlayer) {
         val cards = player.belongings + player.scavengeResults + player.craftables
         cardsUI.forEach {
             contentHolder.removeActor(it.actor)
@@ -80,7 +80,7 @@ class HandUIGdx(
         )
     }
 
-    override fun setPhase(gamePhase: Phase) {
+    override fun setPhaseForHand(gamePhase: Phase) {
         val usableCards = mutableListOf<BaseCardUI>()
         val unusableCards = mutableListOf<BaseCardUI>()
         when (gamePhase) {

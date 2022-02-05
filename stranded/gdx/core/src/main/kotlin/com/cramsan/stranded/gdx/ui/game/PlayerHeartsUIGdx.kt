@@ -76,7 +76,7 @@ class PlayerHeartsUIGdx(
         instructionsText.addAction(Actions.moveTo(0f, moveBy, Theme.Transtion.normal, Interpolation.fade))
     }
 
-    override fun setContent(player: GamePlayer) {
+    override fun setHeartsContent(player: GamePlayer) {
         this.player = player
         recompose()
     }

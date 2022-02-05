@@ -38,6 +38,7 @@ import com.cramsan.stranded.lib.messages.SetPlayerName
 import com.cramsan.stranded.lib.messages.SetReadyToStart
 import com.cramsan.stranded.lib.messages.StartGame
 import com.cramsan.stranded.lib.messages.createSerializedMessage
+import com.cramsan.stranded.lib.messages.module
 import com.cramsan.stranded.lib.messages.parseClientEvent
 import com.cramsan.stranded.lib.repository.ConnectionRepository
 import com.cramsan.stranded.lib.repository.GameRepository
@@ -45,6 +46,8 @@ import com.cramsan.stranded.lib.repository.Lobby
 import com.cramsan.stranded.lib.repository.LobbyRepository
 import com.cramsan.stranded.lib.repository.Player
 import com.cramsan.stranded.lib.repository.PlayerRepository
+import com.cramsan.stranded.lib.storage.CardRepository
+import com.cramsan.stranded.lib.storage.FileBasedCardRepository
 import com.cramsan.stranded.lib.utils.generateUUID
 import io.ktor.application.install
 import io.ktor.http.cio.websocket.DefaultWebSocketSession
@@ -62,6 +65,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
 class Server {
     var scope: CoroutineScope? = null
@@ -72,12 +76,21 @@ class Server {
 
     lateinit var gameRepository: GameRepository
 
+    lateinit var cardRepository: FileBasedCardRepository
+
     lateinit var connectionRepository: ConnectionRepository
 
     lateinit var serverJob: Job
 
     fun start() {
         scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+        cardRepository = FileBasedCardRepository(
+            filename = "test.json",
+            json = Json {
+                serializersModule = module
+            }
+        )
 
         playerRepository = PlayerRepository(object : PlayerRepository.EventHandler {
             override suspend fun onPlayerUpdated(player: Player) {
@@ -114,7 +127,7 @@ class Server {
         )
 
         connectionRepository = ConnectionRepository(lobbyRepository)
-        gameRepository = GameRepository(Dispatchers.IO)
+        gameRepository = GameRepository(cardRepository, Dispatchers.IO)
         serverJob = startServerJob()
     }
 
@@ -124,6 +137,9 @@ class Server {
     }
 
     fun startServerJob() = requireNotNull(scope).launch {
+
+        cardRepository.initialize()
+
         embeddedServer(Netty) {
             install(WebSockets)
 
@@ -200,7 +216,7 @@ class Server {
                     return
                 }
 
-                startGame(lobby.id, lobbyRepository, gameRepository, playerRepository)
+                startGame(lobby.id, lobbyRepository, gameRepository, playerRepository, cardRepository)
                 connectionRepository.broadcastToLobby(lobby.id, GameStarted)
             }
             is SetPlayerName -> {
@@ -287,7 +303,13 @@ suspend inline fun <reified T : ServerEvent> DefaultWebSocketSession.sendEvent(e
     send(message)
 }
 
-fun startGame(lobbyId: String, lobbyRepository: LobbyRepository, gameRepository: GameRepository, playerRepository: PlayerRepository) {
+fun startGame(
+    lobbyId: String,
+    lobbyRepository: LobbyRepository,
+    gameRepository: GameRepository,
+    playerRepository: PlayerRepository,
+    cardRepository: CardRepository,
+) {
     val lobby = lobbyRepository.getLobby(lobbyId)
     // TODO: Reenable check
     // if (lobby.players.size < 2) throw IllegalStateException("Cannot start game with less that 2 players")
@@ -298,31 +320,27 @@ fun startGame(lobbyId: String, lobbyRepository: LobbyRepository, gameRepository:
         playerRepository.getPlayer(it)
     }
 
+
+    cardRepository.readNightCards()
+    cardRepository.readForageCards()
+
     game.configureGame(
         players,
-        listOf(
-            Resource(ResourceType.ROCK),
-            Resource(ResourceType.STICK),
-            Resource(ResourceType.FIBER),
-            Resource(ResourceType.ROCK),
-            Resource(ResourceType.STICK),
-            Resource(ResourceType.FIBER),
-            Resource(ResourceType.ROCK),
-            Resource(ResourceType.STICK),
-            Resource(ResourceType.FIBER),
-            Resource(ResourceType.ROCK),
-            Resource(ResourceType.STICK),
-            Resource(ResourceType.FIBER),
-        ),
-        listOf(
-            NightEvent("1", emptyList()),
-            NightEvent("2", emptyList()),
-            NightEvent("3", emptyList()),
-        ),
-        listOf(
-            Equippable("4", 1),
-            StartingFood("5", 1, 1, Status.NORMAL, 1),
-        ),
+        cardRepository.readForageCards().map { holder ->
+            (0..holder.quantity).map {
+                holder.content
+            }
+        }.flatten().filterNotNull().shuffled(),
+        cardRepository.readNightCards().map { holder ->
+            (0..holder.quantity).map {
+                holder.content
+            }
+        }.flatten().filterNotNull().shuffled(),
+        cardRepository.readBelongingCards().map { holder ->
+            (0..holder.quantity).map {
+                holder.content
+            }
+        }.flatten().filterNotNull().shuffled(),
     )
     gameRepository.configureGame(lobbyId)
 }

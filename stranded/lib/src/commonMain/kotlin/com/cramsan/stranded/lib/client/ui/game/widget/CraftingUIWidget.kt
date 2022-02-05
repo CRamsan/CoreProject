@@ -5,5 +5,5 @@ import com.cramsan.stranded.lib.game.models.common.Phase
 
 interface CraftingUIWidget : UIComponent {
 
-    fun setPhase(gamePhase: Phase)
+    fun setPhaseForCrafting(gamePhase: Phase)
 }

@@ -5,6 +5,6 @@ import com.cramsan.stranded.lib.game.models.GamePlayer
 
 interface PlayerHeartsWidget : UIComponent {
     val hearts: Int
-    fun setContent(player: GamePlayer)
+    fun setHeartsContent(player: GamePlayer)
     fun setEnabled(enabled: Boolean)
 }

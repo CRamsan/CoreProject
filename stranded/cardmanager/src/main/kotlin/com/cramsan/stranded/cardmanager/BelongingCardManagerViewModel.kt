@@ -47,6 +47,9 @@ class BelongingCardManagerViewModel(
         val newQuantity: Int = try {
             quantity.toInt()
         } catch (throwable: Throwable) {
+            if (quantity.isNullOrBlank()) {
+                _remainingUses.value = 0
+            }
             return
         }
 
@@ -57,6 +60,9 @@ class BelongingCardManagerViewModel(
         val newQuantity: Int = try {
             quantity.toInt()
         } catch (throwable: Throwable) {
+            if (quantity.isNullOrBlank()) {
+                _remainingDays.value = 0
+            }
             return
         }
 
@@ -67,6 +73,9 @@ class BelongingCardManagerViewModel(
         val newQuantity: Int = try {
             quantity.toInt()
         } catch (throwable: Throwable) {
+            if (quantity.isNullOrBlank()) {
+                _healthModifier.value = 0
+            }
             return
         }
 

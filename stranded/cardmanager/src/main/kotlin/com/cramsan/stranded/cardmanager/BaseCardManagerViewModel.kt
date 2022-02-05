@@ -120,6 +120,9 @@ abstract class BaseCardManagerViewModel<T : Card>(
         val newQuantity: Int = try {
             quantity.toInt()
         } catch (throwable: Throwable) {
+            if (quantity.isNullOrBlank()) {
+                _cardQuantity.value = 0
+            }
             return
         }
 

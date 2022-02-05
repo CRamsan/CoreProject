@@ -2,11 +2,13 @@ package com.cramsan.stranded.lib.repository
 
 import com.cramsan.stranded.lib.game.intent.PlayerIntent
 import com.cramsan.stranded.lib.game.logic.Game
+import com.cramsan.stranded.lib.storage.CardRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 
 class GameRepository(
-    private val workDispatcher: CoroutineDispatcher
+    private val cardRepository: CardRepository,
+    private val workDispatcher: CoroutineDispatcher,
 ) {
 
     private val gameMapping: MutableMap<String, Game> = mutableMapOf()

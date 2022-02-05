@@ -7,11 +7,11 @@ import com.cramsan.stranded.lib.game.models.common.Phase
 
 interface PlayerHandWidget : UIComponent {
 
-    fun setContent(player: GamePlayer)
+    fun setHandContent(player: GamePlayer)
 
     fun addCard(card: Card)
 
     fun removeCard(card: Card)
 
-    fun setPhase(gamePhase: Phase)
+    fun setPhaseForHand(gamePhase: Phase)
 }
