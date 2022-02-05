@@ -13,5 +13,4 @@ sealed class NavigationCommand {
     ) : NavigationCommand()
 
     object GoToMainMenu : NavigationCommand()
-
 }

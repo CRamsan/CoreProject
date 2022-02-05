@@ -1,5 +1,6 @@
-package com.cramsan.stranded.cardmanager
+package com.cramsan.stranded.cardmanager.nightcards
 
+import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
@@ -9,6 +10,8 @@ class NightCardManagerViewModel(
     cardRepository: CardRepository,
     scope: CoroutineScope,
 ) : BaseCardManagerViewModel<NightEvent>(cardRepository, scope) {
+
+    override val tabTitle = "Night Cards"
 
     override fun readDeckFromRepository(): List<CardHolder<NightEvent>> {
         return cardRepository.readNightCards()

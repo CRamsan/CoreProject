@@ -1,6 +1,5 @@
 package com.cramsan.stranded.cli
 
-
 import com.cramsan.stranded.cli.gamemenu.GameScreen
 import com.cramsan.stranded.cli.mainmenu.MainMenuScreen
 import com.cramsan.stranded.lib.JvmClient
@@ -62,7 +61,7 @@ fun runScreen(cliScreen: CliScreen): NavigationCommand {
 fun createMainMenu(
     client: Client,
     scope: CoroutineScope,
-) = MainMenuScreen (
+) = MainMenuScreen(
     client,
     scope,
 )
@@ -73,7 +72,7 @@ fun createGame(
     lobbyId: String,
     client: Client,
     scope: CoroutineScope,
-) = GameScreen (
+) = GameScreen(
     playerId,
     playerList,
     lobbyId,

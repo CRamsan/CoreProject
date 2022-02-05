@@ -1,6 +1,8 @@
 package com.cramsan.stranded.cardmanager
 
 import com.cramsan.framework.test.TestBase
+import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
+import com.cramsan.stranded.cardmanager.nightcards.NightCardManagerViewModel
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
@@ -61,7 +63,7 @@ class BaseCardManagerViewModelTest : TestBase() {
     @Test
     fun `test changing selected card`() = runBlockingTest {
         viewModel.onShow()
-        viewModel.selectedCardAtIndex(2)
+        viewModel.onCardAtIndexSelected(2)
 
         assertEquals("Card3", viewModel.cardTitle.value)
         assertEquals(6, viewModel.cardQuantity.value)
@@ -70,7 +72,7 @@ class BaseCardManagerViewModelTest : TestBase() {
     @Test
     fun `test adding new card`() = runBlockingTest {
         viewModel.onShow()
-        viewModel.newCard()
+        viewModel.onNewCardSelected()
 
         assertEquals(4, viewModel.deck.value.size)
         assertNull(viewModel.deck.value[3].content?.title)
@@ -81,7 +83,7 @@ class BaseCardManagerViewModelTest : TestBase() {
     @Test
     fun `test removing card`() = runBlockingTest {
         viewModel.onShow()
-        viewModel.removeCard()
+        viewModel.onRemoveCardSelected()
 
         assertEquals(2, viewModel.deck.value.size)
         assertEquals("Card2", viewModel.deck.value[0].content?.title)
@@ -94,8 +96,8 @@ class BaseCardManagerViewModelTest : TestBase() {
         every { cardRepository.readNightCards() } returns emptyList()
 
         viewModel.onShow()
-        viewModel.removeCard()
-        viewModel.removeCard()
+        viewModel.onRemoveCardSelected()
+        viewModel.onRemoveCardSelected()
 
         assertEquals(1, viewModel.deck.value.size)
         assertNull(viewModel.deck.value[0].content?.title)
@@ -122,10 +124,10 @@ class BaseCardManagerViewModelTest : TestBase() {
         every { cardRepository.saveNightCards(capture(slot)) } returns Unit
 
         viewModel.onShow()
-        viewModel.updateTitle(updatedTitle)
-        viewModel.updateQuantity("10")
+        viewModel.onTitleFieldUpdated(updatedTitle)
+        viewModel.onQuantityTitleUpdated("10")
 
-        viewModel.saveDeck()
+        viewModel.onSaveDeckSelected()
 
         assertEquals(updatedTitle, slot.captured[0].content?.title)
         assertEquals(10, slot.captured[0].quantity)
@@ -139,9 +141,9 @@ class BaseCardManagerViewModelTest : TestBase() {
         val updatedTitle = "Updated Card Title"
 
         viewModel.onShow()
-        viewModel.updateTitle(updatedTitle)
-        viewModel.updateQuantity("10")
-        viewModel.newCard()
+        viewModel.onTitleFieldUpdated(updatedTitle)
+        viewModel.onQuantityTitleUpdated("10")
+        viewModel.onNewCardSelected()
 
         assertEquals(updatedTitle, viewModel.deck.value[0].content?.title)
     }

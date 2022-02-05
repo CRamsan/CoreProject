@@ -27,6 +27,10 @@ import androidx.compose.ui.unit.dp
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.storage.CardHolder
 
+/**
+ * Main frame for the CardManager. This is a tabbed layout controlled by the [tabTitles]. Based on
+ * the selected tab the [tabContent] will display the intended content.
+ */
 @Composable
 fun CardManager(
     tabTitles: List<String>,
@@ -49,6 +53,41 @@ fun CardManager(
     }
 }
 
+/**
+ * Display the frame for a selected tab. This will include a bottom bar and a card list.
+ * The [content] will be displayed as the main content of this screen.
+ */
+@Composable
+fun <T : Card> TabFrame(
+    selectedIndex: Int,
+    cardDeck: List<CardHolder<T>>,
+    handler: CardEventHandler,
+    content: @Composable () -> Unit
+) {
+    Column {
+        Row(
+            modifier = Modifier.weight(1f)
+        ) {
+            CardList(
+                selectedIndex = selectedIndex,
+                cardDeck = cardDeck,
+                onCardSelected = { index -> handler.onCardAtIndexSelected(index) },
+            )
+            Box {
+                content()
+            }
+        }
+        BottomBar(
+            onNew = { handler.onNewCardSelected() },
+            onSave = { handler.onSaveDeckSelected() },
+            onRemove = { handler.onRemoveCardSelected() },
+        )
+    }
+}
+
+/**
+ * Render a list of cards of type [T].
+ */
 @Composable
 fun <T : Card> CardList(
     selectedIndex: Int,
@@ -69,60 +108,53 @@ fun <T : Card> CardList(
         ) {
             itemsIndexed(cardDeck) { index, item ->
                 val selected = index == selectedIndex
-                val title = item.content?.title ?: "New title"
-                Text(
-                    text = "$title x ${item.quantity}",
-                    fontWeight = if (selected) { FontWeight.Bold } else { FontWeight.Normal },
-                    overflow = TextOverflow.Ellipsis,
-                    softWrap = false,
-                    maxLines = 1,
-                    modifier = Modifier
-                        .selectable(
-                            selected = selected,
-                            onClick = { onCardSelected(index) }
-                        )
-                        .fillMaxWidth()
-                        .padding(5.dp)
+                CardHolderItem(
+                    item,
+                    index,
+                    selected,
+                    onCardSelected,
                 )
             }
         }
     }
 }
 
+/**
+ * Render a card as part of a list.
+ */
 @Composable
-fun <T : Card> Content(
-    selectedIndex: Int,
-    cardDeck: List<CardHolder<T>>,
-    handler: CardEventHandler,
-    content: @Composable () -> Unit
+fun <T : Card> CardHolderItem(
+    cardHolder: CardHolder<T>,
+    cardIndex: Int,
+    selected: Boolean,
+    onCardSelected: (index: Int) -> Unit,
 ) {
-    Column {
-        Row(
-            modifier = Modifier.weight(1f)
-        ) {
-            CardList(
-                selectedIndex = selectedIndex,
-                cardDeck = cardDeck,
-                onCardSelected = { index -> handler.selectedCardAtIndex(index) },
+    val title = cardHolder.content?.title ?: "New title"
+    Text(
+        text = "$title x ${cardHolder.quantity}",
+        fontWeight = if (selected) { FontWeight.Bold } else { FontWeight.Normal },
+        overflow = TextOverflow.Ellipsis,
+        softWrap = false,
+        maxLines = 1,
+        modifier = Modifier
+            .selectable(
+                selected = selected,
+                onClick = { onCardSelected(cardIndex) }
             )
-            Box {
-                content()
-            }
-        }
-        BottomBar(
-            onNew = { handler.newCard() },
-            onSave = { handler.saveDeck() },
-            onDelete = { handler.removeCard() },
-        )
-    }
+            .fillMaxWidth()
+            .padding(5.dp)
+    )
 }
 
+/**
+ * Render a bottom bar with some global actions such as Save, Remove, New.
+ */
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
     onSave: () -> Unit,
     onNew: () -> Unit,
-    onDelete: () -> Unit,
+    onRemove: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -134,10 +166,10 @@ fun BottomBar(
             Text("New")
         }
         Button(
-            onClick = onDelete,
+            onClick = onRemove,
             modifier = Modifier.padding(5.dp)
         ) {
-            Text("Delete")
+            Text("Remove")
         }
         Spacer(modifier = Modifier.weight(1f))
         Button(
@@ -149,11 +181,37 @@ fun BottomBar(
     }
 }
 
+/**
+ * Handler for all interactions that come from the UI layer.
+ */
 interface CardEventHandler {
-    fun selectedCardAtIndex(index: Int)
-    fun newCard()
-    fun saveDeck()
-    fun removeCard()
-    fun updateTitle(title: String)
-    fun updateQuantity(quantity: String)
+    /**
+     * The card at position [index] was selected by the user.
+     */
+    fun onCardAtIndexSelected(index: Int)
+
+    /**
+     * The user pressed the New button.
+     */
+    fun onNewCardSelected()
+
+    /**
+     * The user pressed the Save button.
+     */
+    fun onSaveDeckSelected()
+
+    /**
+     * The user pressed the Remove button.
+     */
+    fun onRemoveCardSelected()
+
+    /**
+     * The field containing the title was updated with a new string [title].
+     */
+    fun onTitleFieldUpdated(title: String)
+
+    /**
+     * The field containing the card quantity was updated with a new string [quantity].
+     */
+    fun onQuantityTitleUpdated(quantity: String)
 }

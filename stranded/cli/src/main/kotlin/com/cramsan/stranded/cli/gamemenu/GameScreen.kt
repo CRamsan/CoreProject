@@ -4,11 +4,8 @@ import com.cramsan.stranded.cli.CliScreen
 import com.cramsan.stranded.cli.NavigationCommand
 import com.cramsan.stranded.lib.client.Client
 import com.cramsan.stranded.lib.client.controllers.DefaultGameController
-import com.cramsan.stranded.lib.client.controllers.DefaultMainMenuController
 import com.cramsan.stranded.lib.client.controllers.GameController
 import com.cramsan.stranded.lib.client.controllers.GameControllerEventHandler
-import com.cramsan.stranded.lib.client.controllers.MainMenuEventHandler
-import com.cramsan.stranded.lib.client.ui.game.GameScreenEventHandler
 import com.cramsan.stranded.lib.client.ui.game.widget.CraftingUIWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.NightCardWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PhaseComponentWidget
@@ -16,16 +13,12 @@ import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHandWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerHeartsWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.PlayerListWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.ShelterWidget
-import com.cramsan.stranded.lib.client.ui.mainmenu.LobbyListMenu
-import com.cramsan.stranded.lib.client.ui.mainmenu.LobbyMenu
-import com.cramsan.stranded.lib.client.ui.mainmenu.PlayerNameMenu
 import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.crafting.Shelter
 import com.cramsan.stranded.lib.repository.GameScope
-import com.cramsan.stranded.lib.repository.Lobby
 import com.cramsan.stranded.lib.repository.Player
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +29,16 @@ class GameScreen(
     private val lobbyId: String,
     client: Client,
     scope: CoroutineScope,
-) : CliScreen, PlayerListWidget, PlayerHeartsWidget, PlayerHandWidget, ShelterWidget, PhaseComponentWidget,
-    NightCardWidget, CraftingUIWidget, GameControllerEventHandler, BackgroundWidget {
+) : CliScreen,
+    PlayerListWidget,
+    PlayerHeartsWidget,
+    PlayerHandWidget,
+    ShelterWidget,
+    PhaseComponentWidget,
+    NightCardWidget,
+    CraftingUIWidget,
+    GameControllerEventHandler,
+    BackgroundWidget {
 
     private var controller: GameController
 
@@ -109,7 +110,7 @@ class GameScreen(
             GameCommand.LIST_HAND -> {
                 println("Hand contents:")
                 _hand.forEach {
-                    println("\t${it}")
+                    println("\t$it")
                 }
             }
             GameCommand.PLAY_CARD -> {
@@ -130,7 +131,7 @@ class GameScreen(
 
     private fun readArgumentIfNeeded(command: GameCommand?): String? = when (command) {
         GameCommand.PLAY_CARD, GameCommand.SPEND_ENERGY -> readln()
-        GameCommand.SET_READY, GameCommand.SET_NOT_READY,GameCommand.LIST_HAND, GameCommand.HELP, GameCommand.EXIT, null -> null
+        GameCommand.SET_READY, GameCommand.SET_NOT_READY, GameCommand.LIST_HAND, GameCommand.HELP, GameCommand.EXIT, null -> null
     }
 
     override fun stopScreen() {
@@ -171,7 +172,6 @@ class GameScreen(
     override fun removeCard(card: Card) {
         _hand.remove(card)
     }
-
 
     override fun setPhaseForHand(gamePhase: Phase) {
     }

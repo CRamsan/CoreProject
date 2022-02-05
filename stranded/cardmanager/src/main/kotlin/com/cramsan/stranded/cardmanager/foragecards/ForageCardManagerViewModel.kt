@@ -1,5 +1,6 @@
-package com.cramsan.stranded.cardmanager
+package com.cramsan.stranded.cardmanager.foragecards
 
+import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
 import com.cramsan.stranded.lib.game.models.common.Status
 import com.cramsan.stranded.lib.game.models.scavenge.Consumable
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
@@ -16,6 +17,8 @@ class ForageCardManagerViewModel(
     cardRepository: CardRepository,
     scope: CoroutineScope,
 ) : BaseCardManagerViewModel<ScavengeResult>(cardRepository, scope) {
+
+    override val tabTitle = "Forage Cards"
 
     private val _cartType = MutableStateFlow(CARD_TYPES.first())
     val cardType: StateFlow<String> = _cartType
@@ -52,7 +55,7 @@ class ForageCardManagerViewModel(
         }
 
         _resourceType.value = resourceType
-        updateTitle(resourceType.name)
+        onTitleFieldUpdated(resourceType.name)
     }
 
     fun onRemainingUsesUpdated(quantity: String) {
@@ -113,15 +116,23 @@ class ForageCardManagerViewModel(
         }
 
         when (selectedCard) {
-            is Resource, is Useless, null -> {
+            is Useless, null -> {
                 _remainingDays.value = null
                 _healthModifier.value = null
                 _remainingUses.value = null
+                _resourceType.value = null
             }
             is Consumable -> {
                 _remainingDays.value = selectedCard.remainingDays
                 _healthModifier.value = selectedCard.healthModifier
                 _remainingUses.value = selectedCard.remainingUses
+                _resourceType.value = null
+            }
+            is Resource -> {
+                _remainingDays.value = null
+                _healthModifier.value = null
+                _remainingUses.value = null
+                _resourceType.value = selectedCard.resourceType
             }
         }
     }

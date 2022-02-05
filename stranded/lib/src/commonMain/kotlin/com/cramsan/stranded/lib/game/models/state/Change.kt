@@ -13,6 +13,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Change(val priority: Int)
 
+// This section is for changes that will be caused by card effects.
+
 @Serializable
 object CancellableByFire : Change(0)
 
@@ -57,6 +59,8 @@ class AllHealthChange(val healthChange: Int) : Change(90)
 
 @Serializable
 object Survived : Change(100)
+
+// This section is for changes around gameplay. The changes below should not be used for card effects.
 
 @Serializable
 data class DrawBelongingCard(val playerId: String) : Change(110)

@@ -20,16 +20,16 @@ fun commandFromString(friendlyName: String): GameCommand? {
 fun GameCommand.getCommandString() = this.friendlyName
 
 fun GameCommand.getInstructions() = "command: ${getCommandString()}\n" +
-        "argument: ${when (this) {
-            GameCommand.PLAY_CARD -> "[card id]"
-            GameCommand.SPEND_ENERGY -> "[number of hearts]"
-            GameCommand.LIST_HAND -> "[NONE]"
-            GameCommand.SET_READY -> "[NONE]"
-            GameCommand.SET_NOT_READY -> "[NONE]"
-            GameCommand.HELP -> "[NONE]"
-            GameCommand.EXIT -> "[NONE]"
-        }}"
+    "argument: ${when (this) {
+        GameCommand.PLAY_CARD -> "[card id]"
+        GameCommand.SPEND_ENERGY -> "[number of hearts]"
+        GameCommand.LIST_HAND -> "[NONE]"
+        GameCommand.SET_READY -> "[NONE]"
+        GameCommand.SET_NOT_READY -> "[NONE]"
+        GameCommand.HELP -> "[NONE]"
+        GameCommand.EXIT -> "[NONE]"
+    }}"
 
 fun availableCommandsMessage() = "Available commands: ${
-    GameCommand.values().toList().joinToString { it.getCommandString() }
+GameCommand.values().toList().joinToString { it.getCommandString() }
 }"

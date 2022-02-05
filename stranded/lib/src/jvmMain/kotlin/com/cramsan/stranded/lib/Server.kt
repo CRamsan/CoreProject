@@ -3,12 +3,6 @@ package com.cramsan.stranded.lib
 import com.cramsan.stranded.lib.game.intent.PlayerIntent
 import com.cramsan.stranded.lib.game.logic.GameEventHandler
 import com.cramsan.stranded.lib.game.models.common.Card
-import com.cramsan.stranded.lib.game.models.common.Equippable
-import com.cramsan.stranded.lib.game.models.common.StartingFood
-import com.cramsan.stranded.lib.game.models.common.Status
-import com.cramsan.stranded.lib.game.models.night.NightEvent
-import com.cramsan.stranded.lib.game.models.scavenge.Resource
-import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.state.Change
 import com.cramsan.stranded.lib.messages.ClientEvent
 import com.cramsan.stranded.lib.messages.Connected
@@ -319,7 +313,6 @@ fun startGame(
     val players = lobby.players.map {
         playerRepository.getPlayer(it)
     }
-
 
     cardRepository.readNightCards()
     cardRepository.readForageCards()

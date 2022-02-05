@@ -23,19 +23,19 @@ fun commandFromString(friendlyName: String): MainMenuCommand? {
 fun MainMenuCommand.getCommandString() = this.friendlyName
 
 fun MainMenuCommand.getInstructions() = "command: ${getCommandString()}\n" +
-        "argument: ${when (this) {
-            MainMenuCommand.SET_NAME -> "[new player name]"
-            MainMenuCommand.LIST -> "[NONE]"
-            MainMenuCommand.JOIN -> "[lobby id]"
-            MainMenuCommand.LEAVE -> "[NONE]"
-            MainMenuCommand.CREATE -> "[lobby name]"
-            MainMenuCommand.SET_READY -> "[NONE]"
-            MainMenuCommand.SET_NOT_READY -> "[NONE]"
-            MainMenuCommand.START_GAME -> "[NONE]"
-            MainMenuCommand.HELP -> "[NONE]"
-            MainMenuCommand.EXIT -> "[NONE]"
-        }}"
+    "argument: ${when (this) {
+        MainMenuCommand.SET_NAME -> "[new player name]"
+        MainMenuCommand.LIST -> "[NONE]"
+        MainMenuCommand.JOIN -> "[lobby id]"
+        MainMenuCommand.LEAVE -> "[NONE]"
+        MainMenuCommand.CREATE -> "[lobby name]"
+        MainMenuCommand.SET_READY -> "[NONE]"
+        MainMenuCommand.SET_NOT_READY -> "[NONE]"
+        MainMenuCommand.START_GAME -> "[NONE]"
+        MainMenuCommand.HELP -> "[NONE]"
+        MainMenuCommand.EXIT -> "[NONE]"
+    }}"
 
 fun availableCommandsMessage() = "Available commands: ${
-    MainMenuCommand.values().toList().joinToString { it.getCommandString() }
+MainMenuCommand.values().toList().joinToString { it.getCommandString() }
 }"

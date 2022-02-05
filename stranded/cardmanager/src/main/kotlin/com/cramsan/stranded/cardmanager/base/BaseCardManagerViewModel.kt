@@ -1,6 +1,5 @@
-package com.cramsan.stranded.cardmanager
+package com.cramsan.stranded.cardmanager.base
 
-import com.cramsan.stranded.cardmanager.base.CardEventHandler
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
@@ -17,6 +16,8 @@ abstract class BaseCardManagerViewModel<T : Card>(
     protected val cardRepository: CardRepository,
     protected val scope: CoroutineScope,
 ) : CardEventHandler {
+
+    abstract val tabTitle: String
 
     protected val _deck = MutableStateFlow<List<CardHolder<T>>>(listOf())
     val deck: StateFlow<List<CardHolder<T>>> = _deck
@@ -55,23 +56,23 @@ abstract class BaseCardManagerViewModel<T : Card>(
         }.launchIn(scope)
     }
 
-    override fun saveDeck() = runBlocking {
+    override fun onSaveDeckSelected() = runBlocking {
         saveCardToDeck()
         withContext(Dispatchers.IO) {
             writeDeckToRepository(_deck.value)
             _deck.value = readDeckFromRepository()
         }
-        selectedCardAtIndex(selectedCardIndex.value)
+        onCardAtIndexSelected(selectedCardIndex.value)
     }
 
     abstract fun writeDeckToRepository(deck: List<CardHolder<T>>)
 
-    override fun newCard() {
+    override fun onNewCardSelected() {
         saveCardToDeck()
         _selectedCardIndex.value = _deck.value.size
     }
 
-    override fun removeCard() {
+    override fun onRemoveCardSelected() {
         val newDeck = _deck.value.toMutableList()
         newDeck.removeAt(selectedCardIndex.value)
         _deck.value = newDeck
@@ -105,18 +106,18 @@ abstract class BaseCardManagerViewModel<T : Card>(
         onSelectedCardIndexChange()
     }
 
-    override fun selectedCardAtIndex(index: Int) {
+    override fun onCardAtIndexSelected(index: Int) {
         saveCardToDeck()
         _selectedCardIndex.value = index
     }
 
     protected abstract fun loadCardAtIndex(index: Int)
 
-    override fun updateTitle(title: String) {
+    override fun onTitleFieldUpdated(title: String) {
         _cardTitle.value = title
     }
 
-    override fun updateQuantity(quantity: String) {
+    override fun onQuantityTitleUpdated(quantity: String) {
         val newQuantity: Int = try {
             quantity.toInt()
         } catch (throwable: Throwable) {

@@ -1,5 +1,6 @@
-package com.cramsan.stranded.cardmanager
+package com.cramsan.stranded.cardmanager.belongingcards
 
+import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Equippable
 import com.cramsan.stranded.lib.game.models.common.StartingFood
@@ -14,6 +15,8 @@ class BelongingCardManagerViewModel(
     cardRepository: CardRepository,
     scope: CoroutineScope,
 ) : BaseCardManagerViewModel<Belongings>(cardRepository, scope) {
+
+    override val tabTitle = "Belonging Cards"
 
     private val _cartType = MutableStateFlow(CARD_TYPES.first())
     val cardType: StateFlow<String> = _cartType
