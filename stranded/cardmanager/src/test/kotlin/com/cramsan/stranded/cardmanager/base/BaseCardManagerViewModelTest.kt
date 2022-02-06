@@ -1,7 +1,6 @@
-package com.cramsan.stranded.cardmanager
+package com.cramsan.stranded.cardmanager.base
 
 import com.cramsan.framework.test.TestBase
-import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
 import com.cramsan.stranded.cardmanager.nightcards.NightCardManagerViewModel
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.storage.CardHolder
@@ -27,14 +26,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         every { cardRepository.readNightCards() } returns listOf(CARD_HOLDER_1, CARD_HOLDER_2, CARD_HOLDER_3)
 
         viewModel = NightCardManagerViewModel(cardRepository, testCoroutineScope)
-    }
-
-    @Test
-    fun `test initial state`() = runBlockingTest {
-        assertEquals("New title", viewModel.cardTitle.value)
-        assertEquals(0, viewModel.cardQuantity.value)
-        assertEquals(0, viewModel.selectedCardIndex.value)
-        assertEquals(listOf(CardHolder<NightEvent>(null, 0)), viewModel.deck.value)
     }
 
     @Test

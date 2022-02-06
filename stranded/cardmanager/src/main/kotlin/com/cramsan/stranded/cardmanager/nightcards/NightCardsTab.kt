@@ -41,7 +41,6 @@ fun NightCardsTab(
     val argument1Field = viewModel.argument1Field.collectAsState()
     val argument2Label = viewModel.argument2Label.collectAsState()
     val argument2Field = viewModel.argument2Field.collectAsState()
-    val changeType = viewModel.changeType.collectAsState()
 
     TabFrame(selectedIndex.value, cardDeck.value, viewModel) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -60,7 +59,7 @@ fun NightCardsTab(
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-            ){
+            ) {
                 Column(
                     modifier = Modifier.weight(1f),
                 ) {
@@ -82,27 +81,30 @@ fun NightCardsTab(
                     onChangeSelected = { index -> viewModel.onChangeAtIndexSelected(index) }
                 )
                 Column(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(2f),
                 ) {
                     Text("Statement type")
                     var expanded by remember { mutableStateOf(false) }
-                    val selectedChangeTypeIndex = NightCardManagerViewModel.CHANGE_TYPES.indexOf(changeType.value)
-                    Text(
-                        NightCardManagerViewModel.CHANGE_TYPES[selectedChangeTypeIndex],
-                        modifier = Modifier.fillMaxWidth()
-                            .clickable { expanded = true }
-                            .background(Color.Gray)
-                    )
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                    ) {
-                        NightCardManagerViewModel.CHANGE_TYPES.forEach { type ->
-                            DropdownMenuItem(onClick = {
-                                viewModel.onChangeTypeSelected(type)
-                                expanded = false
-                            }) {
-                                Text(text = type)
+                    val dropDownEnabled = selectedChangeIndex.value >= 0
+
+                    if (dropDownEnabled) {
+                        Text(
+                            changeList.value[selectedChangeIndex.value].javaClass.simpleName,
+                            modifier = Modifier.fillMaxWidth()
+                                .background(Color.Gray)
+                                .clickable { expanded = true }
+                        )
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                        ) {
+                            NightCardManagerViewModel.CHANGE_TYPES.forEachIndexed { index, type ->
+                                DropdownMenuItem(onClick = {
+                                    viewModel.onChangeTypeIndexSelected(index)
+                                    expanded = false
+                                }) {
+                                    Text(text = type)
+                                }
                             }
                         }
                     }
@@ -110,21 +112,21 @@ fun NightCardsTab(
                     val label1 = argument1Label.value
                     if (label1 != null) {
                         TextField(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.fillMaxWidth(),
                             value = argument1Field.value,
                             label = { Text(text = label1) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            onValueChange = { viewModel.onQuantityTitleUpdated(it) }
+                            onValueChange = { viewModel.onArgument1FieldUpdated(it) }
                         )
                     }
                     val label2 = argument2Label.value
                     if (label2 != null) {
                         TextField(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.fillMaxWidth(),
                             value = argument2Field.value,
                             label = { Text(text = label2) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            onValueChange = { viewModel.onQuantityTitleUpdated(it) }
+                            onValueChange = { viewModel.onArgument2FieldUpdated(it) }
                         )
                     }
                 }

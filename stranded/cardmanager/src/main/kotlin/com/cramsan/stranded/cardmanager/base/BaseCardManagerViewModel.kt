@@ -19,7 +19,7 @@ abstract class BaseCardManagerViewModel<T : Card>(
 
     abstract val tabTitle: String
 
-    protected val _deck = MutableStateFlow<List<CardHolder<T>>>(listOf())
+    private val _deck = MutableStateFlow<List<CardHolder<T>>>(listOf())
     val deck: StateFlow<List<CardHolder<T>>> = _deck
 
     private val _selectedCardIndex = MutableStateFlow(0)
@@ -31,15 +31,6 @@ abstract class BaseCardManagerViewModel<T : Card>(
     private val _cardTitle = MutableStateFlow("")
     val cardTitle: StateFlow<String> = _cardTitle
 
-    fun onShow() = runBlocking {
-        withContext(Dispatchers.IO) {
-            _deck.value = readDeckFromRepository()
-        }
-        initializeDeck()
-    }
-
-    abstract fun readDeckFromRepository(): List<CardHolder<T>>
-
     protected val onSelectedCardIndexChange = {
         val newSelectedCard = _deck.value.elementAtOrNull(_selectedCardIndex.value)
         _cardTitle.value = newSelectedCard?.content?.title ?: "New title"
@@ -50,11 +41,17 @@ abstract class BaseCardManagerViewModel<T : Card>(
         loadCardAtIndex(_selectedCardIndex.value)
     }
 
-    init {
+    open fun onShow() = runBlocking {
+        withContext(Dispatchers.IO) {
+            _deck.value = readDeckFromRepository()
+        }
+        initializeDeck()
         _selectedCardIndex.onEach {
             onSelectedCardIndexChange()
         }.launchIn(scope)
     }
+
+    abstract fun readDeckFromRepository(): List<CardHolder<T>>
 
     override fun onSaveDeckSelected() = runBlocking {
         saveCardToDeck()
@@ -94,13 +91,6 @@ abstract class BaseCardManagerViewModel<T : Card>(
     }
 
     protected abstract fun instanciateNewCard(): T
-
-    private fun sanitizeBaseInput() {
-        _cardTitle.value = _cardTitle.value.trim()
-        sanitizeInput()
-    }
-
-    abstract fun sanitizeInput()
 
     protected fun initializeDeck() {
         onSelectedCardIndexChange()

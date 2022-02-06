@@ -88,8 +88,6 @@ class ForageCardManagerViewModel(
         _healthModifier.value = newQuantity
     }
 
-    override fun sanitizeInput() = Unit
-
     override fun instanciateNewCard(): ScavengeResult {
         return when (cardType.value) {
             CARD_TYPES[0] -> Consumable(

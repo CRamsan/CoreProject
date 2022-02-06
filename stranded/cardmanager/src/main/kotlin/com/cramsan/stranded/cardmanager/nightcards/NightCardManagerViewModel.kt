@@ -43,26 +43,25 @@ class NightCardManagerViewModel(
     private val _selectedChangeIndex = MutableStateFlow(-1)
     val selectedChangeIndex: StateFlow<Int> = _selectedChangeIndex
 
-    protected val _changeList = MutableStateFlow<List<Change>>(listOf())
+    private val _changeList = MutableStateFlow<List<Change>>(listOf())
     val changeList: StateFlow<List<Change>> = _changeList
 
-    protected val _change = MutableStateFlow<Change?>(null)
+    private val _change = MutableStateFlow<Change?>(null)
     val change: StateFlow<Change?> = _change
 
     private val _argument1Label = MutableStateFlow<String?>(null)
     val argument1Label: StateFlow<String?> = _argument1Label
 
-    private val _argument1Field = MutableStateFlow<String>("")
+    private val _argument1Field = MutableStateFlow("")
     val argument1Field: StateFlow<String> = _argument1Field
 
     private val _argument2Label = MutableStateFlow<String?>(null)
     val argument2Label: StateFlow<String?> = _argument2Label
 
-    private val _argument2Field = MutableStateFlow<String>("")
+    private val _argument2Field = MutableStateFlow("")
     val argument2Field: StateFlow<String> = _argument2Field
 
-    private val _changeType = MutableStateFlow(CHANGE_TYPES.first())
-    val changeType: StateFlow<String> = _changeType
+    private var selectedChangeTypeIndex = -1
 
     private val onSelectedChangeIndexChange = callback@{
         val change = _changeList.value.elementAtOrNull(_selectedChangeIndex.value)
@@ -79,7 +78,7 @@ class NightCardManagerViewModel(
         loadChangeAtIndex(_selectedChangeIndex.value)
     }
 
-    init {
+    override fun onShow() = super.onShow().let {
         _selectedChangeIndex.onEach {
             onSelectedChangeIndexChange()
         }.launchIn(scope)
@@ -94,15 +93,83 @@ class NightCardManagerViewModel(
     }
 
     override fun instanciateNewCard(): NightEvent {
+        val newChangeList = instantiateChangeList()
+
+        _changeList.value = newChangeList
+
         return NightEvent(
             cardTitle.value,
-            changeList.value,
+            newChangeList,
         )
     }
 
-    override fun loadCardAtIndex(index: Int) = Unit
+    private fun instantiateChangeList(): List<Change> {
+        val sanitizedChange = when (val changeToSanitize = _change.value) {
+            CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
+            FiberLost, Survived -> changeToSanitize
+            is CancellableByFood -> {
+                changeToSanitize.copy(
+                    change = _argument1Field.value.toIntOrNull() ?: 0
+                )
+            }
+            is SelectTargetOnlyUnsheltered -> {
+                changeToSanitize.copy(
+                    onlyUnsheltered = _argument1Field.value.toBooleanStrictOrNull() ?: false
+                )
+            }
+            is SelectTargetQuantity -> {
+                changeToSanitize.copy(
+                    affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0
+                )
+            }
+            is CancellableByWeapon -> {
+                changeToSanitize.copy(
+                    change = _argument1Field.value.toIntOrNull() ?: 0
+                )
+            }
+            is ForageCardLost -> {
+                changeToSanitize.copy(
+                    affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0,
+                    cardsLost = _argument1Field.value.toIntOrNull() ?: 0,
+                )
+            }
+            is FireModification -> {
+                changeToSanitize.copy(
+                    change = _argument1Field.value.toIntOrNull() ?: 0
+                )
+            }
+            is DamageToDo -> {
+                changeToSanitize.copy(
+                    healthChange = _argument1Field.value.toIntOrNull() ?: 0
+                )
+            }
 
-    override fun sanitizeInput() = Unit
+            is SingleHealthChange, is MultiHealthChange, is CraftCard, is DrawBelongingCard, DrawNightCard,
+            is DrawScavengeCard, IncrementNight, is SetPhase, is UserCard, null -> changeToSanitize
+        } ?: return emptyList()
+
+        val newList = changeList.value.toMutableList()
+        newList[selectedChangeIndex.value] = sanitizedChange
+        return newList
+    }
+
+    override fun loadCardAtIndex(index: Int) {
+        val selectedCard = deck.value[selectedCardIndex.value].content
+        selectedCard?.statements.let {
+            if (it == null) {
+                _changeList.value = emptyList()
+            } else {
+                _changeList.value = it
+            }
+            if (it.isNullOrEmpty()) {
+                _selectedChangeIndex.value = -1
+                selectedChangeTypeIndex = -1
+            } else {
+                _selectedChangeIndex.value = 0
+                selectedChangeTypeIndex = 0
+            }
+        }
+    }
 
     fun onChangeAtIndexSelected(index: Int) {
         saveCardToDeck()
@@ -131,26 +198,7 @@ class NightCardManagerViewModel(
         _argument2Label.value = null
         _argument2Field.value = ""
 
-        val change = _changeList.value.elementAt(index)
-
-        _changeType.value = when (change) {
-            is CancellableByFire -> CHANGE_TYPES[0]
-            is DestroyShelter -> CHANGE_TYPES[1]
-            is CancellableByFood -> CHANGE_TYPES[2]
-            is FireUnavailableTomorrow -> CHANGE_TYPES[3]
-            is SelectTargetOnlyUnsheltered -> CHANGE_TYPES[4]
-            is SelectTargetQuantity -> CHANGE_TYPES[5]
-            is SelectTargetQuantityAll -> CHANGE_TYPES[6]
-            is CancellableByWeapon -> CHANGE_TYPES[7]
-            is ForageCardLost -> CHANGE_TYPES[8]
-            is FiberLost -> CHANGE_TYPES[9]
-            is FireModification -> CHANGE_TYPES[10]
-            is DamageToDo -> CHANGE_TYPES[11]
-            is Survived -> CHANGE_TYPES[12]
-            else -> TODO()
-        }
-
-        when (change) {
+        when (val change = _changeList.value.elementAt(index)) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
             FiberLost, Survived -> Unit
             is CancellableByFood -> {
@@ -190,7 +238,7 @@ class NightCardManagerViewModel(
     }
 
     private fun instantiateNewChange(): Change {
-        return when (_changeType.value) {
+        return when (CHANGE_TYPES[selectedChangeTypeIndex]) {
             CHANGE_TYPES[0] -> CancellableByFire
             CHANGE_TYPES[1] -> DestroyShelter
             CHANGE_TYPES[2] -> CancellableByFood(1)
@@ -208,9 +256,8 @@ class NightCardManagerViewModel(
         }
     }
 
-    fun onChangeTypeSelected(type: String) {
-        _changeType.value = type
-
+    fun onChangeTypeIndexSelected(index: Int) {
+        selectedChangeTypeIndex = index
         val newChange = instantiateNewChange()
         val list = _changeList.value.toMutableList()
         list[_selectedChangeIndex.value] = newChange
@@ -218,6 +265,14 @@ class NightCardManagerViewModel(
 
         saveCardToDeck()
         onSelectedChangeIndexChange()
+    }
+
+    fun onArgument1FieldUpdated(argument: String) {
+        _argument1Field.value = argument
+    }
+
+    fun onArgument2FieldUpdated(argument: String) {
+        _argument1Field.value = argument
     }
 
     companion object {

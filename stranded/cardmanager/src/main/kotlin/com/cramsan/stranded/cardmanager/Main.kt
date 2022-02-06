@@ -19,6 +19,7 @@ fun main() = application {
         filename = "test.json",
         json = Json {
             serializersModule = module
+            prettyPrint = true
         }
     )
 

@@ -44,8 +44,6 @@ class BelongingCardManagerViewModel(
         onSelectedCardIndexChange()
     }
 
-    override fun sanitizeInput() = Unit
-
     fun onRemainingUsesUpdated(quantity: String) {
         val newQuantity: Int = try {
             quantity.toInt()

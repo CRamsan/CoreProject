@@ -22,34 +22,34 @@ object CancellableByFire : Change(0)
 object DestroyShelter : Change(10)
 
 @Serializable
-class CancellableByFood(val change: Int) : Change(20)
+data class CancellableByFood(val change: Int) : Change(20)
 
 @Serializable
 object FireUnavailableTomorrow : Change(30)
 
 @Serializable
-class SelectTargetOnlyUnsheltered(val onlyUnsheltered: Boolean) : Change(40)
+data class SelectTargetOnlyUnsheltered(val onlyUnsheltered: Boolean) : Change(40)
 
 @Serializable
-class SelectTargetQuantity(val affectedPlayers: Int) : Change(45)
+data class SelectTargetQuantity(val affectedPlayers: Int) : Change(45)
 
 @Serializable
 object SelectTargetQuantityAll : Change(47)
 
 @Serializable
-class CancellableByWeapon(val change: Int) : Change(50)
+data class CancellableByWeapon(val change: Int) : Change(50)
 
 @Serializable
-class ForageCardLost(val affectedPlayers: Int, val cardsLost: Int) : Change(60)
+data class ForageCardLost(val affectedPlayers: Int, val cardsLost: Int) : Change(60)
 
 @Serializable
 object FiberLost : Change(70)
 
 @Serializable
-class FireModification(val change: Int) : Change(80)
+data class FireModification(val change: Int) : Change(80)
 
 @Serializable
-class DamageToDo(val healthChange: Int) : Change(90)
+data class DamageToDo(val healthChange: Int) : Change(90)
 
 @Serializable
 object Survived : Change(100)
