@@ -16,6 +16,7 @@ import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.assertlib.assertNotNull
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.userevents.logEvent
+import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -80,7 +81,7 @@ class MainMenuViewModel @Inject constructor(
             )
             // TODO: Fix wrong language
             val response = pS2LinkRepository.getCharacter(profileId, namespace, getCurrentLang())
-            if (response.isSuccessful) {
+            if (response.isSuccessfulAndContainsBody()) {
                 emit(response.requireBody())
             } else {
                 emit(null)

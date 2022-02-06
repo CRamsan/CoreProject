@@ -7,6 +7,7 @@ import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.userevents.logEvent
+import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -90,7 +91,7 @@ class ProfilePagerViewModel @Inject constructor(
         logEvent(logTag, "addCharacter")
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
-        if (response.isSuccessful) {
+        if (response.isSuccessfulAndContainsBody()) {
             val character = response.requireBody()
             @OptIn(ExperimentalTime::class)
             character?.let {
@@ -103,7 +104,7 @@ class ProfilePagerViewModel @Inject constructor(
         logEvent(logTag, "removeCharacter")
         val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
         val response = pS2LinkRepository.getCharacter(characterId, namespace, lang)
-        if (response.isSuccessful) {
+        if (response.isSuccessfulAndContainsBody()) {
             val character = response.requireBody()
             @OptIn(ExperimentalTime::class)
             character?.let {

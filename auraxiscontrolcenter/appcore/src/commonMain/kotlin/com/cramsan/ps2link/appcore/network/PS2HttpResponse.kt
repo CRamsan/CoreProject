@@ -46,18 +46,36 @@ class PS2HttpResponse<Body> private constructor(
     }
 }
 
+/**
+ * This function should be used for methods that return a PS2HttpResponse in which the body is optional. This could be
+ * the case for methods that perform fetch operations by Id. In which case the request can succeed by if the entry is
+ * not found, the result can still be null.
+ */
+fun <Body> PS2HttpResponse<Body>.isSuccessfulAndContainsBody() = isSuccessful && body != null
+
 fun <Orig, Result> PS2HttpResponse<Orig>.toFailure() = toFailure<Orig, Result>(throwable)
 
 fun <Orig, Result> PS2HttpResponse<Orig>.toFailure(throwable: Throwable?) = PS2HttpResponse.failure<Result>(rawResponse, throwable)
 
 fun <Orig, Result> PS2HttpResponse<Orig>.toSuccess(body: Result) = PS2HttpResponse.success(body, rawResponse)
 
+/**
+ * TODO: https://youtrack.jetbrains.com/issue/KT-26245
+ * Once the language supports it, we need to make this function enforce non-nullability of the type Body.
+ *
+ * Enforeces that the body is non-null. This function should be used with care as it may hide if the [Body]
+ * type is nullable.
+ */
 fun <Body> PS2HttpResponse<Body>.requireBody(): Body {
     assert(isSuccessful, "PS2HttpResponse", "Request needs to be successful")
     return requireNotNull(body)
 }
 
-fun <Orig, Unit> PS2HttpResponse<Orig>.onSuccess(process: (Orig) -> Unit): PS2HttpResponse<Orig> {
+/**
+ * Perform the [process] on the body of the request. USE THIS FUNCTION WITH CARE AS CAN
+ * HIDE THE NULLABILITY OF THE BODY.
+ */
+fun <Orig> PS2HttpResponse<Orig>.onSuccess(process: (Orig) -> Unit): PS2HttpResponse<Orig> {
     return try {
         if (isSuccessful) {
             process(requireBody())

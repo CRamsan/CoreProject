@@ -6,6 +6,7 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.deprecated.module.ObjectDataSource
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.userevents.logEvent
+import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -51,7 +52,7 @@ class ActivityContainerViewModel @Inject constructor(
         val outfits = objectDataSource.getAllOutfits(false)
         profiles.forEach { cachedProfiles ->
             val response = pS2LinkRepository.getCharacter(cachedProfiles.characterId, cachedProfiles.namespace, lang)
-            if (response.isSuccessful) {
+            if (response.isSuccessfulAndContainsBody()) {
                 @OptIn(ExperimentalTime::class)
                 response.requireBody()?.let {
                     pS2LinkRepository.saveCharacter(it.copy(cached = true))

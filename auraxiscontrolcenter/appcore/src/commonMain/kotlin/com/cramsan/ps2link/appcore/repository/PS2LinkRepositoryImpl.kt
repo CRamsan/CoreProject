@@ -4,6 +4,7 @@ import com.cramsan.framework.assertlib.assertNotNull
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.localizedName
 import com.cramsan.ps2link.appcore.network.PS2HttpResponse
+import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.onSuccess
 import com.cramsan.ps2link.appcore.network.process
 import com.cramsan.ps2link.appcore.network.processList
@@ -153,7 +154,7 @@ class PS2LinkRepositoryImpl(
         lang: CensusLang,
     ): PS2HttpResponse<List<WeaponItem>> {
         val response = getCharacter(characterId, namespace, lang)
-        if (!response.isSuccessful) {
+        if (!response.isSuccessfulAndContainsBody()) {
             return response.toFailure()
         }
         val character = response.requireBody()
