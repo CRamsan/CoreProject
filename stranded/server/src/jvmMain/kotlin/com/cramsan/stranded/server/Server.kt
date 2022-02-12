@@ -56,7 +56,7 @@ class Server(
     private val gameRepository: GameRepository,
     private val connectionRepository: ConnectionRepository,
     private val json: Json,
-    private val dispatcher: CoroutineDispatcher,
+    dispatcher: CoroutineDispatcher,
 ) : PlayerRepository.EventHandler, LobbyRepository.EventHandler {
     private var scope = CoroutineScope(SupervisorJob() + dispatcher)
 
@@ -132,7 +132,13 @@ class Server(
                 session.sendEvent(LobbyCreatedFromRequest(newLobby), json)
             }
             is JoinLobby -> {
-                lobbyRepository.joinLobby(clientEvent.lobbyId, playerId)
+                if (!lobbyRepository.joinLobby(clientEvent.lobbyId, playerId)) {
+                    return
+                }
+                val players = lobbyRepository.getLobby(clientEvent.lobbyId)?.players?.mapNotNull {
+                    playerRepository.getPlayer(it)
+                } ?: emptyList()
+                session.sendEvent(PlayerListFromRequest(players), json)
             }
             is DeleteLobby -> {
                 val lobbyId = lobbyRepository.getLobbyForPlayer(playerId) ?: return

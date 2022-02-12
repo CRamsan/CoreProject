@@ -1,15 +1,15 @@
-package com.cramsan.stranded.server.demoapp
+package com.cramsan.stranded.testgui
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.cramsan.stranded.lib.game.intent.StrandedPlayerIntent
+import com.cramsan.stranded.lib.game.logic.StrandedGameState
+import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.server.JvmClient
 import com.cramsan.stranded.server.Server
-import com.cramsan.stranded.server.demoapp.game.DemoGameState
-import com.cramsan.stranded.server.demoapp.game.IncrementCounter
-import com.cramsan.stranded.server.demoapp.game.RequestIncrementCounter
 import com.cramsan.stranded.server.game.GameState
 import com.cramsan.stranded.server.game.PlayerIntent
 import com.cramsan.stranded.server.game.StateChange
@@ -17,7 +17,9 @@ import com.cramsan.stranded.server.repository.ConnectionRepository
 import com.cramsan.stranded.server.repository.GameRepository
 import com.cramsan.stranded.server.repository.LobbyRepository
 import com.cramsan.stranded.server.repository.PlayerRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -35,21 +37,23 @@ fun main() = application {
         prettyPrint = true
         serializersModule = SerializersModule {
             polymorphic(GameState::class) {
-                subclass(DemoGameState::class)
+                subclass(StrandedGameState::class)
             }
             polymorphic(PlayerIntent::class) {
-                subclass(RequestIncrementCounter::class)
+                subclass(StrandedPlayerIntent::class)
             }
             polymorphic(StateChange::class) {
-                subclass(IncrementCounter::class)
+                subclass(StrandedStateChange::class)
             }
         }
     }
 
+    val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
     /**
      * Initialize server dependencies.
      */
-    val demoGameRepository = DemoGameFactory()
+    val demoGameRepository = DemoGameFactory(scope)
     val playerRepository = PlayerRepository()
     val lobbyRepository = LobbyRepository(playerRepository)
     val gameRepository = GameRepository(demoGameRepository)

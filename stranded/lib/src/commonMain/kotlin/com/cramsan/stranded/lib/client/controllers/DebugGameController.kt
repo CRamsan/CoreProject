@@ -13,6 +13,7 @@ import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
 import com.cramsan.stranded.lib.game.logic.StrandedGameState
 import com.cramsan.stranded.lib.game.models.GamePlayer
+import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Equippable
 import com.cramsan.stranded.lib.game.models.common.Phase
@@ -23,11 +24,14 @@ import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
+import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
+import com.cramsan.stranded.lib.game.models.state.ExtinguishFire
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
-import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
+import com.cramsan.stranded.lib.game.models.state.LoseCard
+import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
@@ -85,30 +89,28 @@ open class DebugGameController(
         this.craftingUI = craftingUI
 
         game = Game(gameScope.scope)
-        game.gameEventHandler = this
 
-        val currentPlayer = GamePlayer(
+        val currentPlayer = MutableGamePlayer(
             "",
             "cramsan",
             5,
-        ).apply {
             belongings = mutableListOf(
                 Equippable("Test item", 1),
-            )
+            ),
             scavengeResults = mutableListOf(
                 Resource(ResourceType.FIBER),
                 Consumable("Test", 1, 1, Status.NORMAL, 3),
-            )
-            craftables = mutableListOf()
-        }
+            ),
+            craftables = mutableListOf(),
+        )
 
         val players = listOf(
-            GamePlayer("", "Cramsan", 4),
-            GamePlayer("", "Test", 2),
-            GamePlayer("", "Dummy", 5),
-            GamePlayer("", "Test2", 6),
-            GamePlayer("", "A very long name!! :D@#$%^& jhgjhg KDDD", 1),
-            GamePlayer("", "Howdy", 0),
+            MutableGamePlayer("", "Cramsan", 4),
+            MutableGamePlayer("", "Test", 2),
+            MutableGamePlayer("", "Dummy", 5),
+            MutableGamePlayer("", "Test2", 6),
+            MutableGamePlayer("", "A very long name!! :D@#$%^& jhgjhg KDDD", 1),
+            MutableGamePlayer("", "Howdy", 0),
             currentPlayer,
         )
         game.setGameState(
@@ -155,7 +157,6 @@ open class DebugGameController(
     override fun onEventHandled(change: StrandedStateChange) {
         when (change) {
             is SingleHealthChange -> Unit
-            is MultiHealthChange -> Unit
             is DrawBelongingCard -> Unit
             is DrawScavengeCard -> Unit
             DrawNightCard -> Unit
@@ -182,6 +183,10 @@ open class DebugGameController(
             }
             is UserCard -> Unit
             is CraftCard -> Unit
+            DestroyShelter -> Unit
+            ExtinguishFire -> Unit
+            is LoseCard -> Unit
+            is SetFireBlockStatus -> Unit
         }
     }
 

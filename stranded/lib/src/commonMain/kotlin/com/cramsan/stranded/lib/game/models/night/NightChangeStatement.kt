@@ -15,9 +15,6 @@ object CancellableByFire : NightChangeStatement(0)
 object DestroyShelter : NightChangeStatement(10)
 
 @Serializable
-data class CancellableByFood(val change: Int) : NightChangeStatement(20)
-
-@Serializable
 object FireUnavailableTomorrow : NightChangeStatement(30)
 
 @Serializable
@@ -30,16 +27,13 @@ data class SelectTargetQuantity(val affectedPlayers: Int) : NightChangeStatement
 object SelectTargetQuantityAll : NightChangeStatement(47)
 
 @Serializable
-data class CancellableByWeapon(val change: Int) : NightChangeStatement(50)
+data class CancellableByWeapon(val change: Int, val damage: Int) : NightChangeStatement(50)
 
 @Serializable
-data class ForageCardLost(val affectedPlayers: Int, val cardsLost: Int) : NightChangeStatement(60)
+data class ForageCardLost(val cardsLost: Int) : NightChangeStatement(60)
 
 @Serializable
 object FiberLost : NightChangeStatement(70)
-
-@Serializable
-data class FireModification(val change: Int) : NightChangeStatement(80)
 
 @Serializable
 data class DamageToDo(val healthChange: Int) : NightChangeStatement(90)

@@ -24,11 +24,14 @@ import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
+import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
+import com.cramsan.stranded.lib.game.models.state.ExtinguishFire
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
-import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
+import com.cramsan.stranded.lib.game.models.state.LoseCard
+import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
@@ -101,7 +104,6 @@ class DefaultGameController(
         this.lobbyId = lobbyId
 
         game = Game(gameScope.scope)
-        game.gameEventHandler = this
         game.configureGame(
             playerList,
             listOf(),
@@ -207,9 +209,12 @@ class DefaultGameController(
                     playerHeartsWidget.setEnabled(false)
                 }
             }
-            is MultiHealthChange -> Unit
             is SingleHealthChange -> Unit
             is CraftCard -> Unit
+            DestroyShelter -> Unit
+            ExtinguishFire -> Unit
+            is LoseCard -> Unit
+            is SetFireBlockStatus -> Unit
         }
     }
 

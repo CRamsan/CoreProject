@@ -4,18 +4,19 @@ import com.cramsan.stranded.lib.game.intent.Consume
 import com.cramsan.stranded.lib.game.intent.Craft
 import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.Forage
+import com.cramsan.stranded.lib.game.intent.SelectCard
 import com.cramsan.stranded.lib.game.intent.StrandedPlayerIntent
 import com.cramsan.stranded.lib.game.intent.Transfer
 import com.cramsan.stranded.lib.game.models.GamePlayer
+import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Phase
+import com.cramsan.stranded.lib.game.models.common.Weapon
 import com.cramsan.stranded.lib.game.models.night.CancellableByFire
-import com.cramsan.stranded.lib.game.models.night.CancellableByFood
 import com.cramsan.stranded.lib.game.models.night.CancellableByWeapon
 import com.cramsan.stranded.lib.game.models.night.DamageToDo
 import com.cramsan.stranded.lib.game.models.night.DestroyShelter
 import com.cramsan.stranded.lib.game.models.night.FiberLost
-import com.cramsan.stranded.lib.game.models.night.FireModification
 import com.cramsan.stranded.lib.game.models.night.FireUnavailableTomorrow
 import com.cramsan.stranded.lib.game.models.night.ForageCardLost
 import com.cramsan.stranded.lib.game.models.night.NightEvent
@@ -23,13 +24,18 @@ import com.cramsan.stranded.lib.game.models.night.SelectTargetOnlyUnsheltered
 import com.cramsan.stranded.lib.game.models.night.SelectTargetQuantity
 import com.cramsan.stranded.lib.game.models.night.SelectTargetQuantityAll
 import com.cramsan.stranded.lib.game.models.night.Survived
+import com.cramsan.stranded.lib.game.models.scavenge.Resource
+import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
+import com.cramsan.stranded.lib.game.models.state.ExtinguishFire
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
+import com.cramsan.stranded.lib.game.models.state.LoseCard
+import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
@@ -42,6 +48,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 /**
  * This class is where the logic for the game resides.
@@ -49,6 +56,12 @@ import kotlinx.coroutines.launch
 class Game(
     private val gameScope: CoroutineScope,
 ) : MultiplayerGame {
+
+    private lateinit var playerIntents: Map<String, Channel<StrandedPlayerIntent>>
+
+    private var _gameEventHandler: GameEventHandler? = null
+
+    private var _multiplayerGameEventHandler: MultiplayerGameEventHandler? = null
 
     private val _gameState = MutableStrandedGameState(
         mutableListOf(),
@@ -59,29 +72,28 @@ class Game(
 
     override val gameState: StrandedGameState = _gameState
 
+    private var gameCompleted = false
+
     override fun onGameStarted() {
-        TODO("Not yet implemented")
     }
 
     override fun onGameEnded() {
-        TODO("Not yet implemented")
     }
 
     override fun onPlayerIntentReceived(playerId: String, playerIntent: PlayerIntent) {
-        TODO("Not yet implemented")
+        gameScope.launch {
+            playerIntents[playerId]?.send(playerIntent as StrandedPlayerIntent)
+        }
     }
 
     override fun registerServerEventHandler(eventHandler: MultiplayerGameEventHandler) {
-        TODO("Not yet implemented")
+        _multiplayerGameEventHandler = eventHandler
     }
 
     override fun deregisterServerEventHandler() {
-        TODO("Not yet implemented")
+        _multiplayerGameEventHandler = null
     }
 
-    lateinit var playerIntents: Map<String, Channel<StrandedPlayerIntent>>
-
-    var gameEventHandler: GameEventHandler? = null
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
@@ -90,7 +102,7 @@ class Game(
     fun setGameState(newGameState: StrandedGameState) {
         clearGameState()
         _gameState.apply {
-            gamePlayers.addAll(newGameState.gamePlayers)
+            gamePlayers.addAll(newGameState.gamePlayers.map { MutableGamePlayer.fromGamePlayer(it) })
             scavengeStack.addAll(newGameState.scavengeStack)
             nightStack.addAll(newGameState.nightStack)
             belongingsStack.addAll(newGameState.belongingsStack)
@@ -98,7 +110,6 @@ class Game(
             hasFire = newGameState.hasFire
             isFireBlocked = newGameState.isFireBlocked
             night = newGameState.night
-            targetList.addAll(newGameState.targetList)
             fireDamageMod = newGameState.fireDamageMod
             phase = newGameState.phase
         }
@@ -112,7 +123,7 @@ class Game(
     ) {
         clearGameState()
         _gameState.gamePlayers.addAll(players.map {
-            GamePlayer(
+            MutableGamePlayer(
                 it.id,
                 it.name,
                 4,
@@ -128,15 +139,20 @@ class Game(
         }
     }
 
-    internal suspend fun startGameJobAsync() = gameScope.launch(exceptionHandler) {
-        dealInitialHand()
+    private fun startGameJob() {
+        gameScope.launch(exceptionHandler) {
+            dealInitialHand()
 
-        while (gameState.nightStack.isNotEmpty()) {
-            performNightPhase()
-            performDayPhase()
+            while (gameState.nightStack.isNotEmpty()) {
+                performNightPhase()
+                if (gameCompleted) {
+                    break
+                }
+                performDayPhase()
+            }
+
+            println("Game is over")
         }
-
-        println("Game is over")
     }
 
     private fun dealInitialHand() {
@@ -157,39 +173,100 @@ class Game(
         processEvent(IncrementNight)
     }
 
-    suspend fun processNightEvent(nightEvent: NightEvent) {
+    private suspend fun processNightEvent(nightEvent: NightEvent) {
+        processEvent(SetFireBlockStatus(false))
+        val targetList = mutableListOf<GamePlayer>()
 
-        nightEvent.statements.sortedBy { it.priority }.forEach {
-            when (it) {
-                CancellableByFire -> Unit
-                is CancellableByFood -> Unit
-                is CancellableByWeapon -> Unit
-                is DamageToDo -> Unit
-                DestroyShelter -> Unit
-                FiberLost -> Unit
-                is FireModification -> Unit
-                FireUnavailableTomorrow -> Unit
-                is ForageCardLost -> Unit
-                is SelectTargetOnlyUnsheltered -> Unit
-                is SelectTargetQuantity -> Unit
-                SelectTargetQuantityAll -> Unit
-                Survived -> Unit
+        val statements = nightEvent.statements.sortedBy { it.priority }
+
+        for (statement in statements) {
+            when (statement) {
+                CancellableByFire -> if (gameState.hasFire) {
+                    break
+                }
+                DestroyShelter -> {
+                    processEvent(com.cramsan.stranded.lib.game.models.state.DestroyShelter)
+                }
+                FireUnavailableTomorrow -> {
+                    processEvent(SetFireBlockStatus(true))
+                }
+                is SelectTargetOnlyUnsheltered -> {
+                    val sheltered = gameState.shelters.map { it.playerList }.flatten()
+                    targetList.clear()
+                    targetList.addAll(gameState.gamePlayers.filter { !sheltered.contains(it.id) })
+                }
+                is SelectTargetQuantity -> {
+                    targetList.clear()
+                    targetList.addAll(gameState.gamePlayers.shuffled().subList(0, statement.affectedPlayers))
+                }
+                SelectTargetQuantityAll -> {
+                    targetList.clear()
+                    targetList.addAll(gameState.gamePlayers)
+                }
+                is CancellableByWeapon -> targetList.waitForAll { gamePlayer, intent ->
+                    when (intent) {
+                        is SelectCard -> {
+                            if (gamePlayer.id != intent.playerId) {
+                                false
+                            } else if (intent.cardId.isEmpty()) {
+                                processEvent(SingleHealthChange(gamePlayer.id, statement.damage))
+                                true
+                            } else if (getCard(gamePlayer, intent.cardId) !is Weapon) {
+                                false
+                            } else {
+                                processEvent(UserCard(gamePlayer.id, intent.cardId))
+                                processEvent(SingleHealthChange(gamePlayer.id, statement.damage + statement.change))
+                                true
+                            }
+                        }
+                        else -> false
+                    }
+                }
+                is ForageCardLost -> {
+                    targetList.forEach { gamePlayer ->
+                        val cardList = gamePlayer.scavengeResults.map { it.id }.shuffled()
+                        cardList.subList(0, minOf(cardList.size, statement.cardsLost)).forEach { cardId ->
+                            processEvent(LoseCard(gamePlayer.id, cardId))
+                        }
+                    }
+                }
+                FiberLost -> {
+                    targetList.forEach { gamePlayer ->
+                        gamePlayer.scavengeResults.filter { it is Resource && it.resourceType == ResourceType.FIBER }.forEach { card ->
+                            processEvent(LoseCard(gamePlayer.id, card.id))
+                        }
+                    }
+                }
+                is DamageToDo -> {
+                    targetList.forEach { gamePlayer ->
+                        processEvent(SingleHealthChange(gamePlayer.id, statement.healthChange))
+                    }
+                }
+                Survived -> gameCompleted = true
             }
         }
 
-        gameState.gamePlayers.map {
-            gameScope.launch(exceptionHandler) {
-                val eventChannel = playerIntents.getValue(it.id)
+        processEvent(ExtinguishFire)
 
+        gameState.gamePlayers.waitForAll { _, intent ->
+            intent is EndTurn
+        }
+    }
+
+    // MOve out of class
+    private suspend fun List<GamePlayer>.waitForAll(predicate: suspend (GamePlayer, StrandedPlayerIntent) -> Boolean) {
+        this.map { gamePlayer ->
+            gameScope.launch(exceptionHandler) {
+                val eventChannel = playerIntents.getValue(gamePlayer.id)
                 while (true) {
                     val playerEvent = eventChannel.receive()
-                    if (playerEvent is EndTurn)
+                    if (predicate(gamePlayer, playerEvent))
                         break
                 }
+
             }
         }.joinAll()
     }
-
     private suspend fun performDayPhase() {
         println("Starting forage phase")
         processEvent(SetPhase(Phase.FORAGING))
@@ -258,11 +335,12 @@ class Game(
             is Craft -> {
                 processEvent(CraftCard(player.id, playerIntent.targetList, playerIntent.craftable))
             }
+            is SelectCard -> TODO()
         }
     }
 
     fun processEvent(change: StrandedStateChange) {
-        _gameState.processEvent(change, gameEventHandler)
+        _gameState.processEvent(change, _gameEventHandler)
     }
 
     private fun clearGameState() {
@@ -275,7 +353,6 @@ class Game(
             hasFire = false
             isFireBlocked = false
             night = 1
-            targetList.clear()
             fireDamageMod = 0
             phase = Phase.NIGHT
         }

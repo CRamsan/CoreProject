@@ -18,9 +18,6 @@ sealed class StrandedStateChange : StateChange()
 class SingleHealthChange(val playerId: String, val healthChange: Int) : StrandedStateChange()
 
 @Serializable
-class MultiHealthChange(val playerList: List<String>, val healthChange: Int) : StrandedStateChange()
-
-@Serializable
 data class DrawBelongingCard(val playerId: String) : StrandedStateChange()
 
 @Serializable
@@ -40,3 +37,15 @@ data class UserCard(val playerId: String, val cardId: String) : StrandedStateCha
 
 @Serializable
 data class CraftCard(val playerId: String, val targetList: List<String>, val craftable: Craftable) : StrandedStateChange()
+
+@Serializable
+object ExtinguishFire : StrandedStateChange()
+
+@Serializable
+data class SetFireBlockStatus(val blockFire: Boolean) : StrandedStateChange()
+
+@Serializable
+object DestroyShelter : StrandedStateChange()
+
+@Serializable
+data class LoseCard(val playerId: String, val cardId: String) : StrandedStateChange()

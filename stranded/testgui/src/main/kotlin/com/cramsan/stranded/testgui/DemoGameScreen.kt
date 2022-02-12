@@ -1,4 +1,4 @@
-package com.cramsan.stranded.server.demoapp
+package com.cramsan.stranded.testgui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
@@ -143,11 +143,6 @@ fun DemoGameScreen(
                 onClick = { viewModel.onStartGameSelected() }
             ) {
                 Text("Start Game")
-            }
-            Button(
-                onClick = { viewModel.onGameActionSelected() }
-            ) {
-                Text("Game action")
             }
         }
         Row {

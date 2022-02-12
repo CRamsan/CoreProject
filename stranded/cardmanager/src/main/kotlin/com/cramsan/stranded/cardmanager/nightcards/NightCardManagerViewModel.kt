@@ -2,12 +2,10 @@ package com.cramsan.stranded.cardmanager.nightcards
 
 import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
 import com.cramsan.stranded.lib.game.models.night.CancellableByFire
-import com.cramsan.stranded.lib.game.models.night.CancellableByFood
 import com.cramsan.stranded.lib.game.models.night.CancellableByWeapon
 import com.cramsan.stranded.lib.game.models.night.DamageToDo
 import com.cramsan.stranded.lib.game.models.night.DestroyShelter
 import com.cramsan.stranded.lib.game.models.night.FiberLost
-import com.cramsan.stranded.lib.game.models.night.FireModification
 import com.cramsan.stranded.lib.game.models.night.FireUnavailableTomorrow
 import com.cramsan.stranded.lib.game.models.night.ForageCardLost
 import com.cramsan.stranded.lib.game.models.night.NightChangeStatement
@@ -96,11 +94,6 @@ class NightCardManagerViewModel(
         val sanitizedStatement = when (val statementToSanitize = _statement.value) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
             FiberLost, Survived -> statementToSanitize
-            is CancellableByFood -> {
-                statementToSanitize.copy(
-                    change = _argument1Field.value.toIntOrNull() ?: 0
-                )
-            }
             is SelectTargetOnlyUnsheltered -> {
                 statementToSanitize.copy(
                     onlyUnsheltered = _argument1Field.value.toBooleanStrictOrNull() ?: false
@@ -113,18 +106,13 @@ class NightCardManagerViewModel(
             }
             is CancellableByWeapon -> {
                 statementToSanitize.copy(
-                    change = _argument1Field.value.toIntOrNull() ?: 0
+                    change = _argument1Field.value.toIntOrNull() ?: 0,
+                    damage = _argument2Field.value.toIntOrNull() ?: 0,
                 )
             }
             is ForageCardLost -> {
                 statementToSanitize.copy(
-                    affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0,
                     cardsLost = _argument1Field.value.toIntOrNull() ?: 0,
-                )
-            }
-            is FireModification -> {
-                statementToSanitize.copy(
-                    change = _argument1Field.value.toIntOrNull() ?: 0
                 )
             }
             is DamageToDo -> {
@@ -191,10 +179,6 @@ class NightCardManagerViewModel(
         when (statement) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
             FiberLost, Survived -> Unit
-            is CancellableByFood -> {
-                _argument1Label.value = "Change"
-                _argument1Field.value = statement.change.toString()
-            }
             is SelectTargetOnlyUnsheltered -> {
                 _argument1Label.value = "Only unsheltered"
                 _argument1Field.value = statement.onlyUnsheltered.toString()
@@ -206,16 +190,12 @@ class NightCardManagerViewModel(
             is CancellableByWeapon -> {
                 _argument1Label.value = "Change"
                 _argument1Field.value = statement.change.toString()
+                _argument2Label.value = "Damage"
+                _argument2Field.value = statement.damage.toString()
             }
             is ForageCardLost -> {
-                _argument1Label.value = "Affected players"
-                _argument1Field.value = statement.affectedPlayers.toString()
                 _argument2Label.value = "Cards to lose"
                 _argument2Field.value = statement.cardsLost.toString()
-            }
-            is FireModification -> {
-                _argument1Label.value = "Change"
-                _argument1Field.value = statement.change.toString()
             }
             is DamageToDo -> {
                 _argument1Label.value = "Change"
@@ -228,17 +208,15 @@ class NightCardManagerViewModel(
         return when (STATEMENT_TYPES[selectedStatementTypeIndex]) {
             STATEMENT_TYPES[0] -> CancellableByFire
             STATEMENT_TYPES[1] -> DestroyShelter
-            STATEMENT_TYPES[2] -> CancellableByFood(1)
-            STATEMENT_TYPES[3] -> FireUnavailableTomorrow
-            STATEMENT_TYPES[4] -> SelectTargetOnlyUnsheltered(true)
-            STATEMENT_TYPES[5] -> SelectTargetQuantity(1)
-            STATEMENT_TYPES[6] -> SelectTargetQuantityAll
-            STATEMENT_TYPES[7] -> CancellableByWeapon(1)
-            STATEMENT_TYPES[8] -> ForageCardLost(1, 1)
-            STATEMENT_TYPES[9] -> FiberLost
-            STATEMENT_TYPES[10] -> FireModification(1)
-            STATEMENT_TYPES[11] -> DamageToDo(1)
-            STATEMENT_TYPES[12] -> Survived
+            STATEMENT_TYPES[2] -> FireUnavailableTomorrow
+            STATEMENT_TYPES[3] -> SelectTargetOnlyUnsheltered(true)
+            STATEMENT_TYPES[4] -> SelectTargetQuantity(1)
+            STATEMENT_TYPES[5] -> SelectTargetQuantityAll
+            STATEMENT_TYPES[6] -> CancellableByWeapon(1, 3)
+            STATEMENT_TYPES[7] -> ForageCardLost(1)
+            STATEMENT_TYPES[8] -> FiberLost
+            STATEMENT_TYPES[9] -> DamageToDo(1)
+            STATEMENT_TYPES[10] -> Survived
             else -> TODO()
         }
     }

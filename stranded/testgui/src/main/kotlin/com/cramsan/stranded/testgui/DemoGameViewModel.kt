@@ -1,10 +1,7 @@
-package com.cramsan.stranded.server.demoapp
+package com.cramsan.stranded.testgui
 
 import com.cramsan.stranded.server.JvmClient
 import com.cramsan.stranded.server.Server
-import com.cramsan.stranded.server.demoapp.game.DemoGameState
-import com.cramsan.stranded.server.demoapp.game.DemoGameStateChange
-import com.cramsan.stranded.server.demoapp.game.RequestIncrementCounter
 import com.cramsan.stranded.server.game.ClientEventHandler
 import com.cramsan.stranded.server.messages.Connected
 import com.cramsan.stranded.server.messages.CreateLobby
@@ -27,7 +24,6 @@ import com.cramsan.stranded.server.messages.SetPlayerName
 import com.cramsan.stranded.server.messages.SetReadyToStartGame
 import com.cramsan.stranded.server.messages.StartGame
 import com.cramsan.stranded.server.repository.Player
-import game.transformWithStateChange
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -35,7 +31,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -59,7 +54,6 @@ class DemoGameViewModel(
     }
 
     private var playerId = ""
-    private var _gameState: DemoGameState? = null
 
     private val _playerName = MutableStateFlow("")
     private val _lobbyName = MutableStateFlow("")
@@ -113,13 +107,6 @@ class DemoGameViewModel(
      */
     fun onLobbyIdUpdated(lobbyId: String) {
         _lobbyId.value = lobbyId
-    }
-
-    /**
-     * Self-explanatory
-     */
-    fun onGameActionSelected() {
-        client.sendMessage(GamePlayerIntent(RequestIncrementCounter))
     }
 
     /**
@@ -228,16 +215,6 @@ class DemoGameViewModel(
             GameStarted -> {
                 println("Game started")
             }
-            is GameChange -> {
-                val gameStateChange = serverEvent.change as DemoGameStateChange
-                _gameState = _gameState?.transformWithStateChange(gameStateChange)
-                _gameContent.value = json.encodeToString(_gameState)
-            }
-            is GameStateMessage -> {
-                val gameState = serverEvent.gameState as DemoGameState
-                _gameState = gameState
-                _gameContent.value = json.encodeToString(_gameState)
-            }
             is JoinedLobby -> {
                 val newPlayerList = if (_playerList.value.any { it.id == serverEvent.player.id }) {
                     _playerList.value + serverEvent.player
@@ -264,6 +241,7 @@ class DemoGameViewModel(
             is PlayerListFromRequest -> {
                 _playerList.value = serverEvent.playerList
             }
+            is GameChange, is GameStateMessage -> Unit
         }
     }
 

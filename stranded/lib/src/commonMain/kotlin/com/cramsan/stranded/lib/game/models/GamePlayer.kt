@@ -14,15 +14,11 @@ import kotlinx.serialization.Serializable
  * The [GamePlayer] has three sets of cards, the [belongings], [scavengeResults], [craftables]. These are all the cards
  * that this player owns.
  */
-@Serializable
-data class GamePlayer(
-    val id: String,
-    val nane: String,
-    var health: Int,
-) {
-    var belongings: MutableList<Belongings> = mutableListOf()
-
-    var scavengeResults: MutableList<ScavengeResult> = mutableListOf()
-
-    var craftables: MutableList<Craftable> = mutableListOf()
+interface GamePlayer {
+    val id: String
+    val nane: String
+    val health: Int
+    val belongings: List<Belongings>
+    val scavengeResults: List<ScavengeResult>
+    val craftables: List<Craftable>
 }

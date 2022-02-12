@@ -1,16 +1,18 @@
 package com.cramsan.stranded.lib.game.logic
 
+import com.cramsan.stranded.lib.game.intent.SelectCard
 import com.cramsan.stranded.lib.game.models.GamePlayer
+import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Food
 import com.cramsan.stranded.lib.game.models.common.UsableItem
+import com.cramsan.stranded.lib.game.models.common.Weapon
 import com.cramsan.stranded.lib.game.models.crafting.Basket
 import com.cramsan.stranded.lib.game.models.crafting.Craftable
 import com.cramsan.stranded.lib.game.models.crafting.Fire
 import com.cramsan.stranded.lib.game.models.crafting.Shelter
 import com.cramsan.stranded.lib.game.models.crafting.Spear
-import com.cramsan.stranded.lib.game.models.night.CancellableByFire
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
@@ -18,11 +20,14 @@ import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.scavenge.Useless
 import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
+import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
+import com.cramsan.stranded.lib.game.models.state.ExtinguishFire
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
-import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
+import com.cramsan.stranded.lib.game.models.state.LoseCard
+import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
@@ -34,14 +39,11 @@ internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, 
     when (change) {
         is SingleHealthChange -> {
             val damage = change.healthChange + fireDamageMod
-            val player = getPlayer(change.playerId)
+            val player = getMutablePlayer(change.playerId)
             player.changeHealth(damage, eventHandler)
         }
-        is MultiHealthChange -> {
-            TODO()
-        }
         is DrawBelongingCard -> {
-            val player = getPlayer(change.playerId)
+            val player = getMutablePlayer(change.playerId)
             val card = drawBelongingCard()
             player.receiveCard(card, eventHandler)
         }
@@ -57,18 +59,24 @@ internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, 
             drawNightCard()
         }
         is DrawScavengeCard -> {
-            val player = getPlayer(change.playerId)
+            val player = getMutablePlayer(change.playerId)
             val card = drawScavengeCard()
             player.receiveCard(card, eventHandler)
         }
         is SetPhase -> phase = change.gamePhase
         is UserCard -> {
-            val player = getPlayer(change.playerId)
+            val player = getMutablePlayer(change.playerId)
 
             val card = getCard(player, change.cardId)
             when (card) {
                 is Food -> {
                     player.changeHealth(card.healthModifier, eventHandler)
+                    card.itemUsed()
+                    if (card.remainingUses <= 0) {
+                        player.releaseCard(card, eventHandler)
+                    }
+                }
+                is Weapon -> {
                     card.itemUsed()
                     if (card.remainingUses <= 0) {
                         player.releaseCard(card, eventHandler)
@@ -80,7 +88,7 @@ internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, 
             }
         }
         is CraftCard -> {
-            val player = getPlayer(change.playerId)
+            val player = getMutablePlayer(change.playerId)
 
             val cardsToLose = change.targetList.map { target ->
                 getScavengeResultCard(player, target) as Resource
@@ -103,6 +111,15 @@ internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, 
                 }
                 player.receiveCard(change.craftable, eventHandler)
             }
+        }
+        ExtinguishFire -> hasFire = false
+        DestroyShelter -> shelters.clear()
+        is SetFireBlockStatus -> isFireBlocked = change.blockFire
+        is LoseCard -> {
+            val player = getMutablePlayer(change.playerId)
+            val cardToLose = getCard(player, change.cardId)
+
+            player.releaseCard(cardToLose, eventHandler)
         }
     }
     eventHandler?.onEventHandled(change)
@@ -145,7 +162,7 @@ private fun UsableItem.itemUsed() {
     remainingUses--
 }
 
-private fun <T : Card> GamePlayer.releaseCard(card: T, eventHandler: GameEventHandler?): T {
+private fun <T : Card> MutableGamePlayer.releaseCard(card: T, eventHandler: GameEventHandler?): T {
     val result = when (card) {
         is Belongings -> belongings.remove(card)
         is ScavengeResult -> scavengeResults.remove(card)
@@ -157,7 +174,7 @@ private fun <T : Card> GamePlayer.releaseCard(card: T, eventHandler: GameEventHa
     return card
 }
 
-private fun <T : Card> GamePlayer.receiveCard(card: T, eventHandler: GameEventHandler?) {
+private fun <T : Card> MutableGamePlayer.receiveCard(card: T, eventHandler: GameEventHandler?) {
     when (card) {
         is Belongings -> belongings.add(card)
         is ScavengeResult -> scavengeResults.add(card)
@@ -166,9 +183,13 @@ private fun <T : Card> GamePlayer.receiveCard(card: T, eventHandler: GameEventHa
     eventHandler?.onCardReceived(id, card)
 }
 
-private fun GamePlayer.changeHealth(damage: Int, eventHandler: GameEventHandler?) {
+private fun MutableGamePlayer.changeHealth(damage: Int, eventHandler: GameEventHandler?) {
     health += damage
     eventHandler?.onPlayerHealthChange(id, health)
+}
+
+private fun MutableStrandedGameState.getMutablePlayer(playerId: String): MutableGamePlayer {
+    return gamePlayers.find { it.id == playerId }!!
 }
 
 /**

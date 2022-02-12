@@ -22,7 +22,6 @@ interface StrandedGameState : GameState {
     val hasFire: Boolean
     val isFireBlocked: Boolean
     val night: Int
-    val targetList: List<GamePlayer>
     val fireDamageMod: Int
     val phase: Phase
 }
