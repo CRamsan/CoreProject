@@ -1,0 +1,25 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: 'kotlinx-serialization'
+apply plugin: "org.jetbrains.compose"
+
+dependencies {
+    implementation compose.desktop.currentOs
+
+    implementation project(":stranded:server")
+    implementation packages.KotlinxSerialization
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "DemoApp"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+
+registerDependency(":stranded:server")

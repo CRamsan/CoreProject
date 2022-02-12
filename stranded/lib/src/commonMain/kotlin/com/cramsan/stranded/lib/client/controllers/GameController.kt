@@ -1,6 +1,5 @@
 package com.cramsan.stranded.lib.client.controllers
 
-import com.cramsan.stranded.lib.client.ClientEventHandler
 import com.cramsan.stranded.lib.client.UIComponent
 import com.cramsan.stranded.lib.client.ui.game.PauseMenuEventHandler
 import com.cramsan.stranded.lib.client.ui.game.widget.CraftingUIWidget
@@ -16,8 +15,9 @@ import com.cramsan.stranded.lib.client.ui.game.widget.ShelterWidget
 import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.GameEventHandler
-import com.cramsan.stranded.lib.game.logic.GameState
-import com.cramsan.stranded.lib.repository.Player
+import com.cramsan.stranded.lib.game.logic.StrandedGameState
+import com.cramsan.stranded.server.game.ClientEventHandler
+import com.cramsan.stranded.server.repository.Player
 
 interface GameController :
     ClientEventHandler,
@@ -49,7 +49,7 @@ interface GameController :
 
     fun onDispose()
 
-    fun handleGameStateMessage(gameState: GameState)
+    fun handleGameStateMessage(gameState: StrandedGameState)
 
     fun setMenuMode(mode: GameMode)
 

@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.cramsan.stranded.lib.game.models.common.Card
-import com.cramsan.stranded.lib.game.models.state.Change
+import com.cramsan.stranded.lib.game.models.night.NightChangeStatement
 import com.cramsan.stranded.lib.storage.CardHolder
 
 /**
@@ -154,7 +154,7 @@ fun <T : Card> CardHolderItem(
  * Render a list of Change statements.
  */
 @Composable
-fun <T : Change> ChangeList(
+fun <T : NightChangeStatement> StatementList(
     selectedIndex: Int,
     changeList: List<T>,
     modifier: Modifier = Modifier,
@@ -185,10 +185,10 @@ fun <T : Change> ChangeList(
 }
 
 /**
- * Render a [Change] statement.
+ * Render a [NightChangeStatement] statement.
  */
 @Composable
-fun <T : Change> ChangeItem(
+fun <T : NightChangeStatement> ChangeItem(
     change: T,
     cardIndex: Int,
     selected: Boolean,

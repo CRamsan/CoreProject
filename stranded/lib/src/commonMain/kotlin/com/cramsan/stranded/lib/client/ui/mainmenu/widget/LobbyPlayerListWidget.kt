@@ -1,7 +1,7 @@
 package com.cramsan.stranded.lib.client.ui.mainmenu.widget
 
 import com.cramsan.stranded.lib.client.UIComponent
-import com.cramsan.stranded.lib.repository.Player
+import com.cramsan.stranded.server.repository.Player
 
 interface LobbyPlayerListWidget : UIComponent {
 

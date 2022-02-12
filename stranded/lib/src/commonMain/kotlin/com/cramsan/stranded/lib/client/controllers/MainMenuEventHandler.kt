@@ -1,6 +1,6 @@
 package com.cramsan.stranded.lib.client.controllers
 
-import com.cramsan.stranded.lib.repository.Player
+import com.cramsan.stranded.server.repository.Player
 
 interface MainMenuEventHandler {
     fun onExitSelected()

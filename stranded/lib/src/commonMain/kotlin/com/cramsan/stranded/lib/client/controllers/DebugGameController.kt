@@ -10,8 +10,8 @@ import com.cramsan.stranded.lib.client.ui.game.widget.PlayerListWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.ShelterWidget
 import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.logic.Game
-import com.cramsan.stranded.lib.game.logic.GameState
-import com.cramsan.stranded.lib.game.logic.MutableGameState
+import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
+import com.cramsan.stranded.lib.game.logic.StrandedGameState
 import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Equippable
@@ -21,32 +21,19 @@ import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.game.models.scavenge.Consumable
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
-import com.cramsan.stranded.lib.game.models.state.CancellableByFire
-import com.cramsan.stranded.lib.game.models.state.CancellableByFood
-import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
-import com.cramsan.stranded.lib.game.models.state.Change
+import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
-import com.cramsan.stranded.lib.game.models.state.DamageToDo
-import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
-import com.cramsan.stranded.lib.game.models.state.FiberLost
-import com.cramsan.stranded.lib.game.models.state.FireModification
-import com.cramsan.stranded.lib.game.models.state.FireUnavailableTomorrow
-import com.cramsan.stranded.lib.game.models.state.ForageCardLost
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
 import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
-import com.cramsan.stranded.lib.game.models.state.SelectTargetOnlyUnsheltered
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantity
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantityAll
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
-import com.cramsan.stranded.lib.game.models.state.Survived
 import com.cramsan.stranded.lib.game.models.state.UserCard
-import com.cramsan.stranded.lib.messages.ServerEvent
 import com.cramsan.stranded.lib.repository.GameScope
-import com.cramsan.stranded.lib.repository.Player
+import com.cramsan.stranded.server.messages.ServerEvent
+import com.cramsan.stranded.server.repository.Player
 
 open class DebugGameController(
     private val gameScope: GameScope,
@@ -125,8 +112,8 @@ open class DebugGameController(
             currentPlayer,
         )
         game.setGameState(
-            MutableGameState(
-                players,
+            MutableStrandedGameState(
+                players.toMutableList(),
                 mutableListOf(),
                 mutableListOf(),
                 mutableListOf(),
@@ -148,7 +135,7 @@ open class DebugGameController(
 
     override fun onServerEventReceived(serverEvent: ServerEvent) = Unit
 
-    override fun handleGameStateMessage(gameState: GameState) = Unit
+    override fun handleGameStateMessage(gameState: StrandedGameState) = Unit
 
     override fun setMenuMode(mode: GameMode) {
         pauseMenu.setVisible(mode == GameMode.Pause)
@@ -165,23 +152,10 @@ open class DebugGameController(
 
     override fun onCardSelected(card: Card) = Unit
 
-    override fun onEventHandled(change: Change) {
+    override fun onEventHandled(change: StrandedStateChange) {
         when (change) {
-            CancellableByFire -> Unit
-            DestroyShelter -> Unit
-            is CancellableByFood -> Unit
-            FireUnavailableTomorrow -> Unit
-            is SelectTargetOnlyUnsheltered -> Unit
-            is SelectTargetQuantity -> Unit
-            SelectTargetQuantityAll -> Unit
-            is CancellableByWeapon -> Unit
-            is ForageCardLost -> Unit
-            FiberLost -> Unit
-            is FireModification -> Unit
             is SingleHealthChange -> Unit
             is MultiHealthChange -> Unit
-            is DamageToDo -> Unit
-            Survived -> Unit
             is DrawBelongingCard -> Unit
             is DrawScavengeCard -> Unit
             DrawNightCard -> Unit

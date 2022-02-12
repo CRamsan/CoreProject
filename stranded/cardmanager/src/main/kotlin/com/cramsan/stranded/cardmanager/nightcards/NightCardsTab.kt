@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
-import com.cramsan.stranded.cardmanager.base.ChangeList
+import com.cramsan.stranded.cardmanager.base.StatementList
 import com.cramsan.stranded.cardmanager.base.TabFrame
 
 /**
@@ -33,10 +33,11 @@ fun NightCardsTab(
 ) {
     val title = viewModel.cardTitle.collectAsState()
     val selectedIndex = viewModel.selectedCardIndex.collectAsState()
-    val selectedChangeIndex = viewModel.selectedChangeIndex.collectAsState()
+    val selectedStatementIndex = viewModel.selectedStatementIndex.collectAsState()
     val quantity = viewModel.cardQuantity.collectAsState()
     val cardDeck = viewModel.deck.collectAsState()
-    val changeList = viewModel.changeList.collectAsState()
+    val statement = viewModel.statement.collectAsState()
+    val statementList = viewModel.statementList.collectAsState()
     val argument1Label = viewModel.argument1Label.collectAsState()
     val argument1Field = viewModel.argument1Field.collectAsState()
     val argument2Label = viewModel.argument2Label.collectAsState()
@@ -64,32 +65,32 @@ fun NightCardsTab(
                     modifier = Modifier.weight(1f),
                 ) {
                     Button(
-                        onClick = { viewModel.onAddChangeStatementSelected() }
+                        onClick = { viewModel.onAddStatementStatementSelected() }
                     ) {
                         Text("Add")
                     }
                     Button(
-                        onClick = { viewModel.onRemoveChangeStatementSelected() }
+                        onClick = { viewModel.onRemoveStatementStatementSelected() }
                     ) {
                         Text("Remove")
                     }
                 }
-                ChangeList(
+                StatementList(
                     modifier = Modifier.weight(2f),
-                    selectedIndex = selectedChangeIndex.value,
-                    changeList = changeList.value,
-                    onChangeSelected = { index -> viewModel.onChangeAtIndexSelected(index) }
+                    selectedIndex = selectedStatementIndex.value,
+                    changeList = statementList.value,
+                    onChangeSelected = { index -> viewModel.onStatementAtIndexSelected(index) }
                 )
                 Column(
                     modifier = Modifier.weight(2f),
                 ) {
                     Text("Statement type")
                     var expanded by remember { mutableStateOf(false) }
-                    val dropDownEnabled = selectedChangeIndex.value >= 0
+                    val dropDownEnabled = selectedStatementIndex.value >= 0
 
                     if (dropDownEnabled) {
                         Text(
-                            changeList.value[selectedChangeIndex.value].javaClass.simpleName,
+                            statement.value?.javaClass?.simpleName ?: "",
                             modifier = Modifier.fillMaxWidth()
                                 .background(Color.Gray)
                                 .clickable { expanded = true }
@@ -98,9 +99,9 @@ fun NightCardsTab(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
                         ) {
-                            NightCardManagerViewModel.CHANGE_TYPES.forEachIndexed { index, type ->
+                            NightCardManagerViewModel.STATEMENT_TYPES.forEachIndexed { index, type ->
                                 DropdownMenuItem(onClick = {
-                                    viewModel.onChangeTypeIndexSelected(index)
+                                    viewModel.onStatementTypeIndexSelected(index)
                                     expanded = false
                                 }) {
                                     Text(text = type)
@@ -108,7 +109,6 @@ fun NightCardsTab(
                             }
                         }
                     }
-
                     val label1 = argument1Label.value
                     if (label1 != null) {
                         TextField(

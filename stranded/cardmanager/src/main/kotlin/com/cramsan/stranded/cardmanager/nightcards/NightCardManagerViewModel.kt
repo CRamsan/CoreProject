@@ -1,30 +1,21 @@
 package com.cramsan.stranded.cardmanager.nightcards
 
 import com.cramsan.stranded.cardmanager.base.BaseCardManagerViewModel
+import com.cramsan.stranded.lib.game.models.night.CancellableByFire
+import com.cramsan.stranded.lib.game.models.night.CancellableByFood
+import com.cramsan.stranded.lib.game.models.night.CancellableByWeapon
+import com.cramsan.stranded.lib.game.models.night.DamageToDo
+import com.cramsan.stranded.lib.game.models.night.DestroyShelter
+import com.cramsan.stranded.lib.game.models.night.FiberLost
+import com.cramsan.stranded.lib.game.models.night.FireModification
+import com.cramsan.stranded.lib.game.models.night.FireUnavailableTomorrow
+import com.cramsan.stranded.lib.game.models.night.ForageCardLost
+import com.cramsan.stranded.lib.game.models.night.NightChangeStatement
 import com.cramsan.stranded.lib.game.models.night.NightEvent
-import com.cramsan.stranded.lib.game.models.state.CancellableByFire
-import com.cramsan.stranded.lib.game.models.state.CancellableByFood
-import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
-import com.cramsan.stranded.lib.game.models.state.Change
-import com.cramsan.stranded.lib.game.models.state.CraftCard
-import com.cramsan.stranded.lib.game.models.state.DamageToDo
-import com.cramsan.stranded.lib.game.models.state.DestroyShelter
-import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
-import com.cramsan.stranded.lib.game.models.state.DrawNightCard
-import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
-import com.cramsan.stranded.lib.game.models.state.FiberLost
-import com.cramsan.stranded.lib.game.models.state.FireModification
-import com.cramsan.stranded.lib.game.models.state.FireUnavailableTomorrow
-import com.cramsan.stranded.lib.game.models.state.ForageCardLost
-import com.cramsan.stranded.lib.game.models.state.IncrementNight
-import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
-import com.cramsan.stranded.lib.game.models.state.SelectTargetOnlyUnsheltered
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantity
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantityAll
-import com.cramsan.stranded.lib.game.models.state.SetPhase
-import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
-import com.cramsan.stranded.lib.game.models.state.Survived
-import com.cramsan.stranded.lib.game.models.state.UserCard
+import com.cramsan.stranded.lib.game.models.night.SelectTargetOnlyUnsheltered
+import com.cramsan.stranded.lib.game.models.night.SelectTargetQuantity
+import com.cramsan.stranded.lib.game.models.night.SelectTargetQuantityAll
+import com.cramsan.stranded.lib.game.models.night.Survived
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
 import kotlinx.coroutines.CoroutineScope
@@ -40,14 +31,14 @@ class NightCardManagerViewModel(
 
     override val tabTitle = "Night Cards"
 
-    private val _selectedChangeIndex = MutableStateFlow(-1)
-    val selectedChangeIndex: StateFlow<Int> = _selectedChangeIndex
+    private val _selectedStatementIndex = MutableStateFlow(-1)
+    val selectedStatementIndex: StateFlow<Int> = _selectedStatementIndex
 
-    private val _changeList = MutableStateFlow<List<Change>>(listOf())
-    val changeList: StateFlow<List<Change>> = _changeList
+    private val _statementList = MutableStateFlow<List<NightChangeStatement>>(listOf())
+    val statementList: StateFlow<List<NightChangeStatement>> = _statementList
 
-    private val _change = MutableStateFlow<Change?>(null)
-    val change: StateFlow<Change?> = _change
+    private val _statement = MutableStateFlow<NightChangeStatement?>(null)
+    val statement: StateFlow<NightChangeStatement?> = _statement
 
     private val _argument1Label = MutableStateFlow<String?>(null)
     val argument1Label: StateFlow<String?> = _argument1Label
@@ -61,26 +52,26 @@ class NightCardManagerViewModel(
     private val _argument2Field = MutableStateFlow("")
     val argument2Field: StateFlow<String> = _argument2Field
 
-    private var selectedChangeTypeIndex = -1
+    private var selectedStatementTypeIndex = -1
 
-    private val onSelectedChangeIndexChange = callback@{
-        val change = _changeList.value.elementAtOrNull(_selectedChangeIndex.value)
-        _change.value = change
+    private val onSelectedStatementIndexChange = callback@{
+        val statement = _statementList.value.elementAtOrNull(_selectedStatementIndex.value)
+        _statement.value = statement
 
-        if (_selectedChangeIndex.value < 0) {
+        if (_selectedStatementIndex.value < 0) {
             return@callback
         }
 
-        if (change == null) {
-            _changeList.value = _changeList.value + CancellableByFire
+        if (statement == null) {
+            _statementList.value = _statementList.value + CancellableByFire
         }
 
-        loadChangeAtIndex(_selectedChangeIndex.value)
+        loadStatementAtIndex(_selectedStatementIndex.value)
     }
 
     override fun onShow() = super.onShow().let {
-        _selectedChangeIndex.onEach {
-            onSelectedChangeIndexChange()
+        _selectedStatementIndex.onEach {
+            onSelectedStatementIndexChange()
         }.launchIn(scope)
     }
 
@@ -93,63 +84,59 @@ class NightCardManagerViewModel(
     }
 
     override fun instanciateNewCard(): NightEvent {
-        val newChangeList = instantiateChangeList()
-
-        _changeList.value = newChangeList
+        val newStatementList = instantiateStatementList()
 
         return NightEvent(
             cardTitle.value,
-            newChangeList,
+            newStatementList,
         )
     }
 
-    private fun instantiateChangeList(): List<Change> {
-        val sanitizedChange = when (val changeToSanitize = _change.value) {
+    private fun instantiateStatementList(): List<NightChangeStatement> {
+        val sanitizedStatement = when (val statementToSanitize = _statement.value) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
-            FiberLost, Survived -> changeToSanitize
+            FiberLost, Survived -> statementToSanitize
             is CancellableByFood -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     change = _argument1Field.value.toIntOrNull() ?: 0
                 )
             }
             is SelectTargetOnlyUnsheltered -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     onlyUnsheltered = _argument1Field.value.toBooleanStrictOrNull() ?: false
                 )
             }
             is SelectTargetQuantity -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0
                 )
             }
             is CancellableByWeapon -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     change = _argument1Field.value.toIntOrNull() ?: 0
                 )
             }
             is ForageCardLost -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0,
                     cardsLost = _argument1Field.value.toIntOrNull() ?: 0,
                 )
             }
             is FireModification -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     change = _argument1Field.value.toIntOrNull() ?: 0
                 )
             }
             is DamageToDo -> {
-                changeToSanitize.copy(
+                statementToSanitize.copy(
                     healthChange = _argument1Field.value.toIntOrNull() ?: 0
                 )
             }
-
-            is SingleHealthChange, is MultiHealthChange, is CraftCard, is DrawBelongingCard, DrawNightCard,
-            is DrawScavengeCard, IncrementNight, is SetPhase, is UserCard, null -> changeToSanitize
+            null -> null
         } ?: return emptyList()
 
-        val newList = changeList.value.toMutableList()
-        newList[selectedChangeIndex.value] = sanitizedChange
+        val newList = statementList.value.toMutableList()
+        newList[selectedStatementIndex.value] = sanitizedStatement
         return newList
     }
 
@@ -157,114 +144,114 @@ class NightCardManagerViewModel(
         val selectedCard = deck.value[selectedCardIndex.value].content
         selectedCard?.statements.let {
             if (it == null) {
-                _changeList.value = emptyList()
+                _statementList.value = emptyList()
             } else {
-                _changeList.value = it
+                _statementList.value = it
             }
             if (it.isNullOrEmpty()) {
-                _selectedChangeIndex.value = -1
-                selectedChangeTypeIndex = -1
+                _selectedStatementIndex.value = -1
+                selectedStatementTypeIndex = -1
             } else {
-                _selectedChangeIndex.value = 0
-                selectedChangeTypeIndex = 0
+                _selectedStatementIndex.value = 0
+                selectedStatementTypeIndex = 0
             }
         }
+        onSelectedStatementIndexChange()
     }
 
-    fun onChangeAtIndexSelected(index: Int) {
+    fun onStatementAtIndexSelected(index: Int) {
         saveCardToDeck()
-        _selectedChangeIndex.value = index
+        _selectedStatementIndex.value = index
     }
 
-    fun onAddChangeStatementSelected() {
+    fun onAddStatementStatementSelected() {
         saveCardToDeck()
-        _selectedChangeIndex.value = _changeList.value.size
+        _selectedStatementIndex.value = _statementList.value.size
     }
 
-    fun onRemoveChangeStatementSelected() {
-        val newChangeList = _changeList.value.toMutableList()
-        newChangeList.removeAt(selectedChangeIndex.value)
-        _changeList.value = newChangeList
-        if (_changeList.value.isNotEmpty() && selectedChangeIndex.value > _changeList.value.lastIndex) {
-            _selectedChangeIndex.value = selectedChangeIndex.value - 1
+    fun onRemoveStatementStatementSelected() {
+        val newStatementList = _statementList.value.toMutableList()
+        newStatementList.removeAt(selectedStatementIndex.value)
+        _statementList.value = newStatementList
+        if (newStatementList.isEmpty() || selectedStatementIndex.value > _statementList.value.lastIndex) {
+            _selectedStatementIndex.value = selectedStatementIndex.value - 1
         } else {
-            onSelectedChangeIndexChange()
+            onSelectedStatementIndexChange()
         }
     }
 
-    private fun loadChangeAtIndex(index: Int) {
+    private fun loadStatementAtIndex(index: Int) {
         _argument1Label.value = null
         _argument1Field.value = ""
         _argument2Label.value = null
         _argument2Field.value = ""
 
-        when (val change = _changeList.value.elementAt(index)) {
+        val statement = _statementList.value[index]
+        _statement.value = statement
+        when (statement) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
             FiberLost, Survived -> Unit
             is CancellableByFood -> {
                 _argument1Label.value = "Change"
-                _argument1Field.value = change.change.toString()
+                _argument1Field.value = statement.change.toString()
             }
             is SelectTargetOnlyUnsheltered -> {
                 _argument1Label.value = "Only unsheltered"
-                _argument1Field.value = change.onlyUnsheltered.toString()
+                _argument1Field.value = statement.onlyUnsheltered.toString()
             }
             is SelectTargetQuantity -> {
                 _argument1Label.value = "Affected players"
-                _argument1Field.value = change.affectedPlayers.toString()
+                _argument1Field.value = statement.affectedPlayers.toString()
             }
             is CancellableByWeapon -> {
                 _argument1Label.value = "Change"
-                _argument1Field.value = change.change.toString()
+                _argument1Field.value = statement.change.toString()
             }
             is ForageCardLost -> {
                 _argument1Label.value = "Affected players"
-                _argument1Field.value = change.affectedPlayers.toString()
-                _argument1Label.value = "Cards to lose"
-                _argument1Field.value = change.cardsLost.toString()
+                _argument1Field.value = statement.affectedPlayers.toString()
+                _argument2Label.value = "Cards to lose"
+                _argument2Field.value = statement.cardsLost.toString()
             }
             is FireModification -> {
                 _argument1Label.value = "Change"
-                _argument1Field.value = change.change.toString()
+                _argument1Field.value = statement.change.toString()
             }
             is DamageToDo -> {
                 _argument1Label.value = "Change"
-                _argument1Field.value = change.healthChange.toString()
+                _argument1Field.value = statement.healthChange.toString()
             }
-
-            is SingleHealthChange, is MultiHealthChange, is CraftCard, is DrawBelongingCard, DrawNightCard,
-            is DrawScavengeCard, IncrementNight, is SetPhase, is UserCard -> Unit
         }
     }
 
-    private fun instantiateNewChange(): Change {
-        return when (CHANGE_TYPES[selectedChangeTypeIndex]) {
-            CHANGE_TYPES[0] -> CancellableByFire
-            CHANGE_TYPES[1] -> DestroyShelter
-            CHANGE_TYPES[2] -> CancellableByFood(1)
-            CHANGE_TYPES[3] -> FireUnavailableTomorrow
-            CHANGE_TYPES[4] -> SelectTargetOnlyUnsheltered(true)
-            CHANGE_TYPES[5] -> SelectTargetQuantity(1)
-            CHANGE_TYPES[6] -> SelectTargetQuantityAll
-            CHANGE_TYPES[7] -> CancellableByWeapon(1)
-            CHANGE_TYPES[8] -> ForageCardLost(1, 1)
-            CHANGE_TYPES[9] -> FiberLost
-            CHANGE_TYPES[10] -> FireModification(1)
-            CHANGE_TYPES[11] -> DamageToDo(1)
-            CHANGE_TYPES[12] -> Survived
+    private fun instantiateNewStatement(): NightChangeStatement {
+        return when (STATEMENT_TYPES[selectedStatementTypeIndex]) {
+            STATEMENT_TYPES[0] -> CancellableByFire
+            STATEMENT_TYPES[1] -> DestroyShelter
+            STATEMENT_TYPES[2] -> CancellableByFood(1)
+            STATEMENT_TYPES[3] -> FireUnavailableTomorrow
+            STATEMENT_TYPES[4] -> SelectTargetOnlyUnsheltered(true)
+            STATEMENT_TYPES[5] -> SelectTargetQuantity(1)
+            STATEMENT_TYPES[6] -> SelectTargetQuantityAll
+            STATEMENT_TYPES[7] -> CancellableByWeapon(1)
+            STATEMENT_TYPES[8] -> ForageCardLost(1, 1)
+            STATEMENT_TYPES[9] -> FiberLost
+            STATEMENT_TYPES[10] -> FireModification(1)
+            STATEMENT_TYPES[11] -> DamageToDo(1)
+            STATEMENT_TYPES[12] -> Survived
             else -> TODO()
         }
     }
 
-    fun onChangeTypeIndexSelected(index: Int) {
-        selectedChangeTypeIndex = index
-        val newChange = instantiateNewChange()
-        val list = _changeList.value.toMutableList()
-        list[_selectedChangeIndex.value] = newChange
-        _changeList.value = list
+    fun onStatementTypeIndexSelected(index: Int) {
+        selectedStatementTypeIndex = index
+        val newStatement = instantiateNewStatement()
+        val list = _statementList.value.toMutableList()
+        list[_selectedStatementIndex.value] = newStatement
+        _statementList.value = list
 
         saveCardToDeck()
-        onSelectedChangeIndexChange()
+        onSelectedStatementIndexChange()
     }
 
     fun onArgument1FieldUpdated(argument: String) {
@@ -276,7 +263,7 @@ class NightCardManagerViewModel(
     }
 
     companion object {
-        val CHANGE_TYPES = listOf(
+        val STATEMENT_TYPES = listOf(
             "CancellableByFire",
             "DestroyShelter",
             "CancellableByFood",

@@ -1,6 +1,6 @@
 package com.cramsan.stranded.lib.game.models.common
 
-import com.cramsan.stranded.lib.utils.generateUUID
+import com.cramsan.stranded.server.utils.generateUUID
 import kotlinx.serialization.Serializable
 
 /**

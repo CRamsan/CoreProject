@@ -1,34 +1,29 @@
 package com.cramsan.stranded.lib.client.controllers
 
-import com.cramsan.stranded.lib.client.Client
 import com.cramsan.stranded.lib.client.UIComponent
 import com.cramsan.stranded.lib.client.ui.mainmenu.LobbyListMenu
 import com.cramsan.stranded.lib.client.ui.mainmenu.LobbyMenu
 import com.cramsan.stranded.lib.client.ui.mainmenu.PlayerNameMenu
-import com.cramsan.stranded.lib.messages.Connected
-import com.cramsan.stranded.lib.messages.CreateLobby
-import com.cramsan.stranded.lib.messages.Disconnected
-import com.cramsan.stranded.lib.messages.GameChange
-import com.cramsan.stranded.lib.messages.GameStarted
-import com.cramsan.stranded.lib.messages.GameStateMessage
-import com.cramsan.stranded.lib.messages.Ignore
-import com.cramsan.stranded.lib.messages.JoinLobby
-import com.cramsan.stranded.lib.messages.JoinedLobby
-import com.cramsan.stranded.lib.messages.LeaveLobby
-import com.cramsan.stranded.lib.messages.LeftLobby
-import com.cramsan.stranded.lib.messages.ListLobbies
-import com.cramsan.stranded.lib.messages.ListPlayers
-import com.cramsan.stranded.lib.messages.LobbyCreated
-import com.cramsan.stranded.lib.messages.LobbyCreatedFromRequest
-import com.cramsan.stranded.lib.messages.LobbyDestroyed
-import com.cramsan.stranded.lib.messages.LobbyList
-import com.cramsan.stranded.lib.messages.PlayerListFromRequest
-import com.cramsan.stranded.lib.messages.PlayerUpdated
-import com.cramsan.stranded.lib.messages.ServerEvent
-import com.cramsan.stranded.lib.messages.SetPlayerName
-import com.cramsan.stranded.lib.messages.SetReadyToStart
-import com.cramsan.stranded.lib.messages.StartGame
-import com.cramsan.stranded.lib.repository.Player
+import com.cramsan.stranded.server.Client
+import com.cramsan.stranded.server.messages.Connected
+import com.cramsan.stranded.server.messages.CreateLobby
+import com.cramsan.stranded.server.messages.Disconnected
+import com.cramsan.stranded.server.messages.GameChange
+import com.cramsan.stranded.server.messages.GameStarted
+import com.cramsan.stranded.server.messages.GameStateMessage
+import com.cramsan.stranded.server.messages.JoinLobby
+import com.cramsan.stranded.server.messages.JoinedLobby
+import com.cramsan.stranded.server.messages.LeaveLobby
+import com.cramsan.stranded.server.messages.LeftLobby
+import com.cramsan.stranded.server.messages.ListPlayers
+import com.cramsan.stranded.server.messages.LobbyCreatedFromRequest
+import com.cramsan.stranded.server.messages.PlayerListFromRequest
+import com.cramsan.stranded.server.messages.PlayerUpdated
+import com.cramsan.stranded.server.messages.ServerEvent
+import com.cramsan.stranded.server.messages.SetPlayerName
+import com.cramsan.stranded.server.messages.SetReadyToStartGame
+import com.cramsan.stranded.server.messages.StartGame
+import com.cramsan.stranded.server.repository.Player
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -86,16 +81,12 @@ class DefaultMainMenuController(
                 Disconnected -> {
                     mode = MainMenuMode.None
                 }
-                Ignore -> Unit
                 is JoinedLobby -> {
                     handleJoinedLobby(serverEvent)
                 }
                 is LeftLobby -> {
                     handleLeftLobby(serverEvent)
                 }
-                is LobbyCreated -> Unit
-                is LobbyDestroyed -> Unit
-                is LobbyList -> lobbyListMenu.setLobbyList(serverEvent.lobbyList)
                 is PlayerUpdated -> handlePlayerUpdate(serverEvent.player)
                 is LobbyCreatedFromRequest -> {
                     client.sendMessage(JoinLobby(serverEvent.lobby.id))
@@ -116,7 +107,6 @@ class DefaultMainMenuController(
             MainMenuMode.CreateLobby, MainMenuMode.LobbyList, MainMenuMode.PlayerName,
             MainMenuMode.MainMenu, MainMenuMode.None -> Unit
             MainMenuMode.Lobby -> {
-                require(serverEvent.lobbyId == lobbyId)
                 if (serverEvent.player.id == client.player.id) {
                     mode = MainMenuMode.MainMenu
                 } else {
@@ -176,7 +166,7 @@ class DefaultMainMenuController(
 
     override fun openLobbyListMenu() {
         mode = MainMenuMode.LobbyList
-        client.sendMessage(ListLobbies)
+        // TODO: Remove this function since we do not list lobbies anymore
     }
 
     override fun onReturnToMainMenuSelected() {
@@ -192,7 +182,7 @@ class DefaultMainMenuController(
     }
 
     override fun onReadySelected(isReady: Boolean) {
-        client.sendMessage(SetReadyToStart(isReady))
+        client.sendMessage(SetReadyToStartGame(isReady))
     }
 
     override fun onStartGameSelected() {

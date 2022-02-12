@@ -10,66 +10,28 @@ import com.cramsan.stranded.lib.game.models.crafting.Craftable
 import com.cramsan.stranded.lib.game.models.crafting.Fire
 import com.cramsan.stranded.lib.game.models.crafting.Shelter
 import com.cramsan.stranded.lib.game.models.crafting.Spear
+import com.cramsan.stranded.lib.game.models.night.CancellableByFire
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.scavenge.Useless
-import com.cramsan.stranded.lib.game.models.state.CancellableByFire
-import com.cramsan.stranded.lib.game.models.state.CancellableByFood
-import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
-import com.cramsan.stranded.lib.game.models.state.Change
+import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
-import com.cramsan.stranded.lib.game.models.state.DamageToDo
-import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
-import com.cramsan.stranded.lib.game.models.state.FiberLost
-import com.cramsan.stranded.lib.game.models.state.FireModification
-import com.cramsan.stranded.lib.game.models.state.FireUnavailableTomorrow
-import com.cramsan.stranded.lib.game.models.state.ForageCardLost
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
 import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
-import com.cramsan.stranded.lib.game.models.state.SelectTargetOnlyUnsheltered
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantity
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantityAll
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
-import com.cramsan.stranded.lib.game.models.state.Survived
 import com.cramsan.stranded.lib.game.models.state.UserCard
 
 /**
- * This is the only function to apply changes to [MutableGameState].
+ * This is the only function to apply changes to [StrandedGameState].
  */
-internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEventHandler? = null) {
+internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, eventHandler: GameEventHandler? = null) {
     when (change) {
-        CancellableByFire -> Unit
-        DestroyShelter -> {
-            shelters.forEach { shelter -> shelter.clearPlayers() }
-            shelters.clear()
-        }
-        is CancellableByFood -> {
-            TODO()
-        }
-        FireUnavailableTomorrow -> {
-            isFireBlocked = true
-        }
-        SelectTargetQuantityAll -> {
-            targetList = gamePlayers.getNext(gamePlayers.size)
-        }
-        is SelectTargetOnlyUnsheltered -> TODO()
-        is SelectTargetQuantity -> {
-            targetList = gamePlayers.getNext(change.affectedPlayers)
-        }
-        is CancellableByWeapon -> TODO()
-        is ForageCardLost -> TODO()
-        FiberLost -> TODO()
-        is FireModification -> {
-            if (hasFire) {
-                fireDamageMod = change.change
-            }
-        }
         is SingleHealthChange -> {
             val damage = change.healthChange + fireDamageMod
             val player = getPlayer(change.playerId)
@@ -78,16 +40,6 @@ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEve
         is MultiHealthChange -> {
             TODO()
         }
-        is DamageToDo -> TODO()
-        /*
-        is AllHealthChange -> {
-            val damage = change.healthChange + fireDamageMod
-
-            targetList?.forEach { player ->
-                player.changeHealth(damage, eventHandler)
-            }
-        }
-         */
         is DrawBelongingCard -> {
             val player = getPlayer(change.playerId)
             val card = drawBelongingCard()
@@ -109,7 +61,6 @@ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEve
             val card = drawScavengeCard()
             player.receiveCard(card, eventHandler)
         }
-        Survived -> TODO()
         is SetPhase -> phase = change.gamePhase
         is UserCard -> {
             val player = getPlayer(change.playerId)
@@ -160,13 +111,11 @@ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEve
 /**
  * There are all the extension functions that can make modifications to the state. They are all private.
  */
-private fun <T> List<T>.getNext(count: Int = 1): List<T> = this.subList(0, count)
+private fun MutableStrandedGameState.drawNightCard(): NightEvent = drawCard(nightStack)
 
-private fun MutableGameState.drawNightCard(): NightEvent = drawCard(nightStack)
+private fun MutableStrandedGameState.drawScavengeCard(): ScavengeResult = drawCard(scavengeStack)
 
-private fun MutableGameState.drawScavengeCard(): ScavengeResult = drawCard(scavengeStack)
-
-private fun MutableGameState.drawBelongingCard(): Belongings = drawCard(belongingsStack)
+private fun MutableStrandedGameState.drawBelongingCard(): Belongings = drawCard(belongingsStack)
 
 private fun <T : Card> drawCard(stack: MutableList<T>): T {
     return stack.removeLast()
@@ -223,10 +172,10 @@ private fun GamePlayer.changeHealth(damage: Int, eventHandler: GameEventHandler?
 }
 
 /**
- * These are the extensions functions to read from the [GameState]. These can be public as they do not make modifications.
+ * These are the extensions functions to read from the [StrandedGameState]. These can be public as they do not make modifications.
  */
 
-fun GameState.getPlayer(playerId: String): GamePlayer {
+fun StrandedGameState.getPlayer(playerId: String): GamePlayer {
     return gamePlayers.find { it.id == playerId }!!
 }
 

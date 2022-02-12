@@ -1,6 +1,5 @@
 package com.cramsan.stranded.lib.client.controllers
 
-import com.cramsan.stranded.lib.client.Client
 import com.cramsan.stranded.lib.client.UIComponent
 import com.cramsan.stranded.lib.client.ui.game.widget.CraftingUIWidget
 import com.cramsan.stranded.lib.client.ui.game.widget.NightCardWidget
@@ -15,7 +14,7 @@ import com.cramsan.stranded.lib.game.intent.Craft
 import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.Forage
 import com.cramsan.stranded.lib.game.logic.Game
-import com.cramsan.stranded.lib.game.logic.GameState
+import com.cramsan.stranded.lib.game.logic.StrandedGameState
 import com.cramsan.stranded.lib.game.logic.getPlayer
 import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
@@ -23,36 +22,23 @@ import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.crafting.Spear
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
-import com.cramsan.stranded.lib.game.models.state.CancellableByFire
-import com.cramsan.stranded.lib.game.models.state.CancellableByFood
-import com.cramsan.stranded.lib.game.models.state.CancellableByWeapon
-import com.cramsan.stranded.lib.game.models.state.Change
+import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
-import com.cramsan.stranded.lib.game.models.state.DamageToDo
-import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
 import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
-import com.cramsan.stranded.lib.game.models.state.FiberLost
-import com.cramsan.stranded.lib.game.models.state.FireModification
-import com.cramsan.stranded.lib.game.models.state.FireUnavailableTomorrow
-import com.cramsan.stranded.lib.game.models.state.ForageCardLost
 import com.cramsan.stranded.lib.game.models.state.IncrementNight
 import com.cramsan.stranded.lib.game.models.state.MultiHealthChange
-import com.cramsan.stranded.lib.game.models.state.SelectTargetOnlyUnsheltered
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantity
-import com.cramsan.stranded.lib.game.models.state.SelectTargetQuantityAll
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
-import com.cramsan.stranded.lib.game.models.state.Survived
 import com.cramsan.stranded.lib.game.models.state.UserCard
-import com.cramsan.stranded.lib.messages.GameChange
-import com.cramsan.stranded.lib.messages.GamePlayerIntent
-import com.cramsan.stranded.lib.messages.GameStateMessage
-import com.cramsan.stranded.lib.messages.ReadyToStartGame
-import com.cramsan.stranded.lib.messages.ServerEvent
 import com.cramsan.stranded.lib.repository.GameScope
-import com.cramsan.stranded.lib.repository.Player
+import com.cramsan.stranded.server.Client
+import com.cramsan.stranded.server.messages.GameChange
+import com.cramsan.stranded.server.messages.GamePlayerIntent
+import com.cramsan.stranded.server.messages.GameStateMessage
+import com.cramsan.stranded.server.messages.ServerEvent
+import com.cramsan.stranded.server.repository.Player
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -127,7 +113,6 @@ class DefaultGameController(
     override fun onShow() {
         client.registerListener(this)
         mode = GameMode.Game
-        client.sendMessage(ReadyToStartGame)
     }
 
     override fun onDispose() {
@@ -139,15 +124,19 @@ class DefaultGameController(
         mainScope.launch {
             when (serverEvent) {
                 is GameChange -> {
-                    game.processEvent(serverEvent.change)
+                    val change = serverEvent.change as StrandedStateChange
+                    game.processEvent(change)
                 }
-                is GameStateMessage -> handleGameStateMessage(serverEvent.gameState)
+                is GameStateMessage -> {
+                    val gameState = serverEvent.gameState as StrandedGameState
+                    handleGameStateMessage(gameState)
+                }
                 else -> Unit
             }
         }
     }
 
-    override fun handleGameStateMessage(gameState: GameState) {
+    override fun handleGameStateMessage(gameState: StrandedGameState) {
         // TODO: Fix this, we are creating a copy every time.
         game.setGameState(gameState)
         playerListUI.setPlayerList(gameState.gamePlayers)
@@ -196,24 +185,12 @@ class DefaultGameController(
         TODO("Not yet implemented")
     }
 
-    override fun onEventHandled(change: Change) {
+    override fun onEventHandled(change: StrandedStateChange) {
         when (change) {
-            is DamageToDo -> Unit
-            CancellableByFire -> Unit
-            is CancellableByFood -> Unit
-            is CancellableByWeapon -> Unit
-            DestroyShelter -> Unit
             DrawNightCard -> {
             }
             is DrawScavengeCard, is DrawBelongingCard, is UserCard -> Unit
-            FiberLost -> Unit
-            is FireModification -> Unit
-            FireUnavailableTomorrow -> Unit
-            is ForageCardLost -> Unit
             IncrementNight -> Unit
-            is SelectTargetOnlyUnsheltered -> Unit
-            is SelectTargetQuantity -> Unit
-            SelectTargetQuantityAll -> Unit
             is SetPhase -> {
                 phaseUI.setPhase(change.gamePhase)
                 craftingUI.setPhaseForCrafting(change.gamePhase)
@@ -232,7 +209,6 @@ class DefaultGameController(
             }
             is MultiHealthChange -> Unit
             is SingleHealthChange -> Unit
-            Survived -> Unit
             is CraftCard -> Unit
         }
     }
@@ -247,19 +223,19 @@ class DefaultGameController(
 
     override fun onPlayerHealthChange(playerId: String, health: Int) {
         playerListUI.setPlayerList(game.gameState.gamePlayers)
-        if (playerId == client.player.id) {
+        if (playerId == this.playerId) {
             playerHeartsWidget.setHeartsContent(game.gameState.getPlayer(playerId))
         }
     }
 
     override fun onCardReceived(playerId: String, card: Card) {
-        if (playerId == client.player.id) {
+        if (playerId == this.playerId) {
             handUI.addCard(card)
         }
     }
 
     override fun onCardRemoved(playerId: String, card: Card) {
-        if (playerId == client.player.id) {
+        if (playerId == this.playerId) {
             handUI.removeCard(card)
         }
     }

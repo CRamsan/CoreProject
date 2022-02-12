@@ -9,6 +9,7 @@ dependencies {
 
     implementation project(":framework:test")
     implementation project(":stranded:lib")
+    implementation project(":stranded:server")
     implementation packages.KotlinxSerialization
 }
 
@@ -25,4 +26,5 @@ compose.desktop {
 
 
 registerDependency(":stranded:lib")
+registerDependency(":stranded:server")
 registerDependency(":framework:test")
