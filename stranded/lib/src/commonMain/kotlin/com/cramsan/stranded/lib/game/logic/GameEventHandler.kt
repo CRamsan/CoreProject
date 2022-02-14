@@ -5,8 +5,6 @@ import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 
 interface GameEventHandler {
 
-    fun onEventHandled(change: StrandedStateChange)
-
     fun onPlayerHealthChange(playerId: String, health: Int)
 
     fun onCardReceived(playerId: String, card: Card)

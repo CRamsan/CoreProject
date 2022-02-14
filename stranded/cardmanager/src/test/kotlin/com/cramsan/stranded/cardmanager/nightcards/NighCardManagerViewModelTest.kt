@@ -77,7 +77,7 @@ class NighCardManagerViewModelTest : TestBase() {
     fun `test adding change statement`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(1)
-        viewModel.onAddStatementStatementSelected()
+        viewModel.onAddStatementSelected()
 
         assertEquals("Night2", viewModel.cardTitle.value)
         assertEquals(9, viewModel.cardQuantity.value)

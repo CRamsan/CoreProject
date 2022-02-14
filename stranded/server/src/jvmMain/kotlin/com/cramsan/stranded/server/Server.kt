@@ -206,7 +206,14 @@ class Server(
             }
         })
 
+        val players = lobby.players.mapNotNull {
+            playerRepository.getPlayer(it)
+        }
+        createdGame.onConfigureGame(players)
+
         broadcastToLobby(lobby.id, GameStateMessage(createdGame.gameState))
+
+        createdGame.onGameStarted()
     }
 
     suspend fun broadcastToLobby(lobbyId: String, serverEvent: ServerEvent) {

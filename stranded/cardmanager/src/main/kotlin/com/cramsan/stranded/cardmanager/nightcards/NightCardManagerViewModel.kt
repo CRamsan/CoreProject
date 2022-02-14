@@ -152,13 +152,16 @@ class NightCardManagerViewModel(
         _selectedStatementIndex.value = index
     }
 
-    fun onAddStatementStatementSelected() {
+    fun onAddStatementSelected() {
         saveCardToDeck()
         _selectedStatementIndex.value = _statementList.value.size
     }
 
-    fun onRemoveStatementStatementSelected() {
+    fun onRemoveStatementSelected() {
         val newStatementList = _statementList.value.toMutableList()
+        if (newStatementList.isEmpty()) {
+            return
+        }
         newStatementList.removeAt(selectedStatementIndex.value)
         _statementList.value = newStatementList
         if (newStatementList.isEmpty() || selectedStatementIndex.value > _statementList.value.lastIndex) {
@@ -244,7 +247,6 @@ class NightCardManagerViewModel(
         val STATEMENT_TYPES = listOf(
             "CancellableByFire",
             "DestroyShelter",
-            "CancellableByFood",
             "FireUnavailableTomorrow",
             "SelectTargetOnlyUnsheltered",
             "SelectTargetQuantity",
@@ -252,7 +254,6 @@ class NightCardManagerViewModel(
             "CancellableByWeapon",
             "ForageCardLost",
             "FiberLost",
-            "FireModification",
             "DamageToDo",
             "Survived",
         )

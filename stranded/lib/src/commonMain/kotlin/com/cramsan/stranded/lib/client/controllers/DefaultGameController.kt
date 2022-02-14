@@ -37,6 +37,8 @@ import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
 import com.cramsan.stranded.lib.repository.GameScope
 import com.cramsan.stranded.server.Client
+import com.cramsan.stranded.server.MultiplayerGameEventHandler
+import com.cramsan.stranded.server.game.StateChange
 import com.cramsan.stranded.server.messages.GameChange
 import com.cramsan.stranded.server.messages.GamePlayerIntent
 import com.cramsan.stranded.server.messages.GameStateMessage
@@ -49,7 +51,7 @@ class DefaultGameController(
     private val client: Client,
     private val mainScope: CoroutineScope,
     private val gameScope: GameScope,
-) : GameController {
+) : GameController, MultiplayerGameEventHandler {
 
     private var mode: GameMode = GameMode.Game
 
@@ -103,12 +105,11 @@ class DefaultGameController(
         this.playerList = playerList
         this.lobbyId = lobbyId
 
-        game = Game(gameScope.scope)
-        game.configureGame(
-            playerList,
-            listOf(),
-            listOf(),
-            listOf(),
+        game = Game(
+            gameScope.scope,
+            emptyList(),
+            emptyList(),
+            emptyList()
         )
     }
 
@@ -187,7 +188,10 @@ class DefaultGameController(
         TODO("Not yet implemented")
     }
 
-    override fun onEventHandled(change: StrandedStateChange) {
+    override fun onStateChangeExecuted(change: StateChange) {
+        if (change !is StrandedStateChange) {
+            return
+        }
         when (change) {
             DrawNightCard -> {
             }
@@ -229,7 +233,7 @@ class DefaultGameController(
     override fun onPlayerHealthChange(playerId: String, health: Int) {
         playerListUI.setPlayerList(game.gameState.gamePlayers)
         if (playerId == this.playerId) {
-            playerHeartsWidget.setHeartsContent(game.gameState.getPlayer(playerId))
+            game.gameState.getPlayer(playerId)?.let { playerHeartsWidget.setHeartsContent(it) }
         }
     }
 

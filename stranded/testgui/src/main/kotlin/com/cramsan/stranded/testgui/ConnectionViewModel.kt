@@ -8,7 +8,6 @@ import com.cramsan.stranded.server.messages.CreateLobby
 import com.cramsan.stranded.server.messages.DeleteLobby
 import com.cramsan.stranded.server.messages.Disconnected
 import com.cramsan.stranded.server.messages.GameChange
-import com.cramsan.stranded.server.messages.GamePlayerIntent
 import com.cramsan.stranded.server.messages.GameStarted
 import com.cramsan.stranded.server.messages.GameStateMessage
 import com.cramsan.stranded.server.messages.JoinLobby
@@ -31,7 +30,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 /**
@@ -40,10 +38,9 @@ import kotlinx.serialization.json.Json
  *
  * @author cramsan
  */
-class DemoGameViewModel(
+class ConnectionViewModel(
     private val client: JvmClient,
     private val server: Server,
-    private val json: Json,
     dispatcher: CoroutineDispatcher,
 ) : ClientEventHandler {
 

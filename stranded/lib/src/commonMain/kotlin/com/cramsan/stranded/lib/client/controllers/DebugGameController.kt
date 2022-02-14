@@ -12,7 +12,6 @@ import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
 import com.cramsan.stranded.lib.game.logic.StrandedGameState
-import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Equippable
@@ -36,12 +35,14 @@ import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
 import com.cramsan.stranded.lib.repository.GameScope
+import com.cramsan.stranded.server.MultiplayerGameEventHandler
+import com.cramsan.stranded.server.game.StateChange
 import com.cramsan.stranded.server.messages.ServerEvent
 import com.cramsan.stranded.server.repository.Player
 
 open class DebugGameController(
     private val gameScope: GameScope,
-) : GameController {
+) : GameController, MultiplayerGameEventHandler {
 
     private var mode: GameMode = GameMode.Game
 
@@ -88,7 +89,12 @@ open class DebugGameController(
         this.backgroundWidget = backgroundWidget
         this.craftingUI = craftingUI
 
-        game = Game(gameScope.scope)
+        game = Game(
+            gameScope.scope,
+            emptyList(),
+            emptyList(),
+            emptyList()
+        )
 
         val currentPlayer = MutableGamePlayer(
             "",
@@ -154,7 +160,10 @@ open class DebugGameController(
 
     override fun onCardSelected(card: Card) = Unit
 
-    override fun onEventHandled(change: StrandedStateChange) {
+    override fun onStateChangeExecuted(change: StateChange) {
+        if (change !is StrandedStateChange) {
+            return
+        }
         when (change) {
             is SingleHealthChange -> Unit
             is DrawBelongingCard -> Unit
@@ -210,6 +219,6 @@ open class DebugGameController(
             Phase.NIGHT_PREPARE -> Phase.NIGHT
             Phase.NIGHT -> Phase.FORAGING
         }
-        onEventHandled(SetPhase(newPhase))
+        onStateChangeExecuted(SetPhase(newPhase))
     }
 }

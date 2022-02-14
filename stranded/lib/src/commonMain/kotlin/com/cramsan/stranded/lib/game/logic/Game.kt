@@ -48,13 +48,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 /**
  * This class is where the logic for the game resides.
  */
 class Game(
     private val gameScope: CoroutineScope,
+    private val startingNightCards: List<NightEvent>,
+    private val startingForageCards: List<ScavengeResult>,
+    private val startingBelongingCards: List<Belongings>,
 ) : MultiplayerGame {
 
     private lateinit var playerIntents: Map<String, Channel<StrandedPlayerIntent>>
@@ -74,7 +76,12 @@ class Game(
 
     private var gameCompleted = false
 
+    override fun onConfigureGame(playerList: List<Player>) {
+       configureGame(playerList)
+    }
+
     override fun onGameStarted() {
+        startGameJob()
     }
 
     override fun onGameEnded() {
@@ -110,17 +117,11 @@ class Game(
             hasFire = newGameState.hasFire
             isFireBlocked = newGameState.isFireBlocked
             night = newGameState.night
-            fireDamageMod = newGameState.fireDamageMod
             phase = newGameState.phase
         }
     }
 
-    fun configureGame(
-        players: List<Player>,
-        scavengeStack: List<ScavengeResult>,
-        nightStack: List<NightEvent>,
-        belongingsStack: List<Belongings>,
-    ) {
+    private fun configureGame(players: List<Player>) {
         clearGameState()
         _gameState.gamePlayers.addAll(players.map {
             MutableGamePlayer(
@@ -129,9 +130,9 @@ class Game(
                 4,
             )
         })
-        _gameState.scavengeStack.addAll(scavengeStack)
-        _gameState.nightStack.addAll(nightStack)
-        _gameState.belongingsStack.addAll(belongingsStack)
+        _gameState.scavengeStack.addAll(startingForageCards)
+        _gameState.nightStack.addAll(startingNightCards)
+        _gameState.belongingsStack.addAll(startingBelongingCards)
         playerIntents = gameState.gamePlayers.associate {
             it.id to Channel(
                 capacity = Channel.UNLIMITED,
@@ -340,7 +341,7 @@ class Game(
     }
 
     fun processEvent(change: StrandedStateChange) {
-        _gameState.processEvent(change, _gameEventHandler)
+        _gameState.processEvent(change, _multiplayerGameEventHandler, _gameEventHandler)
     }
 
     private fun clearGameState() {
@@ -353,7 +354,6 @@ class Game(
             hasFire = false
             isFireBlocked = false
             night = 1
-            fireDamageMod = 0
             phase = Phase.NIGHT
         }
     }

@@ -1,6 +1,5 @@
 package com.cramsan.stranded.lib.game.logic
 
-import com.cramsan.stranded.lib.game.intent.SelectCard
 import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
@@ -31,14 +30,19 @@ import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
+import com.cramsan.stranded.server.MultiplayerGameEventHandler
 
 /**
  * This is the only function to apply changes to [StrandedGameState].
  */
-internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, eventHandler: GameEventHandler? = null) {
+internal fun MutableStrandedGameState.processEvent(
+    change: StrandedStateChange,
+    multiplayerGameEventHandler: MultiplayerGameEventHandler? = null,
+    eventHandler: GameEventHandler? = null,
+) {
     when (change) {
         is SingleHealthChange -> {
-            val damage = change.healthChange + fireDamageMod
+            val damage = change.healthChange
             val player = getMutablePlayer(change.playerId)
             player.changeHealth(damage, eventHandler)
         }
@@ -119,10 +123,12 @@ internal fun MutableStrandedGameState.processEvent(change: StrandedStateChange, 
             val player = getMutablePlayer(change.playerId)
             val cardToLose = getCard(player, change.cardId)
 
-            player.releaseCard(cardToLose, eventHandler)
+            cardToLose?.let {
+                player.releaseCard(it, eventHandler)
+            }
         }
     }
-    eventHandler?.onEventHandled(change)
+    multiplayerGameEventHandler?.onStateChangeExecuted(change)
 }
 
 /**
@@ -196,27 +202,26 @@ private fun MutableStrandedGameState.getMutablePlayer(playerId: String): Mutable
  * These are the extensions functions to read from the [StrandedGameState]. These can be public as they do not make modifications.
  */
 
-fun StrandedGameState.getPlayer(playerId: String): GamePlayer {
-    return gamePlayers.find { it.id == playerId }!!
+fun StrandedGameState.getPlayer(playerId: String): GamePlayer? {
+    return gamePlayers.find { it.id == playerId }
 }
 
-fun getCard(player: GamePlayer, cardId: String): Card {
-    val card = player.scavengeResults.find { it.id == cardId }
+fun getCard(player: GamePlayer, cardId: String): Card? {
+    return player.scavengeResults.find { it.id == cardId }
         ?: player.belongings.find { it.id == cardId }
         ?: player.craftables.find { it.id == cardId }
-    return requireNotNull(card)
 }
 
-fun getScavengeResultCard(player: GamePlayer, cardId: String): Card {
-    return requireNotNull(player.scavengeResults.find { it.id == cardId })
+fun getScavengeResultCard(player: GamePlayer, cardId: String): Card? {
+    return player.scavengeResults.find { it.id == cardId }
 }
 
 fun List<ScavengeResult>.getResources(): List<Resource> {
     return filter { it is Resource }.map { it as Resource }
 }
 
-fun List<ScavengeResult>.getResourceCard(resourceType: ResourceType): Resource {
-    return requireNotNull(getResources().find { it.resourceType == resourceType })
+fun List<ScavengeResult>.getResourceCard(resourceType: ResourceType): Resource? {
+    return getResources().find { it.resourceType == resourceType }
 }
 
 fun GamePlayer.getFood(): List<Food> {

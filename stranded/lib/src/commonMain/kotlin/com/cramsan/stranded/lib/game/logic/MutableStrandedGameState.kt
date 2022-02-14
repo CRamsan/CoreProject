@@ -24,6 +24,5 @@ data class MutableStrandedGameState(
     override var hasFire: Boolean = false,
     override var isFireBlocked: Boolean = false,
     override var night: Int = 1,
-    override var fireDamageMod: Int = 0,
     override var phase: Phase = Phase.NIGHT
 ) : StrandedGameState

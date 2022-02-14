@@ -1,6 +1,7 @@
 package com.cramsan.stranded.server.game
 
 import com.cramsan.stranded.server.MultiplayerGameEventHandler
+import com.cramsan.stranded.server.repository.Player
 
 /**
  * Represents an instance of a game implemented for multiple players.
@@ -17,6 +18,8 @@ interface MultiplayerGame {
     /**
      * Called when the server has been instructed the game is ready to start by the game host.
      */
+    fun onConfigureGame(playerList: List<Player>)
+
     fun onGameStarted()
 
     /**

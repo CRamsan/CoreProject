@@ -65,12 +65,12 @@ fun NightCardsTab(
                     modifier = Modifier.weight(1f),
                 ) {
                     Button(
-                        onClick = { viewModel.onAddStatementStatementSelected() }
+                        onClick = { viewModel.onAddStatementSelected() }
                     ) {
                         Text("Add")
                     }
                     Button(
-                        onClick = { viewModel.onRemoveStatementStatementSelected() }
+                        onClick = { viewModel.onRemoveStatementSelected() }
                     ) {
                         Text("Remove")
                     }

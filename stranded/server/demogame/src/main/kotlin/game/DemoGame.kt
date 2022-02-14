@@ -3,6 +3,7 @@ package com.cramsan.stranded.server.demoapp.game
 import com.cramsan.stranded.server.MultiplayerGameEventHandler
 import com.cramsan.stranded.server.game.MultiplayerGame
 import com.cramsan.stranded.server.game.PlayerIntent
+import com.cramsan.stranded.server.repository.Player
 import game.transformWithStateChange
 
 /**
@@ -19,6 +20,8 @@ class DemoGame : MultiplayerGame {
 
     override val gameState: DemoGameState
         get() = _gameState
+
+    override fun onConfigureGame(playerList: List<Player>) = Unit
 
     override fun onGameStarted() = Unit
 
