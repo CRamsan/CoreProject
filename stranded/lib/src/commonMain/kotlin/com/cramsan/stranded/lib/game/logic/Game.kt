@@ -74,7 +74,8 @@ class Game(
 
     override val gameState: StrandedGameState = _gameState
 
-    private var gameCompleted = false
+    var gameCompleted = false
+        private set
 
     override fun onConfigureGame(playerList: List<Player>) {
        configureGame(playerList)
@@ -174,7 +175,7 @@ class Game(
         processEvent(IncrementNight)
     }
 
-    private suspend fun processNightEvent(nightEvent: NightEvent) {
+    internal suspend fun processNightEvent(nightEvent: NightEvent) {
         processEvent(SetFireBlockStatus(false))
         val targetList = mutableListOf<GamePlayer>()
 

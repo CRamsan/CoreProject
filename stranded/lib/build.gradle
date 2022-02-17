@@ -22,6 +22,7 @@ kotlin {
         }
         commonTest {
             dependencies {
+                implementation project(":framework:test")
             }
         }
         jvmMain {
@@ -44,3 +45,4 @@ kotlin {
 }
 
 registerDependency(":stranded:server")
+registerDependency(":framework:test")

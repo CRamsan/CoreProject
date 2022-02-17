@@ -191,6 +191,9 @@ private fun <T : Card> MutableGamePlayer.receiveCard(card: T, eventHandler: Game
 
 private fun MutableGamePlayer.changeHealth(damage: Int, eventHandler: GameEventHandler?) {
     health += damage
+    if (health <= 0) {
+        health = 0
+    }
     eventHandler?.onPlayerHealthChange(id, health)
 }
 

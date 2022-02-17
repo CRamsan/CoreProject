@@ -34,6 +34,7 @@ include 'auraxiscontrolcenter:network-models'
 include 'auraxiscontrolcenter:ui'
 
 include 'stranded:lib'
+include 'stranded:gdx'
 include 'stranded:cardmanager'
 include 'stranded:testgui'
 include 'stranded:server'
