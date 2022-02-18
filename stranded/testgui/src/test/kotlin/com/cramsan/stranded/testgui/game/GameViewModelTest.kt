@@ -2,12 +2,10 @@ package com.cramsan.stranded.testgui.game
 
 import com.cramsan.framework.test.TestBase
 import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
-import com.cramsan.stranded.lib.game.models.MutableGamePlayer
+import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Phase
-import com.cramsan.stranded.lib.game.models.state.DrawScavengeCard
 import com.cramsan.stranded.server.JvmClient
 import com.cramsan.stranded.server.messages.Connected
-import com.cramsan.stranded.server.messages.GameChange
 import com.cramsan.stranded.server.messages.GameStateMessage
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,7 +44,7 @@ class GameViewModelTest : TestBase() {
         val playerId = "playerId1"
         val testGameState = MutableStrandedGameState(
             gamePlayers = mutableListOf(
-                MutableGamePlayer(
+                GamePlayer(
                     id = playerId,
                     nane = "cramsan",
                     health = 5,

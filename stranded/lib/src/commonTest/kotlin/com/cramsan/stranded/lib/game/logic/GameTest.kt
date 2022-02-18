@@ -3,7 +3,7 @@ package com.cramsan.stranded.lib.game.logic
 import com.cramsan.framework.test.TestBase
 import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.SelectCard
-import com.cramsan.stranded.lib.game.models.MutableGamePlayer
+import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.crafting.Craftable
@@ -123,7 +123,7 @@ class GameTest : TestBase() {
             belongings: MutableList<Belongings> = mutableListOf(),
             scavengeResults: MutableList<ScavengeResult> = mutableListOf(),
             craftables: MutableList<Craftable> = mutableListOf(),
-        ): MutableGamePlayer = MutableGamePlayer(
+        ): GamePlayer = GamePlayer(
             id,
             nane,
             health,
@@ -133,7 +133,7 @@ class GameTest : TestBase() {
         )
 
         fun createGameState(
-            gamePlayers: MutableList<MutableGamePlayer> = mutableListOf(createGamePlayer("1"), createGamePlayer("2")),
+            gamePlayers: MutableList<GamePlayer> = mutableListOf(createGamePlayer("1"), createGamePlayer("2")),
             scavengeStack: MutableList<ScavengeResult> = mutableListOf(),
             nightStack: MutableList<NightEvent> = mutableListOf(),
             belongingsStack: MutableList<Belongings> = mutableListOf(),

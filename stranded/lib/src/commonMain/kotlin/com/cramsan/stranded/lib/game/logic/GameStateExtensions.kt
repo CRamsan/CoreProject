@@ -1,7 +1,6 @@
 package com.cramsan.stranded.lib.game.logic
 
 import com.cramsan.stranded.lib.game.models.GamePlayer
-import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Food
@@ -39,7 +38,7 @@ internal fun MutableStrandedGameState.processEvent(
     change: StrandedStateChange,
     multiplayerGameEventHandler: MultiplayerGameEventHandler? = null,
     eventHandler: GameEventHandler? = null,
-) {
+): StrandedGameState {
     when (change) {
         is SingleHealthChange -> {
             val damage = change.healthChange
@@ -129,6 +128,7 @@ internal fun MutableStrandedGameState.processEvent(
         }
     }
     multiplayerGameEventHandler?.onStateChangeExecuted(change)
+    return MutableStrandedGameState.toSnapshot(this)
 }
 
 /**
@@ -168,7 +168,7 @@ private fun UsableItem.itemUsed() {
     remainingUses--
 }
 
-private fun <T : Card> MutableGamePlayer.releaseCard(card: T, eventHandler: GameEventHandler?): T {
+private fun <T : Card> GamePlayer.releaseCard(card: T, eventHandler: GameEventHandler?): T {
     val result = when (card) {
         is Belongings -> belongings.remove(card)
         is ScavengeResult -> scavengeResults.remove(card)
@@ -180,7 +180,7 @@ private fun <T : Card> MutableGamePlayer.releaseCard(card: T, eventHandler: Game
     return card
 }
 
-private fun <T : Card> MutableGamePlayer.receiveCard(card: T, eventHandler: GameEventHandler?) {
+private fun <T : Card> GamePlayer.receiveCard(card: T, eventHandler: GameEventHandler?) {
     when (card) {
         is Belongings -> belongings.add(card)
         is ScavengeResult -> scavengeResults.add(card)
@@ -189,7 +189,7 @@ private fun <T : Card> MutableGamePlayer.receiveCard(card: T, eventHandler: Game
     eventHandler?.onCardReceived(id, card)
 }
 
-private fun MutableGamePlayer.changeHealth(damage: Int, eventHandler: GameEventHandler?) {
+private fun GamePlayer.changeHealth(damage: Int, eventHandler: GameEventHandler?) {
     health += damage
     if (health <= 0) {
         health = 0
@@ -197,7 +197,7 @@ private fun MutableGamePlayer.changeHealth(damage: Int, eventHandler: GameEventH
     eventHandler?.onPlayerHealthChange(id, health)
 }
 
-private fun MutableStrandedGameState.getMutablePlayer(playerId: String): MutableGamePlayer {
+private fun MutableStrandedGameState.getMutablePlayer(playerId: String): GamePlayer {
     return gamePlayers.find { it.id == playerId }!!
 }
 

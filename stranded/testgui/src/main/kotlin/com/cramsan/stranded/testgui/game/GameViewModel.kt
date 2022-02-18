@@ -1,21 +1,15 @@
 package com.cramsan.stranded.testgui.game
 
 import com.cramsan.stranded.lib.game.intent.Consume
-import com.cramsan.stranded.lib.game.intent.Craft
 import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.Forage
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
 import com.cramsan.stranded.lib.game.logic.StrandedGameState
-import com.cramsan.stranded.lib.game.models.GamePlayer
-import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.crafting.Craftable
 import com.cramsan.stranded.lib.game.models.crafting.Shelter
-import com.cramsan.stranded.lib.game.models.crafting.Spear
-import com.cramsan.stranded.lib.game.models.scavenge.Resource
-import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.server.JvmClient
@@ -33,19 +27,11 @@ import com.cramsan.stranded.server.messages.LobbyCreatedFromRequest
 import com.cramsan.stranded.server.messages.PlayerListFromRequest
 import com.cramsan.stranded.server.messages.PlayerUpdated
 import com.cramsan.stranded.server.messages.ServerEvent
-import com.cramsan.stranded.server.repository.Player
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
 
 /**
  * ViewModel that powers the UI of this demo application. This viewModel has an action for pretty much all possible

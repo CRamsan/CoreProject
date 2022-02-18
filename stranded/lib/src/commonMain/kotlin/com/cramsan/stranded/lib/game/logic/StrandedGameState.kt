@@ -9,18 +9,29 @@ import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.server.game.GameState
 import kotlinx.serialization.Serializable
 
-/**
- * This class represents the entire state of the game.
- * This class does not hold any game logic. To make change you should call [processEvent].
- */
-interface StrandedGameState : GameState {
-    val gamePlayers: List<GamePlayer>
-    val scavengeStack: List<ScavengeResult>
-    val nightStack: List<NightEvent>
-    val belongingsStack: List<Belongings>
-    val shelters: List<Shelter>
-    val hasFire: Boolean
-    val isFireBlocked: Boolean
-    val night: Int
-    val phase: Phase
+@Serializable
+data class StrandedGameState(
+    val gamePlayers: List<GamePlayer>,
+    val scavengeStack: List<ScavengeResult>,
+    val nightStack: List<NightEvent>,
+    val belongingsStack: List<Belongings>,
+    val shelters: List<Shelter>,
+    val hasFire: Boolean,
+    val isFireBlocked: Boolean,
+    val night: Int,
+    val phase: Phase,
+) : GameState {
+    companion object {
+        val EMPTY_STATE = StrandedGameState(
+            gamePlayers = emptyList(),
+            scavengeStack = emptyList(),
+            nightStack = emptyList(),
+            belongingsStack = emptyList(),
+            shelters = emptyList(),
+            hasFire = false,
+            isFireBlocked = false,
+            night = 0,
+            phase = Phase.NIGHT,
+        )
+    }
 }

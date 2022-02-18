@@ -12,7 +12,7 @@ import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
 import com.cramsan.stranded.lib.game.logic.StrandedGameState
-import com.cramsan.stranded.lib.game.models.MutableGamePlayer
+import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Card
 import com.cramsan.stranded.lib.game.models.common.Equippable
 import com.cramsan.stranded.lib.game.models.common.Phase
@@ -96,7 +96,7 @@ open class DebugGameController(
             emptyList()
         )
 
-        val currentPlayer = MutableGamePlayer(
+        val currentPlayer = GamePlayer(
             "",
             "cramsan",
             5,
@@ -111,22 +111,17 @@ open class DebugGameController(
         )
 
         val players = listOf(
-            MutableGamePlayer("", "Cramsan", 4),
-            MutableGamePlayer("", "Test", 2),
-            MutableGamePlayer("", "Dummy", 5),
-            MutableGamePlayer("", "Test2", 6),
-            MutableGamePlayer("", "A very long name!! :D@#$%^& jhgjhg KDDD", 1),
-            MutableGamePlayer("", "Howdy", 0),
+            GamePlayer("", "Cramsan", 4),
+            GamePlayer("", "Test", 2),
+            GamePlayer("", "Dummy", 5),
+            GamePlayer("", "Test2", 6),
+            GamePlayer("", "A very long name!! :D@#$%^& jhgjhg KDDD", 1),
+            GamePlayer("", "Howdy", 0),
             currentPlayer,
         )
-        game.setGameState(
-            MutableStrandedGameState(
-                players.toMutableList(),
-                mutableListOf(),
-                mutableListOf(),
-                mutableListOf(),
-            )
-        )
+        game.setGameState(StrandedGameState.EMPTY_STATE.copy(
+            gamePlayers = players.toMutableList(),
+        ))
 
         phaseUI.setPhase(Phase.NIGHT)
         playerHeartsWidget.setHeartsContent(currentPlayer)

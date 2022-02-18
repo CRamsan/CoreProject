@@ -8,9 +8,6 @@ import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
 
 val module = SerializersModule {
-    polymorphic(StrandedGameState::class) {
-        subclass(MutableStrandedGameState::class)
-    }
 }
 private val serializer = Json {
     serializersModule = module

@@ -8,7 +8,6 @@ import com.cramsan.stranded.lib.game.intent.SelectCard
 import com.cramsan.stranded.lib.game.intent.StrandedPlayerIntent
 import com.cramsan.stranded.lib.game.intent.Transfer
 import com.cramsan.stranded.lib.game.models.GamePlayer
-import com.cramsan.stranded.lib.game.models.MutableGamePlayer
 import com.cramsan.stranded.lib.game.models.common.Belongings
 import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.common.Weapon
@@ -72,7 +71,8 @@ class Game(
         mutableListOf(),
     )
 
-    override val gameState: StrandedGameState = _gameState
+    private var _gameStateSnapshot = StrandedGameState.EMPTY_STATE
+    override val gameState: StrandedGameState = _gameStateSnapshot
 
     var gameCompleted = false
         private set
@@ -110,7 +110,7 @@ class Game(
     fun setGameState(newGameState: StrandedGameState) {
         clearGameState()
         _gameState.apply {
-            gamePlayers.addAll(newGameState.gamePlayers.map { MutableGamePlayer.fromGamePlayer(it) })
+            gamePlayers.addAll(newGameState.gamePlayers)
             scavengeStack.addAll(newGameState.scavengeStack)
             nightStack.addAll(newGameState.nightStack)
             belongingsStack.addAll(newGameState.belongingsStack)
@@ -120,12 +120,13 @@ class Game(
             night = newGameState.night
             phase = newGameState.phase
         }
+        _gameStateSnapshot = MutableStrandedGameState.toSnapshot(_gameState)
     }
 
     private fun configureGame(players: List<Player>) {
         clearGameState()
         _gameState.gamePlayers.addAll(players.map {
-            MutableGamePlayer(
+            GamePlayer(
                 it.id,
                 it.name,
                 4,
@@ -134,6 +135,7 @@ class Game(
         _gameState.scavengeStack.addAll(startingForageCards)
         _gameState.nightStack.addAll(startingNightCards)
         _gameState.belongingsStack.addAll(startingBelongingCards)
+        _gameStateSnapshot = MutableStrandedGameState.toSnapshot(_gameState)
         playerIntents = gameState.gamePlayers.associate {
             it.id to Channel(
                 capacity = Channel.UNLIMITED,
@@ -342,7 +344,8 @@ class Game(
     }
 
     fun processEvent(change: StrandedStateChange) {
-        _gameState.processEvent(change, _multiplayerGameEventHandler, _gameEventHandler)
+        val newSnapshot = _gameState.processEvent(change, _multiplayerGameEventHandler, _gameEventHandler)
+        _gameStateSnapshot = newSnapshot
     }
 
     private fun clearGameState() {
@@ -357,5 +360,6 @@ class Game(
             night = 1
             phase = Phase.NIGHT
         }
+        _gameStateSnapshot = MutableStrandedGameState.toSnapshot(_gameState)
     }
 }

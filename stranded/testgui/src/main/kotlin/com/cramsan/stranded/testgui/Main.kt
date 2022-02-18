@@ -58,9 +58,6 @@ fun main() = application {
     val json = Json {
         prettyPrint = false
         serializersModule = SerializersModule {
-            polymorphic(GameState::class) {
-                subclass(MutableStrandedGameState::class)
-            }
             polymorphic(PlayerIntent::class) {
                 subclass(Forage::class)
                 subclass(Consume::class)
