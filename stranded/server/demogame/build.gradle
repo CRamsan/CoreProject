@@ -8,6 +8,7 @@ dependencies {
     implementation compose.desktop.currentOs
 
     implementation project(":stranded:server")
+    implementation packages.KtorClientCio
     implementation packages.KotlinxSerialization
 }
 

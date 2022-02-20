@@ -17,6 +17,9 @@ kotlin {
         commonMain {
             dependencies {
                 implementation packages.KotlinxSerialization
+                implementation packages.KtorClientWebSockets
+                implementation packages.KtorCore
+                implementation packages.KtorServerCore
             }
         }
         commonTest {
@@ -25,16 +28,19 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                implementation packages.KtorCore
-                implementation packages.KtorServerCore
-                implementation packages.KtorClientCio
+                // Serer dependencies
                 implementation packages.KtorServerNetty
                 implementation packages.KtorServerWebSockets
-                implementation packages.KtorClientWebSockets
             }
         }
         jvmTest {
             dependencies {
+            }
+        }
+        jsMain {
+            dependencies {
+                // Client dependencies
+                implementation packages.KtorClientJs
             }
         }
     }

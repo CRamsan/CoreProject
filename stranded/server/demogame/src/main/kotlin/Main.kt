@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import com.cramsan.stranded.server.JvmClient
+import com.cramsan.stranded.server.CommonClient
 import com.cramsan.stranded.server.Server
 import com.cramsan.stranded.server.demoapp.game.DemoGameState
 import com.cramsan.stranded.server.demoapp.game.IncrementCounter
@@ -17,6 +17,7 @@ import com.cramsan.stranded.server.repository.ConnectionRepository
 import com.cramsan.stranded.server.repository.GameRepository
 import com.cramsan.stranded.server.repository.LobbyRepository
 import com.cramsan.stranded.server.repository.PlayerRepository
+import io.ktor.client.engine.cio.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -58,8 +59,9 @@ fun main() = application {
     /**
      * Instantiate a server and client.
      */
-    val client = JvmClient(
+    val client = CommonClient(
         json,
+        CIO,
         Dispatchers.IO,
     )
     val server = Server(
