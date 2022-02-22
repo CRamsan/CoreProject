@@ -35,6 +35,8 @@ include 'auraxiscontrolcenter:ui'
 
 include 'stranded:lib'
 include 'stranded:gdx'
+include 'stranded:gdx:desktop'
+include 'stranded:gdx:core'
 include 'stranded:cardmanager'
 include 'stranded:testgui'
 include 'stranded:server'

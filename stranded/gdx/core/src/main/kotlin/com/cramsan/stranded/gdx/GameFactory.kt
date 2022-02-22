@@ -1,4 +1,4 @@
-package com.cramsan.stranded.testgui.game
+package com.cramsan.stranded.gdx
 
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.storage.CardRepository

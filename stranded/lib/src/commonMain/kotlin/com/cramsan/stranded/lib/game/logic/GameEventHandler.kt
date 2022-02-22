@@ -1,7 +1,6 @@
 package com.cramsan.stranded.lib.game.logic
 
 import com.cramsan.stranded.lib.game.models.common.Card
-import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 
 interface GameEventHandler {
 

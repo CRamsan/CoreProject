@@ -1,6 +1,6 @@
 package com.cramsan.stranded.testgui
 
-import com.cramsan.stranded.server.JvmClient
+import com.cramsan.stranded.server.CommonClient
 import com.cramsan.stranded.server.Server
 import com.cramsan.stranded.server.game.ClientEventHandler
 import com.cramsan.stranded.server.messages.Connected
@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.json.Json
 
 /**
  * ViewModel that powers the UI of this demo application. This viewModel has an action for pretty much all possible
@@ -39,7 +38,7 @@ import kotlinx.serialization.json.Json
  * @author cramsan
  */
 class ConnectionViewModel(
-    private val client: JvmClient,
+    private val client: CommonClient,
     private val server: Server,
     dispatcher: CoroutineDispatcher,
 ) : ClientEventHandler {

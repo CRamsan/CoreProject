@@ -11,8 +11,6 @@ import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.Forage
 import com.cramsan.stranded.lib.game.intent.SelectCard
 import com.cramsan.stranded.lib.game.intent.Transfer
-import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
-import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.state.CraftCard
 import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
@@ -27,9 +25,8 @@ import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
 import com.cramsan.stranded.lib.messages.module
 import com.cramsan.stranded.lib.storage.FileBasedCardRepository
-import com.cramsan.stranded.server.JvmClient
+import com.cramsan.stranded.server.CommonClient
 import com.cramsan.stranded.server.Server
-import com.cramsan.stranded.server.game.GameState
 import com.cramsan.stranded.server.game.PlayerIntent
 import com.cramsan.stranded.server.game.StateChange
 import com.cramsan.stranded.server.repository.ConnectionRepository
@@ -106,7 +103,7 @@ fun main() = application {
     /**
      * Instantiate a server and client.
      */
-    val client = JvmClient(
+    val client = CommonClient(
         json,
         Dispatchers.IO,
     )

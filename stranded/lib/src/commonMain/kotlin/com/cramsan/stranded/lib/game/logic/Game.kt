@@ -26,7 +26,6 @@ import com.cramsan.stranded.lib.game.models.night.Survived
 import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
-import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
 import com.cramsan.stranded.lib.game.models.state.DrawNightCard
@@ -37,6 +36,7 @@ import com.cramsan.stranded.lib.game.models.state.LoseCard
 import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
+import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
 import com.cramsan.stranded.server.MultiplayerGameEventHandler
 import com.cramsan.stranded.server.game.MultiplayerGame
@@ -78,7 +78,7 @@ class Game(
         private set
 
     override fun onConfigureGame(playerList: List<Player>) {
-       configureGame(playerList)
+        configureGame(playerList)
     }
 
     override fun onGameStarted() {
@@ -102,7 +102,6 @@ class Game(
         _multiplayerGameEventHandler = null
     }
 
-
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
     }
@@ -125,13 +124,15 @@ class Game(
 
     private fun configureGame(players: List<Player>) {
         clearGameState()
-        _gameState.gamePlayers.addAll(players.map {
-            GamePlayer(
-                it.id,
-                it.name,
-                4,
-            )
-        })
+        _gameState.gamePlayers.addAll(
+            players.map {
+                GamePlayer(
+                    it.id,
+                    it.name,
+                    4,
+                )
+            }
+        )
         _gameState.scavengeStack.addAll(startingForageCards)
         _gameState.nightStack.addAll(startingNightCards)
         _gameState.belongingsStack.addAll(startingBelongingCards)
@@ -267,7 +268,6 @@ class Game(
                     if (predicate(gamePlayer, playerEvent))
                         break
                 }
-
             }
         }.joinAll()
     }

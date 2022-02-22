@@ -12,7 +12,7 @@ import com.cramsan.stranded.lib.game.models.crafting.Craftable
 import com.cramsan.stranded.lib.game.models.crafting.Shelter
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
-import com.cramsan.stranded.server.JvmClient
+import com.cramsan.stranded.server.CommonClient
 import com.cramsan.stranded.server.game.ClientEventHandler
 import com.cramsan.stranded.server.messages.Connected
 import com.cramsan.stranded.server.messages.Disconnected
@@ -40,7 +40,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @author cramsan
  */
 class GameViewModel(
-    private val client: JvmClient,
+    private val client: CommonClient,
     dispatcher: CoroutineDispatcher,
 ) : ClientEventHandler {
 
@@ -113,8 +113,6 @@ class GameViewModel(
     }
 
     fun onCraftShelterSelected() {
-
-
     }
 
     fun onEndTurnSelected() {

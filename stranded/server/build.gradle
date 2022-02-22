@@ -29,6 +29,7 @@ kotlin {
         jvmMain {
             dependencies {
                 // Serer dependencies
+                implementation packages.KtorClientCio
                 implementation packages.KtorServerNetty
                 implementation packages.KtorServerWebSockets
             }

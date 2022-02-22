@@ -16,7 +16,6 @@ import com.cramsan.stranded.lib.game.models.scavenge.Resource
 import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.lib.game.models.scavenge.Useless
-import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.CraftCard
 import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
@@ -28,6 +27,7 @@ import com.cramsan.stranded.lib.game.models.state.LoseCard
 import com.cramsan.stranded.lib.game.models.state.SetFireBlockStatus
 import com.cramsan.stranded.lib.game.models.state.SetPhase
 import com.cramsan.stranded.lib.game.models.state.SingleHealthChange
+import com.cramsan.stranded.lib.game.models.state.StrandedStateChange
 import com.cramsan.stranded.lib.game.models.state.UserCard
 import com.cramsan.stranded.server.MultiplayerGameEventHandler
 

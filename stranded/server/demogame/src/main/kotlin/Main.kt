@@ -17,7 +17,6 @@ import com.cramsan.stranded.server.repository.ConnectionRepository
 import com.cramsan.stranded.server.repository.GameRepository
 import com.cramsan.stranded.server.repository.LobbyRepository
 import com.cramsan.stranded.server.repository.PlayerRepository
-import io.ktor.client.engine.cio.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -61,7 +60,6 @@ fun main() = application {
      */
     val client = CommonClient(
         json,
-        CIO,
         Dispatchers.IO,
     )
     val server = Server(

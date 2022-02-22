@@ -28,13 +28,6 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation project(":stranded:server")
-
-                implementation packages.KtorCore
-                implementation packages.KtorServerCore
-                implementation packages.KtorClientCio
-                implementation packages.KtorServerNetty
-                implementation packages.KtorServerWebSockets
-                implementation packages.KtorClientWebSockets
             }
         }
         jvmTest {

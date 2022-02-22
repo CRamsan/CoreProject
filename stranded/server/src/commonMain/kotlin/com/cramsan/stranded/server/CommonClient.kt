@@ -11,7 +11,6 @@ import com.cramsan.stranded.server.messages.createSerializedClientMessage
 import com.cramsan.stranded.server.messages.parseServerEvent
 import com.cramsan.stranded.server.repository.Player
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.features.websocket.webSocket
 import io.ktor.http.HttpMethod
@@ -28,10 +27,9 @@ import kotlinx.serialization.json.Json
 
 class CommonClient(
     private val json: Json,
-    engine: HttpClientEngine,
     dispatcher: CoroutineDispatcher,
 ) : Client {
-    private val client = HttpClient(engine) {
+    private val client = HttpClient {
         install(WebSockets)
     }
 

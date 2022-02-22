@@ -56,9 +56,11 @@ class GameTest : TestBase() {
     @Test
     fun testIgnoreByFire() = runBlockingTest {
         game.onConfigureGame(listOf(createPlayer("1"), createPlayer("2")))
-        game.setGameState(createGameState(
-            hasFire = true,
-        ))
+        game.setGameState(
+            createGameState(
+                hasFire = true,
+            )
+        )
 
         launch {
             game.processNightEvent(NightEvent("", listOf(CancellableByFire, Survived)))
@@ -73,23 +75,31 @@ class GameTest : TestBase() {
     fun testCancellableByWeapon() = runBlockingTest {
         val spear = Spear()
         game.onConfigureGame(listOf(createPlayer("1"), createPlayer("2")))
-        game.setGameState(createGameState(
-            gamePlayers = mutableListOf(
-                createGamePlayer("1",
-                    craftables = mutableListOf(spear)
+        game.setGameState(
+            createGameState(
+                gamePlayers = mutableListOf(
+                    createGamePlayer(
+                        "1",
+                        craftables = mutableListOf(spear)
+                    ),
+                    createGamePlayer(
+                        "2",
+                        craftables = mutableListOf(spear)
+                    )
                 ),
-                createGamePlayer(
-                    "2",
-                    craftables = mutableListOf(spear)
-                )),
             )
         )
 
         launch {
-            game.processNightEvent(NightEvent("", listOf(
-                SelectTargetQuantityAll,
-                CancellableByWeapon(+1, -1),
-            )))
+            game.processNightEvent(
+                NightEvent(
+                    "",
+                    listOf(
+                        SelectTargetQuantityAll,
+                        CancellableByWeapon(+1, -1),
+                    )
+                )
+            )
         }
 
         game.onPlayerIntentReceived("1", SelectCard("1", spear.id))
