@@ -41,6 +41,7 @@ include 'stranded:cardmanager'
 include 'stranded:testgui'
 include 'stranded:server'
 include 'stranded:server:demogame'
+include 'stranded:web'
 
 include 'framework-samples:android-app'
 include 'framework-samples:android-lib'

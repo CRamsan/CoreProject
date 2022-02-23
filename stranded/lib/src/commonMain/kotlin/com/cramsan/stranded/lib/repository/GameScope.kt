@@ -2,10 +2,12 @@ package com.cramsan.stranded.lib.repository
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 
-expect class GameScope(dispatcher: CoroutineDispatcher) {
+class GameScope constructor(dispatcher: CoroutineDispatcher) {
 
-    val scope: CoroutineScope
+    val scope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 
-    fun endScope()
+    fun endScope() = scope.cancel()
 }

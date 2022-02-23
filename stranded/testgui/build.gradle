@@ -7,10 +7,11 @@ apply plugin: "org.jetbrains.compose"
 dependencies {
     implementation compose.desktop.currentOs
 
-    implementation project(":framework:test")
     implementation project(":stranded:lib")
     implementation project(":stranded:server")
     implementation packages.KotlinxSerialization
+
+    testImplementation project(":framework:test")
 }
 
 compose.desktop {
@@ -23,7 +24,6 @@ compose.desktop {
         }
     }
 }
-
 
 registerDependency(":stranded:lib")
 registerDependency(":stranded:server")

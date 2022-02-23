@@ -84,8 +84,8 @@ class CommonClient(
                 val message = json.createSerializedClientMessage(clientEvent)
                 println("Client send: $message")
                 session.send(message)
-            } catch (e: Exception) {
-                println("Error while sending: " + e.localizedMessage)
+            } catch (e: Throwable) {
+                println("Error while sending: " + e.message)
             }
         }
     }
@@ -99,7 +99,7 @@ class CommonClient(
                 handleServerEvent(json.parseServerEvent(receivedText))
             }
         } catch (e: Exception) {
-            println("Error while receiving: " + e.localizedMessage)
+            println("Error while receiving: " + e.message)
         }
     }
 

@@ -1,0 +1,41 @@
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
+disableIosTarget()
+disableJvmTarget()
+disableAndroidTarget()
+
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
+apply plugin: 'kotlinx-serialization'
+apply plugin: "org.jetbrains.compose"
+
+kotlin {
+    js(IR) {
+        browser {
+            testTask {
+                testLogging.showStandardStreams = true
+                useKarma {
+                    useChromeHeadless()
+                    useFirefox()
+                }
+            }
+        }
+        binaries.executable()
+    }
+
+    sourceSets {
+        jsMain {
+            dependencies {
+                implementation compose.web.core
+                implementation compose.runtime
+
+                implementation project(":stranded:lib")
+                implementation packages.KotlinxSerialization
+            }
+        }
+        jsTest {
+            dependencies {
+            }
+        }
+    }
+}

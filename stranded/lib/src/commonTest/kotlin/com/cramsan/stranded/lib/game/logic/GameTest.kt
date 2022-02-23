@@ -152,7 +152,7 @@ class GameTest : TestBase() {
             isFireBlocked: Boolean = false,
             night: Int = 1,
             phase: Phase = Phase.NIGHT
-        ): StrandedGameState = MutableStrandedGameState(
+        ): StrandedGameState = MutableStrandedGameState.toSnapshot(MutableStrandedGameState(
             gamePlayers,
             scavengeStack,
             nightStack,
@@ -162,6 +162,6 @@ class GameTest : TestBase() {
             isFireBlocked,
             night,
             phase,
-        )
+        ))
     }
 }

@@ -1,9 +1,7 @@
 ext.libraryVersionCode = 1
 ext.libraryVersionName = "0.1"
 
-
 disableIosTarget()
-disableJsTarget()
 disableAndroidTarget()
 
 apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
@@ -13,13 +11,18 @@ apply plugin: 'kotlinx-serialization'
  * Configure multiplatform project
  */
 kotlin {
+    js(IR) {
+        browser {
+        }
+        binaries.executable()
+    }
+
     sourceSets {
         commonMain {
             dependencies {
                 implementation packages.KotlinxSerialization
                 implementation packages.KtorClientWebSockets
                 implementation packages.KtorCore
-                implementation packages.KtorServerCore
             }
         }
         commonTest {
@@ -30,6 +33,7 @@ kotlin {
             dependencies {
                 // Serer dependencies
                 implementation packages.KtorClientCio
+                implementation packages.KtorServerCore
                 implementation packages.KtorServerNetty
                 implementation packages.KtorServerWebSockets
             }

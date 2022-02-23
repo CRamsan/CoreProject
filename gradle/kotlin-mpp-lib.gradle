@@ -108,6 +108,7 @@ kotlin {
 
     if (isJsTargetEnabled()) {
         js(IR) {
+            browser()
             nodejs()
         }
     }
