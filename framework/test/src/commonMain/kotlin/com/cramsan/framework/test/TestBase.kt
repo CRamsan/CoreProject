@@ -1,11 +1,14 @@
 package com.cramsan.framework.test
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestScope
 
 /**
  * Base class that should handle running unit tests. This class will be implemented on each platform
  * to provide the right approach for each one of them.
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 expect abstract class TestBase() {
 
     /**
@@ -21,7 +24,7 @@ expect abstract class TestBase() {
      * need to wait for [TestCoroutineScope] to be available for common code.
      * https://github.com/Kotlin/kotlinx.coroutines/issues/1996
      */
-    fun runBlockingTest(block: suspend CoroutineScope.() -> Unit)
+    fun runBlockingTest(block: suspend TestScope.() -> Unit)
 
     abstract fun setupTest()
 }

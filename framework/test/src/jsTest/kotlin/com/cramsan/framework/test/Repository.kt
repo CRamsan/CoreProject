@@ -9,7 +9,6 @@ actual class Repository {
     }
 
     actual fun getDataBlocking(): Int {
-        Thread.sleep(100)
         return 100
     }
 }

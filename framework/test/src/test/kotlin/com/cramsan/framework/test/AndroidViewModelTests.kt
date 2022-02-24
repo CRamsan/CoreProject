@@ -1,7 +1,7 @@
 package com.cramsan.framework.test
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -19,7 +19,7 @@ class AndroidViewModelTests : TestBase() {
     lateinit var repository: Repository
 
     override fun setupTest() {
-        repository = RepositoryImpl()
+        repository = Repository()
         viewModel = AndroidViewModel(testCoroutineScope, repository)
     }
 
@@ -55,7 +55,7 @@ class AndroidViewModelTests : TestBase() {
         assertNull(viewModel.observableInt.value)
 
         viewModel.updateWithIODispatch()
-        delay(1000)
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }
@@ -65,7 +65,7 @@ class AndroidViewModelTests : TestBase() {
         assertNull(viewModel.observableInt.value)
 
         viewModel.updateWithIODispatchAndBlockingWait()
-        delay(1000)
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }
@@ -75,7 +75,7 @@ class AndroidViewModelTests : TestBase() {
         assertNull(viewModel.observableInt.value)
 
         viewModel.updateWithScopeLaunch()
-        delay(1000)
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }
@@ -85,6 +85,7 @@ class AndroidViewModelTests : TestBase() {
         assertNull(viewModel.observableInt.value)
 
         viewModel.updateWithScopeLaunchAndBlockingWait()
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }

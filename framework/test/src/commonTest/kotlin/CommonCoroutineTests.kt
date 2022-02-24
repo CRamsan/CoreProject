@@ -2,6 +2,8 @@ package com.cramsan.framework.test
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
@@ -14,14 +16,13 @@ class CommonCoroutineTests : TestBase() {
     lateinit var viewModel: SimpleViewModel
     lateinit var repository: Repository
 
-    override fun setupTest() { }
-
-    fun setUp(repository: Repository) {
-        this.repository = repository
+    override fun setupTest() {
+        this.repository = Repository()
         this.viewModel = SimpleViewModel(testCoroutineScope, repository)
     }
 
-    fun `Test simple assert`() = runBlockingTest {
+    @Test
+    fun Test_simple_assert() = runBlockingTest {
         assertTrue(true)
         assertFalse(false)
         assertEquals("word", "word")
@@ -29,13 +30,15 @@ class CommonCoroutineTests : TestBase() {
         assertNotEquals<String?>("word", null)
     }
 
-    fun `Test delays are executed instantly`() = runBlockingTest {
+    @Test
+    fun Test_delays_are_executed_instantly() = runBlockingTest {
         // This method should run instantly
         // When upgrading to Kotlin 1.5 we can use the new Duration.hours API.
         delay((1000 * 60 * 60).toLong())
     }
 
-    fun `Test for update in suspending function`() = runBlockingTest {
+    @Test
+    fun Test_for_update_in_suspending_function() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithCoroutine()
@@ -43,7 +46,8 @@ class CommonCoroutineTests : TestBase() {
         assertEquals(100, viewModel.observableInt.value)
     }
 
-    fun `Test for update in suspending function and blocking wait`() = runBlockingTest {
+    @Test
+    fun Test_for_update_in_suspending_function_and_blocking_wait() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithCoroutineAndBlockingWait()
@@ -51,37 +55,43 @@ class CommonCoroutineTests : TestBase() {
         assertEquals(100, viewModel.observableInt.value)
     }
 
-    fun `Test for updated with IO dispatch`() = runBlockingTest {
+    @Test
+    fun Test_for_updated_with_IO_dispatch() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithIODispatch()
-        delay(1000)
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }
 
-    fun `Test for updated with IO dispatch and blocking wait`() = runBlockingTest {
+    @Test
+    fun Test_for_updated_with_IO_dispatch_and_blocking_wait() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithIODispatchAndBlockingWait()
-        delay(1000)
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }
 
-    fun `Test for update in scope launch`() = runBlockingTest {
+    @Test
+    fun Test_for_update_in_scope_launch() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithScopeLaunch()
-        delay(1000)
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }
 
-    fun `Test for update in scope launch and blocking wait`() = runBlockingTest {
+    @Test
+    fun Test_for_update_in_scope_launch_and_blocking_wait() = runBlockingTest {
         assertEquals(0, viewModel.observableInt.value)
 
         viewModel.updateWithScopeLaunchAndBlockingWait()
+
+        advanceUntilIdle()
 
         assertEquals(100, viewModel.observableInt.value)
     }

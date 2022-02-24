@@ -5,6 +5,7 @@ import com.cramsan.framework.core.DispatcherProvider
 import io.mockk.MockKAnnotations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestScope
 import org.junit.Rule
 import kotlin.test.BeforeTest
 
@@ -20,7 +21,7 @@ actual abstract class TestBase {
     @get:Rule
     var testCoroutineRule: TestCoroutineRule = TestCoroutineRule()
 
-    actual fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) = testCoroutineRule.runBlockingTest { block() }
+    actual fun runBlockingTest(block: suspend TestScope.() -> Unit) = testCoroutineRule.runBlockingTest { block() }
 
     @BeforeTest
     fun internalSetupTest() {

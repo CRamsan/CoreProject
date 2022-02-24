@@ -1,11 +1,15 @@
 package com.cramsan.framework.test
 
-/**
- * Basic repo class to be implemented on each platform.
- */
-interface Repository {
+import kotlinx.coroutines.delay
 
-    suspend fun getData(): Int
+actual class Repository {
+    actual suspend fun getData(): Int {
+        delay(100)
+        return 100
+    }
 
-    fun getDataBlocking(): Int
+    actual fun getDataBlocking(): Int {
+        Thread.sleep(100)
+        return 100
+    }
 }

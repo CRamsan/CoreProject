@@ -41,7 +41,7 @@ def versions_packages = [
     Cdk : "1.145.0",
     Coil : "1.4.0",
     ConstraintLayout : "2.1.3",
-    Coroutines : "1.5.2",
+    Coroutines : "1.6.0",
     DependencyGraphGenerator : "0.7.0",
     Diskord : "2.0.2",
     DokkaGradle : "1.6.10",
@@ -367,6 +367,7 @@ def core_test_jvm = [
 
 def core_test_js = [
         packages.KotlinTestJS,
+        packages.CoroutinesTest,
 ]
 
 def core_common = [
@@ -375,6 +376,7 @@ def core_common = [
 ]
 
 def core_test_common = [
+        packages.CoroutinesTest,
         packages.KotlinTestCommon,
         packages.KotlinTestAnnotationsCommon,
         packages.MockkCommon,

@@ -1,7 +1,11 @@
 package com.cramsan.framework.test
 
 import kotlinx.coroutines.delay
+import platform.posix.sleep
 
+/**
+ * Basic repo class to be implemented on each platform.
+ */
 actual class Repository {
     actual suspend fun getData(): Int {
         delay(100)
@@ -9,7 +13,7 @@ actual class Repository {
     }
 
     actual fun getDataBlocking(): Int {
-        Thread.sleep(100)
+        sleep(1)
         return 100
     }
 }
