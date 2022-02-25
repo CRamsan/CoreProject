@@ -17,12 +17,14 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkClass
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
  *
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class AssertUtilCommonTest : TestBase() {
 
     override fun setupTest() { }

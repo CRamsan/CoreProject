@@ -38,5 +38,5 @@ actual abstract class TestBase {
     actual val testCoroutineScope: CoroutineScope
         get() = testCoroutineRule.testCoroutineScope
 
-    val dispatcherProvider: DispatcherProvider = TestDispatcherProviderImpl(testCoroutineRule)
+    val dispatcherProvider: DispatcherProvider = TestDispatcherProviderImpl(testCoroutineRule.testCoroutineDispatcher)
 }

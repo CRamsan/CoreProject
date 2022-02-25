@@ -21,6 +21,7 @@ import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -31,6 +32,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class EntityManagerTests : TestBase() {
 
     private lateinit var map: GameMap

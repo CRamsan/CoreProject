@@ -14,6 +14,7 @@ import io.mockk.verify
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -65,6 +66,9 @@ class DownloadCatalogViewModelTest : TestBase() {
 
         assertEquals(false, viewModel.observableIsDownloadComplete.value)
         viewModel.downloadCatalog()
+
+        advanceUntilIdle()
+
         verify { observer.onChanged(true) }
         assertEquals(true, viewModel.observableIsDownloadComplete.value)
     }

@@ -1,27 +1,27 @@
 package com.cramsan.framework.haltUtil.implementation
 
+import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
-import kotlinx.coroutines.runBlocking
-import org.junit.Before
+import com.cramsan.framework.test.TestBase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
+import kotlin.concurrent.thread
 
 /**
  */
-class HaltUtilTest {
+@OptIn(ExperimentalCoroutinesApi::class)
+class HaltUtilTest : TestBase() {
 
-    private lateinit var haltUtilTest: HaltUtilCommonTest
+    override fun setupTest() { }
 
-    @Before
-    fun setUp() {
-        haltUtilTest = HaltUtilCommonTest()
-    }
-
-    // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
-    // We cannot use the runBlockingTest context due to this issue.
     @Test
-    fun testStopThread() {
-        runBlocking {
-            haltUtilTest.testStopThread(HaltUtilJVM())
+    fun testStopThread() = runBlockingTest {
+        val haltUtil = HaltUtilImpl(HaltUtilJVM())
+
+        thread {
+            Thread.sleep(1500)
+            haltUtil.resumeThread()
         }
+        haltUtil.stopThread()
     }
 }

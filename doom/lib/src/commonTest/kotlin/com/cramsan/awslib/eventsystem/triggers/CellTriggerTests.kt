@@ -16,10 +16,12 @@ import com.cramsan.framework.halt.HaltUtil
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class CellTriggerTests : TestBase() {
 
     private lateinit var log: EventLoggerInterface

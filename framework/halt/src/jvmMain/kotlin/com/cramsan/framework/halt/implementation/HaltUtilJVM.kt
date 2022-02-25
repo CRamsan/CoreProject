@@ -9,16 +9,17 @@ import kotlin.system.exitProcess
 class HaltUtilJVM : HaltUtilDelegate {
 
     // TODO: Refactor this into an AtomicBoolean
-    private var shouldStop = true
+    private var shouldStop = false
 
     override fun resumeThread() {
-        while (shouldStop) {
-            Thread.sleep(sleepTime)
-        }
+        shouldStop = false
     }
 
     override fun stopThread() {
-        shouldStop = false
+        shouldStop = true
+        while (shouldStop) {
+            Thread.sleep(sleepTime)
+        }
     }
 
     override fun crashApp() {

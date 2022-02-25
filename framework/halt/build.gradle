@@ -12,8 +12,19 @@ kotlin {
                 implementation project(":framework:logging")
             }
         }
+        commonTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation project(":framework:test")
+            }
+        }
     }
 }
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:logging")
+registerDependency(":framework:test:")

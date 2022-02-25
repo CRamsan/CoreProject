@@ -8,10 +8,12 @@ import com.cramsan.framework.logging.EventLogger
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.test.TestBase
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TransitionStackTests : TestBase() {
 
     private lateinit var transitionStack: TransitionStack
