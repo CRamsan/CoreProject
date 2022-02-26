@@ -16,10 +16,10 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.cramsan.stranded.cardmanager.MainKt"
+        mainClass = "com.cramsan.stranded.testgui.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "CardManager"
+            packageName = "TestGui"
             packageVersion = "1.0.0"
         }
     }
