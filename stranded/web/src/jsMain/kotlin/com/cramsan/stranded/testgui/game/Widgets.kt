@@ -11,22 +11,46 @@ import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Input
 import org.jetbrains.compose.web.dom.P
+import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 
-@Suppress("LongMethod", "FunctionNaming", "UNUSED_PARAMETER")
+@Suppress("FunctionNaming")
 @Composable
-fun GameScreen(
+fun Header(
     name: String,
     health: Int,
-    phase: Phase,
-    day: Int,
-    viewModel: GameViewModel? = null,
 ) {
-    Div {
-        Header(name, health)
+    P {
+        val content = if (health == 0) {
+            ""
+        } else {
+            "❤️x$health"
+        }
+        Span {
+            Text(name)
+        }
+        Span {
+            Text(content)
+        }
+    }
+}
 
-        Phase(phase)
+@Suppress("FunctionNaming")
+@Composable
+fun Phase(
+    phase: Phase,
+) {
+    P {
+        Text(phase.name)
+    }
+}
 
-        Day(day)
+@Suppress("FunctionNaming")
+@Composable
+fun Day(
+    day: Int,
+) {
+    P {
+        Text("Day: $day")
     }
 }

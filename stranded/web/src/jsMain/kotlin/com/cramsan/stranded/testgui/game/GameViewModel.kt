@@ -67,6 +67,7 @@ class GameViewModel(
     val craftables = MutableStateFlow(listOf<Craftable>())
     val shelter = MutableStateFlow(listOf<Shelter>())
     val quantity: StateFlow<Int> = _quantity
+    val day = MutableStateFlow(0)
 
     init {
         client.registerListener(this)
@@ -136,6 +137,7 @@ class GameViewModel(
         scavengeResults.value = player?.scavengeResults ?: emptyList()
         craftables.value = player?.craftables ?: emptyList()
         shelter.value = gameState.shelters
+        day.value = gameState.night
     }
 
     companion object {

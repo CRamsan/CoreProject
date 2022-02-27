@@ -8,6 +8,7 @@ import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.Forage
 import com.cramsan.stranded.lib.game.intent.SelectCard
 import com.cramsan.stranded.lib.game.intent.Transfer
+import com.cramsan.stranded.lib.game.models.common.Phase
 import com.cramsan.stranded.lib.game.models.state.CraftCard
 import com.cramsan.stranded.lib.game.models.state.DestroyShelter
 import com.cramsan.stranded.lib.game.models.state.DrawBelongingCard
@@ -39,21 +40,26 @@ import org.w3c.dom.url.URLSearchParams
 
 fun main() {
 
-    val roomId = URLSearchParams(window.location.href).get("roomId")
 
     /**
      * Instantiate client.
      */
+    /*
     val client = CommonClient(
         json(),
         Dispatchers.Main,
     )
+
+    val roomId = URLSearchParams(window.location.href).get("roomId")
 
     if (roomId.isNullOrBlank()) {
         lobbyScreen(client)
     } else {
         gameScreen(client)
     }
+     */
+    debugGameScreen()
+
 }
 
 fun lobbyScreen(client: CommonClient) {
@@ -88,28 +94,34 @@ fun gameScreen(client: CommonClient) {
     renderComposable(rootElementId = "root") {
         val name = gameViewModel.name.collectAsState()
         val health = gameViewModel.health.collectAsState()
-        val quantity = gameViewModel.quantity.collectAsState()
-        val belongings = gameViewModel.belongings.collectAsState()
-        val scavengeResults = gameViewModel.scavengeResults.collectAsState()
-        val craftables = gameViewModel.craftables.collectAsState()
         val phase = gameViewModel.phase.collectAsState()
-        val shelters = gameViewModel.shelter.collectAsState()
+        val day = gameViewModel.day.collectAsState()
 
         Div {
             GameScreen(
                 name = name.value,
                 health = health.value,
-                quantity = quantity.value,
-                belongings = belongings.value,
-                scavengeResults = scavengeResults.value,
-                craftables = craftables.value,
                 phase = phase.value,
-                shelters = shelters.value,
+                day = day.value,
                 viewModel = gameViewModel,
             )
         }
     }
 }
+
+fun debugGameScreen() {
+    renderComposable(rootElementId = "root") {
+        Div {
+            GameScreen(
+                name = "cramsan",
+                health = 3,
+                phase = Phase.NIGHT,
+                day = 2,
+            )
+        }
+    }
+}
+
 
 fun json() = Json {
     prettyPrint = false
