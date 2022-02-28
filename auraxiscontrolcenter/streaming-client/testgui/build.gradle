@@ -1,0 +1,26 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: 'kotlinx-serialization'
+apply plugin: "org.jetbrains.compose"
+
+dependencies {
+    implementation compose.desktop.currentOs
+
+    implementation project(":auraxiscontrolcenter:streaming-client")
+    implementation packages.KotlinxSerialization
+    implementation packages.KtorClientWebSockets
+    implementation packages.KtorCore
+}
+
+compose.desktop {
+    application {
+        mainClass = "package com.cramsan.ps2link.network.ws.testgui.MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "PS2Link WS TestGui"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+

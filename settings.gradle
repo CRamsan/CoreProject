@@ -31,6 +31,8 @@ include 'auraxiscontrolcenter:core-models'
 include 'auraxiscontrolcenter:db-models'
 include 'auraxiscontrolcenter:deployable-models'
 include 'auraxiscontrolcenter:network-models'
+include 'auraxiscontrolcenter:streaming-client'
+include 'auraxiscontrolcenter:streaming-client:testgui'
 include 'auraxiscontrolcenter:ui'
 
 include 'stranded:lib'
