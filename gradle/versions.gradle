@@ -68,6 +68,7 @@ def versions_packages = [
     Kodein : "7.1.0",
     Kotlin : versions_tools.KotlinVersion,
     KotlinxDatetime : "0.3.2",
+    KotlinxHtmlJVM : "0.7.2",
     KotlinxSerialization : "1.3.2",
     KtlintVerion : "0.44.0",
     Ktor : "1.6.7",
@@ -160,6 +161,7 @@ def packages = [
         CoroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions_packages.Coroutines",
         CoroutinesCoreJS : "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$versions_packages.Coroutines",
         CoroutinesTest : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions_packages.Coroutines",
+        KotlinxHtmlJVM : "org.jetbrains.kotlinx:kotlinx-html-jvm:$versions_packages.KotlinxHtmlJVM",
         DependencyGraphGenerator : "com.vanniktech:gradle-dependency-graph-generator-plugin:$versions_packages.DependencyGraphGenerator",
         Detekt : "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions_packages.Detekt",
         DiskordCore : "com.jessecorbett:diskord-core:$versions_packages.Diskord",
@@ -225,6 +227,7 @@ def packages = [
         KtorCore : "io.ktor:ktor-client-core:$versions_packages.Ktor",
         KtorGson : "io.ktor:ktor-client-gson:$versions_packages.Ktor",
         KtorServerGson : "io.ktor:ktor-gson:$versions_packages.Ktor",
+        KtorHtmlBuilder : "io.ktor:ktor-html-builder:$versions_packages.Ktor",
         KtorJson : "io.ktor:ktor-client-json:$versions_packages.Ktor",
         KtorServerWebSockets : "io.ktor:ktor-websockets:$versions_packages.Ktor",
         // TODO: We should rename this package from KtorSerialization to KtorClientSerialization

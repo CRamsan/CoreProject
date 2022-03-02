@@ -1,0 +1,47 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+ext.libraryVersionCode = 1
+ext.libraryVersionName = "0.1"
+
+disableIosTarget()
+disableAndroidTarget()
+
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
+apply plugin: "application" // Enable this application to run as an application.
+apply plugin: "org.jetbrains.compose"
+
+kotlin {
+    jvm {
+        withJava()
+    }
+    js(IR) {
+        browser {
+            commonWebpackConfig {
+                cssSupport.enabled = true
+            }
+        }
+        binaries.executable()
+    }
+
+    sourceSets {
+        jvmMain {
+            dependencies {
+                implementation packages.KtorServerCore
+                implementation packages.KtorServerNetty
+                implementation packages.KotlinxHtmlJVM
+                implementation packages.KtorHtmlBuilder
+            }
+        }
+        jsMain {
+            dependencies {
+                implementation compose.web.core
+                implementation compose.runtime
+            }
+        }
+    }
+}
+
+// Setting the main class to run when executing as an application.
+application {
+    mainClassName = "me.cesar.application.MainKt"
+}

@@ -1,3 +1,5 @@
+include 'api-endpoint'
+
 include 'framework'
 include 'framework:assert'
 include 'framework:crashhandler'
