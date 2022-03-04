@@ -1,4 +1,4 @@
-package com.cramsan.stranded.testgui
+package com.cramsan.stranded.web
 
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.web.attributes.InputType

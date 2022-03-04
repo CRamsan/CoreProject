@@ -1,6 +1,7 @@
-package com.cramsan.stranded.testgui.game
+package com.cramsan.stranded.web.game
 
 import com.cramsan.stranded.lib.game.intent.Consume
+import com.cramsan.stranded.lib.game.intent.Craft
 import com.cramsan.stranded.lib.game.intent.EndTurn
 import com.cramsan.stranded.lib.game.intent.Forage
 import com.cramsan.stranded.lib.game.logic.Game
@@ -62,11 +63,10 @@ class GameViewModel(
     val phase = MutableStateFlow(Phase.NIGHT)
     val name = MutableStateFlow("")
     val health = MutableStateFlow(0)
-    val belongings = MutableStateFlow(listOf<Belongings>())
-    val scavengeResults = MutableStateFlow(listOf<ScavengeResult>())
-    val craftables = MutableStateFlow(listOf<Craftable>())
-    val shelter = MutableStateFlow(listOf<Shelter>())
-    val quantity: StateFlow<Int> = _quantity
+    val belongings = MutableStateFlow<List<Belongings>>(emptyList())
+    val scavengeResults = MutableStateFlow<List<ScavengeResult>>(emptyList())
+    val craftables = MutableStateFlow<List<Craftable>>(emptyList())
+    val shelter = MutableStateFlow<List<Shelter>>(emptyList())
     val day = MutableStateFlow(0)
 
     init {
@@ -102,26 +102,12 @@ class GameViewModel(
         client.sendMessage(GamePlayerIntent(Consume(id)))
     }
 
-    fun onCraftSpearSelected() {
-        /*
-        val res1 = _player.value?.scavengeResults?.find { (it is Resource) && it.resourceType == ResourceType.STICK } ?: return
-        val res2 = _player.value?.scavengeResults?.find { (it is Resource) && it.resourceType == ResourceType.ROCK } ?: return
-        client.sendMessage(GamePlayerIntent(Craft(listOf(res1.id, res2.id),Spear())))
-         */
-    }
-
-    fun onCraftBasketSelected() {
-    }
-
-    fun onCraftShelterSelected() {
-    }
-
     fun onEndTurnSelected() {
         client.sendMessage(GamePlayerIntent(EndTurn))
     }
 
     fun onForageSelected() {
-        client.sendMessage(GamePlayerIntent(Forage(quantity.value)))
+        //client.sendMessage(GamePlayerIntent(Forage(quantity.value)))
     }
 
     fun onCardQuantityUpdated(it: String) {

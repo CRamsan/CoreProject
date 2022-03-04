@@ -1,3 +1,5 @@
+package com.cramsan.stranded.web
+
 import com.cramsan.stranded.server.CommonClient
 import com.cramsan.stranded.server.game.ClientEventHandler
 import com.cramsan.stranded.server.messages.Connected
