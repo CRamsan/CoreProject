@@ -1,7 +1,5 @@
 /**
  * Plugin to create a JVM based CDK package.
- * This plugin expects that the project sets the value for mainClassTarget.
- * For example: ext.mainClassTarget = "com.cramsan.awslib.aws.PS2LinkApp"
  */
 import org.apache.tools.ant.taskdefs.condition.Os
 

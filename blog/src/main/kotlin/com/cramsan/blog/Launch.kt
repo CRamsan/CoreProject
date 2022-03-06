@@ -29,6 +29,10 @@ fun main(args: Array<String>) {
         throw RuntimeException("Input folder is not a directory: $root")
     }
 
+    if (!output.exists() && !output.mkdirs()) {
+        throw RuntimeException("Could not create output directory: $output")
+    }
+
     root.listFiles()?.forEach {
         process(it, output)
     }
@@ -41,8 +45,15 @@ fun process(file: File, outputFolder: File) {
 
     if (file.isDirectory) {
         val newFolder = File(outputFolder, file.name)
-        if (newFolder.mkdir()) {
-            throw RuntimeException("Could not create folder: $newFolder")
+        if (!newFolder.exists()) {
+            if (newFolder.mkdir()) {
+                println("Folder: ${file.absolutePath} -> ${newFolder.absolutePath}")
+            } else {
+                throw RuntimeException("Could not create folder: $newFolder")
+            }
+        }
+        file.listFiles()?.forEach {
+            process(it, newFolder)
         }
     } else if (file.isFile) {
         processFile(file, outputFolder)
@@ -54,7 +65,10 @@ fun process(file: File, outputFolder: File) {
 fun processFile(file: File, outputFolder: File) {
     when (file.extension.lowercase()) {
         "md" -> processMarkdown(file, outputFolder)
-        else -> file.copyTo(outputFolder, overwrite = false)
+        else -> {
+            val newFile = file.copyTo(outputFolder, overwrite = true)
+            println("File: ${file.absolutePath} -> ${newFile.absolutePath}")
+        }
     }
 }
 
@@ -65,8 +79,12 @@ fun processMarkdown(file: File, outputFolder: File) {
     val renderer = HtmlRenderer.builder().build()
 
     val document: Node = parser.parseReader(reader)
-    val processedFile = File(outputFolder, "${file.nameWithoutExtension}.md")
+    val processedFile = File(outputFolder, "${file.nameWithoutExtension}.html")
 
     val fileWriter = FileWriter(processedFile)
-    renderer.render(document, fileWriter)
+    fileWriter.use {
+        renderer.render(document, fileWriter)
+    }
+
+    println("File: ${file.absolutePath} -> ${processedFile.absolutePath}")
 }

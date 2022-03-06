@@ -1,4 +1,4 @@
-ext.mainClassTarget = "com.cramsan.blog.mainKt"
+ext.mainClassTarget = "com.cramsan.blog.LaunchKt"
 
 apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
 
@@ -6,8 +6,10 @@ dependencies {
     implementation packages.CommonMark
 }
 
-task generateSite(type: Exec) {
+task generateSite(type: JavaExec) {
     group = "Application"
     description = "Run the processing tool."
-    commandLine = ["sdf", "sdf"]
+    classpath = sourceSets.main.runtimeClasspath
+    main = mainClassTarget
+    args = ["content", "build/site"]
 }
