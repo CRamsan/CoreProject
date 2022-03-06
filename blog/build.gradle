@@ -1,0 +1,13 @@
+ext.mainClassTarget = "com.cramsan.blog.mainKt"
+
+apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
+
+dependencies {
+    implementation packages.CommonMark
+}
+
+task generateSite(type: Exec) {
+    group = "Application"
+    description = "Run the processing tool."
+    commandLine = ["sdf", "sdf"]
+}
