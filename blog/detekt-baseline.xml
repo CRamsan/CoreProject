@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("Could not create folder: $newFolder")</ID>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("Could not create output directory: $output")</ID>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("File is not a directory or file: $file")</ID>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("Folder does not exist: $file")</ID>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("Input folder does not exist: $root")</ID>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("Input folder is not a directory: $root")</ID>
+    <ID>TooGenericExceptionThrown:Launch.kt$throw RuntimeException("Only two arguments required. Found ${args.size} arguments: $args")</ID>
+  </CurrentIssues>
+</SmellBaseline>

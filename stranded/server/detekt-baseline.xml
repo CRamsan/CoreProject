@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>TooGenericExceptionCaught:CommonClient.kt$CommonClient$e: Exception</ID>
+    <ID>UndocumentedPublicClass:CommonClient.kt$CommonClient : Client</ID>
+    <ID>UndocumentedPublicClass:LobbyRepository.kt$LobbyRepository</ID>
+    <ID>UndocumentedPublicClass:LobbyRepository.kt$LobbyRepository$EventHandler</ID>
+    <ID>UndocumentedPublicClass:PlayerRepository.kt$PlayerRepository</ID>
+    <ID>UndocumentedPublicClass:PlayerRepository.kt$PlayerRepository$EventHandler</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$Client$fun deregisterListener(eventHandler: ClientEventHandler)</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$Client$fun isConnected(): Boolean</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$Client$fun registerListener(eventHandler: ClientEventHandler)</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$Client$fun sendMessage(clientEvent: ClientEvent)</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$Client$fun start()</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$Client$fun stop()</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$fun getLobby(lobbyId: String): Lobby?</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$fun getLobbyForPlayer(playerId: String): String?</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun createLobby(lobbyName: String): Lobby</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun deleteLobby(lobbyId: String): Boolean</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun joinLobby(lobbyId: String, playerId: String): Boolean</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun leaveLobby(lobbyId: String, playerId: String): Boolean</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository.EventHandler$suspend fun onPlayerJoined(playerId: String, lobbyId: String)</ID>
+    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository.EventHandler$suspend fun onPlayerLeft(playerId: String, lobbyId: String)</ID>
+    <ID>UndocumentedPublicFunction:MultiplayerGame.kt$MultiplayerGame$fun onGameStarted()</ID>
+    <ID>UndocumentedPublicFunction:MultiplayerGameFactory.kt$MultiplayerGameFactory$fun buildMultiplayerGame(): MultiplayerGame</ID>
+    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$fun createPlayer(playerId: String): Player?</ID>
+    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$fun deletePlayer(playerId: String): Boolean</ID>
+    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$fun getPlayer(playerId: String): Player?</ID>
+    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$suspend fun setPlayerReady(playerId: String, readyToStart: Boolean)</ID>
+    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$suspend fun updatePlayer(playerId: String, playerName: String): Player?</ID>
+    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository.EventHandler$suspend fun onPlayerUpdated(player: Player)</ID>
+  </CurrentIssues>
+</SmellBaseline>

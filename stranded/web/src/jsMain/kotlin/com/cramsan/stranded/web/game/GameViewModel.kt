@@ -1,9 +1,7 @@
 package com.cramsan.stranded.web.game
 
 import com.cramsan.stranded.lib.game.intent.Consume
-import com.cramsan.stranded.lib.game.intent.Craft
 import com.cramsan.stranded.lib.game.intent.EndTurn
-import com.cramsan.stranded.lib.game.intent.Forage
 import com.cramsan.stranded.lib.game.logic.Game
 import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
 import com.cramsan.stranded.lib.game.logic.StrandedGameState
@@ -32,7 +30,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 /**
  * ViewModel that powers the UI of this demo application. This viewModel has an action for pretty much all possible
@@ -107,7 +104,7 @@ class GameViewModel(
     }
 
     fun onForageSelected() {
-        //client.sendMessage(GamePlayerIntent(Forage(quantity.value)))
+        // client.sendMessage(GamePlayerIntent(Forage(quantity.value)))
     }
 
     fun onCardQuantityUpdated(it: String) {

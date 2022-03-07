@@ -1,6 +1,12 @@
 package me.cesar.application
 
-import kotlinx.html.*
+import kotlinx.html.HTML
+import kotlinx.html.body
+import kotlinx.html.div
+import kotlinx.html.head
+import kotlinx.html.id
+import kotlinx.html.script
+import kotlinx.html.title
 
 fun HTML.index() {
     head {

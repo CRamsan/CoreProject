@@ -16,6 +16,7 @@ import com.cramsan.stranded.lib.game.models.night.SelectTargetQuantityAll
 import com.cramsan.stranded.lib.game.models.night.Survived
 import com.cramsan.stranded.lib.game.models.scavenge.ScavengeResult
 import com.cramsan.stranded.server.repository.Player
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.test.Test
@@ -26,6 +27,7 @@ import kotlin.test.assertTrue
 /**
  * @author cramsan
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class GameTest : TestBase() {
 
     lateinit var game: Game

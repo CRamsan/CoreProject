@@ -1,5 +1,4 @@
-import kotlinx.browser.document
-import kotlinx.browser.window
+
 
 /*
 val client = HttpClient(Js)

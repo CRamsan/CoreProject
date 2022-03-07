@@ -2,333 +2,61 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexMethod:DebugGameController.kt$DebugGameController$override fun onEventHandled(change: Change)</ID>
-    <ID>ComplexMethod:DefaultGameController.kt$DefaultGameController$override fun onEventHandled(change: Change)</ID>
-    <ID>ComplexMethod:DefaultMainMenuController.kt$DefaultMainMenuController$override fun onServerEventReceived(serverEvent: ServerEvent)</ID>
-    <ID>ComplexMethod:GameStateExtensions.kt$ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEventHandler? = null)</ID>
+    <ID>ComplexMethod:Game.kt$Game$internal suspend fun processNightEvent(nightEvent: NightEvent)</ID>
+    <ID>ComplexMethod:GameStateExtensions.kt$ internal fun MutableStrandedGameState.processEvent( change: StrandedStateChange, multiplayerGameEventHandler: MultiplayerGameEventHandler? = null, eventHandler: GameEventHandler? = null, ): StrandedGameState</ID>
     <ID>EmptyDefaultConstructor:ScavengeResult.kt$ScavengeResult$()</ID>
-    <ID>LongMethod:GameStateExtensions.kt$ internal fun MutableGameState.processEvent(change: Change, eventHandler: GameEventHandler? = null)</ID>
-    <ID>LongParameterList:DefaultMainMenuController.kt$DefaultMainMenuController$( val client: Client, private val mainScope: CoroutineScope, private var playerNameMenu: PlayerNameMenu, private var mainMenu: UIComponent, private var createLobbyMenu: UIComponent, private var lobbyListMenu: LobbyListMenu, private var lobbyMenu: LobbyMenu, private var mainMenuEventHandler: MainMenuEventHandler, )</ID>
-    <ID>LongParameterList:GameController.kt$GameController$( playerId: String, playerList: List&lt;Player>, lobbyId: String, playerListUI: PlayerListWidget, playerHeartsWidget: PlayerHeartsWidget, handUI: PlayerHandWidget, shelterUI: ShelterWidget, phaseUI: PhaseComponentWidget, nightCardUI: NightCardWidget, craftingUI: CraftingUIWidget, pauseMenu: UIComponent, gameControllerEventHandler: GameControllerEventHandler, backgroundWidget: BackgroundWidget, )</ID>
-    <ID>TooManyFunctions:DefaultMainMenuController.kt$DefaultMainMenuController : MainMenuController</ID>
+    <ID>EmptyFunctionBlock:Game.kt$Game${ }</ID>
+    <ID>LongMethod:Game.kt$Game$internal suspend fun processNightEvent(nightEvent: NightEvent)</ID>
+    <ID>LongMethod:GameStateExtensions.kt$ internal fun MutableStrandedGameState.processEvent( change: StrandedStateChange, multiplayerGameEventHandler: MultiplayerGameEventHandler? = null, eventHandler: GameEventHandler? = null, ): StrandedGameState</ID>
+    <ID>NestedBlockDepth:Game.kt$Game$internal suspend fun processNightEvent(nightEvent: NightEvent)</ID>
     <ID>TooManyFunctions:GameStateExtensions.kt$com.cramsan.stranded.lib.game.logic.GameStateExtensions.kt</ID>
-    <ID>UndocumentedPublicClass:BackgroundWidget.kt$BackgroundWidget : UIComponent</ID>
     <ID>UndocumentedPublicClass:CardHolder.kt$CardHolder&lt;T : Card></ID>
     <ID>UndocumentedPublicClass:CardRepository.kt$CardRepository</ID>
-    <ID>UndocumentedPublicClass:Change.kt$AllHealthChange : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$CancellableByFire : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$CancellableByFood : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$CancellableByWeapon : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$CraftCard : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$DestroyShelter : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$DrawBelongingCard : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$DrawNightCard : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$DrawScavengeCard : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$FiberLost : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$FireModification : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$FireUnavailableTomorrow : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$ForageCardLost : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$IncrementNight : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$MultiHealthChange : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$SelectTargetOnlyUnsheltered : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$SelectTargetQuantity : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$SelectTargetQuantityAll : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$SetPhase : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$SingleHealthChange : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$Survived : Change</ID>
-    <ID>UndocumentedPublicClass:Change.kt$UserCard : Change</ID>
-    <ID>UndocumentedPublicClass:Client.kt$Client</ID>
-    <ID>UndocumentedPublicClass:ClientEventHandler.kt$ClientEventHandler</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$CreateLobby : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$DeleteLobby : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$GamePlayerIntent : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$JoinLobby : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$LeaveLobby : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$ListLobbies : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$ListPlayers : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$Ping : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$ReadyToStartGame : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$SetPlayerName : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$SetReadyToStart : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:ClientEvents.kt$StartGame : ClientEvent</ID>
-    <ID>UndocumentedPublicClass:CraftingUIWidget.kt$CraftingUIWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:CraftingWidgetEventHandler.kt$CraftingWidgetEventHandler</ID>
-    <ID>UndocumentedPublicClass:CreateLobbyMenuEventHandler.kt$CreateLobbyMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:DebugGameController.kt$DebugGameController : GameController</ID>
     <ID>UndocumentedPublicClass:DeckHolder.kt$DeckHolder</ID>
-    <ID>UndocumentedPublicClass:DefaultGameController.kt$DefaultGameController : GameController</ID>
-    <ID>UndocumentedPublicClass:DefaultMainMenuController.kt$DefaultMainMenuController : MainMenuController</ID>
-    <ID>UndocumentedPublicClass:GameController.kt$GameController : ClientEventHandlerCraftingWidgetEventHandlerPlayerHandEventHandlerGameEventHandlerPauseMenuEventHandlerReadyWidgetEventHandler</ID>
-    <ID>UndocumentedPublicClass:GameControllerEventHandler.kt$GameControllerEventHandler</ID>
     <ID>UndocumentedPublicClass:GameEventHandler.kt$GameEventHandler</ID>
-    <ID>UndocumentedPublicClass:GameMode.kt$GameMode</ID>
-    <ID>UndocumentedPublicClass:GameRepository.kt$GameRepository</ID>
     <ID>UndocumentedPublicClass:GameScope.kt$GameScope</ID>
-    <ID>UndocumentedPublicClass:GameScreenEventHandler.kt$GameScreenEventHandler</ID>
-    <ID>UndocumentedPublicClass:GameState.kt$GameState</ID>
-    <ID>UndocumentedPublicClass:Lobby.kt$Lobby</ID>
-    <ID>UndocumentedPublicClass:LobbyListMenu.kt$LobbyListMenu : UIComponent</ID>
-    <ID>UndocumentedPublicClass:LobbyListMenuEventHandler.kt$LobbyListMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:LobbyListWidget.kt$LobbyListWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:LobbyMenu.kt$LobbyMenu : UIComponent</ID>
-    <ID>UndocumentedPublicClass:LobbyMenuEventHandler.kt$LobbyMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:LobbyPlayerListWidget.kt$LobbyPlayerListWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:LobbyRepository.kt$LobbyRepository</ID>
-    <ID>UndocumentedPublicClass:LobbyRepository.kt$LobbyRepository$EventHandler</ID>
-    <ID>UndocumentedPublicClass:MainMenuController.kt$MainMenuController : ClientEventHandlerCreateLobbyMenuEventHandlerLobbyListMenuEventHandlerLobbyMenuEventHandlerPlayerNameMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:MainMenuEventHandler.kt$MainMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:MainMenuMode.kt$MainMenuMode</ID>
-    <ID>UndocumentedPublicClass:NightCardWidget.kt$NightCardWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:PauseMenuEventHandler.kt$PauseMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:PhaseComponentWidget.kt$PhaseComponentWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:Player.kt$Player</ID>
-    <ID>UndocumentedPublicClass:PlayerHandEventHandler.kt$PlayerHandEventHandler</ID>
-    <ID>UndocumentedPublicClass:PlayerHandWidget.kt$PlayerHandWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:PlayerHeartsWidget.kt$PlayerHeartsWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:PlayerListWidget.kt$PlayerListWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:PlayerNameMenu.kt$PlayerNameMenu : UIComponent</ID>
-    <ID>UndocumentedPublicClass:PlayerNameMenuEventHandler.kt$PlayerNameMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:PlayerRepository.kt$PlayerRepository</ID>
-    <ID>UndocumentedPublicClass:PlayerRepository.kt$PlayerRepository$EventHandler</ID>
-    <ID>UndocumentedPublicClass:ReadyWidgetEventHandler.kt$ReadyWidgetEventHandler</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$Connected : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$Disconnected : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$GameChange : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$GameStarted : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$GameStateMessage : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$Ignore : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$JoinedLobby : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$LeftLobby : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$LobbyCreated : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$LobbyCreatedFromRequest : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$LobbyDestroyed : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$LobbyList : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$PlayerListFromRequest : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ServerEvents.kt$PlayerUpdated : ServerEvent</ID>
-    <ID>UndocumentedPublicClass:ShelterWidget.kt$ShelterWidget : UIComponent</ID>
-    <ID>UndocumentedPublicClass:UIComponent.kt$UIComponent</ID>
-    <ID>UndocumentedPublicFunction:BackgroundWidget.kt$BackgroundWidget$fun setPhase(phase: Phase)</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$CancellableByFire : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$CancellableByWeapon : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$DamageToDo : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$DestroyShelter : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$FiberLost : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$FireUnavailableTomorrow : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$ForageCardLost : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$SelectTargetOnlyUnsheltered : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$SelectTargetQuantity : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$SelectTargetQuantityAll : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:NightChangeStatement.kt$Survived : NightChangeStatement</ID>
+    <ID>UndocumentedPublicClass:StrandedGameState.kt$StrandedGameState : GameState</ID>
+    <ID>UndocumentedPublicClass:StrandedPlayerIntent.kt$SelectCard : StrandedPlayerIntent</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$CraftCard : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$DestroyShelter : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$DrawBelongingCard : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$DrawNightCard : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$DrawScavengeCard : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$ExtinguishFire : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$IncrementNight : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$LoseCard : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$SetFireBlockStatus : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$SetPhase : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$SingleHealthChange : StrandedStateChange</ID>
+    <ID>UndocumentedPublicClass:StrandedStateChange.kt$UserCard : StrandedStateChange</ID>
     <ID>UndocumentedPublicFunction:CardRepository.kt$CardRepository$fun readBelongingCards(): List&lt;CardHolder&lt;Belongings>></ID>
     <ID>UndocumentedPublicFunction:CardRepository.kt$CardRepository$fun readForageCards(): List&lt;CardHolder&lt;ScavengeResult>></ID>
     <ID>UndocumentedPublicFunction:CardRepository.kt$CardRepository$fun readNightCards(): List&lt;CardHolder&lt;NightEvent>></ID>
     <ID>UndocumentedPublicFunction:CardRepository.kt$CardRepository$fun saveBelongingCards(list: List&lt;CardHolder&lt;Belongings>>)</ID>
     <ID>UndocumentedPublicFunction:CardRepository.kt$CardRepository$fun saveForageCards(list: List&lt;CardHolder&lt;ScavengeResult>>)</ID>
     <ID>UndocumentedPublicFunction:CardRepository.kt$CardRepository$fun saveNightCards(list: List&lt;CardHolder&lt;NightEvent>>)</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun deregisterListener(eventHandler: ClientEventHandler)</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun handleServerEvent(event: ServerEvent)</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun isConnected(): Boolean</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun registerListener(eventHandler: ClientEventHandler)</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun sendMessage(clientEvent: ClientEvent)</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun start()</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$fun stop()</ID>
-    <ID>UndocumentedPublicFunction:Client.kt$Client$suspend fun outputMessages()</ID>
-    <ID>UndocumentedPublicFunction:ClientEventHandler.kt$ClientEventHandler$fun onServerEventReceived(serverEvent: ServerEvent)</ID>
-    <ID>UndocumentedPublicFunction:CraftingUIWidget.kt$CraftingUIWidget$fun setPhase(gamePhase: Phase)</ID>
-    <ID>UndocumentedPublicFunction:CraftingWidgetEventHandler.kt$CraftingWidgetEventHandler$fun createBasket()</ID>
-    <ID>UndocumentedPublicFunction:CraftingWidgetEventHandler.kt$CraftingWidgetEventHandler$fun createShelter()</ID>
-    <ID>UndocumentedPublicFunction:CraftingWidgetEventHandler.kt$CraftingWidgetEventHandler$fun createSpear()</ID>
-    <ID>UndocumentedPublicFunction:CreateLobbyMenuEventHandler.kt$CreateLobbyMenuEventHandler$fun onCreateLobbySelected(lobbyName: String)</ID>
-    <ID>UndocumentedPublicFunction:CreateLobbyMenuEventHandler.kt$CreateLobbyMenuEventHandler$fun onReturnToMainMenuSelected()</ID>
-    <ID>UndocumentedPublicFunction:DefaultGameController.kt$DefaultGameController$fun List&lt;GamePlayer>.findPlayer(): GamePlayer</ID>
-    <ID>UndocumentedPublicFunction:Game.kt$Game$fun configureGame( players: List&lt;Player>, scavengeStack: List&lt;ScavengeResult>, nightStack: List&lt;NightEvent>, belongingsStack: List&lt;Belongings>, )</ID>
-    <ID>UndocumentedPublicFunction:Game.kt$Game$fun processEvent(change: Change)</ID>
-    <ID>UndocumentedPublicFunction:Game.kt$Game$fun setGameState(gameState: GameState)</ID>
-    <ID>UndocumentedPublicFunction:Game.kt$Game$suspend fun processNightEvent(nightEvent: NightEvent)</ID>
-    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun configureController( playerId: String, playerList: List&lt;Player>, lobbyId: String, playerListUI: PlayerListWidget, playerHeartsWidget: PlayerHeartsWidget, handUI: PlayerHandWidget, shelterUI: ShelterWidget, phaseUI: PhaseComponentWidget, nightCardUI: NightCardWidget, craftingUI: CraftingUIWidget, pauseMenu: UIComponent, gameControllerEventHandler: GameControllerEventHandler, backgroundWidget: BackgroundWidget, )</ID>
-    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun exitGame()</ID>
-    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun handleGameStateMessage(gameState: GameState)</ID>
-    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun onDispose()</ID>
-    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun onShow()</ID>
-    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun setMenuMode(mode: GameMode)</ID>
-    <ID>UndocumentedPublicFunction:GameControllerEventHandler.kt$GameControllerEventHandler$fun onExitGameSelected()</ID>
+    <ID>UndocumentedPublicFunction:Game.kt$Game$fun processEvent(change: StrandedStateChange)</ID>
+    <ID>UndocumentedPublicFunction:Game.kt$Game$fun setGameState(newGameState: StrandedGameState)</ID>
     <ID>UndocumentedPublicFunction:GameEventHandler.kt$GameEventHandler$fun onCardReceived(playerId: String, card: Card)</ID>
     <ID>UndocumentedPublicFunction:GameEventHandler.kt$GameEventHandler$fun onCardRemoved(playerId: String, card: Card)</ID>
-    <ID>UndocumentedPublicFunction:GameEventHandler.kt$GameEventHandler$fun onEventHandled(change: Change)</ID>
     <ID>UndocumentedPublicFunction:GameEventHandler.kt$GameEventHandler$fun onPlayerHealthChange(playerId: String, health: Int)</ID>
-    <ID>UndocumentedPublicFunction:GameRepository.kt$GameRepository$fun configureGame(gameId: String)</ID>
-    <ID>UndocumentedPublicFunction:GameRepository.kt$GameRepository$fun createGame(lobbyId: String): Game</ID>
-    <ID>UndocumentedPublicFunction:GameRepository.kt$GameRepository$fun getGame(gameId: String): Game</ID>
-    <ID>UndocumentedPublicFunction:GameRepository.kt$GameRepository$fun setPlayerReady(playerId: String, gameId: String): Boolean</ID>
-    <ID>UndocumentedPublicFunction:GameRepository.kt$GameRepository$suspend fun deleteGame(gameId: String)</ID>
     <ID>UndocumentedPublicFunction:GameScope.kt$GameScope$fun endScope()</ID>
-    <ID>UndocumentedPublicFunction:GameScreenEventHandler.kt$GameScreenEventHandler$fun onGameEnd()</ID>
     <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun GamePlayer.getFood(): List&lt;Food></ID>
-    <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun List&lt;ScavengeResult>.getResourceCard(resourceType: ResourceType): Resource</ID>
+    <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun List&lt;ScavengeResult>.getResourceCard(resourceType: ResourceType): Resource?</ID>
     <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun List&lt;ScavengeResult>.getResources(): List&lt;Resource></ID>
-    <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun getCard(player: GamePlayer, cardId: String): Card</ID>
-    <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun getScavengeResultCard(player: GamePlayer, cardId: String): Card</ID>
-    <ID>UndocumentedPublicFunction:LobbyListMenu.kt$LobbyListMenu$fun setLobbyList(lobbyList: List&lt;Lobby>)</ID>
-    <ID>UndocumentedPublicFunction:LobbyListMenuEventHandler.kt$LobbyListMenuEventHandler$fun onLobbySelected(lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:LobbyListMenuEventHandler.kt$LobbyListMenuEventHandler$fun onReturnToMainMenuSelected()</ID>
-    <ID>UndocumentedPublicFunction:LobbyListWidget.kt$LobbyListWidget$fun setLobbyList(lobbyList: List&lt;Lobby>)</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenu.kt$LobbyMenu$fun addPlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenu.kt$LobbyMenu$fun removePlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenu.kt$LobbyMenu$fun setPlayerList(playerList: List&lt;Player>)</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenu.kt$LobbyMenu$fun updatePlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenuEventHandler.kt$LobbyMenuEventHandler$fun onLeaveLobbySelected()</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenuEventHandler.kt$LobbyMenuEventHandler$fun onReadySelected(isReady: Boolean)</ID>
-    <ID>UndocumentedPublicFunction:LobbyMenuEventHandler.kt$LobbyMenuEventHandler$fun onStartGameSelected()</ID>
-    <ID>UndocumentedPublicFunction:LobbyPlayerListWidget.kt$LobbyPlayerListWidget$fun addPlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:LobbyPlayerListWidget.kt$LobbyPlayerListWidget$fun removePlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:LobbyPlayerListWidget.kt$LobbyPlayerListWidget$fun setPlayerList(playerList: List&lt;Player>)</ID>
-    <ID>UndocumentedPublicFunction:LobbyPlayerListWidget.kt$LobbyPlayerListWidget$fun updatePlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$fun getAllLobbies(): List&lt;Lobby></ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$fun getLobby(lobbyId: String): Lobby</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$fun getLobbyForPlayer(playerId: String): Lobby?</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun createLobby(lobbyName: String): Lobby</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun deleteLobby(lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun joinLobby(lobbyId: String, playerId: String)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository$suspend fun leaveLobby(lobbyId: String, playerId: String)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository.EventHandler$suspend fun onLobbyCreated(lobby: Lobby)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository.EventHandler$suspend fun onLobbyDestroyed(lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository.EventHandler$suspend fun onPlayerJoined(playerId: String, lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:LobbyRepository.kt$LobbyRepository.EventHandler$suspend fun onPlayerLeft(playerId: String, lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:MainMenuController.kt$MainMenuController$fun closeApplication()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuController.kt$MainMenuController$fun onDispose()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuController.kt$MainMenuController$fun onShow()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuController.kt$MainMenuController$fun openCreateLobbyMenu()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuController.kt$MainMenuController$fun openLobbyListMenu()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuController.kt$MainMenuController$fun openPlayerNameMenu()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuEventHandler.kt$MainMenuEventHandler$fun onDebugGameScreenSelected()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuEventHandler.kt$MainMenuEventHandler$fun onExitSelected()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuEventHandler.kt$MainMenuEventHandler$fun onGameStarted(playerId: String, playerList: List&lt;Player>, lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:NightCardWidget.kt$NightCardWidget$fun displayCard(card: Card)</ID>
-    <ID>UndocumentedPublicFunction:NightCardWidget.kt$NightCardWidget$fun hideCard()</ID>
-    <ID>UndocumentedPublicFunction:PauseMenuEventHandler.kt$PauseMenuEventHandler$fun onExitGameSelected()</ID>
-    <ID>UndocumentedPublicFunction:PauseMenuEventHandler.kt$PauseMenuEventHandler$fun onResumeGameSelected()</ID>
-    <ID>UndocumentedPublicFunction:PhaseComponentWidget.kt$PhaseComponentWidget$fun setPhase(phase: Phase)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHandEventHandler.kt$PlayerHandEventHandler$fun onCardSelected(card: Card)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHandWidget.kt$PlayerHandWidget$fun addCard(card: Card)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHandWidget.kt$PlayerHandWidget$fun removeCard(card: Card)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHandWidget.kt$PlayerHandWidget$fun setContent(player: GamePlayer)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHandWidget.kt$PlayerHandWidget$fun setPhase(gamePhase: Phase)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHeartsWidget.kt$PlayerHeartsWidget$fun setContent(player: GamePlayer)</ID>
-    <ID>UndocumentedPublicFunction:PlayerHeartsWidget.kt$PlayerHeartsWidget$fun setEnabled(enabled: Boolean)</ID>
-    <ID>UndocumentedPublicFunction:PlayerListWidget.kt$PlayerListWidget$fun setPlayerList(playerList: List&lt;GamePlayer>)</ID>
-    <ID>UndocumentedPublicFunction:PlayerListWidget.kt$PlayerListWidget$fun updatePlayer(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:PlayerNameMenu.kt$PlayerNameMenu$fun setPlayerName(playerName: String)</ID>
-    <ID>UndocumentedPublicFunction:PlayerNameMenuEventHandler.kt$PlayerNameMenuEventHandler$fun onDebugScreenSelected()</ID>
-    <ID>UndocumentedPublicFunction:PlayerNameMenuEventHandler.kt$PlayerNameMenuEventHandler$fun onPlayerNameConfirmed(playerName: String)</ID>
-    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$fun createPlayer(playerId: String): Player</ID>
-    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$fun deletePlayer(playerId: String)</ID>
-    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$fun getPlayer(playerId: String): Player</ID>
-    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$suspend fun setPlayerReady(playerId: String, readyToStart: Boolean)</ID>
-    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository$suspend fun updatePlayer(playerId: String, playerName: String)</ID>
-    <ID>UndocumentedPublicFunction:PlayerRepository.kt$PlayerRepository.EventHandler$suspend fun onPlayerUpdated(player: Player)</ID>
-    <ID>UndocumentedPublicFunction:ReadyWidgetEventHandler.kt$ReadyWidgetEventHandler$fun onReadyButtonPressed()</ID>
-    <ID>UndocumentedPublicFunction:ShelterWidget.kt$ShelterWidget$fun setShelterList(shelterList: List&lt;Shelter>)</ID>
-    <ID>UndocumentedPublicFunction:UIComponent.kt$UIComponent$fun setVisible(isVisible: Boolean)</ID>
-    <ID>UndocumentedPublicFunction:UUID.kt$expect fun generateUUID(): String</ID>
-    <ID>UndocumentedPublicProperty:Card.kt$Card$abstract val title: String</ID>
-    <ID>UndocumentedPublicProperty:Card.kt$Card$val id: String = generateUUID()</ID>
-    <ID>UndocumentedPublicProperty:CardHolder.kt$CardHolder$val content: T?</ID>
-    <ID>UndocumentedPublicProperty:CardHolder.kt$CardHolder$val quantity: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$AllHealthChange$val healthChange: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$CancellableByFood$val change: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$CancellableByWeapon$val change: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$Change$val priority: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$CraftCard$val craftable: Craftable</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$CraftCard$val playerId: String</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$CraftCard$val targetList: List&lt;String></ID>
-    <ID>UndocumentedPublicProperty:Change.kt$DrawBelongingCard$val playerId: String</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$DrawScavengeCard$val playerId: String</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$FireModification$val change: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$ForageCardLost$val affectedPlayers: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$ForageCardLost$val cardsLost: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$MultiHealthChange$val healthChange: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$MultiHealthChange$val playerList: List&lt;String></ID>
-    <ID>UndocumentedPublicProperty:Change.kt$SelectTargetOnlyUnsheltered$val onlyUnsheltered: Boolean</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$SelectTargetQuantity$val affectedPlayers: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$SetPhase$val gamePhase: Phase</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$SingleHealthChange$val healthChange: Int</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$SingleHealthChange$val playerId: String</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$UserCard$val cardId: String</ID>
-    <ID>UndocumentedPublicProperty:Change.kt$UserCard$val playerId: String</ID>
-    <ID>UndocumentedPublicProperty:Client.kt$Client$val listeners: MutableList&lt;ClientEventHandler></ID>
-    <ID>UndocumentedPublicProperty:Client.kt$Client$val lobbyId: String?</ID>
-    <ID>UndocumentedPublicProperty:Client.kt$Client$val player: Player</ID>
-    <ID>UndocumentedPublicProperty:Client.kt$Client$var scope: CoroutineScope</ID>
-    <ID>UndocumentedPublicProperty:ClientEvents.kt$CreateLobby$val lobbyName: String</ID>
-    <ID>UndocumentedPublicProperty:ClientEvents.kt$DeleteLobby$val lobbyId: String</ID>
-    <ID>UndocumentedPublicProperty:ClientEvents.kt$GamePlayerIntent$val playerIntent: PlayerIntent</ID>
-    <ID>UndocumentedPublicProperty:ClientEvents.kt$JoinLobby$val lobbyId: String</ID>
-    <ID>UndocumentedPublicProperty:ClientEvents.kt$SetPlayerName$val playerName: String</ID>
-    <ID>UndocumentedPublicProperty:ClientEvents.kt$SetReadyToStart$val readyToStart: Boolean</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var backgroundWidget: BackgroundWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var craftingUI: CraftingUIWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var gameControllerEventHandler: GameControllerEventHandler</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var handUI: PlayerHandWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var nightCardUI: NightCardWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var pauseMenu: UIComponent</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var phaseUI: PhaseComponentWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var playerHeartsWidget: PlayerHeartsWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var playerListUI: PlayerListWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$lateinit var shelterUI: ShelterWidget</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$var nightCard: Card? = null</ID>
-    <ID>UndocumentedPublicProperty:DebugGameController.kt$DebugGameController$var phase = Phase.NIGHT</ID>
-    <ID>UndocumentedPublicProperty:DeckHolder.kt$DeckHolder$val belongingsCards: List&lt;CardHolder&lt;Belongings>></ID>
-    <ID>UndocumentedPublicProperty:DeckHolder.kt$DeckHolder$val forageCards: List&lt;CardHolder&lt;ScavengeResult>></ID>
-    <ID>UndocumentedPublicProperty:DeckHolder.kt$DeckHolder$val nightCards: List&lt;CardHolder&lt;NightEvent>></ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var backgroundWidget: BackgroundWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var craftingUI: CraftingUIWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var gameControllerEventHandler: GameControllerEventHandler</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var handUI: PlayerHandWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var lobbyId: String</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var nightCardUI: NightCardWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var pauseMenu: UIComponent</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var phaseUI: PhaseComponentWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var playerHeartsWidget: PlayerHeartsWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var playerId: String</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var playerList: List&lt;Player></ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var playerListUI: PlayerListWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$lateinit var shelterUI: ShelterWidget</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$var nightCard: Card? = null</ID>
-    <ID>UndocumentedPublicProperty:DefaultGameController.kt$DefaultGameController$var startingHealth = 0</ID>
-    <ID>UndocumentedPublicProperty:DefaultMainMenuController.kt$DefaultMainMenuController$val client: Client</ID>
-    <ID>UndocumentedPublicProperty:Food.kt$Food$val healthModifier: Int</ID>
-    <ID>UndocumentedPublicProperty:Food.kt$Food$val statusModifier: Status</ID>
-    <ID>UndocumentedPublicProperty:Food.kt$Food$var remainingDays: Int</ID>
-    <ID>UndocumentedPublicProperty:Functions.kt$val module = SerializersModule { polymorphic(GameState::class) { subclass(MutableGameState::class) } }</ID>
-    <ID>UndocumentedPublicProperty:Game.kt$Game$lateinit var playerIntents: Map&lt;String, Channel&lt;PlayerIntent>></ID>
-    <ID>UndocumentedPublicProperty:Game.kt$Game$val gameState: GameState get() { return _mutableGameState }</ID>
-    <ID>UndocumentedPublicProperty:Game.kt$Game$var gameEventHandler: GameEventHandler? = null</ID>
-    <ID>UndocumentedPublicProperty:GameController.kt$GameController$val game: Game</ID>
-    <ID>UndocumentedPublicProperty:GamePlayer.kt$GamePlayer$var belongings: MutableList&lt;Belongings> = mutableListOf()</ID>
-    <ID>UndocumentedPublicProperty:GamePlayer.kt$GamePlayer$var craftables: MutableList&lt;Craftable> = mutableListOf()</ID>
-    <ID>UndocumentedPublicProperty:GamePlayer.kt$GamePlayer$var scavengeResults: MutableList&lt;ScavengeResult> = mutableListOf()</ID>
-    <ID>UndocumentedPublicProperty:GameScope.kt$GameScope$val scope: CoroutineScope</ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val belongingsStack: List&lt;Belongings></ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val fireDamageMod: Int</ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val gamePlayers: List&lt;GamePlayer></ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val hasFire: Boolean</ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val isFireBlocked: Boolean</ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val night: Int</ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val nightStack: List&lt;NightEvent></ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val phase: Phase</ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val scavengeStack: List&lt;ScavengeResult></ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val shelters: List&lt;Shelter></ID>
-    <ID>UndocumentedPublicProperty:GameState.kt$GameState$val targetList: List&lt;GamePlayer>?</ID>
-    <ID>UndocumentedPublicProperty:Lobby.kt$Lobby$val id: String</ID>
-    <ID>UndocumentedPublicProperty:Lobby.kt$Lobby$val name: String</ID>
-    <ID>UndocumentedPublicProperty:Lobby.kt$Lobby$val players: MutableList&lt;String></ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$val id: String</ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$var name: String</ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$var readyToStart: Boolean</ID>
-    <ID>UndocumentedPublicProperty:PlayerHeartsWidget.kt$PlayerHeartsWidget$val hearts: Int</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$Connected$val playerId: String</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$GameChange$val change: Change</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$GameStateMessage$val gameState: GameState</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$JoinedLobby$val lobbyId: String</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$JoinedLobby$val player: Player</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$LeftLobby$val lobbyId: String</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$LeftLobby$val player: Player</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$LobbyCreated$val lobby: Lobby</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$LobbyCreatedFromRequest$val lobby: Lobby</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$LobbyDestroyed$val lobbyId: String</ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$LobbyList$val lobbyList: List&lt;Lobby></ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$PlayerListFromRequest$val playerList: List&lt;Player></ID>
-    <ID>UndocumentedPublicProperty:ServerEvents.kt$PlayerUpdated$val player: Player</ID>
-    <ID>UndocumentedPublicProperty:Shelter.kt$Shelter.Companion$const val MAX_OCCUPANCY = 3</ID>
-    <ID>UndocumentedPublicProperty:UsableItem.kt$UsableItem$var remainingUses: Int</ID>
+    <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun getCard(player: GamePlayer, cardId: String): Card?</ID>
+    <ID>UndocumentedPublicFunction:GameStateExtensions.kt$fun getScavengeResultCard(player: GamePlayer, cardId: String): Card?</ID>
+    <ID>UndocumentedPublicFunction:MutableStrandedGameState.kt$MutableStrandedGameState.Companion$fun toSnapshot(state: MutableStrandedGameState): StrandedGameState</ID>
   </CurrentIssues>
 </SmellBaseline>

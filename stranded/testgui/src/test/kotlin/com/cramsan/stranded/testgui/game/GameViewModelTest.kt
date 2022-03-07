@@ -1,10 +1,10 @@
 package com.cramsan.stranded.testgui.game
 
 import com.cramsan.framework.test.TestBase
-import com.cramsan.stranded.lib.game.logic.MutableStrandedGameState
+import com.cramsan.stranded.lib.game.logic.StrandedGameState
 import com.cramsan.stranded.lib.game.models.GamePlayer
 import com.cramsan.stranded.lib.game.models.common.Phase
-import com.cramsan.stranded.server.JvmClient
+import com.cramsan.stranded.server.Client
 import com.cramsan.stranded.server.messages.Connected
 import com.cramsan.stranded.server.messages.GameStateMessage
 import io.mockk.impl.annotations.MockK
@@ -21,7 +21,7 @@ class GameViewModelTest : TestBase() {
     lateinit var viewModel: GameViewModel
 
     @MockK(relaxed = true)
-    lateinit var client: JvmClient
+    lateinit var client: Client
 
     override fun setupTest() {
         viewModel = GameViewModel(
@@ -42,7 +42,7 @@ class GameViewModelTest : TestBase() {
 
     companion object {
         val playerId = "playerId1"
-        val testGameState = MutableStrandedGameState(
+        val testGameState = StrandedGameState(
             gamePlayers = mutableListOf(
                 GamePlayer(
                     id = playerId,

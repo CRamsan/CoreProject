@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexMethod:Server.kt$Server$private suspend fun handleEvent( playerId: String, session: DefaultWebSocketSession, clientEvent: ClientEvent, )</ID>
+    <ID>UndocumentedPublicClass:Connection.kt$Connection</ID>
+    <ID>UndocumentedPublicClass:Server.kt$Server : EventHandlerEventHandler</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$fun start()</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$fun stop()</ID>
+    <ID>UndocumentedPublicFunction:Server.kt$Server$suspend fun broadcastToLobby(lobbyId: String, serverEvent: ServerEvent)</ID>
+    <ID>UndocumentedPublicFunction:UUID.kt$actual fun generateUUID(): String</ID>
+    <ID>UnreachableCode:Server.kt$Server$broadcastToLobby(lobby.id, GameStarted)</ID>
+    <ID>UnreachableCode:Server.kt$Server$broadcastToLobby(lobby.id, GameStateMessage(createdGame.gameState))</ID>
+    <ID>UnreachableCode:Server.kt$Server$broadcastToLobby(lobbyId, JoinedLobby(lobbyId, player))</ID>
+    <ID>UnreachableCode:Server.kt$Server$broadcastToLobby(lobbyId, LeftLobby(player))</ID>
+    <ID>UnreachableCode:Server.kt$Server$createdGame.onConfigureGame(players)</ID>
+    <ID>UnreachableCode:Server.kt$Server$createdGame.onGameStarted()</ID>
+    <ID>UnreachableCode:Server.kt$Server$createdGame.registerServerEventHandler(object : MultiplayerGameEventHandler { override fun onStateChangeExecuted(change: StateChange) { scope.launch { broadcastToLobby(lobbyId, GameChange(change)) } } })</ID>
+    <ID>UnreachableCode:Server.kt$Server$game.onPlayerIntentReceived(playerId, playerIntent)</ID>
+    <ID>UnreachableCode:Server.kt$Server$if (playerReadyCount &lt; lobby.players.size) { println("All users are not yet ready. Game cannot start") return }</ID>
+    <ID>UnreachableCode:Server.kt$Server$lobbyRepository.deleteLobby(lobbyId)</ID>
+    <ID>UnreachableCode:Server.kt$Server$lobbyRepository.getLobby(lobbyId)?.let { broadcastToLobby(lobbyId, JoinedLobby(lobbyId, player)) }</ID>
+    <ID>UnreachableCode:Server.kt$Server$lobbyRepository.getLobby(lobbyId)?.let { broadcastToLobby(lobbyId, LeftLobby(player)) }</ID>
+    <ID>UnreachableCode:Server.kt$Server$lobbyRepository.leaveLobby(lobbyId, playerId)</ID>
+    <ID>UnreachableCode:Server.kt$Server$session.sendEvent(LeftLobby(leavingPlayer), json)</ID>
+    <ID>UnreachableCode:Server.kt$Server$session.sendEvent(PlayerListFromRequest(players), json)</ID>
+    <ID>UnreachableCode:Server.kt$Server$val createdGame = gameRepository.createGame(lobby.id) ?: return</ID>
+    <ID>UnreachableCode:Server.kt$Server$val game = gameRepository.getGame(lobbyId) ?: return</ID>
+    <ID>UnreachableCode:Server.kt$Server$val leavingPlayer = playerRepository.getPlayer(playerId) ?: return</ID>
+    <ID>UnreachableCode:Server.kt$Server$val lobby = lobbyRepository.getLobby(lobbyId) ?: return</ID>
+    <ID>UnreachableCode:Server.kt$Server$val lobbyId = lobbyRepository.getLobbyForPlayer(playerId) ?: return</ID>
+    <ID>UnreachableCode:Server.kt$Server$val player = playerRepository.getPlayer(playerId) ?: return</ID>
+    <ID>UnreachableCode:Server.kt$Server$val playerReadyCount = lobby.players.count { val player = playerRepository.getPlayer(it) player?.readyToStart == true }</ID>
+    <ID>UnreachableCode:Server.kt$Server$val players = lobby.players.mapNotNull { playerRepository.getPlayer(it) }</ID>
+    <ID>UnreachableCode:Server.kt$Server.&lt;no name provided>$broadcastToLobby(lobbyId, GameChange(change))</ID>
+  </CurrentIssues>
+</SmellBaseline>

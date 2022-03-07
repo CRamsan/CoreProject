@@ -2,8 +2,7 @@ package com.cramsan.stranded.cardmanager.nightcards
 
 import com.cramsan.framework.test.TestBase
 import com.cramsan.stranded.lib.game.models.night.CancellableByFire
-import com.cramsan.stranded.lib.game.models.night.CancellableByFood
-import com.cramsan.stranded.lib.game.models.night.FireModification
+import com.cramsan.stranded.lib.game.models.night.DestroyShelter
 import com.cramsan.stranded.lib.game.models.night.ForageCardLost
 import com.cramsan.stranded.lib.game.models.night.NightEvent
 import com.cramsan.stranded.lib.storage.CardHolder
@@ -12,10 +11,12 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class NighCardManagerViewModelTest : TestBase() {
 
     lateinit var viewModel: NightCardManagerViewModel
@@ -124,7 +125,7 @@ class NighCardManagerViewModelTest : TestBase() {
                 listOf(CARD_HOLDER_1, CARD_HOLDER_2, CARD_HOLDER_3),
                 listOf(
                     CARD_HOLDER_1.copy(
-                        content = NightEvent("Night2", listOf(CancellableByFood(10))),
+                        content = NightEvent("Night2", listOf(DestroyShelter)),
                         quantity = 11,
                     ),
                     CARD_HOLDER_2, CARD_HOLDER_3
@@ -154,7 +155,7 @@ class NighCardManagerViewModelTest : TestBase() {
     companion object {
         val CARD_1 = NightEvent("Night1", listOf(CancellableByFire))
         val CARD_2 = NightEvent("Night2", listOf())
-        val CARD_3 = NightEvent("Night3", listOf(ForageCardLost(1, 2), FireModification(3)))
+        val CARD_3 = NightEvent("Night3", listOf(ForageCardLost(2), DestroyShelter))
         val CARD_HOLDER_1 = CardHolder(CARD_1, 3)
         val CARD_HOLDER_2 = CardHolder(CARD_2, 9)
         val CARD_HOLDER_3 = CardHolder(CARD_3, 10)

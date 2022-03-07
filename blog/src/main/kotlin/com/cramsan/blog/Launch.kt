@@ -1,16 +1,17 @@
 package com.cramsan.blog
 
-import org.commonmark.renderer.html.HtmlRenderer
-import org.commonmark.node.*
+import org.commonmark.node.Node
 import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 
 /**
+ * Main method. Starts the process.
+ *
  * @author cramsan
  */
-
 fun main(args: Array<String>) {
 
     if (args.size != 2) {
@@ -38,6 +39,10 @@ fun main(args: Array<String>) {
     }
 }
 
+/**
+ * Process the provided [file]. This [file] can be either a directory or a regular file. The file will be processed
+ * and the resulting file will be saved in the [outputFolder].
+ */
 fun process(file: File, outputFolder: File) {
     if (!file.exists()) {
         throw RuntimeException("Folder does not exist: $file")
@@ -62,6 +67,10 @@ fun process(file: File, outputFolder: File) {
     }
 }
 
+/**
+ * Process [file] that is a regular file. The file will be processed
+ * and the resulting file will be saved in the [outputFolder].
+ */
 fun processFile(file: File, outputFolder: File) {
     when (file.extension.lowercase()) {
         "md" -> processMarkdown(file, outputFolder)
@@ -72,6 +81,10 @@ fun processFile(file: File, outputFolder: File) {
     }
 }
 
+/**
+ * Process [file] that is of type markdown. The file will be processed
+ * and the resulting file will be saved in the [outputFolder].
+ */
 fun processMarkdown(file: File, outputFolder: File) {
     val reader = FileReader(file)
 

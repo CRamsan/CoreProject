@@ -2,31 +2,10 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>EmptyFunctionBlock:PlayerListUIGdx.kt$PlayerListUIGdx${ }</ID>
-    <ID>UndocumentedPublicClass:BackgroundGdx.kt$BackgroundGdx : BackgroundWidget</ID>
-    <ID>UndocumentedPublicClass:BaseCardUI.kt$BaseCardUI</ID>
-    <ID>UndocumentedPublicClass:BaseUIComponent.kt$BaseUIComponent : UIComponent</ID>
-    <ID>UndocumentedPublicClass:CraftingUIGdx.kt$CraftingUIGdx : BaseUIComponentCraftingUIWidget</ID>
-    <ID>UndocumentedPublicClass:CreateLobbyMenu.kt$CreateLobbyMenu : BaseUIComponent</ID>
-    <ID>UndocumentedPublicClass:GameScreen.kt$GameScreen : KtxScreen</ID>
-    <ID>UndocumentedPublicClass:HandUIGdx.kt$HandUIGdx : BaseUIComponentPlayerHandWidget</ID>
-    <ID>UndocumentedPublicClass:HeartToggleable.kt$HeartToggleable : Actor</ID>
-    <ID>UndocumentedPublicClass:LobbyListMenuGdx.kt$LobbyListMenuGdx : BaseUIComponentLobbyListMenu</ID>
-    <ID>UndocumentedPublicClass:LobbyListWidgetGdx.kt$LobbyListWidgetGdx : BaseUIComponentLobbyListWidget</ID>
-    <ID>UndocumentedPublicClass:LobbyMenuGdx.kt$LobbyMenuGdx : BaseUIComponentLobbyMenu</ID>
-    <ID>UndocumentedPublicClass:LobbyPlayerListUIGdx.kt$LobbyPlayerListUIGdx : BaseUIComponentLobbyPlayerListWidget</ID>
-    <ID>UndocumentedPublicClass:MainMenu.kt$MainMenu : BaseUIComponent</ID>
+    <ID>EmptyFunctionBlock:GameController.kt$GameController${ }</ID>
+    <ID>UndocumentedPublicClass:BackgroundGdx.kt$BackgroundGdx</ID>
+    <ID>UndocumentedPublicClass:GameController.kt$GameController</ID>
     <ID>UndocumentedPublicClass:MainMenuScreen.kt$MainMenuScreen : KtxScreen</ID>
-    <ID>UndocumentedPublicClass:MainMenuScreen.kt$MainMenuScreen$EventHandler</ID>
-    <ID>UndocumentedPublicClass:NightCardUIGdx.kt$NightCardUIGdx : BaseUIComponentNightCardWidget</ID>
-    <ID>UndocumentedPublicClass:PauseMenu.kt$PauseMenu : BaseUIComponent</ID>
-    <ID>UndocumentedPublicClass:PhaseComponentUIGdx.kt$PhaseComponentUIGdx : BaseUIComponentPhaseComponentWidget</ID>
-    <ID>UndocumentedPublicClass:PlayerHeartsUIGdx.kt$PlayerHeartsUIGdx : BaseUIComponentPlayerHeartsWidget</ID>
-    <ID>UndocumentedPublicClass:PlayerListUIGdx.kt$PlayerListUIGdx : BaseUIComponentPlayerListWidget</ID>
-    <ID>UndocumentedPublicClass:PlayerNameMenu.kt$PlayerNameMenu : BaseUIComponentPlayerNameMenu</ID>
-    <ID>UndocumentedPublicClass:ShelterUIGdx.kt$ShelterUIGdx : BaseUIComponentShelterWidget</ID>
-    <ID>UndocumentedPublicClass:SpriteActor.kt$SpriteActor : Actor</ID>
-    <ID>UndocumentedPublicClass:SpriteButton.kt$SpriteButton : SpriteActor</ID>
     <ID>UndocumentedPublicClass:StrandedGame.kt$StrandedGame : KtxGame</ID>
     <ID>UndocumentedPublicClass:Theme.kt$Theme</ID>
     <ID>UndocumentedPublicClass:Theme.kt$Theme$Color</ID>
@@ -36,69 +15,8 @@
     <ID>UndocumentedPublicClass:Theme.kt$Theme$Transtion</ID>
     <ID>UndocumentedPublicFunction:BackgroundGdx.kt$BackgroundGdx$fun act(delta: Float)</ID>
     <ID>UndocumentedPublicFunction:BackgroundGdx.kt$BackgroundGdx$fun draw(width: Float, height: Float, camera: Camera)</ID>
-    <ID>UndocumentedPublicFunction:BaseCardUI.kt$BaseCardUI$fun disable()</ID>
-    <ID>UndocumentedPublicFunction:BaseCardUI.kt$BaseCardUI$fun enable()</ID>
-    <ID>UndocumentedPublicFunction:GameScreen.kt$GameScreen$fun configureGame(playerId: String, playerList: List&lt;Player>, lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:GameScreen.kt$GameScreen$fun getTextureRegion(asset: String): TextureRegion</ID>
-    <ID>UndocumentedPublicFunction:MainMenuScreen.kt$MainMenuScreen.EventHandler$fun onGameStarted(playerId: String, playerList: List&lt;Player>, lobbyId: String)</ID>
-    <ID>UndocumentedPublicFunction:MainMenuScreen.kt$MainMenuScreen.EventHandler$fun startDebugGameScreen()</ID>
-    <ID>UndocumentedPublicProperty:BaseCardUI.kt$BaseCardUI$val actor: Actor</ID>
-    <ID>UndocumentedPublicProperty:BaseCardUI.kt$BaseCardUI$val card: Card</ID>
-    <ID>UndocumentedPublicProperty:BaseUIComponent.kt$BaseUIComponent$abstract val widget: Actor</ID>
-    <ID>UndocumentedPublicProperty:CraftingUIGdx.kt$CraftingUIGdx$lateinit var eventHandler: CraftingWidgetEventHandler</ID>
-    <ID>UndocumentedPublicProperty:CreateLobbyMenu.kt$CreateLobbyMenu$lateinit var eventHandler: CreateLobbyMenuEventHandler</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val background: BackgroundGdx = BackgroundGdx(shapeRenderer)</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val crafting: CraftingUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val hand: HandUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val nightCardUI: NightCardUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val pauseButton: SpriteButton</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val pauseMenu: PauseMenu</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val phaseUI: PhaseComponentUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val playerHearts: PlayerHeartsUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val playerListUI: PlayerListUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val readyButton: SpriteButton</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$val shelterUI: ShelterUIGdx</ID>
-    <ID>UndocumentedPublicProperty:GameScreen.kt$GameScreen$var controller: GameController? = null</ID>
-    <ID>UndocumentedPublicProperty:HandUIGdx.kt$HandUIGdx$lateinit var eventHandler: PlayerHandEventHandler</ID>
-    <ID>UndocumentedPublicProperty:HeartToggleable.kt$HeartToggleable$var enabled: Boolean = false</ID>
-    <ID>UndocumentedPublicProperty:HeartToggleable.kt$HeartToggleable$var toggleState: Boolean = initialToggleState set(value) { currentTextureRegion = if (value) { enabledTextureRegion } else { disabledTextureRegion } field = value }</ID>
-    <ID>UndocumentedPublicProperty:LobbyListMenuGdx.kt$LobbyListMenuGdx$lateinit var eventHandler: LobbyListMenuEventHandler</ID>
-    <ID>UndocumentedPublicProperty:LobbyMenuGdx.kt$LobbyMenuGdx$lateinit var eventHandler: LobbyMenuEventHandler</ID>
-    <ID>UndocumentedPublicProperty:MainMenu.kt$MainMenu$lateinit var controller: DefaultMainMenuController</ID>
-    <ID>UndocumentedPublicProperty:MainMenuScreen.kt$MainMenuScreen$val background: BackgroundGdx = BackgroundGdx(shapeRenderer)</ID>
-    <ID>UndocumentedPublicProperty:MainMenuScreen.kt$MainMenuScreen$val eventHandler: EventHandler</ID>
-    <ID>UndocumentedPublicProperty:PauseMenu.kt$PauseMenu$lateinit var eventHandler: PauseMenuEventHandler</ID>
-    <ID>UndocumentedPublicProperty:PlayerNameMenu.kt$PlayerNameMenu$lateinit var eventHandler: PlayerNameMenuEventHandler</ID>
-    <ID>UndocumentedPublicProperty:PlayerNameMenu.kt$PlayerNameMenu$var inputField: TextField</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme$val containerPadding = Padding.large</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme$val containerSpacing = Padding.medium</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val background = Color(0x010101FF)</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val dayBottom = Color(0xFFF0D9FF.toInt())</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val dayTop = Color(0x32B5FFFF)</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val nightBottom = Color(0x0E2125FF)</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val nightTop = Color(0x192B6AFF)</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val sunsetBottom = Color(0x751500FF)</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Color$val sunsetTop = Color(0x010916FF)</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Padding$val large = 10F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Padding$val medium = 5F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Padding$val small = 3F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Padding$val xlarge = 20F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val large = unit * 2</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val medium = unit</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val small = unit / 2</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val unit = 90f</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val xlarge = unit * 4</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val xsmall = unit / 4</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Scale$val xxlarge = unit * 8</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Size$val large = 50F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Size$val medium = 30F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Size$val small = 15F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Size$val xlarge = 75F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Size$val xsmall = 5F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Transtion$val fast = 1F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Transtion$val normal = 2F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Transtion$val slow = 3F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Transtion$val xfast = 0.5F</ID>
-    <ID>UndocumentedPublicProperty:Theme.kt$Theme.Transtion$val xxfast = 0.2F</ID>
+    <ID>UndocumentedPublicFunction:BackgroundGdx.kt$BackgroundGdx$fun setPhaseForBackground(phase: Phase)</ID>
+    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun onDispose()</ID>
+    <ID>UndocumentedPublicFunction:GameController.kt$GameController$fun onShow()</ID>
   </CurrentIssues>
 </SmellBaseline>

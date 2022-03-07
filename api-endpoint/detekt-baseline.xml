@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicProperty:Constants.kt$Constants$const val API_DECODE = "decode"</ID>
+    <ID>UndocumentedPublicProperty:Constants.kt$Constants$const val API_ENCODE = "encode"</ID>
+    <ID>UndocumentedPublicProperty:Constants.kt$Constants$const val API_PATH = "api"</ID>
+    <ID>UndocumentedPublicProperty:Constants.kt$Constants$const val HOST = "127.0.0.1"</ID>
+    <ID>UndocumentedPublicProperty:Constants.kt$Constants$const val PORT = 8080</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -45,6 +45,9 @@ class StreamingClient(
 
     private val listeners = mutableListOf<StreamingClientEventHandler>()
 
+    /**
+     * Start the client and connect to the WebSocket server.
+     */
     fun start() {
         if (clientJob != null) {
             return
@@ -60,20 +63,32 @@ class StreamingClient(
         }
     }
 
+    /**
+     * Close the client and any current activity.
+     */
     fun stop() {
         client.close()
         clientJob?.cancel()
         clientJob = null
     }
 
+    /**
+     * Register [eventHandler] to receive events from this client.
+     */
     fun registerListener(eventHandler: StreamingClientEventHandler) {
         listeners.add(eventHandler)
     }
 
+    /**
+     * Deregister the [eventHandler] to stop receiving events from this client.
+     */
     fun deregisterListener(eventHandler: StreamingClientEventHandler) {
         listeners.remove(eventHandler)
     }
 
+    /**
+     * Send the [clientEvent] to the WS API.
+     */
     fun sendMessage(clientEvent: ClientCommand) {
         val session = defaultClientWebSocketSession
         if (session == null) {

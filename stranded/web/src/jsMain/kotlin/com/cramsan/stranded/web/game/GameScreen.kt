@@ -2,7 +2,6 @@ package com.cramsan.stranded.web.game
 
 import androidx.compose.runtime.Composable
 import com.cramsan.stranded.lib.game.models.common.Phase
-import com.cramsan.stranded.testgui.game.models.Message
 import org.jetbrains.compose.web.dom.Div
 
 @Suppress("LongMethod", "FunctionNaming", "UNUSED_PARAMETER")
@@ -20,6 +19,5 @@ fun GameScreen(
         PhaseView(phase)
 
         DayView(day)
-
     }
 }

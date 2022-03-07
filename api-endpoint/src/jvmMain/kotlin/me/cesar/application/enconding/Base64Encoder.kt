@@ -1,6 +1,6 @@
 package me.cesar.application.enconding
 
-import java.util.*
+import java.util.Base64
 
 /**
  * Encoder that takes uses Base64 to encode and decode a string.

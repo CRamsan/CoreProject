@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>EmptyFunctionBlock:GameViewModel.kt$GameViewModel${ }</ID>
+    <ID>LongMethod:Main.kt$ fun main()</ID>
+    <ID>UndocumentedPublicFunction:ConnectionViewModel.kt$ConnectionViewModel$fun onUpdatePlayerNameSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameScreen.kt$@Suppress("LongMethod", "FunctionNaming") @Composable fun GameScreen( name: String?, health: Int?, quantity: Int, belongings: List&lt;Belongings>?, scavengeResults: List&lt;ScavengeResult>?, craftables: List&lt;Craftable>?, phase: Phase, shelters: List&lt;Shelter>?, viewModel: GameViewModel, )</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCardQuantityUpdated(it: String)</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCardSelected(id: String)</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCraftBasketSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCraftShelterSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCraftSpearSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onEndTurnSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onForageSelected()</ID>
+  </CurrentIssues>
+</SmellBaseline>

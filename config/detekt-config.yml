@@ -86,7 +86,7 @@ comments:
       - '**/jsTest/**'
       - '**/iosTest/**'
   UndocumentedPublicProperty:
-    active: true
+    active: false
     excludes:
       - '**/build/generated/**'
       - '**/test/**'

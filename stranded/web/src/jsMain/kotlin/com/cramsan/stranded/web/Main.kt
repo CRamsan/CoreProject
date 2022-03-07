@@ -40,7 +40,6 @@ import org.jetbrains.compose.web.renderComposable
 
 fun main() {
 
-
     /**
      * Instantiate client.
      */
@@ -59,7 +58,6 @@ fun main() {
     }
      */
     debugGameScreen()
-
 }
 
 fun lobbyScreen(client: CommonClient) {
@@ -121,7 +119,6 @@ fun debugGameScreen() {
         }
     }
 }
-
 
 fun json() = Json {
     prettyPrint = false

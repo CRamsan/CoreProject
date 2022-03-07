@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicClass:MessageElement.kt$MessageElement</ID>
+    <ID>UndocumentedPublicClass:MessageElement.kt$MessageElement$Action : MessageElement</ID>
+    <ID>UndocumentedPublicClass:MessageElement.kt$MessageElement$Craftable : MessageElement</ID>
+    <ID>UndocumentedPublicClass:MessageElement.kt$MessageElement$Food : MessageElement</ID>
+    <ID>UndocumentedPublicClass:MessageElement.kt$MessageElement$Normal : MessageElement</ID>
+    <ID>UndocumentedPublicClass:MessageElement.kt$MessageElement$Weapon : MessageElement</ID>
+    <ID>UndocumentedPublicFunction:ConnectionViewModel.kt$ConnectionViewModel$fun onUpdatePlayerNameSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameScreen.kt$@Suppress("LongMethod", "FunctionNaming", "UNUSED_PARAMETER") @Composable fun GameScreen( name: String, health: Int, phase: Phase, day: Int, viewModel: GameViewModel? = null, )</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCardQuantityUpdated(it: String)</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onCardSelected(id: String)</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onEndTurnSelected()</ID>
+    <ID>UndocumentedPublicFunction:GameViewModel.kt$GameViewModel$fun onForageSelected()</ID>
+    <ID>UndocumentedPublicFunction:Main.kt$fun debugGameScreen()</ID>
+    <ID>UndocumentedPublicFunction:Main.kt$fun gameScreen(client: CommonClient)</ID>
+    <ID>UndocumentedPublicFunction:Main.kt$fun json()</ID>
+    <ID>UndocumentedPublicFunction:Main.kt$fun lobbyScreen(client: CommonClient)</ID>
+    <ID>UndocumentedPublicFunction:Main.kt$fun main()</ID>
+    <ID>UndocumentedPublicFunction:Widgets.kt$@Suppress("FunctionNaming") @Composable fun DayView( day: Int, )</ID>
+    <ID>UndocumentedPublicFunction:Widgets.kt$@Suppress("FunctionNaming") @Composable fun HeaderView( name: String, health: Int, )</ID>
+    <ID>UndocumentedPublicFunction:Widgets.kt$@Suppress("FunctionNaming") @Composable fun PhaseView( phase: Phase, )</ID>
+  </CurrentIssues>
+</SmellBaseline>

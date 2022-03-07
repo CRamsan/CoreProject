@@ -1,6 +1,6 @@
 package com.cramsan.stranded.server.demoapp
 
-import com.cramsan.stranded.server.JvmClient
+import com.cramsan.stranded.server.Client
 import com.cramsan.stranded.server.Server
 import com.cramsan.stranded.server.demoapp.game.DemoGameState
 import com.cramsan.stranded.server.demoapp.game.DemoGameStateChange
@@ -45,7 +45,7 @@ import kotlinx.serialization.json.Json
  * @author cramsan
  */
 class DemoGameViewModel(
-    private val client: JvmClient,
+    private val client: Client,
     private val server: Server,
     private val json: Json,
     dispatcher: CoroutineDispatcher,

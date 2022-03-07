@@ -4,11 +4,10 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.actions.ColorAction
-import com.cramsan.stranded.lib.client.ui.widget.BackgroundWidget
 import com.cramsan.stranded.lib.game.models.common.Phase
 import ktx.graphics.copy
 
-class BackgroundGdx(private val shapeRenderer: ShapeRenderer) : BackgroundWidget {
+class BackgroundGdx(private val shapeRenderer: ShapeRenderer) {
 
     private var colorActionBottom = ColorAction().apply {
         color = Theme.Color.background.copy()
@@ -17,7 +16,7 @@ class BackgroundGdx(private val shapeRenderer: ShapeRenderer) : BackgroundWidget
         color = Theme.Color.background.copy()
     }
 
-    override fun setPhaseForBackground(phase: Phase) {
+    fun setPhaseForBackground(phase: Phase) {
         val startingColorBottom = colorActionBottom.color
         val startingColorTop = colorActionTop.color
         val targetColorBottom: Color
@@ -49,8 +48,6 @@ class BackgroundGdx(private val shapeRenderer: ShapeRenderer) : BackgroundWidget
             duration = Theme.Transtion.normal
         }
     }
-
-    override fun setVisible(isVisible: Boolean) = Unit
 
     fun act(delta: Float) {
         colorActionBottom.act(delta)

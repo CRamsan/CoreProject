@@ -3,19 +3,20 @@ package me.cesar.application
 import io.ktor.application.call
 import io.ktor.html.respondHtml
 import io.ktor.http.HttpStatusCode
-import io.ktor.routing.get
-import io.ktor.routing.routing
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.request.receiveChannel
 import io.ktor.request.receiveText
 import io.ktor.response.respondText
+import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.route
-import kotlinx.html.*
+import io.ktor.routing.routing
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
+import kotlinx.html.HTML
 import me.cesar.application.enconding.Encoder
+import me.cesar.application.me.Constants
 import java.io.File
 
 /**
@@ -76,13 +77,10 @@ class Server(private val encoder: Encoder) {
 }
 
 /**
-
  URL : cramsan.com/api/encode
  METHOD POST
  Body: string to encode
-
  URL : cramsan.com/api/decode
  METHOD POST
  Body: string to decode
-
  */
