@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexMethod:AWTRenderer.kt$AWTRenderer.RendererCanvas$override fun paint(graphics: Graphics?)</ID>
+    <ID>EmptyFunctionBlock:AWTRenderer.kt$AWTRenderer${ }</ID>
+    <ID>LongMethod:AWTRenderer.kt$AWTRenderer.RendererCanvas$override fun paint(graphics: Graphics?)</ID>
+    <ID>LongMethod:AWTRunner.kt$AWTRunner.Companion$private fun createAndShowGUI()</ID>
+    <ID>NestedBlockDepth:AWTRenderer.kt$AWTRenderer.RendererCanvas$override fun paint(graphics: Graphics?)</ID>
+    <ID>UndocumentedPublicClass:AWTRenderer.kt$AWTRenderer : JFrameEntityManagerEventListener</ID>
+    <ID>UndocumentedPublicClass:AWTRunner.kt$AWTRunner</ID>
+    <ID>UndocumentedPublicFunction:AWTRenderer.kt$AWTRenderer$fun startScene(manager: EntityManager, sceneConfig: SceneConfig, map: GameMap)</ID>
+    <ID>UndocumentedPublicFunction:AWTRunner.kt$AWTRunner.Companion$@JvmStatic fun main(args: Array&lt;String>)</ID>
+  </CurrentIssues>
+</SmellBaseline>

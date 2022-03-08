@@ -72,7 +72,8 @@ class Game(
     )
 
     private var _gameStateSnapshot = StrandedGameState.EMPTY_STATE
-    override val gameState: StrandedGameState = _gameStateSnapshot
+    override val gameState: StrandedGameState
+        get() = _gameStateSnapshot
 
     var gameCompleted = false
         private set

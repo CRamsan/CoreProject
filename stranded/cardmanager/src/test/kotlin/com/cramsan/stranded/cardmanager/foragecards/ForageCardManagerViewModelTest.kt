@@ -14,11 +14,10 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class ForageCardManagerViewModelTest : TestBase() {
 
     lateinit var viewModel: ForageCardManagerViewModel
@@ -34,7 +33,6 @@ class ForageCardManagerViewModelTest : TestBase() {
         viewModel = ForageCardManagerViewModel(cardRepository, testCoroutineScope)
     }
 
-    @Test
     fun `test onShow`() = runBlockingTest {
         viewModel.onShow()
 
@@ -51,7 +49,6 @@ class ForageCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.remainingDays.value)
     }
 
-    @Test
     fun `test changing selected card to consumable`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(1)
@@ -64,7 +61,6 @@ class ForageCardManagerViewModelTest : TestBase() {
         assertEquals(1, viewModel.remainingDays.value)
     }
 
-    @Test
     fun `test changing selected card to resource`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(2)
@@ -77,7 +73,6 @@ class ForageCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.remainingDays.value)
     }
 
-    @Test
     fun `test saving changes`() = runBlockingTest {
 
         val slot = slot<List<CardHolder<ScavengeResult>>>()

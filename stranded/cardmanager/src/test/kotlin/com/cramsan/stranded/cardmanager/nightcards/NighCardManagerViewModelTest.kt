@@ -12,11 +12,10 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class NighCardManagerViewModelTest : TestBase() {
 
     lateinit var viewModel: NightCardManagerViewModel
@@ -32,7 +31,6 @@ class NighCardManagerViewModelTest : TestBase() {
         viewModel = NightCardManagerViewModel(cardRepository, testCoroutineScope)
     }
 
-    @Test
     fun `test onShow`() = runBlockingTest {
         viewModel.onShow()
 
@@ -48,7 +46,6 @@ class NighCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.argument2Label.value)
     }
 
-    @Test
     fun `test changing selected card to night with no changes`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(1)
@@ -60,7 +57,6 @@ class NighCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.argument2Label.value)
     }
 
-    @Test
     fun `test changing selected card to night with changes that include parameters`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(2)
@@ -74,7 +70,6 @@ class NighCardManagerViewModelTest : TestBase() {
         assertEquals("2", viewModel.argument2Field.value)
     }
 
-    @Test
     fun `test adding change statement`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(1)
@@ -87,7 +82,6 @@ class NighCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.argument2Label.value)
     }
 
-    @Test
     fun `test selecting statement type`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(2)
@@ -102,7 +96,6 @@ class NighCardManagerViewModelTest : TestBase() {
         assertEquals("", viewModel.argument2Field.value)
     }
 
-    @Test
     fun `test changing statement type`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(2)
@@ -117,7 +110,6 @@ class NighCardManagerViewModelTest : TestBase() {
         assertEquals("", viewModel.argument2Field.value)
     }
 
-    @Test
     fun `test saving changes`() = runBlockingTest {
         val slot = slot<List<CardHolder<NightEvent>>>()
         every { cardRepository.readNightCards() } returnsMany

@@ -1,4 +1,7 @@
 include 'api-endpoint'
+include 'api-endpoint:common'
+include 'api-endpoint:server-jvm'
+include 'api-endpoint:client-html'
 
 include 'blog'
 

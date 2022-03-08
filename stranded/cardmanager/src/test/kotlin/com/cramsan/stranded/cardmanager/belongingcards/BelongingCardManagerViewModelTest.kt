@@ -12,12 +12,11 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class BelongingCardManagerViewModelTest : TestBase() {
 
     lateinit var viewModel: BelongingCardManagerViewModel
@@ -33,7 +32,6 @@ class BelongingCardManagerViewModelTest : TestBase() {
         viewModel = BelongingCardManagerViewModel(cardRepository, testCoroutineScope)
     }
 
-    @Test
     fun `test onShow`() = runBlockingTest {
         viewModel.onShow()
 
@@ -51,7 +49,6 @@ class BelongingCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.remainingDays.value)
     }
 
-    @Test
     fun `test changing selected card to starting food`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(3)
@@ -64,7 +61,6 @@ class BelongingCardManagerViewModelTest : TestBase() {
         assertEquals(2, viewModel.remainingDays.value)
     }
 
-    @Test
     fun `test changing selected card to equippable`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(2)
@@ -77,7 +73,6 @@ class BelongingCardManagerViewModelTest : TestBase() {
         assertNull(viewModel.remainingDays.value)
     }
 
-    @Test
     fun `test saving changes`() = runBlockingTest {
         val slot = slot<List<CardHolder<Belongings>>>()
 

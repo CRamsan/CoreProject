@@ -1,5 +1,9 @@
 package com.cramsan.awslib.platform
 
+/**
+ * Implementation for a priority queue in common code. The API is based on the
+ * JVMs implementation of java.util.PriorityQueue.
+ */
 expect class KotlinPriorityQueue<T>(comparator: Comparator<T>) {
     fun add(e: T): Boolean
     fun offer(e: T): Boolean

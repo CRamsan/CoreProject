@@ -17,6 +17,7 @@ import com.cramsan.stranded.lib.game.models.night.Survived
 import com.cramsan.stranded.lib.storage.CardHolder
 import com.cramsan.stranded.lib.storage.CardRepository
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -67,10 +68,12 @@ class NightCardManagerViewModel(
         loadStatementAtIndex(_selectedStatementIndex.value)
     }
 
-    override fun onShow() = super.onShow().let {
+    override fun onShow(): Job {
+        val job = super.onShow()
         _selectedStatementIndex.onEach {
             onSelectedStatementIndexChange()
         }.launchIn(scope)
+        return job
     }
 
     override fun readDeckFromRepository(): List<CardHolder<NightEvent>> {

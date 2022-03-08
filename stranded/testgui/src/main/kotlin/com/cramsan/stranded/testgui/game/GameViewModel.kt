@@ -81,11 +81,11 @@ class GameViewModel(
             is PlayerListFromRequest -> Unit
             is GameChange -> {
                 _game.processEvent(serverEvent.change as StrandedStateChange)
-                applyState(_gameState.value)
+                applyState(_game.gameState)
             }
             is GameStateMessage -> {
                 _game.setGameState(serverEvent.gameState as StrandedGameState)
-                applyState(_gameState.value)
+                applyState(_game.gameState)
             }
         }
     }

@@ -10,11 +10,10 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class BaseCardManagerViewModelTest : TestBase() {
 
     lateinit var viewModel: BaseCardManagerViewModel<NightEvent>
@@ -30,7 +29,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         viewModel = NightCardManagerViewModel(cardRepository, testCoroutineScope)
     }
 
-    @Test
     fun `test onShow`() = runBlockingTest {
         viewModel.onShow()
 
@@ -42,7 +40,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals("Card3", viewModel.deck.value[2].content?.title)
     }
 
-    @Test
     fun `test initializing empty deck`() = runBlockingTest {
         every { cardRepository.readNightCards() } returns emptyList()
 
@@ -53,7 +50,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals(0, viewModel.deck.value[0].quantity)
     }
 
-    @Test
     fun `test changing selected card`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onCardAtIndexSelected(2)
@@ -62,7 +58,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals(6, viewModel.cardQuantity.value)
     }
 
-    @Test
     fun `test adding new card`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onNewCardSelected()
@@ -73,7 +68,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals(0, viewModel.cardQuantity.value)
     }
 
-    @Test
     fun `test removing card`() = runBlockingTest {
         viewModel.onShow()
         viewModel.onRemoveCardSelected()
@@ -84,7 +78,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals(4, viewModel.cardQuantity.value)
     }
 
-    @Test
     fun `test removing last card`() = runBlockingTest {
         every { cardRepository.readNightCards() } returns emptyList()
 
@@ -97,7 +90,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals(0, viewModel.deck.value[0].quantity)
     }
 
-    @Test
     fun `test saving changes`() = runBlockingTest {
         val slot = slot<List<CardHolder<NightEvent>>>()
 
@@ -129,7 +121,6 @@ class BaseCardManagerViewModelTest : TestBase() {
         assertEquals(10, viewModel.cardQuantity.value)
     }
 
-    @Test
     fun `test changing card and then creating a new card`() = runBlockingTest {
         val updatedTitle = "Updated Card Title"
 

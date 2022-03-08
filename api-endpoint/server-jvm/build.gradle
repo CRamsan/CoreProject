@@ -1,0 +1,13 @@
+ext.mainClassTarget = "me.cesar.application.MainKt"
+
+apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
+
+dependencies {
+    implementation project(":api-endpoint:common")
+    implementation packages.KtorServerCore
+    implementation packages.KtorServerNetty
+    implementation packages.KotlinxHtmlJVM
+    implementation packages.KtorHtmlBuilder
+}
+
+registerDependency(":api-endpoint:common")

@@ -24,10 +24,6 @@ import com.cramsan.stranded.lib.game.models.state.UserCard
 import com.cramsan.stranded.server.CommonClient
 import com.cramsan.stranded.server.game.PlayerIntent
 import com.cramsan.stranded.server.game.StateChange
-import com.cramsan.stranded.testgui.ConnectionScreen
-import com.cramsan.stranded.testgui.ConnectionViewModel
-import com.cramsan.stranded.testgui.game.GameScreen
-import com.cramsan.stranded.testgui.game.GameViewModel
 import com.cramsan.stranded.web.game.GameScreen
 import com.cramsan.stranded.web.game.GameViewModel
 import kotlinx.coroutines.Dispatchers
