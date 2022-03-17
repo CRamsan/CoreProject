@@ -20,10 +20,10 @@ import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import java.lang.reflect.Type
 import java.util.logging.Logger
-import kotlin.test.Ignore
 
 class APIFunctionTests {
 
