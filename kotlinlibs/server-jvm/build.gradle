@@ -1,0 +1,42 @@
+ext.mainClassTarget = "me.cesar.application.MainKt"
+
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "kotlin-spring"
+apply plugin: "kotlin-allopen"
+apply plugin: "org.jetbrains.kotlin.plugin.jpa"
+apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
+
+dependencies {
+    implementation project(":kotlinlibs:common")
+    implementation project(":framework:test")
+
+    kapt packages.SpringConfiguratorProcessor
+
+    implementation packages.JacksonKotlin
+    implementation packages.KotlinReflect
+    implementation packages.SpringWeb
+    implementation packages.SpringStarterJPA
+    implementation packages.SpringStarterMustache
+    implementation packages.Rome
+
+    runtimeOnly packages.H2DatabaseEngine
+    runtimeOnly packages.SpringDevtools
+
+    testImplementation packages.SpringTest
+    testImplementation packages.SpringMock
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+registerDependency(":kotlinlibs:common")
+registerDependency(":framework:test")

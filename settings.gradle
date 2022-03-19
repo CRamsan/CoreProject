@@ -31,6 +31,10 @@ include 'doom:lib:sample'
 include 'doom:game:core'
 include 'doom:game:desktop'
 
+include 'kotlinlibs:client-html'
+include 'kotlinlibs:common'
+include 'kotlinlibs:server-jvm'
+
 include 'auraxiscontrolcenter:app'
 include 'auraxiscontrolcenter:appcore'
 include 'auraxiscontrolcenter:cdk'
