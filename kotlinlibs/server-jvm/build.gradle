@@ -1,3 +1,4 @@
+// TODO: Verify if this can be removed
 ext.mainClassTarget = "me.cesar.application.MainKt"
 
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
@@ -7,6 +8,12 @@ apply plugin: "kotlin-spring"
 apply plugin: "kotlin-allopen"
 apply plugin: "org.jetbrains.kotlin.plugin.jpa"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
+
+dependencyManagement {
+    imports {
+        mavenBom packages.VaadinBom
+    }
+}
 
 dependencies {
     implementation project(":kotlinlibs:common")
@@ -20,6 +27,7 @@ dependencies {
     implementation packages.SpringStarterJPA
     implementation packages.SpringStarterMustache
     implementation packages.Rome
+    implementation packages.VaadinSpringBootStarter
 
     runtimeOnly packages.H2DatabaseEngine
     runtimeOnly packages.SpringDevtools

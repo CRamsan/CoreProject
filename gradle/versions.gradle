@@ -91,6 +91,8 @@ def versions_packages = [
     Tornadofx : "1.7.20",
     Twitter4J : "4.0.7",
     UIAutomator : "2.2.0",
+    VaadinBom : "14.8.0",
+    VaadinSpringBootStarter : "23.0.1",
     Volley : "1.1.1",
 ]
 
@@ -299,6 +301,8 @@ def packages = [
         Tornadofx : "no.tornado:tornadofx:$versions_packages.Tornadofx",
         Twitter4J : "org.twitter4j:twitter4j-core:$versions_packages.Twitter4J",
         UIAutomator : "androidx.test.uiautomator:uiautomator:$versions_packages.UIAutomator",
+        VaadinBom : "com.vaadin:vaadin-bom:$versions_packages.VaadinBom",
+        VaadinSpringBootStarter : "com.vaadin:vaadin-spring-boot-starter:$versions_packages.VaadinSpringBootStarter",
         Volley : "com.android.volley:volley:$versions_packages.Volley",
 ]
 
