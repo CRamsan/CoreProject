@@ -1,7 +1,0 @@
-ext.libraryVersionCode = 1
-ext.libraryVersionName = "0.1"
-
-disableIosTarget()
-disableAndroidTarget()
-
-apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"

@@ -40,5 +40,5 @@ class ArticleAPIController(
      */
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: String) =
-        service.findById(0) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "This article does not exist")
+        service.findById(id.toLongOrNull() ?: 0) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "This article does not exist")
 }
