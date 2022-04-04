@@ -43,6 +43,27 @@ class BlogConfiguration {
             sourceType = SourceType.RSS,
         )
 
+        private val KOTLINX_SERIALIZATION_GITHUB_RELEASES = Source(
+            title = "Kotlinx Serialization Releases",
+            url = "https://github.com/Kotlin/kotlinx.serialization/releases.atom",
+            lastUpdated = Date(0),
+            sourceType = SourceType.RSS,
+        )
+
+        private val KOTLESS_GITHUB_RELEASES = Source(
+            title = "Kotless Releases",
+            url = "https://github.com/JetBrains/kotless/releases.atom",
+            lastUpdated = Date(0),
+            sourceType = SourceType.RSS,
+        )
+
+        private val KOTLIN_FEED_YOUTUBE = Source(
+            title = "Kotlin Youtube Channel",
+            url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCP7uiEZIqci43m22KDl0sNw",
+            lastUpdated = Date(0),
+            sourceType = SourceType.RSS,
+        )
+
         private val ALL_SOURCES = listOf(
             KTOR_BLOG,
             KOTLIN_BLOG,

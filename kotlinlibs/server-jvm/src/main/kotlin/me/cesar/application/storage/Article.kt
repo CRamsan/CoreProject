@@ -14,6 +14,7 @@ import javax.persistence.Lob
 @Entity
 class Article(
     var title: String,
+    var source: String,
     @Lob
     var content: String,
     var publishedAt: Date,

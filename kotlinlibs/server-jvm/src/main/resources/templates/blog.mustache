@@ -1,27 +1,32 @@
+<html>
 {{> header}}
+
+{{> navbar}}
 
 <h1>{{title}}</h1>
 
-<div class="articles">
+{{#banner.title}}
+    <section>
+        <header>
+            <h2>{{banner.title}}</h2>
+        </header>
+        <div>
+            {{banner.content}}
+        </div>
+    </section>
+{{/banner.title}}
 
-	{{#banner.title}}
-	<section>
-		<header class="banner">
-			<h2 class="banner-title">{{banner.title}}</h2>
-		</header>
-		<div class="banner-content">
-			{{banner.content}}
-		</div>
-	</section>
-	{{/banner.title}}
-
+<div>
 	{{#articles}}
 		<section>
-			<header class="article-header">
-				<h2 class="article-title"><a href="/article/{{id}}">{{title}}</a></h2>
+			<header>
+				<h2><a href="/article/{{id}}">{{title}}</a></h2>
+                <h3>Added on {{addedAt}}</h3>
+                <h4>From {{source}}</h4>
 			</header>
 		</section>
 	{{/articles}}
 </div>
 
 {{> footer}}
+</html>

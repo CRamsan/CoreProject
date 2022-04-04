@@ -1,4 +1,4 @@
-package me.cesar.application.controller
+package me.cesar.application.api
 
 import me.cesar.application.service.ArticleService
 import me.cesar.application.storage.Article

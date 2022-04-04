@@ -36,6 +36,7 @@ class RssFetcher(
         return feed.entries.map {
             Article(
                 title = it.title,
+                source = source.title,
                 content = it.contents.joinToString("\n"),
                 publishedAt = it.publishedDate,
             )

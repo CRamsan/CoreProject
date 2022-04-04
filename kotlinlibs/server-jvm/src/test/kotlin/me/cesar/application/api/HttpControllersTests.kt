@@ -1,4 +1,4 @@
-package me.cesar.application.controller
+package me.cesar.application.api
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every

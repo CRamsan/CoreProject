@@ -1,4 +1,4 @@
-package me.cesar.application.controller
+package me.cesar.application.http
 
 import me.cesar.application.BlogProperties
 import me.cesar.application.service.ArticleService
@@ -45,13 +45,15 @@ class ArticleHtmlController(
     fun Article.render() = RenderedArticle(
         id.toString(),
         title,
+        source,
         content,
-        addedAt.toString(),
+        publishedAt.toString(),
     )
 
     data class RenderedArticle(
         val id: String,
         val title: String,
+        var source: String,
         val content: String,
         val addedAt: String
     )
