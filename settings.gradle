@@ -1,4 +1,3 @@
-include 'api-endpoint'
 include 'api-endpoint:common'
 include 'api-endpoint:server-jvm'
 include 'api-endpoint:client-html'
@@ -25,7 +24,6 @@ include 'petproject:appcore'
 include 'petproject:azurefunction'
 
 include 'doom:lib'
-include 'doom:lib:leveleditor'
 include 'doom:lib:sample'
 
 include 'doom:game:core'

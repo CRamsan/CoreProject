@@ -22,9 +22,9 @@ class HttpControllersTests(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `List articles`() {
-        val spring5Article = Article("Spring Framework 5.0 goes GA", "Dear Spring community ...", Date())
-        val spring43Article = Article("Spring Framework 4.3 goes GA", "Dear Spring community ...", Date())
-        every { articleService.findAllByOrderByPublishedAtDesc(0, 10, "publishedAt") } returns PageImpl(listOf(spring5Article, spring43Article))
+        val article1 = Article("Title 1", "blog1", "A", Date())
+        val article2 = Article("Title 2", "blog2", "B", Date())
+        every { articleService.findAllByOrderByPublishedAtDesc(0, 10, "publishedAt") } returns PageImpl(listOf(article1, article2))
         mockMvc.perform(MockMvcRequestBuilders.get("/api/article/").accept(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))

@@ -16,7 +16,7 @@ class RepositoriesTests @Autowired constructor(
 
     @Test
     fun `When findByIdOrNull then return Article`() {
-        val article = Article("Spring Framework 5.0 goes GA", "Dear Spring community ...", Date())
+        val article = Article("Title 2", "blog2", "B", Date())
         entityManager.persist(article)
         entityManager.flush()
         val found = articleRepository.findByIdOrNull(article.id!!)

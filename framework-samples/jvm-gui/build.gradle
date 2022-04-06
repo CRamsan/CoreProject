@@ -1,3 +1,0 @@
-ext.mainClassTarget = "com.cramsan.framework.sample.jvm_gui.AWTRunner"
-
-apply from: "$rootDir/gradle/kotlin-jvm-gui.gradle"

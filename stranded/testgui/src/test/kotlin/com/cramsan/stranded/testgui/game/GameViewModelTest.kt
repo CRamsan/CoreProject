@@ -9,7 +9,7 @@ import com.cramsan.stranded.server.messages.Connected
 import com.cramsan.stranded.server.messages.GameStateMessage
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
