@@ -13,6 +13,9 @@ apply plugin: 'kotlinx-serialization'
 kotlin {
     js(IR) {
         browser {
+            testTask {
+                enabled = false
+            }
         }
         binaries.executable()
     }
