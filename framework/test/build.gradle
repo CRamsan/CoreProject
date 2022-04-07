@@ -10,8 +10,8 @@ dependencies {
 
 kotlin {
     js(IR) {
-        browser {
-        }
+        browser()
+        nodejs()
         binaries.executable()
     }
 

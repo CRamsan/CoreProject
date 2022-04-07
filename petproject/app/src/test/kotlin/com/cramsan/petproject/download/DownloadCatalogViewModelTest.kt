@@ -11,9 +11,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -25,7 +23,6 @@ class DownloadCatalogViewModelTest : TestBase() {
 
     lateinit var application: PetProjectApplication
     lateinit var modelProvider: ModelProviderInterface
-    lateinit var testDispatcher: CoroutineDispatcher
     lateinit var viewModel: DownloadCatalogViewModel
 
     lateinit var observer: Observer<Boolean>
@@ -36,10 +33,15 @@ class DownloadCatalogViewModelTest : TestBase() {
         EventLogger.setInstance(mockk(relaxed = true))
         ThreadUtil.setInstance(mockk(relaxed = true))
         UserEvents.setInstance(mockk(relaxed = true))
-        testDispatcher = TestCoroutineDispatcher()
         observer = mockk(relaxed = true)
 
-        viewModel = DownloadCatalogViewModel(application, modelProvider, testDispatcher, dispatcherProvider, mockk())
+        viewModel = DownloadCatalogViewModel(
+            application,
+            modelProvider,
+            testCoroutineRule.testCoroutineDispatcher,
+            dispatcherProvider,
+            mockk(),
+        )
         viewModel.observableIsDownloadComplete.observeForever(observer)
     }
 

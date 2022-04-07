@@ -12,8 +12,7 @@ apply plugin: 'kotlinx-serialization'
  */
 kotlin {
     js(IR) {
-        browser {
-        }
+        browser { }
         binaries.executable()
     }
 

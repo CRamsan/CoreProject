@@ -17,14 +17,14 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             kotlinOptions {
                 allWarningsAsErrors = true
             }
         }
-        debug {
+        release {
             kotlinOptions {
-                allWarningsAsErrors = false
+                allWarningsAsErrors = true
             }
         }
     }

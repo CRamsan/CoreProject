@@ -22,6 +22,14 @@ android {
     }
 
     buildTypes {
+        // Debug settings enabled.
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            kotlinOptions {
+                allWarningsAsErrors = true
+            }
+        }
         // Release build.
         release {
             // Minify is currently disabled. Maybe I should look into enabling this in the future?
@@ -29,14 +37,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             kotlinOptions {
                 allWarningsAsErrors = true
-            }
-        }
-        // Debug settings enabled.
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
-            kotlinOptions {
-                allWarningsAsErrors = false
             }
         }
     }
