@@ -29,6 +29,7 @@ include 'doom:lib:sample'
 include 'doom:game:core'
 include 'doom:game:desktop'
 
+include 'kotlinlibs:frontend-js'
 include 'kotlinlibs:server-jvm'
 
 include 'auraxiscontrolcenter:app'
