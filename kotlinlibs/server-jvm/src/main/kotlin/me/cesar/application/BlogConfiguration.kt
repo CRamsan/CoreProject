@@ -1,11 +1,17 @@
 package me.cesar.application
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinFeature
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import me.cesar.application.service.KotlinInstantSerializer
 import me.cesar.application.storage.Source
 import me.cesar.application.storage.SourceRepository
 import me.cesar.application.storage.SourceType
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import java.util.Date
 
 /**
@@ -26,6 +32,29 @@ class BlogConfiguration {
         sourceRepository: SourceRepository
     ) = ApplicationRunner {
         sourceRepository.saveAll(ALL_SOURCES)
+    }
+
+    /**
+     * Define the [ObjectMapper] to be used for this application.
+     */
+    @Bean
+    @Primary
+    fun objectMapper(): ObjectMapper {
+
+        val kotlinModule = KotlinModule.Builder()
+            .withReflectionCacheSize(512)
+            .configure(KotlinFeature.NullToEmptyCollection, false)
+            .configure(KotlinFeature.NullToEmptyMap, false)
+            .configure(KotlinFeature.NullIsSameAsDefault, false)
+            .configure(KotlinFeature.SingletonSupport, false)
+            .configure(KotlinFeature.StrictNullChecks, false)
+            .build()
+
+        kotlinModule.addSerializer(KotlinInstantSerializer())
+
+        return ObjectMapper()
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            .registerModule(kotlinModule)
     }
 
     companion object {

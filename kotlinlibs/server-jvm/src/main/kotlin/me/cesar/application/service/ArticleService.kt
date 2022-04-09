@@ -1,6 +1,6 @@
 package me.cesar.application.service
 
-import me.cesar.application.storage.Article
+import me.cesar.application.model.Article
 import me.cesar.application.storage.ArticleRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -27,7 +27,7 @@ class ArticleService(
     ): Page<Article> {
         val paging = PageRequest.of(page, count, Sort.by(sortBy))
 
-        return repository.findAllByOrderByPublishedAtDesc(paging)
+        return repository.findAllByOrderByPublishedAtDesc(paging).map { it.toModel() }
     }
 
     /**
@@ -36,6 +36,6 @@ class ArticleService(
     fun findById(
         id: Long,
     ): Article? {
-        return repository.findById(id).orElseGet { null }
+        return repository.findById(id).orElseGet { null }.toModel()
     }
 }

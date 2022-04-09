@@ -10,9 +10,12 @@ dependencies {
     kapt packages.SpringConfiguratorProcessor
 
     implementation project(":framework:test")
+    implementation project(":kotlinlibs:common")
 
     implementation packages.JacksonKotlin
     implementation packages.KotlinReflect
+    implementation packages.KotlinxDatetime
+    implementation packages.KotlinxSerialization
     implementation packages.Rome
     implementation packages.SpringStarterJPA
     implementation packages.SpringWeb
@@ -35,3 +38,4 @@ test {
 }
 
 registerDependency(":framework:test")
+registerDependency(":kotlinlibs:common")
