@@ -151,6 +151,8 @@ kotlin {
                     // This syntax is used as the kotlin-mpp plugin does not support
                     // arrays as arguments.
                     meta_packages.CoreTestJVM.each { implementation it }
+
+                    meta_packages.CoreTestJVMRuntimeOnly.each { runtimeOnly it }
                 }
             }
         }
@@ -186,6 +188,7 @@ kotlin {
 tasks {
     if (isJvmTargetEnabled()) {
         jvmTest {
+            useJUnitPlatform()
             testLogging {
                 events "passed", "skipped", "failed"
             }

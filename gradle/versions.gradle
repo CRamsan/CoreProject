@@ -209,6 +209,7 @@ def packages = [
         JetpackComposeUItestJunit : "androidx.compose.ui:ui-test-junit4:$versions_packages.JetpackCompose",
         OpenjfxGradle : "org.openjfx:javafx-plugin:$versions_packages.OpenjfxGradle",
         JUnit : "junit:junit:$versions_packages.JUnit",
+        //JUnit5 : "junit:junit:$versions_packages.JUnit",
         Kodein : "org.kodein.di:kodein-di:$versions_packages.Kodein",
         KodeinAndroid : "org.kodein.di:kodein-di-framework-android-x:$versions_packages.Kodein",
         KotlinGradle : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions_packages.Kotlin",
@@ -380,9 +381,13 @@ def core_js = [
 
 def core_test_jvm = [
         packages.CoroutinesTest,
-        packages.JUnit,
+        'org.junit.jupiter:junit-jupiter-api:5.8.1',
         packages.KotlinTestJunit5,
         packages.Mockk,
+]
+
+def core_test_jvm_runtime_only = [
+        'org.junit.jupiter:junit-jupiter-engine:5.8.1',
 ]
 
 def core_test_js = [
@@ -439,6 +444,7 @@ def meta_packages = [
         CoreTestAndroid : core_test_android,
         CoreTestCommon : core_test_common,
         CoreTestJVM : core_test_jvm,
+        CoreTestJVMRuntimeOnly : core_test_jvm_runtime_only,
         CoreTestJS : core_test_js,
         LibKtx : lib_ktx,
 ]

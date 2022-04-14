@@ -17,20 +17,20 @@ import com.microsoft.azure.functions.HttpResponseMessage
 import com.microsoft.azure.functions.HttpStatus
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Test
 import java.lang.reflect.Type
 import java.util.logging.Logger
+import kotlin.test.BeforeTest
+import kotlin.test.Ignore
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class APIFunctionTests {
 
     lateinit var gson: Gson
     lateinit var function: APIFunction
 
-    @Before
+    @BeforeTest
     fun setUp() {
         gson = Gson()
 

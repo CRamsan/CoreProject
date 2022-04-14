@@ -4,9 +4,9 @@ import com.cramsan.cdkrepo.metrics.MetricsStack
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
-import org.junit.Test
 import software.amazon.awscdk.core.App
 import java.io.IOException
+import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class MetricsStackTest {

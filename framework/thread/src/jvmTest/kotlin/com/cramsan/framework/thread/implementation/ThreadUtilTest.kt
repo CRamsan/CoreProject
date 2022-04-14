@@ -6,9 +6,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
-import org.junit.Test
 import java.util.concurrent.Semaphore
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
 /**
  */
@@ -17,7 +17,7 @@ class ThreadUtilTest {
     private lateinit var threadUtilTest: ThreadUtilCommonTest
     private lateinit var semaphore: Semaphore
 
-    @Before
+    @BeforeTest
     fun setUp() {
         threadUtilTest = ThreadUtilCommonTest()
         semaphore = Semaphore(0)

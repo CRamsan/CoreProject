@@ -7,9 +7,9 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.rules.TestRule
-import org.junit.runner.Description
-import org.junit.runners.model.Statement
+import org.junit.jupiter.api.extension.AfterEachCallback
+import org.junit.jupiter.api.extension.BeforeEachCallback
+import org.junit.jupiter.api.extension.ExtensionContext
 
 /**
  * This is a copy-paste of the Android's version of this rule. We are waiting to be able to share
@@ -17,20 +17,18 @@ import org.junit.runners.model.Statement
  * instead update the Android one and then copy-paste that file here.
  */
 @ExperimentalCoroutinesApi
-class TestCoroutineRule : TestRule {
+class TestCoroutineRule : AfterEachCallback, BeforeEachCallback {
 
     val testCoroutineDispatcher = StandardTestDispatcher()
     val testCoroutineScope = TestScope(testCoroutineDispatcher)
 
-    override fun apply(base: Statement, description: Description) = object : Statement() {
-        override fun evaluate() {
-            Dispatchers.setMain(testCoroutineDispatcher)
+    fun runBlockingTest(block: suspend TestScope.() -> Unit) = testCoroutineScope.runTest { block() }
 
-            base.evaluate()
-
-            Dispatchers.resetMain()
-        }
+    override fun beforeEach(context: ExtensionContext?) {
+        Dispatchers.setMain(testCoroutineDispatcher)
     }
 
-    fun runBlockingTest(block: suspend TestScope.() -> Unit) = testCoroutineScope.runTest { block() }
+    override fun afterEach(context: ExtensionContext?) {
+        Dispatchers.resetMain()
+    }
 }

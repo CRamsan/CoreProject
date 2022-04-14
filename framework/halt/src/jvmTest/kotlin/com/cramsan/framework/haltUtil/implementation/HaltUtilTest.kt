@@ -4,8 +4,8 @@ import com.cramsan.framework.halt.implementation.HaltUtilImpl
 import com.cramsan.framework.halt.implementation.HaltUtilJVM
 import com.cramsan.framework.test.TestBase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Test
 import kotlin.concurrent.thread
+import kotlin.test.Test
 
 /**
  */

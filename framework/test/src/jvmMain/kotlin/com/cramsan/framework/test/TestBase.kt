@@ -4,7 +4,7 @@ import io.mockk.MockKAnnotations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
-import org.junit.Rule
+import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.test.BeforeTest
 
 /**
@@ -14,7 +14,7 @@ import kotlin.test.BeforeTest
 @OptIn(ExperimentalCoroutinesApi::class)
 actual abstract class TestBase {
 
-    @get:Rule
+    @ExtendWith
     var testCoroutineRule: TestCoroutineRule = TestCoroutineRule()
 
     actual fun runBlockingTest(block: suspend TestScope.() -> Unit) = testCoroutineRule.runBlockingTest { block() }
