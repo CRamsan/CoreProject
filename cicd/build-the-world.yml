@@ -26,3 +26,12 @@ steps:
       publishJUnitResults: true
       testResultsFiles: '**/TEST-*.xml'
       tasks: 'release'
+  # Publish code coverage results
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'JaCoCo' # Available options: 'JaCoCo', 'Cobertura'
+      summaryFileLocation: '**/jacoco*.xml'
+      #pathToSources: # Optional
+      #reportDirectory: # Optional
+      #additionalCodeCoverageFiles: # Optional
+      failIfCoverageEmpty: false # Optional

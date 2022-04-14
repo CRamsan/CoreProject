@@ -11,6 +11,12 @@ apply from: "$rootDir/gradle/detekt.gradle"
 jacoco {
     toolVersion = versions_tools.Jacoco
 }
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.enabled = true
+    }
+}
 
 dependencies {
     implementation meta_packages.CoreJVM
