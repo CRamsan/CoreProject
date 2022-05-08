@@ -37,6 +37,11 @@ detekt {
     }
 }
 
+dependencies {
+    // TODO: Enable to reduce duplication with ktlintf
+    // detektPlugins(packages.DetektFormatting)
+}
+
 tasks.withType(io.gitlab.arturbosch.detekt.Detekt).configureEach {
     jvmTarget = versions_tools.JavaCompatibility
 }
