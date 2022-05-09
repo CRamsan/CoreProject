@@ -62,7 +62,7 @@ def versions_packages = [
     Hilt : '2.41',
     HiltAndroidX : "1.0.0",
     IOReactor : "1.1.5",
-    Jackson : "2.13.2.2",
+    Jackson : "2.13.2",
     JUnit : "4.13.2",
     JUnit5: "5.8.2",
     JetpackCompose : versions_tools.JetpackCompose,
