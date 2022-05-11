@@ -38,8 +38,8 @@ class EnemyBuilderBuilder {
             vision,
             health,
             priority,
-            enable
-        )
+            enable,
+        ),
     )
 }
 
@@ -57,8 +57,8 @@ class AllyBuilderBuilder {
             health,
             type,
             priority,
-            enable
-        )
+            enable,
+        ),
     )
 }
 
@@ -80,8 +80,8 @@ class PlaceableBuilderBuilder {
                 priority,
                 enabled,
                 group,
-                type
-            )
+                type,
+            ),
         )
     }
 }
@@ -138,7 +138,7 @@ class EntityBuildersBuilder {
 class EntityListBuilder(
     val enemyBuilders: Map<String, EntityBuilder>,
     val allyBuilders: Map<String, EntityBuilder>,
-    val placeableBuilders: Map<String, EntityBuilder>
+    val placeableBuilders: Map<String, EntityBuilder>,
 ) {
     private val entityList = mutableListOf<CharacterInterface>()
 

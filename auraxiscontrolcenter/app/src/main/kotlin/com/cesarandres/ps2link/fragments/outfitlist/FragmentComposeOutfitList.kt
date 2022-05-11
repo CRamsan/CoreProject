@@ -36,7 +36,7 @@ class FragmentComposeOutfitList : BaseComposePS2Fragment<OutfitListViewModel>() 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         setHasOptionsMenu(true)

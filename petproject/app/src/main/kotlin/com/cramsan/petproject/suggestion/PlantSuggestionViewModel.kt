@@ -26,7 +26,7 @@ import javax.inject.Inject
 class PlantSuggestionViewModel @Inject constructor(
     application: Application,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     /**
@@ -80,7 +80,8 @@ class PlantSuggestionViewModel @Inject constructor(
         logI("PlantSuggestionViewModel", "savePlant")
         viewModelScope.launch(Dispatchers.IO) {
             val suggestion =
-                "${observableText.value}: Cats:${observableSelectedCatToxicity.value?.name} - Dogs:${observableSelectedDogToxicity.value?.name}"
+                "${observableText.value}: Cats:${observableSelectedCatToxicity.value?.name} -" +
+                    " Dogs:${observableSelectedDogToxicity.value?.name}"
             // val feedback = Feedback(-1, FeedbackType.NEW_PLANT, suggestion, -1)
             logEvent("PlantSuggestionViewModel", "suggestion", mapOf("Data" to suggestion))
             viewModelScope.launch {

@@ -17,7 +17,7 @@ class RemoteConfigUploader(
     targetBucket: PublicReadOnlyBucket,
     payloadFile: File,
     scope: software.constructs.Construct,
-    id: String
+    id: String,
 ) : Construct(scope, id) {
 
     init {
@@ -27,10 +27,10 @@ class RemoteConfigUploader(
                 .exclude(
                     listOf(
                         "**",
-                        "!${payloadFile.name}"
-                    )
+                        "!${payloadFile.name}",
+                    ),
                 )
-                .build()
+                .build(),
         )
 
         BucketDeployment(
@@ -39,7 +39,7 @@ class RemoteConfigUploader(
             BucketDeploymentProps.builder()
                 .sources(listOf(asset))
                 .destinationBucket(targetBucket.bucket)
-                .build()
+                .build(),
         )
     }
 }

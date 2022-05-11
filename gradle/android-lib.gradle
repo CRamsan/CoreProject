@@ -3,7 +3,6 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
 apply plugin: "org.jetbrains.dokka"
 apply from: "$rootDir/gradle/jacoco-android.gradle"
-apply from: "$rootDir/gradle/ktlint.gradle"
 apply from: "$rootDir/gradle/detekt.gradle"
 
 android {
@@ -92,7 +91,6 @@ tasks.register("releaseAndroid") {
     group = 'build'
     description = 'Run all the steps to build a release artifact'
 
-    dependsOn 'ktlint' // Verifies the format
     dependsOn 'build' // Assembles and test this project
     dependsOn 'detekt' // Run the code analyzer
     dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results

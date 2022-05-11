@@ -19,7 +19,7 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
     private var database: PetProjectDB = PetProjectDB(
         sqlDriver,
         DescriptionAdapter = com.cramsan.petproject.db.Description.Adapter(AnimalTypeAdapter()),
-        ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter())
+        ToxicityAdapter = com.cramsan.petproject.db.Toxicity.Adapter(AnimalTypeAdapter(), ToxicityValueAdapter()),
     )
 
     override fun insertPlantEntry(plantId: Long?, scientificName: String, imageUrl: String) {
@@ -78,7 +78,13 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         }
     }
 
-    override fun insertToxicityEntry(toxicityId: Long?, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String) {
+    override fun insertToxicityEntry(
+        toxicityId: Long?,
+        isToxic: ToxicityValue,
+        plantId: Long,
+        animalType: AnimalType,
+        source: String,
+    ) {
         if (toxicityId != null) {
             database.toxicityQueries.insert(toxicityId, plantId, animalType, isToxic, source)
         } else {
@@ -92,7 +98,13 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         }
     }
 
-    override fun insertDescriptionEntry(descriptionId: Long?, plantId: Long, animalType: AnimalType, description: String, locale: String) {
+    override fun insertDescriptionEntry(
+        descriptionId: Long?,
+        plantId: Long,
+        animalType: AnimalType,
+        description: String,
+        locale: String,
+    ) {
         return database.descriptionQueries.insert(descriptionId, plantId, animalType, description, locale)
     }
 
@@ -157,7 +169,11 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
     }
 
     override fun getDescriptionEntry(plantId: Long, animalType: AnimalType, locale: String): Description? {
-        val result = database.descriptionQueries.getDescription(plantId, animalType, locale).executeAsOneOrNull() ?: return null
+        val result = database.descriptionQueries.getDescription(
+            plantId,
+            animalType,
+            locale,
+        ).executeAsOneOrNull() ?: return null
         return Description(result)
     }
 
@@ -172,21 +188,38 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
 
     override fun getCustomPlantEntriesFlow(
         animalType: AnimalType,
-        locale: String
+        locale: String,
     ): Flow<List<GetAllPlantsWithAnimalId>> {
         return if (animalType == AnimalType.ALL) {
-            database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(locale, Long.MAX_VALUE, 0).asFlow().mapToList().map { list ->
+            database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(
+                locale,
+                Long.MAX_VALUE,
+                0,
+            ).asFlow().mapToList().map { list ->
                 list.map { GetAllPlantsWithAnimalId(it) }
             }
         } else {
-            database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale, Long.MAX_VALUE, 0).asFlow().mapToList().map { list ->
+            database.customProjectionsQueries.getAllPlantsWithAnimalId(
+                animalType,
+                locale,
+                Long.MAX_VALUE,
+                0,
+            ).asFlow().mapToList().map { list ->
                 list.map { GetAllPlantsWithAnimalId(it) }
             }
         }
     }
 
-    override fun getCustomPlantEntry(plantId: Long, animalType: AnimalType, locale: String): GetPlantWithPlantIdAndAnimalId? {
-        val result = database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(animalType, plantId, locale).executeAsOneOrNull() ?: return null
+    override fun getCustomPlantEntry(
+        plantId: Long,
+        animalType: AnimalType,
+        locale: String,
+    ): GetPlantWithPlantIdAndAnimalId? {
+        val result = database.customProjectionsQueries.getPlantWithPlantIdAndAnimalId(
+            animalType,
+            plantId,
+            locale,
+        ).executeAsOneOrNull() ?: return null
         return GetPlantWithPlantIdAndAnimalId(result)
     }
 
@@ -194,13 +227,22 @@ class SQLDelightDAO(sqlDriver: SqlDriver) : ModelStorageDAO {
         animalType: AnimalType,
         locale: String,
         limit: Long,
-        offset: Long
+        offset: Long,
     ): List<GetAllPlantsWithAnimalId> {
         return if (animalType == AnimalType.ALL) {
-            val result = database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(locale, limit, offset).executeAsList()
+            val result = database.customProjectionsQueries.getAllPlantsWithAnimalIdAll(
+                locale,
+                limit,
+                offset,
+            ).executeAsList()
             result.map { GetAllPlantsWithAnimalId(it) }
         } else {
-            val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(animalType, locale, limit, offset).executeAsList()
+            val result = database.customProjectionsQueries.getAllPlantsWithAnimalId(
+                animalType,
+                locale,
+                limit,
+                offset,
+            ).executeAsList()
             result.map { GetAllPlantsWithAnimalId(it) }
         }
     }

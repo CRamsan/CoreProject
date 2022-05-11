@@ -33,7 +33,7 @@ fun ProfileItem(
 ) {
     SlimButton(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

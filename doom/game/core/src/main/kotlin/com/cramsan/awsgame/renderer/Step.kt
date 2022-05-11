@@ -7,5 +7,5 @@ data class Step(
     var distance: Double,
     val length: Double,
     var shading: Double,
-    var offset: Double
+    var offset: Double,
 )

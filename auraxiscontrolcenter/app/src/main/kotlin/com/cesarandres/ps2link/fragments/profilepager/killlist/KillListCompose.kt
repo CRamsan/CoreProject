@@ -26,7 +26,7 @@ fun KillListCompose(
         Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
-                onRefreshRequested = { eventHandler.onRefreshRequested() }
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             ) {
                 items(killList) {
                     KillItem(
@@ -41,7 +41,7 @@ fun KillListCompose(
                             it.characterId?.let { characterId ->
                                 eventHandler.onProfileSelected(characterId, it.namespace)
                             }
-                        }
+                        },
                     )
                 }
             }

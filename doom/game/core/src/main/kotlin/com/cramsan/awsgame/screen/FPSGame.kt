@@ -64,7 +64,12 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
 
         this.map = Map(32)
         this.controls = Controls()
-        this.camera = Camera(orthoCamera!!, orthoCamera!!.viewportWidth.toDouble(), Math.PI * 0.4, gameViewport as StretchViewport)
+        this.camera = Camera(
+            orthoCamera!!,
+            orthoCamera!!.viewportWidth.toDouble(),
+            Math.PI * 0.4,
+            gameViewport as StretchViewport,
+        )
 
         val sceneConfig = scene {
             player {
@@ -155,7 +160,15 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
         // val assert = AssertUtil(true, logger, haltUtil)
         val aiRepo = DummyAIRepoImpl(logger)
 
-        val entityManager = EntityManager(this.map.map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, this, logger, aiRepo)
+        val entityManager = EntityManager(
+            this.map.map,
+            sceneConfig.triggerList,
+            sceneConfig.eventList,
+            sceneConfig.itemList,
+            this,
+            logger,
+            aiRepo,
+        )
         scene = Scene(entityManager, sceneConfig, logger)
 
         this.player = Player(sceneConfig.player)
@@ -220,7 +233,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
     override fun onInteractionRequired(
         text: String,
         options: List<InteractiveEventOption>,
-        eventReceiver: EntityManagerInteractionReceiver
+        eventReceiver: EntityManagerInteractionReceiver,
     ) {
         val newPane = UIToolKit.createTextPane(this.mySkin!!, text, options, eventReceiver)
         stage!!.addActor(newPane)

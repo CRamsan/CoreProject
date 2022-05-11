@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class RedditResponse(
-    val data: Data
+    val data: Data,
 )

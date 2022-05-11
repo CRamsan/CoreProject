@@ -73,20 +73,20 @@ fun ProfileCompose(
     FrameBottom {
         SwipeToRefreshColumn(
             isLoading = isLoading,
-            onRefreshRequested = { eventHandler.onRefreshRequested() }
+            onRefreshRequested = { eventHandler.onRefreshRequested() },
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Top Faction icon
                 FactionIcon(
                     modifier = Modifier.size(Size.xxlarge),
-                    faction = faction ?: Faction.UNKNOWN
+                    faction = faction ?: Faction.UNKNOWN,
                 )
 
                 ErrorOverlay(
                     modifier = Modifier.wrapContentHeight(),
-                    isError = isError
+                    isError = isError,
                 )
 
                 val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)
@@ -99,7 +99,7 @@ fun ProfileCompose(
                             BR(level = br ?: 0)
                             BRBar(
                                 modifier = Modifier.weight(1f),
-                                percentageToNextLevel = percentToNextBR ?: 0f
+                                percentageToNextLevel = percentToNextBR ?: 0f,
                             )
                             BR(level = (br ?: 0) + 1, enabled = false)
                         }
@@ -132,7 +132,7 @@ fun ProfileCompose(
                     Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
                         CertBar(
                             modifier = Modifier.weight(1f),
-                            percentageToNextCert = percentToNextCert ?: 0f
+                            percentageToNextCert = percentToNextCert ?: 0f,
                         )
                         Cert(certs ?: 0)
                     }
@@ -147,7 +147,7 @@ fun ProfileCompose(
                                 Text(text = stringResource(R.string.text_status))
                                 Text(
                                     text = (loginStatus ?: LoginStatus.UNKNOWN).toStringResource(),
-                                    color = loginStatus.toColor()
+                                    color = loginStatus.toColor(),
                                 )
                             }
                         }
@@ -174,7 +174,7 @@ fun ProfileCompose(
                                         outfit?.let {
                                             eventHandler.onOutfitSelected(it.id, it.namespace)
                                         }
-                                    }
+                                    },
                                 ) {
                                     Text(text = outfit?.name ?: stringResource(R.string.text_none))
                                 }
@@ -195,7 +195,7 @@ fun ProfileCompose(
                                 Text(text = stringResource(R.string.text_hours_played))
                                 Text(
                                     text = timePlayed?.toDouble(DurationUnit.HOURS)?.roundToInt()
-                                        ?.toString() ?: stringResource(R.string.text_unknown)
+                                        ?.toString() ?: stringResource(R.string.text_unknown),
                                 )
                             }
                         }

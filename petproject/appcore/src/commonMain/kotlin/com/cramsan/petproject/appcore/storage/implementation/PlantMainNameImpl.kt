@@ -9,5 +9,5 @@ data class PlantMainNameImpl(
     override val id: Long,
     override val mainName: String,
     override val plantId: Long,
-    override val locale: String
+    override val locale: String,
 ) : PlantMainName

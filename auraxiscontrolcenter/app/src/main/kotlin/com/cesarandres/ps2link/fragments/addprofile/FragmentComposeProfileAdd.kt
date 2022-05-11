@@ -26,7 +26,7 @@ class FragmentComposeProfileAdd : BaseComposePS2Fragment<ProfileAddViewModel>() 
             profileItems = profileList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 }

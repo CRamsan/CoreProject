@@ -27,7 +27,7 @@ fun FactionIcon(
     Image(
         modifier = modifier,
         painter = painterResource(id = resourceId),
-        contentDescription = null
+        contentDescription = null,
     )
 }
 

@@ -9,7 +9,7 @@ import com.cramsan.awslib.utils.constants.InitialValues
 class Player(
     posX: Int,
     posY: Int,
-    speed: Int
+    speed: Int,
 ) :
     Character(
         InitialValues.PLAYER_ID,
@@ -19,7 +19,7 @@ class Player(
         posY,
         speed,
         true,
-        true
+        true,
     ) {
     val equipableItemList = mutableListOf<EquippableItem>()
     val keyItemList = mutableListOf<KeyItem>()

@@ -2,30 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:Map.kt$Map$x &lt; 0 || x > this.size - 1 || y &lt; 0 || y > this.size - 1</ID>
-    <ID>EmptyFunctionBlock:AudioManager.kt$AudioManager${}</ID>
-    <ID>EmptyFunctionBlock:BaseScreen.kt$BaseScreen${}</ID>
-    <ID>EmptyFunctionBlock:CallbackManager.kt$CallbackManager${}</ID>
-    <ID>EmptyFunctionBlock:GameScreen.kt$GameScreen${}</ID>
-    <ID>EmptyFunctionBlock:MainMenuScreen.kt$MainMenuScreen${ }</ID>
-    <ID>EmptyFunctionBlock:MainMenuScreen.kt$MainMenuScreen${}</ID>
-    <ID>EmptyFunctionBlock:SplashScreen.kt$SplashScreen${ }</ID>
-    <ID>EmptyFunctionBlock:SplashScreen.kt$SplashScreen${}</ID>
-    <ID>FunctionNaming:AudioManager.kt$AudioManager$fun PlayMusic()</ID>
-    <ID>FunctionNaming:AudioManager.kt$AudioManager$fun PlaySound(sound: SOUND?)</ID>
-    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnGameClose()</ID>
-    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnGameLoad()</ID>
-    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnScreenClose()</ID>
-    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnScreenLoad()</ID>
-    <ID>LongMethod:FPSGame.kt$FPSGame$override fun screenInit()</ID>
-    <ID>LongMethod:Player.kt$Player$fun update(delta: Float, gameInput: GameInput)</ID>
-    <ID>MemberNameEqualsClassName:Map.kt$Map$var map: GameMap</ID>
-    <ID>TooGenericExceptionThrown:CallbackManager.kt$CallbackManager.ExecutionBlockEvent$throw RuntimeException("Other object is not of type " + this.javaClass)</ID>
-    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("Game already set")</ID>
-    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("Game parameter is null")</ID>
-    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("Game was not set")</ID>
-    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("GameParameterManager already set and cannot be overridden")</ID>
-    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("GameParameterManager not provided.")</ID>
     <ID>UndocumentedPublicClass:AudioManager.kt$AudioManager$MUSIC</ID>
     <ID>UndocumentedPublicClass:AudioManager.kt$AudioManager$SOUND</ID>
     <ID>UndocumentedPublicClass:CallbackManager.kt$CallbackManager : IGameSubsystem</ID>
@@ -66,7 +42,7 @@
     <ID>UndocumentedPublicFunction:Map.kt$Map$fun cast(point: Point, angle: Double, range: Double): Ray</ID>
     <ID>UndocumentedPublicFunction:Map.kt$Map$fun update()</ID>
     <ID>UndocumentedPublicFunction:Map.kt$Map$operator fun get(px: Double, py: Double): Cell?</ID>
-    <ID>UndocumentedPublicFunction:MyGdxGame.kt$MyGdxGame$fun setScreen( newScreen: BaseScreen, isInitialLoad: Boolean )</ID>
+    <ID>UndocumentedPublicFunction:MyGdxGame.kt$MyGdxGame$fun setScreen( newScreen: BaseScreen, isInitialLoad: Boolean, )</ID>
     <ID>UndocumentedPublicFunction:MyGdxGame.kt$MyGdxGame$fun setScreen(newScreen: BaseScreen)</ID>
     <ID>UndocumentedPublicFunction:Player.kt$Player$fun angle(): Double</ID>
     <ID>UndocumentedPublicFunction:Player.kt$Player$fun direction(): Direction</ID>
@@ -78,43 +54,7 @@
     <ID>UndocumentedPublicFunction:SceneManager.kt$SceneManager$fun getGame(): MyGdxGame?</ID>
     <ID>UndocumentedPublicFunction:SceneManager.kt$SceneManager$fun setGame(game: MyGdxGame?)</ID>
     <ID>UndocumentedPublicFunction:SplashScreen.kt$SplashScreen.IResourcesLoaded$fun onResourcesLoaded()</ID>
-    <ID>UndocumentedPublicFunction:UIToolKit.kt$UIToolKit$@OptIn(DelicateCoroutinesApi::class) fun createTextPane( skin: Skin, text: String, options: List&lt;InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver ): Actor</ID>
+    <ID>UndocumentedPublicFunction:UIToolKit.kt$UIToolKit$@OptIn(DelicateCoroutinesApi::class) fun createTextPane( skin: Skin, text: String, options: List&lt;InteractiveEventOption>, eventReceiver: EntityManagerInteractionReceiver, ): Actor</ID>
     <ID>UndocumentedPublicFunction:UIToolKit.kt$UIToolKit$fun createNavigationMenu(skin: Skin): Actor</ID>
-    <ID>UndocumentedPublicProperty:BaseScreen.kt$BaseScreen$val cam: OrthographicCamera</ID>
-    <ID>UndocumentedPublicProperty:BaseScreen.kt$BaseScreen$val viewport: Viewport</ID>
-    <ID>UndocumentedPublicProperty:BaseScreen.kt$BaseScreen$var audioManager: AudioManager? = null</ID>
-    <ID>UndocumentedPublicProperty:BaseScreen.kt$BaseScreen$var callbackManager: CallbackManager</ID>
-    <ID>UndocumentedPublicProperty:Direction.kt$Direction$val direction: com.cramsan.awslib.enums.Direction</ID>
-    <ID>UndocumentedPublicProperty:Map.kt$Map$var light: Double = 0.toDouble()</ID>
-    <ID>UndocumentedPublicProperty:Map.kt$Map$var map: GameMap</ID>
-    <ID>UndocumentedPublicProperty:Map.kt$Map$var skybox: Texture</ID>
-    <ID>UndocumentedPublicProperty:Map.kt$Map$var wallTexture: Texture</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$// Game subsystems. All this classes implement IGameSubsystem to make them easier to // manage and mock. var audioManager: AudioManager? = null</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$var callbackManager: CallbackManager? = null</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$var isEnableGame = true</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$var isEnableRender = true</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$var isSkipSplashScreen = false</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$var isUseFixedStep = true</ID>
-    <ID>UndocumentedPublicProperty:MyGdxGame.kt$MyGdxGame$var spriteBatch: SpriteBatch? = null</ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$var isAttacking = false</ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$var move: com.cramsan.awslib.enums.Direction? = null</ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$var paces: Double = 0.0</ID>
-    <ID>UndocumentedPublicProperty:Player.kt$Player$var weapon: Texture = Texture(Gdx.files.internal("knife_hand.png"))</ID>
-    <ID>UndocumentedPublicProperty:Point.kt$Point$val x: Double</ID>
-    <ID>UndocumentedPublicProperty:Point.kt$Point$val y: Double</ID>
-    <ID>UndocumentedPublicProperty:Projection.kt$Projection$val height: Double</ID>
-    <ID>UndocumentedPublicProperty:Projection.kt$Projection$val top: Double</ID>
-    <ID>UndocumentedPublicProperty:Ray.kt$Ray$var cos: Double</ID>
-    <ID>UndocumentedPublicProperty:Ray.kt$Ray$var map: Map</ID>
-    <ID>UndocumentedPublicProperty:Ray.kt$Ray$var sin: Double</ID>
-    <ID>UndocumentedPublicProperty:Ray.kt$Ray$var steps: MutableList&lt;Step> = mutableListOf()</ID>
-    <ID>UndocumentedPublicProperty:SplashScreen.kt$SplashScreen$var isLoadCompleted = false</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$val length: Double</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$val x: Double</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$val y: Double</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$var distance: Double</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$var height: Double</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$var offset: Double</ID>
-    <ID>UndocumentedPublicProperty:Step.kt$Step$var shading: Double</ID>
   </CurrentIssues>
 </SmellBaseline>

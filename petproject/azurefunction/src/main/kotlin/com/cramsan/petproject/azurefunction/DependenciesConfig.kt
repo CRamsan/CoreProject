@@ -92,12 +92,12 @@ class DependenciesConfig {
             throw UnsupportedOperationException("Path for sqlite is null")
         }
         val modelStorageDAO = ModelStorageJdbcProvider(
-            dbPath
+            dbPath,
         ).provide()
         ModelStorage(
             modelStorageDAO,
             eventLogger,
-            threadUtil
+            threadUtil,
         )
     }
 

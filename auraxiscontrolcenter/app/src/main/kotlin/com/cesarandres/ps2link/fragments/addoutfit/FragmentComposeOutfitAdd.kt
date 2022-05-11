@@ -28,7 +28,7 @@ class FragmentComposeOutfitAdd : BaseComposePS2Fragment<OutfitAddViewModel>() {
             outfitItems = profileList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 }

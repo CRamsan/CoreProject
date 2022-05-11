@@ -82,7 +82,7 @@ class HttpClient(
             HttpNamespace,
             url.urlIdentifier.name,
             value = latency.toDouble(DurationUnit.MILLISECONDS),
-            unit = MetricUnit.MILLIS
+            unit = MetricUnit.MILLIS,
         )
 
         return response

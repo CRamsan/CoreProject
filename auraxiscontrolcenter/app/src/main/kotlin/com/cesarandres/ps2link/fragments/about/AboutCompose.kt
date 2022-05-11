@@ -48,7 +48,7 @@ fun AboutCompose(
             FrameSlim(
                 modifier = Modifier.clickable {
                     eventHandler.onAboutClick()
-                }
+                },
             ) {
                 Text(
                     text = stringResource(R.string.url_homepage),
@@ -82,6 +82,6 @@ fun AboutPreview() {
     AboutCompose(
         eventHandler = object : AboutEventHandler {
             override fun onAboutClick() = Unit
-        }
+        },
     )
 }

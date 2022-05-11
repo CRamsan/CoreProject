@@ -7,5 +7,5 @@ val defaultConfigPayload = RemoteConfigData(
     listOf(
         "planetside2",
         "WrelPlays",
-    )
+    ),
 )

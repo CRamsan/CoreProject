@@ -106,7 +106,11 @@ class SQLDelightDAO(
     }
 
     override fun getAllCharactersAsFlow(): Flow<List<Character>> {
-        return database.characterQueries.getAllCharacters().asFlow().mapToList().map { list -> list.map { character -> character.toCoreModel() } }
+        return database.characterQueries.getAllCharacters().asFlow().mapToList().map { list ->
+            list.map { character ->
+                character.toCoreModel()
+            }
+        }
     }
 
     override fun removeCharacter(
@@ -131,9 +135,10 @@ class SQLDelightDAO(
 
     override fun getCharacterAsFlow(
         characterId: String,
-        namespace: Namespace
+        namespace: Namespace,
     ): Flow<Character?> {
-        return database.characterQueries.getCharacter(characterId, namespace.toDBModel()).asFlow().mapToOneOrNull().map { it?.toCoreModel() }
+        return database.characterQueries.getCharacter(characterId, namespace.toDBModel()).asFlow()
+            .mapToOneOrNull().map { it?.toCoreModel() }
     }
 
     override fun getCharacters(): List<Character> {
@@ -159,7 +164,11 @@ class SQLDelightDAO(
     }
 
     override fun getOutfitAsFlow(outfitId: String, namespace: Namespace): Flow<Outfit?> {
-        return database.outfitQueries.getOutfit(outfitId, namespace.toDBModel()).asFlow().mapToOneOrNull().map { it?.toCoreModel(null) }
+        return database.outfitQueries.getOutfit(outfitId, namespace.toDBModel()).asFlow().mapToOneOrNull().map {
+            it?.toCoreModel(
+                null,
+            )
+        }
     }
 
     override fun getAllOutfits(): List<Outfit> {
@@ -168,7 +177,13 @@ class SQLDelightDAO(
     }
 
     override fun getAllOutfitsAsFlow(): Flow<List<Outfit>> {
-        return database.outfitQueries.getAllOutfits().asFlow().mapToList().map { list -> list.map { outfit -> outfit.toCoreModel(null) } }
+        return database.outfitQueries.getAllOutfits().asFlow().mapToList().map { list ->
+            list.map { outfit ->
+                outfit.toCoreModel(
+                    null,
+                )
+            }
+        }
     }
 
     override fun insertOutfit(
@@ -305,7 +320,7 @@ private fun com.cramsan.ps2link.db.Character.toCoreModel(): Character {
             worldId = it,
             serverName = worldName,
             namespace = namespace.toCoreModel(),
-            serverMetadata = null
+            serverMetadata = null,
         )
     }
 

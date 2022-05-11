@@ -11,5 +11,5 @@ data class DescriptionImpl(
     override val plantId: Long,
     override val animalId: AnimalType,
     override val locale: String,
-    override val description: String
+    override val description: String,
 ) : Description

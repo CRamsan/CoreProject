@@ -65,20 +65,21 @@ object PS2LinkApp {
                     .period(Duration.hours(6))
                     .dimensionsMap(
                         mapOf(
-                            "IDENTIFIER" to ApplicationNamespace.Event.LAUNCH.name
-                        )
+                            "IDENTIFIER" to ApplicationNamespace.Event.LAUNCH.name,
+                        ),
                     )
-                    .build()
+                    .build(),
             )
             Alarm(
-                this, "LaunchUnderflow",
+                this,
+                "LaunchUnderflow",
                 AlarmProps.builder()
                     .metric(launchMetric)
                     .comparisonOperator(ComparisonOperator.LESS_THAN_THRESHOLD)
                     .threshold(4.0)
                     .evaluationPeriods(3)
                     .datapointsToAlarm(2)
-                    .build()
+                    .build(),
             ).apply {
                 addAlarmAction(SnsAction(emailTopic))
             }
@@ -91,21 +92,22 @@ object PS2LinkApp {
                     .period(Duration.hours(6))
                     .dimensionsMap(
                         mapOf(
-                            "IDENTIFIER" to ApplicationNamespace.Event.LAUNCH.name
-                        )
+                            "IDENTIFIER" to ApplicationNamespace.Event.LAUNCH.name,
+                        ),
                     )
-                    .build()
+                    .build(),
             )
 
             Alarm(
-                this, "LaunchCrash",
+                this,
+                "LaunchCrash",
                 AlarmProps.builder()
                     .metric(crashMetric)
                     .comparisonOperator(ComparisonOperator.GREATER_THAN_THRESHOLD)
                     .threshold(4.0)
                     .evaluationPeriods(1)
                     .datapointsToAlarm(1)
-                    .build()
+                    .build(),
             ).apply {
                 addAlarmAction(SnsAction(emailTopic))
             }

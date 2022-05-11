@@ -5,7 +5,7 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 
 class PS2SettingsImpl(
-    val preferences: Preferences
+    val preferences: Preferences,
 ) : PS2Settings {
     override suspend fun updatePreferredCharacterId(characterId: String?) {
         preferences.saveString(PREFERRED_CHARACTER_ID, characterId)

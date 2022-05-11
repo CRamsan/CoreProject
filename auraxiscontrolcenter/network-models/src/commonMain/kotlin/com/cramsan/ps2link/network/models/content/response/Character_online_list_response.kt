@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Character_online_list_response(
-    val characters_online_status_list: List<CharacterProfile>
+    val characters_online_status_list: List<CharacterProfile>,
 )

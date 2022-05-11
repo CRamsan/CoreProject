@@ -22,5 +22,5 @@ open class Placeable(
         posY,
         priority,
         enabled,
-        false
+        false,
     )

@@ -11,7 +11,7 @@ class EquippableItemBuilder(
     private val range: Int,
     private val accuracy: Double,
     private val damage: Double,
-    private val type: EquippableType
+    private val type: EquippableType,
 ) : EntityBuilder(templateName) {
 
     fun build(entityId: String, posX: Int, posY: Int) =

@@ -37,13 +37,13 @@ class MainMenuViewModel @Inject constructor(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
     application,
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     MainMenuEventHandler {
 
@@ -77,7 +77,7 @@ class MainMenuViewModel @Inject constructor(
                     prestige = null,
                     cached = false,
                     namespace = namespace,
-                )
+                ),
             )
             // TODO: Fix wrong language
             val response = pS2LinkRepository.getCharacter(profileId, namespace, getCurrentLang())

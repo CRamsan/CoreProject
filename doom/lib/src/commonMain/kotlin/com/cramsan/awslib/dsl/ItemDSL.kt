@@ -18,8 +18,8 @@ class ConsumableItemBuilderBuilder {
         id to ConsumableItemBuilder(
             id,
             type,
-            ammount
-        )
+            ammount,
+        ),
     )
 }
 
@@ -36,8 +36,8 @@ class EquippableItemBuilderBuilder {
             range,
             accuracy,
             damage,
-            type
-        )
+            type,
+        ),
     )
 }
 
@@ -48,7 +48,7 @@ class KeyItemBuilderBuilder {
     internal fun build() = mapOf(
         id to KeyItemBuilder(
             id,
-        )
+        ),
     )
 }
 
@@ -99,7 +99,7 @@ class ItemBuildersBuilder {
 class ItemListBuilder(
     val consumableBuilders: Map<String, EntityBuilder>,
     val equippableBuilders: Map<String, EntityBuilder>,
-    val keyItemBuilders: Map<String, EntityBuilder>
+    val keyItemBuilders: Map<String, EntityBuilder>,
 ) {
     private val itemList = mutableListOf<ItemInterface>()
 

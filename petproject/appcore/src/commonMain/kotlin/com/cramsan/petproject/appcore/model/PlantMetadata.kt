@@ -24,5 +24,5 @@ class PlantMetadata(
     /**
      * Url that should point to the source where this information was retrieved.
      */
-    val source: String
+    val source: String,
 )

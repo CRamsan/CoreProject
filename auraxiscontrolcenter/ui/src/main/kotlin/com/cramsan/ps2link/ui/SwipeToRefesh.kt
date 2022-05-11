@@ -37,11 +37,11 @@ fun SwipeToRefresh(
                 backgroundColor = MaterialTheme.colors.primary,
                 shape = CircleShape,
             )
-        }
+        },
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            content = content
+            content = content,
         )
     }
 }
@@ -51,7 +51,7 @@ fun SwipeToRefreshColumn(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     onRefreshRequested: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     SwipeRefresh(
         modifier = modifier.fillMaxSize(),
@@ -68,11 +68,11 @@ fun SwipeToRefreshColumn(
                 backgroundColor = MaterialTheme.colors.primary,
                 shape = CircleShape,
             )
-        }
+        },
     ) {
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-            content = content
+            content = content,
         )
     }
 }

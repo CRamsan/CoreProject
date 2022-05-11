@@ -23,7 +23,7 @@ open class Ally(
         posY,
         priority,
         enabled,
-        false
+        false,
     ) {
 
     override var attack = InitialValues.ATTACK_DOCTOR

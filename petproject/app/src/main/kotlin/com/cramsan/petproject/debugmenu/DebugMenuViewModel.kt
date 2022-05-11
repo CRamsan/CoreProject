@@ -22,7 +22,7 @@ class DebugMenuViewModel @Inject constructor(
     application: Application,
     dispatcherProvider: DispatcherProvider,
     private val modelProvider: ModelProviderInterface,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     override val logTag: String

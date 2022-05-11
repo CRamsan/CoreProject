@@ -18,7 +18,7 @@ open class Enemy(
     var damage: Double,
     var accuracy: Double,
     var move: Int,
-    val vision: Int
+    val vision: Int,
 ) :
     Character(
         id,
@@ -28,7 +28,7 @@ open class Enemy(
         posY,
         priority,
         enabled,
-        true
+        true,
     ) {
 
     override var attack = InitialValues.ATTACK_DOG

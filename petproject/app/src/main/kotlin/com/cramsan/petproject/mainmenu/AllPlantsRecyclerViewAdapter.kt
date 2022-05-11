@@ -80,7 +80,9 @@ class AllPlantsRecyclerViewAdapter(
         when (item.isToxic) {
             ToxicityValue.TOXIC -> targetAnimalView.setBackgroundResource(R.drawable.plant_view_item_danger)
             ToxicityValue.NON_TOXIC -> targetAnimalView.setBackgroundResource(R.drawable.plant_view_item_safe)
-            ToxicityValue.UNDETERMINED -> targetAnimalView.setBackgroundResource(R.drawable.plant_view_item_undetermined)
+            ToxicityValue.UNDETERMINED -> targetAnimalView.setBackgroundResource(
+                R.drawable.plant_view_item_undetermined,
+            )
         }
 
         with(holder.mView) {
@@ -98,7 +100,7 @@ class AllPlantsRecyclerViewAdapter(
         /**
          * View that is tied to this holder.
          */
-        val mView: View
+        val mView: View,
     ) : RecyclerView.ViewHolder(mView) {
         /**
          * Reference to the header text.

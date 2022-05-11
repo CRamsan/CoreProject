@@ -19,7 +19,7 @@ class AllyBuilder(
         posX: Int,
         posY: Int,
         priority: Int?,
-        enabled: Boolean?
+        enabled: Boolean?,
     ): Ally {
         return Ally(
             entityId,
@@ -28,7 +28,7 @@ class AllyBuilder(
             posY,
             priority ?: this.priority,
             enabled ?: this.enabled,
-            allyType
+            allyType,
         )
     }
 }

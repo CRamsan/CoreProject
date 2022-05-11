@@ -30,7 +30,7 @@ class PlantDetailsViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
     override val logTag: String

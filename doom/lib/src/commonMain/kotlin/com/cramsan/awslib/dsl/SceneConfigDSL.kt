@@ -21,7 +21,7 @@ class PlayerBuilder {
     internal fun build() = Player(
         posX,
         posY,
-        speed
+        speed,
     )
 }
 

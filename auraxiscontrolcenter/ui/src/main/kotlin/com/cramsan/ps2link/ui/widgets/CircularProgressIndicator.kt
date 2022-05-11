@@ -42,7 +42,7 @@ fun CustomCircularProgressIndicator(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.primary,
     diameter: Dp = CircularIndicatorDiameter,
-    strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth
+    strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth,
 ) {
     val stroke = with(LocalDensity.current) {
         Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Square)
@@ -57,9 +57,9 @@ fun CustomCircularProgressIndicator(
         infiniteRepeatable(
             animation = tween(
                 durationMillis = RotationDuration * RotationsPerCycle,
-                easing = LinearEasing
-            )
-        )
+                easing = LinearEasing,
+            ),
+        ),
     )
     // How far forward (degrees) the base point should be from the start point
     val baseRotation by transition.animateFloat(
@@ -68,9 +68,9 @@ fun CustomCircularProgressIndicator(
         infiniteRepeatable(
             animation = tween(
                 durationMillis = RotationDuration,
-                easing = LinearEasing
-            )
-        )
+                easing = LinearEasing,
+            ),
+        ),
     )
     // How far forward (degrees) both the head and tail should be from the base point
     val endAngle by transition.animateFloat(
@@ -81,8 +81,8 @@ fun CustomCircularProgressIndicator(
                 durationMillis = HeadAndTailAnimationDuration + HeadAndTailDelayDuration
                 0f at 0 with CircularEasing
                 JumpRotationAngle at HeadAndTailAnimationDuration
-            }
-        )
+            },
+        ),
     )
 
     val startAngle by transition.animateFloat(
@@ -93,14 +93,14 @@ fun CustomCircularProgressIndicator(
                 durationMillis = HeadAndTailAnimationDuration + HeadAndTailDelayDuration
                 0f at HeadAndTailDelayDuration with CircularEasing
                 JumpRotationAngle at durationMillis
-            }
-        )
+            },
+        ),
     )
     Canvas(
         modifier
             .progressSemantics()
             .size(diameter)
-            .focusable()
+            .focusable(),
     ) {
 
         val currentRotationAngleOffset = (currentRotation * RotationAngleOffset) % 360f
@@ -143,7 +143,7 @@ private fun DrawScope.drawCircularIndicator(
     startAngle: Float,
     sweep: Float,
     color: Color,
-    stroke: Stroke
+    stroke: Stroke,
 ) {
     // To draw this circle we need a rect with edges that line up with the midpoint of the stroke.
     // To do this we need to remove half the stroke width from the total diameter for both sides.
@@ -156,7 +156,7 @@ private fun DrawScope.drawCircularIndicator(
         useCenter = false,
         topLeft = Offset(diameterOffset, diameterOffset),
         size = Size(arcDimen, arcDimen),
-        style = stroke
+        style = stroke,
     )
 }
 

@@ -35,7 +35,7 @@ class FragmentComposeKillList : BaseComposePS2Fragment<KillListViewModel>() {
             killList = killList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 

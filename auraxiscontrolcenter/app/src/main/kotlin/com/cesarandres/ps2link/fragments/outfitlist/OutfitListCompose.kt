@@ -23,7 +23,7 @@ fun OutfitListCompose(
                     tag = it.tag,
                     memberCount = it.memberCount,
                     namespace = it.namespace,
-                    onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) }
+                    onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) },
                 )
             }
         }
@@ -42,6 +42,6 @@ fun OutfitListComposePreview() {
         outfitItems = emptyList(),
         eventHandler = object : OutfitListEventHandler {
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
-        }
+        },
     )
 }

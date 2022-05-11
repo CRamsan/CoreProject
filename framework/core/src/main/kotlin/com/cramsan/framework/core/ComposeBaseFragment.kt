@@ -27,7 +27,7 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : BaseFragment() {
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         viewModel.events().observe(
-            viewLifecycleOwner
+            viewLifecycleOwner,
         ) {
             it?.let {
                 onViewModelEvent(it)

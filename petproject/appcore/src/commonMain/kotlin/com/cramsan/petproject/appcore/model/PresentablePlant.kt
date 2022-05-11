@@ -23,5 +23,5 @@ class PresentablePlant(
     /**
      * Toxicity value.
      */
-    val isToxic: ToxicityValue
+    val isToxic: ToxicityValue,
 )

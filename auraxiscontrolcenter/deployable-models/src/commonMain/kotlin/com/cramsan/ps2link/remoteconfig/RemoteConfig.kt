@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 data class RemoteConfigData(
-    val twitterUsernames: List<String>
+    val twitterUsernames: List<String>,
 )
 
 val remoteConfigJson = Json {

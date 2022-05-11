@@ -15,7 +15,9 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 
 detekt {
     // For more information: https://detekt.github.io/detekt/gradle.html
-    buildUponDefaultConfig = true // preconfigure defaults
+    // buildUponDefaultConfig = true // preconfigure defaults
+    // allRules = true
+    autoCorrect = true
 
     def localConfigFile = file("$projectDir/config/detekt-config.yml")
     def globalConfigFile = file("$rootDir/config/detekt-config.yml")
@@ -35,11 +37,10 @@ detekt {
         // a way of suppressing issues before introducing detekt
         baseline = baselineFile
     }
-}
 
-dependencies {
-    // TODO: Enable to reduce duplication with ktlintf
-    // detektPlugins(packages.DetektFormatting)
+    dependencies {
+        detektPlugins(packages.DetektFormatting)
+    }
 }
 
 tasks.withType(io.gitlab.arturbosch.detekt.Detekt).configureEach {

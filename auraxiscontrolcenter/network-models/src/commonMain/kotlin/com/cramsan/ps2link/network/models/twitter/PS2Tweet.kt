@@ -54,7 +54,15 @@ class PS2Tweet : Comparable<PS2Tweet> {
      * @param tag tag or alias of the user
      * @param imgUrl url to retrieve the image of the user
      */
-    constructor(id: String, user: String, date: Long, content: String, tag: String, imgUrl: String, sourceUrl: String?) {
+    constructor(
+        id: String,
+        user: String,
+        date: Long,
+        content: String,
+        tag: String,
+        imgUrl: String,
+        sourceUrl: String?,
+    ) {
         this.user = user
         this.date = date
         this.content = content

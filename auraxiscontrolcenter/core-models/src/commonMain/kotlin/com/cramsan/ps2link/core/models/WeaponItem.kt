@@ -10,5 +10,5 @@ data class WeaponItem(
     val vehicleName: String? = null,
     val weaponImage: String? = null,
     val statMapping: Map<WeaponEventType, WeaponStatItem> = hashMapOf(),
-    val medalType: MedalType? = MedalType.NONE
+    val medalType: MedalType? = MedalType.NONE,
 )

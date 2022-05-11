@@ -8,7 +8,7 @@ import com.cramsan.framework.logging.EventLoggerInterface
 class Scene(
     private val entityManager: EntityManager,
     private val sceneConfig: SceneConfig,
-    private val log: EventLoggerInterface
+    private val log: EventLoggerInterface,
 ) {
 
     private val mainPlayer = sceneConfig.player

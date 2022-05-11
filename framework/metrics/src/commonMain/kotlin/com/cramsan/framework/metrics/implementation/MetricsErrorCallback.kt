@@ -38,7 +38,7 @@ class MetricsErrorCallback(
                         Severity.ERROR,
                         TAG,
                         "MetricsErrorCallback was called for an event of severity $severity",
-                        null
+                        null,
                     )
                     dispatchBatch()
                 }
@@ -64,7 +64,7 @@ class MetricsErrorCallback(
                 MetricType.EVENT,
                 MetricsErrorNamespace,
                 Severity.WARNING.name,
-                value = warningCount
+                value = warningCount,
             )
             warningCount = 0.0
         }
@@ -73,7 +73,7 @@ class MetricsErrorCallback(
                 MetricType.EVENT,
                 MetricsErrorNamespace,
                 Severity.ERROR.name,
-                value = errorCount
+                value = errorCount,
             )
             errorCount = 0.0
         }

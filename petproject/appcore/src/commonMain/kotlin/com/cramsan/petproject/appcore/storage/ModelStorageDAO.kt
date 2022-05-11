@@ -54,7 +54,13 @@ interface ModelStorageDAO {
     /**
      * Insert a [Toxicity] using the provided parameters.
      */
-    fun insertToxicityEntry(toxicityId: Long?, isToxic: ToxicityValue, plantId: Long, animalType: AnimalType, source: String)
+    fun insertToxicityEntry(
+        toxicityId: Long?,
+        isToxic: ToxicityValue,
+        plantId: Long,
+        animalType: AnimalType,
+        source: String,
+    )
 
     /**
      * Insert a list of [Toxicity].
@@ -64,7 +70,13 @@ interface ModelStorageDAO {
     /**
      * Insert a [Toxicity] using the provided parameters.
      */
-    fun insertDescriptionEntry(descriptionId: Long?, plantId: Long, animalType: AnimalType, description: String, locale: String)
+    fun insertDescriptionEntry(
+        descriptionId: Long?,
+        plantId: Long,
+        animalType: AnimalType,
+        description: String,
+        locale: String,
+    )
 
     /**
      * Insert a list of [Description].
@@ -158,7 +170,7 @@ interface ModelStorageDAO {
         animalType: AnimalType,
         locale: String,
         limit: Long,
-        offset: Long
+        offset: Long,
     ): List<GetAllPlantsWithAnimalId>
 
     /**

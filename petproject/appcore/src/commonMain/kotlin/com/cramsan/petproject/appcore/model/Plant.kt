@@ -15,11 +15,11 @@ class Plant(
     /**
      * The scientific family that this plant belongs to.
      */
-    val family: String
+    val family: String,
 ) :
     Item(
         id,
         scientificName,
         commonNames,
-        imageUrl
+        imageUrl,
     )

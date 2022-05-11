@@ -27,14 +27,14 @@ fun ServerListCompose(
         Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
-                onRefreshRequested = { eventHandler.onRefreshRequested() }
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             ) {
                 items(serverItems) {
                     ServerItem(
                         serverName = it.serverName ?: "",
                         population = it.serverMetadata?.population ?: Population.UNKNOWN,
                         status = it.serverMetadata?.status ?: ServerStatus.UNKNOWN,
-                        namespace = it.namespace
+                        namespace = it.namespace,
                     )
                 }
             }
@@ -58,7 +58,7 @@ fun ServerListPreview() {
             isError = true,
             eventHandler = object : ServerListEventHandler {
                 override fun onRefreshRequested() = Unit
-            }
+            },
         )
     }
 }

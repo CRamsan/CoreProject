@@ -4,6 +4,6 @@ abstract class NonInteractiveEvent(
     id: String,
     open val nextEventId: String,
     open val enableId: String,
-    open val disableId: String
+    open val disableId: String,
 ) :
     BaseEvent(id)

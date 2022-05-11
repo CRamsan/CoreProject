@@ -24,7 +24,7 @@ import javax.inject.Inject
 class PlantFeedbackViewModel @Inject constructor(
     application: Application,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     override val logTag: String

@@ -25,14 +25,19 @@ class EventLoggerErrorCallbackImpl(
         when (severity) {
             Severity.ERROR, Severity.WARNING -> {
                 delegate.handleErrorEvent(tag, message, throwable, severity)
-                eventLoggerDelegate.log(Severity.DEBUG, TAG, "Handled event with severity: $severity - message: $message", null)
+                eventLoggerDelegate.log(
+                    Severity.DEBUG,
+                    TAG,
+                    "Handled event with severity: $severity - message: $message",
+                    null,
+                )
             }
             else -> {
                 eventLoggerDelegate.log(
                     Severity.ERROR,
                     TAG,
                     "Could not handle event with severity: $severity - message: $message",
-                    InvalidSeverityException
+                    InvalidSeverityException,
                 )
             }
         }
@@ -41,6 +46,8 @@ class EventLoggerErrorCallbackImpl(
     companion object {
         private const val TAG = "EventLoggerErrorCallback"
         private val ExceptionNotProvided = Throwable("Exception not provided")
-        private val InvalidSeverityException = Throwable("EventLoggerErrorCallback called with the wrong severity level. Event not handled.")
+        private val InvalidSeverityException = Throwable(
+            "EventLoggerErrorCallback called with the wrong severity level. Event not handled.",
+        )
     }
 }

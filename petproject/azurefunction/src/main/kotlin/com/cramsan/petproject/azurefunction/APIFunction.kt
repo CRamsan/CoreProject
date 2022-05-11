@@ -30,9 +30,9 @@ class APIFunction(
             name = "req",
             methods = [HttpMethod.GET],
             authLevel = AuthorizationLevel.FUNCTION,
-            route = "plants"
+            route = "plants",
         ) request: HttpRequestMessage<String?>,
-        context: ExecutionContext
+        context: ExecutionContext,
     ): HttpResponseMessage {
         val body: List<Plant> = modelStorage.getPlants()
         val bodyString = mapper.writeValueAsString(body)
@@ -49,9 +49,9 @@ class APIFunction(
             name = "req",
             methods = [HttpMethod.GET],
             authLevel = AuthorizationLevel.FUNCTION,
-            route = "name/main"
+            route = "name/main",
         ) request: HttpRequestMessage<String?>,
-        context: ExecutionContext
+        context: ExecutionContext,
     ): HttpResponseMessage {
         val body = modelStorage.getPlantsMainName()
         val bodyString = mapper.writeValueAsString(body)
@@ -68,10 +68,10 @@ class APIFunction(
             name = "req",
             methods = [HttpMethod.GET],
             authLevel = AuthorizationLevel.FUNCTION,
-            route = "name/common/{plantId}"
+            route = "name/common/{plantId}",
         ) request: HttpRequestMessage<String?>,
         @BindingName("plantId") plantId: Long,
-        context: ExecutionContext
+        context: ExecutionContext,
     ): HttpResponseMessage {
         val list = modelStorage.getPlantsCommonNames()
         val body = list.filter { it.plantId == plantId }
@@ -89,10 +89,10 @@ class APIFunction(
             name = "req",
             methods = [HttpMethod.GET],
             authLevel = AuthorizationLevel.FUNCTION,
-            route = "family/{plantId}"
+            route = "family/{plantId}",
         ) request: HttpRequestMessage<String?>,
         @BindingName("plantId") plantId: Long,
-        context: ExecutionContext
+        context: ExecutionContext,
     ): HttpResponseMessage {
         val list = modelStorage.getPlantsFamily()
         val body = list.first { it.plantId == plantId }
@@ -110,11 +110,11 @@ class APIFunction(
             name = "req",
             methods = [HttpMethod.GET],
             authLevel = AuthorizationLevel.FUNCTION,
-            route = "description/{plantId}/{animalType}"
+            route = "description/{plantId}/{animalType}",
         ) request: HttpRequestMessage<String?>,
         @BindingName("plantId") plantId: Long,
         @BindingName("animalType") animalType: Int,
-        context: ExecutionContext
+        context: ExecutionContext,
     ): HttpResponseMessage {
         val list = modelStorage.getDescription()
         val body = list.first { it.plantId == plantId && it.animalId.ordinal == animalType }
@@ -132,9 +132,9 @@ class APIFunction(
             name = "req",
             methods = [HttpMethod.GET],
             authLevel = AuthorizationLevel.FUNCTION,
-            route = "toxicity"
+            route = "toxicity",
         ) request: HttpRequestMessage<String?>,
-        context: ExecutionContext
+        context: ExecutionContext,
     ): HttpResponseMessage {
         val body = modelStorage.getToxicity()
         val bodyString = mapper.writeValueAsString(body)

@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Data(
-    val children: List<PostData>
+    val children: List<PostData>,
 )

@@ -37,7 +37,13 @@ interface EventLoggerInterface {
      * severity [Severity.ERROR] or [Severity.WARNING]. This is useful when the caller may be in the path of the
      * [EventLoggerErrorCallback] itself.
      */
-    fun log(severity: Severity, tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false)
+    fun log(
+        severity: Severity,
+        tag: String,
+        message: String,
+        throwable: Throwable? = null,
+        ignoreErrorCallback: Boolean = false,
+    )
 
     /**
      * Log a message with [Severity.DEBUG] severity
@@ -57,10 +63,22 @@ interface EventLoggerInterface {
     /**
      * Log a message with [Severity.WARNING] message
      */
-    fun w(tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false) = log(Severity.WARNING, tag, message, throwable, ignoreErrorCallback)
+    fun w(tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false) = log(
+        Severity.WARNING,
+        tag,
+        message,
+        throwable,
+        ignoreErrorCallback,
+    )
 
     /**
      * Log a message with [Severity.ERROR] message
      */
-    fun e(tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false) = log(Severity.ERROR, tag, message, throwable, ignoreErrorCallback)
+    fun e(tag: String, message: String, throwable: Throwable? = null, ignoreErrorCallback: Boolean = false) = log(
+        Severity.ERROR,
+        tag,
+        message,
+        throwable,
+        ignoreErrorCallback,
+    )
 }

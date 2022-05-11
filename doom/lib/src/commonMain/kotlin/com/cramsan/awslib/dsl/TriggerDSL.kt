@@ -17,7 +17,7 @@ class CellTriggerBuilder {
         eventId,
         enabled,
         posX,
-        posY
+        posY,
     )
 }
 
@@ -31,7 +31,7 @@ class CharacterTriggerBuilder {
         id,
         eventId,
         enabled,
-        targetId
+        targetId,
     )
 }
 

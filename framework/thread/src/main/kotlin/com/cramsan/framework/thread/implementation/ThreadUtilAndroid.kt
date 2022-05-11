@@ -11,7 +11,7 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
  * @see [ThreadUtilDelegate]
  */
 class ThreadUtilAndroid constructor(
-    private val assertUtil: AssertUtilInterface
+    private val assertUtil: AssertUtilInterface,
 ) : ThreadUtilDelegate {
 
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }

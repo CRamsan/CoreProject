@@ -31,7 +31,7 @@ class PlantListViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) :
     CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 
@@ -111,7 +111,7 @@ class PlantListViewModel @Inject constructor(
         if (animalType == null) {
             logW(
                 "PlantListViewModel",
-                "Unable to filterPlants. AnimalType is null"
+                "Unable to filterPlants. AnimalType is null",
             )
             viewModelScope.launch {
                 setLoadingMode(true)

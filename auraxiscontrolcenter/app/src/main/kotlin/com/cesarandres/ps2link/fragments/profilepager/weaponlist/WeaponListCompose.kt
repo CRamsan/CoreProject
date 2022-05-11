@@ -30,12 +30,15 @@ fun WeaponListCompose(
         Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
-                onRefreshRequested = { eventHandler.onRefreshRequested() }
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             ) {
                 items(weaponList) {
-                    val totalKills = it.statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
-                    val totalVehiclesDestroyed = it.statMapping[WeaponEventType.VEHICLE_KILLS]?.stats?.values?.filterNotNull()?.sum()
-                    val totalHeadshotKills = it.statMapping[WeaponEventType.HEADSHOT_KILLS]?.stats?.values?.filterNotNull()?.sum()
+                    val totalKills = it.statMapping[WeaponEventType.KILLS]
+                        ?.stats?.values?.filterNotNull()?.sum()
+                    val totalVehiclesDestroyed = it.statMapping[WeaponEventType.VEHICLE_KILLS]
+                        ?.stats?.values?.filterNotNull()?.sum()
+                    val totalHeadshotKills = it.statMapping[WeaponEventType.HEADSHOT_KILLS]
+                        ?.stats?.values?.filterNotNull()?.sum()
                     WeaponItem(
                         modifier = Modifier.fillMaxWidth(),
                         faction = faction,

@@ -14,7 +14,7 @@ abstract class BasePS2ViewModel(
     protected val pS2LinkRepository: PS2LinkRepository,
     protected val ps2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel(application, dispatcherProvider, savedStateHandle) {
 
     private val _isLoading = MutableStateFlow(false)

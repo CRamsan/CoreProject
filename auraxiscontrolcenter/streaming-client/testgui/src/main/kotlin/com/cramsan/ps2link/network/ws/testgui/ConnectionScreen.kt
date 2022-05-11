@@ -36,7 +36,7 @@ fun ConnectionScreen(
             modifier = Modifier
                 .wrapContentWidth()
                 .fillMaxHeight()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
         ) {
             Row {
                 val state = if (connected) {
@@ -46,15 +46,15 @@ fun ConnectionScreen(
                 }
                 Text(
                     "Status: $state",
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    modifier = Modifier.align(Alignment.CenterVertically),
                 )
                 Button(
-                    onClick = { viewModel.onStartClientSelected() }
+                    onClick = { viewModel.onStartClientSelected() },
                 ) {
                     Text("Start Client")
                 }
                 Button(
-                    onClick = { viewModel.onStopClientSelected() }
+                    onClick = { viewModel.onStopClientSelected() },
                 ) {
                     Text("Stop Client")
                 }
@@ -63,40 +63,40 @@ fun ConnectionScreen(
             TextField(
                 value = charactersField,
                 label = { Text(text = "List of character Ids") },
-                onValueChange = { viewModel.onCharactersTextUpdated(it) }
+                onValueChange = { viewModel.onCharactersTextUpdated(it) },
             )
             TextField(
                 value = worldsField,
                 label = { Text(text = "List of world Ids") },
-                onValueChange = { viewModel.onWorldsTextUpdated(it) }
+                onValueChange = { viewModel.onWorldsTextUpdated(it) },
             )
             Column {
                 Text("Commands:")
                 Row {
                     Button(
-                        onClick = { viewModel.onHelpCommandSelected() }
+                        onClick = { viewModel.onHelpCommandSelected() },
                     ) {
                         Text("Help")
                     }
                     Button(
-                        onClick = { viewModel.onEchoCommandSelected() }
+                        onClick = { viewModel.onEchoCommandSelected() },
                     ) {
                         Text("Echo")
                     }
                     Button(
-                        onClick = { viewModel.onCharacterSubscribeCommandSelected() }
+                        onClick = { viewModel.onCharacterSubscribeCommandSelected() },
                     ) {
                         Text("CharacterSubscribe")
                     }
                 }
                 Row {
                     Button(
-                        onClick = { viewModel.onWorldSubscribeCommandSelected() }
+                        onClick = { viewModel.onWorldSubscribeCommandSelected() },
                     ) {
                         Text("WorldSubscribe")
                     }
                     Button(
-                        onClick = { viewModel.onClearSubscribeCommandSelected() }
+                        onClick = { viewModel.onClearSubscribeCommandSelected() },
                     ) {
                         Text("ClearSubscribe")
                     }
@@ -111,17 +111,17 @@ fun ConnectionScreen(
                             onCheckedChange = {
                                 checkedState.value = it
                                 viewModel.onEventTypeSelected(event, it)
-                            }
+                            },
                         )
                         Text(
                             event.name,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                            modifier = Modifier.align(Alignment.CenterVertically),
                         )
                     }
                 }
             }
             Button(
-                onClick = { viewModel.onSendCommandSelected() }
+                onClick = { viewModel.onSendCommandSelected() },
             ) {
                 Text("Send command")
             }
@@ -129,12 +129,12 @@ fun ConnectionScreen(
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
-                .fillMaxHeight()
+                .fillMaxHeight(),
         ) {
             items(events) {
                 Text(
                     it,
-                    modifier = Modifier.padding(5.dp)
+                    modifier = Modifier.padding(5.dp),
                 )
             }
         }

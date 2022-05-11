@@ -52,7 +52,7 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
             Observer {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.value))
                 startActivity(browserIntent)
-            }
+            },
         )
 
         viewModel.observablePlantImageSource.observe(
@@ -66,7 +66,7 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
                                 e: GlideException?,
                                 model: Any?,
                                 target: Target<Drawable>?,
-                                isFirstResource: Boolean
+                                isFirstResource: Boolean,
                             ): Boolean {
                                 logE("PlantDetailsFragment", e.toString())
                                 return false
@@ -77,21 +77,21 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
                                 model: Any?,
                                 target: Target<Drawable>?,
                                 dataSource: DataSource?,
-                                isFirstResource: Boolean
+                                isFirstResource: Boolean,
                             ): Boolean {
                                 logV(
                                     "PlantDetailsFragment",
-                                    "Resource loaded successfully"
+                                    "Resource loaded successfully",
                                 )
                                 dataBinding.plantDetailsImageLoading.visibility = View.GONE
                                 dataBinding.plantDetailsImage.visibility = View.VISIBLE
                                 return false
                             }
-                        }
+                        },
                     )
                     .override(dataBinding.plantDetailsImage.width, dataBinding.plantDetailsImage.height)
                     .into(dataBinding.plantDetailsImage)
-            }
+            },
         )
 
         viewModel.observableStartDownload().observe(
@@ -99,7 +99,7 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
             Observer {
                 val action = PlantDetailsFragmentDirections.actionPlantDetailsFragmentToDownloadCatalogDialogFragment()
                 findNavController().navigate(action)
-            }
+            },
         )
 
         viewModel.observablePlantName.observe(
@@ -107,12 +107,15 @@ class PlantDetailsFragment : BaseDatabindingFragment<PlantDetailsViewModel, Frag
             Observer {
                 val activity = requireActivity() as AppCompatActivity
                 activity.supportActionBar?.title = it
-            }
+            },
         )
 
         dataBinding.plantFeedbackSave.setOnClickListener {
             logI("PlantDetailsFragment", "onClick")
-            val action = PlantDetailsFragmentDirections.actionPlantDetailsFragmentToPlantFeedbackFragment(animalType, plantId)
+            val action = PlantDetailsFragmentDirections.actionPlantDetailsFragmentToPlantFeedbackFragment(
+                animalType,
+                plantId,
+            )
             findNavController().navigate(action)
         }
 

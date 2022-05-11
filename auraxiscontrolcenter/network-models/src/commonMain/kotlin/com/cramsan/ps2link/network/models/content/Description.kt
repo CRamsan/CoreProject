@@ -11,5 +11,5 @@ data class Description(
     /**
      * @param en The en
      */
-    val en: String? = null
+    val en: String? = null,
 )

@@ -43,7 +43,7 @@ fun MainMenuCompose(
                 .padding(horizontal = 50.dp)
                 .verticalScroll(rememberScrollState())
                 .wrapContentWidth()
-                .animateContentSize()
+                .animateContentSize(),
         ) {
             Spacer(modifier = Modifier.height(50.dp))
             val buttonModifier = Modifier
@@ -53,7 +53,7 @@ fun MainMenuCompose(
                 MainMenuButton(
                     buttonModifier,
                     label = preferredProfile?.name,
-                    star = true
+                    star = true,
                 ) {
                     preferredProfile?.let {
                         eventHandler.onPreferredProfileClick(it.characterId, it.namespace)
@@ -64,7 +64,7 @@ fun MainMenuCompose(
                 MainMenuButton(
                     buttonModifier,
                     label = preferredOutfit?.name,
-                    star = true
+                    star = true,
                 ) {
                     preferredOutfit?.let {
                         eventHandler.onPreferredOutfitClick(it.id, it.namespace)
@@ -168,7 +168,7 @@ fun NormalButtonPreview() {
                 override fun onTwitterClick() = Unit
                 override fun onRedditClick() = Unit
                 override fun onAboutClick() = Unit
-            }
+            },
         )
     }
 }

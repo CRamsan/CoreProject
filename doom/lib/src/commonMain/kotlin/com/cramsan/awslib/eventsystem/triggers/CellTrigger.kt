@@ -8,6 +8,6 @@ class CellTrigger(
     eventId: String,
     enabled: Boolean,
     val posX: Int,
-    val posY: Int
+    val posY: Int,
 ) :
     Trigger(id, eventId, enabled)

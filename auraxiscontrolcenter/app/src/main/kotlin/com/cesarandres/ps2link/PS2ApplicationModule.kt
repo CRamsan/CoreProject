@@ -108,7 +108,7 @@ object PS2ApplicationModule {
         val impl = AssertUtilImpl(
             BuildConfig.DEBUG,
             eventLoggerInterface,
-            haltUtilInterface
+            haltUtilInterface,
         )
         AssertUtil.setInstance(impl)
         return AssertUtil.singleton
@@ -166,7 +166,7 @@ object PS2ApplicationModule {
     @Singleton
     fun provideEventLoggerErrorCallbackDelegate(
         @Named(PS2ApplicationModuleConstants.ERROR_CALLBACK_METRICS_IMPL)
-        errorCallback: EventLoggerErrorCallbackDelegate
+        errorCallback: EventLoggerErrorCallbackDelegate,
     ): EventLoggerErrorCallbackDelegate =
         AppCenterErrorCallback(errorCallback)
 
@@ -219,7 +219,7 @@ object PS2ApplicationModule {
     @Singleton
     fun providePreferencesDelegate(@ApplicationContext appContext: Context): PreferencesDelegate =
         PreferencesAndroid(
-            appContext
+            appContext,
         )
 
     @Provides
@@ -287,7 +287,11 @@ object PS2ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(httpClient: io.ktor.client.HttpClient, json: Json, metricsInterface: MetricsInterface): HttpClient {
+    fun provideHttpClient(
+        httpClient: io.ktor.client.HttpClient,
+        json: Json,
+        metricsInterface: MetricsInterface,
+    ): HttpClient {
         return HttpClient(httpClient, json, metricsInterface)
     }
 
@@ -401,7 +405,9 @@ object PS2ApplicationModule {
 
     @Provides
     @Named(REMOTE_CONFIG_ENDPOINT)
-    fun provideRemoteConfigEndpoint(@ApplicationContext context: Context) = context.resources.getString(R.string.remote_config_url)
+    fun provideRemoteConfigEndpoint(@ApplicationContext context: Context) = context.resources.getString(
+        R.string.remote_config_url,
+    )
 
     @OptIn(InternalSerializationApi::class)
     @Provides

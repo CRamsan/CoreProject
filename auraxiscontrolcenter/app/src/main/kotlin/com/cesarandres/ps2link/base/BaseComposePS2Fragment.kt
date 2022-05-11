@@ -47,7 +47,7 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return ComposeView(requireContext()).apply {

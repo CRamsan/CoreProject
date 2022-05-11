@@ -39,7 +39,7 @@ class ObjectDataSource(context: Context) {
         SQLiteManager.CHARACTERS_COLUMN_OUTFIT_NAME,
         SQLiteManager.CACHE_COLUMN_SAVES,
         SQLiteManager.CHARACTERS_COLUMN_WORLD_NAME,
-        SQLiteManager.CHARACTERS_COLUMN_NAMESPACE
+        SQLiteManager.CHARACTERS_COLUMN_NAMESPACE,
     )
 
     private val allColumnsOutfit = arrayOf(
@@ -52,7 +52,7 @@ class ObjectDataSource(context: Context) {
         SQLiteManager.OUTFIT_COLUMN_WORDL_ID,
         SQLiteManager.OUTFIT_COLUMN_FACTION_ID,
         SQLiteManager.CACHE_COLUMN_SAVES,
-        SQLiteManager.OUTFIT_COLUMN_NAMESPACE
+        SQLiteManager.OUTFIT_COLUMN_NAMESPACE,
     )
 
     init {
@@ -72,7 +72,7 @@ class ObjectDataSource(context: Context) {
         } catch (e: Exception) {
             logE(
                 TAG,
-                "Could not open database, database is already locked. Trying again"
+                "Could not open database, database is already locked. Trying again",
             )
             dbHelper.close()
             database = dbHelper.writableDatabase
@@ -100,13 +100,13 @@ class ObjectDataSource(context: Context) {
                 removed = database!!.delete(
                     SQLiteManager.TABLE_CHARACTERS_NAME,
                     SQLiteManager.CACHE_COLUMN_SAVES + " = 0",
-                    null
+                    null,
                 )
             }
         } catch (e: IllegalStateException) {
             logE(
                 TAG,
-                "Connection closed while deleting profiles"
+                "Connection closed while deleting profiles",
             )
         }
 
@@ -156,7 +156,7 @@ class ObjectDataSource(context: Context) {
                     null,
                     null,
                     null,
-                    null
+                    null,
                 )
             } else {
                 cursor = database!!.query(
@@ -166,7 +166,7 @@ class ObjectDataSource(context: Context) {
                     null,
                     null,
                     null,
-                    null
+                    null,
                 )
             }
             cursor!!.moveToFirst()
@@ -228,7 +228,7 @@ class ObjectDataSource(context: Context) {
                     null,
                     null,
                     null,
-                    null
+                    null,
                 )
             }
 

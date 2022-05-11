@@ -61,12 +61,12 @@ class DBGCensus(
         urlParams: String,
         urlIdentifier: HttpNamespace.Api,
         namespace: Namespace,
-        currentLang: CensusLang
+        currentLang: CensusLang,
     ): UrlHolder {
         val baseUrl = "$ENDPOINT_URL/s:$serviceId/$verb/$namespace/$collection/"
         return UrlHolder(
             urlIdentifier = urlIdentifier,
-            completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.lowercase())
+            completeUrl = Url("$baseUrl/?" + urlParams + "&c:lang=" + currentLang.name.lowercase()),
         )
     }
 

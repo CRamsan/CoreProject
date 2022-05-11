@@ -1,6 +1,6 @@
 package com.cramsan.awslib.entitymanager.implementation
 
-import com.cramsan.awslib.ai.`interface`.AIRepo
+import com.cramsan.awslib.ai.AIRepo
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.ItemInterface
 import com.cramsan.awslib.entity.implementation.ConsumableItem
@@ -60,7 +60,7 @@ class EntityManager(
     private val itemList: List<ItemInterface>,
     private var eventListener: EntityManagerEventListener?,
     private val log: EventLoggerInterface,
-    private val aiRepo: AIRepo
+    private val aiRepo: AIRepo,
 ) : EntityManagerInterface, EntityManagerInteractionReceiver, TransitionStack.TransitionHandler {
 
     private val transitionStack = TransitionStack(this)
@@ -106,7 +106,9 @@ class EntityManager(
 
     val queue = mutableListOf<CharacterInterface>()
 
-    var entityMap: Array<Array<CharacterInterface?>> = Array(map.width) { arrayOfNulls<CharacterInterface?>(map.height) }
+    var entityMap: Array<Array<CharacterInterface?>> = Array(map.width) {
+        arrayOfNulls<CharacterInterface?>(map.height)
+    }
     var entityIdMap: MutableMap<String, CharacterInterface> = mutableMapOf()
 
     internal fun register(entity: CharacterInterface) {
@@ -218,7 +220,7 @@ class EntityManager(
                 entity.id,
                 x - entity.posX,
                 y - entity.posY,
-            )
+            ),
         )
 
         if (entity is Player) {
@@ -447,7 +449,9 @@ class EntityManager(
             when (localNextEvent) {
                 is SwapCharacterEvent -> {
                     log.d(tag, "Swap event")
-                    transitionStack.executeNewTransition(SwapCharacter(PLAYER_ID, oldEvent?.id ?: InitialValues.NOOP_ID, localNextEvent))
+                    transitionStack.executeNewTransition(
+                        SwapCharacter(PLAYER_ID, oldEvent?.id ?: InitialValues.NOOP_ID, localNextEvent),
+                    )
                     oldEvent = localNextEvent
                     nextEvent = if (localNextEvent.nextEventId == InitialValues.NOOP_ID) {
                         NoopEvent()

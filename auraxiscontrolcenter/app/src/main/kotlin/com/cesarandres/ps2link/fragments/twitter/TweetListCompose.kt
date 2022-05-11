@@ -41,25 +41,25 @@ fun TweetListCompose(
         Column {
             FrameSlim {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     LazyRow {
                         items(users.toList()) { pair ->
                             Row(
                                 modifier = Modifier.clickable {
                                     eventHandler.onTwitterUserClicked(pair.first)
-                                }.padding(vertical = Padding.medium, horizontal = Padding.large)
+                                }.padding(vertical = Padding.medium, horizontal = Padding.large),
                             ) {
                                 Checkbox(
                                     modifier = Modifier.padding(horizontal = Padding.small),
                                     checked = pair.second,
-                                    onCheckedChange = null
+                                    onCheckedChange = null,
                                 )
                                 Text(
                                     text = stringResource(
                                         id = R.string.title_twitter_handle,
-                                        formatArgs = arrayOf(pair.first)
-                                    )
+                                        formatArgs = arrayOf(pair.first),
+                                    ),
                                 )
                             }
                         }
@@ -69,7 +69,7 @@ fun TweetListCompose(
             Box(modifier = Modifier.fillMaxSize()) {
                 SwipeToRefresh(
                     isLoading = isLoading,
-                    onRefreshRequested = { eventHandler.onRefreshRequested() }
+                    onRefreshRequested = { eventHandler.onRefreshRequested() },
                 ) {
                     items(tweetItems) { tweet ->
                         TweetItem(
@@ -79,7 +79,7 @@ fun TweetListCompose(
                             avatarUrl = tweet.imgUrl,
                             prettyTime = prettyTime,
                             creationTime = tweet.date,
-                            onClick = { eventHandler.onTweetSelected(tweet) }
+                            onClick = { eventHandler.onTweetSelected(tweet) },
                         )
                     }
                 }
@@ -116,7 +116,7 @@ fun ServerListPreview() {
                 override fun onTwitterUserClicked(twitterUser: String) = Unit
                 override fun onTweetSelected(tweet: PS2Tweet) = Unit
                 override fun onRefreshRequested() = Unit
-            }
+            },
         )
     }
 }

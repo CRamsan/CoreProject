@@ -10,6 +10,6 @@ class CharacterTrigger(
     id: String,
     eventId: String,
     enabled: Boolean,
-    val targetId: String
+    val targetId: String,
 ) :
     Trigger(id, eventId, enabled)

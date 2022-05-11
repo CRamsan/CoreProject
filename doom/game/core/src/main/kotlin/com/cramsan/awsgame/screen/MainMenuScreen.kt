@@ -44,11 +44,11 @@ class MainMenuScreen : BaseScreen(), Screen {
             object : ChangeListener() {
                 override fun changed(
                     event: ChangeEvent,
-                    actor: Actor
+                    actor: Actor,
                 ) {
                     SceneManager.startGameScreen(GameParameterManager())
                 }
-            }
+            },
         )
         parentTable.add(startGameButton).row()
 

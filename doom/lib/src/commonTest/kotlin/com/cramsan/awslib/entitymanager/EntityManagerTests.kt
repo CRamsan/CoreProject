@@ -1,6 +1,6 @@
 package com.cramsan.awslib.entitymanager
 
-import com.cramsan.awslib.ai.`interface`.AIRepo
+import com.cramsan.awslib.ai.AIRepo
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.ItemInterface

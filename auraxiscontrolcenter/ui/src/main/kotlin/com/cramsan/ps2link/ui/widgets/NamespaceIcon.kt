@@ -33,13 +33,13 @@ fun NamespaceIcon(
     FrameSlim(
         modifier = Modifier
             .padding(Padding.medium)
-            .background(color = undefined, shape = Shapes.medium)
+            .background(color = undefined, shape = Shapes.medium),
     ) {
         // TODO: Add content description
         Image(
             modifier = modifier,
             painter = painterResource(id = resourceId),
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }

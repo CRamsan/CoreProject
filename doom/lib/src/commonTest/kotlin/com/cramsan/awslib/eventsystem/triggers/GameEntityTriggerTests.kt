@@ -1,6 +1,6 @@
 package com.cramsan.awslib.eventsystem.triggers
 
-import com.cramsan.awslib.ai.`interface`.AIRepo
+import com.cramsan.awslib.ai.AIRepo
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entity.implementation.Ally
 import com.cramsan.awslib.entity.implementation.AllyType

@@ -5,5 +5,5 @@ import io.ktor.http.Url
 
 data class UrlHolder(
     val urlIdentifier: HttpNamespace.Api,
-    val completeUrl: Url
+    val completeUrl: Url,
 )

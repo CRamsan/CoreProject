@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Characters_event_list_response(
-    val characters_event_list: List<CharacterEvent>? = null
+    val characters_event_list: List<CharacterEvent>? = null,
 )

@@ -148,7 +148,7 @@ interface ModelStorageInterface {
         animalType: AnimalType,
         locale: String,
         limit: Long,
-        offset: Long
+        offset: Long,
     ): List<GetAllPlantsWithAnimalId>
 
     /**

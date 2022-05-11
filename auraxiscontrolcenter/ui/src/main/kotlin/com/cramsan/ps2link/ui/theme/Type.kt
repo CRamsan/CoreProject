@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.cramsan.ps2link.ui.R
 
 val PS2Font = FontFamily(
-    Font(resId = R.font.planetside2)
+    Font(resId = R.font.planetside2),
 )
 
 // Set of Material typography styles to start with
@@ -17,8 +17,8 @@ val typography = Typography(
     defaultFontFamily = PS2Font,
     body1 = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    )
+        fontSize = 16.sp,
+    ),
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,

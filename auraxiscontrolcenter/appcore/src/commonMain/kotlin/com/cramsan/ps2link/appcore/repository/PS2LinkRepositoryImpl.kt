@@ -104,7 +104,7 @@ class PS2LinkRepositoryImpl(
                 val endpointProfileList = dbgCensus.getProfiles(
                     searchField = searchField,
                     namespace = namespace,
-                    currentLang = currentLang
+                    currentLang = currentLang,
                 )
                 endpointProfileList
             }
@@ -177,7 +177,7 @@ class PS2LinkRepositoryImpl(
                                 worldId = it,
                                 serverName = world.name?.localizedName(lang) ?: "",
                                 namespace = namespace,
-                                serverMetadata = serverMetadata
+                                serverMetadata = serverMetadata,
                             )
                         }
                     }
@@ -211,7 +211,7 @@ class PS2LinkRepositoryImpl(
         outfitId: String,
         namespace: Namespace,
         lang: CensusLang,
-        forceUpdate: Boolean
+        forceUpdate: Boolean,
     ): PS2HttpResponse<Outfit> {
         val cachedOutfit = dbgDAO?.getOutfit(outfitId, namespace)
         if (!forceUpdate && (cachedOutfit != null && isOutfitValid(cachedOutfit))) {
@@ -244,7 +244,7 @@ class PS2LinkRepositoryImpl(
                     outfitTag = tagSearchField,
                     outfitName = nameSearchField,
                     namespace = namespace,
-                    currentLang = currentLang
+                    currentLang = currentLang,
                 )
                 endpointOutfitList
             }
@@ -252,7 +252,11 @@ class PS2LinkRepositoryImpl(
         }.awaitAll().processList { it }.process { it.flatten() }
     }
 
-    override suspend fun getMembersOnline(outfitId: String, namespace: Namespace, currentLang: CensusLang): PS2HttpResponse<List<Character>> {
+    override suspend fun getMembersOnline(
+        outfitId: String,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<Character>> {
         val response = dbgCensus.getMembersOnline(outfitId, namespace, currentLang)
         if (!response.isSuccessful) {
             return response.toFailure()
@@ -262,7 +266,11 @@ class PS2LinkRepositoryImpl(
         }
     }
 
-    override suspend fun getMembers(outfitId: String, namespace: Namespace, currentLang: CensusLang): PS2HttpResponse<List<Character>> {
+    override suspend fun getMembers(
+        outfitId: String,
+        namespace: Namespace,
+        currentLang: CensusLang,
+    ): PS2HttpResponse<List<Character>> {
         return dbgCensus.getMemberList(outfitId, namespace, currentLang)
     }
 
@@ -271,7 +279,7 @@ class PS2LinkRepositoryImpl(
         filterPrestige: Int?,
         faction: Faction,
         namespace: Namespace,
-        currentLang: CensusLang
+        currentLang: CensusLang,
     ): PS2HttpResponse<ExperienceRank?> {
         val response = dbgCensus.getExperienceRanks(
             listOf(rank),

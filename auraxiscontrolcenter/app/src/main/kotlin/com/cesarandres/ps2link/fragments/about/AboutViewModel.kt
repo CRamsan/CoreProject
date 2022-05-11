@@ -19,13 +19,13 @@ class AboutViewModel @Inject constructor(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BasePS2ViewModel(
     application,
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     AboutEventHandler {
 

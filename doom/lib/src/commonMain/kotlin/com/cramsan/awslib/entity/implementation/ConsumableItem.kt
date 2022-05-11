@@ -10,5 +10,5 @@ data class ConsumableItem(
     override var posX: Int,
     override var posY: Int,
     val type: ConsumableType,
-    val ammount: Int
+    val ammount: Int,
 ) : ItemInterface

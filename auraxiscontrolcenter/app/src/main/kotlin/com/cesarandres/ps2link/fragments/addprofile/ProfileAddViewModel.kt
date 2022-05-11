@@ -33,7 +33,7 @@ class ProfileAddViewModel @Inject constructor(
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     ProfileAddEventHandler {
 

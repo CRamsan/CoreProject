@@ -14,7 +14,7 @@ class RemoteConfigStack @JvmOverloads constructor(
     scope: Construct?,
     id: String?,
     remoteConfig: File,
-    props: StackProps? = null
+    props: StackProps? = null,
 ) : Stack(scope, id, props) {
     init {
         val bucket = PublicReadOnlyBucket(this, "RemoteConfigBucket")

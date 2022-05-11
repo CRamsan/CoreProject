@@ -25,7 +25,7 @@ fun FriendItem(
 ) {
     SlimButton(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

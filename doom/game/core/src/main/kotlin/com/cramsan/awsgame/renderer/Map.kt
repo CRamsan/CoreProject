@@ -39,7 +39,7 @@ class Map(private var size: Int) {
             Step(point.x, point.y, 0.0, 0.0, 0.0, 0.0, 0.0),
             sin(angle),
             cos(angle),
-            range
+            range,
         )
     }
 

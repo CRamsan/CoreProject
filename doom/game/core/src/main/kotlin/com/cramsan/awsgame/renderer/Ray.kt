@@ -10,7 +10,7 @@ class Ray(
     origin: Step,
     var sin: Double,
     var cos: Double,
-    range: Double
+    range: Double,
 ) {
 
     var steps: MutableList<Step> = mutableListOf()
@@ -41,7 +41,7 @@ class Ray(
             0.0,
             java.lang.Double.POSITIVE_INFINITY,
             0.0,
-            0.0
+            0.0,
         )
         val dx = if (run > 0) floor(x + 1) - x else ceil(x - 1) - x
         val dy = dx * (rise / run)
@@ -52,7 +52,7 @@ class Ray(
             0.0,
             dx * dx + dy * dy,
             0.0,
-            0.0
+            0.0,
         )
     }
 

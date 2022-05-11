@@ -42,15 +42,15 @@ fun OutfitCompose(
     FrameBottom {
         SwipeToRefreshColumn(
             isLoading = isLoading,
-            onRefreshRequested = { eventHandler.onRefreshRequested() }
+            onRefreshRequested = { eventHandler.onRefreshRequested() },
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Top Faction icon
                 FactionIcon(
                     modifier = Modifier.size(Size.xxlarge),
-                    faction = faction ?: Faction.UNKNOWN
+                    faction = faction ?: Faction.UNKNOWN,
                 )
 
                 val mediumModifier = Modifier
@@ -86,7 +86,7 @@ fun OutfitCompose(
                                         leader?.let {
                                             eventHandler.onProfileSelected(it.characterId, it.namespace)
                                         }
-                                    }
+                                    },
                                 ) {
                                     Text(text = leader?.name ?: stringResource(R.string.text_unknown))
                                 }
@@ -108,7 +108,7 @@ fun OutfitCompose(
                                 Text(
                                     text = creationTime?.let {
                                         formatter.format(Date(it.toEpochMilliseconds()))
-                                    } ?: stringResource(R.string.text_unknown)
+                                    } ?: stringResource(R.string.text_unknown),
                                 )
                             }
                         }

@@ -75,7 +75,7 @@ object PetProjectApplicationModule {
         val impl = AssertUtilImpl(
             BuildConfig.DEBUG,
             eventLoggerInterface,
-            haltUtilInterface
+            haltUtilInterface,
         )
         AssertUtil.setInstance(impl)
         return AssertUtil.singleton
@@ -178,19 +178,19 @@ object PetProjectApplicationModule {
     fun provideModelStorageInterface(
         modelStorageDAO: ModelStorageDAO,
         eventLoggerInterface: EventLoggerInterface,
-        threadUtilInterface: ThreadUtilInterface
+        threadUtilInterface: ThreadUtilInterface,
     ): ModelStorageInterface =
         ModelStorage(
             modelStorageDAO,
             eventLoggerInterface,
-            threadUtilInterface
+            threadUtilInterface,
         )
 
     @Provides
     @Singleton
     fun providePreferencesDelegate(@ApplicationContext appContext: Context): PreferencesDelegate =
         PreferencesAndroid(
-            appContext
+            appContext,
         )
 
     @Provides
@@ -207,7 +207,7 @@ object PetProjectApplicationModule {
             appContext.getString(R.string.provider_config_commonname_url),
             appContext.getString(R.string.provider_config_description_url),
             appContext.getString(R.string.provider_config_family_url),
-            appContext.getString(R.string.provider_config_toxicities_url)
+            appContext.getString(R.string.provider_config_toxicities_url),
         )
     }
 
@@ -224,7 +224,7 @@ object PetProjectApplicationModule {
         threadUtilInterface,
         modelStorageInterface,
         preferencesInterface,
-        providerConfig
+        providerConfig,
     )
 
     @Provides

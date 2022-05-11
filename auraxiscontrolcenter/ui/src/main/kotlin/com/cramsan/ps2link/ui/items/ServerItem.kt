@@ -28,7 +28,7 @@ fun ServerItem(
     namespace: Namespace,
 ) {
     SlimButton(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row {
             Column(modifier = Modifier.weight(1f)) {

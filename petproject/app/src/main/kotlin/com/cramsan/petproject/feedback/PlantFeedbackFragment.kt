@@ -43,7 +43,7 @@ class PlantFeedbackFragment : BaseDialogFragment<PlantFeedbackViewModel, Fragmen
                     Toast.makeText(context, R.string.thanks_feedback, Toast.LENGTH_LONG).show()
                 }
                 closeDialog()
-            }
+            },
         )
         viewModel = model
     }

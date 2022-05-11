@@ -37,7 +37,7 @@ class FragmentComposeMembers : BaseComposePS2Fragment<MembersViewModel>() {
             memberList = memberList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 

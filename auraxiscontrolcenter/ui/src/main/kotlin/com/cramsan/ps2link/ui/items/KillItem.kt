@@ -45,7 +45,7 @@ fun KillItem(
 ) {
     SlimButton(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -62,7 +62,7 @@ fun KillItem(
                             KillType.KILLEDBY -> R.string.text_killed_by_caps
                             KillType.SUICIDE -> R.string.text_suicide_caps
                             KillType.UNKNOWN -> R.string.title_unkown
-                        }
+                        },
                     ),
                     color = killType.toColor(),
                 )

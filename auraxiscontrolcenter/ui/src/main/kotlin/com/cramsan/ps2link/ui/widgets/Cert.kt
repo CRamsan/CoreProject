@@ -33,7 +33,7 @@ fun Cert(certs: Int) {
     Image(
         modifier = Modifier.padding(horizontal = Padding.small),
         painter = painterResource(id = R.drawable.cert),
-        contentDescription = null
+        contentDescription = null,
     )
     Text(
         text = certs.toString(),
@@ -59,13 +59,13 @@ fun CertBar(
         if (percentageToNextCert > 0) {
             Spacer(
                 modifier = Modifier
-                    .weight(percentageToNextCert)
+                    .weight(percentageToNextCert),
             )
             Box(
                 modifier = Modifier
                     .weight(100 - percentageToNextCert)
                     .fillMaxHeight()
-                    .background(certBackground)
+                    .background(certBackground),
             )
         }
     }

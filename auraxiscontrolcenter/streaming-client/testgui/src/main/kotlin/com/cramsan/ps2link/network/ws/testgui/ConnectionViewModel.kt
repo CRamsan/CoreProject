@@ -63,7 +63,11 @@ class ConnectionViewModel(
     }.stateIn(scope, SharingStarted.Lazily, emptyList())
 
     val connected: StateFlow<Boolean> = _connected
-    val commandText: Flow<String> = _command.map { it?.let { command -> json.createSerializedClientMessage(command) } ?: "" }
+    val commandText: Flow<String> = _command.map {
+        it?.let { command ->
+            json.createSerializedClientMessage(command)
+        } ?: ""
+    }
     val events: StateFlow<List<String>> = _events
     val charactersField: StateFlow<String> = _charactersField
     val worldsField: StateFlow<String> = _worldsField
@@ -82,16 +86,16 @@ class ConnectionViewModel(
         _command.value = when (command) {
             is CharacterSubscribe -> command.copy(
                 characters = characters.value,
-                eventNames = selectedEventTypes()
+                eventNames = selectedEventTypes(),
             )
             is WorldSubscribe -> command.copy(
                 worlds = worlds.value,
-                eventNames = selectedEventTypes()
+                eventNames = selectedEventTypes(),
             )
             is ClearSubscribe -> command.copy(
                 characters = characters.value,
                 worlds = worlds.value,
-                eventNames = selectedEventTypes()
+                eventNames = selectedEventTypes(),
             )
             else -> command
         }

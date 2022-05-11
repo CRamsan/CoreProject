@@ -15,7 +15,7 @@ class InteractiveEventOptionBuilder {
     internal fun build() = InteractiveEventOption(
         id,
         eventId,
-        label
+        label,
     )
 }
 
@@ -42,7 +42,7 @@ class ChangeTriggerEventBuilder {
         id,
         nextEventId,
         enableEventId,
-        disableEventId
+        disableEventId,
     )
 }
 
@@ -56,7 +56,7 @@ class SwapCharacterInteractiveEventBuilder {
         id,
         nextEventId,
         enableCharacterId,
-        disableCharacterId
+        disableCharacterId,
     )
 }
 

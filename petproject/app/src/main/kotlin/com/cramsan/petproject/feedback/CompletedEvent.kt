@@ -9,5 +9,5 @@ class CompletedEvent(
     /**
      * [true] If the feedback was submitted succesfully, [false] otherwise.
      */
-    val feedbackSubmitted: Boolean
+    val feedbackSubmitted: Boolean,
 ) : BaseEvent()

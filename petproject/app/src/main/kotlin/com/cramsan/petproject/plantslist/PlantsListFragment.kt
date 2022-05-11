@@ -28,7 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * A fragment representing a list of Items.
  */
 @AndroidEntryPoint
-class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentPlantsListBinding>(), PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
+class PlantsListFragment :
+    BaseDatabindingFragment<PlantListViewModel, FragmentPlantsListBinding>(),
+    PlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val viewModel: PlantListViewModel by viewModels()
     override val contentViewLayout: Int
@@ -84,26 +86,26 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
             viewLifecycleOwner,
             Observer<List<PresentablePlant>> { plants ->
                 plantsRecyclerAdapter.updateValues(plants)
-            }
+            },
         )
         viewModel.observableStartDownload().observe(
             viewLifecycleOwner,
             Observer {
                 val action = PlantsListFragmentDirections.actionPlantsListFragmentToDownloadCatalogDialogFragment()
                 findNavController().navigate(action)
-            }
+            },
         )
         viewModel.observableShowIsDownloadingData().observe(
             viewLifecycleOwner,
             Observer {
                 // TODO: Implement some UI to let the user know that data is being downloaded
-            }
+            },
         )
         viewModel.observableShowDataDownloaded().observe(
             viewLifecycleOwner,
             Observer {
                 // TODO: Implement some UI to let the user know that the data was downloaded
-            }
+            },
         )
         viewModel.observableDownloadingVisibility().observe(
             viewLifecycleOwner,
@@ -114,7 +116,7 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
                 } else {
                     viewModel.setLoadingMode(false)
                 }
-            }
+            },
         )
 
         dataBinding.plantListAddPlant.setOnClickListener {
@@ -183,7 +185,7 @@ class PlantsListFragment : BaseDatabindingFragment<PlantListViewModel, FragmentP
                         queryCleaner.isEnabled = true
                         return true
                     }
-                }
+                },
             )
         }
     }

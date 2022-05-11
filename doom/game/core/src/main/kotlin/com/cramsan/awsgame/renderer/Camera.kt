@@ -13,7 +13,12 @@ import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.sin
 
-class Camera(private val camera: OrthographicCamera, private var resolution: Double, private var fov: Double, private val viewport: Viewport) {
+class Camera(
+    private val camera: OrthographicCamera,
+    private var resolution: Double,
+    private var fov: Double,
+    private val viewport: Viewport,
+) {
     private var width: Double = 0.toDouble()
     private var height: Double = 0.toDouble()
     private var spacing: Double = 0.toDouble()
@@ -57,7 +62,14 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
         val top = this.height * 0.6 + bobY
         batch.projectionMatrix = viewport.camera.combined
         batch.begin()
-        batch.draw(weapon, left.toFloat(), top.toFloat(), (weapon.width * this.scale).toFloat(), (weapon.height * this.scale).toFloat(), 0, 0, weapon.width, weapon.height, false, true)
+        batch.draw(
+            weapon,
+            left.toFloat(), top.toFloat(),
+            (weapon.width * this.scale).toFloat(), (weapon.height * this.scale).toFloat(),
+            0, 0,
+            weapon.width, weapon.height,
+            false, true,
+        )
         batch.end()
     }
 
@@ -80,7 +92,18 @@ class Camera(private val camera: OrthographicCamera, private var resolution: Dou
 
                 batch.projectionMatrix = viewport.camera.combined
                 batch.begin()
-                batch.draw(texture, left.toFloat(), wall.top.toFloat(), width.toFloat(), wall.height.toFloat(), textureX.toInt(), 0, 1, texture.height, false, true)
+                batch.draw(
+                    texture,
+                    left.toFloat(),
+                    wall.top.toFloat(),
+                    width.toFloat(),
+                    wall.height.toFloat(),
+                    textureX.toInt(),
+                    0,
+                    1,
+                    texture.height,
+                    false, true,
+                )
                 batch.end()
 
                 Gdx.gl.glEnable(GL20.GL_BLEND)

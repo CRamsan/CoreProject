@@ -26,5 +26,5 @@ abstract class Item(
     /**
      * Url for an image to display. An empty string represents the lack of an image.
      */
-    val imageUrl: String
+    val imageUrl: String,
 )

@@ -60,7 +60,7 @@ fun ProfileAddCompose(
                             level = it.battleRank?.toInt() ?: 0,
                             faction = it.faction,
                             namespace = it.namespace,
-                            onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
+                            onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) },
                         )
                     }
                 }
@@ -106,10 +106,10 @@ fun NormalButtonPreview() {
                         "",
                         Namespace.PS2PC,
                         "Ceres",
-                        null
+                        null,
                     ),
                     cached = true,
-                )
+                ),
             ),
             isLoading = true,
             isError = false,

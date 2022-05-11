@@ -273,6 +273,15 @@ coroutines:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+  SuspendFunWithCoroutineScopeReceiver:
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
 
 empty-blocks:
   EmptyCatchBlock:
@@ -548,7 +557,12 @@ exceptions:
       - '**/iosTest/**'
 
 formatting:
+  active: true
+  android: true
+  autoCorrect: true
   AnnotationOnSeparateLine:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -558,6 +572,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   AnnotationSpacing:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -567,6 +583,21 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   ArgumentListWrapping:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    maxLineLength: 120
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  BlockCommentInitialStarAlignment:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -576,6 +607,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   ChainWrapping:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -585,6 +618,31 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   CommentSpacing:
+    active: true
+    autoCorrect: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  CommentWrapping:
+    active: false
+    autoCorrect: true
+    indentSize: 4
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  DiscouragedCommentLocation:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -594,6 +652,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   EnumEntryNameCase:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -603,6 +663,7 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   Filename:
+    active: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -612,6 +673,31 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   FinalNewline:
+    active: true
+    autoCorrect: true
+    insertFinalNewLine: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  FunKeywordSpacing:
+    active: false
+    autoCorrect: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  FunctionTypeReferenceSpacing:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -621,6 +707,9 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   ImportOrdering:
+    active: true
+    autoCorrect: true
+    layout: '*,java.**,javax.**,kotlin.**,^'
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -630,6 +719,21 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   Indentation:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  KdocWrapping:
+    active: false
+    autoCorrect: true
+    indentSize: 4
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -639,6 +743,21 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   MaximumLineLength:
+    active: true
+    autoCorrect: true
+    maxLineLength: 120
+    ignoreBackTickedIdentifier: false
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  ModifierListSpacing:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -648,6 +767,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   ModifierOrdering:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -657,6 +778,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   MultiLineIfElse:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -666,6 +789,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoBlankLineBeforeRbrace:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -675,6 +800,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoConsecutiveBlankLines:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -684,6 +811,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoEmptyClassBody:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -693,6 +822,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoEmptyFirstLineInMethodBlock:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -702,6 +833,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoLineBreakAfterElse:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -711,6 +844,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoLineBreakBeforeAssignment:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -720,6 +855,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoMultipleSpaces:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -729,6 +866,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoSemicolons:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -738,6 +877,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoTrailingSpaces:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -747,6 +888,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoUnitReturn:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -756,6 +899,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoUnusedImports:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -765,6 +910,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   NoWildcardImports:
+    active: true
+    packagesToUseImportOnDemandProperty: 'java.util.*,kotlinx.android.synthetic.**'
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -774,6 +921,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   PackageName:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -783,6 +932,9 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   ParameterListWrapping:
+    active: true
+    autoCorrect: true
+    maxLineLength: 120
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -792,6 +944,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundAngleBrackets:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -801,6 +955,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundColon:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -810,6 +966,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundComma:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -819,6 +977,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundCurly:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -828,6 +988,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundDot:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -837,6 +999,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundDoubleColon:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -846,6 +1010,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundKeyword:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -855,6 +1021,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundOperators:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -864,6 +1032,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundParens:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -873,6 +1043,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundRangeOperator:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -882,6 +1054,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingAroundUnaryOperator:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -891,6 +1065,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingBetweenDeclarationsWithAnnotations:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -900,6 +1076,8 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   SpacingBetweenDeclarationsWithComments:
+    active: false
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -909,6 +1087,54 @@ formatting:
       - '**/jsTest/**'
       - '**/iosTest/**'
   StringTemplate:
+    active: true
+    autoCorrect: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  TrailingComma:
+    active: true
+    autoCorrect: true
+    allowTrailingComma: true
+    allowTrailingCommaOnCallSite: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  TypeArgumentListSpacing:
+    active: false
+    autoCorrect: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  UnnecessaryParenthesesBeforeTrailingLambda:
+    active: false
+    autoCorrect: true
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  Wrapping:
+    active: true
+    autoCorrect: true
     excludes:
       - '**/build/generated/**'
       - '**/test/**'
@@ -1203,6 +1429,15 @@ potential-bugs:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+  ElseCaseInsteadOfExhaustiveWhen:
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
   EqualsAlwaysReturnsTrueOrFalse:
     excludes:
       - '**/build/generated/**'
@@ -1338,6 +1573,15 @@ potential-bugs:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+  NullCheckOnMutableProperty:
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
   NullableToStringCall:
     excludes:
       - '**/build/generated/**'
@@ -1449,6 +1693,16 @@ potential-bugs:
 
 style:
   active: false
+  CanBeNonNullable:
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
   ClassOrdering:
     excludes:
       - '**/build/generated/**'
@@ -1894,6 +2148,15 @@ style:
       - '**/jsTest/**'
       - '**/iosTest/**'
   UnnecessaryInheritance:
+    excludes:
+      - '**/build/generated/**'
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+  UnnecessaryInnerClass:
     excludes:
       - '**/build/generated/**'
       - '**/test/**'

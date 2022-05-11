@@ -49,7 +49,7 @@ object UIToolKit {
         skin: Skin,
         text: String,
         options: List<InteractiveEventOption>,
-        eventReceiver: EntityManagerInteractionReceiver
+        eventReceiver: EntityManagerInteractionReceiver,
     ): Actor {
         val mainPane = Table(skin)
         mainPane.setFillParent(true)
@@ -71,7 +71,7 @@ object UIToolKit {
                         }
                         mainPane.removeActor(mainPane)
                         true
-                    }
+                    },
                 )
                 mainPane.add(button).pad(5F)
             }
@@ -84,7 +84,7 @@ object UIToolKit {
                     }
                     mainPane.removeActor(mainPane)
                     true
-                }
+                },
             )
             mainPane.add(continueButton)
         }

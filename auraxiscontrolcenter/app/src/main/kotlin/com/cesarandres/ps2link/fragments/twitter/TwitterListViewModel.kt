@@ -30,7 +30,7 @@ class TwitterListViewModel @Inject constructor(
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     TweetListComposeEventHandler {
 

@@ -31,7 +31,7 @@ fun NetworkImage(
 ) {
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         val painter = if (imageUrl == null) {
             painterResource(placeHolder)
@@ -43,14 +43,14 @@ fun NetworkImage(
                     placeholder(placeHolder)
                     error(placeHolder)
                     scale(Scale.FIT)
-                }
+                },
             )
         }
         Image(
             modifier = Modifier.matchParentSize(),
             painter = painter,
             contentScale = contentScale,
-            contentDescription = contentDescription
+            contentDescription = contentDescription,
         )
     }
 }

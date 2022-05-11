@@ -59,7 +59,7 @@ fun OutfitAddCompose(
                             name = it.name ?: "",
                             memberCount = it.memberCount,
                             namespace = it.namespace,
-                            onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) }
+                            onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) },
                         )
                     }
                 }
@@ -98,12 +98,12 @@ fun OutfitAddComposePreview() {
                     creationTime = null,
                     sessionCount = null,
                     cached = false,
-                    namespace = Namespace.PS2PC
+                    namespace = Namespace.PS2PC,
                 ),
                 memberCount = 200,
                 cached = false,
                 namespace = Namespace.PS2PS4US,
-            )
+            ),
         ),
         isLoading = true,
         isError = false,

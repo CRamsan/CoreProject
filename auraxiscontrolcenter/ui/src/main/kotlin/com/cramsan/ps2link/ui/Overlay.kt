@@ -28,7 +28,7 @@ fun LoadingOverlay(
     AnimatedVisibility(
         visible = enabled,
         enter = fadeIn(),
-        exit = fadeOut()
+        exit = fadeOut(),
     ) {
         Surface(
             modifier.fillMaxSize(),
@@ -55,7 +55,7 @@ fun ErrorOverlay(
     AnimatedVisibility(
         visible = isError,
         enter = fadeIn(),
-        exit = fadeOut()
+        exit = fadeOut(),
     ) {
         Surface(
             modifier,

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Server_response(
-    val world_list: List<World>
+    val world_list: List<World>,
 )

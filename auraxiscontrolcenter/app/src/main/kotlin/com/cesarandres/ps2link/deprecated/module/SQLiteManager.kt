@@ -1,3 +1,4 @@
+@file:Suppress("MaximumLineLength")
 package com.cesarandres.ps2link.deprecated.module
 
 import android.content.Context

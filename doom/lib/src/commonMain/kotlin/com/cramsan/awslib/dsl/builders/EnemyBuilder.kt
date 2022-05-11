@@ -38,7 +38,7 @@ class EnemyBuilder(
             damage,
             accuracy,
             move,
-            vision
+            vision,
         )
     }
 }

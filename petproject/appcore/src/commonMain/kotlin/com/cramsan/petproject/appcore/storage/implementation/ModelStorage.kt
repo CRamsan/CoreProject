@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 class ModelStorage(
     private val platformDelegate: ModelStorageDAO,
     private val eventLogger: EventLoggerInterface,
-    private val threadUtil: ThreadUtilInterface
+    private val threadUtil: ThreadUtilInterface,
 ) : ModelStorageInterface {
 
     override fun insertPlant(plant: Plant) {
@@ -76,7 +76,12 @@ class ModelStorage(
         } else {
             plantMainName.id
         }
-        platformDelegate.insertPlantMainNameEntry(plantMainNameId, plantMainName.mainName, plantMainName.plantId, plantMainName.locale)
+        platformDelegate.insertPlantMainNameEntry(
+            plantMainNameId,
+            plantMainName.mainName,
+            plantMainName.plantId,
+            plantMainName.locale,
+        )
     }
 
     override fun insertPlantMainNameList(list: List<PlantMainName>) {
@@ -109,7 +114,12 @@ class ModelStorage(
         } else {
             plantCommonName.id
         }
-        return platformDelegate.insertPlantCommonNameEntry(plantCommonNameId, plantCommonName.commonName, plantCommonName.plantId, plantCommonName.locale)
+        return platformDelegate.insertPlantCommonNameEntry(
+            plantCommonNameId,
+            plantCommonName.commonName,
+            plantCommonName.plantId,
+            plantCommonName.locale,
+        )
     }
 
     override fun insertPlantCommonNameList(list: List<PlantCommonName>) {
@@ -135,7 +145,12 @@ class ModelStorage(
         } else {
             plantFamily.id
         }
-        return platformDelegate.insertPlantFamilyNameEntry(plantFamilyId, plantFamily.family, plantFamily.plantId, plantFamily.locale)
+        return platformDelegate.insertPlantFamilyNameEntry(
+            plantFamilyId,
+            plantFamily.family,
+            plantFamily.plantId,
+            plantFamily.locale,
+        )
     }
 
     override fun insertPlantFamilyList(list: List<PlantFamily>) {
@@ -168,7 +183,13 @@ class ModelStorage(
         } else {
             description.id
         }
-        return platformDelegate.insertDescriptionEntry(descriptionId, description.plantId, description.animalId, description.description, description.locale)
+        return platformDelegate.insertDescriptionEntry(
+            descriptionId,
+            description.plantId,
+            description.animalId,
+            description.description,
+            description.locale,
+        )
     }
 
     override fun insertDescriptionList(list: List<Description>) {
@@ -194,7 +215,13 @@ class ModelStorage(
         } else {
             toxicity.id
         }
-        return platformDelegate.insertToxicityEntry(toxicityId, toxicity.toxic, toxicity.plantId, toxicity.animalId, toxicity.source)
+        return platformDelegate.insertToxicityEntry(
+            toxicityId,
+            toxicity.toxic,
+            toxicity.plantId,
+            toxicity.animalId,
+            toxicity.source,
+        )
     }
 
     override fun insertToxicityList(list: List<Toxicity>) {
@@ -221,7 +248,7 @@ class ModelStorage(
     override fun getCustomPlantEntry(
         animalType: AnimalType,
         plantId: Int,
-        locale: String
+        locale: String,
     ): GetPlantWithPlantIdAndAnimalId? {
         eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantEntry")
         threadUtil.assertIsBackgroundThread()
@@ -229,7 +256,7 @@ class ModelStorage(
         return platformDelegate.getCustomPlantEntry(
             plantId.toLong(),
             animalType,
-            locale
+            locale,
         )
     }
 
@@ -242,7 +269,7 @@ class ModelStorage(
 
     override fun getCustomPlantsEntriesFlow(
         animalType: AnimalType,
-        locale: String
+        locale: String,
     ): Flow<List<GetAllPlantsWithAnimalId>> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantsEntriesFlow")
         threadUtil.assertIsBackgroundThread()
@@ -254,7 +281,7 @@ class ModelStorage(
         animalType: AnimalType,
         locale: String,
         limit: Long,
-        offset: Long
+        offset: Long,
     ): List<GetAllPlantsWithAnimalId> {
         eventLogger.log(Severity.INFO, "ModelStorage", "getCustomPlantsEntries")
         threadUtil.assertIsBackgroundThread()

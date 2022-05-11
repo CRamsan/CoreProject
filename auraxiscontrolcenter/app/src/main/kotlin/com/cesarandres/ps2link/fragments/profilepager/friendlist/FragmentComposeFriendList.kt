@@ -35,7 +35,7 @@ class FragmentComposeFriendList : BaseComposePS2Fragment<FriendListViewModel>() 
             friendList = friendList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 

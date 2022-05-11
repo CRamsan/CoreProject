@@ -33,7 +33,7 @@ class PlaceableBuilder(
             enabled ?: this.enabled,
             health ?: this.health,
             group ?: this.group,
-            placeableType
+            placeableType,
         )
     }
 }

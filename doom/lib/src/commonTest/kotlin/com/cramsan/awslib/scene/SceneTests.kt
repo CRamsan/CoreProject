@@ -1,7 +1,7 @@
 package com.cramsan.awslib.scene
 
 import com.cramsan.awslib.ai.implementation.DummyAIRepoImpl
-import com.cramsan.awslib.ai.`interface`.AIRepo
+import com.cramsan.awslib.ai.AIRepo
 import com.cramsan.awslib.dsl.scene
 import com.cramsan.awslib.entitymanager.implementation.EntityManager
 import com.cramsan.awslib.entitymanager.implementation.TurnAction

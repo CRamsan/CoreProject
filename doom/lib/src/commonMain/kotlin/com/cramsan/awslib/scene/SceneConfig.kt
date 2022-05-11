@@ -11,5 +11,5 @@ data class SceneConfig(
     val characterList: List<CharacterInterface>,
     val itemList: List<ItemInterface>,
     val triggerList: List<Trigger>,
-    val eventList: List<BaseEvent>
+    val eventList: List<BaseEvent>,
 )

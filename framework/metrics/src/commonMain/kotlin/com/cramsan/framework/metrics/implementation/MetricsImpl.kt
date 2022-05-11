@@ -26,9 +26,12 @@ class MetricsImpl(
         tag: String,
         metadata: Map<String, String>?,
         value: Double,
-        unit: MetricUnit
+        unit: MetricUnit,
     ) {
-        eventLoggerInterface.i(TAG, "Metric of type: $type, Namespace: $namespace, Tag: $tag, Metadata: $metadata, Value: $value, Unit: $unit")
+        eventLoggerInterface.i(
+            TAG,
+            "Metric of type: $type, Namespace: $namespace, Tag: $tag, Metadata: $metadata, Value: $value, Unit: $unit",
+        )
         platformDelegate.record(type, namespace.identifier, tag, metadata, value, unit)
     }
 

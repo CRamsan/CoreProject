@@ -40,7 +40,7 @@ class FragmentComposeOutfit : BaseComposePS2Fragment<OutfitViewModel>() {
             memberCount = outfit.value?.memberCount?.toLong() ?: 0,
             creationTime = outfit.value?.timeCreated,
             isLoading = isLoading.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 

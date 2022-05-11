@@ -7,7 +7,7 @@ package com.cramsan.awslib.eventsystem.triggers
 abstract class Trigger(
     val id: String,
     val eventId: String,
-    var enabled: Boolean
+    var enabled: Boolean,
 ) {
     override fun toString(): String {
         return "id: $id, event: $eventId, enabled: $enabled"

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Character_name_list_response(
-    val character_name_list: List<CharacterProfileJoin>? = null
+    val character_name_list: List<CharacterProfileJoin>? = null,
 )

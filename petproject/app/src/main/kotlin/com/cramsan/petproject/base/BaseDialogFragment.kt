@@ -51,7 +51,7 @@ abstract class BaseDialogFragment<T : BaseViewModel, U : ViewDataBinding> : Dial
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         eventLogger.log(Severity.INFO, logTag, "onCreateView")

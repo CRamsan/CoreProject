@@ -7,13 +7,16 @@ import io.ktor.client.statement.HttpResponse
 class PS2HttpResponse<Body> private constructor(
     val body: Body?,
     val rawResponse: HttpResponse? = null,
-    val throwable: Throwable? = null
+    val throwable: Throwable? = null,
 ) {
     val code = rawResponse?.status?.value ?: 200
     val isSuccessful = throwable == null && code in 200..299
 
     companion object {
-        fun <Body> success(body: Body, rawResponse: HttpResponse? = null): PS2HttpResponse<Body> = PS2HttpResponse(body, rawResponse)
+        fun <Body> success(body: Body, rawResponse: HttpResponse? = null): PS2HttpResponse<Body> = PS2HttpResponse(
+            body,
+            rawResponse,
+        )
 
         fun <Body> failure(rawResponse: HttpResponse?, throwable: Throwable?): PS2HttpResponse<Body> {
             assert(rawResponse != null || throwable != null, "PS2HttpResponse", "A rawResponse or throwable is needed.")
@@ -23,15 +26,19 @@ class PS2HttpResponse<Body> private constructor(
         fun <Body> failure(rawResponse: HttpResponse?, throwableList: List<Throwable>): PS2HttpResponse<Body> {
             assert(throwableList.isNotEmpty(), "PS2HttpResponse", "throwableList cannot be empty.")
             return PS2HttpResponse(
-                null, rawResponse,
+                null,
+                rawResponse,
                 Exception(
                     "Multiple exceptions found. ${throwableList.size} exceptions in total. First exception attached.",
                     throwableList.first(),
-                )
+                ),
             )
         }
 
-        fun <Orig, Result> process(response: PS2HttpResponse<Orig>, process: (Orig) -> Result): PS2HttpResponse<Result> {
+        fun <Orig, Result> process(
+            response: PS2HttpResponse<Orig>,
+            process: (Orig) -> Result,
+        ): PS2HttpResponse<Result> {
             if (!response.isSuccessful) {
                 return response.toFailure()
             }
@@ -55,7 +62,10 @@ fun <Body> PS2HttpResponse<Body>.isSuccessfulAndContainsBody() = isSuccessful &&
 
 fun <Orig, Result> PS2HttpResponse<Orig>.toFailure() = toFailure<Orig, Result>(throwable)
 
-fun <Orig, Result> PS2HttpResponse<Orig>.toFailure(throwable: Throwable?) = PS2HttpResponse.failure<Result>(rawResponse, throwable)
+fun <Orig, Result> PS2HttpResponse<Orig>.toFailure(throwable: Throwable?) = PS2HttpResponse.failure<Result>(
+    rawResponse,
+    throwable,
+)
 
 fun <Orig, Result> PS2HttpResponse<Orig>.toSuccess(body: Result) = PS2HttpResponse.success(body, rawResponse)
 

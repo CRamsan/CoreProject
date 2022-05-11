@@ -75,13 +75,13 @@ fun BRBar(
         if (percentageToNextLevel > 0) {
             Spacer(
                 modifier = Modifier
-                    .weight(percentageToNextLevel)
+                    .weight(percentageToNextLevel),
             )
             Box(
                 modifier = Modifier
                     .weight(100 - percentageToNextLevel)
                     .fillMaxHeight()
-                    .background(goldBackground)
+                    .background(goldBackground),
             )
         }
     }

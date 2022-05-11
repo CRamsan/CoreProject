@@ -24,7 +24,7 @@ fun RedditCompose(
     FrameBottom {
         SwipeToRefresh(
             isLoading = isLoading,
-            onRefreshRequested = { eventHandler.onRefreshRequested() }
+            onRefreshRequested = { eventHandler.onRefreshRequested() },
         ) {
             items(redditContent) {
                 RedditPostItem(

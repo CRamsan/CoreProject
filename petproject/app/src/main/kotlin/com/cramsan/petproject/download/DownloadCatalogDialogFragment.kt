@@ -29,7 +29,7 @@ class DownloadCatalogDialogFragment : BaseDialogFragment<DownloadCatalogViewMode
                 if (isDownloadComplete) {
                     closeDialog()
                 }
-            }
+            },
         )
         if (model.isCatalogReady()) {
             closeDialog()

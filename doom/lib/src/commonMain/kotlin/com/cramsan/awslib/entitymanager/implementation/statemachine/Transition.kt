@@ -122,15 +122,19 @@ data class UnequiptItem(override val id: String, val consumableItem: EquippableI
     override fun toReverse() = EquipItem(id, consumableItem)
 }
 
-data class SwapCharacter(override val id: String, val originEventId: String, val event: SwapCharacterEvent) : Transition(id) {
+data class SwapCharacter(
+    override val id: String,
+    val originEventId: String,
+    val event: SwapCharacterEvent,
+) : Transition(id) {
     override fun toReverse() = SwapCharacter(
         id,
         event.nextEventId,
         event.copy(
             enableId = event.disableId,
             disableId = event.enableId,
-            nextEventId = originEventId
-        )
+            nextEventId = originEventId,
+        ),
     )
 }
 

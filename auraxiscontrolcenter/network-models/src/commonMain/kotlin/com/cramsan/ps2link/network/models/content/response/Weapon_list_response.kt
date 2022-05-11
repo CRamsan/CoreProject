@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Weapon_list_response(
-    val characters_weapon_stat_by_faction_list: List<WeaponStat>
+    val characters_weapon_stat_by_faction_list: List<WeaponStat>,
 )

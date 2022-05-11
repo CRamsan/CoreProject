@@ -33,6 +33,6 @@ fun PS2Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() 
         colors = palette,
         typography = typography,
         shapes = shapes,
-        content = content
+        content = content,
     )
 }

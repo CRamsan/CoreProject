@@ -49,14 +49,14 @@ fun BoldButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val color = MaterialTheme.colors.primary
     val buttonColors = BoldButtonColors(
         backgroundColor = color.setAlpha(
-            Opacity.translucent
+            Opacity.translucent,
         ),
-        contentColor = MaterialTheme.colors.onPrimary
+        contentColor = MaterialTheme.colors.onPrimary,
     )
 
     Button(
@@ -82,7 +82,7 @@ fun MainMenuButton(
     BoldButton(
         modifier = modifier,
         enabled = enabled,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
             modifier = Modifier.animateContentSize(),
@@ -92,7 +92,7 @@ fun MainMenuButton(
             if (star) {
                 Image(
                     painter = painterResource(id = R.drawable.icon_star_selected),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
             Box(
@@ -111,7 +111,7 @@ fun MainMenuButton(
                             text = label ?: "",
                             style = MaterialTheme.typography.h5,
                             modifier = Modifier
-                                .padding(vertical = Padding.small)
+                                .padding(vertical = Padding.small),
                         )
                     }
                 }
@@ -125,12 +125,12 @@ fun SlimButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val color = MaterialTheme.colors.primary
     val buttonColors = BoldButtonColors(
         backgroundColor = color.setAlpha(Opacity.transparent),
-        contentColor = contentColorFor(color)
+        contentColor = contentColorFor(color),
     )
 
     Button(
@@ -162,7 +162,7 @@ fun BoldButtonPreview() {
                 Text("Android")
             }
             BoldButton(
-                enabled = false
+                enabled = false,
             ) {
                 Text("Test")
             }
@@ -170,7 +170,7 @@ fun BoldButtonPreview() {
                 Text("Slim Test")
             }
             SlimButton(
-                enabled = false
+                enabled = false,
             ) {
                 Text("Slim Test")
             }

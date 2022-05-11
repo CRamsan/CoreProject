@@ -26,7 +26,7 @@ fun MemberListCompose(
         Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
-                onRefreshRequested = { eventHandler.onRefreshRequested() }
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             ) {
                 items(memberList) {
                     OutfitMemberItem(
@@ -34,7 +34,7 @@ fun MemberListCompose(
                         label = it.name ?: "",
                         loginStatus = it.loginStatus,
                         outfitRank = it.outfitRank?.name ?: "",
-                        onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
+                        onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) },
                     )
                 }
             }

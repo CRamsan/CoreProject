@@ -40,7 +40,7 @@ class CloudwatchMetrics(
     private val uploadRequestBuffer = MutableSharedFlow<PutMetricDataRequest>(
         replay = BUFFER_CAPACITY,
         extraBufferCapacity = BUFFER_CAPACITY,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
     override fun initialize() {
@@ -106,9 +106,27 @@ class CloudwatchMetrics(
             when (throwable) {
                 is InvalidParameterValueException, is MissingRequiredParameterException,
                 is InvalidParameterCombinationException, is InternalServiceException,
-                is AmazonServiceException -> eventLogger.log(Severity.WARNING, TAG, "AWS service failure while uploading metric", throwable, false)
-                is AmazonClientException -> eventLogger.log(Severity.WARNING, TAG, "AWS client failure while uploading metric", throwable, false)
-                else -> eventLogger.log(Severity.WARNING, TAG, "Undetermined failure while uploading metric", throwable, false)
+                is AmazonServiceException, -> eventLogger.log(
+                    Severity.WARNING,
+                    TAG,
+                    "AWS service failure while uploading metric",
+                    throwable,
+                    false,
+                )
+                is AmazonClientException -> eventLogger.log(
+                    Severity.WARNING,
+                    TAG,
+                    "AWS client failure while uploading metric",
+                    throwable,
+                    false,
+                )
+                else -> eventLogger.log(
+                    Severity.WARNING,
+                    TAG,
+                    "Undetermined failure while uploading metric",
+                    throwable,
+                    false,
+                )
             }
             false
         }
@@ -136,7 +154,10 @@ class CloudwatchMetrics(
         ): MetricsDelegate {
             val client = createCloudWatchClient(accessKey, secretKey)
             return CloudwatchMetrics(
-                client, dispatcherProvider, eventLogger, scope
+                client,
+                dispatcherProvider,
+                eventLogger,
+                scope,
             )
         }
     }

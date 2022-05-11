@@ -46,10 +46,10 @@ fun WeaponItem(
 ) {
     SlimButton(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(weaponName ?: stringResource(R.string.text_unknown))
             Row(
@@ -63,7 +63,7 @@ fun WeaponItem(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(Padding.small)
+                        .padding(Padding.small),
                 ) {
                     Text(stringResource(R.string.text_kills, totalKills))
                     Spacer(modifier = Modifier.height(Padding.xsmall))
@@ -72,7 +72,7 @@ fun WeaponItem(
                             NCKills?.let {
                                 Text(
                                     stringResource(R.string.text_nc_, it),
-                                    style = MaterialTheme.typography.overline
+                                    style = MaterialTheme.typography.overline,
                                 )
                             }
                         }
@@ -81,7 +81,7 @@ fun WeaponItem(
                             TRKills?.let {
                                 Text(
                                     stringResource(R.string.text_tr_, it),
-                                    style = MaterialTheme.typography.overline
+                                    style = MaterialTheme.typography.overline,
                                 )
                             }
                         }
@@ -90,7 +90,7 @@ fun WeaponItem(
                             VSKills?.let {
                                 Text(
                                     stringResource(R.string.text_vs_, it),
-                                    style = MaterialTheme.typography.overline
+                                    style = MaterialTheme.typography.overline,
                                 )
                             }
                         }
@@ -98,12 +98,12 @@ fun WeaponItem(
                     Spacer(modifier = Modifier.height(Padding.xsmall))
                     Text(
                         stringResource(R.string.text_headshots_, totalHeadshotKills),
-                        style = MaterialTheme.typography.overline
+                        style = MaterialTheme.typography.overline,
                     )
                     Spacer(modifier = Modifier.width(Padding.xsmall))
                     Text(
                         stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed),
-                        style = MaterialTheme.typography.overline
+                        style = MaterialTheme.typography.overline,
                     )
                 }
                 Image(
@@ -111,7 +111,7 @@ fun WeaponItem(
                         .size(Size.xxlarge)
                         .align(CenterVertically),
                     painter = painterResource(medalType.toImageRes()),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }

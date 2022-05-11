@@ -14,7 +14,7 @@ abstract class GameEntity(
     override var posY: Int,
     var speed: Int,
     override var enabled: Boolean,
-    override var shouldMove: Boolean
+    override var shouldMove: Boolean,
 ) : CharacterInterface {
     override var heading = Direction.NORTH
     override var nextTurnAction = TurnAction.NOOP

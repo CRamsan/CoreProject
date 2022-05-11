@@ -27,7 +27,7 @@ class ProfileListViewModel @Inject constructor(
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     ProfileListEventHandler {
 

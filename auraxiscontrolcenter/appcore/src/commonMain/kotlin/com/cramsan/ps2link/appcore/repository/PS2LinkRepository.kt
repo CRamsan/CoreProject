@@ -96,13 +96,13 @@ interface PS2LinkRepository {
     suspend fun getMembersOnline(
         outfitId: String,
         namespace: Namespace,
-        currentLang: CensusLang
+        currentLang: CensusLang,
     ): PS2HttpResponse<List<Character>>
 
     suspend fun getMembers(
         outfitId: String,
         namespace: Namespace,
-        currentLang: CensusLang
+        currentLang: CensusLang,
     ): PS2HttpResponse<List<Character>>
 
     /**

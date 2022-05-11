@@ -22,12 +22,12 @@ class MetricsDefaultAccess(scope: software.constructs.Construct, id: String) : C
     init {
         val readOnlyUser = User(this, "ReadOnly", null)
         readOnlyUser.addManagedPolicy(
-            ManagedPolicy.fromAwsManagedPolicyName("CloudWatchReadOnlyAccess")
+            ManagedPolicy.fromAwsManagedPolicyName("CloudWatchReadOnlyAccess"),
         )
 
         val cloudWatchMetricAccess = User(this, "CloudWatchMetricAccess")
         cloudWatchMetricAccess.addManagedPolicy(
-            ManagedPolicy.fromAwsManagedPolicyName("CloudWatchFullAccess")
+            ManagedPolicy.fromAwsManagedPolicyName("CloudWatchFullAccess"),
         )
         val accessKey = CfnAccessKey(this, "apiAccess") {
             cloudWatchMetricAccess.userName

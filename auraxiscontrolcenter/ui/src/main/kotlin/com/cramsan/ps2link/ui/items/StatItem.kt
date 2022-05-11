@@ -27,7 +27,7 @@ fun StatItem(
     thisMonth: Float?,
 ) {
     SlimButton(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Column {
             Text(
@@ -43,7 +43,7 @@ fun StatItem(
                     style = style,
                     text = stringResource(
                         R.string.text_stat_all,
-                        allTime?.toString() ?: stringResource(R.string.text_unknown)
+                        allTime?.toString() ?: stringResource(R.string.text_unknown),
                     ),
                 )
                 Text(
@@ -51,7 +51,7 @@ fun StatItem(
                     style = style,
                     text = stringResource(
                         R.string.text_stat_today,
-                        today?.toString() ?: stringResource(R.string.text_unknown)
+                        today?.toString() ?: stringResource(R.string.text_unknown),
                     ),
                 )
             }
@@ -61,7 +61,7 @@ fun StatItem(
                     style = style,
                     text = stringResource(
                         R.string.text_stat_week,
-                        thisWeek?.toString() ?: stringResource(R.string.text_unknown)
+                        thisWeek?.toString() ?: stringResource(R.string.text_unknown),
                     ),
                 )
                 Text(
@@ -69,7 +69,7 @@ fun StatItem(
                     style = style,
                     text = stringResource(
                         R.string.text_stat_month,
-                        thisMonth?.toString() ?: stringResource(R.string.text_unknown)
+                        thisMonth?.toString() ?: stringResource(R.string.text_unknown),
                     ),
                 )
             }

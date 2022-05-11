@@ -62,7 +62,9 @@ class AStarAlgorithm {
                     // Ignore the neighbor which is already evaluated.
 
                     // The distance from start to a neighbor
-                    val tentativeGScore = gScore.getValue(current).plus(functionProvider.distanceBetween(current, neighbor))
+                    val tentativeGScore = gScore.getValue(current).plus(
+                        functionProvider.distanceBetween(current, neighbor),
+                    )
                     if (tentativeGScore > maxCost) {
                         continue
                     }

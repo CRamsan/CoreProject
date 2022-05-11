@@ -102,7 +102,7 @@ class TwitterClientImpl(
                                 tag,
                                 imgUrl,
                                 tweetUrl,
-                            )
+                            ),
                         )
                     }
                 }

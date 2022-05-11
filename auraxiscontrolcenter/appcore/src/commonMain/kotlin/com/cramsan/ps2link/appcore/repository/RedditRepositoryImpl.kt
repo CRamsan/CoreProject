@@ -22,8 +22,8 @@ class RedditRepositoryImpl(
         val response = http.sendRequestWithRetry<RedditResponse>(
             UrlHolder(
                 HttpNamespace.Api.REDDIT,
-                Url(url)
-            )
+                Url(url),
+            ),
         )
 
         return response.process {

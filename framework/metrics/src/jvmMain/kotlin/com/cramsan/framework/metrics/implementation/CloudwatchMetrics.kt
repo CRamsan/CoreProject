@@ -67,9 +67,17 @@ class CloudwatchMetrics(
         } catch (throwable: Throwable) {
             when (throwable) {
                 is InvalidParameterValueException, is MissingRequiredParameterException,
-                is InvalidParameterCombinationException -> logE(TAG, "Failed to upload metric due to bad request", throwable)
+                is InvalidParameterCombinationException, -> logE(
+                    TAG,
+                    "Failed to upload metric due to bad request",
+                    throwable,
+                )
                 is InternalServiceException -> logE(TAG, "Failed to upload metric due to service error", throwable)
-                is SdkClientException -> logE(TAG, "Failed to upload metric due to generic client-side issue", throwable)
+                is SdkClientException -> logE(
+                    TAG,
+                    "Failed to upload metric due to generic client-side issue",
+                    throwable,
+                )
                 is CloudWatchException -> logE(TAG, "Failed to upload metric due to generic CW issue", throwable)
                 is SdkException -> logE(TAG, "Failed to upload metric due to generic SDK issue", throwable)
             }

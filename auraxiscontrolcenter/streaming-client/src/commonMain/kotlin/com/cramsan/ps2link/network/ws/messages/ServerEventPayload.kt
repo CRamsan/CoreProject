@@ -39,7 +39,7 @@ data class ContinentLock(
     @SerialName("metagame_event_id")
     val metagameEventId: String? = null,
     @SerialName("event_type")
-    val eventType: String?
+    val eventType: String?,
 ) : ServerEventPayload()
 
 /**
@@ -70,7 +70,7 @@ data class ContinentUnlock(
     @SerialName("metagame_event_id")
     val metagameEventId: String? = null,
     @SerialName("event_type")
-    val eventType: String?
+    val eventType: String?,
 ) : ServerEventPayload()
 
 /**

@@ -35,7 +35,7 @@ class PlantSuggestionFragment : BaseDialogFragment<PlantSuggestionViewModel, Fra
                     Toast.makeText(context, R.string.thanks_suggestion, Toast.LENGTH_LONG).show()
                 }
                 closeDialog()
-            }
+            },
         )
         viewModel = model
     }

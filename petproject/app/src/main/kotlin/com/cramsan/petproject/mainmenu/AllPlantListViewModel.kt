@@ -33,7 +33,7 @@ class AllPlantListViewModel @Inject constructor(
     application: Application,
     modelProvider: ModelProviderInterface,
     dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) :
     CatalogDownloadViewModel(application, dispatcherProvider, modelProvider, savedStateHandle) {
 

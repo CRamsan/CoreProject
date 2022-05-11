@@ -41,9 +41,9 @@ fun SearchField(
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
-            }
+            },
         ),
-        onValueChange = onValueChange
+        onValueChange = onValueChange,
     )
 }
 

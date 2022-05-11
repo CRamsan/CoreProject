@@ -35,7 +35,7 @@ class FragmentComposeStatList : BaseComposePS2Fragment<StatListViewModel>() {
             statList = statList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 

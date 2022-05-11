@@ -3,7 +3,7 @@
  */
 
 apply plugin: "org.jetbrains.kotlin.js"
-apply from: "$rootDir/gradle/ktlint.gradle"
+apply from: "$rootDir/gradle/detekt.gradle"
 
 kotlin {
     js(IR) {
@@ -29,7 +29,7 @@ def releaseJs = tasks.register("releaseJs") {
     group = 'build'
     description = 'Run all the steps to build a Js artifact'
 
-    dependsOn 'ktlint'
+    dependsOn 'detekt'
     dependsOn 'compileKotlinJs'
     dependsOn 'test'
 }

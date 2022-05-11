@@ -26,14 +26,14 @@ fun OnlineMembersCompose(
         Box(modifier = Modifier.fillMaxSize()) {
             SwipeToRefresh(
                 isLoading = isLoading,
-                onRefreshRequested = { eventHandler.onRefreshRequested() }
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             ) {
                 items(memberList) {
                     OnlineMemberItem(
                         modifier = Modifier.fillMaxWidth(),
                         label = it.name ?: "",
                         characterClass = it.activeProfileId,
-                        onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
+                        onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) },
                     )
                 }
             }

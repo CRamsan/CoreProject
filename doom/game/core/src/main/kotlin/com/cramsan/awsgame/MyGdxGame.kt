@@ -34,7 +34,7 @@ class MyGdxGame : Game() {
                         SceneManager.startGameScreen(GameParameterManager())
                         // startMainMenuScreen(true)
                     }
-                }
+                },
             )
             this.setScreen(splashScreen)
         }
@@ -68,7 +68,7 @@ class MyGdxGame : Game() {
 
     fun setScreen(
         newScreen: BaseScreen,
-        isInitialLoad: Boolean
+        isInitialLoad: Boolean,
     ) { // Check if there was an existing screen and if there was hide it.
         if (screen != null) {
             if (!isInitialLoad) {

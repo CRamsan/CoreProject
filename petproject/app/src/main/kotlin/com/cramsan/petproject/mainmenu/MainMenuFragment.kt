@@ -29,7 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * Fragment that manages the main menu.
  */
 @AndroidEntryPoint
-class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, FragmentMainMenuBinding>(), AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
+class MainMenuFragment :
+    BaseDatabindingFragment<AllPlantListViewModel, FragmentMainMenuBinding>(),
+    AllPlantsRecyclerViewAdapter.OnListFragmentAdapterListener {
 
     override val logTag: String
         get() = "MainMenuFragment"
@@ -58,39 +60,39 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
             Observer {
                 val action = MainMenuFragmentDirections.actionMainMenuFragmentToPlantsListFragment(AnimalType.CAT)
                 findNavController().navigate(action)
-            }
+            },
         )
         viewModel.observableNextActivityDog().observe(
             viewLifecycleOwner,
             Observer {
                 val action = MainMenuFragmentDirections.actionMainMenuFragmentToPlantsListFragment(AnimalType.DOG)
                 findNavController().navigate(action)
-            }
+            },
         )
         viewModel.observableShowIsDownloadingData().observe(
             viewLifecycleOwner,
             Observer {
                 displayDownloadingMessage()
-            }
+            },
         )
         viewModel.observableShowDataDownloaded().observe(
             viewLifecycleOwner,
             Observer {
                 displayDownloadCompleteMessage()
-            }
+            },
         )
         viewModel.observablePlants().observe(
             viewLifecycleOwner,
             Observer { plants ->
                 plantsAdapter.updateValues(plants)
-            }
+            },
         )
         viewModel.observableStartDownload().observe(
             viewLifecycleOwner,
             Observer {
                 val action = MainMenuFragmentDirections.actionMainMenuFragmentToDownloadCatalogDialogFragment()
                 findNavController().navigate(action)
-            }
+            },
         )
         viewModel.observableShowDataDownloaded().observe(
             viewLifecycleOwner,
@@ -98,7 +100,7 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
                 logI("MainMenuActivity", "Data is downloaded")
                 enableSearchView = true
                 requireActivity().invalidateOptionsMenu()
-            }
+            },
         )
         layoutManager = LinearLayoutManager(context)
         plantsAdapter = AllPlantsRecyclerViewAdapter(this, AnimalType.ALL)
@@ -177,7 +179,7 @@ class MainMenuFragment : BaseDatabindingFragment<AllPlantListViewModel, Fragment
                         queryCleaner.isEnabled = true
                         return true
                     }
-                }
+                },
             )
         }
     }

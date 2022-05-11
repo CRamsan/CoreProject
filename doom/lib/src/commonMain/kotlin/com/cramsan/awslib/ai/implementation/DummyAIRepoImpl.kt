@@ -1,6 +1,6 @@
 package com.cramsan.awslib.ai.implementation
 
-import com.cramsan.awslib.ai.`interface`.AIRepo
+import com.cramsan.awslib.ai.AIRepo
 import com.cramsan.awslib.entity.CharacterInterface
 import com.cramsan.awslib.entity.implementation.Enemy
 import com.cramsan.awslib.entitymanager.TurnActionInterface
@@ -23,7 +23,11 @@ class DummyAIRepoImpl(private val log: EventLoggerInterface) : AIRepo {
 
     private val tag = "DummyAIRepoImpl"
 
-    override fun getNextTurnAction(character: CharacterInterface, entityManager: EntityManager, map: GameMap): TurnActionInterface {
+    override fun getNextTurnAction(
+        character: CharacterInterface,
+        entityManager: EntityManager,
+        map: GameMap,
+    ): TurnActionInterface {
         val target = getCharacterTarget(character, entityManager)
 
         if (target == null) {
@@ -49,12 +53,18 @@ class DummyAIRepoImpl(private val log: EventLoggerInterface) : AIRepo {
     }
 
     /**
-     * Compare the x and y components of [positionable] and [otherPositionable] and return their diagonal distance as a Float.
+     * Compare the x and y components of [positionable] and [otherPositionable]
+     * and return their diagonal distance as a Float.
      */
     private fun distance(positionable: GridPositionableInterface, otherPositionable: GridPositionableInterface): Float {
         val squarePower = 2
         val squareRoot = 0.5f
-        return ((positionable.posY - otherPositionable.posY).toFloat().pow(squarePower) + (positionable.posX - otherPositionable.posX).toFloat().pow(squarePower)).pow(squareRoot)
+        return (
+            (
+                positionable.posY - otherPositionable.posY
+                ).toFloat().pow(squarePower) +
+                (positionable.posX - otherPositionable.posX).toFloat().pow(squarePower)
+            ).pow(squareRoot)
     }
 
     /**

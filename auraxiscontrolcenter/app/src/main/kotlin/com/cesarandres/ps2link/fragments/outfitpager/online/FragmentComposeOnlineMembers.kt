@@ -37,7 +37,7 @@ class FragmentComposeOnlineMembers : BaseComposePS2Fragment<OnlineMembersViewMod
             memberList = memberList.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            eventHandler = viewModel
+            eventHandler = viewModel,
         )
     }
 

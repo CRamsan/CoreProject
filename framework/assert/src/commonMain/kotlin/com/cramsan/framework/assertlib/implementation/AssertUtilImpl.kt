@@ -12,7 +12,7 @@ import com.cramsan.framework.logging.Severity
 class AssertUtilImpl(
     override val haltOnFailure: Boolean,
     override val eventLogger: EventLoggerInterface?,
-    override val haltUtil: HaltUtil?
+    override val haltUtil: HaltUtil?,
 ) : AssertUtilInterface {
 
     init {

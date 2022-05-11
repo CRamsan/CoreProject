@@ -101,7 +101,7 @@ class DBGServiceClientImpl(
             character_id,
             QueryString.generateQeuryString().AddCommand(
                 QueryString.QueryCommand.RESOLVE,
-                "outfit,world,online_status"
+                "outfit,world,online_status",
             )
                 .AddCommand(QueryString.QueryCommand.JOIN, "type:world^inject_at:server"),
             HttpNamespace.Api.PROFILE,
@@ -131,7 +131,7 @@ class DBGServiceClientImpl(
                 .AddComparison(
                     "name.first_lower",
                     QueryString.SearchModifier.STARTSWITH,
-                    searchField.lowercase()
+                    searchField.lowercase(),
                 )
                 .AddCommand(QueryString.QueryCommand.LIMIT, "25")
                 .AddCommand(QueryString.QueryCommand.JOIN, "character"),
@@ -146,7 +146,7 @@ class DBGServiceClientImpl(
                 it.character_id_join_character?.toCoreModel(
                     namespace,
                     clock.now(),
-                    currentLang
+                    currentLang,
                 )
             }?.filterNotNull() ?: emptyList()
         }
@@ -164,7 +164,7 @@ class DBGServiceClientImpl(
             QueryString.generateQeuryString().AddComparison(
                 "character_id",
                 QueryString.SearchModifier.EQUALS,
-                character_id
+                character_id,
             )
                 .AddCommand(QueryString.QueryCommand.RESOLVE, "character_name"),
             HttpNamespace.Api.FRIEND_LIST,
@@ -190,11 +190,11 @@ class DBGServiceClientImpl(
             QueryString.generateQeuryString().AddComparison(
                 "character_id",
                 QueryString.SearchModifier.EQUALS,
-                character_id
+                character_id,
             )
                 .AddCommand(
                     QueryString.QueryCommand.RESOLVE,
-                    "character,attacker"
+                    "character,attacker",
                 ).AddCommand(QueryString.QueryCommand.LIMIT, "100")
                 .AddComparison("type", QueryString.SearchModifier.EQUALS, "DEATH,KILL"),
             HttpNamespace.Api.KILL_LIST,
@@ -232,7 +232,7 @@ class DBGServiceClientImpl(
                 it.characters_event_list,
                 weaponMapping,
                 vehicleMapping,
-                namespace
+                namespace,
             )
         }
     }
@@ -270,14 +270,14 @@ class DBGServiceClientImpl(
                 AddComparison(
                     "alias_lower",
                     QueryString.SearchModifier.STARTSWITH,
-                    outfitTag
+                    outfitTag,
                 )
             }
             if (outfitName.length >= 3) {
                 AddComparison(
                     "name_lower",
                     QueryString.SearchModifier.STARTSWITH,
-                    outfitName
+                    outfitName,
                 )
             }
             AddCommand(QueryString.QueryCommand.LIMIT, "15")
@@ -333,11 +333,11 @@ class DBGServiceClientImpl(
             QueryString.generateQeuryString().AddComparison(
                 "outfit_id",
                 QueryString.SearchModifier.EQUALS,
-                outfitId
+                outfitId,
             )
                 .AddCommand(
                     QueryString.QueryCommand.RESOLVE,
-                    "member_online_status,member,member_character(name,type.faction)"
+                    "member_online_status,member,member_character(name,type.faction)",
                 ),
             HttpNamespace.Api.OUTFIT_MEMBER_LIST,
             namespace.toNetworkModel(),
@@ -350,7 +350,7 @@ class DBGServiceClientImpl(
                 it.toCoreModel(
                     namespace,
                     clock.now(),
-                    currentLang
+                    currentLang,
                 )
             } ?: emptyList()
         }
@@ -400,17 +400,17 @@ class DBGServiceClientImpl(
             "",
             QueryString.generateQeuryString().AddCommand(
                 QueryString.QueryCommand.LIMIT,
-                "1"
+                "1",
             ).AddComparison(
                 "type",
                 QueryString.SearchModifier.EQUALS,
-                "METAGAME"
+                "METAGAME",
             ).AddComparison("world_id", QueryString.SearchModifier.EQUALS, serverId)
                 .AddComparison(
                     "after",
                     QueryString.SearchModifier.EQUALS,
                     // Get metagame events that are newer than 2 hours
-                    Clock.System.now().minus(15.hours).epochSeconds.toString()
+                    Clock.System.now().minus(15.hours).epochSeconds.toString(),
                 ).AddCommand(QueryString.QueryCommand.JOIN, "metagame_event"),
             HttpNamespace.Api.SERVER_METADATA,
             namespace.toNetworkModel(),
@@ -437,7 +437,7 @@ class DBGServiceClientImpl(
                 .AddCommand(QueryString.QueryCommand.RESOLVE, "stat_history")
                 .AddCommand(
                     QueryString.QueryCommand.HIDE,
-                    "name,battle_rank,certs,times,daily_ribbon"
+                    "name,battle_rank,certs,times,daily_ribbon",
                 ),
             HttpNamespace.Api.STAT_LIST,
             namespace.toNetworkModel(),
@@ -460,10 +460,14 @@ class DBGServiceClientImpl(
             census.generateGameDataRequest(
                 Verb.GET,
                 Collections.PS2Collection.OUTFIT_MEMBER,
-                "c:limit=10000&c:resolve=online_status,character(name,battle_rank,profile_id)&c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.lowercase() + "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
+                "c:limit=10000&" +
+                    "c:resolve=online_status," +
+                    "character(name,battle_rank,profile_id)&" +
+                    "c:join=type:profile^list:0^inject_at:profile^show:name." + currentLang.name.lowercase() +
+                    "^on:character.profile_id^to:profile_id&outfit_id=" + outfitId,
                 HttpNamespace.Api.OUTFIT_MEMBERS_ONLINE,
                 namespace.toNetworkModel(),
-                currentLang
+                currentLang,
             )
         val response = http.sendRequestWithRetry<Outfit_member_response>(url)
         return response.process { outfitMembersOnline ->
@@ -538,7 +542,7 @@ class DBGServiceClientImpl(
         filterPrestige: Int?,
         faction: com.cramsan.ps2link.core.models.Faction,
         namespace: Namespace,
-        currentLang: CensusLang
+        currentLang: CensusLang,
     ): PS2HttpResponse<List<ExperienceRank>> {
         val queryBuilder = QueryString.generateQeuryString()
 
@@ -546,7 +550,11 @@ class DBGServiceClientImpl(
         filterPrestige?.let {
             when (it) {
                 0 -> {
-                    queryBuilder.AddComparison("vs.title.en", QueryString.SearchModifier.NOTCONTAIN, "A.S.P.%20Operative")
+                    queryBuilder.AddComparison(
+                        "vs.title.en",
+                        QueryString.SearchModifier.NOTCONTAIN,
+                        "A.S.P.%20Operative",
+                    )
                 }
                 else -> Unit
             }
@@ -600,13 +608,13 @@ class DBGServiceClientImpl(
 private fun CharacterProfile.toCoreModel(
     namespace: Namespace,
     lastUpdated: Instant,
-    currentLang: CensusLang
+    currentLang: CensusLang,
 ): Character {
     val server = world_id?.let {
         Server(
             worldId = it,
             namespace = namespace,
-            serverName = server?.name?.localizedName(currentLang)
+            serverName = server?.name?.localizedName(currentLang),
         )
     }
     return Character(
@@ -671,7 +679,7 @@ fun Member.toCoreModel(namespace: Namespace): Character? {
 fun Outfit.toCoreModel(
     namespace: Namespace,
     server: Server?,
-    lastUpdate: Instant
+    lastUpdate: Instant,
 ): com.cramsan.ps2link.core.models.Outfit {
     return com.cramsan.ps2link.core.models.Outfit(
         id = outfit_id,
@@ -703,7 +711,7 @@ fun Outfit.toCoreModel(
 private fun formatWeapons(
     weaponList: List<WeaponStat>?,
     faction: com.cramsan.ps2link.core.models.Faction,
-    currentLang: CensusLang
+    currentLang: CensusLang,
 ): List<WeaponItem> {
     if (weaponList == null) {
         return emptyList()
@@ -761,7 +769,7 @@ private fun formatWeapons(
                     com.cramsan.ps2link.core.models.Faction.TR to statTR,
                     com.cramsan.ps2link.core.models.Faction.NC to statNC,
                     com.cramsan.ps2link.core.models.Faction.VS to statVS,
-                )
+                ),
             )
         }
 
@@ -772,7 +780,7 @@ private fun formatWeapons(
             vehicleName = vehicleName,
             weaponImage = DBGCensus.ENDPOINT_URL + "/" + weaponUrl,
             statMapping = statMapping,
-            medalType = kills?.toMedalType()
+            medalType = kills?.toMedalType(),
         )
     }.filterNotNull()
 }
@@ -865,7 +873,7 @@ fun formatKillList(
     characterEventList: List<CharacterEvent>?,
     weaponMapping: Map<String, com.cramsan.ps2link.core.models.Weapon>,
     vehicleMapping: Map<String, Vehicle>,
-    namespace: Namespace
+    namespace: Namespace,
 ): List<KillEvent> {
     if (characterEventList == null) {
         return emptyList()
@@ -917,7 +925,7 @@ fun formatKillList(
             attacker = attackerName,
             time = time,
             weaponName = weaponName,
-            weaponImage = DBGCensus.ENDPOINT_URL + "/" + imageUrl
+            weaponImage = DBGCensus.ENDPOINT_URL + "/" + imageUrl,
         )
     }
 }

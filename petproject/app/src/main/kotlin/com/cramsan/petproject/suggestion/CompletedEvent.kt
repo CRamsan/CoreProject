@@ -9,5 +9,5 @@ class CompletedEvent(
     /**
      * [true] if the suggestion was submitted succesfully, [false] otherwise.
      */
-    val suggestionSubmitted: Boolean
+    val suggestionSubmitted: Boolean,
 ) : BaseEvent()

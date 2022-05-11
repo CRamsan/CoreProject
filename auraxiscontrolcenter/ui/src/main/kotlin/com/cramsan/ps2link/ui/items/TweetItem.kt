@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -44,10 +43,10 @@ fun TweetItem(
             Row {
                 Text(username)
                 Text(
-                    modifier = Modifier.weight(1f).padding(horizontal = Padding.small).align(Alignment.CenterVertically),
+                    modifier = Modifier.weight(1f).padding(horizontal = Padding.small).align(CenterVertically),
                     text = stringResource(
                         id = R.string.title_twitter_handle,
-                        formatArgs = arrayOf(handle)
+                        formatArgs = arrayOf(handle),
                     ),
                     style = MaterialTheme.typography.caption,
                 )

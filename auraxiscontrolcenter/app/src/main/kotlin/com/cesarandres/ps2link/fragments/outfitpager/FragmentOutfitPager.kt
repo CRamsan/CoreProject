@@ -38,7 +38,7 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         setHasOptionsMenu(true)

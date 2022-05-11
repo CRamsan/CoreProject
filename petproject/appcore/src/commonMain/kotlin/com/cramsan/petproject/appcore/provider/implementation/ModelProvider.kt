@@ -48,7 +48,7 @@ class ModelProvider(
     private val threadUtil: ThreadUtilInterface,
     private val modelStorage: ModelStorageInterface,
     private val preferences: Preferences,
-    private val config: ProviderConfig
+    private val config: ProviderConfig,
 ) : ModelProviderInterface {
 
     private val http: HttpClient = HttpClient {
@@ -183,7 +183,7 @@ class ModelProvider(
             plantEntry.mainName,
             plantEntry.commonNames,
             plantEntry.imageUrl,
-            plantEntry.family
+            plantEntry.family,
         )
     }
 
@@ -206,8 +206,8 @@ class ModelProvider(
                     it.scientificName,
                     it.mainName,
                     it.animalId ?: AnimalType.ALL,
-                    it.isToxic ?: ToxicityValue.UNDETERMINED
-                )
+                    it.isToxic ?: ToxicityValue.UNDETERMINED,
+                ),
             )
         }
         return mutableList.sortedBy { it.mainCommonName }
@@ -215,7 +215,7 @@ class ModelProvider(
 
     override fun getPlantsWithToxicityFlow(
         animalType: AnimalType,
-        locale: String
+        locale: String,
     ): Flow<List<PresentablePlant>> {
         TODO("Not yet implemented")
     }
@@ -224,7 +224,7 @@ class ModelProvider(
         animalType: AnimalType,
         locale: String,
         limit: Long,
-        offset: Long
+        offset: Long,
     ): List<PresentablePlant> {
         eventLogger.log(Severity.INFO, "ModelProvider", "getPlantsWithToxicityPaginated")
         threadUtil.assertIsBackgroundThread()
@@ -243,8 +243,8 @@ class ModelProvider(
                     it.scientificName,
                     it.mainName,
                     it.animalId ?: AnimalType.ALL,
-                    it.isToxic ?: ToxicityValue.UNDETERMINED
-                )
+                    it.isToxic ?: ToxicityValue.UNDETERMINED,
+                ),
             )
         }
         return page
@@ -253,7 +253,7 @@ class ModelProvider(
     override suspend fun getPlantsWithToxicityFiltered(
         animalType: AnimalType,
         query: String,
-        locale: String
+        locale: String,
     ): List<PresentablePlant> {
         eventLogger.log(Severity.INFO, "ModelProvider", "getPlantsWithToxicityFiltered")
         threadUtil.assertIsBackgroundThread()
@@ -281,7 +281,7 @@ class ModelProvider(
     override fun getPlantsWithToxicityFilteredFlow(
         animalType: AnimalType,
         query: String,
-        locale: String
+        locale: String,
     ): Flow<List<PresentablePlant>> {
         TODO("Not yet implemented")
     }
@@ -291,7 +291,13 @@ class ModelProvider(
         threadUtil.assertIsBackgroundThread()
 
         val plantCustomEntry = modelStorage.getCustomPlantEntry(animalType, plantId, locale) ?: return null
-        return PlantMetadata(plantId, animalType, plantCustomEntry.isToxic, plantCustomEntry.description, plantCustomEntry.source)
+        return PlantMetadata(
+            plantId,
+            animalType,
+            plantCustomEntry.isToxic,
+            plantCustomEntry.description,
+            plantCustomEntry.source,
+        )
     }
 
     override suspend fun getPresentablePlantsCount(animalType: AnimalType, locale: String): Long {

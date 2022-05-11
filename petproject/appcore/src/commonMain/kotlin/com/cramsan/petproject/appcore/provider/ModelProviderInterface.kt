@@ -91,7 +91,7 @@ interface ModelProviderInterface {
         animalType: AnimalType,
         locale: String,
         limit: Long,
-        offset: Long
+        offset: Long,
     ): List<PresentablePlant>
 
     /**
@@ -101,7 +101,11 @@ interface ModelProviderInterface {
      * @see isCatalogAvailable
      * @see downloadCatalog
      */
-    suspend fun getPlantsWithToxicityFiltered(animalType: AnimalType, query: String, locale: String): List<PresentablePlant>
+    suspend fun getPlantsWithToxicityFiltered(
+        animalType: AnimalType,
+        query: String,
+        locale: String,
+    ): List<PresentablePlant>
 
     /**
      * Get a flow that emits a list of [PresentablePlant] that match the [animalType] and [locale]
@@ -110,7 +114,11 @@ interface ModelProviderInterface {
      * @see isCatalogAvailable
      * @see downloadCatalog
      */
-    fun getPlantsWithToxicityFilteredFlow(animalType: AnimalType, query: String, locale: String): Flow<List<PresentablePlant>>
+    fun getPlantsWithToxicityFilteredFlow(
+        animalType: AnimalType,
+        query: String,
+        locale: String,
+    ): Flow<List<PresentablePlant>>
 
     /**
      * Clears the local cache. Calling this function will cause [isCatalogAvailable] to return false.

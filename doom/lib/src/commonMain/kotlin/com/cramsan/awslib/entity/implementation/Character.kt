@@ -14,7 +14,7 @@ abstract class Character(
     posY: Int,
     speed: Int,
     enabled: Boolean,
-    shouldMove: Boolean
+    shouldMove: Boolean,
 ) :
     GameEntity(
         id,
@@ -22,7 +22,7 @@ abstract class Character(
         posY,
         speed,
         enabled,
-        shouldMove
+        shouldMove,
     ),
     CharacterInterface {
     private var _attack = InitialValues.CHARACTER_ATTACK

@@ -38,7 +38,7 @@ fun UnexpectedError(
 ) {
     UnexpectedError(
         modifier = modifier.widthIn(max = MaxDialogSize),
-        message = stringResource(id = resourceId)
+        message = stringResource(id = resourceId),
     )
 }
 

@@ -47,7 +47,7 @@ class Plant(private val plant: Plant) : com.cramsan.petproject.appcore.storage.P
  * provided [plantCommonName] from sqldelight.
  */
 class PlantCommonName(
-    private val plantCommonName: PlantCommonName
+    private val plantCommonName: PlantCommonName,
 ) : com.cramsan.petproject.appcore.storage.PlantCommonName {
     override val id: Long
         get() = plantCommonName.id
@@ -64,7 +64,7 @@ class PlantCommonName(
  * provided [plantFamily] from sqldelight.
  */
 class PlantFamily(
-    private val plantFamily: PlantFamily
+    private val plantFamily: PlantFamily,
 ) : com.cramsan.petproject.appcore.storage.PlantFamily {
     override val id: Long
         get() = plantFamily.id
@@ -81,7 +81,7 @@ class PlantFamily(
  * provided [plantMainName] from sqldelight.
  */
 class PlantMainName(
-    private val plantMainName: PlantMainName
+    private val plantMainName: PlantMainName,
 ) : com.cramsan.petproject.appcore.storage.PlantMainName {
     override val id: Long
         get() = plantMainName.id
@@ -98,7 +98,7 @@ class PlantMainName(
  * provided [toxicity] from sqldelight.
  */
 class Toxicity(
-    private val toxicity: Toxicity
+    private val toxicity: Toxicity,
 ) : com.cramsan.petproject.appcore.storage.Toxicity {
     override val id: Long
         get() = toxicity.id
@@ -130,7 +130,7 @@ class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPl
             getAllPlantsWithAnimalIdAll.scientific_name,
             getAllPlantsWithAnimalIdAll.main_name,
             getAllPlantsWithAnimalIdAll.animal_id,
-            getAllPlantsWithAnimalIdAll.is_toxic
+            getAllPlantsWithAnimalIdAll.is_toxic,
         )
     }
 
@@ -151,7 +151,7 @@ class GetAllPlantsWithAnimalId : com.cramsan.petproject.appcore.storage.GetAllPl
  * [GetPlantWithPlantIdAndAnimalId] from sqldelight.
  */
 class GetPlantWithPlantIdAndAnimalId(
-    private val getPlantWithPlantIdAndAnimalId: GetPlantWithPlantIdAndAnimalId
+    private val getPlantWithPlantIdAndAnimalId: GetPlantWithPlantIdAndAnimalId,
 ) : com.cramsan.petproject.appcore.storage.GetPlantWithPlantIdAndAnimalId {
     override val id: Long
         get() = getPlantWithPlantIdAndAnimalId.id

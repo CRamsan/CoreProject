@@ -23,7 +23,7 @@ fun ProfileListCompose(
                     level = it.battleRank?.toInt() ?: 0,
                     faction = it.faction,
                     namespace = it.namespace,
-                    onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) }
+                    onClick = { eventHandler.onProfileSelected(it.characterId, it.namespace) },
                 )
             }
         }
@@ -42,6 +42,6 @@ fun NormalButtonPreview() {
         profileItems = emptyList(),
         eventHandler = object : ProfileListEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
-        }
+        },
     )
 }

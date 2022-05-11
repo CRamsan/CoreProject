@@ -27,7 +27,7 @@ class OutfitListViewModel @Inject constructor(
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     OutfitListEventHandler {
 

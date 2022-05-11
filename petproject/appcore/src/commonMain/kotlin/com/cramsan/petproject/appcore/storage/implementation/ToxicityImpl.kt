@@ -12,5 +12,5 @@ data class ToxicityImpl(
     override val plantId: Long,
     override val animalId: AnimalType,
     override val toxic: ToxicityValue,
-    override val source: String
+    override val source: String,
 ) : Toxicity

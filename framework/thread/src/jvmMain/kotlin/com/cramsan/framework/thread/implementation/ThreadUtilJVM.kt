@@ -12,7 +12,7 @@ import com.cramsan.framework.thread.ThreadUtilDelegate
  */
 class ThreadUtilJVM constructor(
     private val eventLogger: EventLoggerInterface,
-    private val assertUtil: AssertUtilInterface
+    private val assertUtil: AssertUtilInterface,
 ) : ThreadUtilDelegate {
 
     override fun isUIThread(): Boolean {

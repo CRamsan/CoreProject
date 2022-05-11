@@ -7,11 +7,11 @@ data class ChangeTriggerEvent(
     override val id: String,
     override val nextEventId: String,
     val enableEventId: String,
-    val disableEventId: String
+    val disableEventId: String,
 ) :
     NonInteractiveEvent(
         id,
         nextEventId,
         disableEventId,
-        enableEventId
+        enableEventId,
     )

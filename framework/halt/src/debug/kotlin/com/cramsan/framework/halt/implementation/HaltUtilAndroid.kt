@@ -47,7 +47,7 @@ class HaltUtilAndroid(private val appContext: Context) : HaltUtilDelegate {
             .setContentText(getStacktrace())
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .bigText(getStacktrace())
+                    .bigText(getStacktrace()),
             )
             .setPriority(NotificationCompat.PRIORITY_MAX)
         with(NotificationManagerCompat.from(appContext)) {

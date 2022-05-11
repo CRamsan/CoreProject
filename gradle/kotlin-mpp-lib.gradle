@@ -15,7 +15,6 @@ apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "org.jetbrains.dokka"
 
 apply from: "$rootDir/gradle/helper-functions.gradle"
-apply from: "$rootDir/gradle/ktlint.gradle"
 apply from: "$rootDir/gradle/detekt.gradle"
 
 if (isJvmTargetEnabled()) {
@@ -206,7 +205,6 @@ if (isJsTargetEnabled()) {
     releaseJs = tasks.register("releaseJs") {
         group = 'build'
         description = 'Run all the steps to build a Js artifact'
-        dependsOn 'ktlint'
         dependsOn 'compileKotlinJs'
         dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
         dependsOn 'detektJsMain' // Run the code analyzer
@@ -219,7 +217,6 @@ if (isJvmTargetEnabled()) {
     releaseJvm = tasks.register("releaseJvm") {
         group = 'build'
         description = 'Run all the steps to build a releaseJvm artifact'
-        dependsOn 'ktlint'
         dependsOn 'compileKotlinJvm'
         dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
         dependsOn 'detektJvmMain' // Run the code analyzer
@@ -233,7 +230,6 @@ if (isAndroidTargetEnabled()) {
     releaseAndroid = tasks.register("releaseAndroid") {
         group = 'build'
         description = 'Run all the steps to build a releaseAndroid artifact'
-        dependsOn 'ktlint' // Verifies the format
         dependsOn 'assembleDebug'
         dependsOn 'assembleRelease'
         dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
@@ -250,7 +246,6 @@ if (isIosTargetEnabled()) {
     releaseIos = tasks.register("releaseIos") {
         group = 'build'
         description = 'Run all the steps to build a releaseIos artifact'
-        dependsOn 'ktlint'
         dependsOn 'compileKotlinIos'
         dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
         dependsOn 'detektIosMain' // Run the code analyzer

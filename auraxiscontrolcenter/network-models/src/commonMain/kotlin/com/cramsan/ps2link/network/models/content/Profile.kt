@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Profile(
-    val name: NameMultiLang? = null
+    val name: NameMultiLang? = null,
 )

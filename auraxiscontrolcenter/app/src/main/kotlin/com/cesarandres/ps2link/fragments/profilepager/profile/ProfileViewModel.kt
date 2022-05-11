@@ -34,7 +34,7 @@ class ProfileViewModel @Inject constructor(
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     ProfileEventHandler {
 
@@ -99,7 +99,13 @@ class ProfileViewModel @Inject constructor(
         loadingStarted()
         ioScope.launch {
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
-            if (pS2LinkRepository.getCharacter(characterId, namespace, lang, forceUpdate = true).isSuccessfulAndContainsBody()) {
+            if (pS2LinkRepository.getCharacter(
+                    characterId,
+                    namespace,
+                    lang,
+                    forceUpdate = true,
+                ).isSuccessfulAndContainsBody()
+            ) {
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

@@ -6,7 +6,7 @@ import com.cramsan.awslib.enums.TurnActionType
 
 class TurnAction(
     override val turnActionType: TurnActionType,
-    override val direction: Direction
+    override val direction: Direction,
 ) : TurnActionInterface {
 
     override fun toString(): String {

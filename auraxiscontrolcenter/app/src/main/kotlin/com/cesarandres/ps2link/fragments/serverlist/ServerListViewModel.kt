@@ -28,7 +28,7 @@ class ServerListViewModel @Inject constructor(
     pS2LinkRepository,
     pS2Settings,
     dispatcherProvider,
-    savedStateHandle
+    savedStateHandle,
 ),
     ServerListEventHandler {
 

@@ -30,5 +30,5 @@ data class ProviderConfig(
     /**
      * API Endpoint for fetching the toxicity data.
      */
-    val toxicityEndpoint: String
+    val toxicityEndpoint: String,
 )

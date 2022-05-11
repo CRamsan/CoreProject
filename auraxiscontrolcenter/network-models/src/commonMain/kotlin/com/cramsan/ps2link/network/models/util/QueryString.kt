@@ -30,7 +30,7 @@ class QueryString {
 
     enum class SearchModifier private constructor(private val mod: String) {
         EQUALS("="), LESSTHAN("=<"), GREATERTHAN("=>"), LESSEQUALTHAN("=["), GREATEREQUALTHAN("=]"), STARTSWITH(
-            "=^"
+            "=^",
         ),
         NOTCONTAIN("=!");
 
@@ -46,11 +46,11 @@ class QueryString {
         HAS("c:has"),
         JOIN("c:join"),
         RESOLVE("c:resolve"), CASE(
-            "c:case"
+            "c:case",
         ),
         LIMIT("c:limit"),
         LIMITPERDB(
-            "c:limitPerDB"
+            "c:limitPerDB",
         ),
         INCLUDENULL("c:includeNull"), START("c:start");
 
@@ -66,7 +66,7 @@ class QueryString {
     private inner class Condition(
         private val key: String,
         private val modifier: SearchModifier,
-        value: String
+        value: String,
     ) : SearchParameter() {
 
         init {

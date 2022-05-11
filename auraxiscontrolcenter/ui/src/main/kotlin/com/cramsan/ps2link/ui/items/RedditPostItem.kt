@@ -44,7 +44,7 @@ fun RedditPostItem(
     ) {
         Row {
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = title,
@@ -69,8 +69,8 @@ fun RedditPostItem(
             }
             Column(
                 modifier = Modifier.wrapContentWidth().padding(start = Padding.small).align(
-                    Alignment.CenterVertically
-                )
+                    Alignment.CenterVertically,
+                ),
             ) {
                 NetworkImage(
                     modifier = Modifier.size(imageWidth, imageHeight).clickable {
