@@ -42,14 +42,14 @@ fun ForageCardsTab(
                 value = title.value,
                 enabled = cardType.value != ForageCardManagerViewModel.CARD_TYPES[1],
                 label = { Text(text = "Card title") },
-                onValueChange = { viewModel.onTitleFieldUpdated(it) }
+                onValueChange = { viewModel.onTitleFieldUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = quantity.value.toString(),
                 label = { Text(text = "Card quantity") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onQuantityTitleUpdated(it) }
+                onValueChange = { viewModel.onQuantityTitleUpdated(it) },
             )
 
             val radioGroupOptions = ForageCardManagerViewModel.CARD_TYPES
@@ -59,12 +59,12 @@ fun ForageCardsTab(
                     Row(
                         Modifier
                             .clickable { viewModel.setCardType(text) }
-                            .padding(horizontal = 16.dp)
+                            .padding(horizontal = 16.dp),
                     ) {
                         RadioButton(selected = selected, onClick = null)
                         Text(
                             text = text,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier.padding(start = 16.dp),
                         )
                     }
                 }
@@ -78,16 +78,16 @@ fun ForageCardsTab(
                     Row(
                         Modifier
                             .clickable { viewModel.setResourceType(text) }
-                            .padding(horizontal = 16.dp)
+                            .padding(horizontal = 16.dp),
                     ) {
                         RadioButton(
                             selected = selected,
                             onClick = null,
-                            enabled = enabled
+                            enabled = enabled,
                         )
                         Text(
                             text = text.name,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier.padding(start = 16.dp),
                         )
                     }
                 }
@@ -99,7 +99,7 @@ fun ForageCardsTab(
                 label = { Text(text = "Remaining uses") },
                 enabled = remainingUses.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onRemainingUsesUpdated(it) }
+                onValueChange = { viewModel.onRemainingUsesUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -107,7 +107,7 @@ fun ForageCardsTab(
                 label = { Text(text = "Health modifier") },
                 enabled = healthModifier.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onHealthModifierUpdated(it) }
+                onValueChange = { viewModel.onHealthModifierUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -115,7 +115,7 @@ fun ForageCardsTab(
                 label = { Text(text = "Remaining days") },
                 enabled = remainingDays.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onRemainingDaysUpdated(it) }
+                onValueChange = { viewModel.onRemainingDaysUpdated(it) },
             )
         }
     }

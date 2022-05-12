@@ -96,15 +96,15 @@ class NightCardManagerViewModel(
     private fun instantiateStatementList(): List<NightChangeStatement> {
         val sanitizedStatement = when (val statementToSanitize = _statement.value) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
-            FiberLost, Survived -> statementToSanitize
+            FiberLost, Survived, -> statementToSanitize
             is SelectTargetOnlyUnsheltered -> {
                 statementToSanitize.copy(
-                    onlyUnsheltered = _argument1Field.value.toBooleanStrictOrNull() ?: false
+                    onlyUnsheltered = _argument1Field.value.toBooleanStrictOrNull() ?: false,
                 )
             }
             is SelectTargetQuantity -> {
                 statementToSanitize.copy(
-                    affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0
+                    affectedPlayers = _argument1Field.value.toIntOrNull() ?: 0,
                 )
             }
             is CancellableByWeapon -> {
@@ -120,7 +120,7 @@ class NightCardManagerViewModel(
             }
             is DamageToDo -> {
                 statementToSanitize.copy(
-                    healthChange = _argument1Field.value.toIntOrNull() ?: 0
+                    healthChange = _argument1Field.value.toIntOrNull() ?: 0,
                 )
             }
             null -> null
@@ -184,7 +184,7 @@ class NightCardManagerViewModel(
         _statement.value = statement
         when (statement) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,
-            FiberLost, Survived -> Unit
+            FiberLost, Survived, -> Unit
             is SelectTargetOnlyUnsheltered -> {
                 _argument1Label.value = "Only unsheltered"
                 _argument1Field.value = statement.onlyUnsheltered.toString()

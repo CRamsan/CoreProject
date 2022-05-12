@@ -22,7 +22,7 @@ import com.cramsan.stranded.cardmanager.base.TabFrame
  */
 @Composable
 fun BelongingsCardsTab(
-    viewModel: BelongingCardManagerViewModel
+    viewModel: BelongingCardManagerViewModel,
 ) {
     val title = viewModel.cardTitle.collectAsState()
     val selectedIndex = viewModel.selectedCardIndex.collectAsState()
@@ -39,14 +39,14 @@ fun BelongingsCardsTab(
                 modifier = Modifier.fillMaxWidth(),
                 value = title.value,
                 label = { Text(text = "Card title") },
-                onValueChange = { viewModel.onTitleFieldUpdated(it) }
+                onValueChange = { viewModel.onTitleFieldUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = quantity.value.toString(),
                 label = { Text(text = "Card quantity") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onQuantityTitleUpdated(it) }
+                onValueChange = { viewModel.onQuantityTitleUpdated(it) },
             )
 
             val radioGroupOptions = BelongingCardManagerViewModel.CARD_TYPES
@@ -56,12 +56,12 @@ fun BelongingsCardsTab(
                     Row(
                         Modifier
                             .clickable { viewModel.setCardType(text) }
-                            .padding(horizontal = 16.dp)
+                            .padding(horizontal = 16.dp),
                     ) {
                         RadioButton(selected = selected, onClick = null)
                         Text(
                             text = text,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier.padding(start = 16.dp),
                         )
                     }
                 }
@@ -72,7 +72,7 @@ fun BelongingsCardsTab(
                 value = remainingUses.value.toString(),
                 label = { Text(text = "Remaining uses") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onRemainingUsesUpdated(it) }
+                onValueChange = { viewModel.onRemainingUsesUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -80,7 +80,7 @@ fun BelongingsCardsTab(
                 label = { Text(text = "Health modifier") },
                 enabled = healthModifier.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onHealthModifierUpdated(it) }
+                onValueChange = { viewModel.onHealthModifierUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -88,7 +88,7 @@ fun BelongingsCardsTab(
                 label = { Text(text = "Remaining days") },
                 enabled = remainingDays.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onRemainingDaysUpdated(it) }
+                onValueChange = { viewModel.onRemainingDaysUpdated(it) },
             )
         }
     }

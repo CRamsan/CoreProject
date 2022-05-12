@@ -44,7 +44,7 @@ fun CardManager(
                     Tab(
                         selected = tabIndex == index,
                         onClick = { tabIndex = index },
-                        text = { Text(text = title) }
+                        text = { Text(text = title) },
                     )
                 }
             }
@@ -62,11 +62,11 @@ fun <T : Card> TabFrame(
     selectedIndex: Int,
     cardDeck: List<CardHolder<T>>,
     handler: CardEventHandler,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column {
         Row(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             CardList(
                 modifier = Modifier.weight(1f),
@@ -100,7 +100,7 @@ fun <T : Card> CardList(
 ) {
 
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(
             text = "Card list",
@@ -108,7 +108,7 @@ fun <T : Card> CardList(
         )
         LazyColumn(
             modifier = modifier.fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
         ) {
             itemsIndexed(cardDeck) { index, item ->
                 val selected = index == selectedIndex
@@ -143,10 +143,10 @@ fun <T : Card> CardHolderItem(
         modifier = Modifier
             .selectable(
                 selected = selected,
-                onClick = { onCardSelected(cardIndex) }
+                onClick = { onCardSelected(cardIndex) },
             )
             .fillMaxWidth()
-            .padding(5.dp)
+            .padding(5.dp),
     )
 }
 
@@ -161,7 +161,7 @@ fun <T : NightChangeStatement> StatementList(
     onChangeSelected: (index: Int) -> Unit,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(
             text = "Statements",
@@ -169,7 +169,7 @@ fun <T : NightChangeStatement> StatementList(
         )
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
         ) {
             itemsIndexed(changeList) { index, item ->
                 val selected = index == selectedIndex
@@ -204,10 +204,10 @@ fun <T : NightChangeStatement> ChangeItem(
         modifier = Modifier
             .selectable(
                 selected = selected,
-                onClick = { onItemSelected(cardIndex) }
+                onClick = { onItemSelected(cardIndex) },
             )
             .fillMaxWidth()
-            .padding(5.dp)
+            .padding(5.dp),
     )
 }
 
@@ -222,24 +222,24 @@ fun BottomBar(
     onRemove: () -> Unit,
 ) {
     Row(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Button(
             onClick = onNew,
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(5.dp),
         ) {
             Text("New")
         }
         Button(
             onClick = onRemove,
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(5.dp),
         ) {
             Text("Remove")
         }
         Spacer(modifier = Modifier.weight(1f))
         Button(
             onClick = onSave,
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(5.dp),
         ) {
             Text("Save")
         }

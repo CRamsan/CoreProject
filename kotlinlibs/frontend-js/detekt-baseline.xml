@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicClass:Welcome.kt$Welcome : RComponent</ID>
+    <ID>UndocumentedPublicClass:Welcome.kt$WelcomeProps : Props</ID>
+    <ID>UndocumentedPublicClass:Welcome.kt$WelcomeState : State</ID>
+    <ID>UndocumentedPublicClass:WelcomeStyles.kt$WelcomeStyles : StyleSheet</ID>
+    <ID>UndocumentedPublicFunction:Client.kt$fun main()</ID>
+  </CurrentIssues>
+</SmellBaseline>

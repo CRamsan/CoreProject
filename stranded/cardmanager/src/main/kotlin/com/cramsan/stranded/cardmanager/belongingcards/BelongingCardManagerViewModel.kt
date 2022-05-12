@@ -94,7 +94,7 @@ class BelongingCardManagerViewModel(
                     _remainingDays.value ?: 0,
                     _healthModifier.value ?: 0,
                     Status.NORMAL,
-                    _remainingUses.value
+                    _remainingUses.value,
                 )
             }
             else -> TODO()

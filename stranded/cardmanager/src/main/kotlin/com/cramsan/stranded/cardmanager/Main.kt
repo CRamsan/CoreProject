@@ -20,7 +20,7 @@ fun main() = application {
         json = Json {
             serializersModule = module
             prettyPrint = true
-        }
+        },
     )
 
     val scope = MainScope()

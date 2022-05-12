@@ -29,7 +29,7 @@ import com.cramsan.stranded.cardmanager.base.TabFrame
  */
 @Composable
 fun NightCardsTab(
-    viewModel: NightCardManagerViewModel
+    viewModel: NightCardManagerViewModel,
 ) {
     val title = viewModel.cardTitle.collectAsState()
     val selectedIndex = viewModel.selectedCardIndex.collectAsState()
@@ -49,14 +49,14 @@ fun NightCardsTab(
                 modifier = Modifier.fillMaxWidth(),
                 value = title.value,
                 label = { Text(text = "Card title") },
-                onValueChange = { viewModel.onTitleFieldUpdated(it) }
+                onValueChange = { viewModel.onTitleFieldUpdated(it) },
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = quantity.value.toString(),
                 label = { Text(text = "Card quantity") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onQuantityTitleUpdated(it) }
+                onValueChange = { viewModel.onQuantityTitleUpdated(it) },
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -65,12 +65,12 @@ fun NightCardsTab(
                     modifier = Modifier.weight(1f),
                 ) {
                     Button(
-                        onClick = { viewModel.onAddStatementSelected() }
+                        onClick = { viewModel.onAddStatementSelected() },
                     ) {
                         Text("Add")
                     }
                     Button(
-                        onClick = { viewModel.onRemoveStatementSelected() }
+                        onClick = { viewModel.onRemoveStatementSelected() },
                     ) {
                         Text("Remove")
                     }
@@ -79,7 +79,7 @@ fun NightCardsTab(
                     modifier = Modifier.weight(2f),
                     selectedIndex = selectedStatementIndex.value,
                     changeList = statementList.value,
-                    onChangeSelected = { index -> viewModel.onStatementAtIndexSelected(index) }
+                    onChangeSelected = { index -> viewModel.onStatementAtIndexSelected(index) },
                 )
                 Column(
                     modifier = Modifier.weight(2f),
@@ -93,7 +93,7 @@ fun NightCardsTab(
                             statement.value?.javaClass?.simpleName ?: "",
                             modifier = Modifier.fillMaxWidth()
                                 .background(Color.Gray)
-                                .clickable { expanded = true }
+                                .clickable { expanded = true },
                         )
                         DropdownMenu(
                             expanded = expanded,
@@ -103,7 +103,7 @@ fun NightCardsTab(
                                 DropdownMenuItem(onClick = {
                                     viewModel.onStatementTypeIndexSelected(index)
                                     expanded = false
-                                }) {
+                                },) {
                                     Text(text = type)
                                 }
                             }
@@ -116,7 +116,7 @@ fun NightCardsTab(
                             value = argument1Field.value,
                             label = { Text(text = label1) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            onValueChange = { viewModel.onArgument1FieldUpdated(it) }
+                            onValueChange = { viewModel.onArgument1FieldUpdated(it) },
                         )
                     }
                     val label2 = argument2Label.value
@@ -126,7 +126,7 @@ fun NightCardsTab(
                             value = argument2Field.value,
                             label = { Text(text = label2) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            onValueChange = { viewModel.onArgument2FieldUpdated(it) }
+                            onValueChange = { viewModel.onArgument2FieldUpdated(it) },
                         )
                     }
                 }

@@ -95,10 +95,10 @@ class ForageCardManagerViewModel(
                 _remainingDays.value ?: 0,
                 _healthModifier.value ?: 0,
                 Status.NORMAL,
-                _remainingUses.value ?: 0
+                _remainingUses.value ?: 0,
             )
             CARD_TYPES[1] -> Resource(
-                _resourceType.value ?: ResourceType.BONE
+                _resourceType.value ?: ResourceType.BONE,
             )
             CARD_TYPES[2] -> Useless(cardTitle.value)
             else -> TODO()
