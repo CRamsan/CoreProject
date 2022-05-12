@@ -77,7 +77,7 @@ class GameViewModel(
             is Connected -> playerId = serverEvent.playerId
             Disconnected -> playerId = ""
             GameStarted, is JoinedLobby, is LeftLobby,
-            is LobbyCreatedFromRequest, is PlayerUpdated -> Unit
+            is LobbyCreatedFromRequest, is PlayerUpdated, -> Unit
             is PlayerListFromRequest -> Unit
             is GameChange -> {
                 _game.processEvent(serverEvent.change as StrandedStateChange)

@@ -2,6 +2,16 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>UndocumentedPublicClass:KotlinPriorityQueue.kt$KotlinPriorityQueue&lt;T></ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun add(e: T)</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun element(): T</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun offer(e: T)</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun peek(): T?</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun poll(): T?</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun remove(): T</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun remove(e: T)</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual fun size()</ID>
+    <ID>UndocumentedPublicFunction:KotlinPriorityQueue.kt$KotlinPriorityQueue$actual operator fun contains(e: T)</ID>
     <ID>UndocumentedPublicClass:AStarAlgorithm.kt$AStarAlgorithm</ID>
     <ID>UndocumentedPublicClass:AStarFunctionProvider.kt$AStarFunctionProvider</ID>
     <ID>UndocumentedPublicClass:Cell.kt$Cell : NodeGridPositionableInterface</ID>

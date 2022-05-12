@@ -29,7 +29,7 @@ actual class MapLoader {
                         "2" -> TerrainType.DOOR
                         "3" -> TerrainType.END
                         else -> TerrainType.WALL
-                    }
+                    },
                 )
             }
             terrainTypeMap.add(terrainTypeArray)

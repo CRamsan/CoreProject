@@ -30,28 +30,28 @@ fun ConnectionScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
         Row {
             Button(
-                onClick = { viewModel.onStartServerSelected() }
+                onClick = { viewModel.onStartServerSelected() },
             ) {
                 Text("Start Server")
             }
             Button(
-                onClick = { viewModel.onStopServerSelected() }
+                onClick = { viewModel.onStopServerSelected() },
             ) {
                 Text("Stop Server")
             }
         }
         Row {
             Button(
-                onClick = { viewModel.onStartClientSelected() }
+                onClick = { viewModel.onStartClientSelected() },
             ) {
                 Text("Start Client")
             }
             Button(
-                onClick = { viewModel.onStopClientSelected() }
+                onClick = { viewModel.onStopClientSelected() },
             ) {
                 Text("Stop Client")
             }
@@ -61,10 +61,10 @@ fun ConnectionScreen(
                 modifier = Modifier.weight(1f),
                 value = playerName,
                 label = { Text(text = "Player name") },
-                onValueChange = { viewModel.onPlayerNameUpdated(it) }
+                onValueChange = { viewModel.onPlayerNameUpdated(it) },
             )
             Button(
-                onClick = { viewModel.onUpdatePlayerNameSelected() }
+                onClick = { viewModel.onUpdatePlayerNameSelected() },
             ) {
                 Text("Update name")
             }
@@ -74,11 +74,11 @@ fun ConnectionScreen(
                 modifier = Modifier.weight(1f),
                 value = lobbyName,
                 label = { Text(text = "Lobby name") },
-                onValueChange = { viewModel.onLobbyNameUpdated(it) }
+                onValueChange = { viewModel.onLobbyNameUpdated(it) },
             )
             Row {
                 Button(
-                    onClick = { viewModel.onCreateLobbySelected() }
+                    onClick = { viewModel.onCreateLobbySelected() },
                 ) {
                     Text("Create Lobby")
                 }
@@ -90,47 +90,47 @@ fun ConnectionScreen(
                     modifier = Modifier.weight(1f),
                     value = lobbyId,
                     label = { Text(text = "Lobby Id") },
-                    onValueChange = { viewModel.onLobbyIdUpdated(it) }
+                    onValueChange = { viewModel.onLobbyIdUpdated(it) },
                 )
                 Button(
-                    onClick = { viewModel.onJoinLobbySelected() }
+                    onClick = { viewModel.onJoinLobbySelected() },
                 ) {
                     Text("Join Lobby")
                 }
             }
             Row {
                 Button(
-                    onClick = { viewModel.onLeaveLobbySelected() }
+                    onClick = { viewModel.onLeaveLobbySelected() },
                 ) {
                     Text("Leave Lobby")
                 }
                 Button(
-                    onClick = { viewModel.onDeleteLobbySelected() }
+                    onClick = { viewModel.onDeleteLobbySelected() },
                 ) {
                     Text("Delete Lobby")
                 }
             }
         }
         Button(
-            onClick = { viewModel.onListPlayersSelected() }
+            onClick = { viewModel.onListPlayersSelected() },
         ) {
             Text("List Players")
         }
         Row {
             Button(
-                onClick = { viewModel.onSetReadySelected() }
+                onClick = { viewModel.onSetReadySelected() },
             ) {
                 Text("Set Ready=True")
             }
             Button(
-                onClick = { viewModel.onSetNotReadySelected() }
+                onClick = { viewModel.onSetNotReadySelected() },
             ) {
                 Text("Set Ready=False")
             }
         }
         Row {
             Button(
-                onClick = { viewModel.onStartGameSelected() }
+                onClick = { viewModel.onStartGameSelected() },
             ) {
                 Text("Start Game")
             }

@@ -132,7 +132,7 @@ class Game(
                     it.name,
                     4,
                 )
-            }
+            },
         )
         _gameState.scavengeStack.addAll(startingForageCards)
         _gameState.nightStack.addAll(startingNightCards)
@@ -221,7 +221,9 @@ class Game(
                                 false
                             } else {
                                 processEvent(UserCard(gamePlayer.id, intent.cardId))
-                                processEvent(SingleHealthChange(gamePlayer.id, statement.damage + statement.change))
+                                processEvent(
+                                    SingleHealthChange(gamePlayer.id, statement.damage + statement.change),
+                                )
                                 true
                             }
                         }
@@ -238,7 +240,9 @@ class Game(
                 }
                 FiberLost -> {
                     targetList.forEach { gamePlayer ->
-                        gamePlayer.scavengeResults.filter { it is Resource && it.resourceType == ResourceType.FIBER }.forEach { card ->
+                        gamePlayer.scavengeResults.filter {
+                            it is Resource && it.resourceType == ResourceType.FIBER
+                        }.forEach { card ->
                             processEvent(LoseCard(gamePlayer.id, card.id))
                         }
                     }

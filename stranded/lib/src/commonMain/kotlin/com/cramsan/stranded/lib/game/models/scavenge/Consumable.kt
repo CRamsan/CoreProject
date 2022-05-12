@@ -13,5 +13,5 @@ data class Consumable(
     override var remainingDays: Int,
     override var healthModifier: Int,
     override var statusModifier: Status,
-    override var remainingUses: Int
+    override var remainingUses: Int,
 ) : Food, ScavengeResult()

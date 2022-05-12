@@ -39,7 +39,7 @@ class PlayerRepository {
         val player = playerMapping[playerId] ?: return
 
         return player.copy(
-            readyToStart = readyToStart
+            readyToStart = readyToStart,
         ).let {
             playerMapping[playerId] = it
             eventHandler?.onPlayerUpdated(it)

@@ -85,7 +85,7 @@ fun main() = application {
         json = Json {
             serializersModule = module
             prettyPrint = true
-        }
+        },
     )
     cardRepository.initialize()
 

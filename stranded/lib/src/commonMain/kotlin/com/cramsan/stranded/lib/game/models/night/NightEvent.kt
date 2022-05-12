@@ -11,5 +11,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NightEvent(
     override val title: String,
-    val statements: List<NightChangeStatement>
+    val statements: List<NightChangeStatement>,
 ) : Card()

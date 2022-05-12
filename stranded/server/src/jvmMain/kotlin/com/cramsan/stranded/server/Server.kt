@@ -198,13 +198,15 @@ class Server(
         val createdGame = gameRepository.createGame(lobby.id) ?: return
 
         broadcastToLobby(lobby.id, GameStarted)
-        createdGame.registerServerEventHandler(object : MultiplayerGameEventHandler {
-            override fun onStateChangeExecuted(change: StateChange) {
-                scope.launch {
-                    broadcastToLobby(lobbyId, GameChange(change))
+        createdGame.registerServerEventHandler(
+            object : MultiplayerGameEventHandler {
+                override fun onStateChangeExecuted(change: StateChange) {
+                    scope.launch {
+                        broadcastToLobby(lobbyId, GameChange(change))
+                    }
                 }
-            }
-        })
+            },
+        )
 
         val players = lobby.players.mapNotNull {
             playerRepository.getPlayer(it)

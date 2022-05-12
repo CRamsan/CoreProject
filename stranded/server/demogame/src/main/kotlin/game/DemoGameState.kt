@@ -11,5 +11,5 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DemoGameState(
-    val counter: Int
+    val counter: Int,
 ) : GameState

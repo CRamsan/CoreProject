@@ -34,7 +34,7 @@ fun GameScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
         Text("Name: $name")
         Text("Health: $health")
@@ -45,7 +45,7 @@ fun GameScreen(
                 value = quantity.toString(),
                 label = { Text(text = "Card quantity") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { viewModel.onCardQuantityUpdated(it) }
+                onValueChange = { viewModel.onCardQuantityUpdated(it) },
             )
             Button({ viewModel.onForageSelected() }) {
                 Text("Forage")

@@ -36,7 +36,11 @@ data class SetPhase(val gamePhase: Phase) : StrandedStateChange()
 data class UserCard(val playerId: String, val cardId: String) : StrandedStateChange()
 
 @Serializable
-data class CraftCard(val playerId: String, val targetList: List<String>, val craftable: Craftable) : StrandedStateChange()
+data class CraftCard(
+    val playerId: String,
+    val targetList: List<String>,
+    val craftable: Craftable,
+) : StrandedStateChange()
 
 @Serializable
 object ExtinguishFire : StrandedStateChange()

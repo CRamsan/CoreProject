@@ -68,7 +68,7 @@ class LobbyRepository(
         }
 
         lobbyMapping[lobbyId] = lobby.copy(
-            players = lobby.players + playerId
+            players = lobby.players + playerId,
         )
 
         return true
@@ -79,7 +79,7 @@ class LobbyRepository(
         val lobby = getLobby(lobbyId) ?: return false
 
         lobbyMapping[lobbyId] = lobby.copy(
-            players = lobby.players.filter { it != playerId }
+            players = lobby.players.filter { it != playerId },
         )
 
         return true

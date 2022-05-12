@@ -20,7 +20,7 @@ data class MutableStrandedGameState(
     var hasFire: Boolean = false,
     var isFireBlocked: Boolean = false,
     var night: Int = 1,
-    var phase: Phase = Phase.NIGHT
+    var phase: Phase = Phase.NIGHT,
 ) {
     companion object {
         fun toSnapshot(state: MutableStrandedGameState): StrandedGameState {

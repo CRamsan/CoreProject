@@ -27,10 +27,10 @@ fun ConnectionScreen(
         Input(InputType.Text, attrs = {
             value(playerName)
             onInput { viewModel.onPlayerNameUpdated(it.value) }
-        })
+        },)
         Button(attrs = {
             onClick { viewModel.onUpdatePlayerNameSelected() }
-        }) {
+        },) {
             Text("Update")
         }
     }
@@ -40,10 +40,10 @@ fun ConnectionScreen(
         Input(InputType.Text, attrs = {
             value(lobbyName)
             onInput { viewModel.onLobbyNameUpdated(it.value) }
-        })
+        },)
         Button(attrs = {
             onClick { viewModel.onCreateLobbySelected() }
-        }) {
+        },) {
             Text("Create Lobby")
         }
     }
@@ -53,20 +53,20 @@ fun ConnectionScreen(
         Input(InputType.Text, attrs = {
             value(lobbyId)
             onInput { viewModel.onLobbyIdUpdated(it.value) }
-        })
+        },)
         Button(attrs = {
             onClick { viewModel.onJoinLobbySelected() }
-        }) {
+        },) {
             Text("Join Lobby")
         }
         Button(attrs = {
             onClick { viewModel.onLeaveLobbySelected() }
-        }) {
+        },) {
             Text("Leave Lobby")
         }
         Button(attrs = {
             onClick { viewModel.onDeleteLobbySelected() }
-        }) {
+        },) {
             Text("Delete Lobby")
         }
     }
@@ -74,17 +74,17 @@ fun ConnectionScreen(
     Div {
         Button(attrs = {
             onClick { viewModel.onListPlayersSelected() }
-        }) {
+        },) {
             Text("List Players")
         }
         Button(attrs = {
             onClick { viewModel.onSetReadySelected() }
-        }) {
+        },) {
             Text("Set Ready=True")
         }
         Button(attrs = {
             onClick { viewModel.onSetNotReadySelected() }
-        }) {
+        },) {
             Text("Set Ready=False")
         }
     }
@@ -92,7 +92,7 @@ fun ConnectionScreen(
     Div {
         Button(attrs = {
             onClick { viewModel.onStartGameSelected() }
-        }) {
+        },) {
             Text("Start Game")
         }
         playerList.forEach {

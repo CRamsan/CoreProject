@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Shelter(
-    val playerList: MutableList<String>
+    val playerList: MutableList<String>,
 ) : Craftable() {
     override val title = "Shelter"
 

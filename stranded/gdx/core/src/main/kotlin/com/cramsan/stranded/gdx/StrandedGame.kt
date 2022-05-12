@@ -21,14 +21,14 @@ class StrandedGame : KtxGame<Screen>(null) {
             json = Json {
                 serializersModule = module
                 prettyPrint = true
-            }
+            },
         )
         cardRepository.initialize()
 
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("uiskin.json"))
         addScreen(
             MainMenuScreen::class.java,
-            MainMenuScreen(cardRepository)
+            MainMenuScreen(cardRepository),
         )
         setScreen<MainMenuScreen>()
     }

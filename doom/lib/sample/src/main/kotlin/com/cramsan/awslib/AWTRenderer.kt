@@ -40,7 +40,7 @@ import kotlin.system.exitProcess
 class AWTRenderer(
     val eventLoggerInterface: EventLoggerInterface,
     val haltUtilInterface: HaltUtil,
-    val assertUtilInterface: AssertUtilInterface
+    val assertUtilInterface: AssertUtilInterface,
 ) : JFrame(), EntityManagerEventListener {
 
     var isGameRunning = true
@@ -136,7 +136,7 @@ class AWTRenderer(
                     scene.runTurn(action)
                     repaint()
                 }
-            }
+            },
         )
         scene.loadScene(listener)
     }
@@ -150,7 +150,7 @@ class AWTRenderer(
     override fun onInteractionRequired(
         text: String,
         options: List<InteractiveEventOption>,
-        eventReceiver: EntityManagerInteractionReceiver
+        eventReceiver: EntityManagerInteractionReceiver,
     ) {
         System.out.println("Options: ")
         options.forEachIndexed { index, interactiveEventOption ->
@@ -166,7 +166,7 @@ class AWTRenderer(
                 JOptionPane.PLAIN_MESSAGE,
                 null,
                 possibilities,
-                possibilities.first()
+                possibilities.first(),
             ) as String
 
             var selection = -1
@@ -191,7 +191,7 @@ class AWTRenderer(
 
     internal inner class RendererCanvas(
         val manager: EntityManager,
-        val map: GameMap
+        val map: GameMap,
     ) : JPanel() {
 
         override fun paint(graphics: Graphics?) {
@@ -235,7 +235,7 @@ class AWTRenderer(
                     entity.posX * cellWidth,
                     entity.posY * cellHeight,
                     cellWidth,
-                    cellHeight
+                    cellHeight,
                 )
             }
 
@@ -258,7 +258,7 @@ class AWTRenderer(
                     it.posX * cellWidth,
                     it.posY * cellHeight,
                     cellWidth / 2,
-                    cellHeight / 2
+                    cellHeight / 2,
                 )
             }
         }

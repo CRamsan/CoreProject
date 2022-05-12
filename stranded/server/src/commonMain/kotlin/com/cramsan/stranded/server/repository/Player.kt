@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class Player(
     val id: String,
     val name: String,
-    val readyToStart: Boolean
+    val readyToStart: Boolean,
 ) {
     companion object {
         val disconnectedPlayer = Player("", "", false)

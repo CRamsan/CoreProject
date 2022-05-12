@@ -121,7 +121,15 @@ class AWTRunner {
             val aiRepo = DummyAIRepoImpl(eventLogger)
 
             val renderer = AWTRenderer(eventLogger, haltUtil, assertUtil)
-            val entityManager = EntityManager(map, sceneConfig.triggerList, sceneConfig.eventList, sceneConfig.itemList, renderer, eventLogger, aiRepo)
+            val entityManager = EntityManager(
+                map,
+                sceneConfig.triggerList,
+                sceneConfig.eventList,
+                sceneConfig.itemList,
+                renderer,
+                eventLogger,
+                aiRepo,
+            )
 
             renderer.startScene(entityManager, sceneConfig, map)
         }
