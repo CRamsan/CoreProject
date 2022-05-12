@@ -2,6 +2,30 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ComplexCondition:Map.kt$Map$x &lt; 0 || x > this.size - 1 || y &lt; 0 || y > this.size - 1</ID>
+    <ID>EmptyFunctionBlock:AudioManager.kt$AudioManager${}</ID>
+    <ID>EmptyFunctionBlock:BaseScreen.kt$BaseScreen${}</ID>
+    <ID>EmptyFunctionBlock:CallbackManager.kt$CallbackManager${}</ID>
+    <ID>EmptyFunctionBlock:GameScreen.kt$GameScreen${}</ID>
+    <ID>EmptyFunctionBlock:MainMenuScreen.kt$MainMenuScreen${ }</ID>
+    <ID>EmptyFunctionBlock:MainMenuScreen.kt$MainMenuScreen${}</ID>
+    <ID>EmptyFunctionBlock:SplashScreen.kt$SplashScreen${ }</ID>
+    <ID>EmptyFunctionBlock:SplashScreen.kt$SplashScreen${}</ID>
+    <ID>FunctionNaming:AudioManager.kt$AudioManager$fun PlayMusic()</ID>
+    <ID>FunctionNaming:AudioManager.kt$AudioManager$fun PlaySound(sound: SOUND?)</ID>
+    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnGameClose()</ID>
+    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnGameLoad()</ID>
+    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnScreenClose()</ID>
+    <ID>FunctionNaming:IGameSubsystem.kt$IGameSubsystem$fun OnScreenLoad()</ID>
+    <ID>LongMethod:FPSGame.kt$FPSGame$override fun screenInit()</ID>
+    <ID>LongMethod:Player.kt$Player$fun update(delta: Float, gameInput: GameInput)</ID>
+    <ID>MemberNameEqualsClassName:Map.kt$Map$var map: GameMap</ID>
+    <ID>TooGenericExceptionThrown:CallbackManager.kt$CallbackManager.ExecutionBlockEvent$throw RuntimeException("Other object is not of type " + this.javaClass)</ID>
+    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("Game already set")</ID>
+    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("Game parameter is null")</ID>
+    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("Game was not set")</ID>
+    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("GameParameterManager already set and cannot be overridden")</ID>
+    <ID>TooGenericExceptionThrown:SceneManager.kt$SceneManager$throw RuntimeException("GameParameterManager not provided.")</ID>
     <ID>UndocumentedPublicClass:AudioManager.kt$AudioManager$MUSIC</ID>
     <ID>UndocumentedPublicClass:AudioManager.kt$AudioManager$SOUND</ID>
     <ID>UndocumentedPublicClass:CallbackManager.kt$CallbackManager : IGameSubsystem</ID>

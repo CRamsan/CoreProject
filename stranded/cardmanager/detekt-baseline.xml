@@ -3,19 +3,19 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ComplexMethod:NightCardManagerViewModel.kt$NightCardManagerViewModel$private fun instantiateStatementList(): List&lt;NightChangeStatement></ID>
-    <ID>FunctionNaming:BelongingsCardsTab.kt$ @Composable fun BelongingsCardsTab( viewModel: BelongingCardManagerViewModel )</ID>
+    <ID>FunctionNaming:BelongingsCardsTab.kt$ @Composable fun BelongingsCardsTab( viewModel: BelongingCardManagerViewModel, )</ID>
     <ID>FunctionNaming:Composables.kt$ @Composable fun &lt;T : Card> CardHolderItem( cardHolder: CardHolder&lt;T>, cardIndex: Int, selected: Boolean, onCardSelected: (index: Int) -> Unit, )</ID>
     <ID>FunctionNaming:Composables.kt$ @Composable fun &lt;T : Card> CardList( selectedIndex: Int, cardDeck: List&lt;CardHolder&lt;T>>, modifier: Modifier = Modifier, onCardSelected: (index: Int) -> Unit, )</ID>
-    <ID>FunctionNaming:Composables.kt$ @Composable fun &lt;T : Card> TabFrame( selectedIndex: Int, cardDeck: List&lt;CardHolder&lt;T>>, handler: CardEventHandler, content: @Composable () -> Unit )</ID>
+    <ID>FunctionNaming:Composables.kt$ @Composable fun &lt;T : Card> TabFrame( selectedIndex: Int, cardDeck: List&lt;CardHolder&lt;T>>, handler: CardEventHandler, content: @Composable () -> Unit, )</ID>
     <ID>FunctionNaming:Composables.kt$ @Composable fun &lt;T : NightChangeStatement> ChangeItem( change: T, cardIndex: Int, selected: Boolean, onItemSelected: (index: Int) -> Unit, )</ID>
     <ID>FunctionNaming:Composables.kt$ @Composable fun &lt;T : NightChangeStatement> StatementList( selectedIndex: Int, changeList: List&lt;T>, modifier: Modifier = Modifier, onChangeSelected: (index: Int) -> Unit, )</ID>
     <ID>FunctionNaming:Composables.kt$ @Composable fun BottomBar( modifier: Modifier = Modifier, onSave: () -> Unit, onNew: () -> Unit, onRemove: () -> Unit, )</ID>
     <ID>FunctionNaming:Composables.kt$ @Composable fun CardManager( tabTitles: List&lt;String>, tabContent: @Composable (Int) -> Unit, )</ID>
     <ID>FunctionNaming:ForageCardsTab.kt$ @Composable fun ForageCardsTab( viewModel: ForageCardManagerViewModel, )</ID>
-    <ID>FunctionNaming:NightCardsTab.kt$ @Composable fun NightCardsTab( viewModel: NightCardManagerViewModel )</ID>
-    <ID>LongMethod:BelongingsCardsTab.kt$ @Composable fun BelongingsCardsTab( viewModel: BelongingCardManagerViewModel )</ID>
+    <ID>FunctionNaming:NightCardsTab.kt$ @Composable fun NightCardsTab( viewModel: NightCardManagerViewModel, )</ID>
+    <ID>LongMethod:BelongingsCardsTab.kt$ @Composable fun BelongingsCardsTab( viewModel: BelongingCardManagerViewModel, )</ID>
     <ID>LongMethod:ForageCardsTab.kt$ @Composable fun ForageCardsTab( viewModel: ForageCardManagerViewModel, )</ID>
-    <ID>LongMethod:NightCardsTab.kt$ @Composable fun NightCardsTab( viewModel: NightCardManagerViewModel )</ID>
+    <ID>LongMethod:NightCardsTab.kt$ @Composable fun NightCardsTab( viewModel: NightCardManagerViewModel, )</ID>
     <ID>SwallowedException:BaseCardManagerViewModel.kt$BaseCardManagerViewModel$throwable: Throwable</ID>
     <ID>SwallowedException:BelongingCardManagerViewModel.kt$BelongingCardManagerViewModel$throwable: Throwable</ID>
     <ID>SwallowedException:ForageCardManagerViewModel.kt$ForageCardManagerViewModel$throwable: Throwable</ID>

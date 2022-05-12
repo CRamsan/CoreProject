@@ -2,6 +2,15 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ComplexMethod:DBGServiceClientImpl.kt$private fun formatStats(stats: List&lt;Stat>?): List&lt;StatItem></ID>
+    <ID>FunctionParameterNaming:DBGServiceClient.kt$DBGServiceClient$character_id: String</ID>
+    <ID>FunctionParameterNaming:DBGServiceClient.kt$DBGServiceClient$character_id: String?</ID>
+    <ID>LongMethod:DBGServiceClientImpl.kt$private fun formatStats(stats: List&lt;Stat>?): List&lt;StatItem></ID>
+    <ID>LongMethod:DBGServiceClientImpl.kt$private fun formatWeapons( weaponList: List&lt;WeaponStat>?, faction: com.cramsan.ps2link.core.models.Faction, currentLang: CensusLang, ): List&lt;WeaponItem></ID>
+    <ID>TooGenericExceptionCaught:HttpClient.kt$HttpClient$exception: Exception</ID>
+    <ID>TooManyFunctions:Extensions.kt$com.cramsan.ps2link.appcore.Extensions.kt</ID>
+    <ID>TooManyFunctions:PS2LinkRepository.kt$PS2LinkRepository</ID>
+    <ID>TooManyFunctions:PS2LinkRepositoryImpl.kt$PS2LinkRepositoryImpl : PS2LinkRepository</ID>
     <ID>UndocumentedPublicClass:DBGServiceClient.kt$DBGServiceClient</ID>
     <ID>UndocumentedPublicClass:DbgDAO.kt$DbgDAO</ID>
     <ID>UndocumentedPublicClass:PS2HttpResponse.kt$PS2HttpResponse&lt;Body></ID>
@@ -108,5 +117,9 @@
     <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updatePreferredOutfitNamespace(namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:PS2Settings.kt$PS2Settings$suspend fun updatePreferredProfileNamespace(namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:RedditRepository.kt$RedditRepository$suspend fun getPosts( redditPage: RedditPage, ): PS2HttpResponse&lt;List&lt;RedditPost>></ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val all_time = ( (kills?.all_time?.toFloatOrNull() ?: 0f) / (deaths?.all_time?.toFloatOrNull() ?: 1f) ).toString()</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val all_time_sph = ( (score?.all_time?.toFloatOrNull() ?: 0f) / ( ( time?.all_time?.toFloatOrNull() ?: 1f ) / 3600f ) ).toString()</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val stat_name = "kdr"</ID>
+    <ID>VariableNaming:DBGServiceClientImpl.kt$val stat_name_sph = "Score/Hour"</ID>
   </CurrentIssues>
 </SmellBaseline>

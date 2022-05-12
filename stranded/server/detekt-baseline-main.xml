@@ -15,7 +15,7 @@
     <ID>UnreachableCode:Server.kt$Server$broadcastToLobby(lobbyId, LeftLobby(player))</ID>
     <ID>UnreachableCode:Server.kt$Server$createdGame.onConfigureGame(players)</ID>
     <ID>UnreachableCode:Server.kt$Server$createdGame.onGameStarted()</ID>
-    <ID>UnreachableCode:Server.kt$Server$createdGame.registerServerEventHandler(object : MultiplayerGameEventHandler { override fun onStateChangeExecuted(change: StateChange) { scope.launch { broadcastToLobby(lobbyId, GameChange(change)) } } })</ID>
+    <ID>UnreachableCode:Server.kt$Server$createdGame.registerServerEventHandler( object : MultiplayerGameEventHandler { override fun onStateChangeExecuted(change: StateChange) { scope.launch { broadcastToLobby(lobbyId, GameChange(change)) } } }, )</ID>
     <ID>UnreachableCode:Server.kt$Server$game.onPlayerIntentReceived(playerId, playerIntent)</ID>
     <ID>UnreachableCode:Server.kt$Server$if (playerReadyCount &lt; lobby.players.size) { println("All users are not yet ready. Game cannot start") return }</ID>
     <ID>UnreachableCode:Server.kt$Server$lobbyRepository.deleteLobby(lobbyId)</ID>
