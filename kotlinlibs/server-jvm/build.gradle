@@ -1,6 +1,5 @@
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 apply plugin: "org.springframework.boot"
-apply plugin: "io.spring.dependency-management"
 apply plugin: "kotlin-spring"
 apply plugin: "kotlin-allopen"
 apply plugin: "org.jetbrains.kotlin.plugin.jpa"

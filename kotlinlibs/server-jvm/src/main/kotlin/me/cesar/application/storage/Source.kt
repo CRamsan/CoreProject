@@ -17,5 +17,5 @@ class Source(
     var url: String,
     var lastUpdated: Date,
     var sourceType: SourceType,
-    @Id @GeneratedValue var id: Long? = null
+    @Id @GeneratedValue var id: Long? = null,
 )

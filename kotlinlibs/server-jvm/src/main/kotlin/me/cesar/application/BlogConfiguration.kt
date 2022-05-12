@@ -29,7 +29,7 @@ class BlogConfiguration {
      */
     @Bean
     fun databaseInitializer(
-        sourceRepository: SourceRepository
+        sourceRepository: SourceRepository,
     ) = ApplicationRunner {
         sourceRepository.saveAll(ALL_SOURCES)
     }

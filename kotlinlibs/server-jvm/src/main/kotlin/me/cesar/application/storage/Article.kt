@@ -19,5 +19,5 @@ class Article(
     var content: String,
     var publishedAt: Date,
     var addedAt: Date = Date(),
-    @Id @GeneratedValue var id: Long? = null
+    @Id @GeneratedValue var id: Long? = null,
 )

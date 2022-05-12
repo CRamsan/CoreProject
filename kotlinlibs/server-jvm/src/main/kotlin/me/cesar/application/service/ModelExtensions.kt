@@ -11,5 +11,5 @@ fun Article.toModel() = me.cesar.application.model.Article(
     source = source,
     content = content,
     publishedAt = Instant.fromEpochMilliseconds(publishedAt.time),
-    id = id ?: 0
+    id = id ?: 0,
 )
