@@ -10,6 +10,6 @@ fun Article.toModel() = me.cesar.application.model.Article(
     title = title,
     source = source,
     content = content,
-    publishedAt = Instant.fromEpochMilliseconds(publishedAt.time),
+    publishedAt = Instant.fromEpochSeconds(publishedAt.time),
     id = id ?: 0,
 )

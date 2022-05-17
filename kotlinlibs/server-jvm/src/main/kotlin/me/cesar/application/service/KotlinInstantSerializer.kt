@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import kotlinx.datetime.Instant
 
 /**
- * Serializer that is used to serialize an instane of [Instant]
+ * Serializer that is used to serialize an instance of [Instant] as a [Long].
  */
 class KotlinInstantSerializer : StdSerializer<Instant>(Instant::class.java) {
     override fun serialize(
