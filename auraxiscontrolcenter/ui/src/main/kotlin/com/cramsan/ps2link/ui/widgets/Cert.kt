@@ -26,6 +26,7 @@ import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.theme.certBackground
 import com.cramsan.ps2link.ui.theme.certOrange
 import com.cramsan.ps2link.ui.theme.certWhite
+import kotlin.math.max
 
 @Composable
 fun Cert(certs: Int) {
@@ -61,9 +62,10 @@ fun CertBar(
                 modifier = Modifier
                     .weight(percentageToNextCert),
             )
+            val remaining = max(1f, 100 - percentageToNextCert)
             Box(
                 modifier = Modifier
-                    .weight(100 - percentageToNextCert)
+                    .weight(remaining)
                     .fillMaxHeight()
                     .background(certBackground),
             )

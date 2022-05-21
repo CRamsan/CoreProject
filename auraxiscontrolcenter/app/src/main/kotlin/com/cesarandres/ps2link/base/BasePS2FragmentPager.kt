@@ -38,6 +38,7 @@ abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM, Fr
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
+        viewPager.isSaveEnabled = false
 
         val tabLayout = dataBinding.tabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
