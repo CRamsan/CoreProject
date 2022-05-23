@@ -6,6 +6,7 @@ import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
@@ -65,7 +66,7 @@ class WeaponListViewModel @Inject constructor(
         ioScope.launch {
             val currentLang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getWeaponList(characterId, namespace, currentLang)
-            if (response.isSuccessful) {
+            if (response.isSuccessfulAndContainsBody()) {
                 _weaponList.value = response.requireBody().filter {
                     (
                         it.statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()

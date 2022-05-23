@@ -166,6 +166,7 @@ class PS2LinkRepositoryImpl(
         if (!serverPopulation.isSuccessful) {
             return@coroutineScope serverPopulation.toFailure()
         }
+
         Namespace.validNamespaces.map { namespace ->
             val job = async {
                 dbgCensus.getServerList(namespace, lang).process { list ->
