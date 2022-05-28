@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 25px;
+  margin: 10px;
+  overflow: hidden;
+  border: 2px solid #000000;
+}
+
+.thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+.content {
+  padding: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+h1, h2, h3 {
+  margin: 4px 0px;
+}
