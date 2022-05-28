@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { Observable, of, from } from 'rxjs';
 import { PagePostComponent } from './page-post.component';
 
 describe('PagePostComponent', () => {
@@ -8,7 +9,8 @@ describe('PagePostComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PagePostComponent ]
+      declarations: [ PagePostComponent ],
+      providers: [ { provide: ActivatedRoute, useValue: activatedRoute } ],
     })
     .compileComponents();
   });
@@ -23,3 +25,7 @@ describe('PagePostComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+let activatedRoute: Partial<ActivatedRoute> = {
+  paramMap: of(convertToParamMap({id: "1"}))
+};

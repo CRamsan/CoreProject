@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from '../data';
+import { Post } from '../../data';
 
 @Component({
   selector: 'app-post-single',
