@@ -38,7 +38,7 @@ This projects follows the guidelines set by Angular with regards to [project fil
 |`src/app/pages`|This folder is used to store modules that represent a single page in the application. These modules usually build pages out of modules of multiple `sections`.|
 |`src/app/sections`|This folder contains modules that are reusable components that can be included in any page.|
 
-This application follows a hierarchy of three distinct layers, the `top-level` modules, `page` modules and `section` modules. Each layer can only include modules from the layer above it, except for `section` modules, those can include other modules from the same section.
+This application follows a hierarchy of three distinct layers, the `top-level` modules, `page` modules and `section` modules. Each layer can only include modules from the layer below it, except for `section` modules, those can include other modules from the same layer.
 
 ```mermaid
 graph TD
