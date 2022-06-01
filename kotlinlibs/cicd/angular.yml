@@ -1,0 +1,32 @@
+# Gradle
+# specific path build
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - kotlinlibs/common/*
+      - kotlinlibs/*
+      - framework/*
+      - build.gradle
+      - gradle.properties
+      - settings.gradle
+      - gradle/*
+
+pool:
+  name: 'Default'
+
+steps:
+  - template: ../../cicd-templates/configure-local-jdk.yml
+  - task: Gradle@2
+    inputs:
+      workingDirectory: ''
+      gradleWrapperFile: 'gradlew'
+      gradleOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.11'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+      tasks: 'kotlinlibs:fronteng-angular:release'

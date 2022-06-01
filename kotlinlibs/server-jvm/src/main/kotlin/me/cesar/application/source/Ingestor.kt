@@ -6,7 +6,9 @@ import me.cesar.application.storage.ArticleRepository
 import me.cesar.application.storage.Source
 import me.cesar.application.storage.SourceRepository
 import me.cesar.application.storage.SourceType
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import java.util.concurrent.TimeUnit
 
 /**
  * The [Ingestor] will load determine all the sources and fetch any new [Article] and persist them in the
@@ -24,6 +26,7 @@ class Ingestor(
      * Based on their [SourceType], the respective implementation of [BaseFetcher] will be called. Any new articles
      * fetched will be persisted in the [ArticleRepository].
      */
+    @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.SECONDS)
     fun processAllSources() {
         sourceRepository.findAll().forEach {
             when (it.sourceType) {

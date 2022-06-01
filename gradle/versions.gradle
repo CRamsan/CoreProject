@@ -10,6 +10,7 @@ def versions_tools = [
     JavaCompatibility : JavaVersion.VERSION_11,
     JetpackCompose : "1.1.0",
     JetBrainsCompose : "1.0.1",
+    GradleNodePlugin : "3.3.0",
 ]
 
 def versions_packages = [
@@ -56,6 +57,7 @@ def versions_packages = [
     GdxRoboVM : "2.3.14",
     Glide : "4.13.2",
     GMSServices : "4.3.3",
+    GradleNodePlugin : versions_tools.GradleNodePlugin,
     GradleVersions : "0.42.0",
     Gson : "2.9.0",
     H2DatabaseEngine : "2.1.212",
@@ -193,6 +195,7 @@ def packages = [
         Glide : "com.github.bumptech.glide:glide:$versions_packages.Glide",
         GlideCompiler : "com.github.bumptech.glide:compiler:$versions_packages.Glide",
         GradleVersions : "com.github.ben-manes:gradle-versions-plugin:$versions_packages.GradleVersions",
+        GradleNodePlugin : "com.github.node-gradle:gradle-node-plugin:$versions_packages.GradleNodePlugin",
         Gson : "com.google.code.gson:gson:$versions_packages.Gson",
         H2DatabaseEngine : "com.h2database:h2:$versions_packages.H2DatabaseEngine",
         Hilt : "com.google.dagger:hilt-android:$versions_packages.Hilt",
@@ -211,6 +214,7 @@ def packages = [
         JetpackComposeRuntimeLiveData : "androidx.compose.runtime:runtime-livedata:$versions_packages.JetpackCompose",
         JetpackComposeUItestJunit : "androidx.compose.ui:ui-test-junit4:$versions_packages.JetpackCompose",
         OpenjfxGradle : "org.openjfx:javafx-plugin:$versions_packages.OpenjfxGradle",
+        JaxbRuntime : "org.glassfish.jaxb:jaxb-runtime",
         JUnit : "junit:junit:$versions_packages.JUnit",
         JUnit5 : "org.junit.jupiter:junit-jupiter-api:$versions_packages.JUnit5",
         JUnit5Engine : "org.junit.jupiter:junit-jupiter-engine:$versions_packages.JUnit5",

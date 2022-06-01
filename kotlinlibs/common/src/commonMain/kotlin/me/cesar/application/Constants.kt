@@ -5,7 +5,5 @@ package me.cesar.application
  */
 object Constants {
 
-    private const val API_ROOT = "api"
-
-    const val ARTICLE_API = "$API_ROOT/article/"
+    const val ARTICLE_API = "article/"
 }

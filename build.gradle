@@ -34,6 +34,7 @@ buildscript {
         classpath packages.DokkaGradle
         classpath packages.JetBrainsCompose
         classpath packages.Detekt
+        classpath packages.GradleNodePlugin
     }
 }
 

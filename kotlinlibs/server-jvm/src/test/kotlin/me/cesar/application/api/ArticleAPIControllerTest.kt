@@ -33,7 +33,7 @@ class ArticleAPIControllerTest(@Autowired val mockMvc: MockMvc) {
         val body = listOf(article1, article2)
         every { articleService.findAllByOrderByPublishedAtDesc(0, 10, "publishedAt") } returns PageImpl(body)
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/article/").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/article/").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andReturn()
@@ -44,7 +44,7 @@ class ArticleAPIControllerTest(@Autowired val mockMvc: MockMvc) {
         val article = Article("Title 1", "blog1", "A", Clock.System.now(), 100)
         every { articleService.findById(100) } returns article
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/article/100").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/article/100").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(100L))

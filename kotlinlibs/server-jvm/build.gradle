@@ -19,6 +19,7 @@ dependencies {
     implementation packages.SpringStarterJPA
     implementation packages.SpringWeb
 
+    runtimeOnly packages.JaxbRuntime
     runtimeOnly packages.H2DatabaseEngine
     runtimeOnly packages.SpringDevtools
 
