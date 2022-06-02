@@ -19,6 +19,10 @@ pool:
 
 steps:
   - template: ../../cicd-templates/configure-local-jdk.yml
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
   - task: Gradle@2
     inputs:
       workingDirectory: ''
@@ -29,4 +33,4 @@ steps:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: true
       testResultsFiles: '**/TEST-*.xml'
-      tasks: 'kotlinlibs:fronteng-angular:release'
+      tasks: 'kotlinlibs:frontend-angular:release'
