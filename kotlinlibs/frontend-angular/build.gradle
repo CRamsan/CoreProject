@@ -7,5 +7,6 @@ def release = tasks.register("release") {
 
 release.configure {
   dependsOn('npmInstall')
-  dependsOn('npm_run_build')
+  dependsOn('npm_run_build-prod')
+  dependsOn('npm_run_test-prod')
 }
