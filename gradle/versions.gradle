@@ -145,6 +145,8 @@ def packages = [
         AwsSdkV2DynamoDBEnhanced : "software.amazon.awssdk:dynamodb-enhanced:$versions_packages.AwsSdkV2",
         AwsSdkV2Lambda : "software.amazon.awssdk:lambda:$versions_packages.AwsSdkV2",
         AwsSdkV2Cloudwatch : "software.amazon.awssdk:cloudwatch:$versions_packages.AwsSdkV2",
+        CdkAmplify : "software.amazon.awscdk:amplify:$versions_packages.Cdk",
+        CdkElasticBeanstalk : "software.amazon.awscdk:elasticbeanstalk:$versions_packages.Cdk",
         CdkIam : "software.amazon.awscdk:iam:$versions_packages.Cdk",
         CdkCore : "software.amazon.awscdk:core:$versions_packages.Cdk",
         CdkCloudwatch : "software.amazon.awscdk:cloudwatch:$versions_packages.Cdk",
@@ -315,6 +317,8 @@ def packages = [
 ]
 
 def cdk_commons = [
+        packages.CdkAmplify,
+        packages.CdkElasticBeanstalk,
         packages.CdkIam,
         packages.CdkCore,
         packages.CdkCloudwatch,

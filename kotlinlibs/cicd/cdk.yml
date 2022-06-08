@@ -11,8 +11,8 @@ trigger:
   paths:
     include:
     - kotlinlibs/common/*
-    - kotlinlibs/server-jvm/*
-    - framework/*
+    - kotlinlibs/cdk/*
+    - cdk-repo/*
     - build.gradle
     - gradle.properties
     - settings.gradle
@@ -23,6 +23,14 @@ pool:
 
 steps:
 - template: ../../cicd-templates/configure-local-jdk.yml
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(system.defaultworkingdirectory)'
+    includeRootFolder: false
+    archiveType: 'tar'
+    tarCompression: 'gz'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/source.tar.gz'
+    replaceExistingArchive: true
 - task: Gradle@2
   inputs:
     workingDirectory: ''
@@ -33,4 +41,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'kotlinlibs:server-jvm:release'
+    tasks: 'kotlinlibs:cdk:release'
+- task: PublishBuildArtifacts@1
+ 

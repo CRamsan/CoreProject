@@ -7,7 +7,7 @@ trigger:
   paths:
     include:
       - kotlinlibs/common/*
-      - kotlinlibs/*
+      - kotlinlibs/frontend-angular/*
       - framework/*
       - build.gradle
       - gradle.properties

@@ -11,6 +11,7 @@ trigger:
   paths:
     include:
     - auraxiscontrolcenter/*
+    - cdk-repo/*
     - build.gradle
     - gradle.properties
     - settings.gradle

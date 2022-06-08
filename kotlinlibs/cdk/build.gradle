@@ -1,0 +1,13 @@
+ext.mainClassTarget = "com.cramsan.kotlinlib.aws.KotlinLibsApp"
+
+apply from: "$rootDir/gradle/kotlin-jvm-cdk.gradle"
+apply plugin: 'kotlinx-serialization'
+
+dependencies {
+    implementation packages.KotlinxSerialization
+    implementation project(":cdk-repo")
+    implementation project(":framework:interfacelib")
+}
+
+registerDependency(":cdk-repo")
+registerDependency(":framework:interfacelib")

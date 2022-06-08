@@ -33,6 +33,7 @@ object PS2LinkApp {
         val props = buildProps()
         buildMetricsStack(app, props)
         buildRemoteConfigStack(app, props)
+        app.synth()
     }
 
     private fun buildRemoteConfigStack(app: App, props: StackProps) {
@@ -43,7 +44,6 @@ object PS2LinkApp {
             payload,
             props,
         )
-        app.synth()
     }
 
     @Suppress("LongMethod")
