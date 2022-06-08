@@ -22,6 +22,8 @@ You can find more documentation in the [wiki](https://dev.azure.com/CRamsan/Fram
 |                                                          |                    |                                                                                                                                                                                                                                          | 
 | [KotlinLibs](kotlinlibs/README.md)                       | Spring Server      | [![Build Status](https://dev.azure.com/CRamsan/KotlinLibs/_apis/build/status/KotlinLibs_Spring?branchName=master)](https://dev.azure.com/CRamsan/KotlinLibs/_build/latest?definitionId=22&branchName=master)                             |
 |                                                          | Angular Site       | [![Build Status](https://dev.azure.com/CRamsan/KotlinLibs/_apis/build/status/KotlinLibs_Angular?branchName=master)](https://dev.azure.com/CRamsan/KotlinLibs/_build/latest?definitionId=23&branchName=master)                            |
+|                                                          | CDK                | [![Build Status](https://dev.azure.com/CRamsan/KotlinLibs/_apis/build/status/KotlinLibs_Cdk?branchName=master)](https://dev.azure.com/CRamsan/KotlinLibs/_build/latest?definitionId=24&branchName=master)                                |
+
 # Framework
 A lot of the code is kept in a shared module called **Framework** that abstract a lot of complexities out of the client apps.
  - [Framework](framework/)
