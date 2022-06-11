@@ -1,1 +1,630 @@
-{"source":2,"revision":2,"description":null,"createdBy":{"displayName":"CRamsan","url":"https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769","_links":{"avatar":{"href":"https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"}},"id":"c7510d85-07b6-6364-84f2-7bf8379b1769","uniqueName":"contact@cramsan.com","imageUrl":"https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5","descriptor":"msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"},"createdOn":"2021-09-24T16:55:32.180Z","modifiedBy":{"displayName":"CRamsan","url":"https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769","_links":{"avatar":{"href":"https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"}},"id":"c7510d85-07b6-6364-84f2-7bf8379b1769","uniqueName":"contact@cramsan.com","imageUrl":"https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5","descriptor":"msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"},"modifiedOn":"2021-09-24T17:09:18.397Z","isDeleted":false,"variables":{},"variableGroups":[],"environments":[{"id":5,"name":"Stage 1","rank":1,"owner":{"displayName":"CRamsan","url":"https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769","_links":{"avatar":{"href":"https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"}},"id":"c7510d85-07b6-6364-84f2-7bf8379b1769","uniqueName":"contact@cramsan.com","imageUrl":"https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5","descriptor":"msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"},"variables":{},"variableGroups":[],"preDeployApprovals":{"approvals":[{"rank":1,"isAutomated":true,"isNotificationOn":false,"id":28}],"approvalOptions":{"requiredApproverCount":null,"releaseCreatorCanBeApprover":false,"autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped":false,"enforceIdentityRevalidation":false,"timeoutInMinutes":0,"executionOrder":1}},"deployStep":{"id":29},"postDeployApprovals":{"approvals":[{"rank":1,"isAutomated":true,"isNotificationOn":false,"id":30}],"approvalOptions":{"requiredApproverCount":null,"releaseCreatorCanBeApprover":false,"autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped":false,"enforceIdentityRevalidation":false,"timeoutInMinutes":0,"executionOrder":2}},"deployPhases":[{"deploymentInput":{"parallelExecution":{"parallelExecutionType":0},"agentSpecification":{"identifier":"vs2017-win2016"},"skipArtifactsDownload":false,"artifactsDownloadInput":{"downloadInputs":[]},"queueId":53,"demands":[],"enableAccessToken":false,"timeoutInMinutes":0,"jobCancelTimeoutInMinutes":1,"condition":"succeeded()","overrideInputs":{}},"rank":1,"phaseType":1,"name":"Agent job","refName":null,"workflowTasks":[]}],"environmentOptions":{"emailNotificationType":"OnlyOnFailure","emailRecipients":"release.environment.owner;release.creator","skipArtifactsDownload":false,"timeoutInMinutes":0,"enableAccessToken":false,"publishDeploymentStatus":true,"badgeEnabled":false,"autoLinkWorkItems":false,"pullRequestDeploymentEnabled":false},"demands":[],"conditions":[{"name":"ReleaseStarted","conditionType":1,"value":""}],"executionPolicy":{"concurrencyCount":1,"queueDepthCount":0},"schedules":[],"currentRelease":{"id":0,"url":"https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/releases/0","_links":{}},"retentionPolicy":{"daysToKeep":30,"releasesToKeep":3,"retainBuild":true},"processParameters":{},"properties":{"BoardsEnvironmentType":{"$type":"System.String","$value":"unmapped"},"LinkBoardsWorkItems":{"$type":"System.String","$value":"False"}},"preDeploymentGates":{"id":0,"gatesOptions":null,"gates":[]},"postDeploymentGates":{"id":0,"gatesOptions":null,"gates":[]},"environmentTriggers":[],"badgeUrl":"https://vsrm.dev.azure.com/CRamsan/_apis/public/Release/badge/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/2/5"}],"artifacts":[{"sourceId":"bacdd427-7b2f-4e2b-ab30-c22cfd15bb73:20","type":"Build","alias":"_AuraxisControlCenter_Cdk","definitionReference":{"artifactSourceDefinitionUrl":{"id":"https://dev.azure.com/CRamsan/_permalink/_build/index?collectionId=587695b5-61c3-4401-bc63-59cc21d5fdef&projectId=bacdd427-7b2f-4e2b-ab30-c22cfd15bb73&definitionId=20","name":""},"defaultVersionBranch":{"id":"","name":""},"defaultVersionSpecific":{"id":"","name":""},"defaultVersionTags":{"id":"","name":""},"defaultVersionType":{"id":"latestType","name":"Latest"},"definition":{"id":"20","name":"AuraxisControlCenter_Cdk"},"definitions":{"id":"","name":""},"IsMultiDefinitionType":{"id":"False","name":"False"},"project":{"id":"bacdd427-7b2f-4e2b-ab30-c22cfd15bb73","name":"AuraxisControlCenter"},"repository":{"id":"","name":""}},"isPrimary":true,"isRetained":false}],"triggers":[],"releaseNameFormat":"Release-$(rev:r)","tags":[],"properties":{"DefinitionCreationSource":{"$type":"System.String","$value":"ReleaseNew"},"IntegrateBoardsWorkItems":{"$type":"System.String","$value":"False"},"IntegrateJiraWorkItems":{"$type":"System.String","$value":"false"}},"id":2,"name":"Cdk Release","path":"\\","projectReference":null,"url":"https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/definitions/2","_links":{"self":{"href":"https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/definitions/2"},"web":{"href":"https://dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_release?definitionId=2"}}}
+{
+  "source": 2,
+  "revision": 32,
+  "description": null,
+  "createdBy": {
+    "displayName": "CRamsan",
+    "url": "https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769",
+    "_links": {
+      "avatar": {
+        "href": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+      }
+    },
+    "id": "c7510d85-07b6-6364-84f2-7bf8379b1769",
+    "uniqueName": "contact@cramsan.com",
+    "imageUrl": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5",
+    "descriptor": "msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+  },
+  "createdOn": "2021-09-24T16:55:32.180Z",
+  "modifiedBy": {
+    "displayName": "CRamsan",
+    "url": "https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769",
+    "_links": {
+      "avatar": {
+        "href": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+      }
+    },
+    "id": "c7510d85-07b6-6364-84f2-7bf8379b1769",
+    "uniqueName": "contact@cramsan.com",
+    "imageUrl": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5",
+    "descriptor": "msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+  },
+  "modifiedOn": "2022-01-19T10:35:15.750Z",
+  "isDeleted": false,
+  "lastRelease": {
+    "id": 442,
+    "name": "Release-118",
+    "artifacts": [],
+    "_links": {},
+    "description": "Triggered by AuraxisControlCenter_Cdk 20220608.1.",
+    "releaseDefinition": {
+      "id": 2,
+      "projectReference": null,
+      "_links": {}
+    },
+    "createdOn": "2022-06-08T15:56:16.403Z",
+    "createdBy": {
+      "displayName": "Microsoft.VisualStudio.Services.TFS",
+      "url": "https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/00000002-0000-8888-8000-000000000000",
+      "_links": {
+        "avatar": {
+          "href": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA"
+        }
+      },
+      "id": "00000002-0000-8888-8000-000000000000",
+      "uniqueName": "00000002-0000-8888-8000-000000000000@2c895908-04e0-4952-89fd-54b0046d6288",
+      "imageUrl": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA",
+      "descriptor": "s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA"
+    }
+  },
+  "variables": {},
+  "variableGroups": [],
+  "environments": [
+    {
+      "id": 5,
+      "name": "PreProd",
+      "rank": 1,
+      "owner": {
+        "displayName": "CRamsan",
+        "url": "https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769",
+        "_links": {
+          "avatar": {
+            "href": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+          }
+        },
+        "id": "c7510d85-07b6-6364-84f2-7bf8379b1769",
+        "uniqueName": "contact@cramsan.com",
+        "imageUrl": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5",
+        "descriptor": "msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+      },
+      "variables": {},
+      "variableGroups": [],
+      "preDeployApprovals": {
+        "approvals": [
+          {
+            "rank": 1,
+            "isAutomated": true,
+            "isNotificationOn": false,
+            "id": 28
+          }
+        ],
+        "approvalOptions": {
+          "requiredApproverCount": null,
+          "releaseCreatorCanBeApprover": false,
+          "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+          "enforceIdentityRevalidation": false,
+          "timeoutInMinutes": 0,
+          "executionOrder": 1
+        }
+      },
+      "deployStep": {
+        "id": 29
+      },
+      "postDeployApprovals": {
+        "approvals": [
+          {
+            "rank": 1,
+            "isAutomated": true,
+            "isNotificationOn": false,
+            "id": 30
+          }
+        ],
+        "approvalOptions": {
+          "requiredApproverCount": null,
+          "releaseCreatorCanBeApprover": false,
+          "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+          "enforceIdentityRevalidation": false,
+          "timeoutInMinutes": 0,
+          "executionOrder": 2
+        }
+      },
+      "deployPhases": [
+        {
+          "deploymentInput": {
+            "parallelExecution": {
+              "parallelExecutionType": 0
+            },
+            "agentSpecification": null,
+            "skipArtifactsDownload": false,
+            "artifactsDownloadInput": {
+              "downloadInputs": [
+                {
+                  "alias": "_AuraxisControlCenter_Cdk",
+                  "artifactType": "Build",
+                  "artifactDownloadMode": "All",
+                  "artifactItems": []
+                }
+              ]
+            },
+            "queueId": 86,
+            "demands": [],
+            "enableAccessToken": false,
+            "timeoutInMinutes": 0,
+            "jobCancelTimeoutInMinutes": 1,
+            "condition": "succeeded()",
+            "overrideInputs": {}
+          },
+          "rank": 1,
+          "phaseType": 1,
+          "name": "Agent job",
+          "refName": null,
+          "workflowTasks": [
+            {
+              "environment": {},
+              "taskId": "31c75bbb-bcdf-4706-8d7c-4da6a1959bc2",
+              "version": "0.*",
+              "name": "Use Node",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "versionSpec": "14.x",
+                "checkLatest": "false",
+                "force32bit": "false"
+              }
+            },
+            {
+              "environment": {},
+              "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+              "version": "1.*",
+              "name": "Extract files ",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/_AuraxisControlCenter_Cdk/drop/**/*.tar.gz",
+                "destinationFolder": "$(System.DefaultWorkingDirectory)/_AuraxisControlCenter_Cdk/drop/source/",
+                "cleanDestinationFolder": "true",
+                "overwriteExistingFiles": "false",
+                "pathToSevenZipTool": ""
+              }
+            },
+            {
+              "environment": {},
+              "taskId": "3aea39d2-803c-43c7-b8d6-8e71b670f816",
+              "version": "1.*",
+              "name": "AWS Shell Script",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "awsCredentials": "e374ff17-6ee1-4075-8ebe-73935786028a",
+                "regionName": "us-west-2",
+                "arguments": "",
+                "scriptType": "inline",
+                "filePath": "",
+                "inlineScript": "cd $(System.DefaultWorkingDirectory)/_AuraxisControlCenter_Cdk/drop/source/\n./gradlew auraxiscontrolcenter:cdk:forceDeploy ",
+                "disableAutoCwd": "false",
+                "workingDirectory": "",
+                "failOnStandardError": "false"
+              }
+            }
+          ]
+        }
+      ],
+      "environmentOptions": {
+        "emailNotificationType": "OnlyOnFailure",
+        "emailRecipients": "release.environment.owner;release.creator",
+        "skipArtifactsDownload": false,
+        "timeoutInMinutes": 0,
+        "enableAccessToken": false,
+        "publishDeploymentStatus": true,
+        "badgeEnabled": false,
+        "autoLinkWorkItems": false,
+        "pullRequestDeploymentEnabled": false
+      },
+      "demands": [],
+      "conditions": [
+        {
+          "name": "ReleaseStarted",
+          "conditionType": 1,
+          "value": ""
+        }
+      ],
+      "executionPolicy": {
+        "concurrencyCount": 0,
+        "queueDepthCount": 0
+      },
+      "schedules": [],
+      "currentRelease": {
+        "id": 442,
+        "url": "https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/releases/442",
+        "_links": {}
+      },
+      "retentionPolicy": {
+        "daysToKeep": 30,
+        "releasesToKeep": 3,
+        "retainBuild": true
+      },
+      "processParameters": {},
+      "properties": {
+        "BoardsEnvironmentType": {
+          "$type": "System.String",
+          "$value": "unmapped"
+        },
+        "LinkBoardsWorkItems": {
+          "$type": "System.String",
+          "$value": "False"
+        }
+      },
+      "preDeploymentGates": {
+        "id": 0,
+        "gatesOptions": null,
+        "gates": []
+      },
+      "postDeploymentGates": {
+        "id": 0,
+        "gatesOptions": null,
+        "gates": []
+      },
+      "environmentTriggers": [],
+      "badgeUrl": "https://vsrm.dev.azure.com/CRamsan/_apis/public/Release/badge/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/2/5"
+    },
+    {
+      "id": 7,
+      "name": "Prod",
+      "rank": 2,
+      "owner": {
+        "displayName": "CRamsan",
+        "url": "https://spsprodcus3.vssps.visualstudio.com/A0dbbd44f-9d02-43f2-8d4e-80d9e73584a9/_apis/Identities/c7510d85-07b6-6364-84f2-7bf8379b1769",
+        "_links": {
+          "avatar": {
+            "href": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+          }
+        },
+        "id": "c7510d85-07b6-6364-84f2-7bf8379b1769",
+        "uniqueName": "contact@cramsan.com",
+        "imageUrl": "https://dev.azure.com/CRamsan/_apis/GraphProfile/MemberAvatars/msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5",
+        "descriptor": "msa.Yzc1MTBkODUtMDdiNi03MzY0LTg0ZjItN2JmODM3OWIxNzY5"
+      },
+      "variables": {},
+      "variableGroups": [],
+      "preDeployApprovals": {
+        "approvals": [
+          {
+            "rank": 1,
+            "isAutomated": true,
+            "isNotificationOn": false,
+            "id": 38
+          }
+        ],
+        "approvalOptions": {
+          "requiredApproverCount": null,
+          "releaseCreatorCanBeApprover": false,
+          "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+          "enforceIdentityRevalidation": false,
+          "timeoutInMinutes": 0,
+          "executionOrder": 1
+        }
+      },
+      "deployStep": {
+        "id": 35
+      },
+      "postDeployApprovals": {
+        "approvals": [
+          {
+            "rank": 1,
+            "isAutomated": true,
+            "isNotificationOn": false,
+            "id": 36
+          }
+        ],
+        "approvalOptions": {
+          "requiredApproverCount": null,
+          "releaseCreatorCanBeApprover": false,
+          "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+          "enforceIdentityRevalidation": false,
+          "timeoutInMinutes": 0,
+          "executionOrder": 2
+        }
+      },
+      "deployPhases": [
+        {
+          "deploymentInput": {
+            "parallelExecution": {
+              "parallelExecutionType": 0
+            },
+            "timeoutInMinutes": 0,
+            "jobCancelTimeoutInMinutes": 1,
+            "condition": "succeeded()",
+            "overrideInputs": {}
+          },
+          "rank": 1,
+          "phaseType": 2,
+          "name": "Agentless job",
+          "refName": null,
+          "workflowTasks": [
+            {
+              "environment": {},
+              "taskId": "bcb64569-d51a-4af0-9c01-ea5d05b3b622",
+              "version": "8.*",
+              "name": "Manual Intervention",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 1440,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "instructions": "Verify changes are ready to be deployed.",
+                "emailRecipients": "",
+                "onTimeout": "reject"
+              }
+            }
+          ]
+        },
+        {
+          "deploymentInput": {
+            "parallelExecution": {
+              "parallelExecutionType": 0
+            },
+            "agentSpecification": null,
+            "skipArtifactsDownload": false,
+            "artifactsDownloadInput": {
+              "downloadInputs": [
+                {
+                  "alias": "_AuraxisControlCenter_Cdk",
+                  "artifactType": "Build",
+                  "artifactDownloadMode": "All",
+                  "artifactItems": []
+                }
+              ]
+            },
+            "queueId": 86,
+            "demands": [],
+            "enableAccessToken": false,
+            "timeoutInMinutes": 0,
+            "jobCancelTimeoutInMinutes": 1,
+            "condition": "succeeded()",
+            "overrideInputs": {}
+          },
+          "rank": 2,
+          "phaseType": 1,
+          "name": "Agent job",
+          "refName": null,
+          "workflowTasks": [
+            {
+              "environment": {},
+              "taskId": "31c75bbb-bcdf-4706-8d7c-4da6a1959bc2",
+              "version": "0.*",
+              "name": "Use Node",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "versionSpec": "14.x",
+                "checkLatest": "false",
+                "force32bit": "false"
+              }
+            },
+            {
+              "environment": {},
+              "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+              "version": "1.*",
+              "name": "Extract files ",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/_AuraxisControlCenter_Cdk/drop/**/*.tar.gz",
+                "destinationFolder": "$(System.DefaultWorkingDirectory)/_AuraxisControlCenter_Cdk/drop/source/",
+                "cleanDestinationFolder": "true",
+                "overwriteExistingFiles": "false",
+                "pathToSevenZipTool": ""
+              }
+            },
+            {
+              "environment": {},
+              "taskId": "3aea39d2-803c-43c7-b8d6-8e71b670f816",
+              "version": "1.*",
+              "name": "AWS Shell Script",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "retryCountOnTaskFailure": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "awsCredentials": "ca6e55aa-9c92-4511-9a8f-ec05754e0c13",
+                "regionName": "us-west-2",
+                "arguments": "",
+                "scriptType": "inline",
+                "filePath": "",
+                "inlineScript": "cd $(System.DefaultWorkingDirectory)/_AuraxisControlCenter_Cdk/drop/source/\n./gradlew auraxiscontrolcenter:cdk:forceDeploy ",
+                "disableAutoCwd": "false",
+                "workingDirectory": "",
+                "failOnStandardError": "false"
+              }
+            }
+          ]
+        }
+      ],
+      "environmentOptions": {
+        "emailNotificationType": "OnlyOnFailure",
+        "emailRecipients": "release.environment.owner;release.creator",
+        "skipArtifactsDownload": false,
+        "timeoutInMinutes": 0,
+        "enableAccessToken": false,
+        "publishDeploymentStatus": true,
+        "badgeEnabled": false,
+        "autoLinkWorkItems": false,
+        "pullRequestDeploymentEnabled": false
+      },
+      "demands": [],
+      "conditions": [
+        {
+          "name": "PreProd",
+          "conditionType": 2,
+          "value": "4"
+        }
+      ],
+      "executionPolicy": {
+        "concurrencyCount": 0,
+        "queueDepthCount": 0
+      },
+      "schedules": [],
+      "currentRelease": {
+        "id": 442,
+        "url": "https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/releases/442",
+        "_links": {}
+      },
+      "retentionPolicy": {
+        "daysToKeep": 30,
+        "releasesToKeep": 3,
+        "retainBuild": true
+      },
+      "processParameters": {},
+      "properties": {
+        "BoardsEnvironmentType": {
+          "$type": "System.String",
+          "$value": "production"
+        },
+        "LinkBoardsWorkItems": {
+          "$type": "System.String",
+          "$value": "False"
+        }
+      },
+      "preDeploymentGates": {
+        "id": 0,
+        "gatesOptions": {
+          "isEnabled": false,
+          "timeout": 1440,
+          "samplingInterval": 15,
+          "stabilizationTime": 5,
+          "minimumSuccessDuration": 0
+        },
+        "gates": []
+      },
+      "postDeploymentGates": {
+        "id": 0,
+        "gatesOptions": null,
+        "gates": []
+      },
+      "environmentTriggers": [],
+      "badgeUrl": "https://vsrm.dev.azure.com/CRamsan/_apis/public/Release/badge/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/2/7"
+    }
+  ],
+  "artifacts": [
+    {
+      "sourceId": "bacdd427-7b2f-4e2b-ab30-c22cfd15bb73:20",
+      "type": "Build",
+      "alias": "_AuraxisControlCenter_Cdk",
+      "definitionReference": {
+        "artifactSourceDefinitionUrl": {
+          "id": "https://dev.azure.com/CRamsan/_permalink/_build/index?collectionId=587695b5-61c3-4401-bc63-59cc21d5fdef&projectId=bacdd427-7b2f-4e2b-ab30-c22cfd15bb73&definitionId=20",
+          "name": ""
+        },
+        "defaultVersionBranch": {
+          "id": "",
+          "name": ""
+        },
+        "defaultVersionSpecific": {
+          "id": "",
+          "name": ""
+        },
+        "defaultVersionTags": {
+          "id": "",
+          "name": ""
+        },
+        "defaultVersionType": {
+          "id": "latestType",
+          "name": "Latest"
+        },
+        "definition": {
+          "id": "20",
+          "name": "AuraxisControlCenter_Cdk"
+        },
+        "definitions": {
+          "id": "",
+          "name": ""
+        },
+        "IsMultiDefinitionType": {
+          "id": "False",
+          "name": "False"
+        },
+        "project": {
+          "id": "bacdd427-7b2f-4e2b-ab30-c22cfd15bb73",
+          "name": "AuraxisControlCenter"
+        },
+        "repository": {
+          "id": "",
+          "name": ""
+        }
+      },
+      "isPrimary": true,
+      "isRetained": false
+    }
+  ],
+  "triggers": [
+    {
+      "artifactAlias": "_AuraxisControlCenter_Cdk",
+      "triggerConditions": [],
+      "triggerType": 1
+    }
+  ],
+  "releaseNameFormat": "Release-$(rev:r)",
+  "tags": [],
+  "properties": {
+    "DefinitionCreationSource": {
+      "$type": "System.String",
+      "$value": "ReleaseNew"
+    },
+    "IntegrateBoardsWorkItems": {
+      "$type": "System.String",
+      "$value": "False"
+    },
+    "IntegrateJiraWorkItems": {
+      "$type": "System.String",
+      "$value": "false"
+    }
+  },
+  "id": 2,
+  "name": "Cdk Release",
+  "path": "\\",
+  "projectReference": null,
+  "url": "https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/definitions/2",
+  "_links": {
+    "self": {
+      "href": "https://vsrm.dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_apis/Release/definitions/2"
+    },
+    "web": {
+      "href": "https://dev.azure.com/CRamsan/bacdd427-7b2f-4e2b-ab30-c22cfd15bb73/_release?definitionId=2"
+    }
+  }
+}
