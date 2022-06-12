@@ -52,12 +52,22 @@ class ElasticBeanstalkApplication(scope: software.constructs.Construct, id: Stri
                     CfnEnvironment.OptionSettingProperty.builder().apply {
                         namespace("aws:autoscaling:launchconfiguration")
                         optionName("InstanceType")
-                        value("t3.small")
+                        value("t2.micro")
                     }.build(),
                     CfnEnvironment.OptionSettingProperty.builder().apply {
                         namespace("aws:autoscaling:launchconfiguration")
                         optionName("IamInstanceProfile")
                         value(instanceProfileName)
+                    }.build(),
+                    CfnEnvironment.OptionSettingProperty.builder().apply {
+                        namespace("aws:autoscaling:asg")
+                        optionName("MinSize")
+                        value("0")
+                    }.build(),
+                    CfnEnvironment.OptionSettingProperty.builder().apply {
+                        namespace("aws:autoscaling:asg")
+                        optionName("MaxSize")
+                        value("1")
                     }.build(),
                 ),
             )
