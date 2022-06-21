@@ -10,7 +10,7 @@ dependencies {
     implementation project(":auraxiscontrolcenter:streaming-client")
     implementation packages.KotlinxSerialization
     implementation packages.KtorClientWebSockets
-    implementation packages.KtorCore
+    implementation packages.KtorClientCore
 }
 
 compose.desktop {

@@ -8,9 +8,9 @@ import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.ps2link.appcore.census.UrlHolder
 import com.cramsan.ps2link.metric.HttpNamespace
 import io.ktor.client.HttpClient
-import io.ktor.client.call.receive
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -40,7 +40,7 @@ class HttpClient(
                 val response = sendRequest(url, retry)
 
                 if (response.status.isSuccess()) {
-                    val body = response.receive<String>()
+                    val body = response.bodyAsText()
                     logD(TAG, "Response: $body")
                     val parsedBody = json.decodeFromString<T>(body)
                     PS2HttpResponse.success(parsedBody, response)

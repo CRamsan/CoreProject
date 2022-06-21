@@ -1,9 +1,9 @@
 package com.cramsan.ps2link.appcore.census
 
 import io.ktor.client.HttpClient
-import io.ktor.client.features.cache.HttpCache
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 /**
@@ -11,11 +11,11 @@ import kotlinx.serialization.json.Json
  * @created 1/18/2021
  */
 
-fun buildHttpClient(json: Json): HttpClient {
+fun buildHttpClient(jsonSerializer: Json): HttpClient {
     return HttpClient {
         install(HttpCache)
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(json)
+        install(ContentNegotiation) {
+            json(jsonSerializer)
         }
     }
 }

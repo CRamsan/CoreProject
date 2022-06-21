@@ -7,7 +7,7 @@ dependencies {
     implementation packages.KtorServerCore
     implementation packages.KtorServerNetty
     implementation packages.KotlinxHtmlJVM
-    implementation packages.KtorHtmlBuilder
+    implementation packages.KtorServerHtmlBuilder
 }
 
 registerDependency(":api-endpoint:common")

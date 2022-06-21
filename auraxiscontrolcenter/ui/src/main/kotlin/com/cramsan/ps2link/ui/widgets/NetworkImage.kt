@@ -6,9 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import coil.size.Scale
 import com.cramsan.ps2link.ui.R
 
@@ -20,7 +21,6 @@ import com.cramsan.ps2link.ui.R
  * image fits within it's bounds.
  */
 @Suppress("FunctionNaming")
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun NetworkImage(
     modifier: Modifier = Modifier,
@@ -36,14 +36,14 @@ fun NetworkImage(
         val painter = if (imageUrl == null) {
             painterResource(placeHolder)
         } else {
-            rememberImagePainter(
-                data = imageUrl,
-                builder = {
-                    crossfade(true)
-                    placeholder(placeHolder)
-                    error(placeHolder)
-                    scale(Scale.FIT)
-                },
+            rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(data = imageUrl).apply {
+                        crossfade(true)
+                        placeholder(placeHolder)
+                        error(placeHolder)
+                        scale(Scale.FIT)
+                    }.build(),
             )
         }
         Image(

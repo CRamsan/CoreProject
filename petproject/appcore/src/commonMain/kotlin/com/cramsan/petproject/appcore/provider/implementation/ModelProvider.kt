@@ -21,9 +21,9 @@ import com.cramsan.petproject.appcore.storage.implementation.PlantImp
 import com.cramsan.petproject.appcore.storage.implementation.PlantMainNameImpl
 import com.cramsan.petproject.appcore.storage.implementation.ToxicityImpl
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ClientRequestException
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.defaultSerializer
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -52,8 +52,7 @@ class ModelProvider(
 ) : ModelProviderInterface {
 
     private val http: HttpClient = HttpClient {
-        install(JsonFeature) {
-            serializer = defaultSerializer()
+        install(ContentNegotiation) {
         }
     }
 
@@ -100,16 +99,16 @@ class ModelProvider(
 
             coroutineScope {
                 launch {
-                    val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint)
+                    val plants: ArrayList<PlantImp> = http.get(config.plantsEndpoint).body()
                     modelStorage.insertPlantList(plants)
                 }
                 launch {
                     val mainNames: ArrayList<PlantMainNameImpl> =
-                        http.get(config.mainNameEndpoint)
+                        http.get(config.mainNameEndpoint).body()
                     modelStorage.insertPlantMainNameList(mainNames)
                 }
                 launch {
-                    val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint)
+                    val toxicities: ArrayList<ToxicityImpl> = http.get(config.toxicityEndpoint).body()
                     modelStorage.insertToxicityList(toxicities)
                 }
             }
@@ -155,7 +154,7 @@ class ModelProvider(
             try {
 
                 val commonNameEndpoint = formatter.format(config.commonNamesEndpoint, plantId)
-                val commonName: ArrayList<PlantCommonNameImpl> = http.get(commonNameEndpoint)
+                val commonName: ArrayList<PlantCommonNameImpl> = http.get(commonNameEndpoint).body()
                 commonName.forEach {
                     modelStorage.insertPlantCommonName(it)
                 }
@@ -165,9 +164,9 @@ class ModelProvider(
 
             try {
                 val familyEndpoint = formatter.format(config.familyEndpoint, plantId)
-                val family: PlantFamilyImpl = http.get(familyEndpoint)
+                val family: PlantFamilyImpl = http.get(familyEndpoint).body()
                 val descriptionEndpoint = formatter.format(config.descriptionsEndpoint, plantId, animalType.ordinal)
-                val description: DescriptionImpl = http.get(descriptionEndpoint)
+                val description: DescriptionImpl = http.get(descriptionEndpoint).body()
                 modelStorage.insertPlantFamily(family)
                 modelStorage.insertDescription(description)
             } catch (cause: ClientRequestException) {

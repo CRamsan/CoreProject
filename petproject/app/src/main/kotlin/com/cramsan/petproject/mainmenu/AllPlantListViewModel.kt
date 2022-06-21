@@ -16,7 +16,7 @@ import com.cramsan.petproject.appcore.model.PresentablePlant
 import com.cramsan.petproject.appcore.provider.ModelProviderInterface
 import com.cramsan.petproject.base.CatalogDownloadViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.ktor.client.features.ServerResponseException
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn

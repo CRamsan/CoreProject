@@ -22,7 +22,7 @@ kotlin {
             dependencies {
                 implementation packages.KotlinxSerialization
                 implementation packages.KtorClientWebSockets
-                implementation packages.KtorCore
+                implementation packages.KtorClientCore
             }
         }
         commonTest {

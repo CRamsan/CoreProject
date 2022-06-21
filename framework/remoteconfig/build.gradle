@@ -9,9 +9,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework:interfacelib")
-                implementation packages.KtorCore
-                implementation packages.KtorJson
-                implementation packages.KtorSerialization
+                implementation packages.KtorClientCore
+                implementation packages.KtorClientContentNegotiation
                 implementation packages.KotlinxSerialization
             }
         }

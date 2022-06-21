@@ -93,7 +93,7 @@ dependencies {
     implementation packages.KotlinxSerialization
     implementation packages.AppCenterSdk
     implementation packages.AppCenterSdkCrashes
-    implementation packages.KtorAndroid
+    implementation packages.KtorClientAndroid
     implementation packages.PrettyTime
     implementation packages.SqlDelightAndroidDriver
 

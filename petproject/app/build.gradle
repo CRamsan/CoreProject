@@ -30,7 +30,7 @@ dependencies {
     implementation packages.AndroidXWorkManagerRuntime
     implementation packages.AndroidMaterial
     implementation packages.Glide
-    implementation packages.KtorAndroid
+    implementation packages.KtorClientAndroid
     implementation packages.AppCenterSdk
 
     kapt packages.GlideCompiler

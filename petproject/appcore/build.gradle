@@ -12,8 +12,8 @@ sqldelight {
 
 dependencies {
     implementation packages.SqlDelightAndroidDriver
-    implementation packages.KtorAndroid
-    implementation packages.KtorGson
+    implementation packages.KtorClientAndroid
+    implementation packages.KtorClientContentNegotiation
 
     testImplementation packages.SqlDelightAndroidDriver
 }
@@ -23,8 +23,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework")
-                implementation packages.KtorCore
-                implementation packages.KtorJson
+                implementation packages.KtorClientCore
+                implementation packages.KtorClientContentNegotiation
                 implementation packages.KotlinxDatetime
                 implementation packages.SqlDelightCoroutineExt
             }
@@ -36,8 +36,8 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                implementation packages.KtorApache
-                implementation packages.KtorGson
+                implementation packages.KtorClientApache
+                implementation packages.KtorClientSerializationGson
                 implementation packages.SqlDelightDriver
             }
         }
