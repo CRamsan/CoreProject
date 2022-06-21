@@ -1,19 +1,19 @@
 package me.cesar.application
 
-import io.ktor.application.call
-import io.ktor.html.respondHtml
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
-import io.ktor.request.receiveChannel
-import io.ktor.request.receiveText
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.post
-import io.ktor.routing.route
-import io.ktor.routing.routing
+import io.ktor.server.application.call
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.http.content.resources
+import io.ktor.server.http.content.static
 import io.ktor.server.netty.Netty
+import io.ktor.server.request.receiveChannel
+import io.ktor.server.request.receiveText
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.route
+import io.ktor.server.routing.routing
 import kotlinx.html.HTML
 import me.cesar.application.enconding.Encoder
 import me.cesar.application.me.Constants
@@ -23,7 +23,7 @@ import java.io.File
  * Server that manages all endpoints for HTML pages and the encoding service.
  */
 class Server(private val encoder: Encoder) {
-    private val server = embeddedServer(Netty, port = Constants.PORT, host = Constants.HOST) {
+    private val embeddedServer = embeddedServer(Netty, port = Constants.PORT, host = Constants.HOST) {
         routing {
             /**
              * Needed for loading the js library
@@ -35,7 +35,7 @@ class Server(private val encoder: Encoder) {
              * Load the HTML site
              */
             get("/") {
-                call.respondHtml(HttpStatusCode.OK, HTML::index)
+                call.respond(HttpStatusCode.OK, HTML::index)
             }
             /**
              * REST API endpoint
@@ -73,7 +73,7 @@ class Server(private val encoder: Encoder) {
         }
     }
 
-    fun start() = server.start(wait = true)
+    fun start() = embeddedServer.start(wait = true)
 }
 
 /**

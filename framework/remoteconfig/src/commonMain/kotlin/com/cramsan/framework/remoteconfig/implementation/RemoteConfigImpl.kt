@@ -5,8 +5,10 @@ import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.remoteconfig.RemoteConfig
 import com.cramsan.framework.thread.ThreadUtilInterface
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ResponseException
+import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.DeserializationStrategy
@@ -44,7 +46,8 @@ class RemoteConfigImpl<T>(
         threadUtil.assertIsBackgroundThread()
 
         return try {
-            val body: String = http.get(remoteConfigEndpoint)
+            val response: HttpResponse = http.get(remoteConfigEndpoint)
+            val body = response.bodyAsText()
             eventLogger.d(TAG, "Remote config payload: $body")
             downloadedConfigPayload = json.decodeFromString(deserializer, body)
             eventLogger.i(TAG, "Config payload was downloaded successfully")
