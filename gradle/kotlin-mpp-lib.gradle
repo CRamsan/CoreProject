@@ -32,7 +32,6 @@ if (isAndroidTargetEnabled()) {
     apply from: "$rootDir/gradle/jacoco-android.gradle"
 
     android {
-        buildToolsVersion versions_tools.AndroidBuildToolsVersion
         compileSdkVersion versions_tools.CompileSdkVersion
         defaultConfig {
             versionCode libraryVersionCode

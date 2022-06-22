@@ -11,7 +11,6 @@ apply from: "$rootDir/gradle/jacoco-android.gradle"
 apply from: "$rootDir/gradle/detekt.gradle"
 
 android {
-    buildToolsVersion versions_tools.AndroidBuildToolsVersion
     compileSdkVersion versions_tools.CompileSdkVersion
 
     defaultConfig {
