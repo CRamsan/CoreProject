@@ -50,11 +50,10 @@ android {
     }
 
     kotlinOptions {
-        useIR = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions_tools.JetpackCompose
+        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
     }
 }
 

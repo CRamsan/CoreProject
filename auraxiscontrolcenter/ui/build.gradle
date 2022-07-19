@@ -9,7 +9,6 @@ android {
     }
 
     kotlinOptions {
-        useIR = true
     }
 
     kapt {
@@ -17,7 +16,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions_tools.JetpackCompose
+        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
     }
 }
 

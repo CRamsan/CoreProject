@@ -28,7 +28,7 @@ compileKotlin {
     kotlinOptions {
         jvmTarget = versions_tools.JavaCompatibility
         allWarningsAsErrors = true
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 }
 

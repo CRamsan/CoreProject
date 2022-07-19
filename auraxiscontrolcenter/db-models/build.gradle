@@ -14,7 +14,7 @@ kotlin {
     sourceSets {
         all {
             languageSettings {
-                useExperimentalAnnotation('kotlin.time.ExperimentalTime')
+                optIn('kotlin.time.ExperimentalTime')
             }
         }
         commonMain {
