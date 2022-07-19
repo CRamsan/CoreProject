@@ -32,21 +32,20 @@ import com.cramsan.stranded.server.repository.LobbyRepository
 import com.cramsan.stranded.server.repository.Player
 import com.cramsan.stranded.server.repository.PlayerRepository
 import com.cramsan.stranded.server.utils.generateUUID
-import io.ktor.application.install
-import io.ktor.http.cio.websocket.DefaultWebSocketSession
-import io.ktor.http.cio.websocket.Frame
-import io.ktor.http.cio.websocket.readText
-import io.ktor.http.cio.websocket.send
-import io.ktor.routing.routing
+import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.websocket.WebSockets
-import io.ktor.websocket.webSocket
+import io.ktor.server.routing.routing
+import io.ktor.server.websocket.WebSockets
+import io.ktor.server.websocket.webSocket
+import io.ktor.websocket.DefaultWebSocketSession
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
+import io.ktor.websocket.send
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
@@ -96,8 +95,8 @@ class Server(
                         playerRepository.createPlayer(newConnection.playerId)
                         sendEvent(Connected(newConnection.playerId), json)
                         for (frame in incoming) {
-                            frame as? Frame.Text ?: continue
-                            val receivedText = frame.readText()
+                            val textFrame = frame as? Frame.Text ?: continue
+                            val receivedText = textFrame.readText()
                             println("Server received: $receivedText")
                             handleEvent(
                                 newConnection.playerId,

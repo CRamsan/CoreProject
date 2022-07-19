@@ -8,7 +8,7 @@ import androidx.compose.ui.window.application
 import com.cramsan.ps2link.network.ws.Environment
 import com.cramsan.ps2link.network.ws.StreamingClient
 import io.ktor.client.HttpClient
-import io.ktor.client.features.websocket.WebSockets
+import io.ktor.client.plugins.websocket.WebSockets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -28,7 +28,7 @@ fun main() = application {
         }
     }
 
-    val httpClient = HttpClient() {
+    val httpClient = HttpClient {
         install(WebSockets)
     }
 

@@ -11,13 +11,13 @@ import com.cramsan.stranded.server.messages.createSerializedClientMessage
 import com.cramsan.stranded.server.messages.parseServerEvent
 import com.cramsan.stranded.server.repository.Player
 import io.ktor.client.HttpClient
-import io.ktor.client.features.websocket.WebSockets
-import io.ktor.client.features.websocket.webSocket
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.http.HttpMethod
-import io.ktor.http.cio.websocket.DefaultWebSocketSession
-import io.ktor.http.cio.websocket.Frame
-import io.ktor.http.cio.websocket.readText
-import io.ktor.http.cio.websocket.send
+import io.ktor.websocket.DefaultWebSocketSession
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
+import io.ktor.websocket.send
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -93,8 +93,8 @@ class CommonClient(
     private suspend fun listenForIncomingMessages(session: DefaultWebSocketSession) {
         try {
             for (message in session.incoming) {
-                message as? Frame.Text ?: continue
-                val receivedText = message.readText()
+                val textMessage = message as? Frame.Text ?: continue
+                val receivedText = textMessage.readText()
                 println("Client received: $receivedText")
                 handleServerEvent(json.parseServerEvent(receivedText))
             }

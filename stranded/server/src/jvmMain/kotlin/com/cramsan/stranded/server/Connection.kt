@@ -1,6 +1,6 @@
 package com.cramsan.stranded.server
 
-import io.ktor.http.cio.websocket.DefaultWebSocketSession
+import io.ktor.websocket.DefaultWebSocketSession
 
 class Connection(
     val playerId: String,
