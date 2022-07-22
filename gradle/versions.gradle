@@ -6,6 +6,7 @@ def versions_tools = [
     MinSdkVersion : 26,
     TargetSdkVersion : 30,
     Jacoco: "0.8.8",
+    // TODO: Update to JDK 17 since its an LTS release
     JavaCompatibility : JavaVersion.VERSION_11,
     JetpackComposeCompiler : "1.2.0",
     JetBrainsCompose : "1.0.1",
