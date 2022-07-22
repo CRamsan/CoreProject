@@ -34,6 +34,7 @@ import com.cramsan.stranded.server.MultiplayerGameEventHandler
 /**
  * This is the only function to apply changes to [StrandedGameState].
  */
+@Suppress("LongMethod", "ComplexMethod")
 internal fun MutableStrandedGameState.processEvent(
     change: StrandedStateChange,
     multiplayerGameEventHandler: MultiplayerGameEventHandler? = null,

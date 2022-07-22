@@ -37,6 +37,7 @@ import kotlin.math.max
  * Improvements:
  * - Allow for size modification
  */
+@Suppress("LongMethod")
 @Composable
 fun CustomCircularProgressIndicator(
     modifier: Modifier = Modifier,

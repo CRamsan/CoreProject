@@ -34,7 +34,6 @@ import com.cramsan.awslib.enums.DebugAction
 import com.cramsan.awslib.enums.Direction
 import com.cramsan.awslib.enums.TerrainType
 import com.cramsan.awslib.enums.TurnActionType
-import com.cramsan.awslib.eventsystem.CharacterTrigger
 import com.cramsan.awslib.eventsystem.events.BaseEvent
 import com.cramsan.awslib.eventsystem.events.ChangeTriggerEvent
 import com.cramsan.awslib.eventsystem.events.InteractiveEvent
@@ -42,6 +41,7 @@ import com.cramsan.awslib.eventsystem.events.InteractiveEventOption
 import com.cramsan.awslib.eventsystem.events.NoopEvent
 import com.cramsan.awslib.eventsystem.events.SwapCharacterEvent
 import com.cramsan.awslib.eventsystem.triggers.CellTrigger
+import com.cramsan.awslib.eventsystem.triggers.CharacterTrigger
 import com.cramsan.awslib.eventsystem.triggers.Trigger
 import com.cramsan.awslib.map.DoorCell
 import com.cramsan.awslib.map.EndCell

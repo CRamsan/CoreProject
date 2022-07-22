@@ -46,6 +46,9 @@ class MainMenuFragment :
     // Only enable the searchView if data is available
     private var enableSearchView = false
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -140,6 +143,9 @@ class MainMenuFragment :
             .show()
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         logI("MainMenuActivity", "onCreateOptionsMenu")
 
@@ -188,6 +194,9 @@ class MainMenuFragment :
         menu.children.find { it.itemId == R.id.action_search }!!.isVisible = enableSearchView
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_debug -> {
             val action = MainMenuFragmentDirections.actionMainMenuFragmentToDebugMenuFragment()

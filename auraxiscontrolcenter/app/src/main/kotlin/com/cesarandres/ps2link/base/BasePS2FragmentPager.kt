@@ -24,6 +24,9 @@ abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM, Fr
 
     private lateinit var viewPager: ViewPager2
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     @CallSuper
     override fun onCreateView(
         inflater: LayoutInflater,

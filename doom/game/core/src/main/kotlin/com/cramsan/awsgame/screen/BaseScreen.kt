@@ -26,8 +26,10 @@ abstract class BaseScreen : Screen {
         callbackManager = CallbackManager()
     }
 
-    // This method will be called to configure objects. This is used to decouple the object initialization
-    // From their configuration in the game world.
+    /**
+     * This method will be called to configure objects. This is used to decouple the object initialization
+     * From their configuration in the game world.
+     */
     open fun screenInit() {
         cam.setToOrtho(false)
         cam.update()

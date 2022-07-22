@@ -44,6 +44,9 @@ class PlantsListFragment :
     private lateinit var queryCleaner: OnBackPressedCallback
     private lateinit var animalType: AnimalType
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -146,6 +149,9 @@ class PlantsListFragment :
         findNavController().navigate(action)
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         logI("PlantsListActivity", "onCreateOptionsMenu")
 

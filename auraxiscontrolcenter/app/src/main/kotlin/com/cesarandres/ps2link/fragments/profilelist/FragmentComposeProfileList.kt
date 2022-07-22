@@ -33,6 +33,9 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
         )
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +46,9 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
         return view
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)

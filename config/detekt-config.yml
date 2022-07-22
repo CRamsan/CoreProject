@@ -1209,6 +1209,7 @@ naming:
       - '**/jsTest/**'
       - '**/iosTest/**'
   FunctionNaming:
+    ignoreAnnotated: ['Composable']
     excludes:
       - '**/build/generated/**'
       - '**/test/**'

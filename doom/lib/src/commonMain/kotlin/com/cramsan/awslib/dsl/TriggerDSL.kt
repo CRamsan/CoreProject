@@ -1,7 +1,7 @@
 package com.cramsan.awslib.dsl
 
-import com.cramsan.awslib.eventsystem.CharacterTrigger
 import com.cramsan.awslib.eventsystem.triggers.CellTrigger
+import com.cramsan.awslib.eventsystem.triggers.CharacterTrigger
 import com.cramsan.awslib.eventsystem.triggers.Trigger
 import com.cramsan.awslib.utils.constants.InitialValues
 

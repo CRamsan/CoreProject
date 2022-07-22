@@ -16,10 +16,10 @@ import java.util.ArrayList
  * methods will take care of configuring the connection with the API
  */
 class TwitterClientImpl(
-    private val CONSUMER_SECRET: String,
-    private val CONSUMER_KEY: String,
-    private val ACCESS_TOKEN: String,
-    private val ACCESS_TOKEN_SECRET: String,
+    private val consumerSecret: String,
+    private val consumerKey: String,
+    private val accessToken: String,
+    private val accessTokenSecret: String,
 ) : TwitterClient {
 
     private val twitter: Twitter by lazy { configureTwitter() }
@@ -51,9 +51,9 @@ class TwitterClientImpl(
      */
     private fun configureTwitter(): Twitter {
         val cb = ConfigurationBuilder()
-        cb.setDebugEnabled(true).setOAuthConsumerKey(CONSUMER_KEY)
-            .setOAuthConsumerSecret(CONSUMER_SECRET).setOAuthAccessToken(ACCESS_TOKEN)
-            .setOAuthAccessTokenSecret(ACCESS_TOKEN_SECRET)
+        cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
+            .setOAuthConsumerSecret(consumerSecret).setOAuthAccessToken(accessToken)
+            .setOAuthAccessTokenSecret(accessTokenSecret)
         val tf = TwitterFactory(cb.build())
         return tf.instance
     }
@@ -65,6 +65,7 @@ class TwitterClientImpl(
      * @throws TwitterException this exception is thrown where there is an error
      * communicating with the twitter API
      */
+    @Suppress("NestedBlockDepth")
     private fun retrieveTweets(users: List<String>): PS2HttpResponse<List<PS2Tweet>> {
         if (users.isEmpty()) {
             return PS2HttpResponse.success(emptyList())
@@ -108,7 +109,7 @@ class TwitterClientImpl(
                 }
             }
             return PS2HttpResponse.success(tweetsFound).process {
-                tweetsFound.map { it.toCoreModel() }
+                tweetsFound.map { tweet -> tweet.toCoreModel() }
             }
         } catch (throwable: Throwable) {
             return PS2HttpResponse.failure(null, throwable)

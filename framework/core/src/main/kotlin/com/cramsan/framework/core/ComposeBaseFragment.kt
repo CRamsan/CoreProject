@@ -29,8 +29,8 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : BaseFragment() {
         viewModel.events().observe(
             viewLifecycleOwner,
         ) {
-            it?.let {
-                onViewModelEvent(it)
+            it?.let { event ->
+                onViewModelEvent(event)
             }
         }
         return view

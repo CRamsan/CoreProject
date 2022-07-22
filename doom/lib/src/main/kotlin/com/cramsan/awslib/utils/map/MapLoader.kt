@@ -20,7 +20,7 @@ actual class MapLoader {
         var readResult = buffer.readLine()
         while (readResult != null) {
             val tokens = readResult.split(",")
-            var terrainTypeArray = mutableListOf<TerrainType>()
+            val terrainTypeArray = mutableListOf<TerrainType>()
             tokens.forEach {
                 terrainTypeArray.add(
                     when (it) {

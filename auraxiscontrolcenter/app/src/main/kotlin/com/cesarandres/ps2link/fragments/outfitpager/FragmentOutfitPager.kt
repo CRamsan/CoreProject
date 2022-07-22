@@ -35,6 +35,9 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
     private lateinit var outfitId: String
     private lateinit var namespace: Namespace
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -83,6 +86,9 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
         }
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.outfit_menu, menu)
@@ -97,6 +103,9 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
         return
     }
 
+    // TODO: Migrate to the new MenuProvider API
+    // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         lifecycleScope.launch {
             when (item.itemId) {

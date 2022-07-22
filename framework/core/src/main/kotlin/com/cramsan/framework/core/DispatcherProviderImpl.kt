@@ -7,5 +7,6 @@ import kotlinx.coroutines.Dispatchers
  */
 class DispatcherProviderImpl : DispatcherProvider {
 
+    @Suppress("InjectDispatcher")
     override fun ioDispatcher() = Dispatchers.IO
 }
