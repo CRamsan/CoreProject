@@ -7,6 +7,8 @@ apply from: "$rootDir/gradle/detekt.gradle"
 
 kotlin {
     js(IR) {
+        browser()
+        nodejs()
         binaries.executable()
     }
 }
@@ -37,7 +39,6 @@ def releaseJs = tasks.register("releaseJs") {
 // Function to add a dependency to another JS project.
 ext.registerDependency = { project ->
     def dependency = "${project}:releaseJs"
-    println("Adding dependency to $dependency")
     releaseJs.configure { dependsOn(dependency) }
 }
 

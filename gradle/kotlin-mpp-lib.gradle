@@ -31,6 +31,12 @@ if (isAndroidTargetEnabled()) {
 
     apply from: "$rootDir/gradle/jacoco-android.gradle"
 
+    /**
+     * False positive "The Kotlin source set androidAndroidTestRelease was
+     * configured but not added to any Kotlin compilation"
+     * https://youtrack.jetbrains.com/issue/KT-48436
+     * Target to remove verify this fix on Kotlin 1.7.20
+     */
     android {
         compileSdkVersion versions_tools.CompileSdkVersion
         defaultConfig {
@@ -106,6 +112,8 @@ kotlin {
 
     if (isJsTargetEnabled()) {
         js(IR) {
+            browser()
+            nodejs()
             binaries.executable()
         }
     }
@@ -273,17 +281,14 @@ def release = tasks.register("release") {
 ext.registerDependency = { project ->
     if (isJvmTargetEnabled()) {
         def dependency = "${project}:releaseJvm"
-        println("Adding dependency to $dependency")
         releaseJvm.configure { dependsOn(dependency) }
     }
     if (isAndroidTargetEnabled()) {
         def dependency = "${project}:releaseAndroid"
-        println("Adding dependency to $dependency")
         releaseAndroid.configure { dependsOn(dependency) }
     }
     if (isJsTargetEnabled()) {
         def dependency = "${project}:releaseJs"
-        println("Adding dependency to $dependency")
         releaseJs.configure { dependsOn(dependency) }
     }
 }
@@ -292,7 +297,6 @@ ext.registerDependency = { project ->
 ext.registerJvmDependency = { project ->
     if (isJvmTargetEnabled()) {
         def dependency = "${project}:releaseJvm"
-        println("Adding dependency to $dependency")
         releaseJvm.configure { dependsOn(dependency) }
     }
 }

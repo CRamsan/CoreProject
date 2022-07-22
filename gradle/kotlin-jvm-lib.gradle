@@ -61,7 +61,6 @@ def releaseJvm = tasks.register("releaseJvm") {
 // Function to add a dependency to another JVM project.
 ext.registerDependency = { project ->
     def dependency = "${project}:releaseJvm"
-    println("Adding dependency to $dependency")
     releaseJvm.configure { dependsOn(dependency) }
 }
 
