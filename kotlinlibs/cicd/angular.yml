@@ -6,6 +6,7 @@ trigger:
       - master
   paths:
     include:
+      - kotlinlibs/cicd/*
       - kotlinlibs/common/*
       - kotlinlibs/frontend-angular/*
       - framework/*
