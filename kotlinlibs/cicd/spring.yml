@@ -34,3 +34,14 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'kotlinlibs:server-jvm:release'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(system.defaultworkingdirectory)/kotlinlibs/server-jvm/build/libs/
+    Contents: '**'
+    targetFolder: $(build.artifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)
