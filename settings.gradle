@@ -53,7 +53,6 @@ include 'stranded:gdx:core'
 // TODO: Enable once JB Compose is stable
 //include 'stranded:cardmanager'
 //include 'stranded:testgui'
-//include 'stranded:server:demogame'
 include 'stranded:server'
 //include 'stranded:server:demogame'
 //include 'stranded:web'
