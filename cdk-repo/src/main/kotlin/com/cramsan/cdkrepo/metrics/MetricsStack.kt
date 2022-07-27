@@ -1,8 +1,8 @@
 package com.cramsan.cdkrepo.metrics
 
-import software.amazon.awscdk.core.Construct
-import software.amazon.awscdk.core.Stack
-import software.amazon.awscdk.core.StackProps
+import software.amazon.awscdk.Stack
+import software.amazon.awscdk.StackProps
+import software.constructs.Construct
 
 /**
  * This stack will deploy resources for client-side metrics collection.

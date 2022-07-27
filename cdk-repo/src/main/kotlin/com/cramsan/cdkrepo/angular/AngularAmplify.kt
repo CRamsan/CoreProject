@@ -1,31 +1,28 @@
 package com.cramsan.cdkrepo.angular
 
-import software.amazon.awscdk.core.Construct
-import software.amazon.awscdk.services.amplify.App
-import software.amazon.awscdk.services.amplify.AppProps
-import software.amazon.awscdk.services.amplify.CustomRule
-import software.amazon.awscdk.services.amplify.CustomRuleOptions
-import software.amazon.awscdk.services.amplify.RedirectStatus
+import software.constructs.Construct
+import software.amazon.awscdk.services.amplify.CfnApp as App
+import software.amazon.awscdk.services.amplify.CfnApp.CustomRuleProperty as CustomRule
+import software.amazon.awscdk.services.amplify.CfnAppProps as AppProps
 
 /**
  * Construct that creates an Angular app on Amplify.
  */
-class AngularAmplify(scope: software.constructs.Construct, id: String) : Construct(scope, id) {
+class AngularAmplify(scope: Construct, id: String) : Construct(scope, id) {
 
     init {
         // Set the routing needed for the SPA.
         // https://angular.io/guide/deployment#server-configuration
         // https://docs.aws.amazon.com/amplify/latest/userguide/redirects.html#redirects-for-single-page-web-apps-spa
         val frontEndAppProps = AppProps.builder().apply {
+            name("Angular-App-$id")
             customRules(
                 listOf(
-                    CustomRule(
-                        CustomRuleOptions.builder().apply {
-                            source(REDIRECT_REGEX)
-                            target("/index.html")
-                            status(RedirectStatus.REWRITE)
-                        }.build(),
-                    ),
+                    CustomRule.builder().apply {
+                        source(REDIRECT_REGEX)
+                        target("/index.html")
+                        status("200")
+                    }.build(),
                 ),
             )
         }.build()

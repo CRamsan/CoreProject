@@ -1,6 +1,5 @@
 package com.cramsan.cdkrepo.backend
 
-import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.elasticbeanstalk.CfnApplication
 import software.amazon.awscdk.services.elasticbeanstalk.CfnApplicationProps
 import software.amazon.awscdk.services.elasticbeanstalk.CfnEnvironment
@@ -11,6 +10,7 @@ import software.amazon.awscdk.services.iam.ManagedPolicy
 import software.amazon.awscdk.services.iam.Role
 import software.amazon.awscdk.services.iam.RoleProps
 import software.amazon.awscdk.services.iam.ServicePrincipal
+import software.constructs.Construct
 
 /**
  * Construct that creates an Elastic Beanstalk application.

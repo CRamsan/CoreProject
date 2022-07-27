@@ -3,5 +3,5 @@ apply plugin: 'kotlinx-serialization'
 
 dependencies {
     implementation packages.KotlinxSerialization
-    implementation meta_packages.CdkCommons
+    implementation packages.CdkV2
 }

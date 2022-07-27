@@ -7,9 +7,9 @@ import com.cramsan.framework.metrics.MetricType
 import com.cramsan.ps2link.metric.ApplicationNamespace
 import com.cramsan.ps2link.remoteconfig.remoteConfigJson
 import com.cramsan.ps2link.remoteconfig.remoteConfigPayload
-import software.amazon.awscdk.core.App
-import software.amazon.awscdk.core.Duration
-import software.amazon.awscdk.core.StackProps
+import software.amazon.awscdk.App
+import software.amazon.awscdk.Duration
+import software.amazon.awscdk.StackProps
 import software.amazon.awscdk.services.cloudwatch.Alarm
 import software.amazon.awscdk.services.cloudwatch.AlarmProps
 import software.amazon.awscdk.services.cloudwatch.ComparisonOperator

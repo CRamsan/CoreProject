@@ -1,10 +1,10 @@
 package com.cramsan.cdkrepo.metrics
 
-import software.amazon.awscdk.core.CfnOutput
-import software.amazon.awscdk.core.Construct
+import software.amazon.awscdk.CfnOutput
 import software.amazon.awscdk.services.iam.CfnAccessKey
 import software.amazon.awscdk.services.iam.ManagedPolicy
 import software.amazon.awscdk.services.iam.User
+import software.constructs.Construct
 
 /**
  * Construct that will create the required users and API keys to have safe and controlled access

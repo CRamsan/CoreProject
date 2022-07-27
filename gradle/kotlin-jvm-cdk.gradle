@@ -6,7 +6,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
 
 dependencies {
-    implementation meta_packages.CdkCommons
+    implementation packages.CdkV2
 }
 
 task synthesize(type:Exec) {

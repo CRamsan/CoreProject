@@ -1,8 +1,8 @@
 package com.cramsan.kotlinlib.aws
 
 import com.cramsan.cdkrepo.metrics.MetricsStack
-import software.amazon.awscdk.core.App
-import software.amazon.awscdk.core.StackProps
+import software.amazon.awscdk.App
+import software.amazon.awscdk.StackProps
 
 /**
  * CDK App

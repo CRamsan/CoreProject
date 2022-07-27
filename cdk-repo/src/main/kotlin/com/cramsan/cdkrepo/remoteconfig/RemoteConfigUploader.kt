@@ -1,11 +1,11 @@
 package com.cramsan.cdkrepo.remoteconfig
 
 import com.cramsan.cdkrepo.common.PublicReadOnlyBucket
-import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.s3.assets.AssetOptions
 import software.amazon.awscdk.services.s3.deployment.BucketDeployment
 import software.amazon.awscdk.services.s3.deployment.BucketDeploymentProps
 import software.amazon.awscdk.services.s3.deployment.Source
+import software.constructs.Construct
 import java.io.File
 
 /**

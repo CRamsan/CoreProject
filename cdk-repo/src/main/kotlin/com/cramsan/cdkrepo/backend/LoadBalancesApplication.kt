@@ -1,9 +1,8 @@
 package com.cramsan.cdkrepo.backend
 
-import software.amazon.awscdk.core.CfnOutput
-import software.amazon.awscdk.core.CfnOutputProps
-import software.amazon.awscdk.core.Construct
-import software.amazon.awscdk.core.Duration
+import software.amazon.awscdk.CfnOutput
+import software.amazon.awscdk.CfnOutputProps
+import software.amazon.awscdk.Duration
 import software.amazon.awscdk.services.autoscaling.AutoScalingGroup
 import software.amazon.awscdk.services.autoscaling.AutoScalingGroupProps
 import software.amazon.awscdk.services.autoscaling.RequestCountScalingProps
@@ -21,6 +20,7 @@ import software.amazon.awscdk.services.elasticloadbalancingv2.ApplicationListene
 import software.amazon.awscdk.services.elasticloadbalancingv2.ApplicationLoadBalancer
 import software.amazon.awscdk.services.elasticloadbalancingv2.ApplicationLoadBalancerProps
 import software.amazon.awscdk.services.elasticloadbalancingv2.HealthCheck
+import software.constructs.Construct
 
 /**
  * Construct that creates an Elastic Beanstalk application.

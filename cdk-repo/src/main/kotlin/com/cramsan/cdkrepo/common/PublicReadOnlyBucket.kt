@@ -1,7 +1,7 @@
 package com.cramsan.cdkrepo.common
 
-import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.s3.Bucket
+import software.constructs.Construct
 
 /**
  * **BE CAREFUL This construct will create a resource that is publicly accessible.**
