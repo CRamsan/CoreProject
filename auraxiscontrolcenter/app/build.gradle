@@ -59,6 +59,7 @@ android {
 
 dependencies {
     implementation project(":framework")
+    implementation project(":framework:core-compose")
     implementation project(":auraxiscontrolcenter:appcore")
     implementation project(":auraxiscontrolcenter:core-models")
     implementation project(':auraxiscontrolcenter:deployable-models')
@@ -106,6 +107,7 @@ dependencies {
 }
 
 registerDependency(":framework")
+registerDependency(":framework:core-compose")
 registerDependency(":auraxiscontrolcenter:appcore")
 registerDependency(":auraxiscontrolcenter:core-models")
 registerDependency(":auraxiscontrolcenter:deployable-models")

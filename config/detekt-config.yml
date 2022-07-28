@@ -2212,6 +2212,7 @@ style:
       - '**/jsTest/**'
       - '**/iosTest/**'
   UnusedPrivateMember:
+    ignoreAnnotated: ['Preview']
     excludes:
       - '**/build/generated/**'
       - '**/test/**'

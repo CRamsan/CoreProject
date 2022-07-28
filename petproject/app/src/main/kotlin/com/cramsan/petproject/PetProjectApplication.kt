@@ -1,6 +1,7 @@
 package com.cramsan.petproject
 
 import android.app.Application
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.logging.EventLoggerInterface
 import com.cramsan.framework.logging.Severity
@@ -27,6 +28,9 @@ class PetProjectApplication : Application() {
 
     @Inject
     lateinit var userEvents: UserEventsInterface
+
+    @Inject
+    lateinit var assertUtilInterface: AssertUtilInterface
 
     @Inject
     lateinit var syncManager: ScheduledSyncManager

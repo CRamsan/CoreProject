@@ -7,15 +7,7 @@
     style="@style/BaseCoordinatorLayout"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout style="@style/BaseAppBarLayout">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/main_menu_toolbar"
-            style="@style/BaseToolBar"
-            tools:title="@string/app_name" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         style="@style/BaseContentLayout"

@@ -9,14 +9,26 @@ android {
         def appCenterId = findProperty("petProjectAppCenterId") ?: ""
         buildConfigField("String", "APP_CENTER_ID", "\"${appCenterId}\"")
     }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
+    }
 }
 
 dependencies {
     implementation project(":petproject:appcore")
+    implementation project(":petproject:ui")
     implementation project(":framework")
+    implementation project(":framework:core-compose")
 
     implementation packages.ConstraintLayout
     implementation packages.AndroidxActivityKtx
+    implementation packages.AndroidXActivityCompose
     implementation packages.AndroidxFragmentKtx
     implementation packages.AndroidXLifecycleLiveDataKtx
     implementation packages.AndroidXLifecycleViewModelKtx
@@ -30,6 +42,14 @@ dependencies {
     implementation packages.AndroidXWorkManagerRuntime
     implementation packages.AndroidMaterial
     implementation packages.Glide
+    implementation packages.JetpackComposeUI
+    implementation packages.JetpackComposeTooling
+    implementation packages.JetpackComposeFoundation
+    implementation packages.JetpackComposeMaterial
+    implementation packages.JetpackComposeIconsCore
+    implementation packages.JetpackComposeIconsExtended
+    implementation packages.JetpackComposeNavication
+    implementation packages.JetpackComposeRuntimeLiveData
     implementation packages.KtorClientAndroid
     implementation packages.AppCenterSdk
 
@@ -46,3 +66,6 @@ dependencies {
 }
 
 registerDependency(":petproject:appcore")
+registerDependency(":petproject:ui")
+registerDependency(":framework")
+registerDependency(":framework:core-compose")

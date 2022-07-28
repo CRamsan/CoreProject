@@ -21,7 +21,6 @@ android {
 }
 
 dependencies {
-    implementation project(":auraxiscontrolcenter:core-models")
     implementation project(":framework:assert")
     implementation project(":framework:interfacelib")
     implementation packages.AccompanistSwipeRefresh

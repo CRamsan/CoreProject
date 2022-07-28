@@ -1,0 +1,37 @@
+apply plugin: "com.android.library"
+apply from: "$rootDir/gradle/android-lib.gradle"
+
+android {
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
+    }
+
+    dependencies {
+        kapt meta_packages.HiltKapt
+
+        implementation meta_packages.Hilt
+
+        implementation project(":framework:interfacelib")
+        implementation project(":framework:core")
+
+        implementation packages.AndroidMaterial
+        implementation packages.AndroidXAppCompat
+        implementation packages.AndroidXActivityCompose
+        implementation packages.AndroidxFragmentKtx
+        implementation packages.AndroidXLifecycleViewModelKtx
+        implementation packages.JetpackComposeUI
+        implementation packages.JetpackComposeTooling
+        implementation packages.JetpackComposeFoundation
+    }
+}
+
+registerDependency(":framework:assert")
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:core")
+registerDependency(":framework:test")

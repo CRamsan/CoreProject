@@ -11,6 +11,8 @@ android {
 
         implementation meta_packages.Hilt
 
+        implementation project(":framework:interfacelib")
+
         implementation packages.AndroidMaterial
         implementation packages.AndroidXAppCompat
         implementation packages.AndroidxFragmentKtx
