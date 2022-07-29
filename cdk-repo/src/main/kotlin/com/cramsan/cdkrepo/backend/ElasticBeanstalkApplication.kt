@@ -2,6 +2,8 @@ package com.cramsan.cdkrepo.backend
 
 import software.amazon.awscdk.services.elasticbeanstalk.CfnApplication
 import software.amazon.awscdk.services.elasticbeanstalk.CfnApplicationProps
+import software.amazon.awscdk.services.elasticbeanstalk.CfnApplicationVersion
+import software.amazon.awscdk.services.elasticbeanstalk.CfnApplicationVersionProps
 import software.amazon.awscdk.services.elasticbeanstalk.CfnEnvironment
 import software.amazon.awscdk.services.elasticbeanstalk.CfnEnvironmentProps
 import software.amazon.awscdk.services.iam.CfnInstanceProfile
@@ -10,12 +12,14 @@ import software.amazon.awscdk.services.iam.ManagedPolicy
 import software.amazon.awscdk.services.iam.Role
 import software.amazon.awscdk.services.iam.RoleProps
 import software.amazon.awscdk.services.iam.ServicePrincipal
+import software.amazon.awscdk.services.s3.assets.Asset
+import software.amazon.awscdk.services.s3.assets.AssetProps
 import software.constructs.Construct
 
 /**
  * Construct that creates an Elastic Beanstalk application.
  */
-class ElasticBeanstalkApplication(scope: software.constructs.Construct, id: String) : Construct(scope, id) {
+class ElasticBeanstalkApplication(scope: Construct, id: String, jarPath: String) : Construct(scope, id) {
 
     init {
         val backendAppProps = CfnApplicationProps.builder().apply {
@@ -74,5 +78,28 @@ class ElasticBeanstalkApplication(scope: software.constructs.Construct, id: Stri
         }.build()
         val environment = CfnEnvironment(this, "EB-Env-$id", environmentProps)
         environment.addDependsOn(backEndApp)
+
+        val wepAppZipArchive = Asset(
+            this,
+            "app-zip",
+            AssetProps.builder().apply {
+                path(jarPath)
+            }.build(),
+        )
+
+        val appVersion = CfnApplicationVersion(
+            this,
+            "app-version",
+            CfnApplicationVersionProps.builder().apply {
+                applicationName(backEndApp.applicationName)
+                sourceBundle(
+                    CfnApplicationVersion.SourceBundleProperty.builder().apply {
+                        s3Bucket(wepAppZipArchive.s3BucketName)
+                        s3Key(wepAppZipArchive.s3ObjectKey)
+                    }.build(),
+                )
+            }.build(),
+        )
+        appVersion.addDependsOn(backEndApp)
     }
 }

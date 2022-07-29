@@ -17,4 +17,6 @@ It is a Gradle based project, so you can open this project with any Gradle compa
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
 
-Enjoy!
+## This CDK pipeline takes some env arguments:
+
+SCHEDULE_EXPRESSION: In [this format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html). Use it to define the execution rate of this lambda.

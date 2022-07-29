@@ -13,7 +13,7 @@ class FullStackApplicationStackTest {
     @Throws(IOException::class)
     fun testStack() {
         val app = App()
-        val stack = FullStackApplicationStack(app, "test")
+        val stack = FullStackApplicationStack(app, "test", scheduleExpression = "rate(1 day)")
 
         // synthesize the stack to a CloudFormation template
         val actual =

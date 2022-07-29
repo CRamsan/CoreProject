@@ -34,6 +34,7 @@ include 'doom:game:desktop'
 include 'kotlinlibs:common'
 include 'kotlinlibs:frontend-angular'
 include 'kotlinlibs:server-jvm'
+include 'kotlinlibs:lambda-jvm'
 include 'kotlinlibs:cdk'
 
 include 'auraxiscontrolcenter:app'

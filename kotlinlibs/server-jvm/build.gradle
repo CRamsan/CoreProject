@@ -4,6 +4,7 @@ apply plugin: "kotlin-spring"
 apply plugin: "kotlin-allopen"
 apply plugin: "org.jetbrains.kotlin.plugin.jpa"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
+apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     kapt packages.SpringConfiguratorProcessor
@@ -35,6 +36,10 @@ allOpen {
 
 test {
     useJUnitPlatform()
+}
+
+release {
+    dependsOn 'shadowJar'
 }
 
 registerDependency(":framework:test")

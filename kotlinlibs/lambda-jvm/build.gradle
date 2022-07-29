@@ -1,0 +1,24 @@
+apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    implementation project(":framework:test")
+    implementation project(":kotlinlibs:common")
+
+    implementation packages.AwsLambda
+    implementation packages.JacksonKotlin
+    implementation packages.KotlinReflect
+    implementation packages.KotlinxDatetime
+    implementation packages.KotlinxSerialization
+}
+
+test {
+    useJUnitPlatform()
+}
+
+release {
+    dependsOn 'shadowJar'
+}
+
+registerDependency(":framework:test")
+registerDependency(":kotlinlibs:common")

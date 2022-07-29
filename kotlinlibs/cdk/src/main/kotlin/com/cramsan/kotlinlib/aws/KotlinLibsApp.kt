@@ -15,8 +15,11 @@ object KotlinLibsApp {
     fun main(args: Array<String>) {
         val app = App()
         val props = buildProps()
+
+        val scheduleExpression = System.getenv("SCHEDULE_EXPRESSION")!!
+
         buildMetricsStack(app, props)
-        buildFullStack(app, props)
+        buildFullStack(app, props, scheduleExpression)
         app.synth()
     }
 
@@ -30,11 +33,16 @@ object KotlinLibsApp {
     }
 
     @Suppress("LongMethod")
-    private fun buildFullStack(app: App, props: StackProps) {
+    private fun buildFullStack(
+        app: App,
+        props: StackProps,
+        scheduleExpression: String,
+    ) {
         FullStackApplicationStack(
             app,
             "KotlinLibsFullStack",
             props,
+            scheduleExpression,
         ) { }
     }
 
