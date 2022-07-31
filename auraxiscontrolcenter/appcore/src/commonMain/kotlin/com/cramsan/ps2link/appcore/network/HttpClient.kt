@@ -6,17 +6,19 @@ import com.cramsan.framework.metrics.MetricType
 import com.cramsan.framework.metrics.MetricUnit
 import com.cramsan.framework.metrics.MetricsInterface
 import com.cramsan.ps2link.appcore.census.UrlHolder
+import com.cramsan.ps2link.appcore.featureflag.FeatureFlagManager
 import com.cramsan.ps2link.metric.HttpNamespace
+import com.cramsan.ps2link.remoteconfig.FeatureFlagKeys
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -30,9 +32,12 @@ class HttpClient(
     private val http: HttpClient,
     val json: Json,
     private val metrics: MetricsInterface,
+    private val featureFlagManager: FeatureFlagManager,
 ) {
 
-    @OptIn(ExperimentalSerializationApi::class, ExperimentalTime::class)
+    /**
+     * Send a request GET request to the [url]. This function will handle retries.
+     */
     suspend inline fun <reified T> sendRequestWithRetry(url: UrlHolder): PS2HttpResponse<T> {
         for (retry in 0..3) {
             delay(retry.toDuration(DurationUnit.SECONDS))
@@ -72,6 +77,21 @@ class HttpClient(
             response = http.get(url.completeUrl)
         }
 
+        handleMetrics(url, response, latency)
+
+        return response
+    }
+
+    private fun handleMetrics(url: UrlHolder, response: HttpResponse, latency: Duration) {
+        val shouldRecordMetrics = featureFlagManager.getFeatureValue(
+            FeatureFlagKeys.RECORD_CW_METRICS,
+            defaultValue = false,
+        )
+
+        if (!shouldRecordMetrics) {
+            return
+        }
+
         if (response.status.isSuccess()) {
             metrics.record(MetricType.SUCCESS, HttpNamespace, url.urlIdentifier.name)
         } else {
@@ -84,8 +104,6 @@ class HttpClient(
             value = latency.toDouble(DurationUnit.MILLISECONDS),
             unit = MetricUnit.MILLIS,
         )
-
-        return response
     }
 
     companion object {

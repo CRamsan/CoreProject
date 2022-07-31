@@ -62,6 +62,8 @@ import com.cramsan.ps2link.appcore.census.DBGCensus
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.appcore.census.DBGServiceClientImpl
 import com.cramsan.ps2link.appcore.census.buildHttpClient
+import com.cramsan.ps2link.appcore.featureflag.FeatureFlagManager
+import com.cramsan.ps2link.appcore.featureflag.FeatureFlagManagerImpl
 import com.cramsan.ps2link.appcore.network.HttpClient
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.preferences.PS2SettingsImpl
@@ -291,8 +293,9 @@ object PS2ApplicationModule {
         httpClient: io.ktor.client.HttpClient,
         json: Json,
         metricsInterface: MetricsInterface,
+        featureFlagManager: FeatureFlagManager,
     ): HttpClient {
-        return HttpClient(httpClient, json, metricsInterface)
+        return HttpClient(httpClient, json, metricsInterface, featureFlagManager)
     }
 
     @Provides
@@ -430,5 +433,13 @@ object PS2ApplicationModule {
         eventLogger,
         dispatcherProvider,
         scope,
+    )
+
+    @Provides
+    @Singleton
+    fun provideFeatureFlagManager(
+        remoteConfig: RemoteConfig<RemoteConfigData>,
+    ): FeatureFlagManager = FeatureFlagManagerImpl(
+        remoteConfig,
     )
 }
