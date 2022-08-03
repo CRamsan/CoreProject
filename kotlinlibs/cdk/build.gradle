@@ -10,4 +10,6 @@ dependencies {
 }
 
 registerDependency(":cdk-repo")
+registerDependency(":kotlinlibs:server-jvm")
+registerDependency(":kotlinlibs:lambda-jvm")
 registerDependency(":framework:interfacelib")
