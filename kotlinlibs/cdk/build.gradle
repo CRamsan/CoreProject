@@ -9,6 +9,11 @@ dependencies {
     implementation project(":framework:interfacelib")
 }
 
+run {
+    dependsOn ":kotlinlibs:server-jvm:release"
+    dependsOn ":kotlinlibs:lambda-jvm:release"
+}
+
 registerDependency(":cdk-repo")
 registerDependency(":kotlinlibs:server-jvm")
 registerDependency(":kotlinlibs:lambda-jvm")
