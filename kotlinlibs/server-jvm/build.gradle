@@ -39,7 +39,7 @@ test {
     useJUnitPlatform()
 }
 
-release {
+releaseJvm {
     dependsOn 'shadowJar'
 }
 

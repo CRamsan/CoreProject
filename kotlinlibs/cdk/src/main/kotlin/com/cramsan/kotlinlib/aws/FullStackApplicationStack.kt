@@ -111,7 +111,7 @@ class FullStackApplicationStack @JvmOverloads constructor(
         val function = Function.Builder.create(this, "periodic-handler")
             // This is how we would deploy the code through CDK. In our case, we will deploy
             // though a CICD pipeline.
-            .code(Code.fromAsset("../lambda-jvm/build/libs/lambda-jvm-all.jar"))
+            .code(Code.fromAsset("../lambda-jvm/build/libs/lambda-jvm-aws.jar"))
             .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
             .environment(
                 mutableMapOf(
