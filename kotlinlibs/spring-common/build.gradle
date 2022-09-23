@@ -4,31 +4,32 @@ apply plugin: "kotlin-spring"
 apply plugin: "kotlin-allopen"
 apply plugin: "org.jetbrains.kotlin.plugin.jpa"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
-apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     kapt packages.SpringConfiguratorProcessor
 
     implementation project(":framework:test")
+    implementation project(":framework:utils")
     implementation project(":kotlinlibs:common")
-    implementation project(":kotlinlibs:spring-common")
 
-    implementation packages.AwsLambda
-    implementation packages.AwsLambdaEvents
     implementation packages.JacksonKotlin
     implementation packages.KotlinReflect
     implementation packages.KotlinxDatetime
     implementation packages.KotlinxSerialization
     implementation packages.Rome
-    implementation packages.SpringCloudFunctionAWS
-    implementation packages.SpringWebFunctionFlux
-    implementation packages.SpringWeb
+    implementation packages.SpringStarterJPA
+    implementation packages.AwsSdkV2DynamoDBEnhanced
 
+    runtimeOnly packages.JaxbRuntime
     runtimeOnly packages.H2DatabaseEngine
     runtimeOnly packages.SpringDevtools
 
     testImplementation packages.SpringTest
     testImplementation packages.SpringMock
+}
+
+bootJar {
+    enabled = false
 }
 
 allOpen {
@@ -37,32 +38,10 @@ allOpen {
     annotation("javax.persistence.MappedSuperclass")
 }
 
-import com.github.jengelman.gradle.plugins.shadow.transformers.*
-shadowJar {
-    classifier = 'aws'
-    dependencies {
-        exclude(
-            dependency(packages.SpringCloudFunctionWebSupport))
-    }
-    // Required for Spring
-    mergeServiceFiles()
-    append 'META-INF/spring.handlers'
-    append 'META-INF/spring.schemas'
-    append 'META-INF/spring.tooling'
-    transform(PropertiesFileTransformer) {
-        paths = ['META-INF/spring.factories']
-        mergeStrategy = "append"
-    }
-}
-
 test {
     useJUnitPlatform()
 }
 
-release {
-    dependsOn 'shadowJar'
-}
-
 registerDependency(":framework:test")
+registerDependency(":framework:utils")
 registerDependency(":kotlinlibs:common")
-registerDependency(":kotlinlibs:spring-common")

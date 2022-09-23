@@ -6,6 +6,8 @@ apply plugin: 'kotlinx-serialization'
 dependencies {
     implementation packages.KotlinxSerialization
     implementation project(":cdk-repo")
+    implementation project(":kotlinlibs:common")
+    implementation project(":kotlinlibs:lambda-jvm")
     implementation project(":framework:interfacelib")
 }
 
@@ -17,4 +19,5 @@ run {
 registerDependency(":cdk-repo")
 registerDependency(":kotlinlibs:server-jvm")
 registerDependency(":kotlinlibs:lambda-jvm")
+registerDependency(":kotlinlibs:common")
 registerDependency(":framework:interfacelib")
