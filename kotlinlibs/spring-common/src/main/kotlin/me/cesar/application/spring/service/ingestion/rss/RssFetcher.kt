@@ -1,6 +1,5 @@
 package me.cesar.application.spring.service.ingestion.rss
 
-import com.cramsan.framework.utils.uuid.UUID
 import com.rometools.rome.feed.synd.SyndFeed
 import com.rometools.rome.io.SyndFeedInput
 import com.rometools.rome.io.XmlReader
@@ -11,6 +10,7 @@ import me.cesar.application.common.model.Source
 import me.cesar.application.spring.service.ArticleService
 import me.cesar.application.spring.service.SourceService
 import me.cesar.application.spring.service.ingestion.BaseFetcher
+import org.bson.types.ObjectId
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.URL
@@ -43,7 +43,7 @@ class RssFetcher(
 
         return feed.entries.map {
             Article(
-                id = UUID.fromString(it.uri),
+                id = ObjectId().toHexString(),
                 title = it.title,
                 sourceId = source.id,
                 content = it.contents.joinToString("\n"),

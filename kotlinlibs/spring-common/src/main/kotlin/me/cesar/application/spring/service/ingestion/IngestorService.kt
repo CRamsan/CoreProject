@@ -8,6 +8,7 @@ import me.cesar.application.common.network.SourceIngestionResult
 import me.cesar.application.spring.service.ArticleService
 import me.cesar.application.spring.service.SourceService
 import me.cesar.application.spring.service.ingestion.rss.RssFetcher
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 
 /**
@@ -27,25 +28,34 @@ class IngestorService(
      * fetched will be persisted in the [ArticleService].
      */
     fun processAllSources(): Result<IngestionResult> = runCatching {
-        val sources = sourceService.findAll().getOrThrow()
-        val newIngestions = sources.mapNotNull { source ->
-            val newArticleCount = when (source.sourceType) {
-                SourceType.RSS -> processRssSource(source)
-                SourceType.UNKNOWN -> return@mapNotNull null
+        var page: Pageable? = null
+        val newIngestions = mutableListOf<SourceIngestionResult>()
+        do {
+            val sources = sourceService.findAll(page).getOrThrow()
+            val newIngestionForPage = sources.mapNotNull { source ->
+                val newArticleCount = when (source.sourceType) {
+                    SourceType.RSS -> processRssSource(source)
+                    SourceType.UNKNOWN -> return@mapNotNull null
+                }
+                SourceIngestionResult(
+                    source = source,
+                    newArticleCount = newArticleCount,
+                )
             }
-            SourceIngestionResult(
-                source = source,
-                newArticleCount = newArticleCount,
-            )
-        }
+            page = if (sources.hasNext()) {
+                sources.nextPageable()
+            } else {
+                null
+            }
+            newIngestions += newIngestionForPage
+        } while (page != null)
         IngestionResult(newIngestions)
     }
 
     /**
      * Initiate the ingestion process for a single source identified by the [sourceId] and [sourceType].
      */
-    fun processSingleSources(sourceId: String, sourceType: SourceType): Result<IngestionResult> = runCatching {
-        val source = sourceService.findSource(sourceId, sourceType).getOrThrow()
+    fun processSingleSources(source: Source): Result<IngestionResult> = runCatching {
         val newArticleCount = when (source.sourceType) {
             SourceType.RSS -> processRssSource(source)
             SourceType.UNKNOWN -> 0
@@ -66,7 +76,6 @@ class IngestorService(
             clock,
         )
         val newArticles = fetcher.processArticles()
-        articleService.insert(newArticles)
         return newArticles.size
     }
 }

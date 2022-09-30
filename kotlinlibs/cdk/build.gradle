@@ -2,6 +2,8 @@ ext.mainClassTarget = "com.cramsan.kotlinlib.aws.KotlinLibsApp"
 
 apply from: "$rootDir/gradle/kotlin-jvm-cdk.gradle"
 apply plugin: 'kotlinx-serialization'
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
 
 dependencies {
     implementation packages.KotlinxSerialization

@@ -3,6 +3,8 @@ package me.cesar.application.server.controller
 import me.cesar.application.common.NetworkPath
 import me.cesar.application.common.model.Article
 import me.cesar.application.spring.service.ArticleService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -23,15 +25,15 @@ class ArticleAPIController(
      * Get a list of [Article].
      */
     @GetMapping
-    fun findAll(): List<Article> {
-        return service.findAll().getOrThrow()
+    fun findAll(pageable: Pageable?): Page<Article> {
+        return service.findAll(pageable).getOrThrow()
     }
 
     /**
      * Get a single [Article] identified with [id].
      */
     @GetMapping("{id}")
-    fun findOne(@PathVariable id: String) {
-        service.findArticle(id).getOrThrow()
+    fun findOne(@PathVariable id: String): Article? {
+        return service.findArticle(id).getOrThrow()
     }
 }

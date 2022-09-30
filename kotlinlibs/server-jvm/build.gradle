@@ -1,8 +1,8 @@
 apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
 apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
 apply plugin: "kotlin-spring"
 apply plugin: "kotlin-allopen"
-apply plugin: "org.jetbrains.kotlin.plugin.jpa"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
 apply plugin: 'com.github.johnrengelman.shadow'
 
@@ -18,11 +18,9 @@ dependencies {
     implementation packages.KotlinxDatetime
     implementation packages.KotlinxSerialization
     implementation packages.Rome
-    implementation packages.SpringStarterJPA
+    implementation packages.SpringDataCommons
     implementation packages.SpringWeb
 
-    runtimeOnly packages.JaxbRuntime
-    runtimeOnly packages.H2DatabaseEngine
     runtimeOnly packages.SpringDevtools
 
     testImplementation packages.SpringTest

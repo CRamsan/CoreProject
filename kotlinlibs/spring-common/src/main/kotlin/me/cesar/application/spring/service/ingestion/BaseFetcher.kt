@@ -30,6 +30,9 @@ abstract class BaseFetcher(
 
         val id = source.id
         val sourceEntity = sourceService.findSource(id, source.sourceType).getOrThrow()
+        check(sourceEntity != null) {
+            "Source with id: $id not found"
+        }
         val lastFetch = sourceEntity.lastUpdated
         val currentTime = clock.now()
 
@@ -49,7 +52,7 @@ abstract class BaseFetcher(
             lastUpdated = currentTime,
         )
         articleService.insert(newArticles).getOrThrow()
-        sourceService.insert(updatedEntity).getOrThrow()
+        sourceService.save(updatedEntity).getOrThrow()
 
         logger.info("LastUpdate for $source was updated to $currentTime")
 

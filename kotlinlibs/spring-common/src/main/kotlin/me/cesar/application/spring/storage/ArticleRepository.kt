@@ -1,6 +1,8 @@
 package me.cesar.application.spring.storage
 
 import me.cesar.application.common.model.Article
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 /**
  * Interface for a repository that can save entities of type [Article].
@@ -12,7 +14,7 @@ interface ArticleRepository {
     /**
      * Return a single [Article] identified by an [id].
      */
-    fun findArticle(id: String): Result<Article>
+    fun findArticle(id: String): Result<Article?>
 
     /**
      * Persist [article] into storage.
@@ -27,10 +29,15 @@ interface ArticleRepository {
     /**
      * Return a list of all [Article]. This return value is not paginated.
      */
-    fun findAll(): Result<List<Article>>
+    fun findAll(pageable: Pageable?): Result<Page<Article>>
 
     /**
      * Return a list of all [Article] from the source identified by [sourceId]. This return value is not paginated.
      */
-    fun findAll(sourceId: String): Result<List<Article>>
+    fun findAll(sourceId: String, pageable: Pageable?): Result<Page<Article>>
+
+    /**
+     * Save the changes to the [article].
+     */
+    fun save(article: Article): Result<Unit>
 }

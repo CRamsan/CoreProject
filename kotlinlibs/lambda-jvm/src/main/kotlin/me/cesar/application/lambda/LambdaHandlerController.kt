@@ -22,7 +22,7 @@ class LambdaHandlerController(
      * Function to trigger the process of ingestion for all sources.
      */
     @Bean
-    fun triggerIngestion(): Function<Unit, IngestionResult> = Function {
+    fun triggerIngestion(): Function<String, IngestionResult> = Function {
         ingestor.processAllSources().getOrThrow()
     }
 
@@ -33,6 +33,6 @@ class LambdaHandlerController(
     fun insertSource(): Function<InsertionRequest, IngestionResult> = Function {
         val source = it.toSource()
         val result = sourceService.insert(source).getOrThrow()
-        ingestor.processSingleSources(result.id, result.sourceType).getOrThrow()
+        ingestor.processSingleSources(result).getOrThrow()
     }
 }

@@ -3,7 +3,9 @@ package me.cesar.application.spring.service
 import me.cesar.application.common.model.Article
 import me.cesar.application.common.model.Source
 import me.cesar.application.common.model.SourceType
-import me.cesar.application.spring.storage.ddb.DDBSourceRepository
+import me.cesar.application.spring.storage.SourceRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service
  */
 @Service
 class SourceService(
-    private val repository: DDBSourceRepository,
+    private val repository: SourceRepository,
 ) {
     /**
      * Fetch a single [Article] with [id]. If no match is found, return null.
@@ -21,7 +23,7 @@ class SourceService(
     fun findSource(
         id: String,
         sourceType: SourceType,
-    ): Result<Source> {
+    ): Result<Source?> {
         return repository.findSource(id, sourceType)
     }
 
@@ -33,9 +35,16 @@ class SourceService(
     }
 
     /**
-     * Return a list of all sources. The result is not paginated.
+     * Return a list of all sources. The result is paginated.
      */
-    fun findAll(): Result<List<Source>> {
-        return repository.findAll()
+    fun findAll(pageable: Pageable?): Result<Page<Source>> {
+        return repository.findAll(pageable)
+    }
+
+    /**
+     * Save the changes to the [source].
+     */
+    fun save(source: Source): Result<Unit> {
+        return repository.save(source)
     }
 }

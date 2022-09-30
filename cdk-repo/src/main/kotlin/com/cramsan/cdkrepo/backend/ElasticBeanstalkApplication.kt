@@ -19,7 +19,12 @@ import software.constructs.Construct
 /**
  * Construct that creates an Elastic Beanstalk application.
  */
-class ElasticBeanstalkApplication(scope: Construct, id: String, jarPath: String) : Construct(scope, id) {
+class ElasticBeanstalkApplication(
+    scope: Construct,
+    id: String,
+    jarPath: String,
+    applyBlock: (ElasticBeanstalkApplication.() -> Unit)? = null,
+) : Construct(scope, id) {
 
     init {
         val backendAppProps = CfnApplicationProps.builder().apply {
@@ -101,5 +106,7 @@ class ElasticBeanstalkApplication(scope: Construct, id: String, jarPath: String)
             }.build(),
         )
         appVersion.addDependsOn(backEndApp)
+
+        applyBlock?.let { it(this) }
     }
 }

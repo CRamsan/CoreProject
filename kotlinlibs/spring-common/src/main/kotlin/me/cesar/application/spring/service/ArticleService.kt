@@ -1,7 +1,9 @@
 package me.cesar.application.spring.service
 
 import me.cesar.application.common.model.Article
-import me.cesar.application.spring.storage.ddb.DDBArticleRepository
+import me.cesar.application.spring.storage.ArticleRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -11,22 +13,22 @@ import org.springframework.stereotype.Service
  */
 @Service
 class ArticleService(
-    private val repository: DDBArticleRepository,
+    private val repository: ArticleRepository,
 ) {
     /**
      * Fetch a single [Article] with [id]. If no match is found, return null.
      */
     fun findArticle(
         id: String,
-    ): Result<Article> {
+    ): Result<Article?> {
         return repository.findArticle(id)
     }
 
     /**
      * Fetch a list of all the articles. This result is not paginated.
      */
-    fun findAll(): Result<List<Article>> {
-        return repository.findAll()
+    fun findAll(pageable: Pageable?): Result<Page<Article>> {
+        return repository.findAll(pageable)
     }
 
     /**
@@ -41,5 +43,12 @@ class ArticleService(
      */
     fun insert(articles: List<Article>): Result<Unit> {
         return repository.insert(articles)
+    }
+
+    /**
+     * Save the changes to the [article].
+     */
+    fun save(article: Article): Result<Unit> {
+        return repository.save(article)
     }
 }
