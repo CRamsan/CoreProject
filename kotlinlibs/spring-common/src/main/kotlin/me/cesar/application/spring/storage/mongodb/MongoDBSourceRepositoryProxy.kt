@@ -21,9 +21,14 @@ class MongoDBSourceRepositoryProxy(
 
     override fun findSource(
         id: String,
-        sourceType: SourceType,
     ): Result<Source?> = runCatching {
-        mongoDBSourceRepository.findByIdAndSourceType(id, sourceType)?.toModel()
+        val result = mongoDBSourceRepository.findById(id)
+        val entity = if (result.isPresent) {
+            result.get()
+        } else {
+            null
+        }
+        entity?.toModel()
     }
 
     override fun insert(source: Source) = runCatching {

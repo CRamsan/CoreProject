@@ -25,10 +25,17 @@ class ArticleService(
     }
 
     /**
-     * Fetch a list of all the articles. This result is not paginated.
+     * Fetch a list of all the articles. This result is paginated.
      */
     fun findAll(pageable: Pageable?): Result<Page<Article>> {
         return repository.findAll(pageable)
+    }
+
+    /**
+     * Fetch a list of all the articles. This result is paginated.
+     */
+    fun findAll(sourceId: String, pageable: Pageable?): Result<Page<Article>> {
+        return repository.findAll(sourceId, pageable)
     }
 
     /**

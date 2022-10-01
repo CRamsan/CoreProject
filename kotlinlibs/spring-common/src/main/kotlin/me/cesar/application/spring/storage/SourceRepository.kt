@@ -13,9 +13,9 @@ import org.springframework.data.domain.Pageable
 interface SourceRepository {
 
     /**
-     * Return a [Source] identified by [id] and [sourceType].
+     * Return a [Source] identified by [id].
      */
-    fun findSource(id: String, sourceType: SourceType): Result<Source?>
+    fun findSource(id: String): Result<Source?>
 
     /**
      * Persist the [source] into storage.
@@ -23,12 +23,12 @@ interface SourceRepository {
     fun insert(source: Source): Result<Source>
 
     /**
-     * Return a list of all [Source] of type [sourceType]. The result is not paginated.
+     * Return a list of all [Source] of type [sourceType]. The result is paginated.
      */
     fun findAll(sourceType: SourceType, pageable: Pageable?): Result<Page<Source>>
 
     /**
-     * Return a list of all [Source]. The result is not paginated.
+     * Return a list of all [Source]. The result is paginated.
      */
     fun findAll(pageable: Pageable?): Result<Page<Source>>
 

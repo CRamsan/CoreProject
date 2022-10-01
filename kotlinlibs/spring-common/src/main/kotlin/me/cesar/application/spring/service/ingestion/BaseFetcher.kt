@@ -29,7 +29,7 @@ abstract class BaseFetcher(
         logger.info("Starting to process articles for $source")
 
         val id = source.id
-        val sourceEntity = sourceService.findSource(id, source.sourceType).getOrThrow()
+        val sourceEntity = sourceService.findSource(id).getOrThrow()
         check(sourceEntity != null) {
             "Source with id: $id not found"
         }

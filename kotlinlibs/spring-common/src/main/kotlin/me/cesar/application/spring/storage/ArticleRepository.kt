@@ -27,12 +27,12 @@ interface ArticleRepository {
     fun insert(articles: List<Article>): Result<Unit>
 
     /**
-     * Return a list of all [Article]. This return value is not paginated.
+     * Return a list of all [Article]. This return value is paginated.
      */
     fun findAll(pageable: Pageable?): Result<Page<Article>>
 
     /**
-     * Return a list of all [Article] from the source identified by [sourceId]. This return value is not paginated.
+     * Return a list of all [Article] from the source identified by [sourceId]. This return value is paginated.
      */
     fun findAll(sourceId: String, pageable: Pageable?): Result<Page<Article>>
 

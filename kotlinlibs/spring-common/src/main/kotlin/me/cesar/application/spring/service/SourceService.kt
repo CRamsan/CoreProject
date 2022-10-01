@@ -22,9 +22,8 @@ class SourceService(
      */
     fun findSource(
         id: String,
-        sourceType: SourceType,
     ): Result<Source?> {
-        return repository.findSource(id, sourceType)
+        return repository.findSource(id)
     }
 
     /**
@@ -39,6 +38,13 @@ class SourceService(
      */
     fun findAll(pageable: Pageable?): Result<Page<Source>> {
         return repository.findAll(pageable)
+    }
+
+    /**
+     * Return a list of all [Source] of type [sourceType]. The result is paginated.
+     */
+    fun findAll(sourceType: SourceType, pageable: Pageable?): Result<Page<Source>> {
+        return repository.findAll(sourceType, pageable)
     }
 
     /**

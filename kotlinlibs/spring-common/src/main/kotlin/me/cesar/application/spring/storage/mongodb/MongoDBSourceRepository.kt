@@ -14,11 +14,6 @@ import org.springframework.stereotype.Repository
 interface MongoDBSourceRepository : MongoRepository<SourceEntity, String> {
 
     /**
-     * Find a single [SourceEntity] for the provided [id] and [sourceType].
-     */
-    fun findByIdAndSourceType(id: String, sourceType: SourceType): SourceEntity?
-
-    /**
      * Return a list of [SourceEntity] that match for the [sourceType].
      */
     fun findBySourceType(sourceType: SourceType, pageable: Pageable): Page<SourceEntity>
