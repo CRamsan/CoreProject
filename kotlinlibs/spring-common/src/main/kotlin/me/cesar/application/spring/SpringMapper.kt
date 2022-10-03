@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import kotlinx.datetime.Instant
 
 /**
  * Provide an [ObjectMapper] that is customized to support all the required serialization and deserialization
@@ -23,6 +24,7 @@ fun createObjectMapper(): ObjectMapper {
         .build()
 
     kotlinModule.addSerializer(KotlinInstantSerializer())
+    kotlinModule.addDeserializer(Instant::class.java, KotlinInstantDeserializer())
 
     return ObjectMapper()
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)

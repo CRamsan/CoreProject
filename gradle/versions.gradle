@@ -190,6 +190,7 @@ def packages = [
         HiltGradle : "com.google.dagger:hilt-android-gradle-plugin:$versions_packages.Hilt",
         JacksonKotlin : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions_packages.Jackson",
         JacksonDatabinding : "com.fasterxml.jackson.core:jackson-databind:$versions_packages.Jackson",
+        JacksonModulesJava8 : "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versions_packages.Jackson",
         JetBrainsCompose: "org.jetbrains.compose:compose-gradle-plugin:$versions_tools.JetBrainsCompose",
         JetpackComposeUI : "androidx.compose.ui:ui:$versions_packages.JetpackCompose",
         JetpackComposeTooling : "androidx.compose.ui:ui-tooling:$versions_packages.JetpackCompose",

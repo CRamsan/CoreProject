@@ -14,6 +14,6 @@ class KotlinInstantSerializer : StdSerializer<Instant>(Instant::class.java) {
         jgen: JsonGenerator,
         provider: SerializerProvider?,
     ) {
-        jgen.writeNumber(value.toEpochMilliseconds())
+        jgen.writeNumber(value.epochSeconds)
     }
 }

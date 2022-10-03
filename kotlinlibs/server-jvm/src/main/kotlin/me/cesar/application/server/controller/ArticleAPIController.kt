@@ -2,8 +2,9 @@ package me.cesar.application.server.controller
 
 import me.cesar.application.common.NetworkPath
 import me.cesar.application.common.model.Article
+import me.cesar.application.common.network.PageResponse
+import me.cesar.application.server.toResponse
 import me.cesar.application.spring.service.ArticleService
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -25,8 +26,9 @@ class ArticleAPIController(
      * Get a list of [Article].
      */
     @GetMapping
-    fun findAll(pageable: Pageable?): Page<Article> {
-        return service.findAll(pageable).getOrThrow()
+    fun findAll(pageable: Pageable?): PageResponse<Article> {
+        val result = service.findAll(pageable).getOrThrow()
+        return result.toResponse()
     }
 
     /**
