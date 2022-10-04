@@ -5,6 +5,7 @@ import com.cramsan.stranded.server.Server
 import com.cramsan.stranded.server.demoapp.game.DemoGameState
 import com.cramsan.stranded.server.demoapp.game.DemoGameStateChange
 import com.cramsan.stranded.server.demoapp.game.RequestIncrementCounter
+import com.cramsan.stranded.server.demoapp.game.transformWithStateChange
 import com.cramsan.stranded.server.game.ClientEventHandler
 import com.cramsan.stranded.server.messages.Connected
 import com.cramsan.stranded.server.messages.CreateLobby
@@ -27,7 +28,6 @@ import com.cramsan.stranded.server.messages.SetPlayerName
 import com.cramsan.stranded.server.messages.SetReadyToStartGame
 import com.cramsan.stranded.server.messages.StartGame
 import com.cramsan.stranded.server.repository.Player
-import game.transformWithStateChange
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

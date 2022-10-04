@@ -112,6 +112,9 @@ kotlin {
 
     if (isJsTargetEnabled()) {
         js(IR) {
+            if (project.ext.has("jsProjectName") && project.ext.get("jsProjectName") != null) {
+                moduleName = jsProjectName
+            }
             browser()
             nodejs()
             binaries.executable()
@@ -216,6 +219,7 @@ if (isJsTargetEnabled()) {
         dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
         dependsOn 'detektJsMain' // Run the code analyzer
         dependsOn 'jsTest'
+        dependsOn 'jsBrowserDistribution'
     }
 }
 

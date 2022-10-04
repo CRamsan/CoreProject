@@ -21,6 +21,7 @@ import com.cramsan.stranded.lib.game.models.scavenge.ResourceType
 /**
  * Content for the Forage Cards tab. The state will be managed by the [viewModel].
  */
+@Suppress("LongMethod")
 @Composable
 fun ForageCardsTab(
     viewModel: ForageCardManagerViewModel,

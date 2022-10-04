@@ -27,6 +27,7 @@ import com.cramsan.stranded.cardmanager.base.TabFrame
 /**
  * Render the content inside the Night Cards tab. The state will be provided by the [viewModel].
  */
+@Suppress("LongMethod")
 @Composable
 fun NightCardsTab(
     viewModel: NightCardManagerViewModel,

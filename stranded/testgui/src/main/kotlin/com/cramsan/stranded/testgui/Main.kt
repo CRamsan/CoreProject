@@ -47,6 +47,7 @@ import kotlinx.serialization.modules.subclass
 /**
  * Application entry point.
  */
+@Suppress("LongMethod")
 fun main() = application {
 
     /**

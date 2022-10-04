@@ -20,6 +20,7 @@ import com.cramsan.stranded.cardmanager.base.TabFrame
 /**
  * Display the content for the Belonging Cards tab. The state will be managed by the [viewModel].
  */
+@Suppress("LongMethod")
 @Composable
 fun BelongingsCardsTab(
     viewModel: BelongingCardManagerViewModel,

@@ -2,14 +2,16 @@ def versions_tools = [
     AndroidGradlePlugin : '7.2.2',
     CompileSdkVersion : 32,
     Detekt : "1.21.0",
-    KotlinVersion : "1.7.0",
+    KotlinVersion : "1.7.10",
     MinSdkVersion : 26,
     TargetSdkVersion : 30,
     Jacoco: "0.8.8",
     // TODO: Update to JDK 17 since its an LTS release
     JavaCompatibility : JavaVersion.VERSION_11,
-    JetpackComposeCompiler : "1.2.0",
-    JetBrainsCompose : "1.0.1",
+    JetpackComposeCompiler : "1.3.1",
+    // JetBrainsCompose : "1.0.1",
+    //JetBrainsCompose : "1.2.0-alpha01-dev620",
+    JetBrainsCompose : "1.2.0-beta01",
     GradleNodePlugin : "3.4.0",
 ]
 

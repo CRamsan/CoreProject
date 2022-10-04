@@ -4,7 +4,6 @@ import com.cramsan.stranded.server.MultiplayerGameEventHandler
 import com.cramsan.stranded.server.game.MultiplayerGame
 import com.cramsan.stranded.server.game.PlayerIntent
 import com.cramsan.stranded.server.repository.Player
-import game.transformWithStateChange
 
 /**
  * Simple implementation of [MultiplayerGame]. The goal of this class is to provide a small test environment
