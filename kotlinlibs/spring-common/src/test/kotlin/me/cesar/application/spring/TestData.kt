@@ -16,6 +16,7 @@ val articleEntity1 = ArticleEntity(
     title = "title 1",
     sourceId = "12345",
     content = "This is an example",
+    bannerUrl = "https://test.com/1.jpg",
     lastUpdated = 100,
 )
 
@@ -24,6 +25,7 @@ val articleEntity2 = ArticleEntity(
     title = "title 2",
     sourceId = "6789",
     content = "This is another example",
+    bannerUrl = "https://test.com/2.jpg",
     lastUpdated = 200,
 )
 
@@ -32,6 +34,7 @@ val articleEntity3 = ArticleEntity(
     title = "title 3",
     sourceId = "9999",
     content = "Kotlin test",
+    bannerUrl = "https://test.com/3.jpg",
     lastUpdated = 300,
 )
 
@@ -40,6 +43,7 @@ val article1 = Article(
     title = "title 1",
     sourceId = "12345",
     content = "This is an example",
+    bannerUrl = "https://test.com/1.jpg",
     publishedTime = Instant.fromEpochSeconds(100),
 )
 
@@ -48,6 +52,7 @@ val article2 = Article(
     title = "title 2",
     sourceId = "6789",
     content = "This is another example",
+    bannerUrl = "https://test.com/2.jpg",
     publishedTime = Instant.fromEpochSeconds(200),
 )
 
@@ -56,6 +61,7 @@ val article3 = Article(
     title = "title 3",
     sourceId = "9999",
     content = "Kotlin test",
+    bannerUrl = "https://test.com/3.jpg",
     publishedTime = Instant.fromEpochSeconds(300),
 )
 

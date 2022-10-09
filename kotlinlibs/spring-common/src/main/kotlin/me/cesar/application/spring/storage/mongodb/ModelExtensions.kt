@@ -14,6 +14,7 @@ fun ArticleEntity.toModel() = Article(
     title = title,
     sourceId = sourceId,
     content = content,
+    bannerUrl = bannerUrl,
     publishedTime = Instant.fromEpochSeconds(lastUpdated),
 )
 
@@ -36,6 +37,7 @@ fun Article.toStorage() = ArticleEntity(
     title = title,
     sourceId = sourceId,
     content = content,
+    bannerUrl = bannerUrl,
     lastUpdated = publishedTime.epochSeconds,
 )
 

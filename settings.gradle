@@ -32,7 +32,7 @@ include 'doom:game:core'
 include 'doom:game:desktop'
 
 include 'kotlinlibs:common'
-include 'kotlinlibs:frontend-angular'
+include 'kotlinlibs:frontend'
 include 'kotlinlibs:server-jvm'
 include 'kotlinlibs:lambda-jvm'
 include 'kotlinlibs:spring-common'

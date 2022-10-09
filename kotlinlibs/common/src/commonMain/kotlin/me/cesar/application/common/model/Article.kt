@@ -12,5 +12,6 @@ data class Article(
     var title: String,
     var sourceId: String,
     var content: String,
+    val bannerUrl: String,
     var publishedTime: Instant,
 )

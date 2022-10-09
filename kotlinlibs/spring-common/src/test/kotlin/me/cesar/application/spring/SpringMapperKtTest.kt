@@ -23,6 +23,7 @@ internal class SpringMapperKtTest {
                      "title":"title 1",
                      "sourceId":"12345",
                      "content":"This is an example",
+                     "bannerUrl":"https://test.com/1.jpg",
                      "publishedTime":100000
                   },
                   {
@@ -30,6 +31,7 @@ internal class SpringMapperKtTest {
                      "title":"title 2",
                      "sourceId":"6789",
                      "content":"This is another example",
+                     "bannerUrl":"https://test.com/2.jpg",
                      "publishedTime":200000
                   }
                ],

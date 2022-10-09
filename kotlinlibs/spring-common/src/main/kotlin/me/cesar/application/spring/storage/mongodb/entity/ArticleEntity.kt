@@ -15,5 +15,6 @@ data class ArticleEntity(
     val title: String,
     val sourceId: String,
     val content: String,
+    val bannerUrl: String,
     val lastUpdated: Long,
 )

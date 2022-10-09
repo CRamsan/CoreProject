@@ -47,6 +47,7 @@ class RssFetcher(
                 title = it.title,
                 sourceId = source.id,
                 content = it.contents.joinToString("\n"),
+                bannerUrl = "https://blog.jetbrains.com/wp-content/uploads/2022/10/Blog_JavaScript-day_feat.png",
                 publishedTime = it.publishedDate.toInstant().toKotlinInstant(),
             )
         }
