@@ -8,7 +8,7 @@ trigger:
     include:
       - kotlinlibs/cicd/*
       - kotlinlibs/common/*
-      - kotlinlibs/frontend-angular/*
+      - kotlinlibs/frontend/*
       - framework/*
       - build.gradle
       - gradle.properties
@@ -34,4 +34,4 @@ steps:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: true
       testResultsFiles: '**/TEST-*.xml'
-      tasks: 'kotlinlibs:frontend-angular:release'
+      tasks: 'kotlinlibs:frontend:release'
