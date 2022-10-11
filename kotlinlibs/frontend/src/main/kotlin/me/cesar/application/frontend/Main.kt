@@ -13,9 +13,11 @@ fun main() {
 
     console.log("Starting app with id $articleId")
 
+    val client = KtorAPIClient()
+
     if (articleId.isNullOrBlank()) {
-        homePage()
+        homePage(client)
     } else {
-        articlePage(articleId)
+        articlePage(client, articleId)
     }
 }

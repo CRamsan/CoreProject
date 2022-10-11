@@ -1,6 +1,7 @@
 package me.cesar.application.frontend
 
 import me.cesar.application.common.model.Article
+import me.cesar.application.common.network.PageResponse
 
 /**
  * @author cramsan
@@ -15,7 +16,7 @@ interface APIClient {
     suspend fun getArticle(articleId: String): Article
 
     /**
-     * Get a list of [Article] for the [sourceId].
+     * Get a paginated list of [Article] for the [sourceId].
      */
-    suspend fun getArticles(sourceId: String): List<Article>
+    suspend fun getArticles(sourceId: String): PageResponse<Article>
 }

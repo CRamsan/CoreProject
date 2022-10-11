@@ -1,11 +1,12 @@
 package me.cesar.application.frontend.theme
 
-import me.cesar.application.frontend.theme.KotlinLibsStyle.style
+import org.jetbrains.compose.web.css.AlignItems
 import org.jetbrains.compose.web.css.DisplayStyle
 import org.jetbrains.compose.web.css.FlexWrap
 import org.jetbrains.compose.web.css.JustifyContent
 import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.StyleSheet
+import org.jetbrains.compose.web.css.alignItems
 import org.jetbrains.compose.web.css.backgroundColor
 import org.jetbrains.compose.web.css.border
 import org.jetbrains.compose.web.css.borderRadius
@@ -16,7 +17,6 @@ import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.justifyContent
 import org.jetbrains.compose.web.css.keywords.auto
 import org.jetbrains.compose.web.css.margin
-import org.jetbrains.compose.web.css.maxHeight
 import org.jetbrains.compose.web.css.maxWidth
 import org.jetbrains.compose.web.css.overflow
 import org.jetbrains.compose.web.css.padding
@@ -35,21 +35,33 @@ object KotlinLibsStyle : StyleSheet() {
             color(Colors.onPrimary)
             textDecoration("none")
         }
+        "h1, h2, h3" style {
+            margin(4.px, 0.px)
+        }
     }
 
     val header by style {
         backgroundColor(Colors.primary)
         color(Colors.onPrimary)
-        padding(Size.large)
+        padding(Padding.none)
         display(DisplayStyle.Flex)
         flexWrap(FlexWrap.Wrap)
         justifyContent(JustifyContent.SpaceAround)
+
+        "h1, h2, h3" style {
+            margin(Padding.large, Padding.large)
+        }
     }
 
     val footer by style {
         backgroundColor(Colors.primary)
         color(Colors.onPrimary)
         padding(Size.large)
+    }
+
+    val inlineAlignCenter by style {
+        display(DisplayStyle.Flex)
+        alignItems(AlignItems.Center)
     }
 
     val snippet by style {
@@ -63,10 +75,6 @@ object KotlinLibsStyle : StyleSheet() {
             style = LineStyle.Solid,
             color = Colors.primary,
         )
-
-        "h1, h2, h3" style {
-            margin(4.px, 0.px)
-        }
     }
 
     val snippetContent by style {
@@ -83,10 +91,5 @@ object KotlinLibsStyle : StyleSheet() {
     val thumbnail by style {
         width(100.percent)
         height(auto)
-    }
-
-    val logo by style {
-        maxWidth(36.px)
-        maxHeight(36.px)
     }
 }

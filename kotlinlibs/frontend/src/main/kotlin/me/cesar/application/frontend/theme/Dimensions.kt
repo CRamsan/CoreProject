@@ -21,6 +21,7 @@ object Size {
  * List of padding dimensions.
  */
 object Padding {
+    val none = 0.px
     val micro = 1.px
     val xsmall = 2.px
     val small = 4.px

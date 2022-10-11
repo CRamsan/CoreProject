@@ -6,6 +6,7 @@ import me.cesar.application.common.network.PageResponse
 import me.cesar.application.server.toResponse
 import me.cesar.application.spring.service.ArticleService
 import org.springframework.data.domain.Pageable
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController
  * @author cramsan
  */
 @RestController
+@CrossOrigin(origins = ["http://localhost:8080"])
 @RequestMapping(NetworkPath.ARTICLE_API)
 class ArticleAPIController(
     private val service: ArticleService,

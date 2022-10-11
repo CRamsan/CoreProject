@@ -7,12 +7,14 @@ disableAndroidTarget()
 ext.jsProjectName = "kotlinlibs-common"
 
 apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
+apply plugin: 'kotlinx-serialization'
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
                 implementation packages.KotlinxDatetime
+                implementation packages.KotlinxSerialization
             }
         }
     }
