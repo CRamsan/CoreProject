@@ -45,8 +45,11 @@ data class Transfer(val cardId: String, val targetPlayerId: String) : StrandedPl
 @Serializable
 data class Craft(val targetList: List<String>, val craftable: Craftable) : StrandedPlayerIntent()
 
+/**
+ * The [cardId] represents a [Card] that will be used to resolve a condition.
+ */
 @Serializable
-data class SelectCard(val playerId: String, val cardId: String) : StrandedPlayerIntent()
+data class SelectCard(val cardId: String) : StrandedPlayerIntent()
 
 /**
  * The user intents to complete the current [Phase].

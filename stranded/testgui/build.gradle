@@ -9,6 +9,7 @@ dependencies {
 
     implementation project(":stranded:lib")
     implementation project(":stranded:server")
+    implementation packages.CoroutinesSwing
     implementation packages.KotlinxSerialization
 
     testImplementation project(":framework:test")

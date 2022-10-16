@@ -212,9 +212,7 @@ class Game(
                 is CancellableByWeapon -> targetList.waitForAll { gamePlayer, intent ->
                     when (intent) {
                         is SelectCard -> {
-                            if (gamePlayer.id != intent.playerId) {
-                                false
-                            } else if (intent.cardId.isEmpty()) {
+                            if (intent.cardId.isEmpty()) {
                                 processEvent(SingleHealthChange(gamePlayer.id, statement.damage))
                                 true
                             } else if (getCard(gamePlayer, intent.cardId) !is Weapon) {
