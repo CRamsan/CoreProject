@@ -18,6 +18,7 @@ class FragmentComposeOutfit : BaseComposePS2Fragment<OutfitViewModel>() {
     override val logTag = "FragmentComposeOutfit"
     override val viewModel: OutfitViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

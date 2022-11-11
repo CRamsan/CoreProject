@@ -17,6 +17,7 @@ class FragmentComposeStatList : BaseComposePS2Fragment<StatListViewModel>() {
     override val logTag = "FragmentComposeProfile"
     override val viewModel: StatListViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

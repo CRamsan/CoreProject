@@ -17,6 +17,7 @@ class FragmentComposeKillList : BaseComposePS2Fragment<KillListViewModel>() {
     override val logTag = "FragmentComposeProfile"
     override val viewModel: KillListViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

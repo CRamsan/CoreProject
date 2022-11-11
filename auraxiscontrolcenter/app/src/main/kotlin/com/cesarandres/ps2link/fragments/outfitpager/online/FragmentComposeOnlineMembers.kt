@@ -18,6 +18,7 @@ class FragmentComposeOnlineMembers : BaseComposePS2Fragment<OnlineMembersViewMod
     override val logTag = "FragmentComposeOutfit"
     override val viewModel: OnlineMembersViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

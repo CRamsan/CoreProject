@@ -22,6 +22,7 @@ class FragmentComposeReddit : BaseComposePS2Fragment<RedditViewModel>() {
     override val logTag = "FragmentComposeProfile"
     override val viewModel: RedditViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

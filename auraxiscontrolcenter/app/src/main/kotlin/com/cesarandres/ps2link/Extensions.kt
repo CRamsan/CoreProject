@@ -8,4 +8,8 @@ fun getLang() = Locale.getDefault().displayLanguage
 
 fun getCurrentLang() = CensusLang.fromString(getLang())
 
-fun Bundle.toMetadataMap(): Map<String, String> = this.keySet().map { it to get(it).toString() }.toMap()
+/**
+ * Transform a [Bundle] into a map. Used for telemetry purposes.
+ */
+@Suppress("DEPRECATION")
+fun Bundle.toMetadataMap(): Map<String, String> = this.keySet().associateWith { get(it).toString() }

@@ -18,6 +18,7 @@ class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListViewModel>() 
     override val logTag = "FragmentComposeProfile"
     override val viewModel: WeaponListViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

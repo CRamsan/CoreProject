@@ -7,8 +7,6 @@ import com.cramsan.ps2link.appcore.twitter.TwitterClient
 import com.cramsan.ps2link.core.models.PS2Tweet
 import twitter4j.Twitter
 import twitter4j.TwitterException
-import twitter4j.TwitterFactory
-import twitter4j.conf.ConfigurationBuilder
 import java.util.ArrayList
 
 /**
@@ -50,12 +48,10 @@ class TwitterClientImpl(
      * contact the API
      */
     private fun configureTwitter(): Twitter {
-        val cb = ConfigurationBuilder()
-        cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
-            .setOAuthConsumerSecret(consumerSecret).setOAuthAccessToken(accessToken)
-            .setOAuthAccessTokenSecret(accessTokenSecret)
-        val tf = TwitterFactory(cb.build())
-        return tf.instance
+        return Twitter.newBuilder().apply {
+            oAuthConsumer(consumerKey, consumerSecret)
+            oAuthAccessToken(accessToken, accessTokenSecret)
+        }.build()
     }
 
     /**
@@ -71,12 +67,12 @@ class TwitterClientImpl(
             return PS2HttpResponse.success(emptyList())
         }
         try {
-            val usersFound = twitter.lookupUsers(*users.toTypedArray())
+            val usersFound = twitter.v1().users().lookupUsers(*users.toTypedArray())
             val tweetsFound = ArrayList<com.cramsan.ps2link.network.models.twitter.PS2Tweet>()
 
             for (foundUser in usersFound) {
                 if (foundUser.status != null) {
-                    val statusess = twitter.getUserTimeline(foundUser.screenName)
+                    val statusess = twitter.v1().timelines().getUserTimeline(foundUser.screenName)
                     var name: String
                     var tag: String
                     var imgUrl: String
@@ -98,7 +94,7 @@ class TwitterClientImpl(
                             com.cramsan.ps2link.network.models.twitter.PS2Tweet(
                                 java.lang.Long.toString(status3.id),
                                 name,
-                                status3.createdAt.time,
+                                status3.createdAt.second * 1000L,
                                 text,
                                 tag,
                                 imgUrl,

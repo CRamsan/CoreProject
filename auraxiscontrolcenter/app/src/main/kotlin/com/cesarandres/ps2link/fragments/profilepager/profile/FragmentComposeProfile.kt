@@ -23,6 +23,7 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
     override val logTag = "FragmentComposeProfile"
     override val viewModel: ProfileViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

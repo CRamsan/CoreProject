@@ -17,6 +17,7 @@ class FragmentComposeFriendList : BaseComposePS2Fragment<FriendListViewModel>() 
     override val logTag = "FragmentComposeProfile"
     override val viewModel: FriendListViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

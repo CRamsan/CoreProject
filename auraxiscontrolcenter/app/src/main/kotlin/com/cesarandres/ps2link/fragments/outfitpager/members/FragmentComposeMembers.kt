@@ -18,6 +18,7 @@ class FragmentComposeMembers : BaseComposePS2Fragment<MembersViewModel>() {
     override val logTag = "FragmentComposeMembers"
     override val viewModel: MembersViewModel by viewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
