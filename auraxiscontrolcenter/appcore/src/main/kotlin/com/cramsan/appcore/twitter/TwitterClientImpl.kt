@@ -5,6 +5,7 @@ import com.cramsan.ps2link.appcore.network.process
 import com.cramsan.ps2link.appcore.toCoreModel
 import com.cramsan.ps2link.appcore.twitter.TwitterClient
 import com.cramsan.ps2link.core.models.PS2Tweet
+import java.time.ZoneOffset
 import twitter4j.Twitter
 import twitter4j.TwitterException
 import java.util.ArrayList
@@ -94,7 +95,7 @@ class TwitterClientImpl(
                             com.cramsan.ps2link.network.models.twitter.PS2Tweet(
                                 java.lang.Long.toString(status3.id),
                                 name,
-                                status3.createdAt.second * 1000L,
+                                status3.createdAt.toInstant(ZoneOffset.UTC).toEpochMilli(),
                                 text,
                                 tag,
                                 imgUrl,

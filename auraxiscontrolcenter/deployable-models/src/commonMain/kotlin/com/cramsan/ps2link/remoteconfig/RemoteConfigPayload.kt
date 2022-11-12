@@ -7,6 +7,7 @@ val remoteConfigPayload = RemoteConfigData(
     twitterUsernames = listOf(
         "planetside2",
         "WrelPlays",
+        "PS2Central",
     ),
     featureFlag = mapOf(
         FeatureFlagKeys.RECORD_CW_METRICS to FeatureFlag(
