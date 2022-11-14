@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 
 /**
- * This class extends [BaseFragment] with the capabilities to render a View based screen. The [viewModel]
+ * This class extends [BaseViewModelFragment] with the capabilities to render a View based screen. The [viewModel]
  * is a required field. If this class does not need a viewModel, then [NoopViewModel] can be used.
  * Since compose if the future for Android UI development, [ComposeBaseFragment] should be used for
  * any new screens.
@@ -20,13 +19,7 @@ import com.google.android.material.appbar.MaterialToolbar
  * should be the correct type for the layout, otherwise the fragment will throw an exception and the
  * app will most probably crash.
  */
-abstract class BaseDatabindingFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseFragment() {
-
-    /**
-     * ViewModel instance that will be used to manage this [Fragment]. The class that extends [BaseFragment] is in
-     * charge of providing the implementation.
-     */
-    protected abstract val viewModel: VM
+abstract class BaseDatabindingFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseViewModelFragment<VM>() {
 
     /**
      * DataBinding instance that will be used to access the layout [contentViewLayout].

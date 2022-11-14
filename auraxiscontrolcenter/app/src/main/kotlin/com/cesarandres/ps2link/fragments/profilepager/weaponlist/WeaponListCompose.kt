@@ -20,6 +20,9 @@ import com.cramsan.ps2link.ui.items.WeaponItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render the weapons used by a character and it's stats.
+ */
 @Composable
 fun WeaponListCompose(
     faction: Faction,

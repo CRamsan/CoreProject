@@ -12,6 +12,9 @@ import com.cramsan.ps2link.ui.items.OutfitItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render the list of outfits saved in the app.
+ */
 @Composable
 fun OutfitListCompose(
     outfitItems: ImmutableList<Outfit>,

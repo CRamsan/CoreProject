@@ -18,6 +18,9 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render the list [serverItems] of servers and their current status.
+ */
 @Composable
 fun ServerListCompose(
     serverItems: ImmutableList<Server>,

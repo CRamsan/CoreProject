@@ -17,6 +17,9 @@ import com.cramsan.ps2link.ui.items.KillItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render the killfeed for this user.
+ */
 @Composable
 fun KillListCompose(
     killList: ImmutableList<KillEvent>,

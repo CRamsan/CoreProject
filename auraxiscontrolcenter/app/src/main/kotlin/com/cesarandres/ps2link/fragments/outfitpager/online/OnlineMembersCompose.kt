@@ -17,6 +17,9 @@ import com.cramsan.ps2link.ui.items.OnlineMemberItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render [memberList] as a column of members with their online status.
+ */
 @Composable
 fun OnlineMembersCompose(
     memberList: ImmutableList<Character>,

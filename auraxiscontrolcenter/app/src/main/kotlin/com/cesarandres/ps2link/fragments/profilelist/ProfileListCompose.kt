@@ -12,6 +12,9 @@ import com.cramsan.ps2link.ui.items.ProfileItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render the list of saved profiles.
+ */
 @Composable
 fun ProfileListCompose(
     profileItems: ImmutableList<Character>,

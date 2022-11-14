@@ -15,6 +15,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.ocpsoft.prettytime.PrettyTime
 
+/**
+ * Render the list of posts for a given subreddit.
+ */
 @Composable
 fun RedditCompose(
     redditContent: ImmutableList<RedditPost>,

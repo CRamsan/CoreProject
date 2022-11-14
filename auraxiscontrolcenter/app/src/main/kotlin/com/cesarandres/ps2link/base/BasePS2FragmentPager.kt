@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.databinding.FragmentPagerBinding
 import com.cramsan.framework.core.BaseViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,10 +16,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 /**
  * This fragment holds a generic view pager
  */
-abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM, FragmentPagerBinding>() {
+abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM>() {
 
     override val logTag = "BasePS2FragmentPager"
-    override val contentViewLayout = R.layout.fragment_pager
 
     private lateinit var viewPager: ViewPager2
 
@@ -33,17 +31,20 @@ abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM, Fr
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreateView(inflater, container, savedInstanceState)
+
+        val binding = FragmentPagerBinding.inflate(layoutInflater)
+
         setHasOptionsMenu(true)
 
-        viewPager = dataBinding.fragmentPager
+        viewPager = binding.fragmentPager
 
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
         viewPager.isSaveEnabled = false
 
-        val tabLayout = dataBinding.tabLayout
+        val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = pageTitle(position)
         }.attach()

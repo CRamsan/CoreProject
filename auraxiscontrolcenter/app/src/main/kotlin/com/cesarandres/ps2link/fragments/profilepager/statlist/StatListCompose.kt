@@ -18,6 +18,9 @@ import com.cramsan.ps2link.ui.items.StatItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render a lit of stats for a given profile.
+ */
 @Composable
 fun StatListCompose(
     statList: ImmutableList<StatItem>,

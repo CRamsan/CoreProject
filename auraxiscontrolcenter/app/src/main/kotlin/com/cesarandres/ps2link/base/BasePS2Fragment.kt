@@ -1,8 +1,7 @@
 package com.cesarandres.ps2link.base
 
-import androidx.databinding.ViewDataBinding
-import com.cramsan.framework.core.BaseDatabindingFragment
 import com.cramsan.framework.core.BaseViewModel
+import com.cramsan.framework.core.BaseViewModelFragment
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import javax.inject.Inject
 
@@ -14,7 +13,7 @@ import javax.inject.Inject
 /**
  * @author cramsan
  */
-abstract class BasePS2Fragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseDatabindingFragment<VM, DB>() {
+abstract class BasePS2Fragment<VM : BaseViewModel> : BaseViewModelFragment<VM>() {
 
     @Inject
     protected lateinit var dbgCensus: DBGServiceClient

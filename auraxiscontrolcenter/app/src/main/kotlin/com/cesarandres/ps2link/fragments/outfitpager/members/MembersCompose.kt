@@ -17,6 +17,9 @@ import com.cramsan.ps2link.ui.items.OutfitMemberItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render [memberList] as a list of outfit members.
+ */
 @Composable
 fun MemberListCompose(
     memberList: ImmutableList<Character>,

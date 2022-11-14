@@ -32,6 +32,9 @@ import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
 
+/**
+ * Render a page to add a profile to track in the app.
+ */
 @Composable
 fun ProfileAddCompose(
     searchField: String,

@@ -26,6 +26,9 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 
+/**
+ * Render the page to add outfits to the app.
+ */
 @Composable
 fun OutfitAddCompose(
     tagSearchField: String,

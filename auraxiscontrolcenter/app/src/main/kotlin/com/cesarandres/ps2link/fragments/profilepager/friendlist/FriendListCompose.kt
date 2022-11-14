@@ -17,6 +17,9 @@ import com.cramsan.ps2link.ui.items.FriendItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * Render a list of friends.
+ */
 @Composable
 fun FriendListCompose(
     friendList: ImmutableList<Character>,
