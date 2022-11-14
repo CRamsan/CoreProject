@@ -185,7 +185,7 @@ fun Post.toCoreModel(): RedditPost {
         label = selftext,
         upvotes = ((ups ?: 0) - (downs ?: 0)),
         comments = num_comments ?: 0,
-        createdTime = Instant.fromEpochSeconds(((created_utc ?: 0) as Long)),
+        createdTime = Instant.fromEpochSeconds(created_utc?.toLong() ?: 0),
         imgUr = thumbnail,
         postUrl = RedditRepositoryImpl.BASE_URL + permalink,
     )

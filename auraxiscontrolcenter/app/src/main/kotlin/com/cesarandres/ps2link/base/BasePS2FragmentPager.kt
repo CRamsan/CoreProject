@@ -49,7 +49,7 @@ abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM>() 
             tab.text = pageTitle(position)
         }.attach()
 
-        return view
+        return binding.root
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
