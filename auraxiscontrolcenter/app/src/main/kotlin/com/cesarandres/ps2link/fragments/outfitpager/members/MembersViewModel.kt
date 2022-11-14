@@ -14,6 +14,9 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -39,7 +42,7 @@ class MembersViewModel @Inject constructor(
         get() = "OnlineMembersViewModel"
 
     // State
-    private val _memberList = MutableStateFlow<List<Character>>(emptyList())
+    private val _memberList = MutableStateFlow<ImmutableList<Character>>(persistentListOf())
     val memberList = _memberList.asStateFlow()
 
     private lateinit var outfitId: String
@@ -76,7 +79,7 @@ class MembersViewModel @Inject constructor(
                             1
                         }
                     }
-                }
+                }.toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

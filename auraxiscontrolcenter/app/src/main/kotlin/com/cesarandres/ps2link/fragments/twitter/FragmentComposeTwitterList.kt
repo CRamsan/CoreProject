@@ -7,6 +7,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.collections.immutable.persistentListOf
 import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class FragmentComposeTwitterList : BaseComposePS2Fragment<TwitterListViewModel>(
 
     @Composable
     override fun CreateComposeContent() {
-        val tweetList = viewModel.tweetList.observeAsState(emptyList())
+        val tweetList = viewModel.tweetList.observeAsState(persistentListOf())
         val twitterUsers = viewModel.twitterUsers.observeAsState(emptyMap())
         val isLoading = viewModel.isLoading.collectAsState()
         val isError = viewModel.isError.collectAsState()

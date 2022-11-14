@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Fragment to display the list of locally stored profiles.
@@ -26,7 +27,7 @@ class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>(
 
     @Composable
     override fun CreateComposeContent() {
-        val profileList = viewModel.profileList.observeAsState(emptyList())
+        val profileList = viewModel.profileList.observeAsState(persistentListOf())
         ProfileListCompose(
             profileItems = profileList.value,
             eventHandler = viewModel,

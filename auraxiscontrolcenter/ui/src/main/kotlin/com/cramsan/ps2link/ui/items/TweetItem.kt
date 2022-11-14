@@ -17,8 +17,9 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.widgets.NetworkImage
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toJavaInstant
 import org.ocpsoft.prettytime.PrettyTime
-import java.util.Date
 
 /**
  * Renders a single tweet.
@@ -31,7 +32,7 @@ fun TweetItem(
     handle: String,
     content: String,
     avatarUrl: String,
-    creationTime: Long,
+    creationTime: Instant,
     prettyTime: PrettyTime,
     onClick: () -> Unit = {},
 ) {
@@ -50,7 +51,7 @@ fun TweetItem(
                     ),
                     style = MaterialTheme.typography.caption,
                 )
-                val updateTime = prettyTime.format(Date(creationTime))
+                val updateTime = prettyTime.format(creationTime.toJavaInstant())
                 Text(
                     modifier = Modifier.align(CenterVertically),
                     text = updateTime,
@@ -84,7 +85,7 @@ fun TweetItemPreview() {
             content = "This is an example of content\nin multiple lines\nbye",
             avatarUrl = "https://census.daybreakgames.com/files/ps2/images/static/88685.png",
             prettyTime = PrettyTime(),
-            creationTime = 19993932,
+            creationTime = Instant.fromEpochSeconds(19993932),
         )
     }
 }

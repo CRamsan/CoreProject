@@ -13,6 +13,9 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,7 +42,7 @@ class KillListViewModel @Inject constructor(
         get() = "KillListViewModel"
 
     // State
-    private val _killList = MutableStateFlow<List<KillEvent>>(emptyList())
+    private val _killList = MutableStateFlow<ImmutableList<KillEvent>>(persistentListOf())
     val killList = _killList.asStateFlow()
 
     lateinit var characterId: String
@@ -68,7 +71,7 @@ class KillListViewModel @Inject constructor(
             val response = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
             delay(3000)
             if (response.isSuccessful) {
-                _killList.value = response.requireBody()
+                _killList.value = response.requireBody().toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

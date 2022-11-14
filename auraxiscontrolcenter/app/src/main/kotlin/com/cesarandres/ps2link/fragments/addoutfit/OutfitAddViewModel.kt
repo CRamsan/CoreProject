@@ -12,6 +12,9 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,7 +47,7 @@ class OutfitAddViewModel @Inject constructor(
         get() = "OutfitAddViewModel"
 
     // State
-    private val _outfitList = MutableStateFlow<List<Outfit>>(emptyList())
+    private val _outfitList = MutableStateFlow<ImmutableList<Outfit>>(persistentListOf())
     private val _tagSearchQuery = MutableStateFlow("")
     private val _nameSearchQuery = MutableStateFlow("")
     private val queryFlow = _tagSearchQuery.combine(_nameSearchQuery) { tag, name ->
@@ -86,7 +89,7 @@ class OutfitAddViewModel @Inject constructor(
             if (response.isSuccessful) {
                 _outfitList.value = response.requireBody().sortedBy {
                     it.name?.lowercase()
-                }
+                }.toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

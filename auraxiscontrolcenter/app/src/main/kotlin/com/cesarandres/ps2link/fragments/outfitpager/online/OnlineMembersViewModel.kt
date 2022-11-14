@@ -13,6 +13,9 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -38,7 +41,7 @@ class OnlineMembersViewModel @Inject constructor(
         get() = "OnlineMembersViewModel"
 
     // State
-    private val _memberList = MutableStateFlow<List<Character>>(emptyList())
+    private val _memberList = MutableStateFlow<ImmutableList<Character>>(persistentListOf())
     val memberList = _memberList.asStateFlow()
 
     private lateinit var outfitId: String
@@ -66,7 +69,7 @@ class OnlineMembersViewModel @Inject constructor(
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getMembersOnline(outfitId, namespace, lang)
             if (response.isSuccessful) {
-                _memberList.value = response.requireBody().sortedBy { it.name }
+                _memberList.value = response.requireBody().sortedBy { it.name }.toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

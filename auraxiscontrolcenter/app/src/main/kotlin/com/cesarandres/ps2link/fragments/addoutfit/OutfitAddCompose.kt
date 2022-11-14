@@ -21,6 +21,8 @@ import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
 import com.cramsan.ps2link.ui.SearchField
 import com.cramsan.ps2link.ui.items.OutfitItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 
@@ -28,7 +30,7 @@ import kotlin.time.ExperimentalTime
 fun OutfitAddCompose(
     tagSearchField: String,
     nameSearchField: String,
-    outfitItems: List<Outfit>,
+    outfitItems: ImmutableList<Outfit>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: OutfitAddEventHandler,
@@ -104,7 +106,7 @@ fun OutfitAddComposePreview() {
                 cached = false,
                 namespace = Namespace.PS2PS4US,
             ),
-        ),
+        ).toImmutableList(),
         isLoading = true,
         isError = false,
         eventHandler = object : OutfitAddEventHandler {

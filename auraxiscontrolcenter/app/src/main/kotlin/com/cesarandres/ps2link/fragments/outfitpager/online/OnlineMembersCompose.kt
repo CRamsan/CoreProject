@@ -14,10 +14,12 @@ import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.OnlineMemberItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun OnlineMembersCompose(
-    memberList: List<Character>,
+    memberList: ImmutableList<Character>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: OnlineMemberEventHandler,
@@ -52,7 +54,7 @@ interface OnlineMemberEventHandler {
 @Composable
 fun Preview() {
     OnlineMembersCompose(
-        memberList = emptyList(),
+        memberList = persistentListOf(),
         isLoading = true,
         isError = false,
         eventHandler = object : OnlineMemberEventHandler {

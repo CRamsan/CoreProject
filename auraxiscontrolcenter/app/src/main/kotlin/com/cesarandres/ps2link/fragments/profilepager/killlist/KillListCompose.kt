@@ -14,10 +14,12 @@ import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.KillItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun KillListCompose(
-    killList: List<KillEvent>,
+    killList: ImmutableList<KillEvent>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: KillListEventHandler,
@@ -60,7 +62,7 @@ interface KillListEventHandler {
 @Composable
 fun Preview() {
     KillListCompose(
-        killList = emptyList(),
+        killList = persistentListOf(),
         isLoading = true,
         isError = false,
         eventHandler = object : KillListEventHandler {

@@ -13,6 +13,8 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
 import com.cramsan.ps2link.core.models.PS2Tweet
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,16 +42,16 @@ class TwitterListViewModel @Inject constructor(
     // State
     val tweetList = twitterRepository.getTweetsAsFlow().map { response ->
         if (response == null) {
-            return@map emptyList()
+            return@map persistentListOf()
         }
         if (response.isSuccessful) {
             loadingCompleted()
             response.requireBody().sortedByDescending { twit ->
                 twit.date
-            }
+            }.toImmutableList()
         } else {
             loadingCompletedWithError()
-            emptyList()
+            persistentListOf()
         }
     }.asLiveData()
     val twitterUsers = twitterRepository.getTwitterUsersAsFlow().asLiveData()

@@ -12,6 +12,9 @@ import com.cramsan.ps2link.appcore.repository.RedditRepository
 import com.cramsan.ps2link.core.models.RedditPage
 import com.cramsan.ps2link.core.models.RedditPost
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -38,7 +41,7 @@ class RedditViewModel @Inject constructor(
         get() = "RedditViewModel"
 
     // State
-    private val _redditContent = MutableStateFlow<List<RedditPost>>(emptyList())
+    private val _redditContent = MutableStateFlow<ImmutableList<RedditPost>>(persistentListOf())
     val redditContent = _redditContent.asStateFlow()
 
     private lateinit var redditPage: RedditPage
@@ -65,7 +68,7 @@ class RedditViewModel @Inject constructor(
         ioScope.launch {
             val response = redditRepository.getPosts(redditPage)
             if (response.isSuccessful) {
-                _redditContent.value = response.requireBody()
+                _redditContent.value = response.requireBody().toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

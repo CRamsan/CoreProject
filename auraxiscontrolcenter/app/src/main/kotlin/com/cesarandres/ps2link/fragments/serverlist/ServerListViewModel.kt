@@ -2,7 +2,6 @@ package com.cesarandres.ps2link.fragments.serverlist
 
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asLiveData
 import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.getCurrentLang
 import com.cramsan.framework.core.DispatcherProvider
@@ -12,7 +11,11 @@ import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Server
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,8 +39,8 @@ class ServerListViewModel @Inject constructor(
         get() = "ServerListViewModel"
 
     // State
-    private val _serverList = MutableStateFlow(emptyList<Server>())
-    val serverList = _serverList.asLiveData()
+    private val _serverList = MutableStateFlow<ImmutableList<Server>>(persistentListOf())
+    val serverList = _serverList.asStateFlow()
 
     fun setUp() {
         onRefreshRequested()
@@ -56,7 +59,7 @@ class ServerListViewModel @Inject constructor(
             val serverList = response.requireBody().sortedBy {
                 it.serverName?.lowercase()
             }
-            _serverList.value = serverList
+            _serverList.value = serverList.toImmutableList()
             loadingCompleted()
         } else {
             loadingCompletedWithError()

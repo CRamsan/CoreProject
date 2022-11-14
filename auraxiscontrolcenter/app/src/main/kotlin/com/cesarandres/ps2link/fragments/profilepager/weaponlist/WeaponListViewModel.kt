@@ -15,6 +15,9 @@ import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -40,7 +43,7 @@ class WeaponListViewModel @Inject constructor(
         get() = "WeaponListViewModel"
 
     // State
-    private val _weaponList = MutableStateFlow<List<WeaponItem>>(emptyList())
+    private val _weaponList = MutableStateFlow<ImmutableList<WeaponItem>>(persistentListOf())
     val weaponList = _weaponList.asStateFlow()
 
     private val _faction = MutableStateFlow<Faction>(Faction.UNKNOWN)
@@ -75,7 +78,7 @@ class WeaponListViewModel @Inject constructor(
                 }.sortedByDescending {
                     it.statMapping[WeaponEventType.KILLS]?.stats?.values?.filterNotNull()?.sum()
                         ?: 0
-                }
+                }.toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

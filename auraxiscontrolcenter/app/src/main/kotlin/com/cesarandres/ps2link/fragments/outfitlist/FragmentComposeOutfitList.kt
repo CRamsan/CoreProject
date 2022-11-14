@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Fragment to display the list of locally stored profiles.
@@ -26,7 +27,7 @@ class FragmentComposeOutfitList : BaseComposePS2Fragment<OutfitListViewModel>() 
 
     @Composable
     override fun CreateComposeContent() {
-        val outfitList = viewModel.outfitList.observeAsState(emptyList())
+        val outfitList = viewModel.outfitList.observeAsState(persistentListOf())
         OutfitListCompose(
             outfitItems = outfitList.value,
             eventHandler = viewModel,

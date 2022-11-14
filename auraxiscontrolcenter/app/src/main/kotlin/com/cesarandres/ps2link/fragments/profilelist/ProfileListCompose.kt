@@ -9,10 +9,12 @@ import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.ProfileItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ProfileListCompose(
-    profileItems: List<Character>,
+    profileItems: ImmutableList<Character>,
     eventHandler: ProfileListEventHandler,
 ) {
     FrameBottom {
@@ -39,7 +41,7 @@ interface ProfileListEventHandler {
 @Composable
 fun NormalButtonPreview() {
     ProfileListCompose(
-        profileItems = emptyList(),
+        profileItems = persistentListOf(),
         eventHandler = object : ProfileListEventHandler {
             override fun onProfileSelected(profileId: String, namespace: Namespace) = Unit
         },

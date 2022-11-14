@@ -12,6 +12,9 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +44,7 @@ class ProfileAddViewModel @Inject constructor(
         get() = "ProfileListViewModel"
 
     // State
-    private val _profileList = MutableStateFlow<List<Character>>(emptyList())
+    private val _profileList = MutableStateFlow<ImmutableList<Character>>(persistentListOf())
     val profileList = _profileList.asStateFlow()
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
@@ -63,7 +66,7 @@ class ProfileAddViewModel @Inject constructor(
             if (response.isSuccessful) {
                 _profileList.value = response.requireBody().sortedBy {
                     it.name?.lowercase()
-                }
+                }.toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()

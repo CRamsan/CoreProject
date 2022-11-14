@@ -9,10 +9,12 @@ import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.items.OutfitItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun OutfitListCompose(
-    outfitItems: List<Outfit>,
+    outfitItems: ImmutableList<Outfit>,
     eventHandler: OutfitListEventHandler,
 ) {
     FrameBottom {
@@ -39,7 +41,7 @@ interface OutfitListEventHandler {
 @Composable
 fun OutfitListComposePreview() {
     OutfitListCompose(
-        outfitItems = emptyList(),
+        outfitItems = persistentListOf(),
         eventHandler = object : OutfitListEventHandler {
             override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
         },

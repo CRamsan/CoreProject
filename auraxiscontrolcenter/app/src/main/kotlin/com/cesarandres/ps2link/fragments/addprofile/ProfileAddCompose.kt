@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,15 +26,16 @@ import com.cramsan.ps2link.ui.SearchField
 import com.cramsan.ps2link.ui.items.ProfileItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ProfileAddCompose(
     searchField: String,
-    profileItems: List<Character>,
+    profileItems: ImmutableList<Character>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: ProfileAddEventHandler,
@@ -110,7 +110,7 @@ fun NormalButtonPreview() {
                     ),
                     cached = true,
                 ),
-            ),
+            ).toImmutableList(),
             isLoading = true,
             isError = false,
             eventHandler = object : ProfileAddEventHandler {

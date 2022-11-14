@@ -15,10 +15,12 @@ import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.StatItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun StatListCompose(
-    statList: List<StatItem>,
+    statList: ImmutableList<StatItem>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: StatListEventHandler,
@@ -54,7 +56,7 @@ interface StatListEventHandler {
 @Composable
 fun Preview() {
     StatListCompose(
-        statList = emptyList(),
+        statList = persistentListOf(),
         isLoading = true,
         isError = false,
         eventHandler = object : StatListEventHandler {

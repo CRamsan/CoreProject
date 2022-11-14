@@ -30,7 +30,7 @@ class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListViewModel>() 
 
     @Composable
     override fun CreateComposeContent() {
-        val weaponList = viewModel.weaponList.collectAsState(emptyList())
+        val weaponList = viewModel.weaponList.collectAsState()
         val faction = viewModel.faction.collectAsState(Faction.UNKNOWN)
         val isLoading = viewModel.isLoading.collectAsState()
         val isError = viewModel.isError.collectAsState()

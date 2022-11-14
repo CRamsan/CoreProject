@@ -3,7 +3,6 @@ package com.cesarandres.ps2link.fragments.serverlist
 import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +18,7 @@ class FragmentComposeServerList : BaseComposePS2Fragment<ServerListViewModel>() 
 
     @Composable
     override fun CreateComposeContent() {
-        val serverList = viewModel.serverList.observeAsState(emptyList())
+        val serverList = viewModel.serverList.collectAsState()
         val isLoading = viewModel.isLoading.collectAsState()
         val isError = viewModel.isError.collectAsState()
         ServerListCompose(

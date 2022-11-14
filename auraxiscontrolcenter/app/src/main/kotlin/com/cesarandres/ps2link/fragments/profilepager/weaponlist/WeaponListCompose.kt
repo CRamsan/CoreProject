@@ -17,11 +17,13 @@ import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.WeaponItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun WeaponListCompose(
     faction: Faction,
-    weaponList: List<WeaponItem>,
+    weaponList: ImmutableList<WeaponItem>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: WeaponListEventHandler,
@@ -68,7 +70,7 @@ interface WeaponListEventHandler {
 @Composable
 fun Preview() {
     WeaponListCompose(
-        weaponList = emptyList(),
+        weaponList = persistentListOf(),
         faction = Faction.TR,
         isLoading = true,
         isError = false,

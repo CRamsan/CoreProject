@@ -11,6 +11,7 @@ import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -37,7 +38,7 @@ class ProfileListViewModel @Inject constructor(
     // State
     private val _profileList = pS2LinkRepository.getAllCharactersAsFlow().map {
         assertIsBackgroundThread()
-        it.sortedBy { character -> character.name?.lowercase() }
+        it.sortedBy { character -> character.name?.lowercase() }.toImmutableList()
     }.flowOn(dispatcherProvider.ioDispatcher())
     val profileList = _profileList.asLiveData()
 

@@ -11,11 +11,13 @@ import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.RedditPostItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.ocpsoft.prettytime.PrettyTime
 
 @Composable
 fun RedditCompose(
-    redditContent: List<RedditPost>,
+    redditContent: ImmutableList<RedditPost>,
     isLoading: Boolean,
     isError: Boolean,
     prettyTime: PrettyTime,
@@ -57,7 +59,7 @@ interface RedditEventHandler {
 fun Preview() {
     PS2Theme {
         RedditCompose(
-            redditContent = emptyList(),
+            redditContent = persistentListOf(),
             isLoading = true,
             isError = true,
             prettyTime = PrettyTime(),

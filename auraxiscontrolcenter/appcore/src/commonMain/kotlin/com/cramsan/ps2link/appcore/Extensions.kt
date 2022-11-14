@@ -18,6 +18,7 @@ import com.cramsan.ps2link.network.models.content.response.server.PopulationStat
 import com.cramsan.ps2link.network.models.content.world.NameMultiLang
 import com.cramsan.ps2link.network.models.reddit.Post
 import com.cramsan.ps2link.network.models.twitter.PS2Tweet
+import kotlinx.datetime.Instant
 
 /**
  * @Author cramsan
@@ -184,7 +185,7 @@ fun Post.toCoreModel(): RedditPost {
         label = selftext,
         upvotes = ((ups ?: 0) - (downs ?: 0)),
         comments = num_comments ?: 0,
-        createdTime = created_utc?.times(1000)?.toLong() ?: 0,
+        createdTime = Instant.fromEpochSeconds(((created_utc ?: 0) as Long)),
         imgUr = thumbnail,
         postUrl = RedditRepositoryImpl.BASE_URL + permalink,
     )
@@ -195,7 +196,7 @@ fun PS2Tweet.toCoreModel(): com.cramsan.ps2link.core.models.PS2Tweet {
         user = user ?: "",
         content = content ?: "",
         tag = tag ?: "",
-        date = date ?: 0,
+        date = Instant.fromEpochSeconds(date ?: 0),
         imgUrl = imgUrl ?: "",
         id = id ?: "",
         sourceUrl = sourceUrl ?: "",

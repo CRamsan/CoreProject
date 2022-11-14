@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.collections.immutable.persistentListOf
 
 /**
  * Fragment to display the list of locally stored profiles.
@@ -29,7 +30,7 @@ class FragmentComposeKillList : BaseComposePS2Fragment<KillListViewModel>() {
 
     @Composable
     override fun CreateComposeContent() {
-        val killList = viewModel.killList.collectAsState(emptyList())
+        val killList = viewModel.killList.collectAsState(persistentListOf())
         val isLoading = viewModel.isLoading.collectAsState()
         val isError = viewModel.isError.collectAsState()
         KillListCompose(

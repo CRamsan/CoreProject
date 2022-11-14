@@ -31,6 +31,7 @@ dependencies {
     implementation packages.AndroidxFragmentKtx
     implementation packages.Coil
     implementation packages.CoilCompose
+    implementation packages.KotlinXCollections
     implementation packages.ConstraintLayout
     implementation packages.JetpackComposeUI
     implementation packages.JetpackComposeTooling

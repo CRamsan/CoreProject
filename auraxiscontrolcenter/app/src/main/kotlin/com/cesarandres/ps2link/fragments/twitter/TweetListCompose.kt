@@ -25,13 +25,15 @@ import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.TweetItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.ocpsoft.prettytime.PrettyTime
 
 @Suppress("FunctionNaming", "UndocumentedPublicFunction")
 @Composable
 fun TweetListCompose(
     users: Map<String, Boolean>,
-    tweetItems: List<PS2Tweet>,
+    tweetItems: ImmutableList<PS2Tweet>,
     isLoading: Boolean,
     isError: Boolean,
     prettyTime: PrettyTime,
@@ -107,7 +109,7 @@ interface TweetListComposeEventHandler {
 fun ServerListPreview() {
     PS2Theme {
         TweetListCompose(
-            tweetItems = emptyList(),
+            tweetItems = persistentListOf(),
             users = emptyMap(),
             isLoading = false,
             isError = false,

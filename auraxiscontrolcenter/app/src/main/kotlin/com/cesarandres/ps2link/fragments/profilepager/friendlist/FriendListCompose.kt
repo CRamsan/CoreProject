@@ -14,10 +14,12 @@ import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.FriendItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun FriendListCompose(
-    friendList: List<Character>,
+    friendList: ImmutableList<Character>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: FriendListEventHandler,
@@ -52,7 +54,7 @@ interface FriendListEventHandler {
 @Composable
 fun Preview() {
     FriendListCompose(
-        friendList = emptyList(),
+        friendList = persistentListOf(),
         isLoading = true,
         isError = false,
         eventHandler = object : FriendListEventHandler {

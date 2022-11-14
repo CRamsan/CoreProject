@@ -15,10 +15,12 @@ import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.ServerItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ServerListCompose(
-    serverItems: List<Server>,
+    serverItems: ImmutableList<Server>,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: ServerListEventHandler,
@@ -53,7 +55,7 @@ interface ServerListEventHandler {
 fun ServerListPreview() {
     PS2Theme {
         ServerListCompose(
-            serverItems = emptyList(),
+            serverItems = persistentListOf(),
             isLoading = false,
             isError = true,
             eventHandler = object : ServerListEventHandler {

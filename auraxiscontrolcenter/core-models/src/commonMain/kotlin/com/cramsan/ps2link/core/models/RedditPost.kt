@@ -1,5 +1,7 @@
 package com.cramsan.ps2link.core.models
 
+import kotlinx.datetime.Instant
+
 /**
  * @Author cramsan
  * @created 1/22/2021
@@ -12,6 +14,6 @@ data class RedditPost(
     val label: String?,
     val upvotes: Int,
     val comments: Int,
-    val createdTime: Long,
+    val createdTime: Instant,
     val postUrl: String?,
 )

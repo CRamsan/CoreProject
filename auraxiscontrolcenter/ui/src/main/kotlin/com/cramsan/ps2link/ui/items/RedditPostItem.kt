@@ -22,9 +22,13 @@ import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.widgets.NetworkImage
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toJavaInstant
 import org.ocpsoft.prettytime.PrettyTime
-import java.util.Date
 
+/**
+ * Render a Reddit post.
+ */
 @Composable
 fun RedditPostItem(
     modifier: Modifier = Modifier,
@@ -33,7 +37,7 @@ fun RedditPostItem(
     author: String,
     upvotes: Int,
     comments: Int,
-    createdTime: Long,
+    createdTime: Instant,
     prettyTime: PrettyTime,
     onImageClick: () -> Unit = {},
     onPostClick: () -> Unit = {},
@@ -52,7 +56,7 @@ fun RedditPostItem(
                     maxLines = 5,
                     overflow = TextOverflow.Ellipsis,
                 )
-                val creationTime = prettyTime.format(Date(createdTime))
+                val creationTime = prettyTime.format(createdTime.toJavaInstant())
                 Text(
                     modifier = Modifier.padding(top = Padding.xsmall),
                     text = stringResource(id = R.string.twitter_upload_by, formatArgs = arrayOf(creationTime, author)),
@@ -102,7 +106,7 @@ fun RedditPostItemPreview() {
             author = "ThisIsNoTAnExampleOfUser",
             upvotes = 30,
             comments = 100,
-            createdTime = 13425432,
+            createdTime = Instant.fromEpochMilliseconds(13425432),
             prettyTime = PrettyTime(),
         )
     }

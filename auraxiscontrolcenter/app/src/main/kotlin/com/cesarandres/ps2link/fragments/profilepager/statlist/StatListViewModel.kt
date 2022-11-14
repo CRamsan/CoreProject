@@ -13,6 +13,9 @@ import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.StatItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -38,7 +41,7 @@ class StatListViewModel @Inject constructor(
         get() = "ProfileViewModel"
 
     // State
-    private val _statList = MutableStateFlow<List<StatItem>>(emptyList())
+    private val _statList = MutableStateFlow<ImmutableList<StatItem>>(persistentListOf())
     val statList = _statList.asStateFlow()
 
     private lateinit var characterId: String
@@ -66,7 +69,7 @@ class StatListViewModel @Inject constructor(
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getStatList(characterId, namespace, lang)
             if (response.isSuccessful) {
-                _statList.value = response.requireBody()
+                _statList.value = response.requireBody().toImmutableList()
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()
