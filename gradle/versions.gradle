@@ -27,7 +27,7 @@ def versions_packages = [
     AndroidXPaging : '3.1.1',
     AndroidXPreferences : "1.2.0",
     AndroidXRecyclerView : "1.2.1",
-    AndroidXTest : "1.5.1",
+    AndroidXTest : "1.5.0",
     AndroidXTestRunner : "1.5.1",
     AndroidXWorkManager : "2.7.1",
     AppCenterEspressoTestExt : "1.5",
