@@ -1,0 +1,54 @@
+apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
+
+kotlin {
+    js(IR) {
+        browser()
+        nodejs()
+        binaries.executable()
+    }
+}
+
+kotlin {
+    js(IR) {
+        browser {
+            testTask {
+                enabled = false
+            }
+        }
+        nodejs()
+        binaries.executable()
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":framework:interfacelib")
+                implementation project(":framework:test")
+
+                meta_packages.CoreTestCommon.each { implementation it }
+            }
+        }
+        jvmMain {
+            dependencies {
+                meta_packages.CoreTestJVM.each { implementation it }
+            }
+        }
+        jvmTest {
+        }
+        androidMain {
+            dependencies {
+                meta_packages.CoreTestAndroid.each { implementation it }
+            }
+        }
+        androidTest {
+        }
+        jsMain {
+            dependencies {
+                meta_packages.CoreTestJS.each { implementation it }
+            }
+        }
+    }
+}
+
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:test")

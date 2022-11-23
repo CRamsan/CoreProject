@@ -16,7 +16,7 @@ class PreferencesImpl(private val platformDelegate: PreferencesDelegate) : Prefe
         return platformDelegate.loadString(key)
     }
 
-    override fun saveInt(key: String, value: Int?) {
+    override fun saveInt(key: String, value: Int) {
         platformDelegate.saveInt(key, value)
     }
 
@@ -24,11 +24,15 @@ class PreferencesImpl(private val platformDelegate: PreferencesDelegate) : Prefe
         return platformDelegate.loadInt(key)
     }
 
-    override fun saveLong(key: String, value: Long?) {
+    override fun saveLong(key: String, value: Long) {
         platformDelegate.saveLong(key, value)
     }
 
     override fun loadLong(key: String): Long? {
         return platformDelegate.loadLong(key)
+    }
+
+    override fun remove(key: String) {
+        platformDelegate.remove(key)
     }
 }

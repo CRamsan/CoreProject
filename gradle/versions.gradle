@@ -386,7 +386,6 @@ def core_test_common = [
         packages.CoroutinesTest,
         packages.KotlinTestCommon,
         packages.KotlinTestAnnotationsCommon,
-        packages.MockkCommon,
 ]
 
 def lib_ktx = [

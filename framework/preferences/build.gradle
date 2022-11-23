@@ -10,6 +10,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation project(":framework:test")
+                implementation project(":framework:interfacelib-test")
             }
         }
     }
@@ -17,3 +18,4 @@ kotlin {
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+registerDependency(":framework:interfacelib-test")

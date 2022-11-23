@@ -10,10 +10,11 @@ import com.cramsan.framework.preferences.PreferencesDelegate
  * TODO: Remove the hardcoded file name. Preferably make it injectable.
  * TODO: Keep a reference to the [SharedPreferences] after initialization to prevent excessive IO.
  */
-class PreferencesAndroid(private val context: Context) : PreferencesDelegate {
+class PreferencesAndroid(context: Context) : PreferencesDelegate {
+
+    private val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
 
     override fun saveString(key: String, value: String?) {
-        val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             putString(key, value)
             commit()
@@ -21,41 +22,35 @@ class PreferencesAndroid(private val context: Context) : PreferencesDelegate {
     }
 
     override fun loadString(key: String): String? {
-        val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
         return sharedPref.getString(key, null)
     }
 
-    override fun saveInt(key: String, value: Int?) {
-        val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
+    override fun saveInt(key: String, value: Int) {
         with(sharedPref.edit()) {
-            if (value == null) {
-                remove(key)
-            } else {
-                putInt(key, value)
-            }
+            putInt(key, value)
             commit()
         }
     }
 
     override fun loadInt(key: String): Int? {
-        val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
         return sharedPref.getInt(key, 0)
     }
 
-    override fun saveLong(key: String, value: Long?) {
-        val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
+    override fun saveLong(key: String, value: Long) {
         with(sharedPref.edit()) {
-            if (value == null) {
-                remove(key)
-            } else {
-                putLong(key, value)
-            }
+            putLong(key, value)
             commit()
         }
     }
 
-    override fun loadLong(key: String): Long? {
-        val sharedPref = context.getSharedPreferences("global", Context.MODE_PRIVATE)
+    override fun loadLong(key: String): Long {
         return sharedPref.getLong(key, 0)
+    }
+
+    override fun remove(key: String) {
+        with(sharedPref.edit()) {
+            remove(key)
+            commit()
+        }
     }
 }
