@@ -8,9 +8,14 @@ import com.cramsan.framework.logging.Severity
  */
 class LoggerJVM : EventLoggerDelegate {
     override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
-        println("[${severity.name}][$tag]$message")
+        val pipe = when (severity) {
+            Severity.DISABLED -> return
+            Severity.VERBOSE, Severity.DEBUG, Severity.INFO -> System.out
+            Severity.WARNING, Severity.ERROR -> System.err
+        }
+        pipe.println("[${severity.name}][$tag]$message")
         throwable?.let {
-            println(it.message)
+            it.printStackTrace()
             throwable.printStackTrace()
         }
     }

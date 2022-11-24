@@ -28,6 +28,6 @@ class ThreadUtilJVM constructor(
     }
 
     override fun assertIsBackgroundThread() {
-        eventLogger.log(Severity.INFO, "ThreadUtilJVM", "assertIsBackgroundThread: Always returning True")
+        eventLogger.log(Severity.DEBUG, "ThreadUtilJVM", "assertIsBackgroundThread: Always returning True")
     }
 }

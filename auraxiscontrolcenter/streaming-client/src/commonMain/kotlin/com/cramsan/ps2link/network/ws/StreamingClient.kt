@@ -1,5 +1,9 @@
 package com.cramsan.ps2link.network.ws
 
+import com.cramsan.framework.logging.logE
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logV
+import com.cramsan.framework.logging.logW
 import com.cramsan.ps2link.network.ws.messages.ClientCommand
 import com.cramsan.ps2link.network.ws.messages.ServerEvent
 import com.cramsan.ps2link.network.ws.messages.createSerializedClientMessage
@@ -16,7 +20,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 
@@ -49,6 +52,7 @@ class StreamingClient(
      */
     fun start() {
         if (clientJob != null) {
+            logW(TAG, "Client already running. Ignoring request to start")
             return
         }
         clientJob = scope.launch {
@@ -56,7 +60,6 @@ class StreamingClient(
                 defaultClientWebSocketSession = this
                 val messageOutputRoutine = launch { listenForIncomingMessages(this@webSocket) }
                 messageOutputRoutine.join()
-                println("Closing websocket session")
                 close()
             }
         }
@@ -66,9 +69,11 @@ class StreamingClient(
      * Close the client and any current activity.
      */
     fun stop() {
-        client.close()
-        clientJob?.cancel()
+        logI(TAG, "Closing websocket session")
+        val job = clientJob
         clientJob = null
+        job?.cancel()
+        logI(TAG, "Websocket session closed")
     }
 
     /**
@@ -91,16 +96,18 @@ class StreamingClient(
     fun sendMessage(clientEvent: ClientCommand) {
         val session = defaultClientWebSocketSession
         if (session == null) {
-            // TODO: Log error
+            logW(TAG, "Cannot send command. Client is not running.")
             return
         }
+
         scope.launch {
             try {
                 val message = json.createSerializedClientMessage(clientEvent)
-                println("Client sending: $message")
+                logI(TAG, "Sending message of type ${clientEvent::class.simpleName}")
+                logV(TAG, "Client raw message: $message")
                 session.send(message)
             } catch (e: Throwable) {
-                println("Error sending message. Error: ${e.message}")
+                logE(TAG, "Error sending message. Error: ${e.message}", e)
             }
         }
     }
@@ -109,13 +116,17 @@ class StreamingClient(
         for (message in session.incoming) {
             message as? Frame.Text ?: continue
             val receivedText = message.readText()
-            println("Client received: $receivedText")
+            logI(TAG, "Received message from server")
+            logV(TAG, "Server raw message: $receivedText")
+
+            if (receivedText == HELP_MESSAGE) {
+                continue
+            }
             try {
-                handleServerEvent(json.parseServerEvent(receivedText))
-            } catch (e: SerializationException) {
-                handleServerEventString(receivedText)
+                val event = json.parseServerEvent(receivedText)
+                handleServerEvent(event)
             } catch (t: Throwable) {
-                println("Error receiving message. Error: ${t.message}")
+                logE(TAG, "Error sending message. Error: ${t.message}", t)
             }
         }
     }
@@ -124,7 +135,9 @@ class StreamingClient(
         listeners.forEach { it.onServerEventReceived(event) }
     }
 
-    private fun handleServerEventString(event: String) {
-        listeners.forEach { it.onUnhandledServerEventReceived(event) }
+    companion object {
+        const val TAG = "StreamingClient"
+
+        const val HELP_MESSAGE = "{\"send this for help\":{\"service\":\"event\",\"action\":\"help\"}}"
     }
 }

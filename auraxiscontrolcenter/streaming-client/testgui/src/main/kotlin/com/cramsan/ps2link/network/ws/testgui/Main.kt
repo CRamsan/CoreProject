@@ -1,69 +1,77 @@
 package com.cramsan.ps2link.network.ws.testgui
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.window.Window
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.window.application
-import com.cramsan.ps2link.network.ws.Environment
-import com.cramsan.ps2link.network.ws.StreamingClient
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.websocket.WebSockets
-import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
+import com.cramsan.ps2link.network.ws.testgui.di.ApplicationLayer
+import com.cramsan.ps2link.network.ws.testgui.di.FrameworkLayer
+import com.cramsan.ps2link.network.ws.testgui.di.MiddleLayer
+import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationGUI
+import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.connection.MainScreen
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsScreen
 
 /**
  * Application entry point.
  */
-fun main() = application {
+fun main() {
 
     /**
-     * Json serialization used for the client and server communication.
+     * Initialize the core framework dependencies
      */
-    val json = Json {
-        prettyPrint = true
-        serializersModule = SerializersModule {
-            classDiscriminator = "_type"
-        }
-    }
-
-    val httpClient = HttpClient {
-        install(WebSockets)
-    }
+    val frameworkLayer = FrameworkLayer()
 
     /**
-     * Instantiate a server and client.
+     * Initialize the PS2Link dependencies
      */
-    val client = StreamingClient(
-        httpClient,
-        json,
-        "PS2LinkPreProd",
-        Environment.PS2,
-        Dispatchers.IO,
+    val middleLayer = MiddleLayer(frameworkLayer)
+
+    /**
+     * Initialize the application dependencies
+     */
+    val applicationLayer = ApplicationLayer(frameworkLayer, middleLayer)
+
+    applicationLayer.hotKeyManager.configureHotKeyManger()
+
+    applicationLayer.applicationManager.startApplication()
+
+    /**
+     * Initialize the GUI
+     */
+    initializeGUI(applicationLayer, middleLayer, frameworkLayer)
+}
+
+/**
+ * Initialize the GUI component of the application.
+ */
+fun initializeGUI(applicationLayer: ApplicationLayer, middleLayer: MiddleLayer, frameworkLayer: FrameworkLayer) {
+    val applicationManager = applicationLayer.applicationManager
+    val hotKeyManager = applicationLayer.hotKeyManager
+    val dbgClient = middleLayer.dbgClient
+    val dispatcherProvider = frameworkLayer.dispatcherProvider
+    val navigator = applicationLayer.navigator
+
+    val settingsScreen = SettingsScreen(
+        applicationManager,
+        hotKeyManager,
     )
+    val mainScreen = MainScreen(
+        applicationManager,
+        dbgClient,
+        dispatcherProvider,
+    )
+    navigator.registerScreen(ScreenType.SETTINGS, settingsScreen)
+    navigator.registerScreen(ScreenType.MAIN, mainScreen)
 
-    /**
-     * This is the viewModel that will power the connection UI.
-     */
-    val connectionViewModel = ConnectionViewModel(client, json)
+    applicationManager.setCurrentScreen(ScreenType.MAIN)
 
-    val connected: State<Boolean> = connectionViewModel.connected.collectAsState()
-    val commandText: State<String> = connectionViewModel.commandText.collectAsState("")
-    val charactersField: State<String> = connectionViewModel.charactersField.collectAsState()
-    val worldsField: State<String> = connectionViewModel.worldsField.collectAsState()
-    val events: State<List<String>> = connectionViewModel.events.collectAsState()
+    application {
+        val uiModel by applicationManager.uiModel.collectAsState()
 
-    Window(onCloseRequest = ::exitApplication) {
-        MaterialTheme {
-            ConnectionScreen(
-                connected.value,
-                commandText.value,
-                charactersField.value,
-                worldsField.value,
-                events.value,
-                connectionViewModel,
-            )
-        }
+        ApplicationGUI(
+            navigator,
+            applicationManager,
+            uiModel,
+        )
     }
 }

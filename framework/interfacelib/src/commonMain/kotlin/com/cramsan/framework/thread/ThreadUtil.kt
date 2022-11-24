@@ -27,8 +27,8 @@ object ThreadUtil {
     /**
      * Set the instance to be used for the [singleton].
      */
-    fun setInstance(assertUtil: ThreadUtilInterface) {
-        _singleton = assertUtil
+    fun setInstance(threadUtil: ThreadUtilInterface) {
+        _singleton = threadUtil
     }
 }
 

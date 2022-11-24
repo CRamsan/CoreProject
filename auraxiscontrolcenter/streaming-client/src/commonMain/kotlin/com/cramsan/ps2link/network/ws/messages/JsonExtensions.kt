@@ -1,14 +1,10 @@
 package com.cramsan.ps2link.network.ws.messages
 
+import com.cramsan.framework.logging.logW
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
-
-/**
- * Serialize an [event] to a String.
- */
-fun Json.createSerializedMessage(event: ServerEvent) = encodeToString(event)
 
 /**
  * Serialize an [event] to a String.
@@ -20,6 +16,17 @@ fun Json.createSerializedClientMessage(event: ClientCommand) = encodeToString(ev
  */
 fun Json.parseServerEvent(textFrame: String): ServerEvent {
     val root = parseToJsonElement(textFrame).jsonObject
+
+    if (!root.contains("type")) {
+        return if (root.contains("subscription")) {
+            val event: SubscriptionConfirmation = decodeFromString(root.toString())
+            event
+        } else {
+            logW("parseServerEvent", "Could not parse message")
+            UnhandledEvent(textFrame)
+        }
+    }
+
     val typeString = root.getValue("type").toString()
     val type: ServerMessageType = decodeFromString(typeString)
     return when (type) {

@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.appcore.network
 
 import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logW
 import com.cramsan.framework.metrics.MetricType
 import com.cramsan.framework.metrics.MetricUnit
@@ -31,8 +32,8 @@ import kotlin.time.toDuration
 class HttpClient(
     private val http: HttpClient,
     val json: Json,
-    private val metrics: MetricsInterface,
-    private val featureFlagManager: FeatureFlagManager,
+    private val metrics: MetricsInterface?,
+    private val featureFlagManager: FeatureFlagManager?,
 ) {
 
     /**
@@ -83,12 +84,17 @@ class HttpClient(
     }
 
     private fun handleMetrics(url: UrlHolder, response: HttpResponse, latency: Duration) {
-        val shouldRecordMetrics = featureFlagManager.getFeatureValue(
+        val shouldRecordMetrics = featureFlagManager?.getFeatureValue(
             FeatureFlagKeys.RECORD_CW_METRICS,
             defaultValue = false,
         )
 
-        if (!shouldRecordMetrics) {
+        if (shouldRecordMetrics != true) {
+            return
+        }
+
+        if (metrics == null) {
+            logE(TAG, "Unable to record metrics. Metrics client is null.")
             return
         }
 

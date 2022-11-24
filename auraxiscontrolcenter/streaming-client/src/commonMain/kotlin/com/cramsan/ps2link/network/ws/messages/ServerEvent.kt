@@ -58,3 +58,31 @@ data class ServiceMessage<T : ServerEventPayload>(
     val type: ServerMessageType?,
     val payload: T?,
 ) : ServerEvent()
+
+/**
+ * Server event that confirms that a subscription was made.
+ */
+@Serializable
+data class SubscriptionConfirmation(
+    val subscription: SubscriptionResponse?,
+) : ServerEvent() {
+
+    /**
+     * Class that holds the information regarding the current subscription.
+     */
+    @Serializable
+    data class SubscriptionResponse(
+        val characterCount: Int?,
+        val eventNames: List<String>?,
+        val logicalAndCharactersWithWorlds: Boolean?,
+        val worlds: List<String>,
+    )
+}
+
+/**
+ * Event that represents that [rawMessage] could not be mapped to any of the know types of events.
+ */
+@Serializable
+data class UnhandledEvent(
+    val rawMessage: String,
+) : ServerEvent()

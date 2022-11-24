@@ -23,6 +23,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation project(":framework:interfacelib")
+
                 implementation packages.KotlinxSerialization
                 implementation packages.KtorClientWebSockets
                 implementation packages.KtorClientCore
@@ -54,3 +56,6 @@ kotlin {
         }
     }
 }
+
+registerDependency(":framework:interfacelib")
+registerDependency(":framework:test")

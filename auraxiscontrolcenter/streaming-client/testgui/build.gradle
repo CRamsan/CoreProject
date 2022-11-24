@@ -7,20 +7,42 @@ apply plugin: "org.jetbrains.compose"
 dependencies {
     implementation compose.desktop.currentOs
 
+    implementation "com.github.kwhat:jnativehook:2.2.2"
+
+    implementation project(":framework")
     implementation project(":auraxiscontrolcenter:streaming-client")
+    implementation project(":auraxiscontrolcenter:core-models")
+    implementation project(":auraxiscontrolcenter:appcore")
+    implementation project(":framework:interfacelib")
+    implementation packages.KotlinxDatetime
+    implementation packages.KotlinXCollections
     implementation packages.KotlinxSerialization
     implementation packages.KtorClientWebSockets
     implementation packages.KtorClientCore
+    implementation packages.PrettyTime
+    implementation packages.SqlDelightDriver
 }
 
 compose.desktop {
     application {
-        mainClass = "package com.cramsan.ps2link.network.ws.testgui.MainKt"
+        mainClass = "com.cramsan.ps2link.network.ws.testgui.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "PS2Link WS TestGui"
+            targetFormats(TargetFormat.Msi, TargetFormat.Exe)
+            packageName = "PS2Link"
             packageVersion = "1.0.0"
+            modules("java.instrument", "java.management", "java.prefs", "jdk.unsupported")
+            windows {
+                iconFile.set(project.file("icon_large.ico"))
+                perUserInstall = true
+                menuGroup = "CRamsan"
+                upgradeUuid = "81f4aaa2-6a1a-11ed-a1eb-0242ac120002"
+            }
         }
     }
 }
 
+registerDependency(":framework")
+registerDependency(":framework:interfacelib")
+registerDependency(":auraxiscontrolcenter:streaming-client")
+registerDependency(":auraxiscontrolcenter:core-models")
+registerDependency(":auraxiscontrolcenter:appcore")
