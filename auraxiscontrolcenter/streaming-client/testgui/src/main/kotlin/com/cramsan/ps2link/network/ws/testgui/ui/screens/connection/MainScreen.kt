@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,18 +22,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.BoldButton
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.ErrorOverlay
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameBottom
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameCenter
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameSlim
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.LoadingOverlay
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.SearchField
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.SlimButton
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.items.ProfileItem
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.FontSize
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Padding
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.ScreenSizes
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Size
@@ -97,8 +100,10 @@ private fun MainScreenContent(
         ) {
             CharacterFragment(
                 uiState.selectedPlayer,
+                uiState.actionLabel,
                 uiState.isLoading,
                 uiState.isError,
+                viewModel,
                 prettyTime,
             )
         }
@@ -113,12 +118,10 @@ private fun SearchFragment(
     isError: Boolean,
     viewModel: MainViewModel,
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
+    FrameSlim(
+        modifier = Modifier.fillMaxSize().padding(Padding.medium),
     ) {
-        FrameSlim(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
+        Column {
             SearchField(
                 modifier = Modifier.fillMaxWidth(),
                 value = characterName,
@@ -126,24 +129,24 @@ private fun SearchFragment(
             ) { text ->
                 viewModel.updateCharacterName(text)
             }
-        }
-        Box {
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-            ) {
-                playerSuggestions.forEach {
-                    ProfileItem(
-                        modifier = Modifier.padding(vertical = Padding.micro),
-                        label = it.name ?: "",
-                        level = it.battleRank?.toInt() ?: 0,
-                        faction = it.faction,
-                        namespace = it.namespace,
-                        onClick = { viewModel.selectCharacter(it) },
-                    )
+            Box {
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                ) {
+                    playerSuggestions.forEach {
+                        ProfileItem(
+                            modifier = Modifier.padding(vertical = Padding.micro),
+                            label = it.name ?: "",
+                            level = it.battleRank?.toInt() ?: 0,
+                            faction = it.faction,
+                            namespace = it.namespace,
+                            onClick = { viewModel.selectCharacter(it) },
+                        )
+                    }
                 }
+                LoadingOverlay(enabled = isLoading)
+                ErrorOverlay(isError = isError)
             }
-            LoadingOverlay(enabled = isLoading)
-            ErrorOverlay(isError = isError)
         }
     }
 }
@@ -152,154 +155,182 @@ private fun SearchFragment(
 @Composable
 private fun CharacterFragment(
     selectedPlayer: Character?,
+    actionLabel: String,
     isLoading: Boolean,
     isError: Boolean,
+    viewModel: MainViewModel,
     prettyTime: PrettyTime,
 ) {
-    if (selectedPlayer != null) {
-        Box {
-            FrameBottom {
-                Column(
-                    modifier = Modifier.verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        modifier = Modifier.padding(Padding.medium),
+    ) {
+        if (selectedPlayer != null) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+            ) {
+                FrameCenter {
+                    Column(
+                        modifier = Modifier.verticalScroll(rememberScrollState()),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(
-                            selectedPlayer.name ?: "UNKNOWN",
-                            fontSize = 30.sp,
-                        )
-                        FactionIcon(
-                            modifier = Modifier.size(Size.xxlarge),
-                            faction = selectedPlayer.faction,
-                        )
-                    }
-
-                    ErrorOverlay(
-                        modifier = Modifier.wrapContentHeight(),
-                        isError = isError,
-                    )
-
-                    val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)
-                    val smallModifier = Modifier.fillMaxWidth().padding(Padding.small)
-
-                    // BR Progress bar
-                    FrameSlim(modifier = mediumModifier) {
-                        Column {
-                            Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
-                                BR(level = selectedPlayer.battleRank?.toInt() ?: 0)
-                                BRBar(
-                                    modifier = Modifier.weight(1f),
-                                    percentageToNextLevel = selectedPlayer.percentageToNextBattleRank?.toFloat() ?: 0f,
-                                )
-                                BR(level = (selectedPlayer.battleRank?.toInt() ?: 0) + 1, enabled = false)
-                            }
-
-                            // Prestige
-                            if (selectedPlayer.prestige != null) {
-                                FrameSlim(modifier = smallModifier.padding(horizontal = Padding.large)) {
-                                    Text(
-                                        text = "Prestige: ${selectedPlayer.prestige}",
-                                        style = MaterialTheme.typography.caption,
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    // Next cert progress bar
-                    FrameSlim(modifier = mediumModifier) {
-                        Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
-                            CertBar(
-                                modifier = Modifier.weight(1f),
-                                percentageToNextCert = (selectedPlayer.percentageToNextCert)?.toFloat() ?: 0f,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                selectedPlayer.name ?: "UNKNOWN",
+                                fontSize = FontSize.title,
                             )
-                            Cert((selectedPlayer.certs)?.toInt() ?: 0)
+                            FactionIcon(
+                                modifier = Modifier.size(Size.xxlarge),
+                                faction = selectedPlayer.faction,
+                            )
                         }
-                    }
 
-                    // Character base stats
-                    FrameSlim(modifier = mediumModifier) {
-                        Column(modifier = smallModifier) {
-                            // Login status
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "STATUS:")
-                                    Text(
-                                        text = selectedPlayer.loginStatus.toStringResource(),
-                                        color = selectedPlayer.loginStatus.toColor(),
+                        val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)
+                        val smallModifier = Modifier.fillMaxWidth().padding(Padding.small)
+
+                        // BR Progress bar
+                        FrameSlim(modifier = mediumModifier) {
+                            Column {
+                                Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
+                                    BR(level = selectedPlayer.battleRank?.toInt() ?: 0)
+                                    BRBar(
+                                        modifier = Modifier.weight(1f),
+                                        percentageToNextLevel =
+                                        selectedPlayer.percentageToNextBattleRank?.toFloat() ?: 0f,
                                     )
+                                    BR(level = (selectedPlayer.battleRank?.toInt() ?: 0) + 1, enabled = false)
                                 }
-                            }
 
-                            // Last login
-                            val lastLoginString = selectedPlayer.lastLogin?.let {
-                                prettyTime.format(Date(it.toEpochMilliseconds()))
-                            } ?: "UNKNOWN"
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "LAST LOGIN:")
-                                    Text(text = lastLoginString)
-                                }
-                            }
-
-                            // Outfit
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "OUTFIT")
-                                    SlimButton(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        enabled = selectedPlayer.outfit != null,
-                                    ) {
-                                        Text(text = selectedPlayer.outfit?.name ?: "UNKNOWN")
+                                // Prestige
+                                if (selectedPlayer.prestige != null) {
+                                    FrameSlim(modifier = smallModifier.padding(horizontal = Padding.large)) {
+                                        Text(
+                                            text = "Prestige: ${selectedPlayer.prestige}",
+                                            style = MaterialTheme.typography.caption,
+                                        )
                                     }
                                 }
                             }
+                        }
 
-                            // Server
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "SERVER:")
-                                    Text(text = selectedPlayer.server?.serverName ?: "UNKNOWN")
-                                }
+                        // Next cert progress bar
+                        FrameSlim(modifier = mediumModifier) {
+                            Row(modifier = smallModifier, verticalAlignment = Alignment.CenterVertically) {
+                                CertBar(
+                                    modifier = Modifier.weight(1f),
+                                    percentageToNextCert = (selectedPlayer.percentageToNextCert)?.toFloat() ?: 0f,
+                                )
+                                Cert((selectedPlayer.certs)?.toInt() ?: 0)
                             }
+                        }
 
-                            // Hours played
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "HOURS PLAYED:")
-                                    Text(
-                                        text = selectedPlayer.timePlayed?.toDouble(DurationUnit.HOURS)?.roundToInt()
-                                            ?.toString() ?: "UNKNOWN",
-                                    )
+                        // Character base stats
+                        FrameSlim(modifier = mediumModifier) {
+                            Column(modifier = smallModifier) {
+                                // Login status
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "STATUS:")
+                                        Text(
+                                            text = selectedPlayer.loginStatus.toStringResource(),
+                                            color = selectedPlayer.loginStatus.toColor(),
+                                        )
+                                    }
                                 }
-                            }
 
-                            // Account created
-                            val accountCreatedString = selectedPlayer.creationTime?.let {
-                                prettyTime.format(Date(it.toEpochMilliseconds()))
-                            } ?: "UNKNOWN"
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "PLAYER SINCE:")
-                                    Text(text = accountCreatedString)
+                                // Last login
+                                val lastLoginString = selectedPlayer.lastLogin?.let {
+                                    prettyTime.format(Date(it.toEpochMilliseconds()))
+                                } ?: "UNKNOWN"
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "LAST LOGIN:")
+                                        Text(text = lastLoginString)
+                                    }
                                 }
-                            }
 
-                            // Session count
-                            FrameSlim(modifier = smallModifier) {
-                                Column(modifier = smallModifier) {
-                                    Text(text = "SESSIONS PLAYED:")
-                                    Text(text = selectedPlayer.sessionCount?.toString() ?: "UNKNOWN")
+                                // Outfit
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "OUTFIT")
+                                        SlimButton(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            enabled = selectedPlayer.outfit != null,
+                                        ) {
+                                            Text(text = selectedPlayer.outfit?.name ?: "UNKNOWN")
+                                        }
+                                    }
+                                }
+
+                                // Server
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "SERVER:")
+                                        Text(text = selectedPlayer.server?.serverName ?: "UNKNOWN")
+                                    }
+                                }
+
+                                // Hours played
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "HOURS PLAYED:")
+                                        Text(
+                                            text = selectedPlayer.timePlayed?.toDouble(DurationUnit.HOURS)?.roundToInt()
+                                                ?.toString() ?: "UNKNOWN",
+                                        )
+                                    }
+                                }
+
+                                // Account created
+                                val accountCreatedString = selectedPlayer.creationTime?.let {
+                                    prettyTime.format(Date(it.toEpochMilliseconds()))
+                                } ?: "UNKNOWN"
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "PLAYER SINCE:")
+                                        Text(text = accountCreatedString)
+                                    }
+                                }
+
+                                // Session count
+                                FrameSlim(modifier = smallModifier) {
+                                    Column(modifier = smallModifier) {
+                                        Text(text = "SESSIONS PLAYED:")
+                                        Text(text = selectedPlayer.sessionCount?.toString() ?: "UNKNOWN")
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                LoadingOverlay(enabled = isLoading)
+                ErrorOverlay(isError = isError)
             }
-            LoadingOverlay(enabled = isLoading)
-            ErrorOverlay(isError = isError)
+        }
+        FrameBottom(
+            modifier = Modifier
+                .wrapContentHeight(),
+        ) {
+            Row(
+                modifier = Modifier.padding(Padding.medium),
+            ) {
+                BoldButton(
+                    modifier = Modifier.wrapContentHeight(),
+                    onClick = { viewModel.openSettings() },
+                ) {
+                    Text("Settings")
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                BoldButton(
+                    modifier = Modifier.wrapContentHeight(),
+                    onClick = { viewModel.onTrayAction() },
+                ) {
+                    Text(actionLabel)
+                }
+            }
         }
     }
 }

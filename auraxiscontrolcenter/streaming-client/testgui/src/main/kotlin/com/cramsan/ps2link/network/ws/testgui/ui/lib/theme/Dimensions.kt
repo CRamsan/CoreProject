@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.lib.theme
 
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 object Size {
     val xmicro = 1.dp
@@ -26,6 +27,10 @@ object Padding {
 
 val MaxDialogSize = 250.dp
 
+object FontSize {
+    val title = 30.sp
+    val subtitle = 20.sp
+}
 object Opacity {
     const val transparent = 0.10f
     const val translucent = 0.55f
@@ -33,6 +38,6 @@ object Opacity {
 
 object ScreenSizes {
     val initialScreenWidth = 1280.dp
-    val initialScreenHeight = 720.dp
+    val initialScreenHeight = 960.dp
     val maxColumnWidth = 480.dp
 }

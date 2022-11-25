@@ -1,7 +1,7 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.lib.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -39,7 +39,7 @@ fun PS2Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable ()
         shapes = shapes,
     ) {
         Surface(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             color = Color.Black,
         ) {
             content()

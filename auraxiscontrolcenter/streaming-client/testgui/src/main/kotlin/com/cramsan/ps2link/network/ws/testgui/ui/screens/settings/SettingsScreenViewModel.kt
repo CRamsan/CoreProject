@@ -22,13 +22,30 @@ import kotlinx.coroutines.flow.asStateFlow
 class SettingsScreenViewModel(
     applicationManager: ApplicationManager,
     private val hotKeyManager: HotKeyManager,
-) : BaseViewModel(applicationManager), HotKeyManagerEventListener {
+) : BaseViewModel(applicationManager) {
 
-    private val _uiState = MutableStateFlow(SettingUIState(false, persistentListOf()))
+    private val _uiState = MutableStateFlow(
+        SettingUIState(
+            false,
+            persistentListOf(),
+            false,
+        ),
+    )
     val uiState = _uiState.asStateFlow()
 
+    private val hotKeyManagerEventListener = object : HotKeyManagerEventListener {
+        override fun onKeyEvent(hotKeyType: HotKeyType, keyEvent: KotlinKeyEvent) = Unit
+
+        override fun onCaptureComplete() {
+            updateUI()
+            _uiState.value = _uiState.value.copy(
+                capturing = false,
+            )
+        }
+    }
+
     override fun onStart() {
-        hotKeyManager.registerListener(this)
+        hotKeyManager.registerListener(hotKeyManagerEventListener)
         updateUI()
     }
 
@@ -42,27 +59,28 @@ class SettingsScreenViewModel(
             )
         }
 
-        _uiState.value = SettingUIState(
-            true,
-            list.toImmutableList(),
+        _uiState.value = _uiState.value.copy(
+            isEnabled = true,
+            list = list.toImmutableList(),
         )
     }
 
     override fun onClose() {
-        hotKeyManager.deregisterListener(this)
+        hotKeyManager.deregisterListener(hotKeyManagerEventListener)
     }
 
     /**
      * Start listening for user key events.
      */
     fun captureHotKeys(hotKeyType: HotKeyType) {
-        hotKeyManager.registerHotKeys(hotKeyType)
+        _uiState.value = _uiState.value.copy(
+            capturing = true,
+        )
+        hotKeyManager.initiateHotKeyRegistration(hotKeyType)
     }
 
-    override fun onKeyEvent(hotKeyType: HotKeyType, keyEvent: KotlinKeyEvent) = Unit
-
-    override fun onCaptureComplete() {
-        updateUI()
+    fun stopCapture() {
+        hotKeyManager.stopHotKeyRegistration()
     }
 
     /**

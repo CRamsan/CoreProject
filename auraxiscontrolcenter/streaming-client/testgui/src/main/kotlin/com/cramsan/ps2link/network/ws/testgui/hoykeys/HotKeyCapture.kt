@@ -55,10 +55,17 @@ class HotKeyCapture {
          * Stop listening for native key events.
          */
         fun stopCapturing() {
+            logD(TAG, "Stopped capturing events")
             isCapturing = false
+            listener?.onCaptureComplete(null)
             GlobalScreen.removeNativeKeyListener(this)
         }
         override fun nativeKeyPressed(e: NativeKeyEvent) {
+            if (e.keyCode == NativeKeyEvent.VC_ESCAPE) {
+                stopCapturing()
+                return
+            }
+
             if (!pressedKeys.contains(e.rawCode)) {
                 pressedKeys.add(e.rawCode)
             } else {

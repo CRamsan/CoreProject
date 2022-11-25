@@ -11,7 +11,8 @@ interface HotKeyCaptureEventListener {
     fun onKeyEvent(keyEvent: KotlinKeyEvent)
 
     /**
-     * Called when the hotkey capture process completes. The [hotKeyEvent] holds the captured hotkey.
+     * Called when the hotkey capture process completes. The [hotKeyEvent] holds the captured hotkey. [hotKeyEvent]
+     * will be null if the capture process is cancelled.
      */
-    fun onCaptureComplete(hotKeyEvent: HotKeyEvent)
+    fun onCaptureComplete(hotKeyEvent: HotKeyEvent?)
 }

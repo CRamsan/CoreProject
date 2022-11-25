@@ -29,7 +29,7 @@ class HotKeyManager(
      */
     fun configureHotKeyManger() {
         try {
-            // GlobalScreen.registerNativeHook()
+            GlobalScreen.registerNativeHook()
         } catch (ex: NativeHookException) {
             logE(TAG, "There was a problem registering the native hook.", ex)
             exitProcess(1)
@@ -69,21 +69,26 @@ class HotKeyManager(
     /**
      * Initiate the hotkey capture so it can be mapped to the [hotKeyType] event.
      */
-    fun registerHotKeys(hotKeyType: HotKeyType) {
+    fun initiateHotKeyRegistration(hotKeyType: HotKeyType) {
         keyListener.startCapture(
             object : HotKeyCaptureEventListener {
                 override fun onKeyEvent(keyEvent: KotlinKeyEvent) {
                     listeners.forEach { it.onKeyEvent(hotKeyType, keyEvent) }
                 }
 
-                override fun onCaptureComplete(hotKeyEvent: HotKeyEvent) {
-                    val serializedEvent = json.encodeToString(hotKeyEvent.toEntity())
-                    preferences.saveString(hotKeyType.name, serializedEvent)
-
+                override fun onCaptureComplete(hotKeyEvent: HotKeyEvent?) {
+                    if (hotKeyEvent != null) {
+                        val serializedEvent = json.encodeToString(hotKeyEvent.toEntity())
+                        preferences.saveString(hotKeyType.name, serializedEvent)
+                    }
                     listeners.forEach { it.onCaptureComplete() }
                 }
             },
         )
+    }
+
+    fun stopHotKeyRegistration() {
+        keyListener.stopCapture()
     }
 
     /**

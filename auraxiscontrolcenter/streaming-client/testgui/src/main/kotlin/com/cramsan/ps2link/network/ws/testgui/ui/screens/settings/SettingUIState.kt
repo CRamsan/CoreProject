@@ -10,6 +10,7 @@ import kotlinx.collections.immutable.ImmutableList
 data class SettingUIState(
     val isEnabled: Boolean,
     val list: ImmutableList<HotKeyState>,
+    val capturing: Boolean,
 ) {
 
     /**

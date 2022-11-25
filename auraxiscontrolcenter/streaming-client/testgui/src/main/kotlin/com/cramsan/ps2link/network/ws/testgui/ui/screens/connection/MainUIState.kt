@@ -14,4 +14,5 @@ data class MainUIState(
     val isListLoading: Boolean,
     val isLoading: Boolean,
     val isError: Boolean,
+    val actionLabel: String,
 )

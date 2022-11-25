@@ -44,6 +44,7 @@ class MainViewModel(
             isListLoading = false,
             isLoading = false,
             isError = false,
+            actionLabel = "",
         ),
     )
     val uiState = _uiState.asStateFlow()
@@ -65,6 +66,7 @@ class MainViewModel(
         _uiState.value = _uiState.value.copy(
             selectedPlayer = applicationUiState.character,
             isLoading = isProgramLoading,
+            actionLabel = applicationUiState.actionLabel ?: "",
         )
     }
 
@@ -121,5 +123,9 @@ class MainViewModel(
      */
     fun openSettings() {
         applicationManager.setCurrentScreen(ScreenType.SETTINGS)
+    }
+
+    fun onTrayAction() {
+        applicationManager.onTrayAction()
     }
 }
