@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyType
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameSlim
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseScreen
 
 /**
@@ -40,35 +41,37 @@ private fun SettingsContent(viewModel: SettingsScreenViewModel) {
         viewModel.captureHotKeys(hotKeyType)
     }
 
-    Column {
-        Text(
-            "Keyboard Shortcuts",
-            modifier = Modifier,
-        )
-        LazyColumn(
-            modifier = Modifier,
-        ) {
-            items(settingsUIState.list) {
-                Button(
-                    enabled = settingsUIState.isEnabled,
-                    onClick = { onHotKeyButtonPressed(it.hotKeyType) },
-                ) {
+    FrameSlim {
+        Column {
+            Text(
+                "Keyboard Shortcuts",
+                modifier = Modifier,
+            )
+            LazyColumn(
+                modifier = Modifier,
+            ) {
+                items(settingsUIState.list) {
+                    Button(
+                        enabled = settingsUIState.isEnabled,
+                        onClick = { onHotKeyButtonPressed(it.hotKeyType) },
+                    ) {
+                        Text(
+                            it.keyCombinationLabel,
+                            modifier = Modifier,
+                        )
+                    }
                     Text(
-                        it.keyCombinationLabel,
+                        it.label,
                         modifier = Modifier,
                     )
                 }
-                Text(
-                    it.label,
-                    modifier = Modifier,
-                )
             }
-        }
-        Row {
-            Button(
-                onClick = { viewModel.returnToMainScreen() },
-            ) {
-                Text("Back")
+            Row {
+                Button(
+                    onClick = { viewModel.returnToMainScreen() },
+                ) {
+                    Text("Back")
+                }
             }
         }
     }

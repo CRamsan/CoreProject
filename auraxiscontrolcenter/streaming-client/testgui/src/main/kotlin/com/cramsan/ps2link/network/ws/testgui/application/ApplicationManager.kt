@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.network.ws.testgui.application
 
+import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.preferences.Preferences
@@ -42,6 +43,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.swing.JFrame
 
 /**
  * Manager class that provides high level access to all the functionalities of the application.
@@ -61,12 +63,15 @@ class ApplicationManager(
 
     private var isClientReady = false
 
+    private var window: JFrame? = null
+
     private var programMode: ProgramMode = ProgramMode.LOADING
         set(value) {
             _uiModel.value = _uiModel.value.copy(
                 status = value.toFriendlyString(),
                 actionLabel = value.toActionLabel(),
                 trayIconPath = pathForStatus(value),
+                programMode = value,
             )
             field = value
         }
@@ -106,31 +111,57 @@ class ApplicationManager(
         }
 
         coroutineScope.launch {
-            programMode = try {
-                val character = serviceClient.getProfile(
-                    character_id = characterId,
-                    namespace = Namespace.PS2PC,
-                    currentLang = CensusLang.EN,
-                ).body ?: return@launch
-                setCharacter(character)
-                ProgramMode.PAUSED
-            } catch (t: Throwable) {
-                logE(TAG, "Could not load character from preferences.")
-                preferences.remove(CHARACTER_PREF_KEY)
-                ProgramMode.NOT_CONFIGURED
-            }
+            setCharacter(characterId)
         }
     }
 
     /**
-     * Set the [character] to be observed.
+     * Set the character to be observed based on the provided [characterId].
      */
-    fun setCharacter(character: Character) {
+    fun setCharacter(characterId: String) {
+        coroutineScope.launch {
+            loadCharacter(characterId)
+        }
+    }
+
+    @Suppress("SwallowedException")
+    private suspend fun loadCharacter(characterId: String) {
+        programMode = ProgramMode.LOADING
+        var character: Character? = null
+        try {
+            logI(TAG, "Trying to fetch data for character $characterId.")
+            character = serviceClient.getProfile(
+                character_id = characterId,
+                namespace = Namespace.PS2PC,
+                currentLang = CensusLang.EN,
+            ).body
+            programMode = if (character == null) {
+                logE(TAG, "Could not find data for character $characterId.")
+                ProgramMode.NOT_CONFIGURED
+            } else {
+                ProgramMode.PAUSED
+            }
+        } catch (t: Throwable) {
+            logE(TAG, "Error when fetching data for character $characterId.")
+            preferences.remove(CHARACTER_PREF_KEY)
+            programMode = ProgramMode.NOT_CONFIGURED
+        }
+
+        when (programMode) {
+            ProgramMode.NOT_CONFIGURED -> return
+            ProgramMode.LOADING, ProgramMode.RUNNING -> {
+                logE(TAG, "Cannot load character data while program is not paused.")
+                return
+            }
+            ProgramMode.PAUSED -> Unit
+        }
+
+        logI(TAG, "Character $characterId loaded.")
         currentPlayer = character
         _uiModel.value = _uiModel.value.copy(
             character = character,
         )
-        preferences.saveString(CHARACTER_PREF_KEY, character.characterId)
+        preferences.saveString(CHARACTER_PREF_KEY, character?.characterId)
     }
 
     /**
@@ -230,9 +261,11 @@ class ApplicationManager(
      * Open the main window.
      */
     fun openWindow() {
+        logD(TAG, "Trying to open window")
         _uiModel.value = _uiModel.value.copy(
             isWindowOpen = true,
         )
+        window?.toFront()
     }
 
     /**
@@ -255,6 +288,20 @@ class ApplicationManager(
             isWindowOpen = true,
             screenType = screenType,
         )
+    }
+
+    /**
+     * Register a [window] so we can execute some operations based on the applications state.
+     */
+    fun registerWindow(window: JFrame) {
+        this.window = window
+    }
+
+    /**
+     * Deregister the referenced window.
+     */
+    fun deregisterWindow() {
+        window = null
     }
 
     companion object {

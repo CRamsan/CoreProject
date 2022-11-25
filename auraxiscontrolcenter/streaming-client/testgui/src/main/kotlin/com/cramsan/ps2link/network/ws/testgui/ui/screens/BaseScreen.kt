@@ -1,8 +1,8 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,8 +30,8 @@ abstract class BaseScreen<VM : BaseViewModel> {
         }
         AnimatedVisibility(
             visible = isVisible,
-            enter = slideInHorizontally(),
-            exit = slideOutHorizontally(),
+            enter = fadeIn(),
+            exit = fadeOut(),
         ) {
             ScreenContent(viewModel)
         }

@@ -11,4 +11,7 @@ data class MainUIState(
     val characterName: String,
     val playerSuggestions: ImmutableList<Character>,
     val selectedPlayer: Character?,
+    val isListLoading: Boolean,
+    val isLoading: Boolean,
+    val isError: Boolean,
 )

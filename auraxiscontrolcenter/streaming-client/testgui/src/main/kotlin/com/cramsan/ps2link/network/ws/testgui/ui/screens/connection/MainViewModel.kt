@@ -6,6 +6,7 @@ import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
+import com.cramsan.ps2link.network.ws.testgui.application.ProgramMode
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
 import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseViewModel
@@ -40,6 +41,9 @@ class MainViewModel(
             characterName = "",
             playerSuggestions = persistentListOf(),
             selectedPlayer = null,
+            isListLoading = false,
+            isLoading = false,
+            isError = false,
         ),
     )
     val uiState = _uiState.asStateFlow()
@@ -57,8 +61,10 @@ class MainViewModel(
     }
 
     private fun handleProgramUIState(applicationUiState: ApplicationUIModel) {
+        val isProgramLoading = applicationUiState.programMode == ProgramMode.LOADING
         _uiState.value = _uiState.value.copy(
             selectedPlayer = applicationUiState.character,
+            isLoading = isProgramLoading,
         )
     }
 
@@ -72,6 +78,7 @@ class MainViewModel(
     fun updateCharacterName(characterName: String) {
         _uiState.value = _uiState.value.copy(
             characterName = characterName,
+            isListLoading = true,
         )
 
         searchJob?.cancel()
@@ -82,7 +89,8 @@ class MainViewModel(
                 CensusLang.EN,
             ).body ?: emptyList()
             _uiState.value = _uiState.value.copy(
-                playerSuggestions = names.toImmutableList(),
+                playerSuggestions = names.take(20).toImmutableList(),
+                isListLoading = false,
             )
         }
     }
@@ -91,10 +99,7 @@ class MainViewModel(
      * Select a [character] to be selected as the observed [Character] globally within the application.
      */
     fun selectCharacter(character: Character) {
-        _uiState.value = _uiState.value.copy(
-            playerSuggestions = emptyList<Character>().toImmutableList(),
-        )
-        applicationManager.setCharacter(character)
+        applicationManager.setCharacter(character.characterId)
     }
 
     /**

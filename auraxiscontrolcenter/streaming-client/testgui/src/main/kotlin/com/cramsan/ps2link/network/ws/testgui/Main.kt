@@ -50,6 +50,7 @@ fun initializeGUI(applicationLayer: ApplicationLayer, middleLayer: MiddleLayer, 
     val dbgClient = middleLayer.dbgClient
     val dispatcherProvider = frameworkLayer.dispatcherProvider
     val navigator = applicationLayer.navigator
+    val prettyTime = applicationLayer.prettyTime
 
     val settingsScreen = SettingsScreen(
         applicationManager,
@@ -59,6 +60,7 @@ fun initializeGUI(applicationLayer: ApplicationLayer, middleLayer: MiddleLayer, 
         applicationManager,
         dbgClient,
         dispatcherProvider,
+        prettyTime,
     )
     navigator.registerScreen(ScreenType.SETTINGS, settingsScreen)
     navigator.registerScreen(ScreenType.MAIN, mainScreen)
