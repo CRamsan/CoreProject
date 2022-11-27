@@ -31,7 +31,7 @@ class DependenciesConfig {
      * Instance of [EventLoggerInterface]
      */
     val eventLogger: EventLoggerInterface by lazy {
-        val impl = EventLoggerImpl(Severity.INFO, null, LoggerJVM())
+        val impl = EventLoggerImpl(Severity.INFO, null, LoggerJVM(false))
         EventLogger.setInstance(impl)
         impl
     }

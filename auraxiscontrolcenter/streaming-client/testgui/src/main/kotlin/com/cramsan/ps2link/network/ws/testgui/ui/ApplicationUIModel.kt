@@ -16,4 +16,5 @@ data class ApplicationUIModel(
     val windowIconPath: String,
     val programMode: ProgramMode,
     val character: Character?,
+    val debugModeEnabled: Boolean,
 )

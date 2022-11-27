@@ -23,6 +23,18 @@ dependencies {
     implementation packages.SqlDelightDriver
 }
 
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+}
+
 compose.desktop {
     application {
         mainClass = "com.cramsan.ps2link.network.ws.testgui.MainKt"

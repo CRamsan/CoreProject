@@ -10,4 +10,9 @@ interface EventLoggerDelegate {
      * There is also an optional [throwable] that can be logged.
      */
     fun log(severity: Severity, tag: String, message: String, throwable: Throwable?)
+
+    /**
+     * Notify when the target severity for the [EventLoggerInterface] changes.
+     */
+    fun setTargetSeverity(targetSeverity: Severity)
 }

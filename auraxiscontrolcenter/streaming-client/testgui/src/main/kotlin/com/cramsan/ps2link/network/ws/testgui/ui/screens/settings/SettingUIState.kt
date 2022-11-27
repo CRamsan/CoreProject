@@ -11,6 +11,8 @@ data class SettingUIState(
     val isEnabled: Boolean,
     val list: ImmutableList<HotKeyState>,
     val capturing: Boolean,
+    val isDebugEnabled: Boolean,
+    val restartDialog: Boolean,
 ) {
 
     /**

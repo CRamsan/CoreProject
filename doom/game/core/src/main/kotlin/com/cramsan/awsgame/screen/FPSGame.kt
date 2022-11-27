@@ -155,7 +155,7 @@ class FPSGame : GameScreen(), EntityManagerEventListener {
             }
         } ?: return
 
-        val logger = EventLoggerImpl(Severity.INFO, null, LoggerJVM())
+        val logger = EventLoggerImpl(Severity.INFO, null, LoggerJVM(false))
         // val haltUtil = HaltUtil(HaltUtilJVM())
         // val assert = AssertUtil(true, logger, haltUtil)
         val aiRepo = DummyAIRepoImpl(logger)

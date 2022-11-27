@@ -317,7 +317,7 @@ private fun CharacterFragment(
             Row(
                 modifier = Modifier.padding(Padding.medium),
             ) {
-                BoldButton(
+                SlimButton(
                     modifier = Modifier.wrapContentHeight(),
                     onClick = { viewModel.openSettings() },
                 ) {

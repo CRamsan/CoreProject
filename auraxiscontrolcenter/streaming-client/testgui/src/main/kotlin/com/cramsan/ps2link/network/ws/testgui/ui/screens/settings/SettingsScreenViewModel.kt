@@ -1,12 +1,14 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.screens.settings
 
 import androidx.compose.runtime.Stable
+import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyEvent
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManagerEventListener
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyType
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.KotlinKeyEvent
+import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
 import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseViewModel
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent
@@ -21,14 +23,17 @@ import kotlinx.coroutines.flow.asStateFlow
 @Stable
 class SettingsScreenViewModel(
     applicationManager: ApplicationManager,
+    dispatcherProvider: DispatcherProvider,
     private val hotKeyManager: HotKeyManager,
-) : BaseViewModel(applicationManager) {
+) : BaseViewModel(applicationManager, dispatcherProvider) {
 
     private val _uiState = MutableStateFlow(
         SettingUIState(
-            false,
+            isEnabled = false,
             persistentListOf(),
-            false,
+            capturing = false,
+            isDebugEnabled = false,
+            restartDialog = false,
         ),
     )
     val uiState = _uiState.asStateFlow()
@@ -45,7 +50,14 @@ class SettingsScreenViewModel(
     }
 
     override fun onStart() {
+        super.onStart()
         hotKeyManager.registerListener(hotKeyManagerEventListener)
+    }
+
+    override fun onClose() {
+        hotKeyManager.deregisterListener(hotKeyManagerEventListener)
+    }
+    override fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel) {
         updateUI()
     }
 
@@ -62,11 +74,8 @@ class SettingsScreenViewModel(
         _uiState.value = _uiState.value.copy(
             isEnabled = true,
             list = list.toImmutableList(),
+            isDebugEnabled = applicationManager.uiModel.value.debugModeEnabled,
         )
-    }
-
-    override fun onClose() {
-        hotKeyManager.deregisterListener(hotKeyManagerEventListener)
     }
 
     /**
@@ -88,6 +97,19 @@ class SettingsScreenViewModel(
      */
     fun returnToMainScreen() {
         applicationManager.setCurrentScreen(ScreenType.MAIN)
+    }
+
+    fun changeDebugMode(isDebugEnabled: Boolean) {
+        applicationManager.changeDebugMode(isDebugEnabled)
+        _uiState.value = _uiState.value.copy(
+            restartDialog = true,
+        )
+    }
+
+    fun closeDialog() {
+        _uiState.value = _uiState.value.copy(
+            restartDialog = false,
+        )
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.network.ws.testgui.ui
 
+import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -84,23 +85,25 @@ fun ApplicationScope.ApplicationGUI(
             onCloseRequest = { applicationManager.closeWindow() },
             icon = painterResource(uiModel.windowIconPath),
             resizable = true,
-            undecorated = false,
+            undecorated = true,
+            transparent = true,
             title = "PS2Link",
             state = state,
         ) {
-
-            window.minimumSize = Dimension(
-                minWindowSize.width.value.toInt(),
-                minWindowSize.height.value.toInt(),
-            )
-            PS2Theme {
-                navigator.renderScreen(uiModel.screenType)
+            WindowDraggableArea {
+                window.minimumSize = Dimension(
+                    minWindowSize.width.value.toInt(),
+                    minWindowSize.height.value.toInt(),
+                )
+                PS2Theme {
+                    navigator.renderScreen(uiModel.screenType)
+                }
+                if (isFirstOpen) {
+                    applicationManager.registerWindow(window)
+                    state.isMinimized = false
+                }
+                isFirstOpen = false
             }
-            if (isFirstOpen) {
-                applicationManager.registerWindow(window)
-                state.isMinimized = false
-            }
-            isFirstOpen = false
         }
     } else {
         applicationManager.deregisterWindow()

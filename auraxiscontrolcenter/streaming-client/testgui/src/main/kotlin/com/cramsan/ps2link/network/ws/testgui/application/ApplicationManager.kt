@@ -35,6 +35,7 @@ import com.cramsan.ps2link.network.ws.messages.SkillAdded
 import com.cramsan.ps2link.network.ws.messages.SubscriptionConfirmation
 import com.cramsan.ps2link.network.ws.messages.UnhandledEvent
 import com.cramsan.ps2link.network.ws.messages.VehicleDestroy
+import com.cramsan.ps2link.network.ws.testgui.Constants
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
 import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
@@ -86,6 +87,7 @@ class ApplicationManager(
             windowIconPath = "icon_large.png",
             programMode = programMode,
             character = null,
+            debugModeEnabled = true,
         ),
     )
     val uiModel = _uiModel.asStateFlow()
@@ -94,12 +96,18 @@ class ApplicationManager(
      * Start the application.
      */
     fun startApplication() {
+        initialize()
         // Load all hotkeys
         hotKeyManager.loadFromPreferences()
         // Register for events from the WS client
         streamingClient.registerListener(this)
         // Load the character if stored from a previous session.
         tryLoadingCachedCharacter()
+    }
+
+    private fun initialize() {
+        val inDebugMode = preferences.loadString(Constants.DEBUG_MODE_PREF_KEY).toBoolean()
+        changeDebugMode(inDebugMode)
     }
 
     @Suppress("SwallowedException")
@@ -302,6 +310,13 @@ class ApplicationManager(
      */
     fun deregisterWindow() {
         window = null
+    }
+
+    fun changeDebugMode(debugEnabled: Boolean) {
+        preferences.saveString(Constants.DEBUG_MODE_PREF_KEY, debugEnabled.toString())
+        _uiModel.value = _uiModel.value.copy(
+            debugModeEnabled = debugEnabled,
+        )
     }
 
     companion object {

@@ -8,6 +8,7 @@ import com.cramsan.framework.logging.Severity
  * Logger that outputs to the standard Android logger.
  */
 class LoggerAndroid : EventLoggerDelegate {
+
     override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
         when (severity) {
             Severity.VERBOSE -> Log.v(tag, message)
@@ -18,4 +19,6 @@ class LoggerAndroid : EventLoggerDelegate {
             Severity.DISABLED -> Unit
         }
     }
+
+    override fun setTargetSeverity(targetSeverity: Severity) = Unit
 }

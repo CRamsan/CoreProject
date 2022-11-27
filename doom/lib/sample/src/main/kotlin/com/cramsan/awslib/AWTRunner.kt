@@ -25,7 +25,7 @@ class AWTRunner {
         }
 
         private fun createAndShowGUI() {
-            val eventLogger = EventLoggerImpl(Severity.VERBOSE, null, LoggerJVM())
+            val eventLogger = EventLoggerImpl(Severity.VERBOSE, null, LoggerJVM(false))
             EventLogger.setInstance(eventLogger)
             val haltUtil = HaltUtilImpl(HaltUtilJVM())
             val assertUtil = AssertUtilImpl(true, eventLogger, haltUtil)

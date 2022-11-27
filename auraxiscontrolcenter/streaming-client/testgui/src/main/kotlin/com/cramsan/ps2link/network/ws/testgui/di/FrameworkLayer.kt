@@ -41,9 +41,12 @@ class FrameworkLayer {
     val dispatcherProvider: DispatcherProvider
 
     init {
-        loggerDelegate = ApplicationModule.provideEventLoggerDelegate()
+        preferencesDelegate = ApplicationModule.providePreferencesDelegate()
+        preferences = ApplicationModule.providePreferencesInterface(preferencesDelegate)
 
-        logger = ApplicationModule.provideEventLoggerInterface(loggerDelegate)
+        val isDebugEnabled = ApplicationModule.isInDebugMode(preferences)
+        loggerDelegate = ApplicationModule.provideEventLoggerDelegate(isDebugEnabled)
+        logger = ApplicationModule.provideEventLoggerInterface(loggerDelegate, isDebugEnabled)
         EventLogger.setInstance(logger)
 
         haltUtilDelegate = ApplicationModule.provideHaltUtilDelegate()
@@ -55,9 +58,6 @@ class FrameworkLayer {
         threadUtilDelegate = ApplicationModule.provideThreadUtilDelegate(logger, assertUtil)
         threadUtil = ApplicationModule.provideThreadUtilInterface(threadUtilDelegate)
         ThreadUtil.setInstance(threadUtil)
-
-        preferencesDelegate = ApplicationModule.providePreferencesDelegate()
-        preferences = ApplicationModule.providePreferencesInterface(preferencesDelegate)
 
         dispatcherProvider = ApplicationModule.provideDispatcher()
     }

@@ -20,6 +20,10 @@ class EventLoggerImpl(
     override val errorCallback: EventLoggerErrorCallback?
         get() = _errorCallback
 
+    init {
+        platformDelegate.setTargetSeverity(targetSeverity)
+    }
+
     override fun setErrorCallback(newErrorCallback: EventLoggerErrorCallback?) {
         _errorCallback = newErrorCallback
     }

@@ -39,7 +39,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import org.ocpsoft.prettytime.PrettyTime
 
 /**
  * This class provides constructor for all dependencies in the application. This class is used as a placeholder until
@@ -68,12 +67,16 @@ object ApplicationModule {
         return ThreadUtilJVM(eventLogger, assertUtilInterface)
     }
 
-    fun provideEventLoggerDelegate(): EventLoggerDelegate = LoggerJVM()
+    fun provideEventLoggerDelegate(logToFile: Boolean): EventLoggerDelegate = LoggerJVM(logToFile)
 
     fun provideEventLoggerInterface(
         eventLoggerDelegate: EventLoggerDelegate,
+        isDebugEnabled: Boolean,
     ): EventLoggerInterface {
-        val severity: Severity = Severity.DEBUG
+        val severity: Severity = when (isDebugEnabled) {
+            true -> Severity.VERBOSE
+            false -> Severity.INFO
+        }
         val instance = EventLoggerImpl(severity, null, eventLoggerDelegate)
         EventLogger.setInstance(instance)
         return EventLogger.singleton
@@ -103,8 +106,6 @@ object ApplicationModule {
     }
 
     fun provideClock(): Clock = Clock.System
-
-    fun providePrettyTime(): PrettyTime = PrettyTime()
 
     fun provideJson() = Json {
         prettyPrint = false
@@ -151,4 +152,10 @@ object ApplicationModule {
     fun provideDbgCensus(serviceId: String): DBGCensus = DBGCensus(serviceId)
 
     fun provideServiceId(): String = "PS2LinkCompanion"
+
+    fun isInDebugMode(
+        preferences: Preferences,
+    ): Boolean {
+        return preferences.loadString(Constants.DEBUG_MODE_PREF_KEY).toBoolean()
+    }
 }

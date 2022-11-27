@@ -12,9 +12,7 @@ import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,10 +26,8 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     applicationManager: ApplicationManager,
     private val serviceClient: DBGServiceClient,
-    private val dispatcherProvider: DispatcherProvider,
-) : BaseViewModel(applicationManager) {
-
-    private var scope: CoroutineScope? = null
+    dispatcherProvider: DispatcherProvider,
+) : BaseViewModel(applicationManager, dispatcherProvider) {
 
     private var searchJob: Job? = null
 
@@ -49,24 +45,12 @@ class MainViewModel(
     )
     val uiState = _uiState.asStateFlow()
 
-    override fun onStart() {
-        val newScope = CoroutineScope(SupervisorJob() + dispatcherProvider.ioDispatcher())
-
-        newScope.launch {
-            applicationManager.uiModel.collect {
-                handleProgramUIState(it)
-            }
-        }
-
-        scope = newScope
-    }
-
-    private fun handleProgramUIState(applicationUiState: ApplicationUIModel) {
-        val isProgramLoading = applicationUiState.programMode == ProgramMode.LOADING
+    override fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel) {
+        val isProgramLoading = applicationUIModel.programMode == ProgramMode.LOADING
         _uiState.value = _uiState.value.copy(
-            selectedPlayer = applicationUiState.character,
+            selectedPlayer = applicationUIModel.character,
             isLoading = isProgramLoading,
-            actionLabel = applicationUiState.actionLabel ?: "",
+            actionLabel = applicationUIModel.actionLabel ?: "",
         )
     }
 
@@ -102,20 +86,6 @@ class MainViewModel(
      */
     fun selectCharacter(character: Character) {
         applicationManager.setCharacter(character.characterId)
-    }
-
-    /**
-     * Start listening for events.
-     */
-    fun startListening() {
-        applicationManager.startListening()
-    }
-
-    /**
-     * Stop listening for events.
-     */
-    fun stopListening() {
-        applicationManager.pauseListening()
     }
 
     /**

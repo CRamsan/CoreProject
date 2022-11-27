@@ -55,6 +55,7 @@ fun initializeGUI(applicationLayer: ApplicationLayer, middleLayer: MiddleLayer, 
     val settingsScreen = SettingsScreen(
         applicationManager,
         hotKeyManager,
+        dispatcherProvider,
     )
     val mainScreen = MainScreen(
         applicationManager,
