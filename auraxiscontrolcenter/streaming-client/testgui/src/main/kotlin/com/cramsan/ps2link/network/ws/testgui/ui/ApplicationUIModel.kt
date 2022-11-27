@@ -8,13 +8,26 @@ import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
  * Data class that holds the UI state for the entire application.
  */
 data class ApplicationUIModel(
-    val isWindowOpen: Boolean,
-    val screenType: ScreenType,
-    val status: String,
-    val actionLabel: String?,
-    val trayIconPath: String,
-    val windowIconPath: String,
-    val programMode: ProgramMode,
-    val character: Character?,
-    val debugModeEnabled: Boolean,
-)
+    val windowUIModel: WindowUIModel,
+    val trayUIModel: TrayUIModel,
+    val state: State,
+) {
+
+    data class WindowUIModel(
+        val isVisible: Boolean,
+        val iconPath: String,
+    )
+
+    data class TrayUIModel(
+        val statusLabel: String,
+        val actionLabel: String?,
+        val iconPath: String,
+    )
+
+    data class State(
+        val screenType: ScreenType,
+        val programMode: ProgramMode,
+        val character: Character?,
+        val debugModeEnabled: Boolean,
+    )
+}

@@ -88,6 +88,7 @@ private fun SettingsContent(viewModel: SettingsScreenViewModel) {
                     SettingsDebugSection(
                         settingsUIState.isDebugEnabled,
                         onDebugEnabledChanged = { isChecked -> viewModel.changeDebugMode(isChecked) },
+                        onOpenLogFolder = { viewModel.openLogFolder() },
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     BoldButton(
@@ -154,6 +155,7 @@ private fun SettingsHotKeySection(
 private fun SettingsDebugSection(
     isDebugEnabled: Boolean,
     onDebugEnabledChanged: (Boolean) -> Unit,
+    onOpenLogFolder: () -> Unit,
 ) {
     Column(
         modifier = Modifier.wrapContentSize().padding(vertical = Padding.medium),
@@ -174,6 +176,25 @@ private fun SettingsDebugSection(
                 )
                 Text(
                     "Enable Debug mode",
+                    modifier = Modifier,
+                )
+            }
+            Row(
+                modifier = Modifier.padding(Padding.small),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                BoldButton(
+                    modifier = Modifier.width(150.dp),
+                    onClick = { onOpenLogFolder() },
+                ) {
+                    Text(
+                        "Open",
+                        modifier = Modifier,
+                    )
+                }
+                Spacer(Modifier.width(Size.small))
+                Text(
+                    "Log files",
                     modifier = Modifier,
                 )
             }

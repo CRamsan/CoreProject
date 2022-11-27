@@ -46,11 +46,11 @@ class MainViewModel(
     val uiState = _uiState.asStateFlow()
 
     override fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel) {
-        val isProgramLoading = applicationUIModel.programMode == ProgramMode.LOADING
+        val isProgramLoading = applicationUIModel.state.programMode == ProgramMode.LOADING
         _uiState.value = _uiState.value.copy(
-            selectedPlayer = applicationUIModel.character,
+            selectedPlayer = applicationUIModel.state.character,
             isLoading = isProgramLoading,
-            actionLabel = applicationUIModel.actionLabel ?: "",
+            actionLabel = applicationUIModel.trayUIModel.actionLabel ?: "",
         )
     }
 

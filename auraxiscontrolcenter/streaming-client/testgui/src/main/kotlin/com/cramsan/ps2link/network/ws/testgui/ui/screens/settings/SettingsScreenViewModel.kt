@@ -74,7 +74,7 @@ class SettingsScreenViewModel(
         _uiState.value = _uiState.value.copy(
             isEnabled = true,
             list = list.toImmutableList(),
-            isDebugEnabled = applicationManager.uiModel.value.debugModeEnabled,
+            isDebugEnabled = applicationManager.uiModel.value.state.debugModeEnabled,
         )
     }
 
@@ -110,6 +110,10 @@ class SettingsScreenViewModel(
         _uiState.value = _uiState.value.copy(
             restartDialog = false,
         )
+    }
+
+    fun openLogFolder() {
+        applicationManager.openFolder(".")
     }
 
     companion object {

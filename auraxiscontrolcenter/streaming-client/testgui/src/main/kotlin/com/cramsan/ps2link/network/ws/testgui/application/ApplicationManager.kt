@@ -3,6 +3,7 @@ package com.cramsan.ps2link.network.ws.testgui.application
 import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logW
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.CensusLang
@@ -42,9 +43,14 @@ import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.awt.Desktop
+import java.io.File
 import javax.swing.JFrame
+import kotlin.system.exitProcess
 
 /**
  * Manager class that provides high level access to all the functionalities of the application.
@@ -66,31 +72,41 @@ class ApplicationManager(
 
     private var window: JFrame? = null
 
-    private var programMode: ProgramMode = ProgramMode.LOADING
-        set(value) {
-            _uiModel.value = _uiModel.value.copy(
-                status = value.toFriendlyString(),
-                actionLabel = value.toActionLabel(),
-                trayIconPath = pathForStatus(value),
-                programMode = value,
-            )
-            field = value
-        }
-
-    private val _uiModel = MutableStateFlow(
-        ApplicationUIModel(
-            isWindowOpen = false,
+    private val applicationState = MutableStateFlow(
+        ApplicationUIModel.State(
             screenType = ScreenType.UNDEFINED,
-            status = programMode.toFriendlyString(),
-            actionLabel = programMode.toActionLabel(),
-            trayIconPath = pathForStatus(ProgramMode.LOADING),
-            windowIconPath = "icon_large.png",
-            programMode = programMode,
+            programMode = ProgramMode.LOADING,
             character = null,
             debugModeEnabled = true,
         ),
     )
-    val uiModel = _uiModel.asStateFlow()
+
+    private val trayUIModel = MutableStateFlow(
+        ApplicationUIModel.TrayUIModel(
+            statusLabel = applicationState.value.programMode.toFriendlyString(),
+            actionLabel = applicationState.value.programMode.toActionLabel(),
+            iconPath = pathForStatus(ProgramMode.LOADING),
+        ),
+    )
+
+    private val windowUIModel = MutableStateFlow(
+        ApplicationUIModel.WindowUIModel(
+            isVisible = false,
+            iconPath = "icon_large.png",
+        ),
+    )
+
+    val uiModel = combine(windowUIModel, trayUIModel, applicationState) { t1, t2, t3 ->
+        ApplicationUIModel(t1, t2, t3)
+    }.stateIn(
+        coroutineScope,
+        SharingStarted.Companion.Eagerly,
+        ApplicationUIModel(
+            windowUIModel = windowUIModel.value,
+            trayUIModel = trayUIModel.value,
+            state = applicationState.value,
+        ),
+    )
 
     /**
      * Start the application.
@@ -132,10 +148,21 @@ class ApplicationManager(
         }
     }
 
+    private fun setProgramMode(programMode: ProgramMode) {
+        applicationState.value = applicationState.value.copy(
+            programMode = programMode,
+        )
+        trayUIModel.value = trayUIModel.value.copy(
+            statusLabel = programMode.toFriendlyString(),
+            actionLabel = programMode.toActionLabel(),
+            iconPath = pathForStatus(programMode),
+        )
+    }
+
     @Suppress("SwallowedException")
     private suspend fun loadCharacter(characterId: String) {
-        programMode = ProgramMode.LOADING
-        var character: Character? = null
+        setProgramMode(ProgramMode.LOADING)
+        val character: Character?
         try {
             logI(TAG, "Trying to fetch data for character $characterId.")
             character = serviceClient.getProfile(
@@ -143,39 +170,31 @@ class ApplicationManager(
                 namespace = Namespace.PS2PC,
                 currentLang = CensusLang.EN,
             ).body
-            programMode = if (character == null) {
+            if (character == null) {
                 logE(TAG, "Could not find data for character $characterId.")
                 ProgramMode.NOT_CONFIGURED
-            } else {
-                ProgramMode.PAUSED
+                return
             }
+            setProgramMode(ProgramMode.PAUSED)
         } catch (t: Throwable) {
             logE(TAG, "Error when fetching data for character $characterId.")
             preferences.remove(CHARACTER_PREF_KEY)
-            programMode = ProgramMode.NOT_CONFIGURED
-        }
-
-        when (programMode) {
-            ProgramMode.NOT_CONFIGURED -> return
-            ProgramMode.LOADING, ProgramMode.RUNNING -> {
-                logE(TAG, "Cannot load character data while program is not paused.")
-                return
-            }
-            ProgramMode.PAUSED -> Unit
+            setProgramMode(ProgramMode.NOT_CONFIGURED)
+            return
         }
 
         logI(TAG, "Character $characterId loaded.")
         currentPlayer = character
-        _uiModel.value = _uiModel.value.copy(
+        applicationState.value = applicationState.value.copy(
             character = character,
         )
-        preferences.saveString(CHARACTER_PREF_KEY, character?.characterId)
+        preferences.saveString(CHARACTER_PREF_KEY, character.characterId)
     }
 
     /**
      * Start listening for events for the selected character.
      */
-    fun startListening() {
+    private fun startListening() {
         val characterId = currentPlayer?.characterId
 
         if (characterId == null) {
@@ -184,7 +203,7 @@ class ApplicationManager(
         }
 
         isClientReady = false
-        programMode = ProgramMode.LOADING
+        setProgramMode(ProgramMode.LOADING)
         coroutineScope.launch {
             streamingClient.start()
 
@@ -202,16 +221,16 @@ class ApplicationManager(
                     eventNames = listOf(EventType.DEATH),
                 ),
             )
-            programMode = ProgramMode.RUNNING
+            setProgramMode(ProgramMode.RUNNING)
         }
     }
 
     /**
      * Pause from listening for events.
      */
-    fun pauseListening() {
+    private fun pauseListening() {
         streamingClient.stop()
-        programMode = ProgramMode.PAUSED
+        setProgramMode(ProgramMode.PAUSED)
     }
 
     override fun onServerEventReceived(serverEvent: ServerEvent) {
@@ -257,11 +276,19 @@ class ApplicationManager(
     }
 
     /**
+     * Exit the application.
+     */
+    fun exitApplication() {
+        logI(TAG, "Closing program.")
+        exitProcess(0)
+    }
+
+    /**
      * Close the main window.
      */
     fun closeWindow() {
-        _uiModel.value = _uiModel.value.copy(
-            isWindowOpen = false,
+        windowUIModel.value = windowUIModel.value.copy(
+            isVisible = false,
         )
     }
 
@@ -270,8 +297,8 @@ class ApplicationManager(
      */
     fun openWindow() {
         logD(TAG, "Trying to open window")
-        _uiModel.value = _uiModel.value.copy(
-            isWindowOpen = true,
+        windowUIModel.value = windowUIModel.value.copy(
+            isVisible = true,
         )
         window?.toFront()
     }
@@ -280,7 +307,7 @@ class ApplicationManager(
      * Execute the single tray action available to the user.
      */
     fun onTrayAction() {
-        when (programMode) {
+        when (uiModel.value.state.programMode) {
             ProgramMode.NOT_CONFIGURED -> openWindow()
             ProgramMode.LOADING -> openWindow()
             ProgramMode.RUNNING -> pauseListening()
@@ -292,8 +319,10 @@ class ApplicationManager(
      * Change the screen that is being displayed.
      */
     fun setCurrentScreen(screenType: ScreenType) {
-        _uiModel.value = _uiModel.value.copy(
-            isWindowOpen = true,
+        windowUIModel.value = windowUIModel.value.copy(
+            isVisible = true,
+        )
+        applicationState.value = applicationState.value.copy(
             screenType = screenType,
         )
     }
@@ -312,9 +341,18 @@ class ApplicationManager(
         window = null
     }
 
+    fun openFolder(path: String) {
+        val directory = File(path)
+        if (!directory.exists() || !directory.isDirectory) {
+            logW(TAG, "Cannot open directory $path")
+            return
+        }
+        Desktop.getDesktop().open(directory)
+    }
+
     fun changeDebugMode(debugEnabled: Boolean) {
         preferences.saveString(Constants.DEBUG_MODE_PREF_KEY, debugEnabled.toString())
-        _uiModel.value = _uiModel.value.copy(
+        applicationState.value = applicationState.value.copy(
             debugModeEnabled = debugEnabled,
         )
     }
@@ -334,7 +372,7 @@ class ApplicationManager(
             return when (this) {
                 ProgramMode.NOT_CONFIGURED, ProgramMode.LOADING -> "Not configured"
                 ProgramMode.RUNNING -> "Running"
-                ProgramMode.PAUSED -> "Paused"
+                ProgramMode.PAUSED -> "Not Running"
             }
         }
 
@@ -342,7 +380,7 @@ class ApplicationManager(
             return when (this) {
                 ProgramMode.NOT_CONFIGURED, ProgramMode.LOADING -> null
                 ProgramMode.RUNNING -> "Pause"
-                ProgramMode.PAUSED -> "Resume"
+                ProgramMode.PAUSED -> "Start"
             }
         }
     }

@@ -37,16 +37,15 @@ fun ApplicationScope.ApplicationGUI(
         )
     }
     var isFirstOpen by remember { mutableStateOf(true) }
-    val state = rememberWindowState(
-        size = minWindowSize,
-    )
+    val state = rememberWindowState(size = minWindowSize)
 
+    val trayUIModel = uiModel.trayUIModel
     Tray(
         state = trayState,
-        icon = painterResource(uiModel.trayIconPath),
+        icon = painterResource(trayUIModel.iconPath),
         onAction = {
-            applicationManager.openWindow()
             state.isMinimized = false
+            applicationManager.openWindow()
         },
         menu = {
             Item(
@@ -56,11 +55,11 @@ fun ApplicationScope.ApplicationGUI(
                     state.isMinimized = false
                 },
             )
-            val actionLabel = uiModel.actionLabel
+            val actionLabel = trayUIModel.actionLabel
             if (actionLabel != null) {
                 Separator()
                 Item(
-                    "Status: ${uiModel.status}",
+                    "Status: ${trayUIModel.statusLabel}",
                     onClick = {
                         applicationManager.openWindow()
                         state.isMinimized = false
@@ -75,15 +74,16 @@ fun ApplicationScope.ApplicationGUI(
             Separator()
             Item(
                 "Exit",
-                onClick = { exitApplication() },
+                onClick = { applicationManager.exitApplication() },
             )
         },
     )
 
-    if (uiModel.isWindowOpen) {
+    val windowUIModel = uiModel.windowUIModel
+    if (windowUIModel.isVisible) {
         Window(
             onCloseRequest = { applicationManager.closeWindow() },
-            icon = painterResource(uiModel.windowIconPath),
+            icon = painterResource(windowUIModel.iconPath),
             resizable = true,
             undecorated = true,
             transparent = true,
@@ -96,7 +96,7 @@ fun ApplicationScope.ApplicationGUI(
                     minWindowSize.height.value.toInt(),
                 )
                 PS2Theme {
-                    navigator.renderScreen(uiModel.screenType)
+                    navigator.renderScreen(uiModel.state.screenType)
                 }
                 if (isFirstOpen) {
                     applicationManager.registerWindow(window)

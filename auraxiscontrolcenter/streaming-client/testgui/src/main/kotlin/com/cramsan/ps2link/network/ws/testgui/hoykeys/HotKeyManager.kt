@@ -29,7 +29,7 @@ class HotKeyManager(
      */
     fun configureHotKeyManger() {
         try {
-            GlobalScreen.registerNativeHook()
+            // GlobalScreen.registerNativeHook()
         } catch (ex: NativeHookException) {
             logE(TAG, "There was a problem registering the native hook.", ex)
             exitProcess(1)
