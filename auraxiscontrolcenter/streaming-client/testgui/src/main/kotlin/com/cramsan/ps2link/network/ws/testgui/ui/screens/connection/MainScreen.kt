@@ -101,7 +101,8 @@ private fun MainScreenContent(
         FrameSlim(
             modifier = Modifier
                 .width(IntrinsicSize.Max)
-                .widthIn(ScreenSizes.maxColumnWidth),
+                .widthIn(ScreenSizes.maxColumnWidth)
+                .fillMaxHeight(),
         ) {
             CharacterFragment(
                 uiState.selectedPlayer,

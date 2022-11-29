@@ -66,12 +66,14 @@ class MainViewModel(
         override fun onProgramModeChanged(programMode: ProgramMode) {
             fetchKillFeed()
         }
+
+        override fun onCharacterLoaded(character: Character?) {
+            _uiState.value = _uiState.value.copy(isLoading = false)
+        }
     }
     override fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel) {
-        val isProgramLoading = applicationUIModel.state.programMode == ProgramMode.LOADING
         _uiState.value = _uiState.value.copy(
             selectedPlayer = applicationUIModel.state.character,
-            isLoading = isProgramLoading,
             actionLabel = applicationUIModel.trayUIModel.actionLabel ?: "",
         )
     }
@@ -131,6 +133,7 @@ class MainViewModel(
      * Select a [character] to be selected as the observed [Character] globally within the application.
      */
     fun selectCharacter(character: Character) {
+        _uiState.value = _uiState.value.copy(isLoading = true)
         applicationManager.setCharacter(character.characterId)
     }
 

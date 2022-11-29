@@ -191,6 +191,7 @@ class ApplicationManager(
             character = character,
         )
         preferences.saveString(CHARACTER_PREF_KEY, character?.characterId)
+        eventHandlers.forEach { it.onCharacterLoaded(character) }
     }
     @Suppress("SwallowedException")
     private suspend fun fetchCharacter(characterId: String): Character? {

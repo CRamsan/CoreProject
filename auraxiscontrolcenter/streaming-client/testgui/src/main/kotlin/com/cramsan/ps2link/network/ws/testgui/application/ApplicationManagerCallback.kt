@@ -8,4 +8,6 @@ interface ApplicationManagerCallback {
     fun onServerEventPayload(character: Character, payload: ServerEventPayload)
 
     fun onProgramModeChanged(programMode: ProgramMode)
+
+    fun onCharacterLoaded(character: Character?)
 }
