@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.screens.connection
 
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.KillEvent
 import kotlinx.collections.immutable.ImmutableList
 
 /**
@@ -15,4 +16,5 @@ data class MainUIState(
     val isLoading: Boolean,
     val isError: Boolean,
     val actionLabel: String,
+    val killList: ImmutableList<KillEvent>,
 )

@@ -8,6 +8,7 @@ import com.cramsan.framework.preferences.Preferences
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.StreamingClientEventHandler
@@ -57,6 +58,7 @@ import kotlin.system.exitProcess
  *
  * @author cramsan
  */
+@Suppress("TooManyFunctions")
 class ApplicationManager(
     private val streamingClient: StreamingClient,
     private val hotKeyManager: HotKeyManager,
@@ -71,6 +73,8 @@ class ApplicationManager(
     private var isClientReady = false
 
     private var window: JFrame? = null
+
+    private val eventHandlers = mutableSetOf<ApplicationManagerCallback>()
 
     private val applicationState = MutableStateFlow(
         ApplicationUIModel.State(
@@ -135,7 +139,7 @@ class ApplicationManager(
         }
 
         coroutineScope.launch {
-            setCharacter(characterId)
+            initialLoadCharacter(characterId)
         }
     }
 
@@ -144,11 +148,12 @@ class ApplicationManager(
      */
     fun setCharacter(characterId: String) {
         coroutineScope.launch {
-            loadCharacter(characterId)
+            updateCharacter(characterId)
         }
     }
 
     private fun setProgramMode(programMode: ProgramMode) {
+        logD(TAG, "Setting program mode: $programMode")
         applicationState.value = applicationState.value.copy(
             programMode = programMode,
         )
@@ -157,11 +162,38 @@ class ApplicationManager(
             actionLabel = programMode.toActionLabel(),
             iconPath = pathForStatus(programMode),
         )
+        eventHandlers.forEach { it.onProgramModeChanged(programMode) }
     }
 
     @Suppress("SwallowedException")
-    private suspend fun loadCharacter(characterId: String) {
+    private suspend fun initialLoadCharacter(characterId: String) {
         setProgramMode(ProgramMode.LOADING)
+        val character = fetchCharacter(characterId)
+        if (character == null) {
+            preferences.remove(CHARACTER_PREF_KEY)
+            setProgramMode(ProgramMode.NOT_CONFIGURED)
+        } else {
+            setProgramMode(ProgramMode.PAUSED)
+        }
+        logI(TAG, "Character $characterId loaded.")
+
+        currentPlayer = character
+        applicationState.value = applicationState.value.copy(
+            character = character,
+        )
+    }
+
+    @Suppress("SwallowedException")
+    private suspend fun updateCharacter(characterId: String) {
+        val character = fetchCharacter(characterId)
+        currentPlayer = character
+        applicationState.value = applicationState.value.copy(
+            character = character,
+        )
+        preferences.saveString(CHARACTER_PREF_KEY, character?.characterId)
+    }
+    @Suppress("SwallowedException")
+    private suspend fun fetchCharacter(characterId: String): Character? {
         val character: Character?
         try {
             logI(TAG, "Trying to fetch data for character $characterId.")
@@ -172,23 +204,35 @@ class ApplicationManager(
             ).body
             if (character == null) {
                 logE(TAG, "Could not find data for character $characterId.")
-                ProgramMode.NOT_CONFIGURED
-                return
+                return null
             }
-            setProgramMode(ProgramMode.PAUSED)
         } catch (t: Throwable) {
             logE(TAG, "Error when fetching data for character $characterId.")
-            preferences.remove(CHARACTER_PREF_KEY)
-            setProgramMode(ProgramMode.NOT_CONFIGURED)
-            return
+            return null
         }
+        return character
+    }
 
-        logI(TAG, "Character $characterId loaded.")
-        currentPlayer = character
+    fun registerCallback(callback: ApplicationManagerCallback) {
+        eventHandlers.add(callback)
+    }
+
+    fun deregisterCallback(callback: ApplicationManagerCallback) {
+        eventHandlers.remove(callback)
+    }
+
+    private fun updateCharacter() {
+        val characterId = applicationState.value.character?.characterId ?: return
+        coroutineScope.launch { updateCharacter(characterId) }
+    }
+
+    private fun setPlayerLoginStatus(loginStatus: LoginStatus) {
+        val character = applicationState.value.character?.copy(
+            loginStatus = loginStatus,
+        )
         applicationState.value = applicationState.value.copy(
             character = character,
         )
-        preferences.saveString(CHARACTER_PREF_KEY, character.characterId)
     }
 
     /**
@@ -218,10 +262,17 @@ class ApplicationManager(
             streamingClient.sendMessage(
                 CharacterSubscribe(
                     characters = listOf(characterId),
-                    eventNames = listOf(EventType.DEATH),
+                    eventNames = listOf(
+                        EventType.DEATH,
+                        EventType.PLAYER_LOGIN,
+                        EventType.PLAYER_LOGOUT,
+                        EventType.GAIN_EXPERIENCE,
+                        EventType.BATTLE_RANK_UP,
+                    ),
                 ),
             )
             setProgramMode(ProgramMode.RUNNING)
+            updateCharacter()
         }
     }
 
@@ -255,23 +306,29 @@ class ApplicationManager(
     private fun handleServerEventPayload(character: Character, payload: ServerEventPayload?) {
         when (payload) {
             is AchievementEarned -> Unit
-            is BattleRankUp -> Unit
+            is BattleRankUp -> { updateCharacter() }
             is ContinentLock -> Unit
             is ContinentUnlock -> Unit
             is Death -> {
                 gameSessionManager.onPlayerDeathEvent(character, payload)
             }
             is FacilityControl -> Unit
-            is GainExperience -> Unit
+            is GainExperience -> {
+                gameSessionManager.onExperienceGained(character, payload)
+            }
             is ItemAdded -> Unit
             is MetagameEvent -> Unit
             is PlayerFacilityCapture -> Unit
             is PlayerFacilityDefend -> Unit
-            is PlayerLogin -> Unit
-            is PlayerLogout -> Unit
+            is PlayerLogin -> { setPlayerLoginStatus(LoginStatus.ONLINE) }
+            is PlayerLogout -> { setPlayerLoginStatus(LoginStatus.OFFLINE) }
             is SkillAdded -> Unit
             is VehicleDestroy -> Unit
             null -> Unit
+        }
+
+        if (payload != null) {
+            eventHandlers.forEach { it.onServerEventPayload(character, payload) }
         }
     }
 

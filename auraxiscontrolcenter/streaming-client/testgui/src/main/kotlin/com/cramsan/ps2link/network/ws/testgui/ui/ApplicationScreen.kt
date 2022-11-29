@@ -95,7 +95,10 @@ fun ApplicationScope.ApplicationGUI(
                     minWindowSize.width.value.toInt(),
                     minWindowSize.height.value.toInt(),
                 )
-                PS2Theme {
+                PS2Theme(
+                    onClose = { applicationManager.closeWindow() },
+                    onMinimize = { state.isMinimized = true },
+                ) {
                     navigator.renderScreen(uiModel.state.screenType)
                 }
                 if (isFirstOpen) {

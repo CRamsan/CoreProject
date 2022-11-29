@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
  *
  * @see Census API Docs - http://census.daybreakgames.com/]
  */
+
 @Serializable
 enum class EventType {
     @SerialName("all")
@@ -31,4 +32,16 @@ enum class EventType {
     PLAYER_FACILITY_CAPTURE,
     @SerialName("PlayerFacilityDefend")
     PLAYER_FACILITY_DEFEND,
+    @SerialName("ContinentLock")
+    CONTINENT_LOCK,
+    @SerialName("ContinentUnlock")
+    CONTINENT_UNLOCK,
+    @SerialName("FacilityControl")
+    FACILITY_CONTROL,
+    @SerialName("MetagameEvent")
+    METAGAME_EVENT,
+    @SerialName("PlayerLogin")
+    PLAYER_LOGIN,
+    @SerialName("PlayerLogout")
+    PLAYER_LOGOUT,
 }

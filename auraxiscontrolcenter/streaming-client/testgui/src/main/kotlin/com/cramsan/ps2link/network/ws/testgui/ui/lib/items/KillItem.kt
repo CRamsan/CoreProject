@@ -10,11 +10,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillType
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.AsyncImage
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.SlimButton
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.loadImageBitmap
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Padding
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Size
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.toColor
@@ -32,6 +36,7 @@ fun KillItem(
     attacker: String? = null,
     time: Instant? = null,
     weaponName: String? = null,
+    weaponImage: String? = null,
     onClick: () -> Unit = {},
 ) {
     SlimButton(
@@ -73,7 +78,15 @@ fun KillItem(
             Column(
                 modifier = Modifier.size(Size.xxxlarge),
             ) {
-                Text(weaponName ?: "Unknown")
+                val weaponDesc = weaponName ?: "Unknown"
+                if (weaponImage != null) {
+                    AsyncImage(
+                        load = { loadImageBitmap(weaponImage) },
+                        painterFor = { remember { BitmapPainter(it) } },
+                        contentDescription = weaponDesc,
+                    )
+                }
+                Text(weaponDesc)
             }
         }
     }

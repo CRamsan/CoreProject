@@ -4,6 +4,7 @@ import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.network.ws.messages.Death
+import com.cramsan.ps2link.network.ws.messages.GainExperience
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyType
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +41,7 @@ class GameSessionManager(
         hotKeyManager.executeHotKey(HotKeyType.ON_ENEMY_KILL_SCREENSHOT)
 
         // Add time to the timer
-        timer += 5000
+        timer += 10000
         if (timerJob?.isCompleted == true || timerJob == null) {
             logI(TAG, "Launched new timer")
             timerJob = coroutineScope.launch { startTimer() }
@@ -67,6 +68,10 @@ class GameSessionManager(
 
         logI(TAG, "Capturing video")
         hotKeyManager.executeHotKey(HotKeyType.ON_ENEMY_KILL_VIDEO)
+    }
+
+    fun onExperienceGained(character: Character, payload: GainExperience) {
+        logI(TAG, "Character: ${character.characterId} gained ${payload.amount} xp.")
     }
 
     companion object {

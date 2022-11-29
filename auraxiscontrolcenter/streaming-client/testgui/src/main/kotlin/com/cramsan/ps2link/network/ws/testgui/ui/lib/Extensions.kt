@@ -1,7 +1,16 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.lib
 
+import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Density
 import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.LoginStatus
@@ -12,6 +21,12 @@ import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.negative
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.positive
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.undefined
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.warning
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.xml.sax.InputSource
+import java.io.File
+import java.io.IOException
+import java.net.URL
 
 /**
  * @Author cramsan
@@ -88,3 +103,67 @@ fun Population.toColor() = when (this) {
     Population.LOW -> warning
     Population.UNKNOWN -> undefined
 }
+
+@Composable
+fun <T> AsyncImage(
+    load: suspend () -> T,
+    painterFor: @Composable (T) -> Painter,
+    contentDescription: String,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Fit,
+) {
+    val image: T? by produceState<T?>(null) {
+        value = withContext(Dispatchers.IO) {
+            try {
+                load()
+            } catch (e: IOException) {
+                // instead of printing to console, you can also write this to log,
+                // or show some error placeholder
+                e.printStackTrace()
+                null
+            }
+        }
+    }
+
+    if (image != null) {
+        Image(
+            painter = painterFor(image!!),
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+            modifier = modifier,
+        )
+    }
+}
+
+/* Loading from file with java.io API */
+
+fun loadImageBitmap(file: File): ImageBitmap =
+    file.inputStream().buffered().use {
+        androidx.compose.ui.res.loadImageBitmap(it)
+    }
+
+fun loadSvgPainter(file: File, density: Density): Painter =
+    file.inputStream().buffered().use {
+        androidx.compose.ui.res.loadSvgPainter(it, density)
+    }
+
+fun loadXmlImageVector(file: File, density: Density): ImageVector =
+    file.inputStream().buffered().use {
+        androidx.compose.ui.res.loadXmlImageVector(InputSource(it), density)
+    }
+
+/* Loading from network with java.net API */
+
+fun loadImageBitmap(url: String): ImageBitmap =
+    URL(url).openStream().buffered().use {
+        androidx.compose.ui.res.loadImageBitmap(it)
+    }
+fun loadSvgPainter(url: String, density: Density): Painter =
+    URL(url).openStream().buffered().use {
+        androidx.compose.ui.res.loadSvgPainter(it, density)
+    }
+
+fun loadXmlImageVector(url: String, density: Density): ImageVector =
+    URL(url).openStream().buffered().use {
+        androidx.compose.ui.res.loadXmlImageVector(InputSource(it), density)
+    }

@@ -18,7 +18,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,7 +33,6 @@ import com.cramsan.ps2link.network.ws.testgui.ui.lib.setAlpha
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.FontSize
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Opacity
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Padding
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.ScreenSizes
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Size
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseScreen
 import kotlinx.collections.immutable.ImmutableList
@@ -66,9 +64,7 @@ private fun SettingsContent(viewModel: SettingsScreenViewModel) {
         viewModel.captureHotKeys(hotKeyType)
     }
     FrameSlim(
-        modifier = Modifier
-            .width(ScreenSizes.maxColumnWidth)
-            .fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
     ) {
         Box(
             contentAlignment = Alignment.Center,

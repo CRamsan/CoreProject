@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.Character
+import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.BoldButton
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.ErrorOverlay
@@ -34,6 +37,7 @@ import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameSlim
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.LoadingOverlay
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.SearchField
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.SlimButton
+import com.cramsan.ps2link.network.ws.testgui.ui.lib.items.KillItem
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.items.ProfileItem
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.FontSize
 import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Padding
@@ -83,7 +87,7 @@ private fun MainScreenContent(
         FrameSlim(
             modifier = Modifier
                 .width(IntrinsicSize.Max)
-                .widthIn(ScreenSizes.maxColumnWidth)
+                .widthIn(ScreenSizes.maxColumnWidth / 2)
                 .fillMaxHeight(),
         ) {
             SearchFragment(
@@ -96,7 +100,8 @@ private fun MainScreenContent(
         }
         FrameSlim(
             modifier = Modifier
-                .fillMaxSize(),
+                .width(IntrinsicSize.Max)
+                .widthIn(ScreenSizes.maxColumnWidth),
         ) {
             CharacterFragment(
                 uiState.selectedPlayer,
@@ -105,6 +110,14 @@ private fun MainScreenContent(
                 uiState.isError,
                 viewModel,
                 prettyTime,
+            )
+        }
+        FrameSlim(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
+            KillFeedFragment(
+                uiState.killList,
             )
         }
     }
@@ -330,6 +343,30 @@ private fun CharacterFragment(
                 ) {
                     Text(actionLabel)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun KillFeedFragment(
+    killList: ImmutableList<KillEvent>,
+) {
+    FrameSlim(
+        modifier = Modifier.fillMaxSize().padding(Padding.medium),
+    ) {
+        LazyColumn {
+            items(killList) {
+                KillItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    killType = it.killType,
+                    faction = it.faction,
+                    attacker = it.attacker,
+                    time = it.time,
+                    weaponName = it.weaponName,
+                    weaponImage = it.weaponImage,
+                    onClick = { },
+                )
             }
         }
     }
