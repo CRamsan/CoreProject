@@ -189,6 +189,9 @@ class ApplicationManager(
             character = character,
         )
         preferences.saveString(CHARACTER_PREF_KEY, character?.characterId)
+        if (applicationState.value.programMode == ProgramMode.NOT_CONFIGURED) {
+            setProgramMode(ProgramMode.PAUSED)
+        }
         eventHandlers.forEach { it.onCharacterLoaded(character) }
     }
     @Suppress("SwallowedException")

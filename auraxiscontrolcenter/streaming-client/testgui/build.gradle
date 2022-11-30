@@ -41,7 +41,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Msi, TargetFormat.Exe)
             packageName = "PS2Link"
-            packageVersion = "1.0.4"
+            packageVersion = "1.0.5"
             modules("java.instrument", "java.management", "java.prefs", "jdk.unsupported")
             windows {
                 iconFile.set(project.file("icon_large.ico"))
