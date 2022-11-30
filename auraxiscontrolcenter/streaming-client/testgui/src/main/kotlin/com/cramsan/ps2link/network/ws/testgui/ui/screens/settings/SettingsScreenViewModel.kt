@@ -55,6 +55,7 @@ class SettingsScreenViewModel(
     }
 
     override fun onClose() {
+        super.onClose()
         hotKeyManager.deregisterListener(hotKeyManagerEventListener)
     }
     override fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel) {

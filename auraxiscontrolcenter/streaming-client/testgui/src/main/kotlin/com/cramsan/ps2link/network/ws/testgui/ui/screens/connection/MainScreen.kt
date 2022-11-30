@@ -1,5 +1,9 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.screens.connection
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -84,22 +88,29 @@ private fun MainScreenContent(
     val uiState by viewModel.uiState.collectAsState()
 
     Row {
-        FrameSlim(
-            modifier = Modifier
-                .width(IntrinsicSize.Max)
-                .widthIn(ScreenSizes.maxColumnWidth / 2)
-                .fillMaxHeight(),
+        AnimatedVisibility(
+            visible = !uiState.isRunning,
+            enter = slideInHorizontally(),
+            exit = slideOutHorizontally(),
         ) {
-            SearchFragment(
-                uiState.characterName,
-                uiState.playerSuggestions,
-                uiState.isListLoading,
-                uiState.isError,
-                viewModel,
-            )
+            FrameSlim(
+                modifier = Modifier
+                    .width(IntrinsicSize.Max)
+                    .widthIn(ScreenSizes.maxColumnWidth / 2)
+                    .fillMaxHeight(),
+            ) {
+                SearchFragment(
+                    uiState.characterName,
+                    uiState.playerSuggestions,
+                    uiState.isListLoading,
+                    uiState.isError,
+                    viewModel,
+                )
+            }
         }
         FrameSlim(
             modifier = Modifier
+                .animateContentSize()
                 .width(IntrinsicSize.Max)
                 .widthIn(ScreenSizes.maxColumnWidth)
                 .fillMaxHeight(),
@@ -115,10 +126,12 @@ private fun MainScreenContent(
         }
         FrameSlim(
             modifier = Modifier
+                .animateContentSize()
                 .fillMaxSize(),
         ) {
             KillFeedFragment(
                 uiState.killList,
+                onEventSelected = { viewModel.onKillEventSelected(it) },
             )
         }
     }
@@ -352,6 +365,7 @@ private fun CharacterFragment(
 @Composable
 private fun KillFeedFragment(
     killList: ImmutableList<KillEvent>,
+    onEventSelected: (String?) -> Unit,
 ) {
     FrameSlim(
         modifier = Modifier.fillMaxSize().padding(Padding.medium),
@@ -366,7 +380,7 @@ private fun KillFeedFragment(
                     time = it.time,
                     weaponName = it.weaponName,
                     weaponImage = it.weaponImage,
-                    onClick = { },
+                    onClick = { onEventSelected(it.characterId) },
                 )
             }
         }

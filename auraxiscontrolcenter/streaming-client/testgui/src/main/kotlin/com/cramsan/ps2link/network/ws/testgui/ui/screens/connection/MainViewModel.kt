@@ -3,6 +3,7 @@ package com.cramsan.ps2link.network.ws.testgui.ui.screens.connection
 import androidx.compose.runtime.Stable
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logW
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Character
@@ -25,6 +26,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.awt.Desktop
+import java.net.URI
 
 /**
  * ViewModel to manage the Main screen.
@@ -64,6 +67,9 @@ class MainViewModel(
         }
 
         override fun onProgramModeChanged(programMode: ProgramMode) {
+            _uiState.value = _uiState.value.copy(
+                isRunning = programMode == ProgramMode.RUNNING,
+            )
             fetchKillFeed()
         }
 
@@ -81,8 +87,10 @@ class MainViewModel(
     override fun onStart() {
         super.onStart()
         applicationManager.registerCallback(applicationManagerCallback)
+        fetchKillFeed()
     }
     override fun onClose() {
+        super.onClose()
         applicationManager.deregisterCallback(applicationManagerCallback)
         scope?.cancel()
     }
@@ -146,6 +154,15 @@ class MainViewModel(
 
     fun onTrayAction() {
         applicationManager.onTrayAction()
+    }
+
+    fun onKillEventSelected(characterId: String?) {
+        if (characterId == null) {
+            logW(TAG, "Cannot open killfeed for null character Id")
+            return
+        }
+        val desk = Desktop.getDesktop()
+        desk.browse(URI("https://www.planetside2.com/players/#!/$characterId/killboard"))
     }
 
     companion object {

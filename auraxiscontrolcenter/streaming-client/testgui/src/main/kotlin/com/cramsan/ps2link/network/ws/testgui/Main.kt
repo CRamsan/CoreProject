@@ -10,11 +10,12 @@ import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationGUI
 import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.connection.MainScreen
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsScreen
+import kotlinx.coroutines.runBlocking
 
 /**
  * Application entry point.
  */
-fun main() {
+fun main() = runBlocking {
 
     /**
      * Initialize the core framework dependencies

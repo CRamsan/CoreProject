@@ -115,7 +115,7 @@ class ApplicationManager(
     /**
      * Start the application.
      */
-    fun startApplication() {
+    suspend fun startApplication() {
         initialize()
         // Load all hotkeys
         hotKeyManager.loadFromPreferences()
@@ -131,16 +131,14 @@ class ApplicationManager(
     }
 
     @Suppress("SwallowedException")
-    private fun tryLoadingCachedCharacter() {
+    private suspend fun tryLoadingCachedCharacter() {
         val characterId = preferences.loadString(CHARACTER_PREF_KEY)
         if (characterId.isNullOrBlank()) {
             ProgramMode.NOT_CONFIGURED
             return
         }
 
-        coroutineScope.launch {
-            initialLoadCharacter(characterId)
-        }
+        initialLoadCharacter(characterId)
     }
 
     /**

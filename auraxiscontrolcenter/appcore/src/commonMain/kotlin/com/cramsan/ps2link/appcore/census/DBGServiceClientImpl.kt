@@ -887,14 +887,20 @@ fun formatKillList(
         val faction: Faction
 
         val weaponName: String?
-        val imageUrl: String?
+        val pathUrl: String?
 
         if (it.attacker_weapon_id != null && !it.attacker_weapon_id.equals("0")) {
             weaponName = weaponMapping[it.attacker_weapon_id]?.name
-            imageUrl = weaponMapping[it.attacker_weapon_id]?.imageUrl
+            pathUrl = weaponMapping[it.attacker_weapon_id]?.imageUrl
         } else {
             weaponName = vehicleMapping[it.attacker_vehicle_id]?.name
-            imageUrl = vehicleMapping[it.attacker_vehicle_id]?.imageUrl
+            pathUrl = vehicleMapping[it.attacker_vehicle_id]?.imageUrl
+        }
+
+        val imageUrl = if (pathUrl != null) {
+            DBGCensus.ENDPOINT_URL + "/" + pathUrl
+        } else {
+            null
         }
 
         if (it.attacker_character_id == characterId) {
@@ -925,7 +931,7 @@ fun formatKillList(
             attacker = attackerName,
             time = time,
             weaponName = weaponName,
-            weaponImage = DBGCensus.ENDPOINT_URL + "/" + imageUrl,
+            weaponImage = imageUrl,
         )
     }
 }

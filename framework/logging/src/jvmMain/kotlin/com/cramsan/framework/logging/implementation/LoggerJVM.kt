@@ -39,14 +39,16 @@ class LoggerJVM(private val logToFile: Boolean) : EventLoggerDelegate {
 
         builder.setConfigurationName("DefaultRollingFileLogger")
 
-        val appender = if (logToFile) {
-            createFileAppender(builder)
-        } else {
-            createConsoleAppender(builder)
+        val consoleAppender = createConsoleAppender(builder)
+        builder.add(consoleAppender)
+        rootLogger.add(builder.newAppenderRef(consoleAppender.name))
+
+        if (logToFile) {
+            val fileAppender = createFileAppender(builder)
+            builder.add(fileAppender)
+            rootLogger.add(builder.newAppenderRef(fileAppender.name))
         }
 
-        builder.add(appender)
-        rootLogger.add(builder.newAppenderRef(appender.name))
         builder.add(rootLogger)
         Configurator.reconfigure(builder.build())
     }
