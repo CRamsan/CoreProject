@@ -97,7 +97,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-@Suppress("UndocumentedPublicFunction")
+@Suppress("UndocumentedPublicFunction", "TooManyFunctions")
 @InstallIn(SingletonComponent::class)
 object PS2ApplicationModule {
 

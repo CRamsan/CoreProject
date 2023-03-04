@@ -785,6 +785,7 @@ private fun formatWeapons(
     }.filterNotNull()
 }
 
+@Suppress("CyclomaticComplexMethod", "LongMethod")
 private fun formatStats(stats: List<Stat>?): List<StatItem> {
     if (stats == null) {
         return emptyList()

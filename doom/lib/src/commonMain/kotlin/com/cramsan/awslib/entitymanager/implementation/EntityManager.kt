@@ -614,6 +614,7 @@ class EntityManager(
          */
     }
 
+    @Suppress("CyclomaticComplexMethod")
     override fun executeTransition(transition: Transition) {
         when (transition) {
             is Enable -> enableEntity(transition.target)
