@@ -7,3 +7,7 @@ kotlin {
         binaries.executable()
     }
 }
+
+android {
+    namespace 'com.cramsan.framework.interfacelib'
+}

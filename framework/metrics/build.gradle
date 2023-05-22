@@ -17,16 +17,20 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                implementation packages.AwsSdkV2Auth
-                implementation packages.AwsSdkV2Cloudwatch
+                implementation "software.amazon.awssdk:auth:_"
+                implementation "software.amazon.awssdk:cloudwatch:_"
             }
         }
     }
 }
 
 dependencies {
-    implementation packages.AwsAndroidSdk
+    implementation "com.amazonaws:aws-android-sdk-cloudwatch:_"
 }
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+
+android {
+    namespace 'com.cramsan.framework.metrics'
+}

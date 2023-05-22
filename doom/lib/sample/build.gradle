@@ -5,7 +5,7 @@ apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
 dependencies {
     implementation project(":framework")
     implementation project(":doom:lib")
-    implementation packages.CoroutinesSwing
+    implementation KotlinX.coroutines.swing
 }
 
 registerDependency(":framework")

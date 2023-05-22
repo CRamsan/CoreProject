@@ -25,10 +25,14 @@ kotlin {
         }
         jvmTest {
             dependencies {
-                implementation packages.CoroutinesSwing
+                implementation KotlinX.coroutines.swing
             }
         }
     }
 }
 
 registerDependency(":framework")
+
+android {
+    namespace 'com.cramsan.doom.lib'
+}

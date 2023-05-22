@@ -7,8 +7,8 @@ sourceSets.main.resources.srcDirs = ["../core/assets"]
 
 dependencies {
     implementation project(":doom:game:core")
-    implementation packages.GdxLwjgl3
-    implementation packages.GdxDesktop
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:_"
+    implementation "com.badlogicgames.gdx:gdx-backend-android:_"
 }
 
 task run(dependsOn: classes, type: JavaExec) {

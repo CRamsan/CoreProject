@@ -13,8 +13,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation packages.KotlinxDatetime
-                implementation packages.KotlinxSerialization
+                implementation KotlinX.datetime
+                implementation KotlinX.serialization.json
             }
         }
     }

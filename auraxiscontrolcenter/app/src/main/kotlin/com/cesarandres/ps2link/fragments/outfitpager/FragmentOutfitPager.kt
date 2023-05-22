@@ -50,7 +50,7 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
         namespace = args.namespace
         viewModel.setUp(outfitId, namespace)
         viewModel.title.asLiveData().observe(viewLifecycleOwner) {
-            val title = it ?: getString(R.string.text_unknown)
+            val title = it ?: getString(com.cramsan.ps2link.ui.R.string.text_unknown)
             requireAppCompatActivity().supportActionBar?.title = title
         }
         viewModel.displayAddOutfit.asLiveData().observe(viewLifecycleOwner) {
@@ -72,9 +72,9 @@ class FragmentOutfitPager : BasePS2FragmentPager<OutfitPagerViewModel>() {
 
     override fun pageTitle(position: Int): String {
         return when (OutfitPage.values()[position]) {
-            OutfitPage.OUTFIT -> resources.getString(R.string.title_outfit)
-            OutfitPage.ONLINE -> resources.getString(R.string.text_online_caps)
-            OutfitPage.MEMBERS -> resources.getString(R.string.text_members)
+            OutfitPage.OUTFIT -> resources.getString(com.cramsan.ps2link.ui.R.string.title_outfit)
+            OutfitPage.ONLINE -> resources.getString(com.cramsan.ps2link.ui.R.string.text_online_caps)
+            OutfitPage.MEMBERS -> resources.getString(com.cramsan.ps2link.ui.R.string.text_members)
         }
     }
 

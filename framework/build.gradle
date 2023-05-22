@@ -50,3 +50,7 @@ registerDependency(":framework:remoteconfig")
 registerDependency(":framework:test")
 registerDependency(":framework:thread")
 registerDependency(":framework:utils")
+
+android {
+    namespace 'com.cramsan.framework'
+}

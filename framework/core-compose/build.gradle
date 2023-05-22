@@ -9,26 +9,28 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
+        kotlinCompilerExtensionVersion "1.4.6"
     }
 
     dependencies {
-        kapt meta_packages.HiltKapt
+        kapt Google.dagger.hilt.android.compiler
+        kapt Google.dagger.hilt.android.gradlePlugin
 
-        implementation meta_packages.Hilt
+        implementation Google.dagger.hilt.android
 
         implementation project(":framework:interfacelib")
         implementation project(":framework:core")
 
-        implementation packages.AndroidMaterial
-        implementation packages.AndroidXAppCompat
-        implementation packages.AndroidXActivityCompose
-        implementation packages.AndroidxFragmentKtx
-        implementation packages.AndroidXLifecycleViewModelKtx
-        implementation packages.JetpackComposeUI
-        implementation packages.JetpackComposeTooling
-        implementation packages.JetpackComposeFoundation
+        implementation Google.android.material
+        implementation AndroidX.appCompat
+        implementation AndroidX.activity.compose
+        implementation AndroidX.fragment.ktx
+        implementation AndroidX.lifecycle.viewModelKtx
+        implementation AndroidX.compose.ui
+        implementation AndroidX.compose.ui.tooling
+        implementation AndroidX.compose.foundation
     }
+    namespace 'com.cramsan.framework.core.compose'
 }
 
 registerDependency(":framework:assert")

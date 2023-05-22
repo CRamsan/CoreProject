@@ -36,7 +36,7 @@ fun StatListCompose(
             ) {
                 items(statList) {
                     StatItem(
-                        label = it.statName ?: stringResource(R.string.text_unknown),
+                        label = it.statName ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
                         allTime = it.allTime?.toFloat(),
                         today = it.today?.toFloat(),
                         thisWeek = it.thisWeek?.toFloat(),

@@ -119,7 +119,7 @@ fun ProfileCompose(
                         if (prestige != null) {
                             FrameSlim(modifier = smallModifier.padding(horizontal = Padding.large)) {
                                 Text(
-                                    text = stringResource(R.string.text_prestige, prestige),
+                                    text = stringResource(com.cramsan.ps2link.ui.R.string.text_prestige, prestige),
                                     style = MaterialTheme.typography.caption,
                                 )
                             }
@@ -144,7 +144,7 @@ fun ProfileCompose(
                         // Login status
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_status))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_status))
                                 Text(
                                     text = (loginStatus ?: LoginStatus.UNKNOWN).toStringResource(),
                                     color = loginStatus.toColor(),
@@ -155,10 +155,10 @@ fun ProfileCompose(
                         // Last login
                         val lastLoginString = lastLogin?.let {
                             prettyTime.format(Date(it.toEpochMilliseconds()))
-                        } ?: stringResource(R.string.text_unknown)
+                        } ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown)
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_last_login))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_last_login))
                                 Text(text = lastLoginString)
                             }
                         }
@@ -166,7 +166,7 @@ fun ProfileCompose(
                         // Outfit
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.title_outfit))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.title_outfit))
                                 SlimButton(
                                     modifier = Modifier.fillMaxWidth(),
                                     enabled = outfit != null,
@@ -176,7 +176,11 @@ fun ProfileCompose(
                                         }
                                     },
                                 ) {
-                                    Text(text = outfit?.name ?: stringResource(R.string.text_none))
+                                    Text(
+                                        text = outfit?.name ?: stringResource(
+                                            com.cramsan.ps2link.ui.R.string.text_none
+                                        )
+                                    )
                                 }
                             }
                         }
@@ -184,18 +188,18 @@ fun ProfileCompose(
                         // Server
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.title_server))
-                                Text(text = server ?: stringResource(R.string.text_unknown))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.title_server))
+                                Text(text = server ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown))
                             }
                         }
 
                         // Hours played
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_hours_played))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_hours_played))
                                 Text(
                                     text = timePlayed?.toDouble(DurationUnit.HOURS)?.roundToInt()
-                                        ?.toString() ?: stringResource(R.string.text_unknown),
+                                        ?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
                                 )
                             }
                         }
@@ -203,10 +207,14 @@ fun ProfileCompose(
                         // Account created
                         val accountCreatedString = creationTime?.let {
                             prettyTime.format(Date(it.toEpochMilliseconds()))
-                        } ?: stringResource(R.string.text_unknown)
+                        } ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown)
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_member_since))
+                                Text(
+                                    text = stringResource(
+                                        com.cramsan.ps2link.ui.R.string.text_member_since
+                                    )
+                                )
                                 Text(text = accountCreatedString)
                             }
                         }
@@ -214,8 +222,16 @@ fun ProfileCompose(
                         // Session count
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_sessions_played))
-                                Text(text = sessionCount?.toString() ?: stringResource(R.string.text_unknown))
+                                Text(
+                                    text = stringResource(
+                                        com.cramsan.ps2link.ui.R.string.text_sessions_played
+                                    )
+                                )
+                                Text(
+                                    text = sessionCount?.toString() ?: stringResource(
+                                        com.cramsan.ps2link.ui.R.string.text_unknown
+                                    )
+                                )
                             }
                         }
                     }

@@ -25,7 +25,7 @@ kotlin {
             dependencies {
                 implementation project(":stranded:server")
 
-                implementation packages.KotlinxSerialization
+                implementation KotlinX.serialization.json
             }
         }
         commonTest {

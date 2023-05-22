@@ -60,8 +60,12 @@ fun OutfitCompose(
                     .fillMaxWidth()
                     .padding(Padding.small)
 
-                val formattedTag = tag?.let { stringResource(R.string.text_outfit_tag, it) } ?: ""
-                val displayName = name ?: stringResource(id = R.string.text_unknown)
+                val formattedTag = tag?.let {
+                    stringResource(com.cramsan.ps2link.ui.R.string.text_outfit_tag, it)
+                } ?: ""
+                val displayName = name ?: stringResource(
+                    id = com.cramsan.ps2link.ui.R.string.text_unknown
+                )
 
                 // Outfit name
                 FrameSlim(modifier = mediumModifier) {
@@ -78,7 +82,11 @@ fun OutfitCompose(
                         // Leader
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_leader))
+                                Text(
+                                    text = stringResource(
+                                        com.cramsan.ps2link.ui.R.string.text_leader
+                                    )
+                                )
                                 SlimButton(
                                     modifier = Modifier.fillMaxWidth(),
                                     enabled = leader != null,
@@ -88,7 +96,11 @@ fun OutfitCompose(
                                         }
                                     },
                                 ) {
-                                    Text(text = leader?.name ?: stringResource(R.string.text_unknown))
+                                    Text(
+                                        text = leader?.name ?: stringResource(
+                                            com.cramsan.ps2link.ui.R.string.text_unknown
+                                        )
+                                    )
                                 }
                             }
                         }
@@ -96,7 +108,7 @@ fun OutfitCompose(
                         // Member count
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_members))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_members))
                                 Text(text = memberCount.toString())
                             }
                         }
@@ -104,11 +116,11 @@ fun OutfitCompose(
                         // Creation date
                         FrameSlim(modifier = smallModifier) {
                             Column(modifier = smallModifier) {
-                                Text(text = stringResource(R.string.text_created))
+                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_created))
                                 Text(
                                     text = creationTime?.let {
                                         formatter.format(Date(it.toEpochMilliseconds()))
-                                    } ?: stringResource(R.string.text_unknown),
+                                    } ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
                                 )
                             }
                         }

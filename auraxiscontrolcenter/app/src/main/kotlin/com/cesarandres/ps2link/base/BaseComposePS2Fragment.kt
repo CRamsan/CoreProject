@@ -93,7 +93,7 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
     }
 
     val navigationOptions = NavOptions.Builder()
-        .setEnterAnim(R.anim.nav_default_enter_anim)
-        .setExitAnim(R.anim.nav_default_exit_anim)
+        .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
+        .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
         .build()
 }

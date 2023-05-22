@@ -35,11 +35,11 @@ fun AboutCompose(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.h6,
             )
-            Text(text = stringResource(R.string.text_developed_by))
+            Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_developed_by))
             Spacer(modifier = Modifier.height(Padding.xxlarge))
             FrameSlim {
                 Text(
-                    text = stringResource(R.string.text_about_description),
+                    text = stringResource(com.cramsan.ps2link.ui.R.string.text_about_description),
                     modifier = Modifier.padding(Padding.medium),
                     style = MaterialTheme.typography.caption,
                 )
@@ -51,14 +51,14 @@ fun AboutCompose(
                 },
             ) {
                 Text(
-                    text = stringResource(R.string.url_homepage),
+                    text = stringResource(com.cramsan.ps2link.ui.R.string.url_homepage),
                     modifier = Modifier.padding(Padding.medium),
                 )
             }
             Spacer(modifier = Modifier.height(Padding.xlarge))
             FrameSlim {
                 Text(
-                    text = stringResource(R.string.text_about_thanks),
+                    text = stringResource(com.cramsan.ps2link.ui.R.string.text_about_thanks),
                     modifier = Modifier.padding(Padding.medium),
                     style = MaterialTheme.typography.caption,
                 )

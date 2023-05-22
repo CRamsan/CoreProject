@@ -1,7 +1,7 @@
 apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 
 dependencies {
-    implementation packages.SupportCompat
+    implementation "com.android.support:support-compat:_"
 }
 
 kotlin {
@@ -28,3 +28,7 @@ kotlin {
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:logging")
 registerDependency(":framework:test:")
+
+android {
+    namespace 'com.cramsan.framework.halt'
+}

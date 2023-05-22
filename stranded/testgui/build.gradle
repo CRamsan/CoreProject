@@ -9,8 +9,8 @@ dependencies {
 
     implementation project(":stranded:lib")
     implementation project(":stranded:server")
-    implementation packages.CoroutinesSwing
-    implementation packages.KotlinxSerialization
+    implementation KotlinX.coroutines.swing
+    implementation KotlinX.serialization.json
 
     testImplementation project(":framework:test")
 }

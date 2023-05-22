@@ -1,8 +1,8 @@
 apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 
 dependencies {
-    implementation packages.AppCenterSdkAnalytics
-    implementation packages.AppCenterSdkCrashes
+    implementation "com.microsoft.appcenter:appcenter-analytics:_"
+    implementation "com.microsoft.appcenter:appcenter-crashes:_"
 }
 
 kotlin {
@@ -22,3 +22,7 @@ kotlin {
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+
+android {
+    namespace 'com.cramsan.framework.userevents'
+}

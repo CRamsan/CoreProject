@@ -19,3 +19,7 @@ kotlin {
 registerDependency(":framework:assert")
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+
+android {
+    namespace 'com.cramsan.framework.thread'
+}

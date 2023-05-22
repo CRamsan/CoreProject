@@ -6,13 +6,14 @@ apply from: "$rootDir/gradle/kotlin-mpp-lib.gradle"
 apply plugin: 'kotlinx-serialization'
 
 dependencies {
-    kapt meta_packages.HiltKapt
+    kapt Google.dagger.hilt.android.compiler
+    kapt Google.dagger.hilt.android.gradlePlugin
 
-    implementation meta_packages.Hilt
+    implementation Google.dagger.hilt.android
 
-    implementation packages.SqlDelightAndroidDriver
-    implementation packages.KtorClientAndroid
-    implementation packages.Twitter4J
+    implementation Square.sqlDelight.drivers.android
+    implementation Ktor.client.android
+    implementation "org.twitter4j:twitter4j-core:_"
 }
 
 kotlin {
@@ -24,12 +25,12 @@ kotlin {
                 implementation project(":auraxiscontrolcenter:db-models")
                 implementation project(":auraxiscontrolcenter:deployable-models")
                 implementation project(":auraxiscontrolcenter:network-models")
-                implementation packages.KtorClientCore
-                implementation packages.KtorClientContentNegotiation
-                implementation packages.KtorClientSerializationKotlinX
-                implementation packages.KotlinxDatetime
-                implementation packages.KotlinxSerialization
-                implementation packages.SqlDelightCoroutineExt
+                implementation Ktor.client.core
+                implementation Ktor.client.contentNegotiation
+                implementation Ktor.plugins.serialization.kotlinx.json
+                implementation KotlinX.datetime
+                implementation KotlinX.serialization.json
+                implementation Square.sqlDelight.extensions.coroutines
             }
         }
         commonTest {
@@ -45,3 +46,7 @@ registerDependency(":auraxiscontrolcenter:db-models")
 registerDependency(":auraxiscontrolcenter:core-models")
 registerDependency(":auraxiscontrolcenter:network-models")
 registerDependency(":auraxiscontrolcenter:deployable-models")
+
+android {
+    namespace 'com.cramsan.ps2link.appcore'
+}

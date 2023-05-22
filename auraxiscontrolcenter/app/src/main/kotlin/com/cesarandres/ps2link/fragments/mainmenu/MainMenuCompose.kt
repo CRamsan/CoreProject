@@ -73,32 +73,32 @@ fun MainMenuCompose(
             }
             MainMenuButton(
                 buttonModifier,
-                label = stringResource(R.string.title_profiles),
+                label = stringResource(com.cramsan.ps2link.ui.R.string.title_profiles),
                 star = false,
             ) { eventHandler.onProfileClick() }
             MainMenuButton(
                 buttonModifier,
-                label = stringResource(R.string.title_servers),
+                label = stringResource(com.cramsan.ps2link.ui.R.string.title_server),
                 star = false,
             ) { eventHandler.onServersClick() }
             MainMenuButton(
                 buttonModifier,
-                label = stringResource(R.string.title_outfits),
+                label = stringResource(com.cramsan.ps2link.ui.R.string.title_outfits),
                 star = false,
             ) { eventHandler.onOutfitsClick() }
             MainMenuButton(
                 buttonModifier,
-                label = stringResource(R.string.title_twitter),
+                label = stringResource(com.cramsan.ps2link.ui.R.string.title_twitter),
                 star = false,
             ) { eventHandler.onTwitterClick() }
             MainMenuButton(
                 buttonModifier,
-                label = stringResource(R.string.title_reddit),
+                label = stringResource(com.cramsan.ps2link.ui.R.string.title_reddit),
                 star = false,
             ) { eventHandler.onRedditClick() }
             MainMenuButton(
                 buttonModifier,
-                label = stringResource(R.string.title_about),
+                label = stringResource(com.cramsan.ps2link.ui.R.string.title_about),
                 star = false,
             ) { eventHandler.onAboutClick() }
             Spacer(modifier = Modifier.height(50.dp))

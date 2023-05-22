@@ -108,7 +108,6 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:textSize="@dimen/text_size_content"
-                    android:visibility="@{viewModel.observablePlantCommonNamesVisibility}"
                     app:formatArg="@{viewModel.observablePlantCommonNames}"
                     app:formatString="@{@string/plant_details_common_names}"
                     app:layout_constraintEnd_toEndOf="parent"

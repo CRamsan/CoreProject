@@ -48,14 +48,16 @@ android {
         // Enables Jetpack Compose for this module
         compose true
         viewBinding true
+        buildConfig = true
     }
 
     kotlinOptions {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
+        kotlinCompilerExtensionVersion "1.4.6"
     }
+    namespace 'com.cesarandres.ps2link'
 }
 
 dependencies {
@@ -66,46 +68,46 @@ dependencies {
     implementation project(':auraxiscontrolcenter:deployable-models')
     implementation project(":auraxiscontrolcenter:ui")
 
-    implementation packages.AndroidXAppCompat
-    implementation packages.AndroidxActivityKtx
-    implementation packages.AndroidxFragmentKtx
-    implementation packages.AndroidXLifecycleLiveDataKtx
-    implementation packages.AndroidXLifecycleViewModelKtx
-    implementation packages.AndroidXLifecycleRuntimeKtx
-    implementation packages.AndroidXPagingRuntimeKtx
-    implementation packages.AndroidXRecyclerView
-    implementation packages.AndroidXPreferences
-    implementation packages.AndroidXPreferencesKtx
-    implementation packages.AndroidXNavigationFragmentKtx
-    implementation packages.AndroidXNavigationUIKtx
-    implementation packages.AndroidXWorkManagerRuntimeKtx
-    implementation packages.AndroidXWorkManagerRuntime
-    implementation packages.AndroidMaterial
-    implementation packages.ConstraintLayout
-    implementation packages.EspressoIdlingResource
-    implementation packages.JetpackComposeUI
-    implementation packages.JetpackComposeTooling
-    implementation packages.JetpackComposeFoundation
-    implementation packages.JetpackComposeMaterial
-    implementation packages.JetpackComposeIconsCore
-    implementation packages.JetpackComposeIconsExtended
-    implementation packages.JetpackComposeRuntimeLiveData
-    implementation packages.KotlinxDatetime
-    implementation packages.KotlinXCollections
-    implementation packages.KotlinxSerialization
-    implementation packages.AppCenterSdk
-    implementation packages.AppCenterSdkCrashes
-    implementation packages.KtorClientAndroid
-    implementation packages.PrettyTime
-    implementation packages.SqlDelightAndroidDriver
+    implementation AndroidX.appCompat
+    implementation AndroidX.activity.ktx
+    implementation AndroidX.fragment.ktx
+    implementation AndroidX.lifecycle.liveDataKtx
+    implementation AndroidX.lifecycle.viewModelKtx
+    implementation AndroidX.lifecycle.runtime.ktx
+    implementation AndroidX.paging.runtimeKtx
+    implementation AndroidX.recyclerView
+    implementation AndroidX.preference
+    implementation AndroidX.preference.ktx
+    implementation AndroidX.navigation.fragmentKtx
+    implementation AndroidX.navigation.uiKtx
+    implementation AndroidX.work.runtimeKtx
+    implementation AndroidX.work.runtime
+    implementation Google.android.material
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.test.espresso.idlingResource
+    implementation AndroidX.compose.ui
+    implementation AndroidX.compose.ui.tooling
+    implementation AndroidX.compose.foundation
+    implementation AndroidX.compose.material
+    implementation AndroidX.compose.material.icons.core
+    implementation AndroidX.compose.material.icons.extended
+    implementation AndroidX.compose.runtime.liveData
+    implementation KotlinX.datetime
+    implementation KotlinX.collections.immutable
+    implementation KotlinX.serialization.json
+    implementation "com.microsoft.appcenter:appcenter:_"
+    implementation "com.microsoft.appcenter:appcenter-crashes:_"
+    implementation Ktor.client.android
+    implementation "org.ocpsoft.prettytime:prettytime:_"
+    implementation Square.sqlDelight.drivers.android
 
     testImplementation project(":framework:test")
 
-    androidTestImplementation packages.AndroidXTestRunner
-    androidTestImplementation packages.EspressoIntents
-    androidTestImplementation packages.Espresso
-    androidTestImplementation packages.UIAutomator
-    androidTestImplementation packages.AppCenterEspressoTestExt
+    androidTestImplementation AndroidX.test.runner
+    androidTestImplementation AndroidX.test.espresso.intents
+    androidTestImplementation AndroidX.test.espresso.core
+    androidTestImplementation AndroidX.test.uiAutomator
+    androidTestImplementation "com.microsoft.appcenter:espresso-test-extension:_"
 }
 
 registerDependency(":framework")

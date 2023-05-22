@@ -44,14 +44,14 @@ fun OutfitAddCompose(
                 SearchField(
                     modifier = Modifier.weight(1f),
                     value = tagSearchField,
-                    hint = stringResource(R.string.text_tag),
+                    hint = stringResource(com.cramsan.ps2link.ui.R.string.text_tag),
                 ) { text ->
                     eventHandler.onTagFieldUpdated(text)
                 }
                 SearchField(
                     modifier = Modifier.weight(3f),
                     value = nameSearchField,
-                    hint = stringResource(R.string.text_outfit_name),
+                    hint = stringResource(com.cramsan.ps2link.ui.R.string.text_outfit_name),
                 ) { text ->
                     eventHandler.onNameFieldUpdated(text)
                 }

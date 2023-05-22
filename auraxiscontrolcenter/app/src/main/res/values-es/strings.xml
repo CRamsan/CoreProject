@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App title with version in all caps -->
+    <string name="app_name">Centro de Control de Auraxis</string>
+    <string name="app_name_capital">CENTRO DE CONTROL DE AURAXIS</string>
+</resources>

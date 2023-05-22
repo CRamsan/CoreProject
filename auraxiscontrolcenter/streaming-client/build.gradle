@@ -25,9 +25,9 @@ kotlin {
             dependencies {
                 implementation project(":framework:interfacelib")
 
-                implementation packages.KotlinxSerialization
-                implementation packages.KtorClientWebSockets
-                implementation packages.KtorClientCore
+                implementation KotlinX.serialization.json
+                implementation "io.ktor:ktor-client-websockets:_"
+                implementation Ktor.client.core
             }
         }
         commonTest {
@@ -38,10 +38,10 @@ kotlin {
         jvmMain {
             dependencies {
                 // Serer dependencies
-                implementation packages.KtorClientCio
-                implementation packages.KtorServerCore
-                implementation packages.KtorServerNetty
-                implementation packages.KtorServerWebSockets
+                implementation Ktor.client.cio
+                implementation Ktor.server.core
+                implementation Ktor.server.netty
+                implementation Ktor.server.websockets
             }
         }
         jvmTest {
@@ -51,7 +51,7 @@ kotlin {
         jsMain {
             dependencies {
                 // Client dependencies
-                implementation packages.KtorClientJs
+                implementation "io.ktor:ktor-client-js:_"
             }
         }
     }

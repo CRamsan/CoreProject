@@ -4,6 +4,7 @@ android {
     dependencies {
         testImplementation project(":framework:test")
     }
+    namespace 'com.cramsan.framework.utils'
 }
 
 kotlin {

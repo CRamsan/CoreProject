@@ -19,3 +19,7 @@ kotlin {
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
 registerDependency(":framework:interfacelib-test")
+
+android {
+    namespace 'com.cramsan.framework.preferences'
+}

@@ -6,7 +6,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
 
 dependencies {
-    implementation packages.CdkV2
+    implementation "software.amazon.awscdk:aws-cdk-lib:_"
 }
 
 task synthesize(type:Exec) {

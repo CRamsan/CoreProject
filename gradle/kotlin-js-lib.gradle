@@ -21,9 +21,10 @@ compileKotlinJs{
 }
 
 dependencies {
-    implementation meta_packages.CoreJS
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:_"
 
-    testImplementation meta_packages.CoreTestJS
+    testImplementation Kotlin.test.js
+    testImplementation KotlinX.coroutines.test
 }
 
 // Release task that will build and test the project.

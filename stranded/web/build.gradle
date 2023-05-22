@@ -30,7 +30,7 @@ kotlin {
                 implementation compose.runtime
 
                 implementation project(":stranded:lib")
-                implementation packages.KotlinxSerialization
+                implementation KotlinX.serialization.json
             }
         }
         jsTest {

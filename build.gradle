@@ -1,8 +1,5 @@
 buildscript {
 
-    //Define the version variables to be used across the entire project
-    apply from: "gradle/versions.gradle"
-
     repositories {
         gradlePluginPortal()
         google()
@@ -19,29 +16,26 @@ buildscript {
     }
 
     dependencies {
-        classpath packages.GradleVersions
-        classpath packages.AndroidBuildGradle
-        classpath packages.SqlDelightGradle
-        classpath packages.HiltGradle
-        classpath packages.AndroidXNavigationSafeArgsGradle
-        classpath packages.DependencyGraphGenerator
-        classpath packages.KotlinGradle
-        classpath packages.KotlinxSerializationGradle
-        classpath packages.SpringBootGradle
-        classpath packages.SpringDependencyManagement
-        classpath packages.AzureFunctionsGradle
-        classpath packages.KotlinNoArg
-        classpath packages.KotlinAllOpen
-        classpath packages.OpenjfxGradle
-        classpath packages.Shadow
-        classpath packages.DokkaGradle
-        classpath packages.JetBrainsCompose
-        classpath packages.Detekt
-        classpath packages.GradleNodePlugin
+        classpath "com.github.ben-manes:gradle-versions-plugin:_"
+        classpath Android.tools.build.gradlePlugin
+        classpath Square.sqlDelight.gradlePlugin
+        classpath Google.dagger.hilt.android.gradlePlugin
+        classpath AndroidX.navigation.safeArgsGradlePlugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:_"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:_"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:_"
+        classpath "io.spring.gradle:dependency-management-plugin:_"
+        classpath "com.microsoft.azure:azure-functions-gradle-plugin:_"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:_"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:_"
+        classpath "org.openjfx:javafx-plugin:_"
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:_"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:_"
+        classpath "org.jetbrains.compose:compose-gradle-plugin:_"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:_"
+        classpath "com.github.node-gradle:gradle-node-plugin:_"
     }
 }
-
-apply from: "gradle/gradle-versions.gradle"
 
 subprojects {
     repositories {
@@ -50,7 +44,6 @@ subprojects {
     }
 
     apply from: "$rootDir/gradle/helper-functions.gradle"
-    apply from: "$rootDir/gradle/dependency-graph.gradle"
 }
 
 tasks.register("releaseAll") {

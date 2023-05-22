@@ -4,10 +4,10 @@ apply from: "$rootDir/gradle/kotlin-jvm-application.gradle"
 
 dependencies {
     implementation project(":api-endpoint:common")
-    implementation packages.KtorServerCore
-    implementation packages.KtorServerNetty
-    implementation packages.KotlinxHtmlJVM
-    implementation packages.KtorServerHtmlBuilder
+    implementation Ktor.server.core
+    implementation Ktor.server.netty
+    implementation "org.jetbrains.kotlinx:kotlinx-html-jvm:_"
+    implementation Ktor.server.htmlBuilder
 }
 
 registerDependency(":api-endpoint:common")

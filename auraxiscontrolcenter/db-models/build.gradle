@@ -20,8 +20,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework")
-                implementation packages.SqlDelightCoroutineExt
-                implementation packages.KotlinxDatetime
+                implementation Square.sqlDelight.extensions.coroutines
+                implementation KotlinX.datetime
             }
         }
         commonTest {
@@ -33,3 +33,7 @@ kotlin {
 }
 
 registerDependency(":framework")
+
+android {
+    namespace 'com.cramsan.ps2link.db.model'
+}

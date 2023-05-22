@@ -5,9 +5,9 @@ project.ext.assetsDir = new File("../core/assets")
 
 dependencies {
     implementation project(":stranded:gdx:core")
-    implementation packages.GdxLwjgl3
-    implementation packages.GdxDesktop
-    implementation packages.LibKtxApp
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:_"
+    implementation "com.badlogicgames.gdx:gdx-backend-android:_"
+    implementation "io.github.libktx:ktx-app:_"
 }
 
 task run(dependsOn: classes, type: JavaExec) {

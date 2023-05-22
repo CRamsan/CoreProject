@@ -12,10 +12,14 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework:interfacelib")
-                implementation packages.KotlinxSerialization
+                implementation KotlinX.serialization.json
             }
         }
     }
 }
 
 registerDependency(":framework:interfacelib")
+
+android {
+    namespace 'com.cramsan.ps2link.metric'
+}

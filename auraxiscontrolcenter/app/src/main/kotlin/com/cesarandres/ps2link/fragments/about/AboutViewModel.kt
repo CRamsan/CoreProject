@@ -33,6 +33,6 @@ class AboutViewModel @Inject constructor(
         get() = "AboutViewModel"
 
     override fun onAboutClick() {
-        events.value = OpenUrl(resources.getString(R.string.url_homepage))
+        events.value = OpenUrl(resources.getString(com.cramsan.ps2link.ui.R.string.url_homepage))
     }
 }

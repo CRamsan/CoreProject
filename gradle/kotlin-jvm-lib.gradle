@@ -8,25 +8,32 @@ apply plugin: 'jacoco'
 apply from: "$rootDir/gradle/detekt.gradle"
 
 jacoco {
-    toolVersion = versions_tools.Jacoco
+    toolVersion = "0.8.8"
 }
 jacocoTestReport {
     reports {
         xml.required = true
-        html.enabled = true
+        html.required = true
     }
 }
 
-dependencies {
-    implementation meta_packages.CoreJVM
+kotlin {
+    jvmToolchain(17)
+}
 
-    testImplementation meta_packages.CoreTestJVM
+dependencies {
+    implementation Kotlin.stdlib.jdk8
+    implementation KotlinX.coroutines.core
+
+    testImplementation KotlinX.coroutines.test
+    testImplementation Testing.junit.jupiter.api
+    testImplementation Kotlin.test.junit5
+    testImplementation Testing.mockK
 }
 
 // Define the Kotlin jvm target
 compileKotlin {
     kotlinOptions {
-        jvmTarget = versions_tools.JavaCompatibility
         allWarningsAsErrors = true
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
@@ -34,7 +41,6 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = versions_tools.JavaCompatibility
         allWarningsAsErrors = true
     }
 }

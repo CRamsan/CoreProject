@@ -14,11 +14,13 @@ android {
         // Enables Jetpack Compose for this module
         compose true
         dataBinding true
+        buildConfig = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions_tools.JetpackComposeCompiler
+        kotlinCompilerExtensionVersion "1.4.6"
     }
+    namespace 'com.cramsan.petproject'
 }
 
 dependencies {
@@ -27,43 +29,43 @@ dependencies {
     implementation project(":framework")
     implementation project(":framework:core-compose")
 
-    implementation packages.ConstraintLayout
-    implementation packages.AndroidxActivityKtx
-    implementation packages.AndroidXActivityCompose
-    implementation packages.AndroidxFragmentKtx
-    implementation packages.AndroidXLifecycleLiveDataKtx
-    implementation packages.AndroidXLifecycleViewModelKtx
-    implementation packages.AndroidXPagingRuntimeKtx
-    implementation packages.AndroidXRecyclerView
-    implementation packages.AndroidXPreferences
-    implementation packages.AndroidXPreferencesKtx
-    implementation packages.AndroidXNavigationFragmentKtx
-    implementation packages.AndroidXNavigationUIKtx
-    implementation packages.AndroidXWorkManagerRuntimeKtx
-    implementation packages.AndroidXWorkManagerRuntime
-    implementation packages.AndroidMaterial
-    implementation packages.Glide
-    implementation packages.JetpackComposeUI
-    implementation packages.JetpackComposeTooling
-    implementation packages.JetpackComposeFoundation
-    implementation packages.JetpackComposeMaterial
-    implementation packages.JetpackComposeIconsCore
-    implementation packages.JetpackComposeIconsExtended
-    implementation packages.JetpackComposeNavication
-    implementation packages.JetpackComposeRuntimeLiveData
-    implementation packages.KtorClientAndroid
-    implementation packages.AppCenterSdk
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.activity.ktx
+    implementation AndroidX.activity.compose
+    implementation AndroidX.fragment.ktx
+    implementation AndroidX.lifecycle.liveDataKtx
+    implementation AndroidX.lifecycle.viewModelKtx
+    implementation AndroidX.paging.runtimeKtx
+    implementation AndroidX.recyclerView
+    implementation AndroidX.preference
+    implementation AndroidX.preference.ktx
+    implementation AndroidX.navigation.fragmentKtx
+    implementation AndroidX.navigation.uiKtx
+    implementation AndroidX.work.runtimeKtx
+    implementation AndroidX.work.runtime
+    implementation Google.android.material
+    implementation "com.github.bumptech.glide:glide:_"
+    implementation AndroidX.compose.ui
+    implementation AndroidX.compose.ui.tooling
+    implementation AndroidX.compose.foundation
+    implementation AndroidX.compose.material
+    implementation AndroidX.compose.material.icons.core
+    implementation AndroidX.compose.material.icons.extended
+    implementation AndroidX.navigation.compose
+    implementation AndroidX.compose.runtime.liveData
+    implementation Ktor.client.android
+    implementation "com.microsoft.appcenter:appcenter:_"
 
-    kapt packages.GlideCompiler
+    kapt "com.github.bumptech.glide:compiler:_"
 
     testImplementation project(":framework:test")
 
-    androidTestImplementation packages.AndroidXTestRunner
-    androidTestImplementation packages.EspressoIntents
-    androidTestImplementation packages.Espresso
-    androidTestImplementation packages.UIAutomator
-    androidTestImplementation packages.AndroidXNavigationTesting
-    androidTestImplementation packages.AndroidXWorkManagerTesting
+    androidTestImplementation AndroidX.test.runner
+    androidTestImplementation AndroidX.test.espresso.intents
+    androidTestImplementation AndroidX.test.espresso.core
+    androidTestImplementation AndroidX.test.uiAutomator
+    androidTestImplementation AndroidX.navigation.testing
+    androidTestImplementation AndroidX.work.testing
 }
 
 registerDependency(":petproject:appcore")

@@ -11,11 +11,11 @@ apply from: "$rootDir/gradle/jacoco-android.gradle"
 apply from: "$rootDir/gradle/detekt.gradle"
 
 android {
-    compileSdkVersion versions_tools.CompileSdkVersion
+    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion versions_tools.MinSdkVersion
-        targetSdkVersion versions_tools.TargetSdkVersion
+        minSdkVersion 26
+        targetSdkVersion 33
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -56,8 +56,8 @@ android {
 
     compileOptions {
         // Set the compile options for Java source
-        sourceCompatibility versions_tools.JavaCompatibility
-        targetCompatibility versions_tools.JavaCompatibility
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     // Why is this needed again?
@@ -67,9 +67,12 @@ android {
         exclude "**/attach_hotspot_windows.dll" // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
     }
 
+    kotlin {
+        jvmToolchain(17)
+    }
+
     kotlinOptions {
         // Set the compile target for Kotlin source
-        jvmTarget = versions_tools.JavaCompatibility
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 
@@ -92,14 +95,37 @@ android {
 }
 
 dependencies {
-    kapt meta_packages.HiltKapt
+    kapt Google.dagger.hilt.android.compiler
+    kapt Google.dagger.hilt.android.gradlePlugin
 
-    implementation meta_packages.CoreAndroid
-    implementation meta_packages.Hilt
+    implementation Kotlin.stdlib.jdk8
+    implementation KotlinX.coroutines.core
+    implementation KotlinX.coroutines.android
+    implementation Google.dagger.hilt.android
 
-    testImplementation meta_packages.CoreTestAndroid
+    testImplementation AndroidX.test.core
+    testImplementation AndroidX.test.ext.junit
+    testImplementation AndroidX.test.ext.junit.ktx
+    testImplementation AndroidX.archCore.common
+    testImplementation AndroidX.archCore.runtime
+    testImplementation AndroidX.archCore.testing
+    testImplementation KotlinX.coroutines.test
+    testImplementation Testing.junit4
+    testImplementation Kotlin.test
+    testImplementation Kotlin.test.junit
+    testImplementation Testing.mockK
+    testImplementation Testing.mockK.android
 
-    androidTestImplementation meta_packages.CoreAndrodTestAndroid
+    androidTestImplementation AndroidX.test.ext.junit
+    androidTestImplementation AndroidX.test.ext.junit.ktx
+    androidTestImplementation AndroidX.test.core
+    androidTestImplementation AndroidX.test.rules
+    androidTestImplementation KotlinX.coroutines.test
+    androidTestImplementation Testing.junit4
+    androidTestImplementation Kotlin.test
+    androidTestImplementation Kotlin.test.junit
+    androidTestImplementation Testing.mockK.android
+    androidTestImplementation Testing.robolectric
 }
 
 // Register a dependency to a Android library with the `releaseAndroid` task

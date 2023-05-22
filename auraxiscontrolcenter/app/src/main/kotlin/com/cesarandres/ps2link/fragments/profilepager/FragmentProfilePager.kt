@@ -53,7 +53,7 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
 
         viewModel.setUp(profileId, namespace)
         viewModel.title.asLiveData().observe(viewLifecycleOwner) {
-            val title = it ?: getString(R.string.text_unknown)
+            val title = it ?: getString(com.cramsan.ps2link.ui.R.string.text_unknown)
             requireAppCompatActivity().supportActionBar?.title = title
         }
         viewModel.displayAddCharacter.asLiveData().observe(viewLifecycleOwner) {
@@ -76,11 +76,15 @@ class FragmentProfilePager : BasePS2FragmentPager<ProfilePagerViewModel>() {
 
     override fun pageTitle(position: Int): String {
         return when (ProfilePage.values()[position]) {
-            ProfilePage.PROFILE -> resources.getString(R.string.text_profile_pager_title_overview)
-            ProfilePage.FRIENDS -> resources.getString(R.string.text_profile_pager_title_friends)
-            ProfilePage.STATS -> resources.getString(R.string.text_profile_pager_title_stats)
-            ProfilePage.KILLBOARD -> resources.getString(R.string.text_profile_pager_title_killboard)
-            ProfilePage.WEAPONS -> resources.getString(R.string.text_profile_pager_title_weapons)
+            ProfilePage.PROFILE -> resources.getString(
+                com.cramsan.ps2link.ui.R.string.text_profile_pager_title_overview
+            )
+            ProfilePage.FRIENDS -> resources.getString(com.cramsan.ps2link.ui.R.string.text_profile_pager_title_friends)
+            ProfilePage.STATS -> resources.getString(com.cramsan.ps2link.ui.R.string.text_profile_pager_title_stats)
+            ProfilePage.KILLBOARD -> resources.getString(
+                com.cramsan.ps2link.ui.R.string.text_profile_pager_title_killboard
+            )
+            ProfilePage.WEAPONS -> resources.getString(com.cramsan.ps2link.ui.R.string.text_profile_pager_title_weapons)
         }
     }
 

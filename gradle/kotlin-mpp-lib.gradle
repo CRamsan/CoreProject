@@ -38,17 +38,21 @@ if (isAndroidTargetEnabled()) {
      * Target to remove verify this fix on Kotlin 1.7.20
      */
     android {
-        compileSdkVersion versions_tools.CompileSdkVersion
+        compileSdkVersion 33
         defaultConfig {
             versionCode libraryVersionCode
             versionName libraryVersionName
-            minSdkVersion versions_tools.MinSdkVersion
-            targetSdkVersion versions_tools.TargetSdkVersion
+            minSdkVersion 26
+            targetSdkVersion 33
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
         compileOptions {
-            sourceCompatibility versions_tools.JavaCompatibility
-            targetCompatibility versions_tools.JavaCompatibility
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+
+        kotlin {
+            jvmToolchain(17)
         }
 
         testOptions {
@@ -64,11 +68,33 @@ if (isAndroidTargetEnabled()) {
     }
 
     dependencies {
-        implementation meta_packages.CoreAndroid
+        implementation Kotlin.stdlib.jdk8
+        implementation KotlinX.coroutines.core
+        implementation KotlinX.coroutines.android
 
-        testImplementation meta_packages.CoreTestAndroid
+        testImplementation AndroidX.test.core
+        testImplementation AndroidX.test.ext.junit
+        testImplementation AndroidX.test.ext.junit.ktx
+        testImplementation AndroidX.archCore.common
+        testImplementation AndroidX.archCore.runtime
+        testImplementation AndroidX.archCore.testing
+        testImplementation KotlinX.coroutines.test
+        testImplementation Testing.junit4
+        testImplementation Kotlin.test
+        testImplementation Kotlin.test.junit
+        testImplementation Testing.mockK
+        testImplementation Testing.mockK.android
 
-        androidTestImplementation meta_packages.CoreAndrodTestAndroid
+        androidTestImplementation AndroidX.test.ext.junit
+        androidTestImplementation AndroidX.test.ext.junit.ktx
+        androidTestImplementation AndroidX.test.core
+        androidTestImplementation AndroidX.test.rules
+        androidTestImplementation KotlinX.coroutines.test
+        androidTestImplementation Testing.junit4
+        androidTestImplementation Kotlin.test
+        androidTestImplementation Kotlin.test.junit
+        androidTestImplementation Testing.mockK.android
+        androidTestImplementation Testing.robolectric
     }
 }
 
@@ -86,7 +112,7 @@ kotlin {
         android("android") {
             compilations.all {
                 kotlinOptions {
-                    jvmTarget = versions_tools.JavaCompatibility
+
                 }
             }
         }
@@ -96,7 +122,7 @@ kotlin {
         jvm("jvm") {
             compilations.all {
                 kotlinOptions {
-                    jvmTarget = versions_tools.JavaCompatibility
+                    jvmTarget = JavaVersion.VERSION_17
                 }
             }
         }
@@ -126,15 +152,15 @@ kotlin {
             dependencies {
                 // This syntax is used as the kotlin-mpp plugin does not support
                 // arrays as arguments.
-                meta_packages.CoreCommon.each { implementation it }
+                implementation Kotlin.stdlib.common
+                implementation KotlinX.coroutines.core
             }
         }
         commonTest {
             dependencies {
-                // This syntax is used as the kotlin-mpp plugin does not support
-                // arrays as arguments.
-                // implementation packages.KotlinTestCommon
-                meta_packages.CoreTestCommon.each { implementation it }
+                implementation KotlinX.coroutines.test
+                implementation Kotlin.test.common
+                implementation Kotlin.test.annotationsCommon
             }
         }
         if (isAndroidTargetEnabled()) {
@@ -149,19 +175,19 @@ kotlin {
             jvmMain {
                 dependsOn(commonMain)
                 dependencies {
-                    // This syntax is used as the kotlin-mpp plugin does not support
-                    // arrays as arguments.
-                    meta_packages.CoreJVM.each { implementation it }
+                    implementation Kotlin.stdlib.jdk8
+                    implementation KotlinX.coroutines.core
                 }
             }
             jvmTest {
                 dependsOn(commonTest)
                 dependencies {
-                    // This syntax is used as the kotlin-mpp plugin does not support
-                    // arrays as arguments.
-                    meta_packages.CoreTestJVM.each { implementation it }
+                    implementation KotlinX.coroutines.test
+                    implementation Testing.junit.jupiter.api
+                    implementation Kotlin.test.junit5
+                    implementation Testing.mockK
 
-                    meta_packages.CoreTestJVMRuntimeOnly.each { runtimeOnly it }
+                    runtimeOnly Testing.junit.jupiter.engine
                 }
             }
         }
@@ -169,17 +195,14 @@ kotlin {
             jsMain {
                 dependsOn(commonMain)
                 dependencies {
-                    // This syntax is used as the kotlin-mpp plugin does not support
-                    // arrays as arguments.
-                    meta_packages.CoreJS.each { implementation it }
+                    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:_"
                 }
             }
             jsTest {
                 dependsOn(commonTest)
                 dependencies {
-                    // This syntax is used as the kotlin-mpp plugin does not support
-                    // arrays as arguments.
-                    meta_packages.CoreTestJS.each { implementation it }
+                    implementation Kotlin.test.js
+                    implementation KotlinX.coroutines.test
                 }
             }
         }
@@ -204,11 +227,6 @@ tasks {
         }
     }
 }
-
-// TODO: Verify if this can be removed
-// https://youtrack.jetbrains.com/issue/KT-46165
-// https://youtrack.jetbrains.com/issue/KT-46978
-tasks.withType(org.gradle.jvm.tasks.Jar) { duplicatesStrategy = DuplicatesStrategy.WARN }
 
 def releaseJs = null
 if (isJsTargetEnabled()) {

@@ -3,7 +3,7 @@ apply plugin: 'kotlinx-serialization'
 
 dependencies {
     implementation project(":stranded:lib")
-    implementation packages.KotlinxSerialization
+    implementation KotlinX.serialization.json
 }
 
 registerDependency(":stranded:lib")

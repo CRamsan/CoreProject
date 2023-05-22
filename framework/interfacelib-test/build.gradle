@@ -25,26 +25,43 @@ kotlin {
                 implementation project(":framework:interfacelib")
                 implementation project(":framework:test")
 
-                meta_packages.CoreTestCommon.each { implementation it }
+                implementation KotlinX.coroutines.test
+                implementation Kotlin.test.common
+                implementation Kotlin.test.annotationsCommon
             }
         }
         jvmMain {
             dependencies {
-                meta_packages.CoreTestJVM.each { implementation it }
+                implementation KotlinX.coroutines.test
+                implementation Testing.junit.jupiter.api
+                implementation Kotlin.test.junit5
+                implementation Testing.mockK
             }
         }
         jvmTest {
         }
         androidMain {
             dependencies {
-                meta_packages.CoreTestAndroid.each { implementation it }
+                implementation AndroidX.test.core
+                implementation AndroidX.test.ext.junit
+                implementation AndroidX.test.ext.junit.ktx
+                implementation AndroidX.archCore.common
+                implementation AndroidX.archCore.runtime
+                implementation AndroidX.archCore.testing
+                implementation KotlinX.coroutines.test
+                implementation Testing.junit4
+                implementation Kotlin.test
+                implementation Kotlin.test.junit
+                implementation Testing.mockK
+                implementation Testing.mockK.android
             }
         }
         androidTest {
         }
         jsMain {
             dependencies {
-                meta_packages.CoreTestJS.each { implementation it }
+                implementation Kotlin.test.js
+                implementation KotlinX.coroutines.test
             }
         }
     }
@@ -52,3 +69,7 @@ kotlin {
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+
+android {
+    namespace 'com.cramsan.framework.interfacelib'
+}

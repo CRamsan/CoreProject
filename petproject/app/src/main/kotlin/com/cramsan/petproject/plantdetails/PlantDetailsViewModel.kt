@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.LiveEvent
@@ -74,17 +73,6 @@ class PlantDetailsViewModel @Inject constructor(
      * Observable that represents the color to represent the danger.
      */
     val observableDangerousColor = MutableLiveData<Int>(R.color.colorUndetermined)
-    /**
-     * Observable that represents the visibility of the common names.
-     */
-    val observablePlantCommonNamesVisibility =
-        Transformations.map(observablePlantCommonNames) { commonName ->
-            if (commonName.isEmpty()) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
-        }
 
     // Events
     private val observableOpenSourceLink = LiveEvent<StringEvent>()

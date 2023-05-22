@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath packages.Detekt
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
     }
 }
 
@@ -41,13 +41,6 @@ detekt {
     }
 
     dependencies {
-        detektPlugins(packages.DetektFormatting)
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:_")
     }
-}
-
-tasks.withType(Detekt).configureEach {
-    jvmTarget = versions_tools.JavaCompatibility
-}
-tasks.withType(DetektCreateBaselineTask).configureEach {
-    jvmTarget = versions_tools.JavaCompatibility
 }

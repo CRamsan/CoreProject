@@ -10,8 +10,8 @@ dependencies {
     implementation project(":framework:test")
     implementation project(":stranded:lib")
     implementation project(":stranded:server")
-    implementation packages.CoroutinesSwing
-    implementation packages.KotlinxSerialization
+    implementation KotlinX.coroutines.swing
+    implementation KotlinX.serialization.json
 }
 
 compose.desktop {

@@ -12,7 +12,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework")
-                implementation packages.KotlinxSerialization
+                implementation KotlinX.serialization.json
             }
         }
         commonTest {
@@ -24,3 +24,7 @@ kotlin {
 }
 
 registerDependency(":framework")
+
+android {
+    namespace 'com.cramsan.ps2link.network.model'
+}

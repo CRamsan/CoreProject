@@ -59,7 +59,7 @@ fun TweetListCompose(
                                 )
                                 Text(
                                     text = stringResource(
-                                        id = R.string.title_twitter_handle,
+                                        id = com.cramsan.ps2link.ui.R.string.title_twitter_handle,
                                         formatArgs = arrayOf(pair.first),
                                     ),
                                 )

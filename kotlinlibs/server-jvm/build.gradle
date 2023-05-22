@@ -7,24 +7,24 @@ apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
-    kapt packages.SpringConfiguratorProcessor
+    kapt Spring.boot.configurationProcessor
 
     implementation project(":framework:test")
     implementation project(":kotlinlibs:common")
     implementation project(":kotlinlibs:spring-common")
 
-    implementation packages.JacksonKotlin
-    implementation packages.KotlinReflect
-    implementation packages.KotlinxDatetime
-    implementation packages.KotlinxSerialization
-    implementation packages.Rome
-    implementation packages.SpringDataCommons
-    implementation packages.SpringWeb
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:_"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:_"
+    implementation KotlinX.datetime
+    implementation KotlinX.serialization.json
+    implementation "com.rometools:rome:_"
+    implementation "org.springframework.data:spring-data-commons:_"
+    implementation Spring.boot.web
 
-    runtimeOnly packages.SpringDevtools
+    runtimeOnly Spring.boot.devTools
 
-    testImplementation packages.SpringTest
-    testImplementation packages.SpringMock
+    testImplementation Spring.boot.test
+    testImplementation "com.ninja-squad:springmockk:_"
 }
 
 allOpen {

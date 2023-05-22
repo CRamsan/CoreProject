@@ -14,8 +14,8 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                implementation packages.Log4J2Api
-                implementation packages.Log4J2Core
+                implementation "org.apache.logging.log4j:log4j-api:_"
+                implementation "org.apache.logging.log4j:log4j-core:_"
             }
         }
     }
@@ -23,3 +23,7 @@ kotlin {
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+
+android {
+    namespace 'com.cramsan.framework.logging'
+}

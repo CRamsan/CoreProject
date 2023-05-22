@@ -7,17 +7,19 @@ android {
     }
 
     dependencies {
-        kapt meta_packages.HiltKapt
+        kapt Google.dagger.hilt.android.compiler
+        kapt Google.dagger.hilt.android.gradlePlugin
 
-        implementation meta_packages.Hilt
+        implementation Google.dagger.hilt.android
 
         implementation project(":framework:interfacelib")
 
-        implementation packages.AndroidMaterial
-        implementation packages.AndroidXAppCompat
-        implementation packages.AndroidxFragmentKtx
-        implementation packages.AndroidXLifecycleViewModelKtx
+        implementation Google.android.material
+        implementation AndroidX.appCompat
+        implementation AndroidX.fragment.ktx
+        implementation AndroidX.lifecycle.viewModelKtx
     }
+    namespace 'com.cramsan.framework.core'
 }
 
 kotlin {

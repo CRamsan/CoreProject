@@ -82,7 +82,7 @@ class ElasticBeanstalkApplication(
             )
         }.build()
         val environment = CfnEnvironment(this, "EB-Env-$id", environmentProps)
-        environment.addDependsOn(backEndApp)
+        environment.addDependency(backEndApp)
 
         val wepAppZipArchive = Asset(
             this,
@@ -105,7 +105,7 @@ class ElasticBeanstalkApplication(
                 )
             }.build(),
         )
-        appVersion.addDependsOn(backEndApp)
+        appVersion.addDependency(backEndApp)
 
         applyBlock?.let { it(this) }
     }

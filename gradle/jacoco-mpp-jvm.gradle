@@ -6,7 +6,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = versions_tools.Jacoco
+    toolVersion = "0.8.8"
 }
 
 project.afterEvaluate {
@@ -29,8 +29,8 @@ project.afterEvaluate {
         executionData(files("${project.buildDir}/jacoco/${jvmTestTaskName}.exec"))
 
         reports {
-            xml.enabled = true
-            html.enabled = true
+            xml.required = true
+            html.required = true
         }
     }
 }

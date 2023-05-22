@@ -8,7 +8,7 @@ dependencies {
     implementation compose.desktop.currentOs
 
     implementation project(":stranded:server")
-    implementation packages.KotlinxSerialization
+    implementation KotlinX.serialization.json
 }
 
 compose.desktop {

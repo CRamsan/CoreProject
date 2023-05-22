@@ -23,10 +23,10 @@ dependencies {
     implementation compose.runtime
 
     implementation project(":kotlinlibs:common")
-    implementation packages.KotlinxSerialization
-    implementation packages.KtorClientContentNegotiation
-    implementation packages.KtorClientJs
-    implementation packages.KtorClientSerializationKotlinX
+    implementation KotlinX.serialization.json
+    implementation Ktor.client.contentNegotiation
+    implementation "io.ktor:ktor-client-js:_"
+    implementation Ktor.plugins.serialization.kotlinx.json
 }
 
 registerDependency(":kotlinlibs:common")

@@ -9,9 +9,9 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":framework:interfacelib")
-                implementation packages.KtorClientCore
-                implementation packages.KtorClientContentNegotiation
-                implementation packages.KotlinxSerialization
+                implementation Ktor.client.core
+                implementation Ktor.client.contentNegotiation
+                implementation KotlinX.serialization.json
             }
         }
         commonTest {
@@ -24,3 +24,7 @@ kotlin {
 
 registerDependency(":framework:interfacelib")
 registerDependency(":framework:test")
+
+android {
+    namespace 'com.cramsan.framework.remoteconfig'
+}

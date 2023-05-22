@@ -15,7 +15,6 @@ import software.amazon.awscdk.services.cloudwatch.AlarmProps
 import software.amazon.awscdk.services.cloudwatch.ComparisonOperator
 import software.amazon.awscdk.services.cloudwatch.Metric
 import software.amazon.awscdk.services.cloudwatch.MetricProps
-import software.amazon.awscdk.services.cloudwatch.Statistic
 import software.amazon.awscdk.services.cloudwatch.actions.SnsAction
 import software.amazon.awscdk.services.sns.Topic
 import software.amazon.awscdk.services.sns.subscriptions.EmailSubscription
@@ -61,7 +60,7 @@ object PS2LinkApp {
                 MetricProps.builder()
                     .namespace(ApplicationNamespace.identifier)
                     .metricName(MetricType.SUCCESS.name)
-                    .statistic(Statistic.SUM.name)
+                    .statistic("Sum")
                     .period(Duration.hours(6))
                     .dimensionsMap(
                         mapOf(
@@ -88,7 +87,7 @@ object PS2LinkApp {
                 MetricProps.builder()
                     .namespace(ApplicationNamespace.identifier)
                     .metricName(MetricType.FAILURE.name)
-                    .statistic(Statistic.SUM.name)
+                    .statistic("Sum")
                     .period(Duration.hours(6))
                     .dimensionsMap(
                         mapOf(
