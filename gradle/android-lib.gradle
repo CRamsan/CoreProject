@@ -1,9 +1,6 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
-apply plugin: "org.jetbrains.dokka"
-apply from: "$rootDir/gradle/jacoco-android.gradle"
-apply from: "$rootDir/gradle/detekt.gradle"
 
 android {
     compileSdkVersion 33
@@ -95,32 +92,4 @@ dependencies {
     androidTestImplementation Kotlin.test.junit
     androidTestImplementation Testing.mockK.android
     androidTestImplementation Testing.robolectric
-}
-
-// Register a dependency to a Android library with the `releaseAndroid` task
-ext.registerDependency = { project ->
-    def dependency = "${project}:releaseAndroid"
-    release.configure { dependsOn(dependency) }
-}
-
-// Register a dependency to a JVM library with the `releaseJVM` task
-ext.registerJvmDependency = { project ->
-    def dependency = "${project}:releaseJvm"
-    release.configure { dependsOn(dependency) }
-}
-
-tasks.register("releaseAndroid") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
-    dependsOn 'build' // Assembles and test this project
-    dependsOn 'detekt' // Run the code analyzer
-    dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results
-}
-
-tasks.register("release") {
-    group = 'build'
-    description = 'Run releaseAndroid'
-
-    dependsOn 'releaseAndroid'
 }

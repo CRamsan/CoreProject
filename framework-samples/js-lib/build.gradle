@@ -1,9 +1,0 @@
-apply from: "$rootDir/gradle/kotlin-js-lib.gradle"
-
-kotlin {
-    js(IR) {
-        binaries.executable()
-        nodejs {
-        }
-    }
-}

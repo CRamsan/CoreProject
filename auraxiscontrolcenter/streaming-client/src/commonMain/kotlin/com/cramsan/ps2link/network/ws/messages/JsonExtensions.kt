@@ -48,6 +48,7 @@ fun Json.parseServerEvent(textFrame: String): ServerEvent {
     }
 }
 
+@Suppress("CyclomaticComplexMethod", "LongMethod")
 private fun Json.parseServerEventPayload(textFrame: String): ServerEvent {
     val root = parseToJsonElement(textFrame).jsonObject
     val eventNameString = root.getValue("payload").jsonObject.getValue("event_name").toString()

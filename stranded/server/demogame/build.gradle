@@ -21,5 +21,3 @@ compose.desktop {
         }
     }
 }
-
-registerDependency(":stranded:server")

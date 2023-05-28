@@ -27,7 +27,7 @@ You can find more documentation in the [wiki](https://dev.azure.com/CRamsan/Fram
 # Framework
 A lot of the code is kept in a shared module called **Framework** that abstract a lot of complexities out of the client apps.
  - [Framework](framework/)
- - [Root gradle file](build.gradle), [properties](gradle.properties) and [settings](settings.gradle.kts)
+ - [Root gradle file](build.gradle.kts), [properties](gradle.properties) and [settings](settings.gradle.kts)
 
 ## Getting started
  

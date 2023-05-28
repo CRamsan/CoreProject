@@ -3,11 +3,9 @@
  */
 
 apply plugin: "org.jetbrains.kotlin.js"
-apply from: "$rootDir/gradle/detekt.gradle"
 
 kotlin {
     js(IR) {
-        browser()
         nodejs()
         binaries.executable()
     }
@@ -25,26 +23,4 @@ dependencies {
 
     testImplementation Kotlin.test.js
     testImplementation KotlinX.coroutines.test
-}
-
-// Release task that will build and test the project.
-def releaseJs = tasks.register("releaseJs") {
-    group = 'build'
-    description = 'Run all the steps to build a Js artifact'
-
-    dependsOn 'detekt'
-    dependsOn 'compileKotlinJs'
-    dependsOn 'test'
-}
-
-// Function to add a dependency to another JS project.
-ext.registerDependency = { project ->
-    def dependency = "${project}:releaseJs"
-    releaseJs.configure { dependsOn(dependency) }
-}
-
-tasks.register("release") {
-    group = 'build'
-
-    dependsOn "releaseJs"
 }

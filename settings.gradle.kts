@@ -1,25 +1,25 @@
+pluginManagement {
+    repositories {
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    }
+}
+
 plugins {
     // See https://jmfayard.github.io/refreshVersions
     id("de.fayard.refreshVersions") version "0.51.0"
 }
 
-refreshVersions {
-
-}
-
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
-
-include("api-endpoint:common")
-include("api-endpoint:server-jvm")
-include("api-endpoint:client-html")
-
-include("blog")
-
-include("framework")
 include("framework:assert")
 include("framework:crashhandler")
 include("framework:core")
@@ -36,24 +36,6 @@ include("framework:thread")
 include("framework:test")
 include("framework:utils")
 
-include("petproject:app")
-include("petproject:ui")
-include("petproject:appcore")
-include("petproject:azurefunction")
-
-include("doom:lib")
-include("doom:lib:sample")
-
-include("doom:game:core")
-include("doom:game:desktop")
-
-include("kotlinlibs:common")
-include("kotlinlibs:frontend")
-include("kotlinlibs:server-jvm")
-include("kotlinlibs:lambda-jvm")
-include("kotlinlibs:spring-common")
-include("kotlinlibs:cdk")
-
 include("auraxiscontrolcenter:app")
 include("auraxiscontrolcenter:appcore")
 include("auraxiscontrolcenter:cdk")
@@ -62,12 +44,10 @@ include("auraxiscontrolcenter:db-models")
 include("auraxiscontrolcenter:deployable-models")
 include("auraxiscontrolcenter:network-models")
 include("auraxiscontrolcenter:streaming-client")
-include("auraxiscontrolcenter:streaming-client:testgui")
+include("auraxiscontrolcenter:desktop")
 include("auraxiscontrolcenter:ui")
 
 include("stranded:lib")
-include("stranded:gdx")
-include("stranded:gdx:desktop")
 include("stranded:gdx:core")
 include("stranded:cardmanager")
 include("stranded:testgui")
@@ -75,10 +55,13 @@ include("stranded:server")
 include("stranded:server:demogame")
 include("stranded:web")
 
-include("framework-samples:android-app")
-include("framework-samples:android-lib")
-include("framework-samples:mpp-lib")
-include("framework-samples:jvm-lib")
-include("framework-samples:js-lib")
+include("samples:android-app")
+include("samples:android-lib")
+include("samples:jbcompose-mpp-lib")
+include("samples:jbcompose-desktop-app")
+include("samples:jbcompose-android-app")
+include("samples:mpp-lib")
+include("samples:jvm-lib")
+include("samples:nodejs-app")
 
 include("cdk-repo")

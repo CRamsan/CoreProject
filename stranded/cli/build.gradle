@@ -1,9 +1,0 @@
-apply from: "$rootDir/gradle/kotlin-jvm-lib.gradle"
-apply plugin: 'kotlinx-serialization'
-
-dependencies {
-    implementation project(":stranded:lib")
-    implementation KotlinX.serialization.json
-}
-
-registerDependency(":stranded:lib")

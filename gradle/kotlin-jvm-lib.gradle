@@ -3,19 +3,6 @@
  */
 
 apply plugin: 'kotlin'
-apply plugin: "org.jetbrains.dokka"
-apply plugin: 'jacoco'
-apply from: "$rootDir/gradle/detekt.gradle"
-
-jacoco {
-    toolVersion = "0.8.8"
-}
-jacocoTestReport {
-    reports {
-        xml.required = true
-        html.required = true
-    }
-}
 
 kotlin {
     jvmToolchain(17)
@@ -48,30 +35,4 @@ compileTestKotlin {
 // Enable outputting the results of the tests
 test {
     useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
-
-// Release task that will build and test the project.
-def releaseJvm = tasks.register("releaseJvm") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact'
-
-    dependsOn 'build'
-    dependsOn 'detekt' // Run the code analyzer
-    dependsOn 'test'
-    dependsOn 'jacocoTestReport'
-}
-
-// Function to add a dependency to another JVM project.
-ext.registerDependency = { project ->
-    def dependency = "${project}:releaseJvm"
-    releaseJvm.configure { dependsOn(dependency) }
-}
-
-tasks.register("release") {
-    group = 'build'
-
-    dependsOn "releaseJvm"
 }

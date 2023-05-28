@@ -10,7 +10,7 @@ apply plugin: "application" // Enable this application to run as an application.
 jar {
     manifest {
         attributes(
-                'Main-Class' : mainClassTarget
+            'Main-Class' : mainClassTarget
         )
     }
 }

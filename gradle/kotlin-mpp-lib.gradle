@@ -1,47 +1,14 @@
 /**
  * Plugin to create a kotlin MPP with safe defaults.
- * This plugin requires that the project set the values for:
- * - libraryVersionCode
- * - libraryVersionName
- *
- * By default, the JVM, JS and IOS targets are created. You can
- * call the following functions to disable some of them:
- * disableJvmTarget()
- * disableIosTarget()
- * disableJsTarget()
- * disableAndroidTarget()
  */
 apply plugin: "org.jetbrains.kotlin.multiplatform"
-apply plugin: "org.jetbrains.dokka"
 
-apply from: "$rootDir/gradle/helper-functions.gradle"
-apply from: "$rootDir/gradle/detekt.gradle"
-
-if (isJvmTargetEnabled()) {
-    // Set the task name for the jacoco-mpp-jvm plugin
-    ext {
-        jvmTestTaskName = "jvmTest"
-    }
-    apply from: "$rootDir/gradle/jacoco-mpp-jvm.gradle"
-}
-
-if (isAndroidTargetEnabled()) {
     apply plugin: "com.android.library"
     apply plugin: "kotlin-kapt"
 
-    apply from: "$rootDir/gradle/jacoco-android.gradle"
-
-    /**
-     * False positive "The Kotlin source set androidAndroidTestRelease was
-     * configured but not added to any Kotlin compilation"
-     * https://youtrack.jetbrains.com/issue/KT-48436
-     * Target to remove verify this fix on Kotlin 1.7.20
-     */
     android {
         compileSdkVersion 33
         defaultConfig {
-            versionCode libraryVersionCode
-            versionName libraryVersionName
             minSdkVersion 26
             targetSdkVersion 33
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -96,7 +63,6 @@ if (isAndroidTargetEnabled()) {
         androidTestImplementation Testing.mockK.android
         androidTestImplementation Testing.robolectric
     }
-}
 
 kotlin {
     targets.all {
@@ -108,44 +74,32 @@ kotlin {
         }
     }
 
-    if (isAndroidTargetEnabled()) {
-        android("android") {
+        android() {
             compilations.all {
                 kotlinOptions {
 
                 }
             }
         }
-    }
 
-    if (isJvmTargetEnabled()) {
-        jvm("jvm") {
+        jvm() {
             compilations.all {
                 kotlinOptions {
                     jvmTarget = JavaVersion.VERSION_17
                 }
             }
         }
-    }
 
-    if (isIosTargetEnabled()) {
         // TODO: This target should be determined at configuration time since it depends on the
         // architecture of the host.
         iosSimulatorArm64("ios") {
 
         }
-    }
 
-    if (isJsTargetEnabled()) {
         js(IR) {
-            if (project.ext.has("jsProjectName") && project.ext.get("jsProjectName") != null) {
-                moduleName = jsProjectName
-            }
-            browser()
             nodejs()
             binaries.executable()
         }
-    }
 
     sourceSets {
         commonMain {
@@ -163,22 +117,18 @@ kotlin {
                 implementation Kotlin.test.annotationsCommon
             }
         }
-        if (isAndroidTargetEnabled()) {
             androidMain {
                 dependsOn(commonMain)
             }
-            androidTest {
+            androidUnitTest {
                 dependsOn(commonTest)
             }
-        }
-        if (isJvmTargetEnabled()) {
             jvmMain {
                 dependsOn(commonMain)
                 dependencies {
                     implementation Kotlin.stdlib.jdk8
                     implementation KotlinX.coroutines.core
                 }
-            }
             jvmTest {
                 dependsOn(commonTest)
                 dependencies {
@@ -191,7 +141,6 @@ kotlin {
                 }
             }
         }
-        if (isJsTargetEnabled()) {
             jsMain {
                 dependsOn(commonMain)
                 dependencies {
@@ -205,120 +154,20 @@ kotlin {
                     implementation KotlinX.coroutines.test
                 }
             }
-        }
-        if (isIosTargetEnabled()) {
             iosMain {
                 dependsOn(commonMain)
             }
             iosTest {
                 dependsOn(commonTest)
             }
-        }
     }
 }
 
 tasks {
-    if (isJvmTargetEnabled()) {
-        jvmTest {
-            useJUnitPlatform()
-            testLogging {
-                events "passed", "skipped", "failed"
-            }
+    jvmTest {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
         }
-    }
-}
-
-def releaseJs = null
-if (isJsTargetEnabled()) {
-    releaseJs = tasks.register("releaseJs") {
-        group = 'build'
-        description = 'Run all the steps to build a Js artifact'
-        dependsOn 'compileKotlinJs'
-        dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
-        dependsOn 'detektJsMain' // Run the code analyzer
-        dependsOn 'jsTest'
-        dependsOn 'jsBrowserDistribution'
-    }
-}
-
-def releaseJvm = null
-if (isJvmTargetEnabled()) {
-    releaseJvm = tasks.register("releaseJvm") {
-        group = 'build'
-        description = 'Run all the steps to build a releaseJvm artifact'
-        dependsOn 'compileKotlinJvm'
-        dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
-        dependsOn 'detektJvmMain' // Run the code analyzer
-        dependsOn 'jvmTest'
-        dependsOn 'jacocoJvmKMMTestReport'
-    }
-}
-
-def releaseAndroid = null
-if (isAndroidTargetEnabled()) {
-    releaseAndroid = tasks.register("releaseAndroid") {
-        group = 'build'
-        description = 'Run all the steps to build a releaseAndroid artifact'
-        dependsOn 'assembleDebug'
-        dependsOn 'assembleRelease'
-        dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
-        dependsOn 'detektAndroidDebug' // Run the code analyzer
-        dependsOn 'detektAndroidRelease' // Run the code analyzer
-        dependsOn 'testDebugUnitTest'
-        dependsOn 'testReleaseUnitTest'
-        dependsOn 'jacocoAndroidTestReport' // Generate a jacoco report from the unit-test results
-    }
-}
-
-def releaseIos = null
-if (isIosTargetEnabled()) {
-    releaseIos = tasks.register("releaseIos") {
-        group = 'build'
-        description = 'Run all the steps to build a releaseIos artifact'
-        dependsOn 'compileKotlinIos'
-        dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
-        dependsOn 'detektIosMain' // Run the code analyzer
-        dependsOn 'iosTest'
-    }
-}
-
-def release = tasks.register("release") {
-    group = 'build'
-    description = 'Run all the steps to build a release artifact for all enabled targets'
-
-    if (isJvmTargetEnabled()) {
-        dependsOn 'releaseJvm'
-    }
-    if (isAndroidTargetEnabled()) {
-        dependsOn 'releaseAndroid'
-    }
-    if (isJsTargetEnabled()) {
-        dependsOn 'releaseJs'
-    }
-    if (isIosTargetEnabled()) {
-        dependsOn 'releaseIos'
-    }
-}
-
-ext.registerDependency = { project ->
-    if (isJvmTargetEnabled()) {
-        def dependency = "${project}:releaseJvm"
-        releaseJvm.configure { dependsOn(dependency) }
-    }
-    if (isAndroidTargetEnabled()) {
-        def dependency = "${project}:releaseAndroid"
-        releaseAndroid.configure { dependsOn(dependency) }
-    }
-    if (isJsTargetEnabled()) {
-        def dependency = "${project}:releaseJs"
-        releaseJs.configure { dependsOn(dependency) }
-    }
-}
-
-// Register a dependency to a JVM library with the `releaseJVM` task
-ext.registerJvmDependency = { project ->
-    if (isJvmTargetEnabled()) {
-        def dependency = "${project}:releaseJvm"
-        releaseJvm.configure { dependsOn(dependency) }
     }
 }

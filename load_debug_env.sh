@@ -1,1 +1,0 @@
-export SCHEDULE_EXPRESSION="rate(30 days)"

@@ -34,7 +34,3 @@ task forceDeploy(type:Exec) {
         commandLine "cdk", "deploy", "--all", "--require-approval", "never"
     }
 }
-
-releaseJvm {
-    dependsOn "run"
-}
