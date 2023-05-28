@@ -32,7 +32,7 @@ fun SwipeToRefresh(
             content = content,
         )
 
-        PullRefreshIndicator(isLoading, pullRefreshState, Modifier.align(Alignment.Center))
+        PullRefreshIndicator(isLoading, pullRefreshState, Modifier.align(Alignment.TopCenter))
     }
 }
 
@@ -54,6 +54,6 @@ fun SwipeToRefreshColumn(
             content = content,
         )
 
-        PullRefreshIndicator(isLoading, pullRefreshState, Modifier.align(Alignment.Center))
+        PullRefreshIndicator(isLoading, pullRefreshState, Modifier.align(Alignment.TopCenter))
     }
 }
