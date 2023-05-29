@@ -1,38 +1,29 @@
 plugins {
-    kotlin("multiplatform")
+    id("org.jetbrains.kotlin.android")
     id("com.android.application")
     id("org.jetbrains.compose")
 }
 
-kotlin {
-    android()
-    sourceSets {
-        val androidMain by getting {
-            dependencies {
-                implementation(project(":samples:jbcompose-mpp-lib"))
-
-                implementation(AndroidX.activity.compose)
-                implementation(AndroidX.appCompat)
-                implementation(AndroidX.core.ktx)
-            }
-        }
-    }
-}
+apply(from = "$rootDir/gradle/android-app.gradle")
 
 android {
-    compileSdk = 33
+    namespace = "com.cramsan.framework.sample.jbcompose.mpplib"
+
     defaultConfig {
-        applicationId = "com.cramsan.minesweepers.android"
-        minSdk = 26
-        targetSdk = 33
+        applicationId = "com.cramsan.framework.sample.jbcompose.mpplib"
         versionCode = 1
         versionName = "1.0"
     }
+}
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+dependencies {
+    implementation(project(":samples:jbcompose-mpp-lib"))
 
-    namespace = "com.cramsan.minesweepers.android"
+    implementation(AndroidX.activity.compose)
+
+    implementation(AndroidX.compose.ui.tooling)
+    implementation(AndroidX.compose.foundation)
+
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.core.ktx)
 }

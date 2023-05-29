@@ -1,6 +1,7 @@
 package com.cramsan.minesweepers.common.game
 
 import com.cramsan.minesweepers.common.ui.Assets
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -62,6 +63,7 @@ class Game {
         updateMapState()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun loadAssetsAsync() {
         // This is not the right way to dispatch IO
         // We should be injecting an IO dispatcher.
@@ -71,6 +73,7 @@ class Game {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun initializeMap(initialColumn: Int, initialRow: Int) {
         repeat(mines) {
             var randomX: Int
@@ -201,9 +204,9 @@ class Game {
         }
 
         var remainingTiles = 0
-        repeat(rows) { row ->
+        repeat(rows) {
             repeat(columns) { column ->
-                if (_map[row][column].coverMode != TileCoverMode.UNCOVERED) {
+                if (_map[it][column].coverMode != TileCoverMode.UNCOVERED) {
                     remainingTiles++
                 }
             }

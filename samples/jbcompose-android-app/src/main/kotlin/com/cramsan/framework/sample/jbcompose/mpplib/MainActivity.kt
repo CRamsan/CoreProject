@@ -1,12 +1,15 @@
-package com.cramsan.minesweepers.android
+package com.cramsan.framework.sample.jbcompose.mpplib
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.minesweepers.common.MainView
 import com.cramsan.minesweepers.common.game.Game
+import com.cramsan.minesweepers.common.game.Status
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,4 +43,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun MainActivityPreview() {
+    MainView(
+        10,
+        12,
+        listOf(listOf()),
+        Status.NORMAL,
+        { _, _ -> },
+        { _, _ -> },
+        { },
+    )
 }

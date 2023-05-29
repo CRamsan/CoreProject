@@ -1,27 +1,15 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("multiplatform")
+    kotlin("jvm")
     id("org.jetbrains.compose")
 }
 
-kotlin {
-    jvm {
-        compilations.all {
-            compilerOptions.configure {
-                jvmTarget.set(JvmTarget.JVM_1_8)
-            }
-        }
-    }
-    sourceSets {
-        val jvmMain by getting  {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(project(":samples:jbcompose-mpp-lib"))
-            }
-        }
-    }
+apply(from = "$rootDir/gradle/kotlin-jvm-lib.gradle")
+
+dependencies {
+    implementation(compose.desktop.currentOs)
+    implementation(project(":samples:jbcompose-mpp-lib"))
 }
 
 compose.desktop {

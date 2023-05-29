@@ -1,0 +1,129 @@
+/**
+ * Plugin to create a kotlin MPP with safe defaults.
+ */
+
+apply plugin: "org.jetbrains.kotlin.multiplatform"
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.compose"
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 33
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed"
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation(AndroidX.activity.compose)
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.core.ktx)
+    implementation(compose.desktop.common)
+}
+
+kotlin {
+    targets.all {
+        compilations.all {
+            kotlinOptions {
+                allWarningsAsErrors = true
+                freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+            }
+        }
+    }
+
+    android() {
+        compilations.all {
+            kotlinOptions {
+
+            }
+        }
+    }
+
+    jvm() {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_17
+            }
+        }
+    }
+
+    // TODO: This target should be determined at configuration time since it depends on the
+    // architecture of the host.
+    iosSimulatorArm64() {
+
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                // This syntax is used as the kotlin-mpp plugin does not support
+                // arrays as arguments.
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.components.resources)
+            }
+        }
+        commonTest {
+            dependencies {
+            }
+        }
+        androidMain {
+            dependsOn(commonMain)
+        }
+        androidUnitTest {
+            dependsOn(commonTest)
+        }
+        jvmMain {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(compose.desktop.common)
+            }
+        }
+        jvmTest {
+            dependsOn(commonTest)
+            dependencies {
+            }
+        }
+        iosMain {
+            dependsOn(commonMain)
+        }
+        iosSimulatorArm64Main {
+            dependsOn(iosMain)
+        }
+        iosTest {
+            dependsOn(commonTest)
+        }
+    }
+}
+
+tasks {
+    jvmTest {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
