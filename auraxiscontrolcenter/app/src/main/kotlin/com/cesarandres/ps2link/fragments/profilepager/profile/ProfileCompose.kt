@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
@@ -23,12 +22,13 @@ import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.SwipeToRefreshColumn
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toColor
-import com.cramsan.ps2link.ui.toStringResource
+import com.cramsan.ps2link.ui.toText
 import com.cramsan.ps2link.ui.widgets.BR
 import com.cramsan.ps2link.ui.widgets.BRBar
 import com.cramsan.ps2link.ui.widgets.Cert
@@ -87,6 +87,7 @@ fun ProfileCompose(
                 ErrorOverlay(
                     modifier = Modifier.wrapContentHeight(),
                     isError = isError,
+                    error = stringResource(id = R.string.text_unkown_error)
                 )
 
                 val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)
@@ -146,7 +147,7 @@ fun ProfileCompose(
                             Column(modifier = smallModifier) {
                                 Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_status))
                                 Text(
-                                    text = (loginStatus ?: LoginStatus.UNKNOWN).toStringResource(),
+                                    text = (loginStatus ?: LoginStatus.UNKNOWN).toText(),
                                     color = loginStatus.toColor(),
                                 )
                             }

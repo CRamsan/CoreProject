@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":auraxiscontrolcenter:streaming-client"))
     implementation(project(":auraxiscontrolcenter:core-models"))
     implementation(project(":auraxiscontrolcenter:appcore"))
+    implementation(project(":auraxiscontrolcenter:ui"))
     implementation(project(":framework:interfacelib"))
     implementation(KotlinX.datetime)
     implementation(KotlinX.collections.immutable)

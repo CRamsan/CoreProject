@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,14 +27,13 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyType
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.BoldButton
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameSlim
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.SlimButton
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.setAlpha
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.FontSize
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Opacity
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Padding
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Size
+import com.cramsan.ps2link.ui.BoldButton
+import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.setAlpha
+import com.cramsan.ps2link.ui.theme.Opacity
+import com.cramsan.ps2link.ui.theme.Padding
+import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseScreen
 import kotlinx.collections.immutable.ImmutableList
 
@@ -118,7 +118,7 @@ private fun SettingsHotKeySection(
     ) {
         Text(
             "Keyboard Shortcuts",
-            fontSize = FontSize.subtitle,
+            style = MaterialTheme.typography.subtitle1,
             modifier = Modifier,
         )
         Column {
@@ -158,7 +158,7 @@ private fun SettingsDebugSection(
     ) {
         Text(
             "Debug",
-            fontSize = FontSize.subtitle,
+            style = MaterialTheme.typography.subtitle1,
             modifier = Modifier,
         )
         Column {
@@ -221,7 +221,7 @@ private fun DialogOverlay(
                 ) {
                     Text(
                         "Capturing hot key",
-                        fontSize = FontSize.subtitle,
+                        style = MaterialTheme.typography.subtitle1,
                         modifier = Modifier.padding(Padding.medium),
                     )
                     Text(
@@ -263,7 +263,7 @@ private fun RestartDialogOverlay(
                 ) {
                     Text(
                         "Restart to apply changes",
-                        fontSize = FontSize.subtitle,
+                        style = MaterialTheme.typography.subtitle1,
                         modifier = Modifier.padding(Padding.medium),
                     )
                     SlimButton(

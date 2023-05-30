@@ -37,14 +37,14 @@ fun StatListCompose(
                 items(statList) {
                     StatItem(
                         label = it.statName ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
-                        allTime = it.allTime?.toFloat(),
-                        today = it.today?.toFloat(),
-                        thisWeek = it.thisWeek?.toFloat(),
-                        thisMonth = it.thisMonth?.toFloat(),
+                        allTime = it.allTime?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
+                        today = it.today?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
+                        thisWeek = it.thisWeek?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
+                        thisMonth = it.thisMonth?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
                     )
                 }
             }
-            ErrorOverlay(isError = isError)
+            ErrorOverlay(isError = isError, error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error))
         }
     }
 }

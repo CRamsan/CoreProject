@@ -27,6 +27,7 @@ import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Padding
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.toJavaInstant
 import org.ocpsoft.prettytime.PrettyTime
 
 @Suppress("FunctionNaming", "UndocumentedPublicFunction")
@@ -74,18 +75,18 @@ fun TweetListCompose(
                     onRefreshRequested = { eventHandler.onRefreshRequested() },
                 ) {
                     items(tweetItems) { tweet ->
+                        val updateTime = prettyTime.format(tweet.date.toJavaInstant())
                         TweetItem(
                             username = tweet.user,
                             handle = tweet.tag,
                             content = tweet.content,
                             avatarUrl = tweet.imgUrl,
-                            prettyTime = prettyTime,
-                            creationTime = tweet.date,
+                            creationTime = updateTime,
                             onClick = { eventHandler.onTweetSelected(tweet) },
                         )
                     }
                 }
-                ErrorOverlay(isError = isError)
+                ErrorOverlay(isError = isError, error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error))
             }
         }
     }

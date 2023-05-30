@@ -4,15 +4,18 @@ import androidx.annotation.MainThread
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.RedditPost
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.RedditPostItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.toJavaInstant
 import org.ocpsoft.prettytime.PrettyTime
 
 /**
@@ -32,21 +35,21 @@ fun RedditCompose(
             onRefreshRequested = { eventHandler.onRefreshRequested() },
         ) {
             items(redditContent) {
+                val creationTime = prettyTime.format(it.createdTime.toJavaInstant())
+                val subText = stringResource(id = R.string.twitter_upload_by, formatArgs = arrayOf(creationTime, it.author))
                 RedditPostItem(
                     modifier = Modifier.fillParentMaxWidth(),
                     imgUrl = it.imgUr,
                     title = it.title,
-                    author = it.author,
+                    subtext = subText,
                     upvotes = it.upvotes,
-                    comments = it.comments,
-                    createdTime = it.createdTime,
-                    prettyTime = prettyTime,
+                    comments = stringResource(id = R.string.twitter_comments, formatArgs = arrayOf(it.comments)),
                     onImageClick = { eventHandler.onImageSelected(it) },
                     onPostClick = { eventHandler.onPostSelected(it) },
                 )
             }
         }
-        ErrorOverlay(isError = isError)
+        ErrorOverlay(isError = isError, error = stringResource(id = R.string.text_unkown_error))
     }
 }
 

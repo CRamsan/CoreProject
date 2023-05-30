@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.Server
 import com.cramsan.ps2link.core.models.ServerStatus
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.ServerItem
 import com.cramsan.ps2link.ui.theme.PS2Theme
@@ -43,7 +45,7 @@ fun ServerListCompose(
                     )
                 }
             }
-            ErrorOverlay(isError = isError)
+            ErrorOverlay(isError = isError, error = stringResource(id = R.string.text_unkown_error))
         }
     }
 }

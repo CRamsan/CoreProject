@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.MedalType
@@ -15,6 +16,7 @@ import com.cramsan.ps2link.core.models.WeaponEventType
 import com.cramsan.ps2link.core.models.WeaponItem
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.WeaponItem
 import kotlinx.collections.immutable.ImmutableList
@@ -47,19 +49,26 @@ fun WeaponListCompose(
                     WeaponItem(
                         modifier = Modifier.fillMaxWidth(),
                         faction = faction,
-                        weaponImage = Uri.parse(it.weaponImage),
-                        weaponName = it.weaponName ?: it.vehicleName,
+                        weaponImage = it.weaponImage,
+                        weaponName = it.weaponName ?: it.vehicleName ?: stringResource(R.string.text_unknown),
                         medalType = it.medalType ?: MedalType.NONE,
-                        totalKills = totalKills ?: 0,
-                        totalVehiclesDestroyed = totalVehiclesDestroyed ?: 0,
-                        totalHeadshotKills = totalHeadshotKills ?: 0,
-                        NCKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.NC),
-                        VSKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.VS),
-                        TRKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.TR),
+                        totalKills = stringResource(R.string.text_kills, totalKills ?: 0),
+                        totalVehiclesDestroyed = stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed ?: 0),
+                        totalHeadshotKills = stringResource(R.string.text_headshots_, totalHeadshotKills ?: 0),
+                        NCKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.NC)?.let {
+                            stringResource(R.string.text_nc_, it)
+                        },
+                        VSKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.VS)?.let {
+                            stringResource(R.string.text_vs_, it)
+
+                        },
+                        TRKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.TR)?.let {
+                            stringResource(R.string.text_tr_, it)
+                        },
                     )
                 }
             }
-            ErrorOverlay(isError = isError)
+            ErrorOverlay(isError = isError, error = stringResource(id = R.string.text_unkown_error))
         }
     }
 }

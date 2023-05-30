@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.cesarandres.ps2link.R
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
@@ -19,6 +18,7 @@ import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SearchField
 import com.cramsan.ps2link.ui.items.OutfitItem
 import kotlinx.collections.immutable.ImmutableList
@@ -62,14 +62,14 @@ fun OutfitAddCompose(
                         OutfitItem(
                             tag = it.tag ?: "",
                             name = it.name ?: "",
-                            memberCount = it.memberCount,
+                            memberCount = stringResource(R.string.text_outfit_members, it.memberCount),
                             namespace = it.namespace,
                             onClick = { eventHandler.onOutfitSelected(it.id, it.namespace) },
                         )
                     }
                 }
                 LoadingOverlay(enabled = isLoading)
-                ErrorOverlay(isError = isError)
+                ErrorOverlay(isError = isError, error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error))
             }
         }
     }

@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.R
 import com.cramsan.ps2link.ui.SwipeToRefresh
 import com.cramsan.ps2link.ui.items.FriendItem
 import kotlinx.collections.immutable.ImmutableList
@@ -42,7 +44,7 @@ fun FriendListCompose(
                     )
                 }
             }
-            ErrorOverlay(isError = isError)
+            ErrorOverlay(isError = isError, error = stringResource(id = R.string.text_unkown_error))
         }
     }
 }

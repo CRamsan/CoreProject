@@ -33,31 +33,33 @@ import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.BoldButton
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.ErrorOverlay
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameBottom
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameCenter
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.FrameSlim
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.LoadingOverlay
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.SearchField
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.SlimButton
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.items.KillItem
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.items.ProfileItem
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.FontSize
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Padding
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.ScreenSizes
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.theme.Size
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.toColor
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.toStringResource
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.widgets.BR
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.widgets.BRBar
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.widgets.Cert
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.widgets.CertBar
-import com.cramsan.ps2link.network.ws.testgui.ui.lib.widgets.FactionIcon
+import com.cramsan.ps2link.ui.BoldButton
+import com.cramsan.ps2link.ui.ErrorOverlay
+import com.cramsan.ps2link.ui.FrameBottom
+import com.cramsan.ps2link.ui.FrameCenter
+import com.cramsan.ps2link.ui.FrameSlim
+import com.cramsan.ps2link.ui.LoadingOverlay
+import com.cramsan.ps2link.ui.SearchField
+import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.items.KillItem
+import com.cramsan.ps2link.ui.items.ProfileItem
+import com.cramsan.ps2link.ui.theme.Padding
+import com.cramsan.ps2link.ui.theme.Size
+import com.cramsan.ps2link.ui.toColor
+import com.cramsan.ps2link.ui.widgets.BR
+import com.cramsan.ps2link.ui.widgets.BRBar
+import com.cramsan.ps2link.ui.widgets.Cert
+import com.cramsan.ps2link.ui.widgets.CertBar
+import com.cramsan.ps2link.ui.widgets.FactionIcon
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseScreen
+import com.cramsan.ps2link.network.ws.testgui.ui.theme.ScreenSizes
+import com.cramsan.ps2link.ui.toText
+import com.cramsan.ps2link.ui.unknownString
 import kotlinx.collections.immutable.ImmutableList
 import org.ocpsoft.prettytime.PrettyTime
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import kotlin.math.roundToInt
 import kotlin.time.DurationUnit
 
@@ -172,7 +174,7 @@ private fun SearchFragment(
                     }
                 }
                 LoadingOverlay(enabled = isLoading)
-                ErrorOverlay(isError = isError)
+                ErrorOverlay(isError = isError, error = unknownString())
             }
         }
     }
@@ -207,7 +209,7 @@ private fun CharacterFragment(
                         ) {
                             Text(
                                 selectedPlayer.name ?: "UNKNOWN",
-                                fontSize = FontSize.title,
+                                style = MaterialTheme.typography.h1,
                             )
                             FactionIcon(
                                 modifier = Modifier.size(Size.xxlarge),
@@ -262,7 +264,7 @@ private fun CharacterFragment(
                                     Column(modifier = smallModifier) {
                                         Text(text = "STATUS:")
                                         Text(
-                                            text = selectedPlayer.loginStatus.toStringResource(),
+                                            text = selectedPlayer.loginStatus.toText(),
                                             color = selectedPlayer.loginStatus.toColor(),
                                         )
                                     }
@@ -334,7 +336,7 @@ private fun CharacterFragment(
                     }
                 }
                 LoadingOverlay(enabled = isLoading)
-                ErrorOverlay(isError = isError)
+                ErrorOverlay(isError = isError, error = unknownString())
             }
         }
         FrameBottom(
@@ -362,6 +364,8 @@ private fun CharacterFragment(
     }
 }
 
+var formatter = SimpleDateFormat("MMM dd hh:mm:ss a", Locale.getDefault())
+
 @Composable
 private fun KillFeedFragment(
     killList: ImmutableList<KillEvent>,
@@ -372,13 +376,17 @@ private fun KillFeedFragment(
     ) {
         LazyColumn {
             items(killList) {
+                val time = it.time?.let {
+                    formatter.format(Date(it.toEpochMilliseconds()))
+                } ?: ""
+
                 KillItem(
                     modifier = Modifier.fillMaxWidth(),
                     killType = it.killType,
                     faction = it.faction,
-                    attacker = it.attacker,
-                    time = it.time,
-                    weaponName = it.weaponName,
+                    attacker = it.attacker ?: "",
+                    time = time,
+                    weaponName = it.weaponName ?: "",
                     weaponImage = it.weaponImage,
                     onClick = { onEventSelected(it.characterId) },
                 )
