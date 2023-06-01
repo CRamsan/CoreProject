@@ -20,6 +20,12 @@ plugins {
     id("de.fayard.refreshVersions") version "0.51.0"
 }
 
+refreshVersions {
+    rejectVersionIf {
+        candidate.stabilityLevel != de.fayard.refreshVersions.core.StabilityLevel.Stable
+    }
+}
+
 include("framework:assert")
 include("framework:crashhandler")
 include("framework:core")
