@@ -1,11 +1,14 @@
 package com.cramsan.ps2link.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -43,14 +46,19 @@ fun SwipeToRefresh(
 @Composable
 fun SwipeToRefreshColumn(
     isLoading: Boolean,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     onRefreshRequested: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val pullRefreshState = rememberPullRefreshState(isLoading, onRefreshRequested)
+    val scrollState = rememberScrollState()
 
     Box(Modifier.pullRefresh(pullRefreshState)) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState),
+            horizontalAlignment = horizontalAlignment,
             content = content,
         )
 

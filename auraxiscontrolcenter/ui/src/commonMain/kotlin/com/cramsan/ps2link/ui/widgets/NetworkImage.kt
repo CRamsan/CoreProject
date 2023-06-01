@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 
 /**
@@ -20,15 +21,19 @@ fun NetworkImage(
     modifier: Modifier = Modifier,
     imageUrl: String? = null,
     contentDescription: String? = null,
+    placeHolderPainter: Painter = PlaceholderPainter(),
     contentScale: ContentScale = ContentScale.Fit,
 ) {
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        val painter = CertPainter()
-        if (imageUrl == null) {
-            println()
+
+
+        val painter = if (imageUrl == null) {
+            placeHolderPainter
+        } else {
+            AsyncPainter(imageUrl)
         }
         Image(
             modifier = Modifier.matchParentSize(),
@@ -38,3 +43,9 @@ fun NetworkImage(
         )
     }
 }
+
+@Composable
+internal expect fun PlaceholderPainter(): Painter
+
+@Composable
+internal expect fun AsyncPainter(imageUrl: String): Painter

@@ -16,6 +16,8 @@ android {
 }
 
 dependencies {
+    implementation (COIL.base)
+    implementation (COIL.compose)
     implementation (Google.android.material)
     implementation (AndroidX.compose.material.icons.core)
     implementation (AndroidX.compose.material.icons.extended)

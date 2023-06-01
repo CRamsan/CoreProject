@@ -44,85 +44,81 @@ fun OutfitCompose(
             isLoading = isLoading,
             onRefreshRequested = { eventHandler.onRefreshRequested() },
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                // Top Faction icon
-                FactionIcon(
-                    modifier = Modifier.size(Size.xxlarge),
-                    faction = faction ?: Faction.UNKNOWN,
-                )
+            // Top Faction icon
+            FactionIcon(
+                modifier = Modifier.size(Size.xxlarge),
+                faction = faction ?: Faction.UNKNOWN,
+            )
 
-                val mediumModifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Padding.medium)
-                val smallModifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Padding.small)
+            val mediumModifier = Modifier
+                .fillMaxWidth()
+                .padding(Padding.medium)
+            val smallModifier = Modifier
+                .fillMaxWidth()
+                .padding(Padding.small)
 
-                val formattedTag = tag?.let {
-                    stringResource(com.cramsan.ps2link.ui.R.string.text_outfit_tag, it)
-                } ?: ""
-                val displayName = name ?: stringResource(
-                    id = com.cramsan.ps2link.ui.R.string.text_unknown
-                )
+            val formattedTag = tag?.let {
+                stringResource(com.cramsan.ps2link.ui.R.string.text_outfit_tag, it)
+            } ?: ""
+            val displayName = name ?: stringResource(
+                id = com.cramsan.ps2link.ui.R.string.text_unknown
+            )
 
-                // Outfit name
-                FrameSlim(modifier = mediumModifier) {
-                    Row(modifier = smallModifier) {
-                        Text(
-                            text = "$formattedTag $displayName",
-                            style = MaterialTheme.typography.h5,
-                        )
-                    }
+            // Outfit name
+            FrameSlim(modifier = mediumModifier) {
+                Row(modifier = smallModifier) {
+                    Text(
+                        text = "$formattedTag $displayName",
+                        style = MaterialTheme.typography.h5,
+                    )
                 }
+            }
 
-                FrameSlim(modifier = mediumModifier) {
-                    Column(modifier = smallModifier) {
-                        // Leader
-                        FrameSlim(modifier = smallModifier) {
-                            Column(modifier = smallModifier) {
+            FrameSlim(modifier = mediumModifier) {
+                Column(modifier = smallModifier) {
+                    // Leader
+                    FrameSlim(modifier = smallModifier) {
+                        Column(modifier = smallModifier) {
+                            Text(
+                                text = stringResource(
+                                    com.cramsan.ps2link.ui.R.string.text_leader
+                                )
+                            )
+                            SlimButton(
+                                modifier = Modifier.fillMaxWidth(),
+                                enabled = leader != null,
+                                onClick = {
+                                    leader?.let {
+                                        eventHandler.onProfileSelected(it.characterId, it.namespace)
+                                    }
+                                },
+                            ) {
                                 Text(
-                                    text = stringResource(
-                                        com.cramsan.ps2link.ui.R.string.text_leader
+                                    text = leader?.name ?: stringResource(
+                                        com.cramsan.ps2link.ui.R.string.text_unknown
                                     )
                                 )
-                                SlimButton(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    enabled = leader != null,
-                                    onClick = {
-                                        leader?.let {
-                                            eventHandler.onProfileSelected(it.characterId, it.namespace)
-                                        }
-                                    },
-                                ) {
-                                    Text(
-                                        text = leader?.name ?: stringResource(
-                                            com.cramsan.ps2link.ui.R.string.text_unknown
-                                        )
-                                    )
-                                }
                             }
                         }
+                    }
 
-                        // Member count
-                        FrameSlim(modifier = smallModifier) {
-                            Column(modifier = smallModifier) {
-                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_members))
-                                Text(text = memberCount.toString())
-                            }
+                    // Member count
+                    FrameSlim(modifier = smallModifier) {
+                        Column(modifier = smallModifier) {
+                            Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_members))
+                            Text(text = memberCount.toString())
                         }
+                    }
 
-                        // Creation date
-                        FrameSlim(modifier = smallModifier) {
-                            Column(modifier = smallModifier) {
-                                Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_created))
-                                Text(
-                                    text = creationTime?.let {
-                                        formatter.format(Date(it.toEpochMilliseconds()))
-                                    } ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
-                                )
-                            }
+                    // Creation date
+                    FrameSlim(modifier = smallModifier) {
+                        Column(modifier = smallModifier) {
+                            Text(text = stringResource(com.cramsan.ps2link.ui.R.string.text_created))
+                            Text(
+                                text = creationTime?.let {
+                                    formatter.format(Date(it.toEpochMilliseconds()))
+                                } ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
+                            )
                         }
                     }
                 }

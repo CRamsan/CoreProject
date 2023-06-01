@@ -69,11 +69,19 @@ class StatListViewModel @Inject constructor(
             val lang = ps2Settings.getCurrentLang() ?: getCurrentLang()
             val response = pS2LinkRepository.getStatList(characterId, namespace, lang)
             if (response.isSuccessful) {
-                _statList.value = response.requireBody().toImmutableList()
+                _statList.value = mapToUIModels(response.requireBody())
                 loadingCompleted()
             } else {
                 loadingCompletedWithError()
             }
         }
+    }
+
+    private fun mapToUIModels(response: List<StatItem>): ImmutableList<StatItem> {
+        return response.map {
+            it.copy(
+                statName = it.statName?.replace("_", " ")?.uppercase()
+            )
+        }.toImmutableList()
     }
 }
