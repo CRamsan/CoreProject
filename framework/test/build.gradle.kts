@@ -9,6 +9,13 @@ android {
     namespace = "com.cramsan.framework.test"
 }
 
+kotlin {
+    js() {
+        nodejs()
+        browser()
+    }
+}
+
 dependencies {
     implementation(AndroidX.test.core)
     implementation(AndroidX.test.ext.junit)

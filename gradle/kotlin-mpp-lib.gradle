@@ -103,8 +103,6 @@ kotlin {
         }
 
         js() {
-            nodejs()
-            binaries.executable()
         }
 
     sourceSets {
