@@ -12,7 +12,7 @@ android {
 }
 
 kotlin {
-    js(IR) {
+    js() {
         browser {
             testTask {
                 testLogging.showStandardStreams = true

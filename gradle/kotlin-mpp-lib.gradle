@@ -18,6 +18,12 @@ apply plugin: "org.jetbrains.kotlin.multiplatform"
             targetCompatibility JavaVersion.VERSION_17
         }
 
+        packaging {
+            resources {
+                excludes += "/META-INF/**"
+            }
+        }
+
         kotlin {
             jvmToolchain(17)
         }
@@ -96,7 +102,7 @@ kotlin {
 
         }
 
-        js(IR) {
+        js() {
             nodejs()
             binaries.executable()
         }

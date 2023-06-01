@@ -39,11 +39,10 @@ android {
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 
-    packagingOptions {
-        exclude 'META-INF/**'
-        exclude "META-INF/licenses/**"
-        exclude "**/attach_hotspot_windows.dll"
-        // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
+    packaging {
+        resources {
+            excludes += "/META-INF/**"
+        }
     }
 
     testOptions {

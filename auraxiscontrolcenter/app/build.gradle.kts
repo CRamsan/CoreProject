@@ -46,10 +46,6 @@ android {
         }
     }
 
-    packagingOptions {
-        exclude("software/amazon/awssdk/global/handlers/execution.interceptors")
-    }
-
     buildFeatures {
         // Enables Jetpack Compose for this module
         compose = true

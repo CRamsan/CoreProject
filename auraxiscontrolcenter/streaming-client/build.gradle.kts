@@ -14,7 +14,7 @@ android {
  * Configure multiplatform project
  */
 kotlin {
-    js(IR) {
+    js() {
         browser {
             testTask {
                 enabled = false
