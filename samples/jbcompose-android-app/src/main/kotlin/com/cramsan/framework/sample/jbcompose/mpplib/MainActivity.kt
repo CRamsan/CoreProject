@@ -11,6 +11,9 @@ import com.cramsan.minesweepers.common.MainView
 import com.cramsan.minesweepers.common.game.Game
 import com.cramsan.minesweepers.common.game.Status
 
+/**
+ * Main entry point for the JB Compose Android sample app.
+ */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

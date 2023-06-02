@@ -21,6 +21,7 @@ import kotlinx.collections.immutable.persistentListOf
 /**
  * Render a lit of stats for a given profile.
  */
+@Suppress("MaximumLineLength")
 @Composable
 fun StatListCompose(
     statList: ImmutableList<StatItem>,
@@ -39,12 +40,19 @@ fun StatListCompose(
                         label = it.statName ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
                         allTime = it.allTime?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
                         today = it.today?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
-                        thisWeek = it.thisWeek?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
-                        thisMonth = it.thisMonth?.toString() ?: stringResource(com.cramsan.ps2link.ui.R.string.text_unknown),
+                        thisWeek = it.thisWeek?.toString() ?: stringResource(
+                            com.cramsan.ps2link.ui.R.string.text_unknown
+                        ),
+                        thisMonth = it.thisMonth?.toString() ?: stringResource(
+                            com.cramsan.ps2link.ui.R.string.text_unknown
+                        ),
                     )
                 }
             }
-            ErrorOverlay(isError = isError, error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error))
+            ErrorOverlay(
+                isError = isError,
+                error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error)
+            )
         }
     }
 }

@@ -15,6 +15,10 @@ dependencies {
 }
 
 kotlin {
+    js {
+        nodejs()
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {

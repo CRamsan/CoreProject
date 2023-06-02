@@ -1,0 +1,10 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+/**
+ * Configure the detekt plugin
+ */
+detekt {
+    dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0")
+    }
+}

@@ -102,7 +102,7 @@ kotlin {
 
         }
 
-        js() {
+        js {
         }
 
     sourceSets {

@@ -14,7 +14,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.cramsan.framework.sample.android.app.R
 import com.cramsan.framework.sample.android.app.UIEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
