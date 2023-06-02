@@ -10,7 +10,7 @@ android {
 }
 
 kotlin {
-    js() {
+    js {
         nodejs()
         browser()
     }

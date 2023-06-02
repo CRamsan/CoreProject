@@ -9,6 +9,7 @@ apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
 apply plugin: "androidx.navigation.safeargs.kotlin" // Enable  safe-args for Jetpack Navigation
 apply plugin: "dagger.hilt.android.plugin"
+apply from: "$rootDir/gradle/detekt.gradle"
 
 def composeCompiler = versionFor(project, "version.androidx.compose.compiler")
 android {

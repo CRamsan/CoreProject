@@ -8,3 +8,9 @@ apply(from = "$rootDir/gradle/kotlin-mpp-lib.gradle")
 android {
     namespace = "com.cramsan.framework.sample.mpp_lib"
 }
+
+kotlin {
+    js {
+        nodejs()
+    }
+}

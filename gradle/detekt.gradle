@@ -1,0 +1,38 @@
+import static de.fayard.refreshVersions.core.Versions.versionFor
+
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+def detektFormattingVersion = versionFor(project, "version.io.gitlab.arturbosch.detekt..detekt-formatting")
+
+
+/**
+ * Configure the detekt plugin
+ */
+detekt {
+    // For more information: https://detekt.github.io/detekt/gradle.html
+    buildUponDefaultConfig = true
+    autoCorrect = true
+
+    def localConfigFile = file("$projectDir/config/detekt-config.yml")
+    def globalConfigFile = file("$rootDir/config/detekt-config.yml")
+    if (localConfigFile.exists() && globalConfigFile.exists()) {
+        // Use both global and local config files
+        config = files(globalConfigFile.path, localConfigFile.path)
+    } else if (localConfigFile.exists()) {
+        // Global config file does not exist, use only the local one.
+        config = files(localConfigFile.path)
+    } else if (globalConfigFile.exists()) {
+        // Local config file does not exist, use only the global one.
+        config = files(globalConfigFile.path)
+    }
+
+    def baselineFile = file("$projectDir/config/detekt-baseline.xml")
+    if (baselineFile.exists()) {
+        // a way of suppressing issues before introducing detekt
+        baseline = baselineFile
+    }
+
+    dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektFormattingVersion")
+    }
+}

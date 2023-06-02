@@ -10,6 +10,10 @@ android {
 }
 
 kotlin {
+    js {
+        nodejs()
+    }
+
     sourceSets {
         commonMain {
             dependencies {

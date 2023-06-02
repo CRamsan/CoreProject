@@ -11,6 +11,7 @@ plugins {
     kotlin("plugin.serialization") apply false
     id("androidx.navigation.safeargs.kotlin") apply false
     id("com.squareup.sqldelight") apply false
+    id("io.gitlab.arturbosch.detekt") apply false
 }
 
 tasks.register("buildAll") {
