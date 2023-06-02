@@ -17,6 +17,10 @@ android {
 }
 
 kotlin {
+    js {
+        nodejs()
+    }
+
     sourceSets {
         all {
             languageSettings {

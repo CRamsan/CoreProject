@@ -36,7 +36,8 @@ fun RedditCompose(
         ) {
             items(redditContent) {
                 val creationTime = prettyTime.format(it.createdTime.toJavaInstant())
-                val subText = stringResource(id = R.string.twitter_upload_by, formatArgs = arrayOf(creationTime, it.author))
+                val subText =
+                    stringResource(id = R.string.twitter_upload_by, formatArgs = arrayOf(creationTime, it.author))
                 RedditPostItem(
                     modifier = Modifier.fillParentMaxWidth(),
                     imgUrl = it.imgUr,

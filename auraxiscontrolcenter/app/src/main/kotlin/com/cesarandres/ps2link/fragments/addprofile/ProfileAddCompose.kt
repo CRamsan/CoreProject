@@ -69,7 +69,10 @@ fun ProfileAddCompose(
                 }
 
                 LoadingOverlay(enabled = isLoading)
-                ErrorOverlay(isError = isError, error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error))
+                ErrorOverlay(
+                    isError = isError,
+                    error = stringResource(id = com.cramsan.ps2link.ui.R.string.text_unkown_error)
+                )
             }
         }
     }

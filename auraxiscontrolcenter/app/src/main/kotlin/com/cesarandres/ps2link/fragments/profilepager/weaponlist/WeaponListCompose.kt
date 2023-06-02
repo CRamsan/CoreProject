@@ -1,6 +1,5 @@
 package com.cesarandres.ps2link.fragments.profilepager.weaponlist
 
-import android.net.Uri
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,14 +52,16 @@ fun WeaponListCompose(
                         weaponName = it.weaponName ?: it.vehicleName ?: stringResource(R.string.text_unknown),
                         medalType = it.medalType ?: MedalType.NONE,
                         totalKills = stringResource(R.string.text_kills, totalKills ?: 0),
-                        totalVehiclesDestroyed = stringResource(R.string.text_vehicle_kills_, totalVehiclesDestroyed ?: 0),
+                        totalVehiclesDestroyed = stringResource(
+                            R.string.text_vehicle_kills_,
+                            totalVehiclesDestroyed ?: 0
+                        ),
                         totalHeadshotKills = stringResource(R.string.text_headshots_, totalHeadshotKills ?: 0),
                         NCKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.NC)?.let {
                             stringResource(R.string.text_nc_, it)
                         },
                         VSKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.VS)?.let {
                             stringResource(R.string.text_vs_, it)
-
                         },
                         TRKills = it.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.TR)?.let {
                             stringResource(R.string.text_tr_, it)
