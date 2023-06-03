@@ -7,6 +7,9 @@ import androidx.compose.ui.window.application
 import com.cramsan.minesweepers.common.MainView
 import com.cramsan.minesweepers.common.game.Game
 
+/**
+ *
+ */
 fun main() = application {
     val game = Game()
     game.loadAssetsAsync()

@@ -3,6 +3,7 @@
  */
 
 apply plugin: 'kotlin'
+apply from: "$rootDir/gradle/detekt.gradle"
 
 kotlin {
     jvmToolchain(17)

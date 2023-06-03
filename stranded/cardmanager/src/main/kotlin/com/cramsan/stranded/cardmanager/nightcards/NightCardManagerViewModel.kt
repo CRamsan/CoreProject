@@ -93,6 +93,7 @@ class NightCardManagerViewModel(
         )
     }
 
+    @Suppress("CyclomaticComplexMethod")
     private fun instantiateStatementList(): List<NightChangeStatement> {
         val sanitizedStatement = when (val statementToSanitize = _statement.value) {
             CancellableByFire, DestroyShelter, FireUnavailableTomorrow, SelectTargetQuantityAll,

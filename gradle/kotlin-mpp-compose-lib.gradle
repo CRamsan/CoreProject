@@ -5,6 +5,7 @@
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.compose"
+apply from: "$rootDir/gradle/detekt.gradle"
 
 android {
     compileSdkVersion 33

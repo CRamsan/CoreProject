@@ -205,6 +205,7 @@ class DemoGameViewModel(
         client.stop()
     }
 
+    @Suppress("CyclomaticComplexMethod", "LongMethod")
     override fun onServerEventReceived(serverEvent: ServerEvent) {
         when (serverEvent) {
             is Connected -> {

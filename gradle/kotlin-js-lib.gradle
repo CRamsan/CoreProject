@@ -3,6 +3,7 @@
  */
 
 apply plugin: "org.jetbrains.kotlin.js"
+apply from: "$rootDir/gradle/detekt.gradle"
 
 kotlin {
     js {

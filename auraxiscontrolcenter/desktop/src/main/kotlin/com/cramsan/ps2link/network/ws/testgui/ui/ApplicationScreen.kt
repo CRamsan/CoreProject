@@ -26,7 +26,7 @@ import androidx.compose.ui.window.rememberTrayState
 import androidx.compose.ui.window.rememberWindowState
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.ui.navigation.Navigator
-import com.cramsan.ps2link.network.ws.testgui.ui.theme.ScreenSizes
+import com.cramsan.ps2link.network.ws.testgui.ui.theme.Dimensions
 import com.cramsan.ps2link.ui.BoldButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import com.cramsan.ps2link.ui.theme.Shapes
@@ -47,8 +47,8 @@ fun ApplicationScope.ApplicationGUI(
     val trayState = rememberTrayState()
     val minWindowSize = remember {
         DpSize(
-            ScreenSizes.initialScreenWidth,
-            ScreenSizes.initialScreenHeight,
+            Dimensions.initialScreenWidth,
+            Dimensions.initialScreenHeight,
         )
     }
     var isFirstOpen by remember { mutableStateOf(true) }

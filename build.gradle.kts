@@ -63,4 +63,6 @@ tasks.register("buildAll") {
     dependsOn("samples:nodejs-app:build")
 
     dependsOn("cdk-repo:build")
+
+    dependsOn("tpsd:build")
 }

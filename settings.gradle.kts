@@ -70,4 +70,6 @@ include("samples:mpp-lib")
 include("samples:jvm-lib")
 include("samples:nodejs-app")
 
+include("tpsd")
+
 include("cdk-repo")

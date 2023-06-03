@@ -33,6 +33,8 @@ import com.cramsan.ps2link.appcore.census.DBGServiceClient
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.KillEvent
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseScreen
+import com.cramsan.ps2link.network.ws.testgui.ui.theme.Dimensions
 import com.cramsan.ps2link.ui.BoldButton
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
@@ -46,15 +48,13 @@ import com.cramsan.ps2link.ui.items.ProfileItem
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toColor
+import com.cramsan.ps2link.ui.toText
+import com.cramsan.ps2link.ui.unknownString
 import com.cramsan.ps2link.ui.widgets.BR
 import com.cramsan.ps2link.ui.widgets.BRBar
 import com.cramsan.ps2link.ui.widgets.Cert
 import com.cramsan.ps2link.ui.widgets.CertBar
 import com.cramsan.ps2link.ui.widgets.FactionIcon
-import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseScreen
-import com.cramsan.ps2link.network.ws.testgui.ui.theme.ScreenSizes
-import com.cramsan.ps2link.ui.toText
-import com.cramsan.ps2link.ui.unknownString
 import kotlinx.collections.immutable.ImmutableList
 import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
@@ -98,7 +98,7 @@ private fun MainScreenContent(
             FrameSlim(
                 modifier = Modifier
                     .width(IntrinsicSize.Max)
-                    .widthIn(ScreenSizes.maxColumnWidth / 2)
+                    .widthIn(Dimensions.maxColumnWidth / 2)
                     .fillMaxHeight(),
             ) {
                 SearchFragment(
@@ -114,7 +114,7 @@ private fun MainScreenContent(
             modifier = Modifier
                 .animateContentSize()
                 .width(IntrinsicSize.Max)
-                .widthIn(ScreenSizes.maxColumnWidth)
+                .widthIn(Dimensions.maxColumnWidth)
                 .fillMaxHeight(),
         ) {
             CharacterFragment(
