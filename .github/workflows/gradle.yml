@@ -16,6 +16,9 @@ on:
 permissions:
   contents: read
 
+env:
+  ANDROID_HOME: "/Users/cramsan/Library/Android/sdk"
+  
 jobs:
   build:
 
