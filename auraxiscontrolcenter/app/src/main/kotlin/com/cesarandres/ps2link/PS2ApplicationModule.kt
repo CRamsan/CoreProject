@@ -19,6 +19,7 @@ import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.assertlib.implementation.AssertUtilImpl
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.DispatcherProviderImpl
+import com.cramsan.framework.core.StringProvider
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.crashehandler.CrashHandlerDelegate
 import com.cramsan.framework.crashehandler.implementation.AppCenterCrashHandler
@@ -76,6 +77,7 @@ import com.cramsan.ps2link.appcore.repository.TwitterRepositoryImpl
 import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
 import com.cramsan.ps2link.appcore.twitter.TwitterClient
+import com.cramsan.ps2link.appfrontend.LanguageProvider
 import com.cramsan.ps2link.remoteconfig.RemoteConfigData
 import com.cramsan.ps2link.remoteconfig.defaultConfigPayload
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -442,4 +444,14 @@ object PS2ApplicationModule {
     ): FeatureFlagManager = FeatureFlagManagerImpl(
         remoteConfig,
     )
+
+    @Provides
+    @Singleton
+    fun provideLanguageProvider(): LanguageProvider = LanguageProvider()
+
+    @Provides
+    @Singleton
+    fun provideStringProvider(
+        @ApplicationContext appContext: Context
+    ): StringProvider = StringProvider(appContext)
 }

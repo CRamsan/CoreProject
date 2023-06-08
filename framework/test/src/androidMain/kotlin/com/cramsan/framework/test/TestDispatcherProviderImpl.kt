@@ -15,4 +15,5 @@ class TestDispatcherProviderImpl(
 ) : DispatcherProvider {
 
     override fun ioDispatcher() = ioDispatcher
+    override fun uiDispatcher() = ioDispatcher
 }

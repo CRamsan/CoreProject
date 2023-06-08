@@ -6,7 +6,6 @@ import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.MedalType
 import com.cramsan.ps2link.core.models.Namespace
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal expect fun CharacterClass.toPainter(): Painter

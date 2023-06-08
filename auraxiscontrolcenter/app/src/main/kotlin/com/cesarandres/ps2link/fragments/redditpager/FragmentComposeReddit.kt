@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.redditpager.RedditCompose
 import com.cramsan.ps2link.core.models.RedditPage
 import dagger.hilt.android.AndroidEntryPoint
 import org.ocpsoft.prettytime.PrettyTime
@@ -14,13 +15,13 @@ import javax.inject.Inject
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeReddit : BaseComposePS2Fragment<RedditViewModel>() {
+class FragmentComposeReddit : BaseComposePS2Fragment<RedditAndroidViewModel>() {
 
     @Inject
     lateinit var prettyTime: PrettyTime
 
     override val logTag = "FragmentComposeProfile"
-    override val viewModel: RedditViewModel by viewModels()
+    override val viewModel: RedditAndroidViewModel by viewModels()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,6 @@ class FragmentComposeReddit : BaseComposePS2Fragment<RedditViewModel>() {
             redditContent = redditContent.value,
             isLoading = isLoading.value,
             isError = isError.value,
-            prettyTime = prettyTime,
             eventHandler = viewModel,
         )
     }

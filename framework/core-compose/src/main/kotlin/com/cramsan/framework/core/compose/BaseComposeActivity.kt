@@ -6,9 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.lifecycleScope
 import com.cramsan.framework.core.BaseEvent
 import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.logging.logD
+import kotlinx.coroutines.launch
 
 /**
  * This class provides some helpful defaults that should be generally used when implementing new
@@ -34,11 +36,14 @@ abstract class BaseComposeActivity<T : BaseViewModel> : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logD(logTag, "onCreate")
-        viewModel.events().observe(this) {
-            it?.let { event ->
-                onViewModelEvent(event)
+
+        // Start a coroutine in the lifecycle scope
+        lifecycleScope.launch {
+            viewModel.events.collect {
+                onViewModelEvent(it)
             }
         }
+
         setContent {
             ApplyTheme {
                 CreateComposeContent()

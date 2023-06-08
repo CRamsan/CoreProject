@@ -14,7 +14,6 @@ import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
-import com.cramsan.ps2link.ui.unknownString
 import com.cramsan.ps2link.ui.widgets.NamespaceIcon
 
 @Composable

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.profilepager.weaponlist.WeaponListCompose
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,10 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListViewModel>() {
+class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListAndroidViewModel>() {
 
     override val logTag = "FragmentComposeProfile"
-    override val viewModel: WeaponListViewModel by viewModels()
+    override val viewModel: WeaponListAndroidViewModel by viewModels()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {

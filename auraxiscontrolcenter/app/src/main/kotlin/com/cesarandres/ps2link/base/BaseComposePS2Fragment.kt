@@ -6,22 +6,24 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
-import com.cesarandres.ps2link.fragments.OpenAbout
-import com.cesarandres.ps2link.fragments.OpenOutfit
-import com.cesarandres.ps2link.fragments.OpenOutfitList
-import com.cesarandres.ps2link.fragments.OpenProfile
-import com.cesarandres.ps2link.fragments.OpenProfileList
-import com.cesarandres.ps2link.fragments.OpenReddit
-import com.cesarandres.ps2link.fragments.OpenServerList
-import com.cesarandres.ps2link.fragments.OpenTwitter
-import com.cesarandres.ps2link.fragments.OpenUrl
+import com.cesarandres.ps2link.fragments.outfitpager.FragmentOutfitPagerArgs
+import com.cesarandres.ps2link.fragments.profilepager.FragmentProfilePagerArgs
 import com.cesarandres.ps2link.toMetadataMap
+import com.cramsan.framework.core.BaseAndroidViewModel
 import com.cramsan.framework.core.BaseEvent
-import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.compose.ComposeBaseFragment
 import com.cramsan.framework.logging.logW
 import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
+import com.cramsan.ps2link.appfrontend.OpenAbout
+import com.cramsan.ps2link.appfrontend.OpenOutfit
+import com.cramsan.ps2link.appfrontend.OpenOutfitList
+import com.cramsan.ps2link.appfrontend.OpenProfile
+import com.cramsan.ps2link.appfrontend.OpenProfileList
+import com.cramsan.ps2link.appfrontend.OpenReddit
+import com.cramsan.ps2link.appfrontend.OpenServerList
+import com.cramsan.ps2link.appfrontend.OpenTwitter
+import com.cramsan.ps2link.appfrontend.OpenUrl
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import javax.inject.Inject
 
@@ -33,7 +35,7 @@ import javax.inject.Inject
 /**
  * @author cramsan
  */
-abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<VM>() {
+abstract class BaseComposePS2Fragment<VM : BaseAndroidViewModel> : ComposeBaseFragment<VM>() {
 
     @Inject
     protected lateinit var dbgCensus: DBGServiceClient
@@ -49,12 +51,14 @@ abstract class BaseComposePS2Fragment<VM : BaseViewModel> : ComposeBaseFragment<
         super.onViewModelEvent(event)
         when (event) {
             is OpenProfile -> {
-                logEvent(logTag, event.javaClass.simpleName, event.args.toBundle().toMetadataMap())
-                findNavController().navigate(R.id.fragmentProfilePager, event.args.toBundle(), navigationOptions)
+                val args = FragmentProfilePagerArgs(event.characterId, event.namespace)
+                logEvent(logTag, event.javaClass.simpleName, args.toBundle().toMetadataMap())
+                findNavController().navigate(R.id.fragmentProfilePager, args.toBundle(), navigationOptions)
             }
             is OpenOutfit -> {
-                logEvent(logTag, event.javaClass.simpleName, event.args.toBundle().toMetadataMap())
-                findNavController().navigate(R.id.fragmentOutfitPager, event.args.toBundle(), navigationOptions)
+                val args = FragmentOutfitPagerArgs(event.outfitId, event.namespace)
+                logEvent(logTag, event.javaClass.simpleName, args.toBundle().toMetadataMap())
+                findNavController().navigate(R.id.fragmentOutfitPager, args.toBundle(), navigationOptions)
             }
             is OpenProfileList -> {
                 logEvent(logTag, event.javaClass.simpleName)

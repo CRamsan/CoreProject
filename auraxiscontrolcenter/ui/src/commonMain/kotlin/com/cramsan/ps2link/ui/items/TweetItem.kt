@@ -21,11 +21,7 @@ import com.cramsan.ps2link.ui.widgets.NetworkImage
 @Suppress("FunctionNaming")
 fun TweetItem(
     modifier: Modifier = Modifier,
-    username: String,
-    handle: String,
-    content: String,
-    avatarUrl: String,
-    creationTime: String,
+    model: PS2TweetUIModel,
     onClick: () -> Unit = {},
 ) {
     SlimButton(
@@ -34,15 +30,15 @@ fun TweetItem(
     ) {
         Column {
             Row {
-                Text(username)
+                Text(model.user)
                 Text(
                     modifier = Modifier.weight(1f).padding(horizontal = Padding.small).align(CenterVertically),
-                    text = handle,
+                    text = model.tag,
                     style = MaterialTheme.typography.caption,
                 )
                 Text(
                     modifier = Modifier.align(CenterVertically),
-                    text = creationTime,
+                    text = model.creationTime,
                     style = MaterialTheme.typography.overline,
                 )
             }
@@ -51,14 +47,24 @@ fun TweetItem(
                     modifier = Modifier.size(Size.xxlarge)
                         .padding(Padding.small)
                         .align(CenterVertically),
-                    imageUrl = avatarUrl,
+                    imageUrl = model.imgUrl,
                 )
                 Text(
                     modifier = Modifier.weight(1f)
                         .padding(vertical = Padding.medium),
-                    text = content,
+                    text = model.content,
                 )
             }
         }
     }
 }
+
+data class PS2TweetUIModel(
+    val user: String,
+    val content: String,
+    val tag: String,
+    val creationTime: String,
+    val imgUrl: String,
+    val id: String,
+    val sourceUrl: String,
+)

@@ -13,7 +13,7 @@ actual fun unknownString(): String {
 
 @Composable
 internal actual fun KillType.toText(): String {
-    return when(this) {
+    return when (this) {
         KillType.KILL -> "KILL"
         KillType.KILLEDBY -> "KILLED BY"
         KillType.SUICIDE -> "SUICIDE"
@@ -23,7 +23,7 @@ internal actual fun KillType.toText(): String {
 
 @Composable
 actual fun LoginStatus.toText(): String {
-    return when(this) {
+    return when (this) {
         LoginStatus.ONLINE -> "ONLINE"
         LoginStatus.OFFLINE -> "OFFLINE"
         LoginStatus.UNKNOWN -> "UNKNOWN"
@@ -32,7 +32,7 @@ actual fun LoginStatus.toText(): String {
 
 @Composable
 actual fun ServerStatus.toText(): String {
-    return when(this) {
+    return when (this) {
         ServerStatus.ONLINE -> "ONLINE"
         ServerStatus.OFFLINE -> "OFFLINE"
         ServerStatus.LOCKED -> "LOCKED"
@@ -42,7 +42,7 @@ actual fun ServerStatus.toText(): String {
 
 @Composable
 actual fun Population.toText(): String {
-    return when(this) {
+    return when (this) {
         Population.HIGH -> "HIGH"
         Population.MEDIUM -> "MEDIUM"
         Population.LOW -> "LOW"

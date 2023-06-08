@@ -30,7 +30,7 @@ private fun LcdDisplay(
     Row {
         repeat(digits) {
             val digit = value.toString().padStart(digits)[it].digitToIntOrNull()
-            val imageBitmap = when(digit) {
+            val imageBitmap = when (digit) {
                 0 -> Assets.lcdNumberZero()
                 1 -> Assets.lcdNumberOne()
                 2 -> Assets.lcdNumberTwo()

@@ -113,6 +113,4 @@ object Assets {
     internal fun arrowDown() = _arrowDown
     internal fun arrowLeft() = _arrowLeft
     internal fun arrowRight() = _arrowRight
-
-
 }

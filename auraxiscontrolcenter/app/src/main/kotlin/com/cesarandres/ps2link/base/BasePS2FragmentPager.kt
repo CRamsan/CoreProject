@@ -10,13 +10,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.cesarandres.ps2link.databinding.FragmentPagerBinding
-import com.cramsan.framework.core.BaseViewModel
+import com.cramsan.framework.core.BaseAndroidViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * This fragment holds a generic view pager
  */
-abstract class BasePS2FragmentPager<VM : BaseViewModel> : BasePS2Fragment<VM>() {
+abstract class BasePS2FragmentPager<VM : BaseAndroidViewModel> : BasePS2Fragment<VM>() {
 
     override val logTag = "BasePS2FragmentPager"
 

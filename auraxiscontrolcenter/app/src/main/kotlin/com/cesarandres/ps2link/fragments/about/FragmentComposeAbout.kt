@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments.about
 import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.about.AboutCompose
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -11,10 +12,10 @@ import dagger.hilt.android.AndroidEntryPoint
  * buttons if those have been set.
  */
 @AndroidEntryPoint
-class FragmentComposeAbout : BaseComposePS2Fragment<AboutViewModel>() {
+class FragmentComposeAbout : BaseComposePS2Fragment<AboutAndroidViewModel>() {
 
     override val logTag = "FragmentComposeAbout"
-    override val viewModel: AboutViewModel by viewModels()
+    override val viewModel: AboutAndroidViewModel by viewModels()
 
     @Composable
     override fun CreateComposeContent() {

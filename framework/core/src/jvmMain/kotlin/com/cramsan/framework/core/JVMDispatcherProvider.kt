@@ -9,4 +9,6 @@ class JVMDispatcherProvider : DispatcherProvider {
 
     @Suppress("InjectDispatcher")
     override fun ioDispatcher() = Dispatchers.IO
+
+    override fun uiDispatcher() = Dispatchers.Main
 }

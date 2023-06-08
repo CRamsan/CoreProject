@@ -47,9 +47,9 @@
     <ID>TooManyFunctions:PS2ApplicationModule.kt$PS2ApplicationModule$PS2ApplicationModule</ID>
     <ID>UndocumentedPublicClass:AboutCompose.kt$AboutEventHandler</ID>
     <ID>UndocumentedPublicClass:AboutViewModel.kt$AboutViewModel : BasePS2ViewModelAboutEventHandler</ID>
-    <ID>UndocumentedPublicClass:ActivityContainerViewModel.kt$ActivityContainerViewModel : BasePS2ViewModel</ID>
+    <ID>UndocumentedPublicClass:ActivityContainerViewModel.kt$ActivityContainerViewModel : com.cramsan.ps2link.appfrontend.BasePS2ViewModel</ID>
     <ID>UndocumentedPublicClass:ApplicationPS2Link.kt$ApplicationPS2Link : Application</ID>
-    <ID>UndocumentedPublicClass:BasePS2ViewModel.kt$BasePS2ViewModel : BaseViewModel</ID>
+    <ID>UndocumentedPublicClass:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel : BaseViewModel</ID>
     <ID>UndocumentedPublicClass:Events.kt$OpenAbout : BaseEvent</ID>
     <ID>UndocumentedPublicClass:Events.kt$OpenOutfit : BaseEvent</ID>
     <ID>UndocumentedPublicClass:Events.kt$OpenOutfitList : BaseEvent</ID>
@@ -60,42 +60,42 @@
     <ID>UndocumentedPublicClass:Events.kt$OpenTwitter : BaseEvent</ID>
     <ID>UndocumentedPublicClass:Events.kt$OpenUrl : BaseEvent</ID>
     <ID>UndocumentedPublicClass:FriendListCompose.kt$FriendListEventHandler</ID>
-    <ID>UndocumentedPublicClass:FriendListViewModel.kt$FriendListViewModel : BasePS2ViewModelFriendListEventHandler</ID>
+    <ID>UndocumentedPublicClass:FriendListAndroidViewModel.kt$FriendListViewModel : BasePS2ViewModelFriendListEventHandler</ID>
     <ID>UndocumentedPublicClass:KillListCompose.kt$KillListEventHandler</ID>
-    <ID>UndocumentedPublicClass:KillListViewModel.kt$KillListViewModel : BasePS2ViewModelKillListEventHandler</ID>
+    <ID>UndocumentedPublicClass:KillListAndroidViewModel.kt$KillListViewModel : BasePS2ViewModelKillListEventHandler</ID>
     <ID>UndocumentedPublicClass:MainMenuCompose.kt$MainMenuEventHandler</ID>
-    <ID>UndocumentedPublicClass:MainMenuViewModel.kt$MainMenuViewModel : BasePS2ViewModelMainMenuEventHandler</ID>
+    <ID>UndocumentedPublicClass:MainMenuAndroidViewModel.kt$MainMenuViewModel : BasePS2ViewModelMainMenuEventHandler</ID>
     <ID>UndocumentedPublicClass:MembersCompose.kt$MemberListEventHandler</ID>
-    <ID>UndocumentedPublicClass:MembersViewModel.kt$MembersViewModel : BasePS2ViewModelMemberListEventHandler</ID>
+    <ID>UndocumentedPublicClass:MembersAndroidViewModel.kt$MembersViewModel : BasePS2ViewModelMemberListEventHandler</ID>
     <ID>UndocumentedPublicClass:Namespace.kt$Namespace</ID>
     <ID>UndocumentedPublicClass:OnlineMembersCompose.kt$OnlineMemberEventHandler</ID>
-    <ID>UndocumentedPublicClass:OnlineMembersViewModel.kt$OnlineMembersViewModel : BasePS2ViewModelOnlineMemberEventHandler</ID>
+    <ID>UndocumentedPublicClass:OnlineMembersAndroidViewModel.kt$OnlineMembersViewModel : BasePS2ViewModelOnlineMemberEventHandler</ID>
     <ID>UndocumentedPublicClass:OutfitAddCompose.kt$OutfitAddEventHandler</ID>
-    <ID>UndocumentedPublicClass:OutfitAddViewModel.kt$OutfitAddViewModel : BasePS2ViewModelOutfitAddEventHandler</ID>
+    <ID>UndocumentedPublicClass:OutfitAddAndroidViewModel.kt$OutfitAddViewModel : BasePS2ViewModelOutfitAddEventHandler</ID>
     <ID>UndocumentedPublicClass:OutfitCompose.kt$OutfitEventHandler</ID>
     <ID>UndocumentedPublicClass:OutfitListCompose.kt$OutfitListEventHandler</ID>
-    <ID>UndocumentedPublicClass:OutfitListViewModel.kt$OutfitListViewModel : BasePS2ViewModelOutfitListEventHandler</ID>
-    <ID>UndocumentedPublicClass:OutfitPagerViewModel.kt$OutfitPagerViewModel : BasePS2ViewModel</ID>
-    <ID>UndocumentedPublicClass:OutfitViewModel.kt$OutfitViewModel : BasePS2ViewModelOutfitEventHandler</ID>
+    <ID>UndocumentedPublicClass:OutfitListAndroidViewModel.kt$OutfitListViewModel : BasePS2ViewModelOutfitListEventHandler</ID>
+    <ID>UndocumentedPublicClass:OutfitPagerViewModel.kt$OutfitPagerViewModel : com.cramsan.ps2link.appfrontend.BasePS2ViewModel</ID>
+    <ID>UndocumentedPublicClass:OutfitAndroidViewModel.kt$OutfitViewModel : BasePS2ViewModelOutfitEventHandler</ID>
     <ID>UndocumentedPublicClass:PS2ApplicationModule.kt$PS2ApplicationModule</ID>
     <ID>UndocumentedPublicClass:PS2ApplicationModuleConstants.kt$PS2ApplicationModuleConstants</ID>
     <ID>UndocumentedPublicClass:ProfileAddCompose.kt$ProfileAddEventHandler</ID>
-    <ID>UndocumentedPublicClass:ProfileAddViewModel.kt$ProfileAddViewModel : BasePS2ViewModelProfileAddEventHandler</ID>
+    <ID>UndocumentedPublicClass:ProfileAddAndroidViewModel.kt$ProfileAddViewModel : BasePS2ViewModelProfileAddEventHandler</ID>
     <ID>UndocumentedPublicClass:ProfileCompose.kt$ProfileEventHandler</ID>
     <ID>UndocumentedPublicClass:ProfileListCompose.kt$ProfileListEventHandler</ID>
-    <ID>UndocumentedPublicClass:ProfileListViewModel.kt$ProfileListViewModel : BasePS2ViewModelProfileListEventHandler</ID>
-    <ID>UndocumentedPublicClass:ProfilePagerViewModel.kt$ProfilePagerViewModel : BasePS2ViewModel</ID>
-    <ID>UndocumentedPublicClass:ProfileViewModel.kt$ProfileViewModel : BasePS2ViewModelProfileEventHandler</ID>
+    <ID>UndocumentedPublicClass:ProfileListAndroidViewModel.kt$ProfileListViewModel : BasePS2ViewModelProfileListEventHandler</ID>
+    <ID>UndocumentedPublicClass:ProfilePagerViewModel.kt$ProfilePagerViewModel : com.cramsan.ps2link.appfrontend.BasePS2ViewModel</ID>
+    <ID>UndocumentedPublicClass:ProfileAndroidViewModel.kt$ProfileViewModel : BasePS2ViewModelProfileEventHandler</ID>
     <ID>UndocumentedPublicClass:RedditCompose.kt$RedditEventHandler</ID>
-    <ID>UndocumentedPublicClass:RedditViewModel.kt$RedditViewModel : BasePS2ViewModelRedditEventHandler</ID>
+    <ID>UndocumentedPublicClass:RedditAndroidViewModel.kt$RedditViewModel : BasePS2ViewModelRedditEventHandler</ID>
     <ID>UndocumentedPublicClass:ServerListCompose.kt$ServerListEventHandler</ID>
-    <ID>UndocumentedPublicClass:ServerListViewModel.kt$ServerListViewModel : BasePS2ViewModelServerListEventHandler</ID>
+    <ID>UndocumentedPublicClass:ServerListAndroidViewModel.kt$ServerListViewModel : BasePS2ViewModelServerListEventHandler</ID>
     <ID>UndocumentedPublicClass:StatListCompose.kt$StatListEventHandler</ID>
-    <ID>UndocumentedPublicClass:StatListViewModel.kt$StatListViewModel : BasePS2ViewModelStatListEventHandler</ID>
+    <ID>UndocumentedPublicClass:StatListAndroidViewModel.kt$StatListViewModel : BasePS2ViewModelStatListEventHandler</ID>
     <ID>UndocumentedPublicClass:TweetListCompose.kt$TweetListComposeEventHandler</ID>
-    <ID>UndocumentedPublicClass:TwitterListViewModel.kt$TwitterListViewModel : BasePS2ViewModelTweetListComposeEventHandler</ID>
+    <ID>UndocumentedPublicClass:TwitterListAndroidViewModel.kt$TwitterListViewModel : BasePS2ViewModelTweetListComposeEventHandler</ID>
     <ID>UndocumentedPublicClass:WeaponListCompose.kt$WeaponListEventHandler</ID>
-    <ID>UndocumentedPublicClass:WeaponListViewModel.kt$WeaponListViewModel : BasePS2ViewModelWeaponListEventHandler</ID>
+    <ID>UndocumentedPublicClass:WeaponListAndroidViewModel.kt$WeaponListViewModel : BasePS2ViewModelWeaponListEventHandler</ID>
     <ID>UndocumentedPublicFunction:AboutCompose.kt$@Composable fun AboutCompose( eventHandler: AboutEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:AboutCompose.kt$@Preview( widthDp = 900, heightDp = 400, ) @Composable fun AboutPreview()</ID>
     <ID>UndocumentedPublicFunction:AboutCompose.kt$AboutEventHandler$fun onAboutClick()</ID>
@@ -104,9 +104,9 @@
     <ID>UndocumentedPublicFunction:BasePS2FragmentPager.kt$BasePS2FragmentPager$abstract fun createFragment(position: Int): Fragment</ID>
     <ID>UndocumentedPublicFunction:BasePS2FragmentPager.kt$BasePS2FragmentPager$abstract fun itemCount(): Int</ID>
     <ID>UndocumentedPublicFunction:BasePS2FragmentPager.kt$BasePS2FragmentPager$abstract fun pageTitle(position: Int): CharSequence</ID>
-    <ID>UndocumentedPublicFunction:BasePS2ViewModel.kt$BasePS2ViewModel$fun loadingCompleted()</ID>
-    <ID>UndocumentedPublicFunction:BasePS2ViewModel.kt$BasePS2ViewModel$fun loadingCompletedWithError()</ID>
-    <ID>UndocumentedPublicFunction:BasePS2ViewModel.kt$BasePS2ViewModel$fun loadingStarted()</ID>
+    <ID>UndocumentedPublicFunction:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$fun loadingCompleted()</ID>
+    <ID>UndocumentedPublicFunction:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$fun loadingCompletedWithError()</ID>
+    <ID>UndocumentedPublicFunction:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$fun loadingStarted()</ID>
     <ID>UndocumentedPublicFunction:Extensions.kt$fun Bundle.toMetadataMap(): Map&lt;String, String></ID>
     <ID>UndocumentedPublicFunction:Extensions.kt$fun getCurrentLang()</ID>
     <ID>UndocumentedPublicFunction:Extensions.kt$fun getLang()</ID>
@@ -123,12 +123,12 @@
     <ID>UndocumentedPublicFunction:FriendListCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:FriendListCompose.kt$FriendListEventHandler$fun onProfileSelected(profileId: String, namespace: Namespace)</ID>
     <ID>UndocumentedPublicFunction:FriendListCompose.kt$FriendListEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:FriendListViewModel.kt$FriendListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:FriendListAndroidViewModel.kt$FriendListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:KillListCompose.kt$@Composable fun KillListCompose( killList: List&lt;KillEvent>, isLoading: Boolean, isError: Boolean, eventHandler: KillListEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:KillListCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:KillListCompose.kt$KillListEventHandler$fun onProfileSelected(profileId: String, namespace: Namespace)</ID>
     <ID>UndocumentedPublicFunction:KillListCompose.kt$KillListEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:KillListViewModel.kt$KillListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:KillListAndroidViewModel.kt$KillListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:MainMenuCompose.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun MainMenuCompose( preferredProfile: Character?, preferredOutfit: Outfit?, eventHandler: MainMenuEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:MainMenuCompose.kt$@Preview( showBackground = true, backgroundColor = 0xFF000000, ) @Composable fun NormalButtonPreview()</ID>
     <ID>UndocumentedPublicFunction:MainMenuCompose.kt$MainMenuEventHandler$fun onAboutClick()</ID>
@@ -139,24 +139,24 @@
     <ID>UndocumentedPublicFunction:MainMenuCompose.kt$MainMenuEventHandler$fun onRedditClick()</ID>
     <ID>UndocumentedPublicFunction:MainMenuCompose.kt$MainMenuEventHandler$fun onServersClick()</ID>
     <ID>UndocumentedPublicFunction:MainMenuCompose.kt$MainMenuEventHandler$fun onTwitterClick()</ID>
-    <ID>UndocumentedPublicFunction:MainMenuViewModel.kt$MainMenuViewModel$fun updateUI()</ID>
+    <ID>UndocumentedPublicFunction:MainMenuAndroidViewModel.kt$MainMenuViewModel$fun updateUI()</ID>
     <ID>UndocumentedPublicFunction:MembersCompose.kt$@Composable fun MemberListCompose( memberList: List&lt;Character>, isLoading: Boolean, isError: Boolean, eventHandler: MemberListEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:MembersCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:MembersCompose.kt$MemberListEventHandler$fun onProfileSelected(profileId: String, namespace: Namespace)</ID>
     <ID>UndocumentedPublicFunction:MembersCompose.kt$MemberListEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:MembersViewModel.kt$MembersViewModel$fun setUp(outfitId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:MembersAndroidViewModel.kt$MembersViewModel$fun setUp(outfitId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:Namespace.kt$fun Namespace.toCoreModel(): com.cramsan.ps2link.core.models.Namespace</ID>
     <ID>UndocumentedPublicFunction:OnlineMembersCompose.kt$@Composable fun OnlineMembersCompose( memberList: List&lt;Character>, isLoading: Boolean, isError: Boolean, eventHandler: OnlineMemberEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:OnlineMembersCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:OnlineMembersCompose.kt$OnlineMemberEventHandler$fun onProfileSelected(profileId: String, namespace: Namespace)</ID>
     <ID>UndocumentedPublicFunction:OnlineMembersCompose.kt$OnlineMemberEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:OnlineMembersViewModel.kt$OnlineMembersViewModel$fun setUp(outfitId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:OnlineMembersAndroidViewModel.kt$OnlineMembersViewModel$fun setUp(outfitId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:OutfitAddCompose.kt$@Composable fun OutfitAddCompose( tagSearchField: String, nameSearchField: String, outfitItems: List&lt;Outfit>, isLoading: Boolean, isError: Boolean, eventHandler: OutfitAddEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:OutfitAddCompose.kt$@OptIn(ExperimentalTime::class) @Preview @Composable fun OutfitAddComposePreview()</ID>
     <ID>UndocumentedPublicFunction:OutfitAddCompose.kt$OutfitAddEventHandler$fun onNameFieldUpdated(searchField: String)</ID>
     <ID>UndocumentedPublicFunction:OutfitAddCompose.kt$OutfitAddEventHandler$fun onOutfitSelected(outfitId: String, namespace: Namespace)</ID>
     <ID>UndocumentedPublicFunction:OutfitAddCompose.kt$OutfitAddEventHandler$fun onTagFieldUpdated(searchField: String)</ID>
-    <ID>UndocumentedPublicFunction:OutfitAddViewModel.kt$OutfitAddViewModel$@OptIn(ExperimentalTime::class) fun search(tag: String, name: String)</ID>
+    <ID>UndocumentedPublicFunction:OutfitAddAndroidViewModel.kt$OutfitAddViewModel$@OptIn(ExperimentalTime::class) fun search(tag: String, name: String)</ID>
     <ID>UndocumentedPublicFunction:OutfitCompose.kt$@Composable fun OutfitCompose( name: String? = null, tag: String? = null, leader: Character? = null, memberCount: Long = 0, creationTime: Instant? = null, faction: Faction?, isLoading: Boolean, eventHandler: OutfitEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:OutfitCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:OutfitCompose.kt$OutfitEventHandler$fun onProfileSelected(profileId: String, namespace: Namespace)</ID>
@@ -169,7 +169,7 @@
     <ID>UndocumentedPublicFunction:OutfitPagerViewModel.kt$OutfitPagerViewModel$suspend fun pinOutfit()</ID>
     <ID>UndocumentedPublicFunction:OutfitPagerViewModel.kt$OutfitPagerViewModel$suspend fun removeOutfit()</ID>
     <ID>UndocumentedPublicFunction:OutfitPagerViewModel.kt$OutfitPagerViewModel$suspend fun unpinOutfit()</ID>
-    <ID>UndocumentedPublicFunction:OutfitViewModel.kt$OutfitViewModel$fun setUp(outfitId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:OutfitAndroidViewModel.kt$OutfitViewModel$fun setUp(outfitId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:PS2ApplicationModule.kt$PS2ApplicationModule$@Provides @Named(ACCESS_TOKEN) fun provideTwitterAccessToken(): String</ID>
     <ID>UndocumentedPublicFunction:PS2ApplicationModule.kt$PS2ApplicationModule$@Provides @Named(ACCESS_TOKEN_SECRET) fun provideTwitterAccessTokenSecret(): String</ID>
     <ID>UndocumentedPublicFunction:PS2ApplicationModule.kt$PS2ApplicationModule$@Provides @Named(APP_CENTER_ID) fun provideAppCenterId(): String</ID>
@@ -228,31 +228,31 @@
     <ID>UndocumentedPublicFunction:ProfilePagerViewModel.kt$ProfilePagerViewModel$suspend fun pinCharacter()</ID>
     <ID>UndocumentedPublicFunction:ProfilePagerViewModel.kt$ProfilePagerViewModel$suspend fun removeCharacter()</ID>
     <ID>UndocumentedPublicFunction:ProfilePagerViewModel.kt$ProfilePagerViewModel$suspend fun unpinCharacter()</ID>
-    <ID>UndocumentedPublicFunction:ProfileViewModel.kt$ProfileViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:ProfileAndroidViewModel.kt$ProfileViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:RedditCompose.kt$@Composable fun RedditCompose( redditContent: List&lt;RedditPost>, isLoading: Boolean, isError: Boolean, prettyTime: PrettyTime, eventHandler: RedditEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:RedditCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:RedditCompose.kt$RedditEventHandler$fun onImageSelected(redditPost: RedditPost)</ID>
     <ID>UndocumentedPublicFunction:RedditCompose.kt$RedditEventHandler$fun onPostSelected(redditPost: RedditPost)</ID>
     <ID>UndocumentedPublicFunction:RedditCompose.kt$RedditEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:RedditViewModel.kt$RedditViewModel$fun setUp(redditPage: RedditPage)</ID>
+    <ID>UndocumentedPublicFunction:RedditAndroidViewModel.kt$RedditViewModel$fun setUp(redditPage: RedditPage)</ID>
     <ID>UndocumentedPublicFunction:ServerListCompose.kt$@Composable fun ServerListCompose( serverItems: List&lt;Server>, isLoading: Boolean, isError: Boolean, eventHandler: ServerListEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:ServerListCompose.kt$@Preview @Composable fun ServerListPreview()</ID>
     <ID>UndocumentedPublicFunction:ServerListCompose.kt$ServerListEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:ServerListViewModel.kt$ServerListViewModel$fun setUp()</ID>
+    <ID>UndocumentedPublicFunction:ServerListAndroidViewModel.kt$ServerListViewModel$fun setUp()</ID>
     <ID>UndocumentedPublicFunction:StatListCompose.kt$@Composable fun StatListCompose( statList: List&lt;StatItem>, isLoading: Boolean, isError: Boolean, eventHandler: StatListEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:StatListCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:StatListCompose.kt$StatListEventHandler$fun onProfileSelected(profileId: String, namespace: Namespace)</ID>
     <ID>UndocumentedPublicFunction:StatListCompose.kt$StatListEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:StatListViewModel.kt$StatListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:StatListAndroidViewModel.kt$StatListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicFunction:TweetListCompose.kt$@Composable fun TweetListCompose( users: Map&lt;TwitterUser, Boolean>, tweetItems: List&lt;PS2Tweet>, isLoading: Boolean, isError: Boolean, prettyTime: PrettyTime, eventHandler: TweetListComposeEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:TweetListCompose.kt$@Preview @Composable fun ServerListPreview()</ID>
     <ID>UndocumentedPublicFunction:TweetListCompose.kt$TweetListComposeEventHandler$fun onRefreshRequested()</ID>
     <ID>UndocumentedPublicFunction:TweetListCompose.kt$TweetListComposeEventHandler$fun onTwitterUserClicked(twitterUser: TwitterUser)</ID>
-    <ID>UndocumentedPublicFunction:TwitterListViewModel.kt$TwitterListViewModel$fun setUp()</ID>
+    <ID>UndocumentedPublicFunction:TwitterListAndroidViewModel.kt$TwitterListViewModel$fun setUp()</ID>
     <ID>UndocumentedPublicFunction:WeaponListCompose.kt$@Composable fun WeaponListCompose( faction: Faction, weaponList: List&lt;WeaponItem>, isLoading: Boolean, isError: Boolean, eventHandler: WeaponListEventHandler, )</ID>
     <ID>UndocumentedPublicFunction:WeaponListCompose.kt$@Preview @Composable fun Preview()</ID>
     <ID>UndocumentedPublicFunction:WeaponListCompose.kt$WeaponListEventHandler$fun onRefreshRequested()</ID>
-    <ID>UndocumentedPublicFunction:WeaponListViewModel.kt$WeaponListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
+    <ID>UndocumentedPublicFunction:WeaponListAndroidViewModel.kt$WeaponListViewModel$fun setUp(characterId: String?, namespace: Namespace?)</ID>
     <ID>UndocumentedPublicProperty:ApplicationPS2Link.kt$ApplicationPS2Link$@Inject @Named(PS2ApplicationModuleConstants.APP_CENTER_ID) lateinit var appCenterId: String</ID>
     <ID>UndocumentedPublicProperty:ApplicationPS2Link.kt$ApplicationPS2Link$@Inject lateinit var assertUtil: AssertUtilInterface</ID>
     <ID>UndocumentedPublicProperty:ApplicationPS2Link.kt$ApplicationPS2Link$@Inject lateinit var crashHandler: CrashHandler</ID>
@@ -263,8 +263,8 @@
     <ID>UndocumentedPublicProperty:ApplicationPS2Link.kt$ApplicationPS2Link$@Inject lateinit var userEvents: UserEventsInterface</ID>
     <ID>UndocumentedPublicProperty:ApplicationPS2Link.kt$ApplicationPS2Link.Companion$const val TAG = "ApplicationPS2Link"</ID>
     <ID>UndocumentedPublicProperty:BaseComposePS2Fragment.kt$BaseComposePS2Fragment$val navigationOptions = NavOptions.Builder() .setEnterAnim(R.anim.nav_default_enter_anim) .setExitAnim(R.anim.nav_default_exit_anim) .build()</ID>
-    <ID>UndocumentedPublicProperty:BasePS2ViewModel.kt$BasePS2ViewModel$val isError = _isError.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:BasePS2ViewModel.kt$BasePS2ViewModel$val isLoading = _isLoading.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$val isError = _isError.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$val isLoading = _isLoading.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:Events.kt$OpenOutfit$val args = FragmentOutfitPagerArgs(outfitId, namespace)</ID>
     <ID>UndocumentedPublicProperty:Events.kt$OpenOutfit$val namespace: Namespace</ID>
     <ID>UndocumentedPublicProperty:Events.kt$OpenOutfit$val outfitId: String</ID>
@@ -276,45 +276,45 @@
     <ID>UndocumentedPublicProperty:FragmentComposeReddit.kt$FragmentComposeReddit$@Inject lateinit var prettyTime: PrettyTime</ID>
     <ID>UndocumentedPublicProperty:FragmentComposeTwitterList.kt$FragmentComposeTwitterList$@Inject lateinit var prettyTime: PrettyTime</ID>
     <ID>UndocumentedPublicProperty:FragmentOutfitPager.kt$FragmentOutfitPager$val args: FragmentOutfitPagerArgs by navArgs()</ID>
-    <ID>UndocumentedPublicProperty:FriendListViewModel.kt$FriendListViewModel$lateinit var characterId: String</ID>
-    <ID>UndocumentedPublicProperty:FriendListViewModel.kt$FriendListViewModel$lateinit var namespace: Namespace</ID>
-    <ID>UndocumentedPublicProperty:FriendListViewModel.kt$FriendListViewModel$val friendList = _friendList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:KillListViewModel.kt$KillListViewModel$lateinit var characterId: String</ID>
-    <ID>UndocumentedPublicProperty:KillListViewModel.kt$KillListViewModel$lateinit var namespace: Namespace</ID>
-    <ID>UndocumentedPublicProperty:KillListViewModel.kt$KillListViewModel$val killList = _killList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:MainMenuViewModel.kt$MainMenuViewModel$val preferredOutfit: Flow&lt;Outfit?> = _preferredOutfitId.transform { outfitId -> if (outfitId.isNullOrBlank()) { emit(null) logEvent(logTag, EVENT_PREFERRED_OUTFIT, mapOf(PARAMETER_PRESENT to false.toString())) return@transform } logEvent(logTag, EVENT_PREFERRED_OUTFIT, mapOf(PARAMETER_PRESENT to true.toString())) val namespace = ps2Settings.getPreferredOutfitNamespace() assertNotNull(namespace, logTag, "Namespace cannot be null") if (namespace != null) { emit(Outfit(outfitId, cached = false, namespace = namespace)) // TODO: Fix wrong language val response = pS2LinkRepository.getOutfit(outfitId, namespace, getCurrentLang()) if (response.isSuccessful) { emit(response.requireBody()) } else { emit(null) } } else { emit(null) } }.flowOn(dispatcherProvider.ioDispatcher())</ID>
-    <ID>UndocumentedPublicProperty:MainMenuViewModel.kt$MainMenuViewModel$val preferredProfile: Flow&lt;Character?> = _preferredProfileId.transform { profileId -> if (profileId.isNullOrBlank()) { emit(null) logEvent(logTag, EVENT_PREFERRED_PROFILE, mapOf(PARAMETER_PRESENT to false.toString())) return@transform } logEvent(logTag, EVENT_PREFERRED_PROFILE, mapOf(PARAMETER_PRESENT to true.toString())) val namespace = ps2Settings.getPreferredProfileNamespace() assertNotNull(namespace, logTag, "Namespace cannot be null") if (namespace != null) { emit(Character(profileId, cached = false, namespace = namespace)) // TODO: Fix wrong language val response = pS2LinkRepository.getCharacter(profileId, namespace, getCurrentLang()) if (response.isSuccessful) { emit(response.requireBody()) } else { emit(null) } } else { emit(null) } }.flowOn(dispatcherProvider.ioDispatcher())</ID>
-    <ID>UndocumentedPublicProperty:MainMenuViewModel.kt$MainMenuViewModel.Companion$const val EVENT_PREFERRED_OUTFIT = "preferredOutfit"</ID>
-    <ID>UndocumentedPublicProperty:MainMenuViewModel.kt$MainMenuViewModel.Companion$const val EVENT_PREFERRED_PROFILE = "preferredProfile"</ID>
-    <ID>UndocumentedPublicProperty:MainMenuViewModel.kt$MainMenuViewModel.Companion$const val PARAMETER_PRESENT = "present"</ID>
-    <ID>UndocumentedPublicProperty:MembersViewModel.kt$MembersViewModel$val memberList = _memberList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:OnlineMembersViewModel.kt$OnlineMembersViewModel$val memberList = _memberList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:OutfitAddViewModel.kt$OutfitAddViewModel$val nameSearchQuery = _nameSearchQuery.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:OutfitAddViewModel.kt$OutfitAddViewModel$val outfitList = _outfitList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:OutfitAddViewModel.kt$OutfitAddViewModel$val tagSearchQuery = _tagSearchQuery.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:FriendListAndroidViewModel.kt$FriendListViewModel$lateinit var characterId: String</ID>
+    <ID>UndocumentedPublicProperty:FriendListAndroidViewModel.kt$FriendListViewModel$lateinit var namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:FriendListAndroidViewModel.kt$FriendListViewModel$val friendList = _friendList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:KillListAndroidViewModel.kt$KillListViewModel$lateinit var characterId: String</ID>
+    <ID>UndocumentedPublicProperty:KillListAndroidViewModel.kt$KillListViewModel$lateinit var namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:KillListAndroidViewModel.kt$KillListViewModel$val killList = _killList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:MainMenuAndroidViewModel.kt$MainMenuViewModel$val preferredOutfit: Flow&lt;Outfit?> = _preferredOutfitId.transform { outfitId -> if (outfitId.isNullOrBlank()) { emit(null) logEvent(logTag, EVENT_PREFERRED_OUTFIT, mapOf(PARAMETER_PRESENT to false.toString())) return@transform } logEvent(logTag, EVENT_PREFERRED_OUTFIT, mapOf(PARAMETER_PRESENT to true.toString())) val namespace = ps2Settings.getPreferredOutfitNamespace() assertNotNull(namespace, logTag, "Namespace cannot be null") if (namespace != null) { emit(Outfit(outfitId, cached = false, namespace = namespace)) // TODO: Fix wrong language val response = pS2LinkRepository.getOutfit(outfitId, namespace, getCurrentLang()) if (response.isSuccessful) { emit(response.requireBody()) } else { emit(null) } } else { emit(null) } }.flowOn(dispatcherProvider.ioDispatcher())</ID>
+    <ID>UndocumentedPublicProperty:MainMenuAndroidViewModel.kt$MainMenuViewModel$val preferredProfile: Flow&lt;Character?> = _preferredProfileId.transform { profileId -> if (profileId.isNullOrBlank()) { emit(null) logEvent(logTag, EVENT_PREFERRED_PROFILE, mapOf(PARAMETER_PRESENT to false.toString())) return@transform } logEvent(logTag, EVENT_PREFERRED_PROFILE, mapOf(PARAMETER_PRESENT to true.toString())) val namespace = ps2Settings.getPreferredProfileNamespace() assertNotNull(namespace, logTag, "Namespace cannot be null") if (namespace != null) { emit(Character(profileId, cached = false, namespace = namespace)) // TODO: Fix wrong language val response = pS2LinkRepository.getCharacter(profileId, namespace, getCurrentLang()) if (response.isSuccessful) { emit(response.requireBody()) } else { emit(null) } } else { emit(null) } }.flowOn(dispatcherProvider.ioDispatcher())</ID>
+    <ID>UndocumentedPublicProperty:MainMenuAndroidViewModel.kt$MainMenuViewModel.Companion$const val EVENT_PREFERRED_OUTFIT = "preferredOutfit"</ID>
+    <ID>UndocumentedPublicProperty:MainMenuAndroidViewModel.kt$MainMenuViewModel.Companion$const val EVENT_PREFERRED_PROFILE = "preferredProfile"</ID>
+    <ID>UndocumentedPublicProperty:MainMenuAndroidViewModel.kt$MainMenuViewModel.Companion$const val PARAMETER_PRESENT = "present"</ID>
+    <ID>UndocumentedPublicProperty:MembersAndroidViewModel.kt$MembersViewModel$val memberList = _memberList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:OnlineMembersAndroidViewModel.kt$OnlineMembersViewModel$val memberList = _memberList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:OutfitAddAndroidViewModel.kt$OutfitAddViewModel$val nameSearchQuery = _nameSearchQuery.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:OutfitAddAndroidViewModel.kt$OutfitAddViewModel$val outfitList = _outfitList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:OutfitAddAndroidViewModel.kt$OutfitAddViewModel$val tagSearchQuery = _tagSearchQuery.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:OutfitCompose.kt$var formatter = SimpleDateFormat("MMMM dd, yyyy")</ID>
-    <ID>UndocumentedPublicProperty:OutfitListViewModel.kt$OutfitListViewModel$val outfitList = _outfitList.asLiveData()</ID>
+    <ID>UndocumentedPublicProperty:OutfitListAndroidViewModel.kt$OutfitListViewModel$val outfitList = _outfitList.asLiveData()</ID>
     <ID>UndocumentedPublicProperty:OutfitPagerViewModel.kt$OutfitPagerViewModel$val displayAddOutfit = _displayAddOutfit.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:OutfitPagerViewModel.kt$OutfitPagerViewModel$val displayPreferOutfit = _displayPreferOutfit.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:OutfitPagerViewModel.kt$OutfitPagerViewModel$val displayRemoveOutfit = _displayRemoveOutfit.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:OutfitPagerViewModel.kt$OutfitPagerViewModel$val displayUnpreferOutfit = _displayUnpreferOutfit.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:OutfitPagerViewModel.kt$OutfitPagerViewModel$val title: Flow&lt;String?> by lazy { profile.map { it?.name } }</ID>
-    <ID>UndocumentedPublicProperty:OutfitViewModel.kt$OutfitViewModel$// State lateinit var outfit: Flow&lt;Outfit?></ID>
+    <ID>UndocumentedPublicProperty:OutfitAndroidViewModel.kt$OutfitViewModel$// State lateinit var outfit: Flow&lt;Outfit?></ID>
     <ID>UndocumentedPublicProperty:PS2ApplicationModuleConstants.kt$PS2ApplicationModuleConstants$const val APP_CENTER_ID = "APP_CENTER_ID"</ID>
     <ID>UndocumentedPublicProperty:PS2ApplicationModuleConstants.kt$PS2ApplicationModuleConstants$const val APP_SCOPE = "APP_SCOPE"</ID>
     <ID>UndocumentedPublicProperty:PS2ApplicationModuleConstants.kt$PS2ApplicationModuleConstants$const val AWS_ACCESS_KEY = "AWS_ACCESS_KEY"</ID>
     <ID>UndocumentedPublicProperty:PS2ApplicationModuleConstants.kt$PS2ApplicationModuleConstants$const val AWS_SECRET_KEY = "AWS_SECRET_KEY"</ID>
     <ID>UndocumentedPublicProperty:PS2ApplicationModuleConstants.kt$PS2ApplicationModuleConstants$const val CENSUS_SERVICE_ID = "CENSUS_SERVICE_ID"</ID>
-    <ID>UndocumentedPublicProperty:ProfileAddViewModel.kt$ProfileAddViewModel$val profileList = _profileList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:ProfileAddViewModel.kt$ProfileAddViewModel$val searchQuery = _searchQuery.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:ProfileListViewModel.kt$ProfileListViewModel$val profileList = _profileList.asLiveData()</ID>
+    <ID>UndocumentedPublicProperty:ProfileAddAndroidViewModel.kt$ProfileAddViewModel$val profileList = _profileList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:ProfileAddAndroidViewModel.kt$ProfileAddViewModel$val searchQuery = _searchQuery.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:ProfileListAndroidViewModel.kt$ProfileListViewModel$val profileList = _profileList.asLiveData()</ID>
     <ID>UndocumentedPublicProperty:ProfilePagerViewModel.kt$ProfilePagerViewModel$val displayAddCharacter = _displayAddCharacter.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:ProfilePagerViewModel.kt$ProfilePagerViewModel$val displayPreferProfile = _displayPreferProfile.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:ProfilePagerViewModel.kt$ProfilePagerViewModel$val displayRemoveCharacter = _displayRemoveCharacter.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:ProfilePagerViewModel.kt$ProfilePagerViewModel$val displayUnpreferProfile = _displayUnpreferProfile.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:ProfilePagerViewModel.kt$ProfilePagerViewModel$val title: Flow&lt;String?> by lazy { profile.map { it?.name } }</ID>
-    <ID>UndocumentedPublicProperty:ProfileViewModel.kt$ProfileViewModel$// State lateinit var profile: Flow&lt;Character?></ID>
-    <ID>UndocumentedPublicProperty:RedditViewModel.kt$RedditViewModel$val redditContent = _redditContent.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:ProfileAndroidViewModel.kt$ProfileViewModel$// State lateinit var profile: Flow&lt;Character?></ID>
+    <ID>UndocumentedPublicProperty:RedditAndroidViewModel.kt$RedditViewModel$val redditContent = _redditContent.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:SQLiteManager.kt$SQLiteManager.Companion$val CACHE_COLUMN_SAVES = "cached"</ID>
     <ID>UndocumentedPublicProperty:SQLiteManager.kt$SQLiteManager.Companion$val CHARACTERS_COLUMN_ACTIVE_PROFILE_ID = "active_profile_id"</ID>
     <ID>UndocumentedPublicProperty:SQLiteManager.kt$SQLiteManager.Companion$val CHARACTERS_COLUMN_CURRENT_POINTS = "current_points"</ID>
@@ -348,12 +348,12 @@
     <ID>UndocumentedPublicProperty:SQLiteManager.kt$SQLiteManager.Companion$val TABLE_OUTFITS_NAME = "outfits"</ID>
     <ID>UndocumentedPublicProperty:SQLiteManager.kt$SQLiteManager.Companion$val TABLE_WORLDS_NAME = "worlds"</ID>
     <ID>UndocumentedPublicProperty:SQLiteManager.kt$SQLiteManager.Companion$val WORLDS_COLUMN_ID = "world_id"</ID>
-    <ID>UndocumentedPublicProperty:ServerListViewModel.kt$ServerListViewModel$val serverList = _serverList.asLiveData()</ID>
-    <ID>UndocumentedPublicProperty:StatListViewModel.kt$StatListViewModel$val statList = _statList.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:TwitterListViewModel.kt$TwitterListViewModel$// State val tweetList = twitterRepository.getTweetsAsFlow().map { response -> if (response == null) { return@map emptyList() } if (response.isSuccessful) { loadingCompleted() response.requireBody().sortedByDescending { twit -> twit.date } } else { loadingCompletedWithError() emptyList() } }.asLiveData()</ID>
-    <ID>UndocumentedPublicProperty:TwitterListViewModel.kt$TwitterListViewModel$val twitterUsers = twitterRepository.getTwitterUsersAsFlow().asLiveData()</ID>
-    <ID>UndocumentedPublicProperty:WeaponListViewModel.kt$WeaponListViewModel$val faction = _faction.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:WeaponListViewModel.kt$WeaponListViewModel$val weaponList = _weaponList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:ServerListAndroidViewModel.kt$ServerListViewModel$val serverList = _serverList.asLiveData()</ID>
+    <ID>UndocumentedPublicProperty:StatListAndroidViewModel.kt$StatListViewModel$val statList = _statList.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:TwitterListAndroidViewModel.kt$TwitterListViewModel$// State val tweetList = twitterRepository.getTweetsAsFlow().map { response -> if (response == null) { return@map emptyList() } if (response.isSuccessful) { loadingCompleted() response.requireBody().sortedByDescending { twit -> twit.date } } else { loadingCompletedWithError() emptyList() } }.asLiveData()</ID>
+    <ID>UndocumentedPublicProperty:TwitterListAndroidViewModel.kt$TwitterListViewModel$val twitterUsers = twitterRepository.getTwitterUsersAsFlow().asLiveData()</ID>
+    <ID>UndocumentedPublicProperty:WeaponListAndroidViewModel.kt$WeaponListViewModel$val faction = _faction.asStateFlow()</ID>
+    <ID>UndocumentedPublicProperty:WeaponListAndroidViewModel.kt$WeaponListViewModel$val weaponList = _weaponList.asStateFlow()</ID>
     <ID>VariableNaming:ObjectDataSource.kt$ObjectDataSource$private val TAG = "ObjectDataSource"</ID>
     <ID>VariableNaming:ObjectDataSource.kt$ObjectDataSource$val character_id = cursor.getString(0)</ID>
   </CurrentIssues>

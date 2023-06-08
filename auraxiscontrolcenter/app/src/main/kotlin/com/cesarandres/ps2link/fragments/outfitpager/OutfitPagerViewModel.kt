@@ -1,15 +1,12 @@
 package com.cesarandres.ps2link.fragments.outfitpager
 
-import android.app.Application
-import androidx.lifecycle.SavedStateHandle
-import com.cesarandres.ps2link.base.BasePS2ViewModel
 import com.cesarandres.ps2link.getCurrentLang
-import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.appcore.network.requireBody
-import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appfrontend.BasePS2AndroidViewModel
+import com.cramsan.ps2link.appfrontend.NoopPS2ViewModel
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,19 +18,13 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Suppress("UndocumentedPublicClass")
 @HiltViewModel
 class OutfitPagerViewModel @Inject constructor(
-    application: Application,
     pS2LinkRepository: PS2LinkRepository,
-    pS2Settings: PS2Settings,
-    dispatcherProvider: DispatcherProvider,
-    savedStateHandle: SavedStateHandle,
-) : BasePS2ViewModel(
-    application,
-    pS2LinkRepository,
-    pS2Settings,
-    dispatcherProvider,
-    savedStateHandle,
+    viewModel: NoopPS2ViewModel,
+) : BasePS2AndroidViewModel<NoopPS2ViewModel>(
+    viewModel,
 ) {
 
     override val logTag: String

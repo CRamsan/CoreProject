@@ -15,5 +15,5 @@ sealed class Tile(
     data class Adjacent(
         val risk: Int,
         override val coverMode: TileCoverMode,
-    ): Tile(coverMode)
+    ) : Tile(coverMode)
 }

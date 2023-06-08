@@ -41,7 +41,7 @@ internal fun ResetButton(
     )
 }
 
-private fun FaceButtonState.toImageBitmap(): ImageBitmap = when(this) {
+private fun FaceButtonState.toImageBitmap(): ImageBitmap = when (this) {
     FaceButtonState.NORMAL -> Assets.buttonNormal()
     FaceButtonState.DEAD -> Assets.buttonDead()
     FaceButtonState.PRESSED -> Assets.buttonPressed()

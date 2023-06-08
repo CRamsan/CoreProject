@@ -5,16 +5,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.serverlist.ServerListCompose
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeServerList : BaseComposePS2Fragment<ServerListViewModel>() {
+class FragmentComposeServerList : BaseComposePS2Fragment<ServerListAndroidViewModel>() {
 
     override val logTag = "FragmentComposeServerList"
-    override val viewModel: ServerListViewModel by viewModels()
+    override val viewModel: ServerListAndroidViewModel by viewModels()
 
     @Composable
     override fun CreateComposeContent() {

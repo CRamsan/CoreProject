@@ -1,23 +1,9 @@
 package com.cesarandres.ps2link.fragments.mainmenu
 
-import androidx.annotation.MainThread
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.cesarandres.ps2link.R
+import com.cramsan.ps2link.appfrontend.mainmenu.MainMenuCompose
+import com.cramsan.ps2link.appfrontend.mainmenu.MainMenuEventHandler
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
@@ -25,98 +11,8 @@ import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.core.models.Server
-import com.cramsan.ps2link.ui.FrameBottom
-import com.cramsan.ps2link.ui.MainMenuButton
 import com.cramsan.ps2link.ui.theme.PS2Theme
 import kotlinx.datetime.Instant
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun MainMenuCompose(
-    preferredProfile: Character?,
-    preferredOutfit: Outfit?,
-    eventHandler: MainMenuEventHandler,
-) {
-    FrameBottom {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 50.dp)
-                .verticalScroll(rememberScrollState())
-                .wrapContentWidth()
-                .animateContentSize(),
-        ) {
-            Spacer(modifier = Modifier.height(50.dp))
-            val buttonModifier = Modifier
-                .padding(10.dp)
-                .fillMaxWidth()
-            AnimatedVisibility(preferredProfile != null) {
-                MainMenuButton(
-                    buttonModifier,
-                    label = preferredProfile?.name,
-                    star = true,
-                ) {
-                    preferredProfile?.let {
-                        eventHandler.onPreferredProfileClick(it.characterId, it.namespace)
-                    }
-                }
-            }
-            AnimatedVisibility(preferredOutfit != null) {
-                MainMenuButton(
-                    buttonModifier,
-                    label = preferredOutfit?.name,
-                    star = true,
-                ) {
-                    preferredOutfit?.let {
-                        eventHandler.onPreferredOutfitClick(it.id, it.namespace)
-                    }
-                }
-            }
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(com.cramsan.ps2link.ui.R.string.title_profiles),
-                star = false,
-            ) { eventHandler.onProfileClick() }
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(com.cramsan.ps2link.ui.R.string.title_server),
-                star = false,
-            ) { eventHandler.onServersClick() }
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(com.cramsan.ps2link.ui.R.string.title_outfits),
-                star = false,
-            ) { eventHandler.onOutfitsClick() }
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(com.cramsan.ps2link.ui.R.string.title_twitter),
-                star = false,
-            ) { eventHandler.onTwitterClick() }
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(com.cramsan.ps2link.ui.R.string.title_reddit),
-                star = false,
-            ) { eventHandler.onRedditClick() }
-            MainMenuButton(
-                buttonModifier,
-                label = stringResource(com.cramsan.ps2link.ui.R.string.title_about),
-                star = false,
-            ) { eventHandler.onAboutClick() }
-            Spacer(modifier = Modifier.height(50.dp))
-        }
-    }
-}
-
-@MainThread
-interface MainMenuEventHandler {
-    fun onPreferredProfileClick(characterId: String, namespace: Namespace)
-    fun onPreferredOutfitClick(outfitId: String, namespace: Namespace)
-    fun onProfileClick()
-    fun onServersClick()
-    fun onOutfitsClick()
-    fun onTwitterClick()
-    fun onRedditClick()
-    fun onAboutClick()
-}
 
 @Preview(
     showBackground = true,

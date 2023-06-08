@@ -1,5 +1,3 @@
-import de.fayard.refreshVersions.core.versionFor
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")

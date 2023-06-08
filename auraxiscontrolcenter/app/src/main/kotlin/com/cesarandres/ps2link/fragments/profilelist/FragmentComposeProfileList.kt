@@ -8,11 +8,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cesarandres.ps2link.R
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.profilelist.ProfileListCompose
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.collections.immutable.persistentListOf
 
@@ -20,14 +21,14 @@ import kotlinx.collections.immutable.persistentListOf
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListViewModel>() {
+class FragmentComposeProfileList : BaseComposePS2Fragment<ProfileListAndroidViewModel>() {
 
     override val logTag = "FragmentComposeProfileList"
-    override val viewModel: ProfileListViewModel by viewModels()
+    override val viewModel: ProfileListAndroidViewModel by viewModels()
 
     @Composable
     override fun CreateComposeContent() {
-        val profileList = viewModel.profileList.observeAsState(persistentListOf())
+        val profileList = viewModel.profileList.collectAsState(initial = persistentListOf())
         ProfileListCompose(
             profileItems = profileList.value,
             eventHandler = viewModel,

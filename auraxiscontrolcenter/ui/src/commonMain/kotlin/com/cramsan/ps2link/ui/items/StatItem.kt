@@ -16,10 +16,10 @@ import com.cramsan.ps2link.ui.theme.Padding
 fun StatItem(
     modifier: Modifier = Modifier,
     label: String,
-    allTime: String,
-    today: String,
-    thisWeek: String,
-    thisMonth: String,
+    allTime: Double?,
+    today: Double?,
+    thisWeek: Double?,
+    thisMonth: Double?,
 ) {
     SlimButton(
         modifier = modifier,
@@ -34,26 +34,38 @@ fun StatItem(
                 Text(
                     modifier = statModifier,
                     style = style,
-                    text = allTime,
+                    text = TextAllTime(allTime),
                 )
                 Text(
                     modifier = statModifier,
                     style = style,
-                    text = today,
+                    text = TextToday(today),
                 )
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     modifier = statModifier,
                     style = style,
-                    text = thisWeek,
+                    text = TextThisWeek(thisWeek),
                 )
                 Text(
                     modifier = statModifier,
                     style = style,
-                    text = thisMonth,
+                    text = TextThisMonth(thisMonth),
                 )
             }
         }
     }
 }
+
+@Composable
+expect fun TextAllTime(value: Double?): String
+
+@Composable
+expect fun TextToday(value: Double?): String
+
+@Composable
+expect fun TextThisWeek(value: Double?): String
+
+@Composable
+expect fun TextThisMonth(value: Double?): String

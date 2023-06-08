@@ -29,7 +29,6 @@ fun NetworkImage(
         contentAlignment = Alignment.Center,
     ) {
 
-
         val painter = if (imageUrl == null) {
             placeHolderPainter
         } else {

@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.lifecycleScope
+import com.cramsan.framework.core.BaseAndroidViewModel
 import com.cramsan.framework.core.BaseFragment
-import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.BaseViewModelFragment
+import kotlinx.coroutines.launch
 
 /**
  * This class extends [BaseFragment] with the capabilities to render a Compose screen. The [viewModel]
  * is a required field. If this class does not need a viewModel, then [NoopViewModel] can be used.
  */
-abstract class ComposeBaseFragment<VM : BaseViewModel> : BaseViewModelFragment<VM>() {
+abstract class ComposeBaseFragment<VM : BaseAndroidViewModel> : BaseViewModelFragment<VM>() {
 
     @CallSuper
     override fun onCreateView(
@@ -24,13 +26,14 @@ abstract class ComposeBaseFragment<VM : BaseViewModel> : BaseViewModelFragment<V
         savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        viewModel.events().observe(
-            viewLifecycleOwner,
-        ) {
-            it?.let { event ->
-                onViewModelEvent(event)
+
+        // Start a coroutine in the lifecycle scope
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.events.collect {
+                onViewModelEvent(it)
             }
         }
+
         return ComposeView(requireContext()).apply {
             setContent {
                 ApplyTheme {

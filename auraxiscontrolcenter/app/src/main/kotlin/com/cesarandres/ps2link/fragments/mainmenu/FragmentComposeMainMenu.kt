@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.mainmenu.MainMenuCompose
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -12,10 +13,10 @@ import dagger.hilt.android.AndroidEntryPoint
  * buttons if those have been set.
  */
 @AndroidEntryPoint
-class FragmentComposeMainMenu : BaseComposePS2Fragment<MainMenuViewModel>() {
+class FragmentComposeMainMenu : BaseComposePS2Fragment<MainMenuAndroidViewModel>() {
 
     override val logTag = "FragmentComposeMainMenu"
-    override val viewModel: MainMenuViewModel by viewModels()
+    override val viewModel: MainMenuAndroidViewModel by viewModels()
 
     @Composable
     override fun CreateComposeContent() {

@@ -4,16 +4,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.addoutfit.OutfitAddCompose
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragment to display the list of locally stored outfits.
  */
 @AndroidEntryPoint
-class FragmentComposeOutfitAdd : BaseComposePS2Fragment<OutfitAddViewModel>() {
+class FragmentComposeOutfitAdd : BaseComposePS2Fragment<OutfitAddAndroidViewModel>() {
 
     override val logTag = "FragmentComposeOutfitAdd"
-    override val viewModel: OutfitAddViewModel by viewModels()
+    override val viewModel: OutfitAddAndroidViewModel by viewModels()
 
     @Composable
     override fun CreateComposeContent() {

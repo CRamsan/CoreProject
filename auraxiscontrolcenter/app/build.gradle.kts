@@ -76,6 +76,7 @@ dependencies {
     implementation(project(":framework:utils"))
 
     implementation(project(":auraxiscontrolcenter:appcore"))
+    implementation(project(":auraxiscontrolcenter:app-frontend"))
     implementation(project(":auraxiscontrolcenter:core-models"))
     implementation(project(":auraxiscontrolcenter:deployable-models"))
     implementation(project(":auraxiscontrolcenter:ui"))

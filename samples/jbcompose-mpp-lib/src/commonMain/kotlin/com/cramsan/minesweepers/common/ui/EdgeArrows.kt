@@ -13,7 +13,7 @@ import com.cramsan.minesweepers.common.ui.theme.Padding
 
 @Composable
 internal fun ArrowDownRow(modifier: Modifier) {
-    Row (modifier = modifier) {
+    Row(modifier = modifier) {
         repeat(3) {
             Image(
                 Assets.arrowDown(),
@@ -32,7 +32,7 @@ internal fun ArrowDownRow(modifier: Modifier) {
 
 @Composable
 internal fun ArrowUpRow(modifier: Modifier) {
-    Row (modifier = modifier) {
+    Row(modifier = modifier) {
         repeat(3) {
             Image(
                 Assets.arrowUp(),

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.outfitpager.outfit.OutfitCompose
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.time.ExperimentalTime
@@ -13,10 +14,10 @@ import kotlin.time.ExperimentalTime
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeOutfit : BaseComposePS2Fragment<OutfitViewModel>() {
+class FragmentComposeOutfit : BaseComposePS2Fragment<OutfitAndroidViewModel>() {
 
     override val logTag = "FragmentComposeOutfit"
-    override val viewModel: OutfitViewModel by viewModels()
+    override val viewModel: OutfitAndroidViewModel by viewModels()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {

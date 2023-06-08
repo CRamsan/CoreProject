@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.viewModels
 import com.cesarandres.ps2link.base.BaseComposePS2Fragment
+import com.cramsan.ps2link.appfrontend.profilepager.profile.ProfileCompose
 import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 import org.ocpsoft.prettytime.PrettyTime
@@ -15,13 +16,13 @@ import kotlin.time.ExperimentalTime
  * Fragment to display the list of locally stored profiles.
  */
 @AndroidEntryPoint
-class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
+class FragmentComposeProfile : BaseComposePS2Fragment<ProfileAndroidViewModel>() {
 
     @Inject
     lateinit var prettyTime: PrettyTime
 
     override val logTag = "FragmentComposeProfile"
-    override val viewModel: ProfileViewModel by viewModels()
+    override val viewModel: ProfileAndroidViewModel by viewModels()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +56,6 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileViewModel>() {
             creationTime = profile.value?.creationTime,
             sessionCount = profile.value?.sessionCount,
             prestigeIcon = prestigeIcon.value,
-            prettyTime = prettyTime,
             eventHandler = viewModel,
             isLoading = isLoading.value,
             isError = isError.value,

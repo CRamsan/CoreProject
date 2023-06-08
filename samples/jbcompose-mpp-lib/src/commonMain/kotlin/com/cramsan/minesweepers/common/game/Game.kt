@@ -169,9 +169,9 @@ class Game {
             return
         }
 
-        _map[row][column] = when(currentTile) {
+        _map[row][column] = when (currentTile) {
             is Tile.Bomb -> return
-            is Tile.Adjacent,  -> Tile.Adjacent(currentTile.risk, TileCoverMode.UNCOVERED)
+            is Tile.Adjacent, -> Tile.Adjacent(currentTile.risk, TileCoverMode.UNCOVERED)
             is Tile.Empty -> Tile.Empty(TileCoverMode.UNCOVERED)
         }
 
@@ -179,7 +179,7 @@ class Game {
             return
         }
 
-        uncoverTile(column - 1, row -1)
+        uncoverTile(column - 1, row - 1)
         uncoverTile(column - 1, row)
         uncoverTile(column - 1, row + 1)
         uncoverTile(column, row - 1)

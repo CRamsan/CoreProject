@@ -13,4 +13,9 @@ interface DispatcherProvider {
      * implementation of the dispatcher. It will be up to the caller to provide the correct implementation.
      */
     fun ioDispatcher(): CoroutineDispatcher
+
+    /**
+     * Dispatcher to be used for operations that need to be done in the UI thread.
+     */
+    fun uiDispatcher(): CoroutineDispatcher
 }
