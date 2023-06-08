@@ -31,7 +31,7 @@ import com.cramsan.minesweepers.common.ui.theme.Dimensions
 import com.cramsan.minesweepers.common.ui.theme.Padding
 
 @Composable
-@Suppress("LongMethod", "MaxLineLength")
+@Suppress("LongMethod", "MaxLineLength", "MaximumLineLength")
 internal fun GameMap(
     map: List<List<Tile>>,
     onTileSelected: (column: Int, row: Int) -> Unit,
@@ -75,7 +75,9 @@ internal fun GameMap(
                                         offsetX += dragAmount.x
                                     }
                                 } else {
-                                    if ((mapPos.x + mapSize.width) > (boxSize.width - (Dimensions.TILE_SIZE.value * density))) {
+                                    if ((mapPos.x + mapSize.width) >
+                                        (boxSize.width - (Dimensions.TILE_SIZE.value * density))
+                                    ) {
                                         offsetX += dragAmount.x
                                     }
                                 }
@@ -85,7 +87,9 @@ internal fun GameMap(
                                         offsetY += dragAmount.y
                                     }
                                 } else {
-                                    if ((mapPos.y + mapSize.height) > (boxSize.height - (Dimensions.TILE_SIZE.value * density))) {
+                                    if ((mapPos.y + mapSize.height) >
+                                        (boxSize.height - (Dimensions.TILE_SIZE.value * density))
+                                    ) {
                                         offsetY += dragAmount.y
                                     }
                                 }

@@ -1,4 +1,4 @@
-name: RefreshVersions
+name: Update Versions File
 
 on:
   workflow_dispatch:

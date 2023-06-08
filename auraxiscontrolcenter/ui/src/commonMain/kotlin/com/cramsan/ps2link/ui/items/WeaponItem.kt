@@ -22,6 +22,7 @@ import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.toPainter
 import com.cramsan.ps2link.ui.widgets.NetworkImage
 
+@Suppress("LongMethod")
 @Composable
 fun WeaponItem(
     modifier: Modifier = Modifier,
@@ -32,9 +33,9 @@ fun WeaponItem(
     totalKills: String,
     totalVehiclesDestroyed: String,
     totalHeadshotKills: String,
-    VSKills: String? = null,
-    TRKills: String? = null,
-    NCKills: String? = null,
+    vsKills: String? = null,
+    trKills: String? = null,
+    ncKills: String? = null,
     onClick: () -> Unit = {},
 ) {
     SlimButton(
@@ -62,7 +63,7 @@ fun WeaponItem(
                     Spacer(modifier = Modifier.height(Padding.xsmall))
                     Row {
                         if (faction != Faction.NC) {
-                            NCKills?.let {
+                            ncKills?.let {
                                 Text(
                                     it,
                                     style = MaterialTheme.typography.overline,
@@ -71,7 +72,7 @@ fun WeaponItem(
                         }
                         if (faction != Faction.TR) {
                             Spacer(modifier = Modifier.width(Padding.small))
-                            TRKills?.let {
+                            trKills?.let {
                                 Text(
                                     it,
                                     style = MaterialTheme.typography.overline,
@@ -80,7 +81,7 @@ fun WeaponItem(
                         }
                         if (faction != Faction.VS) {
                             Spacer(modifier = Modifier.width(Padding.small))
-                            VSKills?.let {
+                            vsKills?.let {
                                 Text(
                                     it,
                                     style = MaterialTheme.typography.overline,

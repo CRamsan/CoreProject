@@ -78,15 +78,16 @@ kotlin {
 
     // TODO: This target should be determined at configuration time since it depends on the
     // architecture of the host.
-    iosSimulatorArm64() {
+    iosSimulatorArm64("ios") {
 
     }
 
     sourceSets {
         commonMain {
             dependencies {
-                // This syntax is used as the kotlin-mpp plugin does not support
-                // arrays as arguments.
+                implementation(project(":framework:interfacelib"))
+                implementation(project(":framework:logging"))
+
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
@@ -117,9 +118,6 @@ kotlin {
         iosMain {
             dependsOn(commonMain)
         }
-        iosSimulatorArm64Main {
-            dependsOn(iosMain)
-        }
         iosTest {
             dependsOn(commonTest)
         }
@@ -133,4 +131,43 @@ tasks {
             events "passed", "skipped", "failed"
         }
     }
+}
+
+tasks.register("releaseJvm") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseJvm artifact'
+    dependsOn 'compileKotlinJvm'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektJvmMain' // Run the code analyzer
+    dependsOn 'jvmTest'
+}
+
+tasks.register("releaseAndroid") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseAndroid artifact'
+    dependsOn 'assembleDebug'
+    dependsOn 'assembleRelease'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektAndroidDebug' // Run the code analyzer
+    dependsOn 'detektAndroidRelease' // Run the code analyzer
+    dependsOn 'testDebugUnitTest'
+    dependsOn 'testReleaseUnitTest'
+}
+
+tasks.register("releaseIos") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseIos artifact'
+    dependsOn 'compileKotlinIos'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektIosMain' // Run the code analyzer
+    dependsOn 'iosTest'
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact for all enabled targets'
+
+    dependsOn 'releaseJvm'
+    dependsOn 'releaseAndroid'
+    dependsOn 'releaseIos'
 }

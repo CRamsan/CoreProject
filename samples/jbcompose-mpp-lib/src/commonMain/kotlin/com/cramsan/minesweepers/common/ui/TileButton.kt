@@ -4,6 +4,10 @@ import androidx.compose.runtime.Composable
 import com.cramsan.minesweepers.common.game.Tile
 import com.cramsan.minesweepers.common.game.TileCoverMode
 
+/**
+ *
+ */
+@Suppress("CyclomaticComplexMethod")
 @Composable
 internal fun TileButton(
     tile: Tile,

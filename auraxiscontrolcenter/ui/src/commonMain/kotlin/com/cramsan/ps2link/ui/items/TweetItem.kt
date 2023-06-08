@@ -59,6 +59,9 @@ fun TweetItem(
     }
 }
 
+/**
+ * UIModel for presenting tweets.
+ */
 data class PS2TweetUIModel(
     val user: String,
     val content: String,

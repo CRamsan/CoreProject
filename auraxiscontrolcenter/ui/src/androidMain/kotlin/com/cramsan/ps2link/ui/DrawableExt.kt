@@ -10,7 +10,7 @@ import com.cramsan.ps2link.core.models.Namespace
 
 @Composable
 internal actual fun CharacterClass.toPainter(): Painter {
-    val resource =  when (this) {
+    val resource = when (this) {
         CharacterClass.LIGHT_ASSAULT -> R.drawable.icon_lia
         CharacterClass.ENGINEER -> R.drawable.icon_eng
         CharacterClass.MEDIC -> R.drawable.icon_med

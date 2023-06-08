@@ -7,69 +7,69 @@ apply plugin: "org.jetbrains.kotlin.multiplatform"
     apply plugin: "kotlin-kapt"
 apply from: "$rootDir/gradle/detekt.gradle"
 
-    android {
-        compileSdkVersion 33
-        defaultConfig {
-            minSdkVersion 26
-            targetSdkVersion 33
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        }
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_17
-            targetCompatibility JavaVersion.VERSION_17
-        }
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 33
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 
-        packaging {
-            resources {
-                excludes += "/META-INF/**"
-            }
+    packaging {
+        resources {
+            excludes += "/META-INF/**"
         }
+    }
 
-        kotlin {
-            jvmToolchain(17)
-        }
+    kotlin {
+        jvmToolchain(17)
+    }
 
-        testOptions {
-            unitTests {
-                includeAndroidResources = true
-                all {
-                    testLogging {
-                        events "passed", "skipped", "failed"
-                    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed"
                 }
             }
         }
     }
+}
 
-    dependencies {
-        implementation Kotlin.stdlib.jdk8
-        implementation KotlinX.coroutines.core
-        implementation KotlinX.coroutines.android
+dependencies {
+    implementation Kotlin.stdlib.jdk8
+    implementation KotlinX.coroutines.core
+    implementation KotlinX.coroutines.android
 
-        testImplementation AndroidX.test.core
-        testImplementation AndroidX.test.ext.junit
-        testImplementation AndroidX.test.ext.junit.ktx
-        testImplementation AndroidX.archCore.common
-        testImplementation AndroidX.archCore.runtime
-        testImplementation AndroidX.archCore.testing
-        testImplementation KotlinX.coroutines.test
-        testImplementation Testing.junit4
-        testImplementation Kotlin.test
-        testImplementation Kotlin.test.junit
-        testImplementation Testing.mockK
-        testImplementation Testing.mockK.android
+    testImplementation AndroidX.test.core
+    testImplementation AndroidX.test.ext.junit
+    testImplementation AndroidX.test.ext.junit.ktx
+    testImplementation AndroidX.archCore.common
+    testImplementation AndroidX.archCore.runtime
+    testImplementation AndroidX.archCore.testing
+    testImplementation KotlinX.coroutines.test
+    testImplementation Testing.junit4
+    testImplementation Kotlin.test
+    testImplementation Kotlin.test.junit
+    testImplementation Testing.mockK
+    testImplementation Testing.mockK.android
 
-        androidTestImplementation AndroidX.test.ext.junit
-        androidTestImplementation AndroidX.test.ext.junit.ktx
-        androidTestImplementation AndroidX.test.core
-        androidTestImplementation AndroidX.test.rules
-        androidTestImplementation KotlinX.coroutines.test
-        androidTestImplementation Testing.junit4
-        androidTestImplementation Kotlin.test
-        androidTestImplementation Kotlin.test.junit
-        androidTestImplementation Testing.mockK.android
-        androidTestImplementation Testing.robolectric
-    }
+    androidTestImplementation AndroidX.test.ext.junit
+    androidTestImplementation AndroidX.test.ext.junit.ktx
+    androidTestImplementation AndroidX.test.core
+    androidTestImplementation AndroidX.test.rules
+    androidTestImplementation KotlinX.coroutines.test
+    androidTestImplementation Testing.junit4
+    androidTestImplementation Kotlin.test
+    androidTestImplementation Kotlin.test.junit
+    androidTestImplementation Testing.mockK.android
+    androidTestImplementation Testing.robolectric
+}
 
 kotlin {
     targets.all {
@@ -81,36 +81,34 @@ kotlin {
         }
     }
 
-        android() {
-            compilations.all {
-                kotlinOptions {
+    android() {
+        compilations.all {
+            kotlinOptions {
 
-                }
             }
         }
+    }
 
-        jvm() {
-            compilations.all {
-                kotlinOptions {
-                    jvmTarget = JavaVersion.VERSION_17
-                }
+    jvm() {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_17
             }
         }
+    }
 
-        // TODO: This target should be determined at configuration time since it depends on the
-        // architecture of the host.
-        iosSimulatorArm64("ios") {
+    // TODO: This target should be determined at configuration time since it depends on the
+    // architecture of the host.
+    iosSimulatorArm64("ios") {
 
-        }
+    }
 
-        js {
-        }
+    js {
+    }
 
     sourceSets {
         commonMain {
             dependencies {
-                // This syntax is used as the kotlin-mpp plugin does not support
-                // arrays as arguments.
                 implementation Kotlin.stdlib.common
                 implementation KotlinX.coroutines.core
             }
@@ -122,49 +120,49 @@ kotlin {
                 implementation Kotlin.test.annotationsCommon
             }
         }
-            androidMain {
-                dependsOn(commonMain)
-            }
-            androidUnitTest {
-                dependsOn(commonTest)
-            }
-            jvmMain {
-                dependsOn(commonMain)
-                dependencies {
-                    implementation Kotlin.stdlib.jdk8
-                    implementation KotlinX.coroutines.core
-                }
-            jvmTest {
-                dependsOn(commonTest)
-                dependencies {
-                    implementation KotlinX.coroutines.test
-                    implementation Testing.junit.jupiter.api
-                    implementation Kotlin.test.junit5
-                    implementation Testing.mockK
-
-                    runtimeOnly Testing.junit.jupiter.engine
-                }
+        androidMain {
+            dependsOn(commonMain)
+        }
+        androidUnitTest {
+            dependsOn(commonTest)
+        }
+        jvmMain {
+            dependsOn(commonMain)
+            dependencies {
+                implementation Kotlin.stdlib.jdk8
+                implementation KotlinX.coroutines.core
             }
         }
-            jsMain {
-                dependsOn(commonMain)
-                dependencies {
-                    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:_"
-                }
+        jvmTest {
+            dependsOn(commonTest)
+            dependencies {
+                implementation KotlinX.coroutines.test
+                implementation Testing.junit.jupiter.api
+                implementation Kotlin.test.junit5
+                implementation Testing.mockK
+
+                runtimeOnly Testing.junit.jupiter.engine
             }
-            jsTest {
-                dependsOn(commonTest)
-                dependencies {
-                    implementation Kotlin.test.js
-                    implementation KotlinX.coroutines.test
-                }
+        }
+        jsMain {
+            dependsOn(commonMain)
+            dependencies {
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:_"
             }
-            iosMain {
-                dependsOn(commonMain)
+        }
+        jsTest {
+            dependsOn(commonTest)
+            dependencies {
+                implementation Kotlin.test.js
+                implementation KotlinX.coroutines.test
             }
-            iosTest {
-                dependsOn(commonTest)
-            }
+        }
+        iosMain {
+            dependsOn(commonMain)
+        }
+        iosTest {
+            dependsOn(commonTest)
+        }
     }
 }
 
@@ -175,4 +173,53 @@ tasks {
             events "passed", "skipped", "failed"
         }
     }
+}
+
+tasks.register("releaseJs") {
+    group = 'build'
+    description = 'Run all the steps to build a Js artifact'
+    dependsOn 'compileKotlinJs'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektJsMain' // Run the code analyzer
+    dependsOn 'jsTest'
+}
+
+tasks.register("releaseJvm") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseJvm artifact'
+    dependsOn 'compileKotlinJvm'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektJvmMain' // Run the code analyzer
+    dependsOn 'jvmTest'
+}
+
+tasks.register("releaseAndroid") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseAndroid artifact'
+    dependsOn 'assembleDebug'
+    dependsOn 'assembleRelease'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektAndroidDebug' // Run the code analyzer
+    dependsOn 'detektAndroidRelease' // Run the code analyzer
+    dependsOn 'testDebugUnitTest'
+    dependsOn 'testReleaseUnitTest'
+}
+
+tasks.register("releaseIos") {
+    group = 'build'
+    description = 'Run all the steps to build a releaseIos artifact'
+    dependsOn 'compileKotlinIos'
+    dependsOn 'detektMetadataMain' // Run the code analyzer on the common-code source set
+    dependsOn 'detektIosMain' // Run the code analyzer
+    dependsOn 'iosTest'
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact for all enabled targets'
+
+    dependsOn 'releaseJvm'
+    dependsOn 'releaseAndroid'
+    dependsOn 'releaseJs'
+    dependsOn 'releaseIos'
 }

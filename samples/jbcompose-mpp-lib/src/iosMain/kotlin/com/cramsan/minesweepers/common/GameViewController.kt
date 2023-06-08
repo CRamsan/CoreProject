@@ -8,6 +8,9 @@ import com.cramsan.minesweepers.common.game.Game
 import com.cramsan.minesweepers.common.ui.GameBar
 import com.cramsan.minesweepers.common.ui.GameMap
 
+/**
+ * ViewController to expose the screen for the iOS platform.
+ */
 @Suppress("FunctionNaming")
 fun MainViewController(game: Game) = ComposeUIViewController {
 

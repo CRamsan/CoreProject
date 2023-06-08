@@ -5,6 +5,9 @@ import androidx.compose.ui.graphics.ImageBitmap
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.resource
 
+/**
+ *
+ */
 @Suppress("TooManyFunctions")
 object Assets {
     private lateinit var _lcdNumberDash: ImageBitmap
@@ -42,6 +45,9 @@ object Assets {
     private lateinit var _arrowLeft: ImageBitmap
     private lateinit var _arrowRight: ImageBitmap
 
+    /**
+     *
+     */
     suspend fun loadAssets() {
         _lcdNumberDash = resource("dash.png").readBytes().toImageBitmap()
         _lcdNumberNone = resource("none.png").readBytes().toImageBitmap()

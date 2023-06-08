@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
+/**
+ *
+ */
 class Game {
 
     private lateinit var random: Random
@@ -34,6 +37,9 @@ class Game {
     private var mines: Int = 0
     private var firstSelection = true
 
+    /**
+     *
+     */
     fun configure(
         columns: Int = 15,
         rows: Int = 15,
@@ -63,6 +69,9 @@ class Game {
         updateMapState()
     }
 
+    /**
+     *
+     */
     @OptIn(DelicateCoroutinesApi::class)
     fun loadAssetsAsync() {
         // This is not the right way to dispatch IO
@@ -73,6 +82,9 @@ class Game {
         }
     }
 
+    /**
+     *
+     */
     @OptIn(DelicateCoroutinesApi::class)
     private fun initializeMap(initialColumn: Int, initialRow: Int) {
         repeat(mines) {
@@ -189,6 +201,9 @@ class Game {
         uncoverTile(column + 1, row + 1)
     }
 
+    /**
+     *
+     */
     fun primaryAction(column: Int, row: Int) {
         if (firstSelection) {
             initializeMap(column, row)
@@ -219,6 +234,9 @@ class Game {
         }
     }
 
+    /**
+     *
+     */
     fun secondaryAction(column: Int, row: Int) {
         if (!isGameRunning) {
             return

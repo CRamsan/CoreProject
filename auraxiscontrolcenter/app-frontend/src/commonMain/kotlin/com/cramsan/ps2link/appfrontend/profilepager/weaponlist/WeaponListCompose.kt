@@ -51,13 +51,13 @@ fun WeaponListCompose(
                         totalKills = KillsText(totalKills),
                         totalVehiclesDestroyed = VehiclesDestroyedText(totalVehiclesDestroyed),
                         totalHeadshotKills = HeadshotsText(totalHeadshotKills),
-                        NCKills = weapon.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.NC)?.let {
+                        ncKills = weapon.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.NC)?.let {
                             NCCountText(it)
                         },
-                        VSKills = weapon.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.VS)?.let {
+                        vsKills = weapon.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.VS)?.let {
                             VSCountText(it)
                         },
-                        TRKills = weapon.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.TR)?.let {
+                        trKills = weapon.statMapping[WeaponEventType.KILLS]?.stats?.get(Faction.TR)?.let {
                             TRCountText(it)
                         },
                     )

@@ -93,3 +93,18 @@ dependencies {
     androidTestImplementation Testing.mockK.android
     androidTestImplementation Testing.robolectric
 }
+
+tasks.register("releaseAndroid") {
+    group = 'build'
+    description = 'Run all the steps to build a release artifact'
+
+    dependsOn 'build' // Assembles and test this project
+    dependsOn 'detekt' // Run the code analyzer
+}
+
+tasks.register("release") {
+    group = 'build'
+    description = 'Run releaseAndroid'
+
+    dependsOn 'releaseAndroid'
+}

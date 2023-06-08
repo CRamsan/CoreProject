@@ -6,8 +6,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.cancel
 
+/**
+ * Implementation of [BaseViewModel] that provides some safe defaults to build upon.
+ */
 abstract class BaseViewModelImpl(
     override val dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel {
@@ -23,6 +25,7 @@ abstract class BaseViewModelImpl(
     /**
      * Emit values that should be consumed by the UI layer.
      */
+    @Suppress("VariableNaming")
     protected val _events = MutableSharedFlow<BaseEvent>()
 
     /**

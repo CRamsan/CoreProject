@@ -23,3 +23,19 @@ dependencies {
     testImplementation Kotlin.test.js
     testImplementation KotlinX.coroutines.test
 }
+
+// Release task that will build and test the project.
+def releaseJs = tasks.register("releaseJs") {
+    group = 'build'
+    description = 'Run all the steps to build a Js artifact'
+
+    dependsOn 'detekt'
+    dependsOn 'compileKotlinJs'
+    dependsOn 'test'
+}
+
+tasks.register("release") {
+    group = 'build'
+
+    dependsOn "releaseJs"
+}
