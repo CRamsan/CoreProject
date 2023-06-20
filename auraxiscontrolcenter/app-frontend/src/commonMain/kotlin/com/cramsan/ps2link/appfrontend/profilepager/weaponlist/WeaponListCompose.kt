@@ -27,6 +27,7 @@ fun WeaponListCompose(
     weaponList: ImmutableList<WeaponItem>,
     isLoading: Boolean,
     isError: Boolean,
+    useVerticalMode: Boolean,
     eventHandler: WeaponListEventHandler,
 ) {
     FrameBottom {
@@ -44,6 +45,7 @@ fun WeaponListCompose(
                         ?.stats?.values?.filterNotNull()?.sum()
                     WeaponItem(
                         modifier = Modifier.fillMaxWidth(),
+                        useVerticalMode = useVerticalMode,
                         faction = faction,
                         weaponImage = weapon.weaponImage,
                         weaponName = weapon.weaponName ?: weapon.vehicleName ?: UnknownText(),
@@ -68,7 +70,13 @@ fun WeaponListCompose(
     }
 }
 
+/**
+ *
+ */
 interface WeaponListEventHandler {
+    /**
+     *
+     */
     fun onRefreshRequested()
 }
 

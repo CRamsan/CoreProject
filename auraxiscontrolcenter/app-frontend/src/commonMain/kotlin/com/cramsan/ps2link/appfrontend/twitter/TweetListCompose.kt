@@ -79,15 +79,22 @@ fun TweetListCompose(
     }
 }
 
+/**
+ *
+ */
 interface TweetListComposeEventHandler {
-    @Suppress("UndocumentedPublicFunction")
+    /**
+     *
+     */
     fun onTwitterUserClicked(twitterUser: String)
 
     /**
      * User has clicked on tweet.
      */
     fun onTweetSelected(tweet: PS2TweetUIModel)
-
+    /**
+     *
+     */
     fun onRefreshRequested()
 }
 

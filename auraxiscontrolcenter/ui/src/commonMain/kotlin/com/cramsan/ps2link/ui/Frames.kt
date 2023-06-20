@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import com.cramsan.ps2link.ui.theme.Opacity
+import com.cramsan.ps2link.ui.theme.Color
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Shapes
 import com.cramsan.ps2link.ui.theme.Size
@@ -30,7 +30,7 @@ private fun Frame(
         modifier = modifier,
         shape = shape,
         border = border,
-        color = MaterialTheme.colors.primary.setAlpha(Opacity.transparent),
+        color = MaterialTheme.colors.surface.setAlpha(Color.transparent),
         contentColor = MaterialTheme.colors.onPrimary,
     ) {
         Box(
@@ -44,12 +44,12 @@ private fun Frame(
 
 @Composable
 fun FrameBottom(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
     Frame(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         shape = Shapes.largeBottom,
         border = BorderStroke(Size.xsmall, MaterialTheme.colors.primary),
         marginPadding = Padding.medium,
@@ -61,12 +61,12 @@ fun FrameBottom(
 
 @Composable
 fun FrameCenter(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
     Frame(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         shape = RectangleShape,
         border = BorderStroke(Size.xsmall, MaterialTheme.colors.primary),
         marginPadding = Padding.medium,

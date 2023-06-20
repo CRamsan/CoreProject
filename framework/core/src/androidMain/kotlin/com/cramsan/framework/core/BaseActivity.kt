@@ -11,7 +11,7 @@ import com.cramsan.framework.logging.logD
  * classes that inherit from [Activity]. [viewModel] is considered a good pattern so it is required
  * to specify which one will be used. If a viewModel is not required then [NoopViewModel] can be used.
  */
-abstract class BaseActivity<T : BaseAndroidViewModel> : AppCompatActivity() {
+abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     /**
      * ViewModel instance that will be used to manage this [Activity]. The class that extends [BaseActivity] is in

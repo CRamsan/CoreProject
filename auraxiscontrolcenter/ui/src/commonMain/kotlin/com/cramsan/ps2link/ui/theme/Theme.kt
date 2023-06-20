@@ -22,7 +22,7 @@ val ps2Palette = Colors(
 )
 
 @Composable
-fun PS2Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun PS2Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     // The PS2 app does not support dark/light theme
     val palette = if (darkTheme) {
         ps2Palette

@@ -50,15 +50,15 @@
     <ID>UndocumentedPublicClass:ActivityContainerViewModel.kt$ActivityContainerViewModel : com.cramsan.ps2link.appfrontend.BasePS2ViewModel</ID>
     <ID>UndocumentedPublicClass:ApplicationPS2Link.kt$ApplicationPS2Link : Application</ID>
     <ID>UndocumentedPublicClass:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel : BaseViewModel</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenAbout : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenOutfit : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenOutfitList : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenProfile : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenProfileList : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenReddit : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenServerList : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenTwitter : BaseEvent</ID>
-    <ID>UndocumentedPublicClass:Events.kt$OpenUrl : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenAbout : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenOutfit : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenOutfitList : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenProfile : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenProfileList : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenReddit : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenServerList : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenTwitter : BaseEvent</ID>
+    <ID>UndocumentedPublicClass:BasePS2Event.kt$OpenUrl : BaseEvent</ID>
     <ID>UndocumentedPublicClass:FriendListCompose.kt$FriendListEventHandler</ID>
     <ID>UndocumentedPublicClass:FriendListAndroidViewModel.kt$FriendListViewModel : BasePS2ViewModelFriendListEventHandler</ID>
     <ID>UndocumentedPublicClass:KillListCompose.kt$KillListEventHandler</ID>
@@ -265,13 +265,13 @@
     <ID>UndocumentedPublicProperty:BaseComposePS2Fragment.kt$BaseComposePS2Fragment$val navigationOptions = NavOptions.Builder() .setEnterAnim(R.anim.nav_default_enter_anim) .setExitAnim(R.anim.nav_default_exit_anim) .build()</ID>
     <ID>UndocumentedPublicProperty:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$val isError = _isError.asStateFlow()</ID>
     <ID>UndocumentedPublicProperty:com.cramsan.ps2link.appfrontend.BasePS2ViewModel.kt$com.cramsan.ps2link.appfrontend.BasePS2ViewModel$val isLoading = _isLoading.asStateFlow()</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenOutfit$val args = FragmentOutfitPagerArgs(outfitId, namespace)</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenOutfit$val namespace: Namespace</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenOutfit$val outfitId: String</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenProfile$val args = FragmentProfilePagerArgs(characterId, namespace)</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenProfile$val characterId: String</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenProfile$val namespace: Namespace</ID>
-    <ID>UndocumentedPublicProperty:Events.kt$OpenUrl$val url: String</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenOutfit$val args = FragmentOutfitPagerArgs(outfitId, namespace)</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenOutfit$val namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenOutfit$val outfitId: String</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenProfile$val args = FragmentProfilePagerArgs(characterId, namespace)</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenProfile$val characterId: String</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenProfile$val namespace: Namespace</ID>
+    <ID>UndocumentedPublicProperty:BasePS2Event.kt$OpenUrl$val url: String</ID>
     <ID>UndocumentedPublicProperty:FragmentComposeProfile.kt$FragmentComposeProfile$@Inject lateinit var prettyTime: PrettyTime</ID>
     <ID>UndocumentedPublicProperty:FragmentComposeReddit.kt$FragmentComposeReddit$@Inject lateinit var prettyTime: PrettyTime</ID>
     <ID>UndocumentedPublicProperty:FragmentComposeTwitterList.kt$FragmentComposeTwitterList$@Inject lateinit var prettyTime: PrettyTime</ID>

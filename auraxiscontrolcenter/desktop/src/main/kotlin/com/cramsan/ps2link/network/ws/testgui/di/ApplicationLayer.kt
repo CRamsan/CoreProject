@@ -1,49 +1,68 @@
 package com.cramsan.ps2link.network.ws.testgui.di
 
+import com.cramsan.ps2link.appcore.preferences.PS2Settings
+import com.cramsan.ps2link.appcore.preferences.PS2SettingsImpl
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepositoryImpl
+import com.cramsan.ps2link.appfrontend.LanguageProvider
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.application.GameSessionManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
-import com.cramsan.ps2link.network.ws.testgui.ui.navigation.Navigator
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTabEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTabEventHandler
+import org.koin.dsl.binds
+import org.koin.dsl.module
 import org.ocpsoft.prettytime.PrettyTime
 
 /**
  * Initialized instances to be used at the application layer. The classes here pertain to the bejaviour of this
  * application.
  */
-class ApplicationLayer(
-    frameworkLayer: FrameworkLayer,
-    middleLayer: MiddleLayer,
-) {
+val ApplicationModule = module {
 
-    val hotKeyManager: HotKeyManager
-
-    val gameSessionManager: GameSessionManager
-
-    val navigator: Navigator
-
-    val applicationManager: ApplicationManager
-
-    val prettyTime: PrettyTime
-
-    init {
-        hotKeyManager = HotKeyManager(
-            json = middleLayer.json,
-            preferences = frameworkLayer.preferences,
+    single<HotKeyManager> {
+        HotKeyManager(
+            json = get(),
+            preferences = get(),
         )
+    }
 
-        gameSessionManager = GameSessionManager(hotKeyManager, middleLayer.applicationScope)
+    single<GameSessionManager> {
+        GameSessionManager(get(), get())
+    }
 
-        navigator = Navigator()
-
-        applicationManager = ApplicationManager(
-            middleLayer.streamingClient,
-            hotKeyManager,
-            gameSessionManager,
-            frameworkLayer.preferences,
-            middleLayer.dbgClient,
-            middleLayer.applicationScope,
+    single<ApplicationManager> {
+        ApplicationManager(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
         )
+    } binds arrayOf(
+        ProfilesTabEventHandler::class,
+        OutfitsTabEventHandler::class,
+    )
 
-        prettyTime = PrettyTime()
+    single<PrettyTime> {
+        PrettyTime()
+    }
+
+    single<PS2LinkRepository> {
+        PS2LinkRepositoryImpl(
+            get(),
+            get(),
+            get(),
+        )
+    }
+
+    single<PS2Settings> {
+        PS2SettingsImpl(get())
+    }
+
+    single<LanguageProvider> {
+        LanguageProvider()
     }
 }

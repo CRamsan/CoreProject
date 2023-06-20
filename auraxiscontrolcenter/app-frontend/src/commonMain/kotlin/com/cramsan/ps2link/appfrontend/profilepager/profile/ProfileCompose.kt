@@ -220,8 +220,17 @@ fun ProfileCompose(
     }
 }
 
+/**
+ *
+ */
 interface ProfileEventHandler {
+    /**
+     *
+     */
     fun onOutfitSelected(outfitId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }
 
@@ -252,6 +261,9 @@ expect fun TextMembersSince(): String
 @Composable
 expect fun TextSessionsPlayer(): String
 
+/**
+ *
+ */
 data class CharacterUIModel(
     val characterId: String,
     val name: String? = null,

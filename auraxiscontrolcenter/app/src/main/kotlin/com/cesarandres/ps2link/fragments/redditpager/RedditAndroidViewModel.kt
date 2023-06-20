@@ -15,8 +15,4 @@ class RedditAndroidViewModel @Inject constructor(
     viewModel,
 ),
     RedditEventHandler by viewModel,
-    RedditViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "RedditViewModel"
-}
+    RedditViewModelInterface by viewModel

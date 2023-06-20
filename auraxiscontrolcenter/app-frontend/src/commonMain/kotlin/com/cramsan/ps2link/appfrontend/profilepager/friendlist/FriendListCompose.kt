@@ -45,7 +45,16 @@ fun FriendListCompose(
     }
 }
 
+/**
+ *
+ */
 interface FriendListEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }

@@ -2,6 +2,11 @@ package com.cramsan.ps2link.network.ws.testgui.ui.screens.settings
 
 import androidx.compose.runtime.Stable
 import com.cramsan.framework.core.DispatcherProvider
+import com.cramsan.ps2link.appcore.preferences.PS2Settings
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appfrontend.BasePS2Event
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
+import com.cramsan.ps2link.appfrontend.LanguageProvider
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyEvent
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
@@ -9,23 +14,32 @@ import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManagerEventListener
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyType
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.KotlinKeyEvent
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
-import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
-import com.cramsan.ps2link.network.ws.testgui.ui.screens.BaseViewModel
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel for managing the Settings screen.
  */
 @Stable
 class SettingsScreenViewModel(
-    applicationManager: ApplicationManager,
+    pS2LinkRepository: PS2LinkRepository,
+    pS2Settings: PS2Settings,
+    languageProvider: LanguageProvider,
     dispatcherProvider: DispatcherProvider,
+    private val applicationManager: ApplicationManager,
     private val hotKeyManager: HotKeyManager,
-) : BaseViewModel(applicationManager, dispatcherProvider) {
+) : BasePS2ViewModel(
+    pS2LinkRepository,
+    pS2Settings,
+    languageProvider,
+    dispatcherProvider,
+),
+    SettingsScreenViewModelInterface {
 
     private val _uiState = MutableStateFlow(
         SettingUIState(
@@ -36,7 +50,7 @@ class SettingsScreenViewModel(
             restartDialog = false,
         ),
     )
-    val uiState = _uiState.asStateFlow()
+    override val uiState = _uiState.asStateFlow()
 
     private val hotKeyManagerEventListener = object : HotKeyManagerEventListener {
         override fun onKeyEvent(hotKeyType: HotKeyType, keyEvent: KotlinKeyEvent) = Unit
@@ -50,12 +64,10 @@ class SettingsScreenViewModel(
     }
 
     override fun onStart() {
-        super.onStart()
         hotKeyManager.registerListener(hotKeyManagerEventListener)
     }
 
     override fun onClose() {
-        super.onClose()
         hotKeyManager.deregisterListener(hotKeyManagerEventListener)
     }
     override fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel) {
@@ -82,38 +94,40 @@ class SettingsScreenViewModel(
     /**
      * Start listening for user key events.
      */
-    fun captureHotKeys(hotKeyType: HotKeyType) {
+    override fun captureHotKeys(hotKeyType: HotKeyType) {
         _uiState.value = _uiState.value.copy(
             capturing = true,
         )
         hotKeyManager.initiateHotKeyRegistration(hotKeyType)
     }
 
-    fun stopCapture() {
+    override fun stopCapture() {
         hotKeyManager.stopHotKeyRegistration()
     }
 
     /**
      * Close the current screen and navigate to the main screen.
      */
-    fun returnToMainScreen() {
-        applicationManager.setCurrentScreen(ScreenType.MAIN)
+    override fun returnToMainScreen() {
+        viewModelScope.launch {
+            _events.emit(BasePS2Event.OpenSettings)
+        }
     }
 
-    fun changeDebugMode(isDebugEnabled: Boolean) {
+    override fun changeDebugMode(isDebugEnabled: Boolean) {
         applicationManager.changeDebugMode(isDebugEnabled)
         _uiState.value = _uiState.value.copy(
             restartDialog = true,
         )
     }
 
-    fun closeDialog() {
+    override fun closeDialog() {
         _uiState.value = _uiState.value.copy(
             restartDialog = false,
         )
     }
 
-    fun openLogFolder() {
+    override fun openLogFolder() {
         applicationManager.openFolder(".")
     }
 
@@ -135,4 +149,21 @@ class SettingsScreenViewModel(
             HotKeyType.ON_ENEMY_KILL_VIDEO -> "On Enemy Kill - Video Capture"
         }
     }
+
+    override val logTag = "SettingsScreenViewModel"
+}
+
+interface SettingsScreenViewModelInterface {
+
+    fun onStart()
+    fun onClose()
+    fun onApplicationUIModelUpdated(applicationUIModel: ApplicationUIModel)
+
+    val uiState: StateFlow<SettingUIState>
+    fun captureHotKeys(hotKeyType: HotKeyType)
+    fun stopCapture()
+    fun returnToMainScreen()
+    fun changeDebugMode(isDebugEnabled: Boolean)
+    fun closeDialog()
+    fun openLogFolder()
 }

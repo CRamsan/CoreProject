@@ -45,6 +45,12 @@ fun ServerListCompose(
     }
 }
 
+/**
+ *
+ */
 interface ServerListEventHandler {
+    /**
+     *
+     */
     fun onRefreshRequested()
 }

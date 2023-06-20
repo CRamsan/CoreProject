@@ -13,7 +13,7 @@ import com.cramsan.ps2link.ui.SlimButton
 import com.cramsan.ps2link.ui.theme.Padding
 
 @Composable
-fun StatItem(
+fun StatItemHorizontal(
     modifier: Modifier = Modifier,
     label: String,
     allTime: Double?,
@@ -54,6 +54,48 @@ fun StatItem(
                     text = TextThisMonth(thisMonth),
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun StatItemVertical(
+    modifier: Modifier = Modifier,
+    label: String,
+    allTime: Double?,
+    today: Double?,
+    thisWeek: Double?,
+    thisMonth: Double?,
+) {
+    SlimButton(
+        modifier = modifier,
+    ) {
+        Column {
+            Text(label)
+
+            val statModifier = remember { Modifier.fillMaxWidth() }
+            val style = MaterialTheme.typography.caption
+
+            Text(
+                modifier = statModifier,
+                style = style,
+                text = TextAllTime(allTime),
+            )
+            Text(
+                modifier = statModifier,
+                style = style,
+                text = TextToday(today),
+            )
+            Text(
+                modifier = statModifier,
+                style = style,
+                text = TextThisWeek(thisWeek),
+            )
+            Text(
+                modifier = statModifier,
+                style = style,
+                text = TextThisMonth(thisMonth),
+            )
         }
     }
 }

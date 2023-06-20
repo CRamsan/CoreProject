@@ -3,6 +3,7 @@ package com.cesarandres.ps2link.fragments.about
 import com.cramsan.ps2link.appfrontend.BasePS2AndroidViewModel
 import com.cramsan.ps2link.appfrontend.about.AboutEventHandler
 import com.cramsan.ps2link.appfrontend.about.AboutViewModel
+import com.cramsan.ps2link.appfrontend.about.AboutViewModelInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,7 +14,5 @@ class AboutAndroidViewModel @Inject constructor(
 ) : BasePS2AndroidViewModel<AboutViewModel>(
     viewModel,
 ),
-    AboutEventHandler by viewModel {
-    override val logTag: String
-        get() = "AboutAndroidViewModel"
-}
+    AboutViewModelInterface by viewModel,
+    AboutEventHandler by viewModel

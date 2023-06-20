@@ -12,7 +12,8 @@ import com.cramsan.ps2link.core.models.StatItem
 import com.cramsan.ps2link.ui.ErrorOverlay
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SwipeToRefresh
-import com.cramsan.ps2link.ui.items.StatItem
+import com.cramsan.ps2link.ui.items.StatItemHorizontal
+import com.cramsan.ps2link.ui.items.StatItemVertical
 import kotlinx.collections.immutable.ImmutableList
 
 /**
@@ -24,6 +25,7 @@ fun StatListCompose(
     statList: ImmutableList<StatItem>,
     isLoading: Boolean,
     isError: Boolean,
+    useVerticalMode: Boolean = false,
     eventHandler: StatListEventHandler,
 ) {
     FrameBottom {
@@ -33,13 +35,23 @@ fun StatListCompose(
                 onRefreshRequested = { eventHandler.onRefreshRequested() },
             ) {
                 items(statList) {
-                    StatItem(
-                        label = it.statName ?: UnknownText(),
-                        allTime = it.allTime,
-                        today = it.today,
-                        thisWeek = it.thisWeek,
-                        thisMonth = it.thisMonth,
-                    )
+                    if (useVerticalMode) {
+                        StatItemVertical(
+                            label = it.statName ?: UnknownText(),
+                            allTime = it.allTime,
+                            today = it.today,
+                            thisWeek = it.thisWeek,
+                            thisMonth = it.thisMonth,
+                        )
+                    } else {
+                        StatItemHorizontal(
+                            label = it.statName ?: UnknownText(),
+                            allTime = it.allTime,
+                            today = it.today,
+                            thisWeek = it.thisWeek,
+                            thisMonth = it.thisMonth,
+                        )
+                    }
                 }
             }
             ErrorOverlay(
@@ -50,7 +62,16 @@ fun StatListCompose(
     }
 }
 
+/**
+ *
+ */
 interface StatListEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }

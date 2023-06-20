@@ -16,6 +16,8 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.coroutines.cancellation.CancellationException
@@ -35,6 +37,8 @@ class HttpClient(
     private val metrics: MetricsInterface?,
     private val featureFlagManager: FeatureFlagManager?,
 ) {
+
+    private val mutex: Mutex = Mutex()
 
     /**
      * Send a request GET request to the [url]. This function will handle retries.
@@ -70,7 +74,7 @@ class HttpClient(
     }
 
     @OptIn(ExperimentalTime::class)
-    suspend fun sendRequest(url: UrlHolder, retry: Int): HttpResponse {
+    suspend fun sendRequest(url: UrlHolder, retry: Int): HttpResponse = mutex.withLock {
         logD(TAG, "Url: ${url.completeUrl} - retry: $retry")
 
         val response: HttpResponse
@@ -80,7 +84,7 @@ class HttpClient(
 
         handleMetrics(url, response, latency)
 
-        return response
+        response
     }
 
     private fun handleMetrics(url: UrlHolder, response: HttpResponse, latency: Duration) {

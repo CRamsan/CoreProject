@@ -15,8 +15,4 @@ class TwitterListAndroidViewModel @Inject constructor(
     viewModel,
 ),
     TweetListComposeEventHandler by viewModel,
-    TwitterListViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "TwitterListViewModel"
-}
+    TwitterListViewModelInterface by viewModel

@@ -1,72 +1,92 @@
 package com.cramsan.ps2link.network.ws.testgui.di
 
+import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.census.DBGCensus
 import com.cramsan.ps2link.appcore.census.DBGServiceClient
+import com.cramsan.ps2link.appcore.preferences.PS2Settings
+import com.cramsan.ps2link.appcore.preferences.PS2SettingsImpl
+import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
+import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
+import com.cramsan.ps2link.db.models.PS2LinkDB
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.testgui.ApplicationModule
+import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
 /**
  * Initialize classes to be used by the application mid-layer, which comes from the PS2Link:appcore package. These
  * classes hold business logic to interface with the PS2 API and are not directly tied to the current application.
  */
-class MiddleLayer(frameworkLayer: FrameworkLayer) {
+val DomainModule = module {
 
-    val backgroundDispatcher: CoroutineDispatcher
+    single<CoroutineDispatcher> {
+        val dispatcherProvider: DispatcherProvider = get()
+        dispatcherProvider.ioDispatcher()
+    }
 
-    val json: Json
+    single<Json> {
+        ApplicationModule.provideJson()
+    }
 
-    val serviceId: String
+    single<String>(named(SERVICE_ID_NAME)) {
+        ApplicationModule.provideServiceId()
+    }
 
-    val ktorHttpClient: HttpClient
+    single<HttpClient> {
+        ApplicationModule.provideKtorHttpClient(get())
+    }
 
-    val httpClient: com.cramsan.ps2link.appcore.network.HttpClient
-
-    val streamingClient: StreamingClient
-
-    val clock: Clock
-
-    val dbgCensus: DBGCensus
-
-    val dbgClient: DBGServiceClient
-
-    val applicationScope: CoroutineScope
-
-    init {
-        backgroundDispatcher = frameworkLayer.dispatcherProvider.ioDispatcher()
-
-        json = ApplicationModule.provideJson()
-
-        serviceId = ApplicationModule.provideServiceId()
-
-        ktorHttpClient = ApplicationModule.provideKtorHttpClient(json)
-
-        httpClient = ApplicationModule.provideHttpClient(
-            ktorHttpClient,
-            json,
+    single<com.cramsan.ps2link.appcore.network.HttpClient> {
+        ApplicationModule.provideHttpClient(
+            get(),
+            get(),
         )
+    }
 
-        streamingClient = ApplicationModule.provideStreamingClient(
-            ktorHttpClient,
-            json,
-            serviceId,
-            backgroundDispatcher,
+    single<Clock> {
+        ApplicationModule.provideClock()
+    }
+
+    single<DBGCensus> {
+        ApplicationModule.provideDbgCensus(get(named(SERVICE_ID_NAME)))
+    }
+
+    single<DBGServiceClient> {
+        ApplicationModule.provideDbgServiceClient(
+            get(),
+            get(),
+            get(),
         )
+    }
 
-        clock = ApplicationModule.provideClock()
+    single<CoroutineScope> {
+        ApplicationModule.providesApplicationCoroutineScope()
+    }
 
-        dbgCensus = ApplicationModule.provideDbgCensus(serviceId)
+    single<DbgDAO> {
+        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        PS2LinkDB.Schema.create(driver)
+        SQLDelightDAO(driver, get())
+    }
 
-        dbgClient = ApplicationModule.provideDbgServiceClient(
-            dbgCensus,
-            httpClient,
-            clock,
+    single<StreamingClient> {
+        ApplicationModule.provideStreamingClient(
+            get(),
+            get(),
+            get(named(SERVICE_ID_NAME)),
+            get(),
         )
+    }
 
-        applicationScope = ApplicationModule.providesApplicationCoroutineScope()
+    single<PS2Settings> {
+        PS2SettingsImpl(get())
     }
 }
+
+private const val SERVICE_ID_NAME = "serviceId"

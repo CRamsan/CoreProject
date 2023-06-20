@@ -70,9 +70,21 @@ fun OutfitAddCompose(
     }
 }
 
+/**
+ *
+ */
 interface OutfitAddEventHandler {
+    /**
+     *
+     */
     fun onTagFieldUpdated(searchField: String)
+    /**
+     *
+     */
     fun onNameFieldUpdated(searchField: String)
+    /**
+     *
+     */
     fun onOutfitSelected(outfitId: String, namespace: Namespace)
 }
 

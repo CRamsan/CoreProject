@@ -111,8 +111,17 @@ fun OutfitCompose(
     }
 }
 
+/**
+ *
+ */
 interface OutfitEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }
 
@@ -128,6 +137,9 @@ expect fun OutfitMembersText(): String
 @Composable
 expect fun OutfitCreatedText(): String
 
+/**
+ *
+ */
 data class OutfitUIModel(
     val id: String,
     val name: String? = null,

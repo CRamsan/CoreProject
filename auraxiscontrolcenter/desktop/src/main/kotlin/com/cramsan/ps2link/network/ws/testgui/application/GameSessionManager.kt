@@ -2,7 +2,6 @@ package com.cramsan.ps2link.network.ws.testgui.application
 
 import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logI
-import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.network.ws.messages.Death
 import com.cramsan.ps2link.network.ws.messages.GainExperience
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
@@ -26,15 +25,9 @@ class GameSessionManager(
     private var timerJob: Job? = null
 
     /**
-     * Process a kill event. The [currentPlayer] is the current player who is being observed and [death] is the event
-     * received.
+     * Process a kill event.
      */
-    fun onPlayerDeathEvent(currentPlayer: Character, death: Death) {
-        if (death.characterId == currentPlayer.characterId) {
-            logD(TAG, "Current player death")
-            return
-        }
-
+    fun onPlayerDeathEvent(death: Death) {
         logI(TAG, "Kill event for character: ${death.characterId}")
 
         // Take screenshot right away
@@ -70,8 +63,9 @@ class GameSessionManager(
         hotKeyManager.executeHotKey(HotKeyType.ON_ENEMY_KILL_VIDEO)
     }
 
-    fun onExperienceGained(character: Character, payload: GainExperience) {
-        logI(TAG, "Character: ${character.characterId} gained ${payload.amount} xp.")
+    fun onExperienceGained(payload: GainExperience) {
+        val characterId = payload.characterId
+        logI(TAG, "Character: $characterId gained ${payload.amount} xp.")
     }
 
     companion object {

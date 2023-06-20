@@ -8,7 +8,7 @@ import com.cramsan.framework.userevents.logEvent
  * This class extends [BaseFragment] with the capabilities hold a ViewModel. The [viewModel]
  * is a required field. If this class does not need a viewModel, then [NoopViewModel] can be used.
  */
-abstract class BaseViewModelFragment<VM : BaseAndroidViewModel> : BaseFragment() {
+abstract class BaseViewModelFragment<VM : BaseViewModel> : BaseFragment() {
 
     /**
      * ViewModel instance that will be used to manage this [Fragment]. The class that extends [BaseFragment] is in

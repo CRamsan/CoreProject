@@ -15,6 +15,6 @@ fun FactionIcon(
     Image(
         modifier = modifier,
         painter = faction.toPainter(),
-        contentDescription = null,
+        contentDescription = "$faction",
     )
 }

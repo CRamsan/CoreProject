@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import com.cramsan.ps2link.ui.theme.Opacity
 import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import com.cramsan.ps2link.ui.widgets.CustomCircularProgressIndicator
@@ -48,10 +47,10 @@ fun BoldButton(
     onClick: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    val color = MaterialTheme.colors.primary
+    val color = MaterialTheme.colors.surface
     val buttonColors = BoldButtonColors(
         backgroundColor = color.setAlpha(
-            Opacity.translucent,
+            com.cramsan.ps2link.ui.theme.Color.translucent,
         ),
         contentColor = MaterialTheme.colors.onPrimary,
     )
@@ -127,9 +126,9 @@ fun SlimButton(
     onClick: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    val color = MaterialTheme.colors.primary
+    val color = MaterialTheme.colors.surface
     val buttonColors = BoldButtonColors(
-        backgroundColor = color.setAlpha(Opacity.transparent),
+        backgroundColor = color.setAlpha(com.cramsan.ps2link.ui.theme.Color.transparent),
         contentColor = contentColorFor(color),
     )
 

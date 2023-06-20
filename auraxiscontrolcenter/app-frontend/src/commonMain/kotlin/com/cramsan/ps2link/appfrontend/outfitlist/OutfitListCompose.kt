@@ -34,6 +34,12 @@ fun OutfitListCompose(
     }
 }
 
+/**
+ *
+ */
 interface OutfitListEventHandler {
+    /**
+     *
+     */
     fun onOutfitSelected(outfitId: String, namespace: Namespace)
 }

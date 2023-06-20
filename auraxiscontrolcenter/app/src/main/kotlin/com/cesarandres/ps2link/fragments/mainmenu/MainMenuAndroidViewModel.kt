@@ -15,8 +15,4 @@ class MainMenuAndroidViewModel @Inject constructor(
     viewModel,
 ),
     MainMenuEventHandler by viewModel,
-    MainMenuViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "MainMenuAndroidViewModel"
-}
+    MainMenuViewModelInterface by viewModel

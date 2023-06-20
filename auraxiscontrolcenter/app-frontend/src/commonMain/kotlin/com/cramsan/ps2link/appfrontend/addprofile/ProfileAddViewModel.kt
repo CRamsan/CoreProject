@@ -4,9 +4,10 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appfrontend.BasePS2Event
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.LanguageProvider
-import com.cramsan.ps2link.appfrontend.OpenProfile
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.collections.immutable.ImmutableList
@@ -21,7 +22,10 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
-class ProfileAddViewModel constructor(
+/**
+ *
+ */
+class ProfileAddViewModel(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
@@ -32,7 +36,6 @@ class ProfileAddViewModel constructor(
     languageProvider,
     dispatcherProvider,
 ),
-    ProfileAddEventHandler,
     ProfileAddViewModelInterface {
 
     override val logTag: String
@@ -71,12 +74,24 @@ class ProfileAddViewModel constructor(
 
     override fun onProfileSelected(profileId: String, namespace: Namespace) {
         viewModelScope.launch {
-            _events.emit(OpenProfile(profileId, namespace))
+            _events.emit(BasePS2Event.OpenProfile(profileId, namespace))
         }
     }
 }
 
-interface ProfileAddViewModelInterface {
+/**
+ *
+ */
+interface ProfileAddViewModelInterface : BasePS2ViewModelInterface {
     val profileList: StateFlow<ImmutableList<Character>>
     val searchQuery: StateFlow<String>
+    /**
+     *
+     */
+    fun onSearchFieldUpdated(searchField: String)
+
+    /**
+     *
+     */
+    fun onProfileSelected(profileId: String, namespace: Namespace)
 }

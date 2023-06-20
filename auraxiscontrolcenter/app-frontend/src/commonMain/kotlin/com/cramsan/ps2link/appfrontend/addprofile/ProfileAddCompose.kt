@@ -67,8 +67,17 @@ fun ProfileAddCompose(
     }
 }
 
+/**
+ *
+ */
 interface ProfileAddEventHandler {
+    /**
+     *
+     */
     fun onSearchFieldUpdated(searchField: String)
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
 }
 

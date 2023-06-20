@@ -6,6 +6,7 @@ import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.LanguageProvider
 import com.cramsan.ps2link.core.models.Server
 import kotlinx.collections.immutable.ImmutableList
@@ -16,7 +17,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ServerListViewModel constructor(
+/**
+ *
+ */
+class ServerListViewModel(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
@@ -68,8 +72,14 @@ class ServerListViewModel constructor(
     }
 }
 
-interface ServerListViewModelInterface {
+/**
+ *
+ */
+interface ServerListViewModelInterface : BasePS2ViewModelInterface {
     val serverList: StateFlow<ImmutableList<Server>>
+    /**
+     *
+     */
     fun setUp()
 
     /**

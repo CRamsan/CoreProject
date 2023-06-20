@@ -15,8 +15,4 @@ class OutfitListAndroidViewModel @Inject constructor(
     viewModel,
 ),
     OutfitListEventHandler by viewModel,
-    OutfitListViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "OutfitListViewModel"
-}
+    OutfitListViewModelInterface by viewModel

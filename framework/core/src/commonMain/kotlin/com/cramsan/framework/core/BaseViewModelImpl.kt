@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 /**
  * Implementation of [BaseViewModel] that provides some safe defaults to build upon.
  */
-abstract class BaseViewModelImpl(
+abstract class BaseViewModelImpl<E : BaseEvent>(
     override val dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel {
 
@@ -26,7 +26,7 @@ abstract class BaseViewModelImpl(
      * Emit values that should be consumed by the UI layer.
      */
     @Suppress("VariableNaming")
-    protected val _events = MutableSharedFlow<BaseEvent>()
+    protected val _events = MutableSharedFlow<E>()
 
     /**
      * LiveData that produce events of type [BaseEvent].

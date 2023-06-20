@@ -5,9 +5,10 @@ import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.RedditRepository
+import com.cramsan.ps2link.appfrontend.BasePS2Event
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.LanguageProvider
-import com.cramsan.ps2link.appfrontend.OpenUrl
 import com.cramsan.ps2link.core.models.RedditPage
 import com.cramsan.ps2link.core.models.RedditPost
 import kotlinx.collections.immutable.ImmutableList
@@ -18,7 +19,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RedditViewModel constructor(
+/**
+ *
+ */
+class RedditViewModel(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
@@ -50,7 +54,7 @@ class RedditViewModel constructor(
     override fun onPostSelected(redditPost: RedditPostUIModel) {
         redditPost.postUrl?.let {
             viewModelScope.launch {
-                _events.emit(OpenUrl(it))
+                _events.emit(BasePS2Event.OpenUrl(it))
             }
         }
     }
@@ -58,7 +62,7 @@ class RedditViewModel constructor(
     override fun onImageSelected(redditPost: RedditPostUIModel) {
         redditPost.url?.let {
             viewModelScope.launch {
-                _events.emit(OpenUrl(it))
+                _events.emit(BasePS2Event.OpenUrl(it))
             }
         }
     }
@@ -95,7 +99,13 @@ private fun RedditPost.toUIModel(): RedditPostUIModel {
     )
 }
 
-interface RedditViewModelInterface {
+/**
+ *
+ */
+interface RedditViewModelInterface : BasePS2ViewModelInterface {
     val redditContent: StateFlow<ImmutableList<RedditPostUIModel>>
+    /**
+     *
+     */
     fun setUp(redditPage: RedditPage)
 }

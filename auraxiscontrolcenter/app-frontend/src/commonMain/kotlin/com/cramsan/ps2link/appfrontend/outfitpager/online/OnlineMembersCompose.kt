@@ -45,7 +45,16 @@ fun OnlineMembersCompose(
     }
 }
 
+/**
+ *
+ */
 interface OnlineMemberEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }

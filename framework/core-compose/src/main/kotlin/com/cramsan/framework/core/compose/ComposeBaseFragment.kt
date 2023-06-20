@@ -8,8 +8,8 @@ import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
-import com.cramsan.framework.core.BaseAndroidViewModel
 import com.cramsan.framework.core.BaseFragment
+import com.cramsan.framework.core.BaseViewModel
 import com.cramsan.framework.core.BaseViewModelFragment
 import kotlinx.coroutines.launch
 
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * This class extends [BaseFragment] with the capabilities to render a Compose screen. The [viewModel]
  * is a required field. If this class does not need a viewModel, then [NoopViewModel] can be used.
  */
-abstract class ComposeBaseFragment<VM : BaseAndroidViewModel> : BaseViewModelFragment<VM>() {
+abstract class ComposeBaseFragment<VM : BaseViewModel> : BaseViewModelFragment<VM>() {
 
     @CallSuper
     override fun onCreateView(

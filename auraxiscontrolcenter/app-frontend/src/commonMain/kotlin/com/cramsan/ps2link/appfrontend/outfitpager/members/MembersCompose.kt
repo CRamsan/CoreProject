@@ -46,7 +46,16 @@ fun MemberListCompose(
     }
 }
 
+/**
+ *
+ */
 interface MemberListEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }

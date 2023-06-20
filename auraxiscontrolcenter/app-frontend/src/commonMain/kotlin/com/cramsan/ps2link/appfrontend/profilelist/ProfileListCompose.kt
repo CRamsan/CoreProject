@@ -32,6 +32,12 @@ fun ProfileListCompose(
     }
 }
 
+/**
+ *
+ */
 interface ProfileListEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
 }

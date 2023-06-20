@@ -78,6 +78,12 @@ expect fun getUrlHomePage(): String
 @Composable
 expect fun getAboutThankYou(): String
 
+/**
+ *
+ */
 interface AboutEventHandler {
+    /**
+     *
+     */
     fun onAboutClick()
 }

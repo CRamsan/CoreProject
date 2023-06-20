@@ -15,8 +15,4 @@ class ProfileListAndroidViewModel @Inject constructor(
     viewModel
 ),
     ProfileListEventHandler by viewModel,
-    ProfileListViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "ProfileListViewModel"
-}
+    ProfileListViewModelInterface by viewModel

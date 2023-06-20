@@ -36,6 +36,7 @@ tasks.register("releaseAll") {
 
     dependsOn("auraxiscontrolcenter:app:release")
     dependsOn("auraxiscontrolcenter:appcore:release")
+    dependsOn("auraxiscontrolcenter:app-frontend:release")
     dependsOn("auraxiscontrolcenter:cdk:release")
     dependsOn("auraxiscontrolcenter:core-models:release")
     dependsOn("auraxiscontrolcenter:db-models:release")

@@ -11,5 +11,5 @@ import androidx.lifecycle.ViewModel
  * on configuration change so [savedStateHandle] should not be used in those cases.
  */
 abstract class BaseAndroidViewModel(
-    protected val viewModel: BaseViewModel,
-) : BaseViewModel by viewModel, ViewModel()
+    protected open val viewModel: BaseViewModel,
+) : ViewModel()

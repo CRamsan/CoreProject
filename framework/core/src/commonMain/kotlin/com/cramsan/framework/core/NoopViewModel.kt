@@ -5,7 +5,7 @@ package com.cramsan.framework.core
  */
 class NoopViewModel constructor(
     dispatcherProvider: DispatcherProvider,
-) : BaseViewModelImpl(dispatcherProvider) {
+) : BaseViewModelImpl<BaseEvent>(dispatcherProvider) {
     override val logTag: String
         get() = "NoopViewModel"
 }

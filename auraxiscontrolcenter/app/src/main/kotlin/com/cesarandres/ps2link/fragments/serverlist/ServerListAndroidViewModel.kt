@@ -15,8 +15,4 @@ class ServerListAndroidViewModel @Inject constructor(
     viewModel,
 ),
     ServerListEventHandler by viewModel,
-    ServerListViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "ServerListViewModel"
-}
+    ServerListViewModelInterface by viewModel

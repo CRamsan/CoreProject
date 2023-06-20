@@ -23,8 +23,8 @@ internal actual fun CharacterClass.toPainter(): Painter {
 }
 
 @Composable
-internal actual fun MedalType?.toPainter(): Painter {
-    val resourcePath = when (this) {
+internal actual fun painterFromMedalType(medalType: MedalType?): Painter {
+    val resourcePath = when (medalType) {
         MedalType.AURAXIUM -> "medal_araxium.webp"
         MedalType.GOLD -> "medal_gold.webp"
         MedalType.SILVER -> "medal_silver.webp"

@@ -6,6 +6,7 @@ import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appfrontend.BasePS2AndroidViewModel
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.NoopPS2ViewModel
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
@@ -25,7 +26,8 @@ class OutfitPagerViewModel @Inject constructor(
     viewModel: NoopPS2ViewModel,
 ) : BasePS2AndroidViewModel<NoopPS2ViewModel>(
     viewModel,
-) {
+),
+    BasePS2ViewModelInterface by viewModel {
 
     override val logTag: String
         get() = "OutfitPagerViewModel"

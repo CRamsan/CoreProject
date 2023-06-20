@@ -12,6 +12,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun Preview() {
     KillListCompose(
         killList = persistentListOf(),
+        useVerticalMode = false,
         isLoading = true,
         isError = false,
         eventHandler = object : KillListEventHandler {

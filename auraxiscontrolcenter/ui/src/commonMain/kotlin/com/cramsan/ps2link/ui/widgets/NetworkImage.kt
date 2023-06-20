@@ -21,16 +21,14 @@ fun NetworkImage(
     modifier: Modifier = Modifier,
     imageUrl: String? = null,
     contentDescription: String? = null,
-    placeHolderPainter: Painter = PlaceholderPainter(),
     contentScale: ContentScale = ContentScale.Fit,
 ) {
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-
         val painter = if (imageUrl == null) {
-            placeHolderPainter
+            PlaceholderPainter()
         } else {
             AsyncPainter(imageUrl)
         }

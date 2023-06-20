@@ -11,7 +11,7 @@ import com.cramsan.ps2link.core.models.Namespace
 internal expect fun CharacterClass.toPainter(): Painter
 
 @Composable
-internal expect fun MedalType?.toPainter(): Painter
+internal expect fun painterFromMedalType(medalType: MedalType?): Painter
 
 @Composable
 internal expect fun Faction.toPainter(): Painter

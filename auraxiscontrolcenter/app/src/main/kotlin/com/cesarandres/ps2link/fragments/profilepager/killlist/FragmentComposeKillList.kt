@@ -36,6 +36,7 @@ class FragmentComposeKillList : BaseComposePS2Fragment<KillListAndroidViewModel>
         val isError = viewModel.isError.collectAsState()
         KillListCompose(
             killList = killList.value,
+            useVerticalMode = false,
             isLoading = isLoading.value,
             isError = isError.value,
             eventHandler = viewModel,

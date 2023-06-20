@@ -12,6 +12,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun Preview() {
     WeaponListCompose(
         weaponList = persistentListOf(),
+        useVerticalMode = false,
         faction = Faction.TR,
         isLoading = true,
         isError = false,

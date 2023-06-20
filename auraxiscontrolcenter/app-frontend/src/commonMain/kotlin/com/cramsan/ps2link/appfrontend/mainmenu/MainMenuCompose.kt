@@ -19,6 +19,9 @@ import com.cramsan.ps2link.core.models.Outfit
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.MainMenuButton
 
+/**
+ *
+ */
 @Composable
 fun MainMenuCompose(
     preferredProfile: Character?,
@@ -89,14 +92,41 @@ fun MainMenuCompose(
     }
 }
 
+/**
+ *
+ */
 interface MainMenuEventHandler {
+    /**
+     *
+     */
     fun onPreferredProfileClick(characterId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onPreferredOutfitClick(outfitId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onProfileClick()
+    /**
+     *
+     */
     fun onServersClick()
+    /**
+     *
+     */
     fun onOutfitsClick()
+    /**
+     *
+     */
     fun onTwitterClick()
+    /**
+     *
+     */
     fun onRedditClick()
+    /**
+     *
+     */
     fun onAboutClick()
 }
 

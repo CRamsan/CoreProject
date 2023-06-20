@@ -11,7 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.cramsan.ps2link.ui.theme.Opacity
+import com.cramsan.ps2link.ui.theme.Color
 import com.cramsan.ps2link.ui.widgets.UnexpectedError
 
 @Composable
@@ -26,10 +26,13 @@ fun LoadingOverlay(
     ) {
         Surface(
             modifier.fillMaxSize(),
-            color = MaterialTheme.colors.primary.setAlpha(Opacity.transparent),
+            color = MaterialTheme.colors.primary.setAlpha(Color.transparent),
         ) {
             Box(modifier.fillMaxSize()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MaterialTheme.colors.secondary,
+                )
             }
         }
     }
@@ -52,7 +55,7 @@ fun ErrorOverlay(
     ) {
         Surface(
             modifier,
-            color = MaterialTheme.colors.primary.setAlpha(Opacity.transparent),
+            color = MaterialTheme.colors.primary.setAlpha(Color.transparent),
         ) {
             Box(modifier.fillMaxSize()) {
                 UnexpectedError(modifier = Modifier.align(Alignment.Center), error)

@@ -1,14 +1,11 @@
 package com.cramsan.ps2link.network.ws.testgui.application
 
 import com.cramsan.framework.logging.logD
-import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.logging.logW
 import com.cramsan.framework.preferences.Preferences
-import com.cramsan.ps2link.appcore.census.DBGServiceClient
-import com.cramsan.ps2link.core.models.CensusLang
-import com.cramsan.ps2link.core.models.Character
-import com.cramsan.ps2link.core.models.LoginStatus
+import com.cramsan.ps2link.appcore.preferences.PS2Settings
+import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.StreamingClientEventHandler
@@ -39,13 +36,21 @@ import com.cramsan.ps2link.network.ws.messages.UnhandledEvent
 import com.cramsan.ps2link.network.ws.messages.VehicleDestroy
 import com.cramsan.ps2link.network.ws.testgui.Constants
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
+import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationScreenEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
-import com.cramsan.ps2link.network.ws.testgui.ui.navigation.ScreenType
+import com.cramsan.ps2link.network.ws.testgui.ui.PS2TrayEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTabEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTabEventHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.awt.Desktop
@@ -63,12 +68,15 @@ class ApplicationManager(
     private val streamingClient: StreamingClient,
     private val hotKeyManager: HotKeyManager,
     private val gameSessionManager: GameSessionManager,
+    private val ps2Preferences: PS2Settings,
     private val preferences: Preferences,
-    private val serviceClient: DBGServiceClient,
+    private val ps2Repository: PS2LinkRepository,
     private val coroutineScope: CoroutineScope,
-) : StreamingClientEventHandler {
-
-    private var currentPlayer: Character? = null
+) : StreamingClientEventHandler,
+    PS2TrayEventHandler,
+    ProfilesTabEventHandler,
+    ApplicationScreenEventHandler,
+    OutfitsTabEventHandler {
 
     private var isClientReady = false
 
@@ -78,10 +86,11 @@ class ApplicationManager(
 
     private val applicationState = MutableStateFlow(
         ApplicationUIModel.State(
-            screenType = ScreenType.UNDEFINED,
             programMode = ProgramMode.LOADING,
-            character = null,
-            debugModeEnabled = true,
+            debugModeEnabled = false,
+            selectedTab = ApplicationTab.Profile(null, null),
+            profileTab = ApplicationTab.Profile(null, null),
+            outfitTab = ApplicationTab.Outfit(null, null),
         ),
     )
 
@@ -95,12 +104,20 @@ class ApplicationManager(
 
     private val windowUIModel = MutableStateFlow(
         ApplicationUIModel.WindowUIModel(
-            isVisible = false,
+            isVisible = true,
             iconPath = "icon_large.png",
+            dialogUIModel = null,
+            showFTE = true,
+            title = "",
+            showAddButton = false,
         ),
     )
 
-    val uiModel = combine(windowUIModel, trayUIModel, applicationState) { t1, t2, t3 ->
+    val uiModel = combine(
+        windowUIModel,
+        trayUIModel,
+        applicationState,
+    ) { t1, t2, t3, ->
         ApplicationUIModel(t1, t2, t3)
     }.stateIn(
         coroutineScope,
@@ -112,6 +129,8 @@ class ApplicationManager(
         ),
     )
 
+    private var observeJob: Job? = null
+
     /**
      * Start the application.
      */
@@ -122,31 +141,29 @@ class ApplicationManager(
         // Register for events from the WS client
         streamingClient.registerListener(this)
         // Load the character if stored from a previous session.
-        tryLoadingCachedCharacter()
     }
 
     private fun initialize() {
         val inDebugMode = preferences.loadString(Constants.DEBUG_MODE_PREF_KEY).toBoolean()
         changeDebugMode(inDebugMode)
-    }
 
-    @Suppress("SwallowedException")
-    private suspend fun tryLoadingCachedCharacter() {
-        val characterId = preferences.loadString(CHARACTER_PREF_KEY)
-        if (characterId.isNullOrBlank()) {
-            ProgramMode.NOT_CONFIGURED
-            return
-        }
-
-        initialLoadCharacter(characterId)
-    }
-
-    /**
-     * Set the character to be observed based on the provided [characterId].
-     */
-    fun setCharacter(characterId: String) {
         coroutineScope.launch {
-            updateCharacter(characterId)
+            val cachedOutfitId = ps2Preferences.getPreferredOutfitId()
+            val cachedOutfitNamespace = ps2Preferences.getPreferredOutfitNamespace()
+            val cachedCharacterId = ps2Preferences.getPreferredCharacterId()
+            val cachedCharacterNamespace = ps2Preferences.getPreferredProfileNamespace()
+            if (cachedOutfitId != null && cachedOutfitNamespace != null) {
+                onOutfitSelected(cachedOutfitId, cachedOutfitNamespace)
+            }
+            if (cachedCharacterId != null && cachedCharacterNamespace != null) {
+                onProfilesSelected(cachedCharacterId, cachedCharacterNamespace)
+            }
+            onTabSelected(
+                ApplicationTab.Profile(
+                    cachedCharacterId,
+                    cachedCharacterNamespace,
+                )
+            )
         }
     }
 
@@ -163,58 +180,6 @@ class ApplicationManager(
         eventHandlers.forEach { it.onProgramModeChanged(programMode) }
     }
 
-    @Suppress("SwallowedException")
-    private suspend fun initialLoadCharacter(characterId: String) {
-        setProgramMode(ProgramMode.LOADING)
-        val character = fetchCharacter(characterId)
-        if (character == null) {
-            preferences.remove(CHARACTER_PREF_KEY)
-            setProgramMode(ProgramMode.NOT_CONFIGURED)
-        } else {
-            setProgramMode(ProgramMode.PAUSED)
-        }
-        logI(TAG, "Character $characterId loaded.")
-
-        currentPlayer = character
-        applicationState.value = applicationState.value.copy(
-            character = character,
-        )
-    }
-
-    @Suppress("SwallowedException")
-    private suspend fun updateCharacter(characterId: String) {
-        val character = fetchCharacter(characterId)
-        currentPlayer = character
-        applicationState.value = applicationState.value.copy(
-            character = character,
-        )
-        preferences.saveString(CHARACTER_PREF_KEY, character?.characterId)
-        if (applicationState.value.programMode == ProgramMode.NOT_CONFIGURED) {
-            setProgramMode(ProgramMode.PAUSED)
-        }
-        eventHandlers.forEach { it.onCharacterLoaded(character) }
-    }
-    @Suppress("SwallowedException")
-    private suspend fun fetchCharacter(characterId: String): Character? {
-        val character: Character?
-        try {
-            logI(TAG, "Trying to fetch data for character $characterId.")
-            character = serviceClient.getProfile(
-                character_id = characterId,
-                namespace = Namespace.PS2PC,
-                currentLang = CensusLang.EN,
-            ).body
-            if (character == null) {
-                logE(TAG, "Could not find data for character $characterId.")
-                return null
-            }
-        } catch (t: Throwable) {
-            logE(TAG, "Error when fetching data for character $characterId.")
-            return null
-        }
-        return character
-    }
-
     fun registerCallback(callback: ApplicationManagerCallback) {
         eventHandlers.add(callback)
     }
@@ -223,30 +188,11 @@ class ApplicationManager(
         eventHandlers.remove(callback)
     }
 
-    private fun updateCharacter() {
-        val characterId = applicationState.value.character?.characterId ?: return
-        coroutineScope.launch { updateCharacter(characterId) }
-    }
-
-    private fun setPlayerLoginStatus(loginStatus: LoginStatus) {
-        val character = applicationState.value.character?.copy(
-            loginStatus = loginStatus,
-        )
-        applicationState.value = applicationState.value.copy(
-            character = character,
-        )
-    }
-
     /**
      * Start listening for events for the selected character.
      */
     private fun startListening() {
-        val characterId = currentPlayer?.characterId
-
-        if (characterId == null) {
-            logE(TAG, "Cannot start listening. CharacterId is null.")
-            return
-        }
+        val characterId = ""
 
         isClientReady = false
         setProgramMode(ProgramMode.LOADING)
@@ -274,7 +220,6 @@ class ApplicationManager(
                 ),
             )
             setProgramMode(ProgramMode.RUNNING)
-            updateCharacter()
         }
     }
 
@@ -287,17 +232,10 @@ class ApplicationManager(
     }
 
     override fun onServerEventReceived(serverEvent: ServerEvent) {
-        val character = currentPlayer
-
-        if (character == null) {
-            logE(TAG, "Received event while character is null.")
-            return
-        }
-
         when (serverEvent) {
             is ConnectionStateChanged -> Unit
             is Heartbeat -> Unit
-            is ServiceMessage<*> -> { handleServerEventPayload(character, serverEvent.payload) }
+            is ServiceMessage<*> -> { handleServerEventPayload(serverEvent.payload) }
             is ServiceStateChanged -> { isClientReady = true }
             is SubscriptionConfirmation -> Unit
             is UnhandledEvent -> Unit
@@ -305,32 +243,32 @@ class ApplicationManager(
     }
 
     @Suppress("ComplexMethod")
-    private fun handleServerEventPayload(character: Character, payload: ServerEventPayload?) {
+    private fun handleServerEventPayload(payload: ServerEventPayload?) {
         when (payload) {
             is AchievementEarned -> Unit
-            is BattleRankUp -> { updateCharacter() }
+            is BattleRankUp -> Unit
             is ContinentLock -> Unit
             is ContinentUnlock -> Unit
             is Death -> {
-                gameSessionManager.onPlayerDeathEvent(character, payload)
+                gameSessionManager.onPlayerDeathEvent(payload)
             }
             is FacilityControl -> Unit
             is GainExperience -> {
-                gameSessionManager.onExperienceGained(character, payload)
+                gameSessionManager.onExperienceGained(payload)
             }
             is ItemAdded -> Unit
             is MetagameEvent -> Unit
             is PlayerFacilityCapture -> Unit
             is PlayerFacilityDefend -> Unit
-            is PlayerLogin -> { setPlayerLoginStatus(LoginStatus.ONLINE) }
-            is PlayerLogout -> { setPlayerLoginStatus(LoginStatus.OFFLINE) }
+            is PlayerLogin -> Unit
+            is PlayerLogout -> Unit
             is SkillAdded -> Unit
             is VehicleDestroy -> Unit
             null -> Unit
         }
 
         if (payload != null) {
-            eventHandlers.forEach { it.onServerEventPayload(character, payload) }
+            eventHandlers.forEach { it.onServerEventPayload(payload) }
         }
     }
 
@@ -372,18 +310,6 @@ class ApplicationManager(
             ProgramMode.RUNNING -> pauseListening()
             ProgramMode.PAUSED -> startListening()
         }
-    }
-
-    /**
-     * Change the screen that is being displayed.
-     */
-    fun setCurrentScreen(screenType: ScreenType) {
-        windowUIModel.value = windowUIModel.value.copy(
-            isVisible = true,
-        )
-        applicationState.value = applicationState.value.copy(
-            screenType = screenType,
-        )
     }
 
     /**
@@ -442,5 +368,175 @@ class ApplicationManager(
                 ProgramMode.PAUSED -> "Start"
             }
         }
+    }
+
+    override fun onOpenApplicationSelected() {
+        openWindow()
+    }
+
+    override fun onPrimaryActionSelected() {
+        onTrayAction()
+    }
+
+    override fun onCloseApplicationSelected() {
+        exitApplication()
+    }
+
+    override fun onOpenSearchProfileDialogSelected() {
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_PROFILE)
+        )
+    }
+
+    override fun onProfilesSelected(characterId: String, namespace: Namespace) {
+        coroutineScope.launch {
+            ps2Preferences.updatePreferredCharacterId(characterId)
+            ps2Preferences.updatePreferredProfileNamespace(namespace)
+        }
+
+        eventHandlers.forEach { it.onCharacterSelected(characterId, namespace) }
+        windowUIModel.value = windowUIModel.value.copy(
+            showFTE = false,
+            title = "",
+        )
+        applicationState.value = applicationState.value.copy(
+            profileTab = ApplicationTab.Profile(characterId, namespace)
+        )
+        loadLightweightCharacter(characterId, namespace)
+    }
+
+    private fun loadLightweightCharacter(characterId: String?, namespace: Namespace?) {
+        observeJob?.cancel()
+        if (characterId == null || namespace == null) {
+            windowUIModel.value = windowUIModel.value.copy(title = "")
+            return
+        }
+
+        observeJob = coroutineScope.launch {
+            ps2Repository.getCharacterAsFlow(characterId, namespace).onEach {
+                windowUIModel.value = windowUIModel.value.copy(
+                    title = it?.name ?: ""
+                )
+            }.collect()
+        }
+    }
+
+    override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
+        coroutineScope.launch {
+            ps2Preferences.updatePreferredOutfitId(outfitId)
+            ps2Preferences.updatePreferredOutfitNamespace(namespace)
+        }
+
+        eventHandlers.forEach { it.onOutfitSelected(outfitId, namespace) }
+        windowUIModel.value = windowUIModel.value.copy(
+            showFTE = false,
+            title = "",
+        )
+        applicationState.value = applicationState.value.copy(
+            outfitTab = ApplicationTab.Outfit(outfitId, namespace)
+        )
+        loadLightweightOutfit(outfitId, namespace)
+    }
+
+    private fun loadLightweightOutfit(outfitId: String?, namespace: Namespace?) {
+        observeJob?.cancel()
+        if (outfitId == null || namespace == null) {
+            windowUIModel.value = windowUIModel.value.copy(title = "")
+            return
+        }
+
+        observeJob = coroutineScope.launch {
+            ps2Repository.getOutfitAsFlow(outfitId, namespace).onEach {
+                windowUIModel.value = windowUIModel.value.copy(
+                    title = it?.name ?: ""
+                )
+            }.collect()
+        }
+    }
+
+    @Suppress("CyclomaticComplexMethod")
+    override fun onTabSelected(applicationTab: ApplicationTab) {
+        val showFTE = when (applicationTab) {
+            is ApplicationTab.Profile -> applicationTab.characterId == null || applicationTab.namespace == null
+            is ApplicationTab.Outfit -> applicationTab.outfitId == null || applicationTab.namespace == null
+            ApplicationTab.Settings -> false
+        }
+
+        when (applicationTab) {
+            is ApplicationTab.Profile -> {
+                applicationState.value = applicationState.value.copy(
+                    selectedTab = applicationTab,
+                    profileTab = applicationTab,
+                )
+            }
+            is ApplicationTab.Outfit -> {
+                applicationState.value = applicationState.value.copy(
+                    selectedTab = applicationTab,
+                    outfitTab = applicationTab
+                )
+            }
+            ApplicationTab.Settings -> {
+                applicationState.value = applicationState.value.copy(
+                    selectedTab = applicationTab,
+                )
+            }
+        }
+
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = null,
+            title = "",
+            showFTE = showFTE,
+            showAddButton = when (applicationTab) {
+                is ApplicationTab.Outfit -> true
+                is ApplicationTab.Profile -> true
+                ApplicationTab.Settings -> false
+            },
+        )
+        when (applicationTab) {
+            is ApplicationTab.Profile -> {
+                loadLightweightCharacter(applicationTab.characterId, applicationTab.namespace)
+            }
+            is ApplicationTab.Outfit -> {
+                loadLightweightOutfit(applicationTab.outfitId, applicationTab.namespace)
+            }
+            ApplicationTab.Settings -> {
+            }
+        }
+    }
+
+    override fun onMinimizeSelected() {
+        closeWindow()
+    }
+
+    override fun onCloseSelected() {
+        exitApplication()
+    }
+
+    override fun onDialogOutsideSelected() {
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = null
+        )
+    }
+
+    override fun onSearchSelected() {
+        when (applicationState.value.selectedTab) {
+            is ApplicationTab.Profile -> {
+                windowUIModel.value = windowUIModel.value.copy(
+                    dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_PROFILE)
+                )
+            }
+            is ApplicationTab.Outfit -> {
+                windowUIModel.value = windowUIModel.value.copy(
+                    dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_OUTFIT)
+                )
+            }
+            is ApplicationTab.Settings -> Unit
+        }
+    }
+
+    override fun onOpenSearchOutfitDialogSelected() {
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_OUTFIT)
+        )
     }
 }

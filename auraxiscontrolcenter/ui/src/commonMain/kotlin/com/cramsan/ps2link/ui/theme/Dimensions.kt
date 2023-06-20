@@ -24,9 +24,10 @@ object Padding {
     val xxlarge = 36.dp
 }
 
-val MaxDialogSize = 250.dp
-
-object Opacity {
-    const val transparent = 0.10f
-    const val translucent = 0.55f
+/**
+ *
+ */
+expect object Color {
+    val transparent: Float
+    val translucent: Float
 }

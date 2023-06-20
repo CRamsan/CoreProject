@@ -23,6 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun KillListCompose(
     killList: ImmutableList<KillEventUIModel>,
+    useVerticalMode: Boolean,
     isLoading: Boolean,
     isError: Boolean,
     eventHandler: KillListEventHandler,
@@ -37,6 +38,7 @@ fun KillListCompose(
                     val time = it.time ?: UnknownText()
                     KillItem(
                         modifier = Modifier.fillMaxWidth(),
+                        useVerticalMode = useVerticalMode,
                         killType = it.killType,
                         faction = it.faction,
                         attacker = it.attacker ?: UnknownText(),
@@ -56,11 +58,23 @@ fun KillListCompose(
     }
 }
 
+/**
+ *
+ */
 interface KillListEventHandler {
+    /**
+     *
+     */
     fun onProfileSelected(profileId: String, namespace: Namespace)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }
 
+/**
+ *
+ */
 data class KillEventUIModel(
     val characterId: String?,
     val namespace: Namespace,

@@ -4,9 +4,9 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appfrontend.BasePS2Event
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
 import com.cramsan.ps2link.appfrontend.LanguageProvider
-import com.cramsan.ps2link.appfrontend.OpenOutfit
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
 import kotlinx.collections.immutable.ImmutableList
@@ -23,7 +23,10 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
-class OutfitAddViewModel constructor(
+/**
+ *
+ */
+class OutfitAddViewModel(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
@@ -34,7 +37,6 @@ class OutfitAddViewModel constructor(
     languageProvider,
     dispatcherProvider,
 ),
-    OutfitAddEventHandler,
     OutfitAddViewModelInterface {
 
     override val logTag: String
@@ -93,7 +95,7 @@ class OutfitAddViewModel constructor(
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
         viewModelScope.launch {
-            _events.emit(OpenOutfit(outfitId, namespace))
+            _events.emit(BasePS2Event.OpenOutfit(outfitId, namespace))
         }
     }
 }

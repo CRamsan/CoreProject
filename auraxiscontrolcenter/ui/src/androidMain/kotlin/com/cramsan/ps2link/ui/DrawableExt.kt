@@ -48,8 +48,8 @@ internal actual fun Faction.toPainter(): Painter {
 }
 
 @Composable
-internal actual fun MedalType?.toPainter(): Painter {
-    val resource = when (this) {
+internal actual fun painterFromMedalType(medalType: MedalType?): Painter {
+    val resource = when (medalType) {
         MedalType.AURAXIUM -> R.drawable.medal_araxium
         MedalType.GOLD -> R.drawable.medal_gold
         MedalType.SILVER -> R.drawable.medal_silver

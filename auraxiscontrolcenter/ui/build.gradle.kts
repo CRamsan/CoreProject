@@ -40,6 +40,7 @@ kotlin {
                 implementation(project(":auraxiscontrolcenter:core-models"))
                 implementation(KotlinX.collections.immutable)
                 implementation(KotlinX.datetime)
+                implementation("media.kamel:kamel-image:0.5.1")
             }
         }
     }

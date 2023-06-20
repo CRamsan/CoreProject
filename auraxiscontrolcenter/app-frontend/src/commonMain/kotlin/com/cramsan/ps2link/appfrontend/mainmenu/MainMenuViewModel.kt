@@ -7,16 +7,10 @@ import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.appfrontend.BasePS2Event
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.LanguageProvider
-import com.cramsan.ps2link.appfrontend.OpenAbout
-import com.cramsan.ps2link.appfrontend.OpenOutfit
-import com.cramsan.ps2link.appfrontend.OpenOutfitList
-import com.cramsan.ps2link.appfrontend.OpenProfile
-import com.cramsan.ps2link.appfrontend.OpenProfileList
-import com.cramsan.ps2link.appfrontend.OpenReddit
-import com.cramsan.ps2link.appfrontend.OpenServerList
-import com.cramsan.ps2link.appfrontend.OpenTwitter
 import com.cramsan.ps2link.core.models.Character
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.core.models.Outfit
@@ -26,7 +20,10 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
-class MainMenuViewModel constructor(
+/**
+ *
+ */
+class MainMenuViewModel(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
@@ -121,49 +118,49 @@ class MainMenuViewModel constructor(
 
     override fun onPreferredProfileClick(characterId: String, namespace: Namespace) {
         viewModelScope.launch {
-            _events.emit(OpenProfile(characterId, namespace))
+            _events.emit(BasePS2Event.OpenProfile(characterId, namespace))
         }
     }
 
     override fun onPreferredOutfitClick(outfitId: String, namespace: Namespace) {
         viewModelScope.launch {
-            _events.emit(OpenOutfit(outfitId, namespace))
+            _events.emit(BasePS2Event.OpenOutfit(outfitId, namespace))
         }
     }
 
     override fun onProfileClick() {
         viewModelScope.launch {
-            _events.emit(OpenProfileList)
+            _events.emit(BasePS2Event.OpenProfileList)
         }
     }
 
     override fun onServersClick() {
         viewModelScope.launch {
-            _events.emit(OpenServerList)
+            _events.emit(BasePS2Event.OpenServerList)
         }
     }
 
     override fun onOutfitsClick() {
         viewModelScope.launch {
-            _events.emit(OpenOutfitList)
+            _events.emit(BasePS2Event.OpenOutfitList)
         }
     }
 
     override fun onTwitterClick() {
         viewModelScope.launch {
-            _events.emit(OpenTwitter)
+            _events.emit(BasePS2Event.OpenTwitter)
         }
     }
 
     override fun onRedditClick() {
         viewModelScope.launch {
-            _events.emit(OpenReddit)
+            _events.emit(BasePS2Event.OpenReddit)
         }
     }
 
     override fun onAboutClick() {
         viewModelScope.launch {
-            _events.emit(OpenAbout)
+            _events.emit(BasePS2Event.OpenAbout)
         }
     }
 
@@ -174,7 +171,10 @@ class MainMenuViewModel constructor(
     }
 }
 
-interface MainMenuViewModelInterface {
+/**
+ *
+ */
+interface MainMenuViewModelInterface : BasePS2ViewModelInterface {
     /**
      * Flow that emits a nullable [Character] that represents the preferred/starred account selected by the user.
      */
@@ -184,5 +184,9 @@ interface MainMenuViewModelInterface {
      * Flow that emits a nullable [Outfit] that represents the preferred/starred outfit selected by the user.
      */
     val preferredOutfit: Flow<Outfit?>
+
+    /**
+     *
+     */
     fun updateUI()
 }

@@ -13,7 +13,7 @@ import com.google.android.material.appbar.MaterialToolbar
  * optional. If provided, this toolbar will be set as the [ActionBar] for this activity. [logTag] is
  * required so we can identify the source of the events.
  */
-abstract class BaseViewActivity<T : BaseAndroidViewModel> : BaseActivity<T>() {
+abstract class BaseViewActivity<T : BaseViewModel> : BaseActivity<T>() {
 
     /**
      * Id of the layout that will be automatically inflated by this [Activity].

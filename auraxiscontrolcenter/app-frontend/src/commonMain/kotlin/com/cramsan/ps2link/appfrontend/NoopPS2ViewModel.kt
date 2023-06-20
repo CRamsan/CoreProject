@@ -4,6 +4,9 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 
+/**
+ *
+ */
 class NoopPS2ViewModel(
     pS2LinkRepository: PS2LinkRepository,
     pS2Settings: PS2Settings,

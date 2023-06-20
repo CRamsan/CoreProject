@@ -37,6 +37,7 @@ class FragmentComposeWeaponList : BaseComposePS2Fragment<WeaponListAndroidViewMo
         val isError = viewModel.isError.collectAsState()
         WeaponListCompose(
             faction = faction.value,
+            useVerticalMode = false,
             weaponList = weaponList.value,
             isError = isError.value,
             isLoading = isLoading.value,

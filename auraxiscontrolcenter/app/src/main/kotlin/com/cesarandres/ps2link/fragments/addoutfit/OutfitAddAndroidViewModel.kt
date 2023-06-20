@@ -10,13 +10,9 @@ import javax.inject.Inject
 @Suppress("UndocumentedPublicClass")
 @HiltViewModel
 class OutfitAddAndroidViewModel @Inject constructor(
-    viewModel: OutfitAddViewModel,
+    override val viewModel: OutfitAddViewModel,
 ) : BasePS2AndroidViewModel<OutfitAddViewModel>(
     viewModel,
 ),
-    OutfitAddEventHandler by viewModel,
-    OutfitAddViewModelInterface by viewModel {
-
-    override val logTag: String
-        get() = "OutfitAddAndroidViewModel"
-}
+    OutfitAddEventHandler,
+    OutfitAddViewModelInterface by viewModel

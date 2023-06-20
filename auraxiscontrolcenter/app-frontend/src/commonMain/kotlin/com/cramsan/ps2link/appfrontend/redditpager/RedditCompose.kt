@@ -45,12 +45,27 @@ fun RedditCompose(
     }
 }
 
+/**
+ *
+ */
 interface RedditEventHandler {
+    /**
+     *
+     */
     fun onPostSelected(redditPost: RedditPostUIModel)
+    /**
+     *
+     */
     fun onImageSelected(redditPost: RedditPostUIModel)
+    /**
+     *
+     */
     fun onRefreshRequested()
 }
 
+/**
+ *
+ */
 data class RedditPostUIModel(
     val url: String?,
     val title: String,

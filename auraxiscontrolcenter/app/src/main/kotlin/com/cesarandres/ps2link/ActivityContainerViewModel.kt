@@ -5,6 +5,7 @@ import com.cramsan.framework.userevents.logEvent
 import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
 import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appfrontend.BasePS2AndroidViewModel
+import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.NoopPS2ViewModel
 import com.cramsan.ps2link.core.models.CensusLang
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,9 +19,8 @@ class ActivityContainerViewModel @Inject constructor(
     viewModel: NoopPS2ViewModel,
 ) : BasePS2AndroidViewModel<NoopPS2ViewModel>(
     viewModel,
-) {
-
-    override val logTag = "ActivityContainerViewModel"
+),
+    BasePS2ViewModelInterface by viewModel {
 
     fun setUp() {
         val lang = getCurrentLang()
