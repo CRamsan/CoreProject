@@ -34,6 +34,7 @@ data class ApplicationUIModel(
         val selectedTab: ApplicationTab,
         val profileTab: ApplicationTab.Profile,
         val outfitTab: ApplicationTab.Outfit,
+        val trackerTab: ApplicationTab.Tracker,
     )
 
     data class DialogUIModel(

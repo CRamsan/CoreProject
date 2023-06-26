@@ -34,7 +34,6 @@ import com.cramsan.ps2link.network.ws.StreamingClient
 import io.ktor.client.plugins.websocket.WebSockets
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
@@ -100,9 +99,9 @@ object ApplicationModule {
 
     fun provideDispatcher(): DispatcherProvider = JVMDispatcherProvider()
 
-    fun providesApplicationCoroutineScope(): CoroutineScope {
+    fun providesApplicationCoroutineScope(dispatcherProvider: DispatcherProvider): CoroutineScope {
         // Run this code when providing an instance of CoroutineScope
-        return CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        return CoroutineScope(SupervisorJob() + dispatcherProvider.ioDispatcher())
     }
 
     fun provideClock(): Clock = Clock.System

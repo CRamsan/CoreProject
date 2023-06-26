@@ -66,7 +66,9 @@ val DomainModule = module {
     }
 
     single<CoroutineScope> {
-        ApplicationModule.providesApplicationCoroutineScope()
+        ApplicationModule.providesApplicationCoroutineScope(
+            get(),
+        )
     }
 
     single<DbgDAO> {

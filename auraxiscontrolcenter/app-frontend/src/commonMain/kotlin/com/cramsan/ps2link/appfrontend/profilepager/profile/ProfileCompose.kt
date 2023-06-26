@@ -46,6 +46,7 @@ import kotlin.time.DurationUnit
 @Suppress("ComplexMethod")
 @Composable
 fun ProfileCompose(
+    modifier: Modifier = Modifier,
     faction: Faction?,
     br: Int?,
     prestige: Int?,
@@ -64,7 +65,9 @@ fun ProfileCompose(
     isError: Boolean,
     eventHandler: ProfileEventHandler,
 ) {
-    FrameBottom {
+    FrameBottom(
+        modifier = modifier,
+    ) {
         SwipeToRefreshColumn(
             isLoading = isLoading,
             onRefreshRequested = { eventHandler.onRefreshRequested() },

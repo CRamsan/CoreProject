@@ -2,7 +2,6 @@ package com.cramsan.ps2link.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -44,7 +43,7 @@ private fun Frame(
 
 @Composable
 fun FrameBottom(
-    modifier: Modifier = Modifier.fillMaxSize(),
+    modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {
@@ -61,7 +60,7 @@ fun FrameBottom(
 
 @Composable
 fun FrameCenter(
-    modifier: Modifier = Modifier.fillMaxSize(),
+    modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.TopCenter,
     content: @Composable() () -> Unit,
 ) {

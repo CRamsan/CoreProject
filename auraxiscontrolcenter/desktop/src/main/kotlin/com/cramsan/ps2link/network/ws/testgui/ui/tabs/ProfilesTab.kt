@@ -1,14 +1,18 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.tabs
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.cramsan.ps2link.appfrontend.profilepager.friendlist.FriendListCompose
 import com.cramsan.ps2link.appfrontend.profilepager.friendlist.FriendListEventHandler
@@ -31,7 +35,9 @@ import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.AddProfileDialog
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2Dialog
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
+import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SlimButton
+import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.koinInject
@@ -90,33 +96,51 @@ private fun ProfileTab(
     val prestigeIcon = viewModel.prestigeIcon.collectAsState()
     val isLoading = viewModel.isLoading.collectAsState()
     val isError = viewModel.isError.collectAsState()
-    ProfileCompose(
-        faction = profile.value?.faction,
-        br = profile.value?.battleRank?.toInt(),
-        prestige = profile.value?.prestige?.toInt(),
-        percentToNextBR = profile.value?.percentageToNextBattleRank?.toFloat(),
-        certs = profile.value?.certs?.toInt(),
-        percentToNextCert = profile.value?.percentageToNextCert?.toFloat(),
-        loginStatus = profile.value?.loginStatus,
-        lastLogin = profile.value?.lastLogin,
-        outfit = profile.value?.outfit,
-        server = profile.value?.server?.serverName,
-        timePlayed = profile.value?.timePlayed,
-        creationTime = profile.value?.creationTime,
-        sessionCount = profile.value?.sessionCount,
-        prestigeIcon = prestigeIcon.value,
-        isLoading = isLoading.value,
-        isError = isError.value,
-        eventHandler = object : ProfileEventHandler {
-            override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
-                viewModel.onOutfitSelected(outfitId, namespace)
-            }
+    Column {
+        ProfileCompose(
+            modifier = Modifier.weight(1f),
+            faction = profile.value?.faction,
+            br = profile.value?.battleRank?.toInt(),
+            prestige = profile.value?.prestige?.toInt(),
+            percentToNextBR = profile.value?.percentageToNextBattleRank?.toFloat(),
+            certs = profile.value?.certs?.toInt(),
+            percentToNextCert = profile.value?.percentageToNextCert?.toFloat(),
+            loginStatus = profile.value?.loginStatus,
+            lastLogin = profile.value?.lastLogin,
+            outfit = profile.value?.outfit,
+            server = profile.value?.server?.serverName,
+            timePlayed = profile.value?.timePlayed,
+            creationTime = profile.value?.creationTime,
+            sessionCount = profile.value?.sessionCount,
+            prestigeIcon = prestigeIcon.value,
+            isLoading = isLoading.value,
+            isError = isError.value,
+            eventHandler = object : ProfileEventHandler {
+                override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
+                    viewModel.onOutfitSelected(outfitId, namespace)
+                }
 
-            override fun onRefreshRequested() {
-                viewModel.onRefreshRequested()
+                override fun onRefreshRequested() {
+                    viewModel.onRefreshRequested()
+                }
+            },
+        )
+        FrameBottom(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            Column(
+                modifier = Modifier.padding(Padding.medium),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                SlimButton(
+                    onClick = { viewModel.onOpenLiveTrackerSelected() },
+                    modifier = Modifier
+                        .height(Size.xlarge)
+                ) { Text("Open In Live Tracker") }
             }
-        },
-    )
+        }
+    }
 }
 
 @Composable

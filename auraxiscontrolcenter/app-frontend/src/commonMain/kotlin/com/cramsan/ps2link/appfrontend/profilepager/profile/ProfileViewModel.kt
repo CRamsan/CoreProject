@@ -17,7 +17,6 @@ import com.cramsan.ps2link.core.models.Namespace
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -56,16 +55,6 @@ class ProfileViewModel(
 
     private var collectionJob: Job? = null
     private var job: Job? = null
-
-    init {
-        println("Initializing VM Profile")
-        viewModelScope.launch {
-            _profile.onEach {
-                println(it)
-                println("VM State Profile: $it")
-            }.collect()
-        }
-    }
 
     override fun setUp(characterId: String?, namespace: Namespace?) {
         if (this.characterId != characterId || this.namespace != namespace) {
@@ -148,6 +137,19 @@ class ProfileViewModel(
             }
         }
     }
+
+    override fun onOpenLiveTrackerSelected() {
+        val destinationCharacterId = characterId ?: return
+        val destinationNamespace = namespace ?: return
+        viewModelScope.launch {
+            _events.emit(
+                BasePS2Event.OpenProfileLiveTracker(
+                    destinationCharacterId,
+                    destinationNamespace,
+                )
+            )
+        }
+    }
 }
 
 private fun Character.toUIModel(): CharacterUIModel {
@@ -197,4 +199,9 @@ interface ProfileViewModelInterface : BasePS2ViewModelInterface {
      *
      */
     fun onRefreshRequested()
+
+    /**
+     * Open the live tracker page
+     */
+    fun onOpenLiveTrackerSelected()
 }

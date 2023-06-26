@@ -10,6 +10,7 @@ import com.cramsan.ps2link.network.ws.testgui.application.GameSessionManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTabEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTabEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.TrackerTabEventHandler
 import org.koin.dsl.binds
 import org.koin.dsl.module
 import org.ocpsoft.prettytime.PrettyTime
@@ -44,6 +45,7 @@ val ApplicationModule = module {
     } binds arrayOf(
         ProfilesTabEventHandler::class,
         OutfitsTabEventHandler::class,
+        TrackerTabEventHandler::class,
     )
 
     single<PrettyTime> {
@@ -52,6 +54,7 @@ val ApplicationModule = module {
 
     single<PS2LinkRepository> {
         PS2LinkRepositoryImpl(
+            get(),
             get(),
             get(),
             get(),

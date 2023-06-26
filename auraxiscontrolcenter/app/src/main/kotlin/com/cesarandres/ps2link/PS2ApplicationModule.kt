@@ -273,7 +273,8 @@ object PS2ApplicationModule {
         dbgServiceClient: DBGServiceClient,
         dbgDAO: DbgDAO,
         clock: Clock,
-    ): PS2LinkRepository = PS2LinkRepositoryImpl(dbgServiceClient, dbgDAO, clock)
+        dispatcherProvider: DispatcherProvider,
+    ): PS2LinkRepository = PS2LinkRepositoryImpl(dbgServiceClient, dbgDAO, clock, dispatcherProvider)
 
     @Provides
     @Singleton

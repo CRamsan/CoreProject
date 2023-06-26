@@ -22,6 +22,8 @@ import com.cramsan.ps2link.appfrontend.profilepager.weaponlist.WeaponListViewMod
 import com.cramsan.ps2link.appfrontend.profilepager.weaponlist.WeaponListViewModelInterface
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsScreenViewModel
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsScreenViewModelInterface
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerViewModel
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerViewModelInterface
 import org.koin.dsl.module
 
 val ViewModelModule = module {
@@ -119,6 +121,16 @@ val ViewModelModule = module {
     single<SettingsScreenViewModelInterface> {
         SettingsScreenViewModel(
             get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+        )
+    }
+
+    single<TrackerViewModelInterface> {
+        TrackerViewModel(
             get(),
             get(),
             get(),

@@ -6,6 +6,7 @@ import com.cramsan.framework.logging.logW
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
+import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.StreamingClientEventHandler
@@ -35,14 +36,18 @@ import com.cramsan.ps2link.network.ws.messages.SubscriptionConfirmation
 import com.cramsan.ps2link.network.ws.messages.UnhandledEvent
 import com.cramsan.ps2link.network.ws.messages.VehicleDestroy
 import com.cramsan.ps2link.network.ws.testgui.Constants
+import com.cramsan.ps2link.network.ws.testgui.filelogger.BufferedFileLog
+import com.cramsan.ps2link.network.ws.testgui.filelogger.FileLog
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationScreenEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
 import com.cramsan.ps2link.network.ws.testgui.ui.PS2TrayEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.PlayerEvent
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTabEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTabEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.TrackerTabEventHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -76,7 +81,8 @@ class ApplicationManager(
     PS2TrayEventHandler,
     ProfilesTabEventHandler,
     ApplicationScreenEventHandler,
-    OutfitsTabEventHandler {
+    OutfitsTabEventHandler,
+    TrackerTabEventHandler {
 
     private var isClientReady = false
 
@@ -86,11 +92,12 @@ class ApplicationManager(
 
     private val applicationState = MutableStateFlow(
         ApplicationUIModel.State(
-            programMode = ProgramMode.LOADING,
+            programMode = ProgramMode.NOT_CONFIGURED,
             debugModeEnabled = false,
             selectedTab = ApplicationTab.Profile(null, null),
             profileTab = ApplicationTab.Profile(null, null),
             outfitTab = ApplicationTab.Outfit(null, null),
+            trackerTab = ApplicationTab.Tracker(null, null, null, null)
         ),
     )
 
@@ -98,7 +105,7 @@ class ApplicationManager(
         ApplicationUIModel.TrayUIModel(
             statusLabel = applicationState.value.programMode.toFriendlyString(),
             actionLabel = applicationState.value.programMode.toActionLabel(),
-            iconPath = pathForStatus(ProgramMode.LOADING),
+            iconPath = pathForStatus(ProgramMode.NOT_CONFIGURED),
         ),
     )
 
@@ -131,10 +138,12 @@ class ApplicationManager(
 
     private var observeJob: Job? = null
 
+    private var fileLog: FileLog? = null
+
     /**
      * Start the application.
      */
-    suspend fun startApplication() {
+    fun startApplication() {
         initialize()
         // Load all hotkeys
         hotKeyManager.loadFromPreferences()
@@ -192,7 +201,14 @@ class ApplicationManager(
      * Start listening for events for the selected character.
      */
     private fun startListening() {
-        val characterId = ""
+        val characterId = uiModel.value.state.trackerTab.characterId
+        val namespace = uiModel.value.state.trackerTab.characterNamespace
+
+        if (characterId == null || namespace == null) {
+            isClientReady = false
+            setProgramMode(ProgramMode.NOT_CONFIGURED)
+            return
+        }
 
         isClientReady = false
         setProgramMode(ProgramMode.LOADING)
@@ -207,20 +223,35 @@ class ApplicationManager(
                 }
             }
 
+            val fileLog = getLatestLogFile(characterId, namespace) ?: return@launch
+            this@ApplicationManager.fileLog = fileLog
+            eventHandlers.forEach { it.onFileLogActive(fileLog) }
+
             streamingClient.sendMessage(
                 CharacterSubscribe(
                     characters = listOf(characterId),
                     eventNames = listOf(
+                        EventType.ACHIEVEMENT_EARNED,
                         EventType.DEATH,
-                        EventType.PLAYER_LOGIN,
-                        EventType.PLAYER_LOGOUT,
-                        EventType.GAIN_EXPERIENCE,
                         EventType.BATTLE_RANK_UP,
                     ),
                 ),
             )
             setProgramMode(ProgramMode.RUNNING)
         }
+    }
+
+    private suspend fun getLatestLogFile(characterId: String, namespace: Namespace): FileLog? {
+        val character = ps2Repository.getCharacter(
+            characterId,
+            namespace,
+            CensusLang.EN,
+            forceUpdate = false,
+        )
+
+        val name = character.body?.name ?: return null
+
+        return BufferedFileLog("$name.log")
     }
 
     /**
@@ -250,7 +281,10 @@ class ApplicationManager(
             is ContinentLock -> Unit
             is ContinentUnlock -> Unit
             is Death -> {
-                gameSessionManager.onPlayerDeathEvent(payload)
+                val characterId = uiModel.value.state.trackerTab.characterId
+                if (payload.characterId != characterId) {
+                    gameSessionManager.onPlayerDeathEvent(payload)
+                }
             }
             is FacilityControl -> Unit
             is GainExperience -> {
@@ -269,6 +303,10 @@ class ApplicationManager(
 
         if (payload != null) {
             eventHandlers.forEach { it.onServerEventPayload(payload) }
+            coroutineScope.launch {
+                val playerEvent = payload.toPlayerEvent()
+                playerEvent?.let { fileLog?.addLine(it) }
+            }
         }
     }
 
@@ -343,31 +381,7 @@ class ApplicationManager(
     }
 
     companion object {
-
         private const val TAG = "ApplicationManager"
-
-        private const val CHARACTER_PREF_KEY = "lastSelectedPlayer"
-        private fun pathForStatus(programMode: ProgramMode) = when (programMode) {
-            ProgramMode.NOT_CONFIGURED, ProgramMode.LOADING -> "icon_small.png"
-            ProgramMode.RUNNING -> "icon_running.png"
-            ProgramMode.PAUSED -> "icon_not_running.png"
-        }
-
-        private fun ProgramMode.toFriendlyString(): String {
-            return when (this) {
-                ProgramMode.NOT_CONFIGURED, ProgramMode.LOADING -> "Not configured"
-                ProgramMode.RUNNING -> "Running"
-                ProgramMode.PAUSED -> "Not Running"
-            }
-        }
-
-        private fun ProgramMode.toActionLabel(): String? {
-            return when (this) {
-                ProgramMode.NOT_CONFIGURED, ProgramMode.LOADING -> null
-                ProgramMode.RUNNING -> "Pause"
-                ProgramMode.PAUSED -> "Start"
-            }
-        }
     }
 
     override fun onOpenApplicationSelected() {
@@ -382,10 +396,8 @@ class ApplicationManager(
         exitApplication()
     }
 
-    override fun onOpenSearchProfileDialogSelected() {
-        windowUIModel.value = windowUIModel.value.copy(
-            dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_PROFILE)
-        )
+    override fun onNavigateToProfileTabSelected() {
+        onTabSelected(uiModel.value.state.profileTab)
     }
 
     override fun onProfilesSelected(characterId: String, namespace: Namespace) {
@@ -402,7 +414,6 @@ class ApplicationManager(
         applicationState.value = applicationState.value.copy(
             profileTab = ApplicationTab.Profile(characterId, namespace)
         )
-        loadLightweightCharacter(characterId, namespace)
     }
 
     private fun loadLightweightCharacter(characterId: String?, namespace: Namespace?) {
@@ -435,7 +446,6 @@ class ApplicationManager(
         applicationState.value = applicationState.value.copy(
             outfitTab = ApplicationTab.Outfit(outfitId, namespace)
         )
-        loadLightweightOutfit(outfitId, namespace)
     }
 
     private fun loadLightweightOutfit(outfitId: String?, namespace: Namespace?) {
@@ -454,12 +464,15 @@ class ApplicationManager(
         }
     }
 
-    @Suppress("CyclomaticComplexMethod")
+    @Suppress("CyclomaticComplexMethod", "NestedBlockDepth", "LongMethod")
     override fun onTabSelected(applicationTab: ApplicationTab) {
         val showFTE = when (applicationTab) {
             is ApplicationTab.Profile -> applicationTab.characterId == null || applicationTab.namespace == null
             is ApplicationTab.Outfit -> applicationTab.outfitId == null || applicationTab.namespace == null
             ApplicationTab.Settings -> false
+            is ApplicationTab.Tracker -> {
+                applicationTab.characterId == null && applicationTab.outfitId == null
+            }
         }
 
         when (applicationTab) {
@@ -480,6 +493,48 @@ class ApplicationManager(
                     selectedTab = applicationTab,
                 )
             }
+            is ApplicationTab.Tracker -> {
+                val existingTab = applicationState.value.trackerTab
+
+                val characterId = applicationTab.characterId ?: existingTab.characterId
+                val characterNamespace = applicationTab.characterNamespace ?: existingTab.characterNamespace
+                val outfitId = applicationTab.outfitId ?: existingTab.outfitId
+                val outfitNamespace = applicationTab.outfitNamespace ?: existingTab.outfitNamespace
+
+                val newTab = ApplicationTab.Tracker(
+                    characterId = characterId,
+                    characterNamespace = characterNamespace,
+                    outfitId = outfitId,
+                    outfitNamespace = outfitNamespace,
+                )
+
+                if (applicationState.value.selectedTab != newTab) {
+                    if (applicationState.value.trackerTab != newTab) {
+                        if (
+                            applicationState.value.programMode == ProgramMode.NOT_CONFIGURED ||
+                            applicationState.value.programMode == ProgramMode.PAUSED
+                        ) {
+                            applicationState.value = applicationState.value.copy(
+                                selectedTab = newTab,
+                                trackerTab = newTab
+                            )
+                            eventHandlers.forEach {
+                                it.onTrackedCharacterSelected(
+                                    newTab.characterId ?: "",
+                                    newTab.characterNamespace ?: Namespace.UNDETERMINED,
+                                )
+                            }
+                            setProgramMode(ProgramMode.PAUSED)
+                        } else {
+                            TODO()
+                        }
+                    } else {
+                        applicationState.value = applicationState.value.copy(
+                            selectedTab = newTab,
+                        )
+                    }
+                }
+            }
         }
 
         windowUIModel.value = windowUIModel.value.copy(
@@ -490,6 +545,7 @@ class ApplicationManager(
                 is ApplicationTab.Outfit -> true
                 is ApplicationTab.Profile -> true
                 ApplicationTab.Settings -> false
+                is ApplicationTab.Tracker -> false
             },
         )
         when (applicationTab) {
@@ -501,6 +557,7 @@ class ApplicationManager(
             }
             ApplicationTab.Settings -> {
             }
+            is ApplicationTab.Tracker -> Unit
         }
     }
 
@@ -531,6 +588,7 @@ class ApplicationManager(
                 )
             }
             is ApplicationTab.Settings -> Unit
+            is ApplicationTab.Tracker -> Unit
         }
     }
 
@@ -538,5 +596,114 @@ class ApplicationManager(
         windowUIModel.value = windowUIModel.value.copy(
             dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_OUTFIT)
         )
+    }
+
+    override fun onOpenSearchProfileDialogSelected() {
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_PROFILE)
+        )
+    }
+}
+
+@Suppress("CyclomaticComplexMethod", "LongMethod")
+private fun ServerEventPayload.toPlayerEvent(): PlayerEvent? {
+    return when (this) {
+        is AchievementEarned -> PlayerEvent.AchievementEarned(
+            timestamp = timestamp,
+            worldId = worldId,
+            zoneId = zoneId,
+            achievementId = achievementId,
+        )
+        is BattleRankUp -> PlayerEvent.BattleRankUp(
+            timestamp = timestamp,
+            worldId = worldId,
+            zoneId = zoneId,
+            battleRank = battleRank,
+            characterId = characterId,
+        )
+        is Death -> PlayerEvent.Death(
+            attackerCharacterId = attackerCharacterId,
+            attackerFireModeId = attackerFireModeId,
+            attackerLoadoutId = attackerLoadoutId,
+            attackerVehicleId = attackerVehicleId,
+            attackerWeaponId = attackerWeaponId,
+            characterId = characterId,
+            characterLoadoutId = characterLoadoutId,
+            isCritical = isCritical,
+            isHeadshot = isHeadshot,
+            timestamp = timestamp,
+            vehicleId = vehicleId,
+            worldId = worldId,
+            zoneId = zoneId,
+        )
+        is GainExperience -> PlayerEvent.GainExperience(
+            amount = amount,
+            characterId = characterId,
+            experienceId = experienceId,
+            loadoutId = loadoutId,
+            otherId = otherId,
+            timestamp = timestamp,
+            worldId = worldId,
+            zoneId = zoneId,
+        )
+        is ItemAdded -> PlayerEvent.ItemAdded(
+            characterId = characterId,
+            context = context,
+            itemCount = itemCount,
+            itemId = itemId,
+            timestamp = timestamp,
+            worldId = worldId,
+            zoneId = zoneId,
+        )
+        is PlayerFacilityCapture -> PlayerEvent.PlayerFacilityCapture(
+            characterId = characterId,
+            facilityId = facilityId,
+            outfitId = outfitId,
+            timestamp = timestamp,
+            worldId = worldId,
+            zoneId = zoneId,
+        )
+        is PlayerFacilityDefend -> PlayerEvent.PlayerFacilityDefend(
+            characterId = characterId,
+            facilityId = facilityId,
+            outfitId = outfitId,
+            timestamp = timestamp,
+            worldId = worldId,
+            zoneId = zoneId,
+        )
+        is PlayerLogin -> PlayerEvent.PlayerLogin(
+            timestamp = timestamp,
+            zoneId = zoneId,
+            characterId = characterId,
+        )
+        is PlayerLogout -> PlayerEvent.PlayerLogout(
+            timestamp = timestamp,
+            zoneId = zoneId,
+            characterId = characterId,
+        )
+        is SkillAdded -> PlayerEvent.SkillAdded(
+            timestamp = timestamp,
+            zoneId = zoneId,
+            characterId = characterId,
+            skillId = skillId,
+        )
+        is VehicleDestroy -> PlayerEvent.VehicleDestroy(
+            attackerCharacterId = attackerCharacterId,
+            attackerLoadoutId = attackerLoadoutId,
+            attackerVehicleId = attackerVehicleId,
+            attackerWeaponId = attackerWeaponId,
+            characterId = characterId,
+            eventName = eventName,
+            facilityId = facilityId,
+            factionId = factionId,
+            timestamp = timestamp,
+            vehicleId = vehicleId,
+            worldId = worldId,
+            zoneId = zoneId,
+        )
+        is FacilityControl -> null
+        is MetagameEvent -> null
+        is ContinentLock -> null
+        is ContinentUnlock -> null
     }
 }

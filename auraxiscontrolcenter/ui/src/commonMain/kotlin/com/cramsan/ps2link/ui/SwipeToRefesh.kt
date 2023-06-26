@@ -55,7 +55,6 @@ fun SwipeToRefreshColumn(
     Box(Modifier.pullRefresh(pullRefreshState)) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .verticalScroll(scrollState),
             horizontalAlignment = horizontalAlignment,
             content = content,

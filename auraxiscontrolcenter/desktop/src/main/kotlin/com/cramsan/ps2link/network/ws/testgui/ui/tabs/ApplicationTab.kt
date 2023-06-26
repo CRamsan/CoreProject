@@ -15,4 +15,11 @@ sealed class ApplicationTab {
     ) : ApplicationTab()
 
     object Settings : ApplicationTab()
+
+    data class Tracker(
+        val characterId: String?,
+        val characterNamespace: Namespace?,
+        val outfitId: String?,
+        val outfitNamespace: Namespace?,
+    ) : ApplicationTab()
 }

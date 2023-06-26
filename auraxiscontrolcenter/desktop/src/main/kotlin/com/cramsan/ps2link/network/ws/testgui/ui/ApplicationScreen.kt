@@ -28,6 +28,7 @@ import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsConten
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTab
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTab
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.TrackerTab
 import com.cramsan.ps2link.network.ws.testgui.ui.theme.Dimensions
 import com.cramsan.ps2link.ui.BoldButton
 import com.cramsan.ps2link.ui.FrameBottom
@@ -120,6 +121,10 @@ fun ApplicationContent(
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("Outfits") }
                 BoldButton(
+                    onClick = { applicationScreenEventHandler.onTabSelected(uiModel.state.trackerTab) },
+                    modifier = Modifier.height(Size.xlarge)
+                ) { Text("Live Tracker") }
+                BoldButton(
                     onClick = { applicationScreenEventHandler.onTabSelected(ApplicationTab.Settings) },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("Settings") }
@@ -168,6 +173,9 @@ fun ApplicationContent(
                             }
                             ApplicationTab.Settings -> {
                                 SettingsContent()
+                            }
+                            is ApplicationTab.Tracker -> {
+                                TrackerTab()
                             }
                         }
                     }

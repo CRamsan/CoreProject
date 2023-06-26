@@ -28,9 +28,11 @@ import com.cramsan.ps2link.network.ws.testgui.di.ApplicationModule
 import com.cramsan.ps2link.network.ws.testgui.di.DomainModule
 import com.cramsan.ps2link.network.ws.testgui.di.FrameworkModule
 import com.cramsan.ps2link.network.ws.testgui.di.ViewModelModule
+import com.cramsan.ps2link.network.ws.testgui.filelogger.FileLog
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationGUI
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsScreenViewModelInterface
+import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerViewModelInterface
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -92,6 +94,7 @@ suspend fun initializeGUI(applicationManager: ApplicationManager) {
         val membersViewModel: MembersViewModelInterface by inject()
         val outfitAddViewModel: OutfitAddViewModelInterface by inject()
         val settingsScreenViewModel: SettingsScreenViewModelInterface by inject()
+        val trackerViewModel: TrackerViewModelInterface by inject()
         val scope: CoroutineScope by inject()
     }
 
@@ -105,6 +108,7 @@ suspend fun initializeGUI(applicationManager: ApplicationManager) {
     components.onlineMembersViewModel.configureEvents(applicationManager)
     components.membersViewModel.configureEvents(applicationManager)
     components.outfitAddViewModel.configureEvents(applicationManager)
+    components.trackerViewModel.configureEvents(applicationManager)
     components.settingsScreenViewModel.onStart()
 
     components.settingsScreenViewModel.onApplicationUIModelUpdated(applicationManager.uiModel.value)
@@ -130,6 +134,8 @@ suspend fun initializeGUI(applicationManager: ApplicationManager) {
             components.onlineMembersViewModel.setUp(outfitId, namespace)
             components.membersViewModel.setUp(outfitId, namespace)
         }
+        override fun onTrackedCharacterSelected(characterId: String, namespace: Namespace) = Unit
+        override fun onFileLogActive(fileLog: FileLog) = Unit
     })
 
     applicationManager.startApplication()
@@ -179,6 +185,26 @@ private suspend fun BaseViewModel.configureEvents(
                 }
                 BasePS2Event.OpenSettings -> {
                     applicationManager.onTabSelected(ApplicationTab.Settings)
+                }
+                is BasePS2Event.OpenProfileLiveTracker -> {
+                    applicationManager.onTabSelected(
+                        ApplicationTab.Tracker(
+                            it.characterId,
+                            it.namespace,
+                            null,
+                            null,
+                        )
+                    )
+                }
+                is BasePS2Event.OpenOutfitLiveTracker -> {
+                    applicationManager.onTabSelected(
+                        ApplicationTab.Tracker(
+                            null,
+                            null,
+                            it.outfitId,
+                            it.namespace,
+                        )
+                    )
                 }
             }
         }

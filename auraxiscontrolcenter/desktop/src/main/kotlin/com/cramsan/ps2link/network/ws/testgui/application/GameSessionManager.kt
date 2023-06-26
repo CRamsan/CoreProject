@@ -21,6 +21,7 @@ class GameSessionManager(
 ) {
 
     private var timer = 0
+    private var killCounter = 0
 
     private var timerJob: Job? = null
 
@@ -35,6 +36,7 @@ class GameSessionManager(
 
         // Add time to the timer
         timer += 10000
+        killCounter += 1
         if (timerJob?.isCompleted == true || timerJob == null) {
             logI(TAG, "Launched new timer")
             timerJob = coroutineScope.launch { startTimer() }
@@ -56,11 +58,16 @@ class GameSessionManager(
             logD(TAG, "Timer tick: $timer")
         }
 
+        if (killCounter > 3) {
+            logI(TAG, "Capturing video")
+            hotKeyManager.executeHotKey(HotKeyType.ON_ENEMY_KILL_VIDEO)
+        } else {
+            logI(TAG, "Kills: $killCounter - did not meet threshold")
+        }
+
         timerJob = null
         timer = 0
-
-        logI(TAG, "Capturing video")
-        hotKeyManager.executeHotKey(HotKeyType.ON_ENEMY_KILL_VIDEO)
+        killCounter = 0
     }
 
     fun onExperienceGained(payload: GainExperience) {
