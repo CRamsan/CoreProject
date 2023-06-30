@@ -13,7 +13,7 @@ internal actual fun CharacterClass.toPainter(): Painter {
 }
 
 @Composable
-internal actual fun MedalType?.toPainter(): Painter {
+internal actual fun painterFromMedalType(medalType: MedalType?): Painter {
     TODO("Not yet implemented")
 }
 
