@@ -42,9 +42,6 @@ kotlin {
             dependencies {
                 // Serer dependencies
                 implementation(Ktor.client.cio)
-                implementation(Ktor.server.core)
-                implementation(Ktor.server.netty)
-                implementation(Ktor.server.websockets)
             }
         }
         val jvmTest by getting {

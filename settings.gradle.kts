@@ -52,6 +52,7 @@ include("auraxiscontrolcenter:deployable-models")
 include("auraxiscontrolcenter:network-models")
 include("auraxiscontrolcenter:streaming-client")
 include("auraxiscontrolcenter:desktop")
+include("auraxiscontrolcenter:service")
 include("auraxiscontrolcenter:ui")
 
 include("stranded:lib")
