@@ -93,7 +93,6 @@ private fun ProfileTab(
     val viewModel = remember { profileViewModel }
 
     val profile = viewModel.profile.collectAsState(null)
-    val prestigeIcon = viewModel.prestigeIcon.collectAsState()
     val isLoading = viewModel.isLoading.collectAsState()
     val isError = viewModel.isError.collectAsState()
     Column {
@@ -112,7 +111,6 @@ private fun ProfileTab(
             timePlayed = profile.value?.timePlayed,
             creationTime = profile.value?.creationTime,
             sessionCount = profile.value?.sessionCount,
-            prestigeIcon = prestigeIcon.value,
             isLoading = isLoading.value,
             isError = isError.value,
             eventHandler = object : ProfileEventHandler {

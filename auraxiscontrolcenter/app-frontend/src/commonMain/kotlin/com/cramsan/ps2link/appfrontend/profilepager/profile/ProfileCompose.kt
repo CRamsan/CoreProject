@@ -59,7 +59,6 @@ fun ProfileCompose(
     outfit: Outfit?,
     server: String?,
     timePlayed: Duration?,
-    prestigeIcon: String?,
     sessionCount: Long?,
     isLoading: Boolean,
     isError: Boolean,
@@ -97,17 +96,6 @@ fun ProfileCompose(
                             percentageToNextLevel = percentToNextBR ?: 0f,
                         )
                         BR(level = (br ?: 0) + 1, enabled = false)
-                    }
-
-                    // Prestige Icon
-                    if (prestigeIcon != null) {
-                        NetworkImage(
-                            modifier = Modifier
-                                .size(Size.xxlarge, Size.xxlarge)
-                                .align(Alignment.CenterHorizontally),
-                            imageUrl = prestigeIcon,
-                            contentScale = ContentScale.Fit,
-                        )
                     }
 
                     // Prestige

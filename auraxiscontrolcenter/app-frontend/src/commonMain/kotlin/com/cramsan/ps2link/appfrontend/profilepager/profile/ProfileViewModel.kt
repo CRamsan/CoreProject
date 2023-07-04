@@ -47,12 +47,6 @@ class ProfileViewModel(
     private val _profile = MutableStateFlow<CharacterUIModel?>(null)
     override val profile: StateFlow<CharacterUIModel?> = _profile
 
-    private val _prestigeIcon = MutableStateFlow<String?>(null)
-    /**
-     * Flow that emits the URL for the prestige badge image.
-     */
-    override val prestigeIcon: StateFlow<String?> = _prestigeIcon
-
     private var collectionJob: Job? = null
     private var job: Job? = null
 
@@ -75,35 +69,9 @@ class ProfileViewModel(
         collectionJob = profileCore.onEach {
             val uiModel = it?.toUIModel()
             _profile.value = uiModel
-            onCharacterUpdated(it)
         }.launchIn(viewModelScope)
 
         onRefreshRequested()
-    }
-
-    private suspend fun onCharacterUpdated(character: Character?) {
-        val namespace = namespace
-
-        if (namespace == null || character == null) {
-            logW("ProfileViewModel", "Required properties are null")
-            return
-        }
-
-        character.battleRank?.let {
-            val rankResponse = pS2LinkRepository.getExperienceRank(
-                it.toInt(),
-                0, // We are going to only render the ranks for pre-prestige.
-                character.faction,
-                namespace,
-                ps2Settings.getCurrentLang() ?: languageProvider.getCurrentLang(),
-            )
-            if (!rankResponse.isSuccessfulAndContainsBody()) {
-                _prestigeIcon.value = null
-                return@let
-            }
-            val rank = rankResponse.requireBody()
-            _prestigeIcon.value = rank?.imagePath
-        }
     }
 
     override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
@@ -181,10 +149,6 @@ private fun Character.toUIModel(): CharacterUIModel {
  *
  */
 interface ProfileViewModelInterface : BasePS2ViewModelInterface {
-    /**
-     * Flow that emits the URL for the prestige badge image.
-     */
-    val prestigeIcon: StateFlow<String?>
 
     val profile: StateFlow<CharacterUIModel?>
     /**

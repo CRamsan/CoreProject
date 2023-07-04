@@ -85,7 +85,6 @@ class KillListViewModel(
             }
             val currentLang = ps2Settings.getCurrentLang() ?: languageProvider.getCurrentLang()
             val response = pS2LinkRepository.getKillList(characterId, namespace, currentLang)
-            delay(3000)
             if (response.isSuccessful) {
                 _killList.value = response.requireBody().mapToUIModel().toImmutableList()
                 loadingCompleted()
