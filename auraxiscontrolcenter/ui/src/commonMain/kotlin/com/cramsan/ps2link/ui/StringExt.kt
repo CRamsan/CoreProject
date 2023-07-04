@@ -7,7 +7,7 @@ import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.ServerStatus
 
 @Composable
-internal expect fun KillType.toText(): String
+expect fun KillType.toText(): String
 
 @Composable
 expect fun unknownString(): String

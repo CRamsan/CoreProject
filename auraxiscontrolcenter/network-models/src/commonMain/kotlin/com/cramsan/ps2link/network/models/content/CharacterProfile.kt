@@ -29,4 +29,6 @@ data class CharacterProfile(
     val stats: Stats? = null,
     val server: Server? = null,
     val online_status: String? = null,
+    val head_id: String? = null,
+    val title_id: String? = null,
 )

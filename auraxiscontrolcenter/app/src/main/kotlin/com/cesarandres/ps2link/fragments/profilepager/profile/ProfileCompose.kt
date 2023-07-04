@@ -8,9 +8,7 @@ import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Namespace
 import kotlin.time.Duration.Companion.minutes
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 @Preview
 @Composable
 fun Preview() {
@@ -28,7 +26,6 @@ fun Preview() {
         timePlayed = 1000.minutes,
         creationTime = "",
         sessionCount = 100,
-        prestigeIcon = null,
         isLoading = true,
         isError = false,
         eventHandler = object : ProfileEventHandler {

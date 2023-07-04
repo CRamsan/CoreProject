@@ -21,10 +21,14 @@ dependencies {
     implementation(project(":framework:thread"))
     implementation(project(":framework:interfacelib"))
 
+    implementation(project(":auraxiscontrolcenter:streaming-client"))
+    implementation(project(":auraxiscontrolcenter:network-models"))
     implementation("io.insert-koin:koin-core:3.4.2")
     implementation(KotlinX.datetime)
     implementation(KotlinX.serialization.json)
     implementation(Square.sqlDelight.drivers.jdbcSqlite)
+    implementation("org.litote.kmongo:kmongo:_")
+    implementation("org.litote.kmongo:kmongo-coroutine:_")
 
     implementation("org.slf4j:slf4j-api:_")
     implementation("ch.qos.logback:logback-core:_")
@@ -33,4 +37,11 @@ dependencies {
     implementation(Ktor.server.core)
     implementation(Ktor.server.netty)
     implementation(Ktor.server.websockets)
+    implementation(Ktor.server.contentNegotiation)
+
+    implementation(Ktor.client.core)
+    implementation(Ktor.client.java)
+    implementation(Ktor.client.contentNegotiation)
+    implementation(Ktor.plugins.serialization.kotlinx.json)
+    implementation(project(mapOf("path" to ":auraxiscontrolcenter:app-frontend")))
 }

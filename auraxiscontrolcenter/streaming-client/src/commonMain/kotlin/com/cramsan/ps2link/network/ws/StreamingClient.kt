@@ -38,6 +38,7 @@ class StreamingClient(
     private val serviceId: String,
     private val environment: Environment,
     dispatcher: CoroutineDispatcher,
+    private val overrideUrl: String? = null,
 ) {
     private var scope = CoroutineScope(SupervisorJob() + dispatcher)
 
@@ -56,9 +57,12 @@ class StreamingClient(
             return
         }
         clientJob = scope.launch {
-            client.webSocket("wss://push.planetside2.com/streaming?environment=$environment&service-id=s:$serviceId") {
+            val endpointUrl = overrideUrl ?: DEFAULT_URL
+            client.webSocket("$endpointUrl?environment=$environment&service-id=s:$serviceId") {
                 defaultClientWebSocketSession = this
-                val messageOutputRoutine = launch { listenForIncomingMessages(this@webSocket) }
+                val messageOutputRoutine = launch {
+                    listenForIncomingMessages(this@webSocket)
+                }
                 messageOutputRoutine.join()
                 close()
             }
@@ -112,7 +116,29 @@ class StreamingClient(
         }
     }
 
-    private suspend fun listenForIncomingMessages(session: DefaultWebSocketSession) {
+    /**
+     * Send the [rawMessage] to the WS API.
+     */
+    fun sendRawMessage(rawMessage: String) {
+        val session = defaultClientWebSocketSession
+        if (session == null) {
+            logW(TAG, "Cannot send command. Client is not running.")
+            return
+        }
+
+        scope.launch {
+            try {
+                logV(TAG, "Client raw message: $rawMessage")
+                session.send(rawMessage)
+            } catch (e: Throwable) {
+                logE(TAG, "Error sending message. Error: ${e.message}", e)
+            }
+        }
+    }
+
+    private suspend fun listenForIncomingMessages(
+        session: DefaultWebSocketSession,
+    ) {
         for (message in session.incoming) {
             message as? Frame.Text ?: continue
             val receivedText = message.readText()
@@ -137,6 +163,8 @@ class StreamingClient(
 
     companion object {
         const val TAG = "StreamingClient"
+
+        const val DEFAULT_URL = "wss://push.planetside2.com/streaming"
 
         const val HELP_MESSAGE = "{\"send this for help\":{\"service\":\"event\",\"action\":\"help\"}}"
     }

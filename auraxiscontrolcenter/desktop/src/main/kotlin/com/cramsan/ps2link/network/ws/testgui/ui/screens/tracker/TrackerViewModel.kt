@@ -2,12 +2,16 @@ package com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker
 
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
+import com.cramsan.ps2link.appcore.characterClassFromString
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appfrontend.BasePS2Event
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.LanguageProvider
+import com.cramsan.ps2link.appfrontend.formatSimpleDateTime
+import com.cramsan.ps2link.core.models.Faction
+import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.messages.ServerEventPayload
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
@@ -21,6 +25,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import java.util.Queue
 import java.util.concurrent.ArrayBlockingQueue
 
@@ -33,6 +38,7 @@ class TrackerViewModel(
     private val applicationManager: ApplicationManager,
     languageProvider: LanguageProvider,
     dispatcherProvider: DispatcherProvider,
+    private val clock: Clock,
 ) : BasePS2ViewModel(
     pS2LinkRepository,
     pS2Settings,
@@ -101,6 +107,7 @@ class TrackerViewModel(
         val event = playerEvent.toUIModel(
             currentTrackedPlayer,
             currentTrackedNamespace,
+            clock,
         ) ?: return
         messageQueue.add(event)
 
@@ -170,57 +177,63 @@ class TrackerViewModel(
 }
 
 @Suppress("CyclomaticComplexMethod")
-private fun PlayerEvent.toUIModel(trackedCharacterId: String, namespace: Namespace): PlayerEventUIModel? {
+private fun PlayerEvent.toUIModel(
+    trackedCharacterId: String,
+    namespace: Namespace,
+    clock: Clock,
+): PlayerEventUIModel? {
 
-    var linkedCharacter: String? = null
-
-    val event = when (this) {
-        is PlayerEvent.AchievementEarned -> "Achievement Earned"
-        is PlayerEvent.BattleRankUp -> "Battle Rank Up"
+    return when (this) {
+        is PlayerEvent.BattleRankUp -> {
+            null
+        }
         is PlayerEvent.Death -> {
             // Killed another player
             if (characterId != trackedCharacterId) {
-                linkedCharacter = trackedCharacterId
-                "Killed"
+                PlayerKillUIModel(
+                    killType = KillType.KILL,
+                    profile = characterClassFromString(characterLoadoutId),
+                    faction = Faction.fromString(characterFaction),
+                    playerName = characterName,
+                    playerRank = characterRank,
+                    characterId = characterId,
+                    namespace = namespace,
+                    time = formatSimpleDateTime(clock.now()),
+                    weaponName = attackerWeaponName,
+                    weaponImage = attackerWeaponImageUrl,
+                )
             } else {
                 // We died
-                linkedCharacter = attackerCharacterId
                 if (attackerCharacterId == trackedCharacterId) {
-                    "Suicide"
+                    PlayerKillUIModel(
+                        killType = KillType.SUICIDE,
+                        profile = characterClassFromString(characterLoadoutId),
+                        faction = Faction.fromString(characterFaction),
+                        playerName = characterName,
+                        playerRank = characterRank,
+                        characterId = characterId,
+                        namespace = namespace,
+                        time = formatSimpleDateTime(clock.now()),
+                        weaponName = attackerWeaponName,
+                        weaponImage = attackerWeaponImageUrl,
+                    )
                 } else {
-                    "Death"
+                    PlayerKillUIModel(
+                        killType = KillType.KILLEDBY,
+                        profile = characterClassFromString(attackerLoadoutId),
+                        faction = Faction.fromString(attackerCharacterFaction),
+                        playerName = attackerCharacterName,
+                        playerRank = attackerCharacterRank,
+                        characterId = characterId,
+                        namespace = namespace,
+                        time = formatSimpleDateTime(clock.now()),
+                        weaponName = attackerWeaponName,
+                        weaponImage = attackerWeaponImageUrl,
+                    )
                 }
             }
         }
-        is PlayerEvent.GainExperience -> return null
-        is PlayerEvent.ItemAdded -> return null
-        is PlayerEvent.PlayerFacilityCapture -> return null
-        is PlayerEvent.PlayerFacilityDefend -> return null
-        is PlayerEvent.PlayerLogin -> return null
-        is PlayerEvent.PlayerLogout -> return null
-        is PlayerEvent.SkillAdded -> return null
-        is PlayerEvent.VehicleDestroy -> return null
     }
-
-    val description = when (this) {
-        is PlayerEvent.AchievementEarned -> ""
-        is PlayerEvent.BattleRankUp -> "BR:$battleRank"
-        is PlayerEvent.Death -> {
-            if (isHeadshot == "1") {
-                "Headhost"
-            } else {
-                ""
-            }
-        }
-        else -> ""
-    }
-
-    return PlayerEventUIModel(
-        event = event,
-        description = description,
-        characterId = linkedCharacter,
-        namespace = namespace
-    )
 }
 
 /**

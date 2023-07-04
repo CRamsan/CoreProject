@@ -29,6 +29,7 @@ import com.cramsan.ps2link.network.ws.messages.PlayerLogin
 import com.cramsan.ps2link.network.ws.messages.PlayerLogout
 import com.cramsan.ps2link.network.ws.messages.ServerEvent
 import com.cramsan.ps2link.network.ws.messages.ServerEventPayload
+import com.cramsan.ps2link.network.ws.messages.ServerEventPayloadV2
 import com.cramsan.ps2link.network.ws.messages.ServiceMessage
 import com.cramsan.ps2link.network.ws.messages.ServiceStateChanged
 import com.cramsan.ps2link.network.ws.messages.SkillAdded
@@ -280,12 +281,7 @@ class ApplicationManager(
             is BattleRankUp -> Unit
             is ContinentLock -> Unit
             is ContinentUnlock -> Unit
-            is Death -> {
-                val characterId = uiModel.value.state.trackerTab.characterId
-                if (payload.characterId != characterId) {
-                    gameSessionManager.onPlayerDeathEvent(payload)
-                }
-            }
+            is Death -> Unit
             is FacilityControl -> Unit
             is GainExperience -> {
                 gameSessionManager.onExperienceGained(payload)
@@ -299,6 +295,12 @@ class ApplicationManager(
             is SkillAdded -> Unit
             is VehicleDestroy -> Unit
             null -> Unit
+            is ServerEventPayloadV2.DeathV2 -> {
+                val characterId = uiModel.value.state.trackerTab.characterId
+                if (payload.characterId != characterId) {
+                    gameSessionManager.onPlayerDeathEvent(payload)
+                }
+            }
         }
 
         if (payload != null) {
@@ -608,12 +610,6 @@ class ApplicationManager(
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 private fun ServerEventPayload.toPlayerEvent(): PlayerEvent? {
     return when (this) {
-        is AchievementEarned -> PlayerEvent.AchievementEarned(
-            timestamp = timestamp,
-            worldId = worldId,
-            zoneId = zoneId,
-            achievementId = achievementId,
-        )
         is BattleRankUp -> PlayerEvent.BattleRankUp(
             timestamp = timestamp,
             worldId = worldId,
@@ -621,13 +617,26 @@ private fun ServerEventPayload.toPlayerEvent(): PlayerEvent? {
             battleRank = battleRank,
             characterId = characterId,
         )
-        is Death -> PlayerEvent.Death(
+        is Death -> null
+        is FacilityControl -> null
+        is MetagameEvent -> null
+        is ContinentLock -> null
+        is ContinentUnlock -> null
+        is ServerEventPayloadV2.DeathV2 -> PlayerEvent.Death(
             attackerCharacterId = attackerCharacterId,
+            attackerCharacterName = attackerCharacterName,
+            attackerCharacterRank = attackerCharacterRank,
+            attackerCharacterFaction = attackerCharacterFaction,
             attackerFireModeId = attackerFireModeId,
             attackerLoadoutId = attackerLoadoutId,
             attackerVehicleId = attackerVehicleId,
             attackerWeaponId = attackerWeaponId,
+            attackerWeaponName = attackerWeaponName,
+            attackerWeaponImageUrl = attackerWeaponImageUrl,
             characterId = characterId,
+            characterName = characterName,
+            characterRank = characterRank,
+            characterFaction = characterFaction,
             characterLoadoutId = characterLoadoutId,
             isCritical = isCritical,
             isHeadshot = isHeadshot,
@@ -636,74 +645,14 @@ private fun ServerEventPayload.toPlayerEvent(): PlayerEvent? {
             worldId = worldId,
             zoneId = zoneId,
         )
-        is GainExperience -> PlayerEvent.GainExperience(
-            amount = amount,
-            characterId = characterId,
-            experienceId = experienceId,
-            loadoutId = loadoutId,
-            otherId = otherId,
-            timestamp = timestamp,
-            worldId = worldId,
-            zoneId = zoneId,
-        )
-        is ItemAdded -> PlayerEvent.ItemAdded(
-            characterId = characterId,
-            context = context,
-            itemCount = itemCount,
-            itemId = itemId,
-            timestamp = timestamp,
-            worldId = worldId,
-            zoneId = zoneId,
-        )
-        is PlayerFacilityCapture -> PlayerEvent.PlayerFacilityCapture(
-            characterId = characterId,
-            facilityId = facilityId,
-            outfitId = outfitId,
-            timestamp = timestamp,
-            worldId = worldId,
-            zoneId = zoneId,
-        )
-        is PlayerFacilityDefend -> PlayerEvent.PlayerFacilityDefend(
-            characterId = characterId,
-            facilityId = facilityId,
-            outfitId = outfitId,
-            timestamp = timestamp,
-            worldId = worldId,
-            zoneId = zoneId,
-        )
-        is PlayerLogin -> PlayerEvent.PlayerLogin(
-            timestamp = timestamp,
-            zoneId = zoneId,
-            characterId = characterId,
-        )
-        is PlayerLogout -> PlayerEvent.PlayerLogout(
-            timestamp = timestamp,
-            zoneId = zoneId,
-            characterId = characterId,
-        )
-        is SkillAdded -> PlayerEvent.SkillAdded(
-            timestamp = timestamp,
-            zoneId = zoneId,
-            characterId = characterId,
-            skillId = skillId,
-        )
-        is VehicleDestroy -> PlayerEvent.VehicleDestroy(
-            attackerCharacterId = attackerCharacterId,
-            attackerLoadoutId = attackerLoadoutId,
-            attackerVehicleId = attackerVehicleId,
-            attackerWeaponId = attackerWeaponId,
-            characterId = characterId,
-            eventName = eventName,
-            facilityId = facilityId,
-            factionId = factionId,
-            timestamp = timestamp,
-            vehicleId = vehicleId,
-            worldId = worldId,
-            zoneId = zoneId,
-        )
-        is FacilityControl -> null
-        is MetagameEvent -> null
-        is ContinentLock -> null
-        is ContinentUnlock -> null
+        is AchievementEarned -> null
+        is GainExperience -> null
+        is ItemAdded -> null
+        is PlayerFacilityCapture -> null
+        is PlayerFacilityDefend -> null
+        is PlayerLogin -> null
+        is PlayerLogout -> null
+        is SkillAdded -> null
+        is VehicleDestroy -> null
     }
 }

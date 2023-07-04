@@ -11,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import com.cramsan.ps2link.appfrontend.UnknownErrorText
 import com.cramsan.ps2link.appfrontend.UnknownText
 import com.cramsan.ps2link.core.models.CharacterClass
@@ -35,7 +34,6 @@ import com.cramsan.ps2link.ui.widgets.BRBar
 import com.cramsan.ps2link.ui.widgets.Cert
 import com.cramsan.ps2link.ui.widgets.CertBar
 import com.cramsan.ps2link.ui.widgets.FactionIcon
-import com.cramsan.ps2link.ui.widgets.NetworkImage
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.DurationUnit

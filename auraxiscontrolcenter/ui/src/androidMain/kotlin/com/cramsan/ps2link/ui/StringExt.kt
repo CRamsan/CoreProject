@@ -8,7 +8,7 @@ import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.ServerStatus
 
 @Composable
-internal actual fun KillType.toText(): String {
+actual fun KillType.toText(): String {
     val resource = when (this) {
         KillType.KILL -> R.string.text_killed_caps
         KillType.KILLEDBY -> R.string.text_killed_by_caps

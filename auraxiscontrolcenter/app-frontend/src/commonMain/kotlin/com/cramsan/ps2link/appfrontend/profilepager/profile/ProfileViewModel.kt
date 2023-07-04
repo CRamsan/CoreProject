@@ -4,7 +4,6 @@ import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logW
 import com.cramsan.ps2link.appcore.network.isSuccessfulAndContainsBody
-import com.cramsan.ps2link.appcore.network.requireBody
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appfrontend.BasePS2Event

@@ -2,8 +2,8 @@ package com.cramsan.ps2link.network.ws.testgui.application
 
 import com.cramsan.framework.logging.logD
 import com.cramsan.framework.logging.logI
-import com.cramsan.ps2link.network.ws.messages.Death
 import com.cramsan.ps2link.network.ws.messages.GainExperience
+import com.cramsan.ps2link.network.ws.messages.ServerEventPayloadV2
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyType
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +28,7 @@ class GameSessionManager(
     /**
      * Process a kill event.
      */
-    fun onPlayerDeathEvent(death: Death) {
+    fun onPlayerDeathEvent(death: ServerEventPayloadV2.DeathV2) {
         logI(TAG, "Kill event for character: ${death.characterId}")
 
         // Take screenshot right away

@@ -12,12 +12,12 @@ actual fun unknownString(): String {
 }
 
 @Composable
-internal actual fun KillType.toText(): String {
+actual fun KillType.toText(): String {
     return when (this) {
-        KillType.KILL -> "KILL"
-        KillType.KILLEDBY -> "KILLED BY"
-        KillType.SUICIDE -> "SUICIDE"
-        KillType.UNKNOWN -> "UNKNOWN"
+        KillType.KILL -> "Killed"
+        KillType.KILLEDBY -> "Killed By"
+        KillType.SUICIDE -> "Suicide"
+        KillType.UNKNOWN -> "Unknown"
     }
 }
 

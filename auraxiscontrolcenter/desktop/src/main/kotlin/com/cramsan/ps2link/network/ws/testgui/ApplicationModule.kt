@@ -138,6 +138,7 @@ object ApplicationModule {
             serviceId,
             Environment.PS2,
             dispatcher,
+            "ws://ps2link.cramsan.com/ws"
         )
     }
 

@@ -115,5 +115,9 @@ private fun Json.parseServerEventPayload(textFrame: String): ServerEvent {
             val result: ServiceMessage<VehicleDestroy> = decodeFromString(textFrame)
             result
         }
+        EventName.DEATHV2 -> {
+            val result: ServiceMessage<ServerEventPayloadV2.DeathV2> = decodeFromString(textFrame)
+            result
+        }
     }
 }

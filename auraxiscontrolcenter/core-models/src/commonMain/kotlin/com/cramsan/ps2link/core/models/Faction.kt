@@ -10,4 +10,17 @@ enum class Faction {
     TR,
     NS,
     UNKNOWN,
+    ;
+    companion object {
+        private val enumMapping: Map<String, Faction> by lazy {
+            values().associateBy { it.name }
+        }
+
+        /**
+         * Convert [faction] strings to an instance of [Faction].
+         */
+        fun fromString(faction: String?): Faction {
+            return enumMapping[faction] ?: UNKNOWN
+        }
+    }
 }

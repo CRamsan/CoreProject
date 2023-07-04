@@ -10,7 +10,6 @@ import com.cramsan.ps2link.core.models.Namespace
 import dagger.hilt.android.AndroidEntryPoint
 import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Inject
-import kotlin.time.ExperimentalTime
 
 /**
  * Fragment to display the list of locally stored profiles.
@@ -34,11 +33,9 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileAndroidViewModel>()
         viewModel.setUp(characterId, namespace)
     }
 
-    @OptIn(ExperimentalTime::class)
     @Composable
     override fun CreateComposeContent() {
         val profile = viewModel.profile.collectAsState(null)
-        val prestigeIcon = viewModel.prestigeIcon.collectAsState()
         val isLoading = viewModel.isLoading.collectAsState()
         val isError = viewModel.isError.collectAsState()
         ProfileCompose(
@@ -55,7 +52,6 @@ class FragmentComposeProfile : BaseComposePS2Fragment<ProfileAndroidViewModel>()
             timePlayed = profile.value?.timePlayed,
             creationTime = profile.value?.creationTime,
             sessionCount = profile.value?.sessionCount,
-            prestigeIcon = prestigeIcon.value,
             eventHandler = viewModel,
             isLoading = isLoading.value,
             isError = isError.value,

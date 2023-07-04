@@ -41,4 +41,7 @@ enum class EventName {
     SKILL_ADDED,
     @SerialName("VehicleDestroy")
     VEHICLE_DESTROY,
+    // V2 Events
+    @SerialName("DeathV2")
+    DEATHV2,
 }

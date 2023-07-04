@@ -12,10 +12,48 @@ import kotlinx.serialization.Serializable
 sealed class ServerEventPayload
 
 /**
+ * V2 Events from the WebSocket API. These events are sent by our implementation of a WS server.
+ */
+sealed class ServerEventPayloadV2 : ServerEventPayload() {
+
+    /**
+     * V2 death event. This event contains some improvements like [attackerCharacterName],
+     * [attackerCharacterRank], [attackerWeaponName] and [attackerWeaponImageUrl].
+     */
+    @Serializable
+    data class DeathV2(
+        val attackerCharacterId: String?,
+        val attackerCharacterName: String?,
+        val attackerCharacterFaction: String?,
+        val attackerCharacterRank: Int?,
+        val attackerFireModeId: String?,
+        val attackerLoadoutId: String?,
+        val attackerVehicleId: String?,
+        val attackerWeaponId: String?,
+        val attackerWeaponName: String?,
+        val attackerWeaponImageUrl: String?,
+        val characterId: String?,
+        val characterName: String?,
+        val characterFaction: String?,
+        val characterRank: Int?,
+        val characterLoadoutId: String?,
+        val isCritical: String?,
+        val isHeadshot: String?,
+        val timestamp: String?,
+        val vehicleId: String?,
+        val worldId: String?,
+        val zoneId: String?,
+        @SerialName("event_name")
+        val eventName: EventName = EventName.DEATH,
+    ) : ServerEventPayload()
+}
+
+/**
  * The continent was locked. This is a world event.
  *
  * @see Census API Docs - http://census.daybreakgames.com/]
  */
+
 @Serializable
 data class ContinentLock(
     @SerialName("event_name")
