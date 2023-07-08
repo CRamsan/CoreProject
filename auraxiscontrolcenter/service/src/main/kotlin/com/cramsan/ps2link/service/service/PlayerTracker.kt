@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.service.service
 
+import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.StreamingClientEventHandler
 import com.cramsan.ps2link.network.ws.messages.AchievementEarned
@@ -33,7 +34,6 @@ import com.cramsan.ps2link.service.controller.census.DBGServiceClient
 import com.cramsan.ps2link.service.controller.domain.CharacterController
 import com.cramsan.ps2link.service.toCensusModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class PlayerTracker(
@@ -45,6 +45,7 @@ class PlayerTracker(
 
     private val eventHandler = object : StreamingClientEventHandler {
         override fun onServerEventReceived(serverEvent: ServerEvent) {
+            logI(TAG, "Server Event Received: ${serverEvent.javaClass}")
             when (serverEvent) {
                 is ConnectionStateChanged -> Unit
                 is Heartbeat -> Unit
@@ -57,6 +58,7 @@ class PlayerTracker(
     }
 
     fun start() {
+        logI(TAG, "Start")
         streamingClient.registerListener(eventHandler)
         streamingClient.start()
         coroutineScope.launch {
@@ -65,6 +67,7 @@ class PlayerTracker(
     }
 
     private suspend fun subscribeToPlayerLogin() {
+        logI(TAG, "Subscribing to Player Login")
         val servers = dbgServiceClient.getWorlds(Namespace.PS2PC.toCensusModel())
 
         val serverIds = servers?.world_list?.mapNotNull { it.world_id } ?: return
@@ -104,9 +107,14 @@ class PlayerTracker(
     }
 
     private fun triggerPlayerCache(payload: PlayerLogin) {
+        logI(TAG, "Player Logged In: ${payload.characterId}")
         coroutineScope.launch {
             val characterId = payload.characterId ?: return@launch
             characterController.getCharacter(characterId, namespace = Namespace.PS2PC)
         }
+    }
+
+    companion object {
+        private const val TAG = "PlayerTracker"
     }
 }

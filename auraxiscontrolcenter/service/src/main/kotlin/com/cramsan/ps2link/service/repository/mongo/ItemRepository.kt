@@ -1,7 +1,7 @@
 package com.cramsan.ps2link.service.repository.mongo
 
+import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.service.api.models.Namespace
-import com.cramsan.ps2link.service.repository.mongo.models.Character
 import com.cramsan.ps2link.service.repository.mongo.models.Item
 import kotlinx.datetime.Clock
 import org.litote.kmongo.and
@@ -20,6 +20,7 @@ class ItemRepository(
      * Query to create a new article
      */
     suspend fun createItem(item: Item): Item? {
+        logI(TAG, "Create Item ${item.itemId}")
         val toBeInserted = item.setLastUpdateField()
 
         return if (items.insertOne(toBeInserted).wasAcknowledged()) {
@@ -33,6 +34,7 @@ class ItemRepository(
      * Query for an article by ID
      */
     suspend fun getItem(itemId: String, namespace: Namespace): Item? {
+        logI(TAG, "Get Item $itemId")
         return items.findOne(
             Item::itemId eq itemId,
             Item::namespace eq namespace,
@@ -44,6 +46,7 @@ class ItemRepository(
      * article not found with the ID
      */
     suspend fun updateItem(item: Item): Item? {
+        logI(TAG, "Update Item ${item.itemId}")
         val toBeInserted = item.setLastUpdateField()
 
         return if (items.updateOne(
@@ -65,6 +68,7 @@ class ItemRepository(
      * Delete article from the db if the ID is found.
      */
     suspend fun deleteItem(itemId: String, namespace: Namespace): Boolean {
+        logI(TAG, "Delete Item $itemId")
         return items.deleteOne(
             and(
                 Item::itemId eq itemId,
@@ -75,5 +79,9 @@ class ItemRepository(
 
     private fun Item.setLastUpdateField(): Item {
         return copy(lastUpdated = clock.now().epochSeconds)
+    }
+
+    companion object {
+        private const val TAG = "ItemRepository"
     }
 }

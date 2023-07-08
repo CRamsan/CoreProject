@@ -1,5 +1,6 @@
 package com.cramsan.ps2link.service.controller.domain
 
+import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.service.api.models.Namespace
 import com.cramsan.ps2link.service.controller.census.DBGServiceClient
 import com.cramsan.ps2link.service.repository.mongo.ItemRepository
@@ -25,6 +26,7 @@ class ItemController(
         cacheBehaviour: CacheBehaviour = CacheBehaviour.USE_VALID,
         fetchBehaviour: FetchBehaviour = FetchBehaviour.BLOCKING_RETRIEVE,
     ): Item? {
+        logI(TAG, "Get Item $itemId")
         val cachedItem = itemRepository.getItem(itemId, namespace)
 
         val requestedItem = when (cacheBehaviour) {
@@ -80,5 +82,6 @@ class ItemController(
 
     companion object {
         private val CACHE_EXPIRATION = 2.days
+        private const val TAG = "ItemController"
     }
 }

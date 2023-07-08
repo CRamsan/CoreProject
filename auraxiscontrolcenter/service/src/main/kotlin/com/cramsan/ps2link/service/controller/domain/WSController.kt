@@ -1,5 +1,7 @@
 package com.cramsan.ps2link.service.controller.domain
 
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logW
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.StreamingClientEventHandler
 import com.cramsan.ps2link.network.ws.messages.AchievementEarned
@@ -52,6 +54,7 @@ class WSController(
     private val json: Json,
 ) {
     suspend fun handleWSConnection(session: DefaultWebSocketServerSession) {
+        logI(TAG, "New WS Connection")
         val component = object : KoinComponent {
             val streamingClient: StreamingClient by inject(named(WS_CLIENT))
         }
@@ -88,7 +91,7 @@ class WSController(
                 streamingClient.sendRawMessage(receivedText)
             }
         } catch (e: Exception) {
-            println(e.localizedMessage)
+            logW(TAG, "Exception While Reading from Census API.", e)
         } finally {
             streamingClient.deregisterListener(listener)
         }
@@ -123,6 +126,8 @@ class WSController(
     }
 
     private suspend fun mapDeathEvent(payload: Death): ServiceMessage<ServerEventPayloadV2.DeathV2>? {
+        logI(TAG, "Event for ${payload.characterId}")
+
         val characterId = payload.characterId
         val attackerCharacterId = payload.attackerCharacterId
 
@@ -198,5 +203,9 @@ class WSController(
                 attackerWeaponImageUrl = attackerWeaponImageUrl,
             )
         )
+    }
+
+    companion object {
+        private const val TAG = "WSController"
     }
 }

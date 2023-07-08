@@ -1,8 +1,10 @@
 package com.cramsan.ps2link.service.controller.domain
 
+import com.cramsan.framework.logging.logI
 import com.cramsan.ps2link.service.api.models.Namespace
 import com.cramsan.ps2link.service.controller.census.DBGServiceClient
 import com.cramsan.ps2link.service.repository.mongo.CharacterRepository
+import com.cramsan.ps2link.service.repository.mongo.ItemRepository
 import com.cramsan.ps2link.service.repository.mongo.models.Character
 import com.cramsan.ps2link.service.toCensusModel
 import com.cramsan.ps2link.service.toEntity
@@ -25,6 +27,7 @@ class CharacterController(
         cacheBehaviour: CacheBehaviour = CacheBehaviour.USE_VALID,
         fetchBehaviour: FetchBehaviour = FetchBehaviour.BLOCKING_RETRIEVE,
     ): Character? {
+        logI(TAG, "Get Character $characterId")
         val cachedCharacter = characterRepository.getCharacter(characterId, namespace)
 
         val requestedCharacter = when (cacheBehaviour) {
@@ -79,6 +82,7 @@ class CharacterController(
     }
 
     companion object {
+        private const val TAG = "CharacterController"
         private val CACHE_EXPIRATION = 5.minutes
     }
 }
