@@ -22,6 +22,9 @@ class EventLoggerImpl(
 
     init {
         platformDelegate.setTargetSeverity(targetSeverity)
+        Severity.values().forEach {
+            log(it, "EventLoggerImpl", "Initializing logger for severity: $it", null, false)
+        }
     }
 
     override fun setErrorCallback(newErrorCallback: EventLoggerErrorCallback?) {
