@@ -1,4 +1,4 @@
-package com.cramsan.ps2link.appfrontend
+package com.cesarandres.ps2link
 
 import com.cramsan.framework.core.DispatcherProvider
 import com.cramsan.framework.core.StringProvider
@@ -6,6 +6,8 @@ import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.RedditRepository
 import com.cramsan.ps2link.appcore.repository.TwitterRepository
+import com.cramsan.ps2link.appfrontend.LanguageProvider
+import com.cramsan.ps2link.appfrontend.NoopPS2ViewModel
 import com.cramsan.ps2link.appfrontend.about.AboutViewModel
 import com.cramsan.ps2link.appfrontend.addoutfit.OutfitAddViewModel
 import com.cramsan.ps2link.appfrontend.addprofile.ProfileAddViewModel
@@ -56,11 +58,13 @@ object PS2AppFrontEndModule {
         pS2Settings: PS2Settings,
         languageProvider: LanguageProvider,
         dispatcherProvider: DispatcherProvider,
+        targetNamespaces: NamespaceList,
     ): OutfitAddViewModel = OutfitAddViewModel(
         pS2LinkRepository,
         pS2Settings,
         languageProvider,
         dispatcherProvider,
+        targetNamespaces.list,
     )
 
     @Provides
@@ -69,11 +73,13 @@ object PS2AppFrontEndModule {
         pS2Settings: PS2Settings,
         languageProvider: LanguageProvider,
         dispatcherProvider: DispatcherProvider,
+        targetNamespaces: NamespaceList,
     ): ProfileAddViewModel = ProfileAddViewModel(
         pS2LinkRepository,
         pS2Settings,
         languageProvider,
         dispatcherProvider,
+        targetNamespaces.list,
     )
 
     @Provides

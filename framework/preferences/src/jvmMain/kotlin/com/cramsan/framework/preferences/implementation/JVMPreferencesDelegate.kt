@@ -11,7 +11,11 @@ class JVMPreferencesDelegate : PreferencesDelegate {
     private val prefs: Preferences = Preferences.userNodeForPackage(JVMPreferencesDelegate::class.java)
 
     override fun saveString(key: String, value: String?) {
-        prefs.put(key, value)
+        if (value == null) {
+            prefs.remove(key)
+        } else {
+            prefs.put(key, value)
+        }
     }
 
     override fun loadString(key: String): String? {

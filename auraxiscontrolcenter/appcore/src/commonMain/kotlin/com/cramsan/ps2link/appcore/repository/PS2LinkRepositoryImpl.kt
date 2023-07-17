@@ -101,11 +101,12 @@ class PS2LinkRepositoryImpl(
     override suspend fun searchForCharacter(
         searchField: String,
         currentLang: CensusLang,
+        targetNamespaces: List<Namespace>,
     ): PS2HttpResponse<List<Character>> = withContext(dispatcherProvider.ioDispatcher()) {
         if (searchField.length < 3) {
             PS2HttpResponse.success(emptyList())
         } else {
-            Namespace.validNamespaces.map { namespace ->
+            targetNamespaces.map { namespace ->
                 val job = async {
                     val endpointProfileList = dbgCensus.getProfiles(
                         searchField = searchField,
@@ -247,11 +248,12 @@ class PS2LinkRepositoryImpl(
         tagSearchField: String,
         nameSearchField: String,
         currentLang: CensusLang,
+        targetNamespaces: List<Namespace>,
     ): PS2HttpResponse<List<Outfit>> = withContext(dispatcherProvider.ioDispatcher()) {
         if (tagSearchField.length < 3 && nameSearchField.length < 3) {
             PS2HttpResponse.success(emptyList())
         } else {
-            Namespace.validNamespaces.map { namespace ->
+            targetNamespaces.map { namespace ->
                 val job = async {
                     val endpointOutfitList = dbgCensus.getOutfitList(
                         outfitTag = tagSearchField,

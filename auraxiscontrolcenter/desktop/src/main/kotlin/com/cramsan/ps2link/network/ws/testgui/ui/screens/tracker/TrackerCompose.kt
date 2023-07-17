@@ -3,7 +3,9 @@ package com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,6 +20,8 @@ import com.cramsan.ps2link.core.models.CharacterClass
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.Namespace
+import com.cramsan.ps2link.network.ws.testgui.application.ProgramMode
+import com.cramsan.ps2link.network.ws.testgui.application.toActionLabel
 import com.cramsan.ps2link.network.ws.testgui.ui.theme.Dimensions
 import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.FrameSlim
@@ -30,7 +34,7 @@ import com.cramsan.ps2link.ui.theme.Padding
  */
 @Composable
 fun TrackerCompose(
-    actionLabel: String?,
+    programMode: ProgramMode,
     isLoading: Boolean,
     profileName: String?,
     events: List<PlayerEventUIModel>,
@@ -48,43 +52,62 @@ fun TrackerCompose(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                Text("Character: ")
                 profileName?.let {
                     Text(it)
                 }
-
+                Spacer(modifier = Modifier.weight(1f))
+                val status = when (programMode) {
+                    ProgramMode.LOADING -> "Loading..."
+                    ProgramMode.PAUSED,
+                    ProgramMode.NOT_CONFIGURED -> "Not Running"
+                    ProgramMode.RUNNING -> "Tracking"
+                }
+                Text(status)
+                Spacer(modifier = Modifier.weight(1f))
+                val actionLabel = programMode.toActionLabel() ?: ""
                 SlimButton(
                     enabled = !isLoading,
                     onClick = { eventHandler.onActionSelected() }
                 ) {
-                    Text(actionLabel ?: "")
+                    Text(actionLabel)
                 }
             }
 
             FrameSlim(
                 modifier = Modifier.padding(Padding.small)
                     .fillMaxHeight()
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                alignment = Alignment.Center,
             ) {
-                LazyColumn {
-                    items(events) {
-                        when (it) {
-                            is PlayerKillUIModel -> {
-                                val time = it.time ?: UnknownText()
-                                KillItem(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    useVerticalMode = false,
-                                    killType = it.killType,
-                                    faction = it.faction,
-                                    attacker = it.playerName ?: UnknownText(),
-                                    time = time,
-                                    weaponName = it.weaponName ?: UnknownText(),
-                                    weaponImage = it.weaponImage,
-                                    onClick = {
-                                        it.characterId?.let { characterId ->
-                                            eventHandler.onProfileSelected(characterId, it.namespace)
-                                        }
-                                    },
-                                )
+                if (events.isEmpty()) {
+                    if (programMode == ProgramMode.RUNNING) {
+                        Text("Waiting for events...")
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(events) {
+                            when (it) {
+                                is PlayerKillUIModel -> {
+                                    val time = it.time ?: UnknownText()
+                                    KillItem(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        useVerticalMode = false,
+                                        killType = it.killType,
+                                        faction = it.faction,
+                                        attacker = it.playerName ?: UnknownText(),
+                                        time = time,
+                                        weaponName = it.weaponName ?: UnknownText(),
+                                        weaponImage = it.weaponImage,
+                                        onClick = {
+                                            it.characterId?.let { characterId ->
+                                                eventHandler.onProfileSelected(characterId, it.namespace)
+                                            }
+                                        },
+                                    )
+                                }
                             }
                         }
                     }
@@ -110,7 +133,7 @@ interface TrackerEventHandler {
 @Composable
 fun PreviewTracker() {
     TrackerCompose(
-        actionLabel = "Pause",
+        programMode = ProgramMode.PAUSED,
         isLoading = false,
         profileName = "cramsan",
         events = listOf(

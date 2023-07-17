@@ -1,6 +1,7 @@
 package com.cramsan.ps2link.network.ws.testgui.ui
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
@@ -23,9 +25,8 @@ import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import com.cramsan.ps2link.core.models.Namespace
-import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsContent
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTabUIModel
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTab
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTab
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.TrackerTab
@@ -45,7 +46,8 @@ import java.awt.Dimension
 @Suppress("LongMethod")
 @Composable
 fun ApplicationScope.ApplicationGUI(
-    applicationManager: ApplicationManager,
+    ps2TrayEventHandler: PS2TrayEventHandler,
+    applicationScreenEventHandler: ApplicationScreenEventHandler,
     uiModel: ApplicationUIModel,
 ) {
     val minWindowSize = remember {
@@ -58,14 +60,14 @@ fun ApplicationScope.ApplicationGUI(
 
     PS2Tray(
         uiModel.trayUIModel,
-        applicationManager,
+        ps2TrayEventHandler,
     )
 
     val windowUIModel = uiModel.windowUIModel
     if (windowUIModel.isVisible) {
         state.isMinimized = false
         Window(
-            onCloseRequest = { applicationManager.closeWindow() },
+            onCloseRequest = { applicationScreenEventHandler.onCloseProgramSelected() },
             icon = painterResource(windowUIModel.iconPath),
             resizable = true,
             undecorated = true,
@@ -73,7 +75,7 @@ fun ApplicationScope.ApplicationGUI(
             title = "PS2Link",
             state = state,
         ) {
-            applicationManager.registerWindow(window)
+            applicationScreenEventHandler.onWindowDisplayed(window)
 
             WindowDraggableArea {
                 window.minimumSize = Dimension(
@@ -86,14 +88,14 @@ fun ApplicationScope.ApplicationGUI(
                     ) {
                         ApplicationContent(
                             uiModel,
-                            applicationManager,
+                            applicationScreenEventHandler,
                         )
                     }
                 }
             }
         }
     } else {
-        applicationManager.deregisterWindow()
+        applicationScreenEventHandler.onWindowClosed()
     }
 }
 
@@ -103,29 +105,48 @@ fun ApplicationContent(
     uiModel: ApplicationUIModel,
     applicationScreenEventHandler: ApplicationScreenEventHandler,
 ) {
+    val profileTabUIModel = uiModel.state.profileTab
+    val outfitTabUIModel = uiModel.state.outfitTab
+    val trackerTabUIModel = uiModel.state.trackerTab
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
         FrameSlim {
             Row(
                 modifier = Modifier
-                    .background(color = MaterialTheme.colors.background, shape = Shapes.small),
+                    .background(color = MaterialTheme.colors.background, shape = Shapes.small)
+                    .animateContentSize(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 BoldButton(
-                    onClick = { applicationScreenEventHandler.onTabSelected(uiModel.state.profileTab) },
+                    onClick = {
+                        applicationScreenEventHandler.onProfilesSelected(
+                            profileTabUIModel.characterId,
+                            profileTabUIModel.namespace
+                        )
+                    },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("Players") }
                 BoldButton(
-                    onClick = { applicationScreenEventHandler.onTabSelected(uiModel.state.outfitTab) },
+                    onClick = {
+                        applicationScreenEventHandler.onOutfitSelected(
+                            outfitTabUIModel.outfitId,
+                            outfitTabUIModel.namespace
+                        )
+                    },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("Outfits") }
                 BoldButton(
-                    onClick = { applicationScreenEventHandler.onTabSelected(uiModel.state.trackerTab) },
+                    onClick = {
+                        applicationScreenEventHandler.onTrackerSelected(
+                            trackerTabUIModel.characterId,
+                            trackerTabUIModel.namespace
+                        )
+                    },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("Live Tracker") }
                 BoldButton(
-                    onClick = { applicationScreenEventHandler.onTabSelected(ApplicationTab.Settings) },
+                    onClick = { applicationScreenEventHandler.onSettingsSelected() },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("Settings") }
                 Crossfade(
@@ -145,11 +166,11 @@ fun ApplicationContent(
                     ) { Text("+") }
                 }
                 BoldButton(
-                    onClick = { applicationScreenEventHandler.onMinimizeSelected() },
+                    onClick = { applicationScreenEventHandler.onMinimizeWindowSelected() },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("-") }
                 BoldButton(
-                    onClick = { applicationScreenEventHandler.onCloseSelected() },
+                    onClick = { applicationScreenEventHandler.onCloseProgramSelected() },
                     modifier = Modifier.height(Size.xlarge)
                 ) { Text("x") }
             }
@@ -165,17 +186,17 @@ fun ApplicationContent(
                     ) {
                         // Make sure to use `targetTab`, not `uiModel.state.selectedTab`.
                         when (targetTab) {
-                            is ApplicationTab.Profile -> {
-                                ProfilesTab()
+                            is ApplicationTabUIModel.Profile -> {
+                                ProfilesTab(targetTab)
                             }
-                            is ApplicationTab.Outfit -> {
-                                OutfitsTab()
+                            is ApplicationTabUIModel.Outfit -> {
+                                OutfitsTab(targetTab)
                             }
-                            ApplicationTab.Settings -> {
+                            ApplicationTabUIModel.Settings -> {
                                 SettingsContent()
                             }
-                            is ApplicationTab.Tracker -> {
-                                TrackerTab()
+                            is ApplicationTabUIModel.Tracker -> {
+                                TrackerTab(targetTab)
                             }
                         }
                     }
@@ -186,17 +207,23 @@ fun ApplicationContent(
 }
 
 interface ApplicationScreenEventHandler {
-    fun onProfilesSelected(characterId: String, namespace: Namespace)
+    fun onProfilesSelected(characterId: String?, namespace: Namespace?)
 
-    fun onOutfitSelected(outfitId: String, namespace: Namespace)
+    fun onOutfitSelected(outfitId: String?, namespace: Namespace?)
 
-    fun onTabSelected(applicationTab: ApplicationTab)
+    fun onTrackerSelected(characterId: String?, namespace: Namespace?)
 
-    fun onMinimizeSelected()
+    fun onSettingsSelected()
 
-    fun onCloseSelected()
+    fun onMinimizeWindowSelected()
+
+    fun onCloseProgramSelected()
 
     fun onDialogOutsideSelected()
 
     fun onSearchSelected()
+
+    fun onWindowDisplayed(window: ComposeWindow)
+
+    fun onWindowClosed()
 }

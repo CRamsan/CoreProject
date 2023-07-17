@@ -1,12 +1,12 @@
 package com.cramsan.ps2link.network.ws.testgui.application
 
 import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logE
 import com.cramsan.framework.logging.logI
 import com.cramsan.framework.logging.logW
 import com.cramsan.framework.preferences.Preferences
 import com.cramsan.ps2link.appcore.preferences.PS2Settings
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
-import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.StreamingClient
 import com.cramsan.ps2link.network.ws.StreamingClientEventHandler
@@ -40,15 +40,10 @@ import com.cramsan.ps2link.network.ws.testgui.Constants
 import com.cramsan.ps2link.network.ws.testgui.filelogger.BufferedFileLog
 import com.cramsan.ps2link.network.ws.testgui.filelogger.FileLog
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
-import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationScreenEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationUIModel
-import com.cramsan.ps2link.network.ws.testgui.ui.PS2TrayEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.PlayerEvent
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTabEventHandler
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTabEventHandler
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.TrackerTabEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTabUIModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -78,12 +73,7 @@ class ApplicationManager(
     private val preferences: Preferences,
     private val ps2Repository: PS2LinkRepository,
     private val coroutineScope: CoroutineScope,
-) : StreamingClientEventHandler,
-    PS2TrayEventHandler,
-    ProfilesTabEventHandler,
-    ApplicationScreenEventHandler,
-    OutfitsTabEventHandler,
-    TrackerTabEventHandler {
+) : StreamingClientEventHandler {
 
     private var isClientReady = false
 
@@ -95,10 +85,10 @@ class ApplicationManager(
         ApplicationUIModel.State(
             programMode = ProgramMode.NOT_CONFIGURED,
             debugModeEnabled = false,
-            selectedTab = ApplicationTab.Profile(null, null),
-            profileTab = ApplicationTab.Profile(null, null),
-            outfitTab = ApplicationTab.Outfit(null, null),
-            trackerTab = ApplicationTab.Tracker(null, null, null, null)
+            selectedTab = ApplicationTabUIModel.Profile(null, null, true),
+            profileTab = ApplicationTabUIModel.Profile(null, null, true),
+            outfitTab = ApplicationTabUIModel.Outfit(null, null, true),
+            trackerTab = ApplicationTabUIModel.Tracker(null, null, true)
         ),
     )
 
@@ -115,7 +105,6 @@ class ApplicationManager(
             isVisible = true,
             iconPath = "icon_large.png",
             dialogUIModel = null,
-            showFTE = true,
             title = "",
             showAddButton = false,
         ),
@@ -156,6 +145,7 @@ class ApplicationManager(
     private fun initialize() {
         val inDebugMode = preferences.loadString(Constants.DEBUG_MODE_PREF_KEY).toBoolean()
         changeDebugMode(inDebugMode)
+        setProgramMode(ProgramMode.PAUSED)
 
         coroutineScope.launch {
             val cachedOutfitId = ps2Preferences.getPreferredOutfitId()
@@ -163,17 +153,11 @@ class ApplicationManager(
             val cachedCharacterId = ps2Preferences.getPreferredCharacterId()
             val cachedCharacterNamespace = ps2Preferences.getPreferredProfileNamespace()
             if (cachedOutfitId != null && cachedOutfitNamespace != null) {
-                onOutfitSelected(cachedOutfitId, cachedOutfitNamespace)
+                openOutfit(cachedOutfitId, cachedOutfitNamespace)
             }
             if (cachedCharacterId != null && cachedCharacterNamespace != null) {
-                onProfilesSelected(cachedCharacterId, cachedCharacterNamespace)
+                openProfile(cachedCharacterId, cachedCharacterNamespace)
             }
-            onTabSelected(
-                ApplicationTab.Profile(
-                    cachedCharacterId,
-                    cachedCharacterNamespace,
-                )
-            )
         }
     }
 
@@ -203,7 +187,7 @@ class ApplicationManager(
      */
     private fun startListening() {
         val characterId = uiModel.value.state.trackerTab.characterId
-        val namespace = uiModel.value.state.trackerTab.characterNamespace
+        val namespace = uiModel.value.state.trackerTab.namespace
 
         if (characterId == null || namespace == null) {
             isClientReady = false
@@ -214,45 +198,41 @@ class ApplicationManager(
         isClientReady = false
         setProgramMode(ProgramMode.LOADING)
         coroutineScope.launch {
-            streamingClient.start()
+            try {
+                streamingClient.start()
 
-            for (i in 0..5) {
-                delay(1000)
-                logI(TAG, "Waiting for client to be ready to receive events.")
-                if (isClientReady) {
-                    break
+                for (i in 0..5) {
+                    delay(1000)
+                    logI(TAG, "Waiting for client to be ready to receive events.")
+                    if (isClientReady) {
+                        break
+                    }
                 }
-            }
 
-            val fileLog = getLatestLogFile(characterId, namespace) ?: return@launch
-            this@ApplicationManager.fileLog = fileLog
-            eventHandlers.forEach { it.onFileLogActive(fileLog) }
+                val fileLog = getLatestLogFile(characterId, namespace) ?: return@launch
+                this@ApplicationManager.fileLog = fileLog
+                eventHandlers.forEach { it.onFileLogActive(fileLog) }
 
-            streamingClient.sendMessage(
-                CharacterSubscribe(
-                    characters = listOf(characterId),
-                    eventNames = listOf(
-                        EventType.ACHIEVEMENT_EARNED,
-                        EventType.DEATH,
-                        EventType.BATTLE_RANK_UP,
+                streamingClient.sendMessage(
+                    CharacterSubscribe(
+                        characters = listOf(characterId),
+                        eventNames = listOf(
+                            EventType.ACHIEVEMENT_EARNED,
+                            EventType.DEATH,
+                            EventType.BATTLE_RANK_UP,
+                        ),
                     ),
-                ),
-            )
-            setProgramMode(ProgramMode.RUNNING)
+                )
+                setProgramMode(ProgramMode.RUNNING)
+            } catch (throwable: Throwable) {
+                pauseListening()
+                logE(TAG, "Unexpected error in main loop for WS client.", throwable)
+            }
         }
     }
 
-    private suspend fun getLatestLogFile(characterId: String, namespace: Namespace): FileLog? {
-        val character = ps2Repository.getCharacter(
-            characterId,
-            namespace,
-            CensusLang.EN,
-            forceUpdate = false,
-        )
-
-        val name = character.body?.name ?: return null
-
-        return BufferedFileLog("$name.log")
+    private fun getLatestLogFile(characterId: String, namespace: Namespace): FileLog? {
+        return BufferedFileLog("$characterId-$namespace.log")
     }
 
     /**
@@ -386,36 +366,32 @@ class ApplicationManager(
         private const val TAG = "ApplicationManager"
     }
 
-    override fun onOpenApplicationSelected() {
-        openWindow()
-    }
+    fun openProfile(newCharacterId: String?, newNamespace: Namespace?) {
+        val existingTab = applicationState.value.profileTab
 
-    override fun onPrimaryActionSelected() {
-        onTrayAction()
-    }
+        val characterId = newCharacterId ?: existingTab.characterId
+        val namespace = newNamespace ?: existingTab.namespace
+        val showFTE = characterId == null || namespace == null
 
-    override fun onCloseApplicationSelected() {
-        exitApplication()
-    }
-
-    override fun onNavigateToProfileTabSelected() {
-        onTabSelected(uiModel.value.state.profileTab)
-    }
-
-    override fun onProfilesSelected(characterId: String, namespace: Namespace) {
         coroutineScope.launch {
             ps2Preferences.updatePreferredCharacterId(characterId)
             ps2Preferences.updatePreferredProfileNamespace(namespace)
         }
 
-        eventHandlers.forEach { it.onCharacterSelected(characterId, namespace) }
-        windowUIModel.value = windowUIModel.value.copy(
-            showFTE = false,
-            title = "",
-        )
+        val newSelectedTab = ApplicationTabUIModel.Profile(characterId, namespace, showFTE)
         applicationState.value = applicationState.value.copy(
-            profileTab = ApplicationTab.Profile(characterId, namespace)
+            profileTab = newSelectedTab,
+            selectedTab = newSelectedTab,
         )
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = null,
+            title = "",
+            showAddButton = true
+        )
+        loadLightweightCharacter(characterId, namespace)
+        if (characterId != existingTab.characterId || namespace != existingTab.namespace) {
+            eventHandlers.forEach { it.onCharacterSelected(characterId, namespace) }
+        }
     }
 
     private fun loadLightweightCharacter(characterId: String?, namespace: Namespace?) {
@@ -434,19 +410,86 @@ class ApplicationManager(
         }
     }
 
-    override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
+    fun openOutfit(newOutfitId: String?, newNamespace: Namespace?) {
+        val existingTab = applicationState.value.outfitTab
+
+        val outfitId = newOutfitId ?: existingTab.outfitId
+        val namespace = newNamespace ?: existingTab.namespace
+
+        val showFTE = outfitId == null || namespace == null
+
+        val newSelectedTab = ApplicationTabUIModel.Outfit(outfitId, namespace, showFTE)
         coroutineScope.launch {
             ps2Preferences.updatePreferredOutfitId(outfitId)
             ps2Preferences.updatePreferredOutfitNamespace(namespace)
         }
 
-        eventHandlers.forEach { it.onOutfitSelected(outfitId, namespace) }
-        windowUIModel.value = windowUIModel.value.copy(
-            showFTE = false,
-            title = "",
-        )
         applicationState.value = applicationState.value.copy(
-            outfitTab = ApplicationTab.Outfit(outfitId, namespace)
+            outfitTab = newSelectedTab,
+            selectedTab = newSelectedTab,
+        )
+        windowUIModel.value = windowUIModel.value.copy(
+            showAddButton = true,
+            title = "",
+            dialogUIModel = null,
+        )
+        loadLightweightOutfit(outfitId, namespace)
+        if (outfitId != existingTab.outfitId || namespace != existingTab.namespace) {
+            eventHandlers.forEach { it.onOutfitSelected(outfitId, namespace) }
+        }
+    }
+
+    fun openTracker(newCharacterId: String?, newNamespace: Namespace?) {
+        val existingTab = applicationState.value.trackerTab
+
+        val characterId = newCharacterId ?: existingTab.characterId
+        val namespace = newNamespace ?: existingTab.namespace
+
+        val showFTE = characterId == null || namespace == null
+
+        val newTab = ApplicationTabUIModel.Tracker(
+            characterId = characterId,
+            namespace = namespace,
+            showFTE = showFTE,
+        )
+
+        val modifiableState = isModifiableProgramMode(applicationState.value.programMode)
+        if (applicationState.value.trackerTab != newTab) {
+            if (!modifiableState) {
+                pauseListening()
+            }
+            applicationState.value = applicationState.value.copy(
+                selectedTab = newTab,
+                trackerTab = newTab
+            )
+            eventHandlers.forEach {
+                it.onTrackedCharacterSelected(
+                    newTab.characterId ?: "",
+                    newTab.namespace ?: Namespace.UNDETERMINED,
+                )
+            }
+        } else {
+            applicationState.value = applicationState.value.copy(
+                selectedTab = newTab,
+            )
+        }
+
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = null,
+            title = "",
+            showAddButton = true,
+        )
+    }
+
+    fun openSettings() {
+        applicationState.value = applicationState.value.copy(
+            selectedTab = ApplicationTabUIModel.Settings,
+        )
+
+        windowUIModel.value = windowUIModel.value.copy(
+            dialogUIModel = null,
+            title = "",
+            showAddButton = false,
         )
     }
 
@@ -466,144 +509,43 @@ class ApplicationManager(
         }
     }
 
-    @Suppress("CyclomaticComplexMethod", "NestedBlockDepth", "LongMethod")
-    override fun onTabSelected(applicationTab: ApplicationTab) {
-        val showFTE = when (applicationTab) {
-            is ApplicationTab.Profile -> applicationTab.characterId == null || applicationTab.namespace == null
-            is ApplicationTab.Outfit -> applicationTab.outfitId == null || applicationTab.namespace == null
-            ApplicationTab.Settings -> false
-            is ApplicationTab.Tracker -> {
-                applicationTab.characterId == null && applicationTab.outfitId == null
-            }
-        }
-
-        when (applicationTab) {
-            is ApplicationTab.Profile -> {
-                applicationState.value = applicationState.value.copy(
-                    selectedTab = applicationTab,
-                    profileTab = applicationTab,
-                )
-            }
-            is ApplicationTab.Outfit -> {
-                applicationState.value = applicationState.value.copy(
-                    selectedTab = applicationTab,
-                    outfitTab = applicationTab
-                )
-            }
-            ApplicationTab.Settings -> {
-                applicationState.value = applicationState.value.copy(
-                    selectedTab = applicationTab,
-                )
-            }
-            is ApplicationTab.Tracker -> {
-                val existingTab = applicationState.value.trackerTab
-
-                val characterId = applicationTab.characterId ?: existingTab.characterId
-                val characterNamespace = applicationTab.characterNamespace ?: existingTab.characterNamespace
-                val outfitId = applicationTab.outfitId ?: existingTab.outfitId
-                val outfitNamespace = applicationTab.outfitNamespace ?: existingTab.outfitNamespace
-
-                val newTab = ApplicationTab.Tracker(
-                    characterId = characterId,
-                    characterNamespace = characterNamespace,
-                    outfitId = outfitId,
-                    outfitNamespace = outfitNamespace,
-                )
-
-                if (applicationState.value.selectedTab != newTab) {
-                    if (applicationState.value.trackerTab != newTab) {
-                        if (
-                            applicationState.value.programMode == ProgramMode.NOT_CONFIGURED ||
-                            applicationState.value.programMode == ProgramMode.PAUSED
-                        ) {
-                            applicationState.value = applicationState.value.copy(
-                                selectedTab = newTab,
-                                trackerTab = newTab
-                            )
-                            eventHandlers.forEach {
-                                it.onTrackedCharacterSelected(
-                                    newTab.characterId ?: "",
-                                    newTab.characterNamespace ?: Namespace.UNDETERMINED,
-                                )
-                            }
-                            setProgramMode(ProgramMode.PAUSED)
-                        } else {
-                            TODO()
-                        }
-                    } else {
-                        applicationState.value = applicationState.value.copy(
-                            selectedTab = newTab,
-                        )
-                    }
-                }
-            }
-        }
-
-        windowUIModel.value = windowUIModel.value.copy(
-            dialogUIModel = null,
-            title = "",
-            showFTE = showFTE,
-            showAddButton = when (applicationTab) {
-                is ApplicationTab.Outfit -> true
-                is ApplicationTab.Profile -> true
-                ApplicationTab.Settings -> false
-                is ApplicationTab.Tracker -> false
-            },
-        )
-        when (applicationTab) {
-            is ApplicationTab.Profile -> {
-                loadLightweightCharacter(applicationTab.characterId, applicationTab.namespace)
-            }
-            is ApplicationTab.Outfit -> {
-                loadLightweightOutfit(applicationTab.outfitId, applicationTab.namespace)
-            }
-            ApplicationTab.Settings -> {
-            }
-            is ApplicationTab.Tracker -> Unit
-        }
-    }
-
-    override fun onMinimizeSelected() {
+    fun minimizeWindow() {
         closeWindow()
     }
 
-    override fun onCloseSelected() {
+    fun closeProgram() {
         exitApplication()
     }
 
-    override fun onDialogOutsideSelected() {
+    fun dismissDialog() {
         windowUIModel.value = windowUIModel.value.copy(
             dialogUIModel = null
         )
     }
 
-    override fun onSearchSelected() {
+    fun openSearch() {
         when (applicationState.value.selectedTab) {
-            is ApplicationTab.Profile -> {
+            is ApplicationTabUIModel.Profile -> {
                 windowUIModel.value = windowUIModel.value.copy(
                     dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_PROFILE)
                 )
             }
-            is ApplicationTab.Outfit -> {
+            is ApplicationTabUIModel.Outfit -> {
                 windowUIModel.value = windowUIModel.value.copy(
                     dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_OUTFIT)
                 )
             }
-            is ApplicationTab.Settings -> Unit
-            is ApplicationTab.Tracker -> Unit
+            is ApplicationTabUIModel.Settings -> Unit
+            is ApplicationTabUIModel.Tracker -> {
+                windowUIModel.value = windowUIModel.value.copy(
+                    dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.SEARCH_PROFILE_TRACKER)
+                )
+            }
         }
     }
 
-    override fun onOpenSearchOutfitDialogSelected() {
-        windowUIModel.value = windowUIModel.value.copy(
-            dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_OUTFIT)
-        )
-    }
-
-    override fun onOpenSearchProfileDialogSelected() {
-        windowUIModel.value = windowUIModel.value.copy(
-            dialogUIModel = ApplicationUIModel.DialogUIModel(PS2DialogType.ADD_PROFILE)
-        )
+    private fun isModifiableProgramMode(programMode: ProgramMode): Boolean {
+        return programMode == ProgramMode.NOT_CONFIGURED || programMode == ProgramMode.PAUSED
     }
 }
 

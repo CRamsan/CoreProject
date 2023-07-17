@@ -56,7 +56,8 @@ fun StatListCompose(
             }
             ErrorOverlay(
                 isError = isError,
-                error = UnknownErrorText()
+                error = UnknownErrorText(),
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             )
         }
     }

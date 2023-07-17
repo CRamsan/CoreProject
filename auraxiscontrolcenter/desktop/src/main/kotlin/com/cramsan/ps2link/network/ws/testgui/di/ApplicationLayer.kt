@@ -5,13 +5,13 @@ import com.cramsan.ps2link.appcore.preferences.PS2SettingsImpl
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepository
 import com.cramsan.ps2link.appcore.repository.PS2LinkRepositoryImpl
 import com.cramsan.ps2link.appfrontend.LanguageProvider
+import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.application.GameSessionManager
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.OutfitsTabEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ProfilesTabEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.tabs.TrackerTabEventHandler
-import org.koin.dsl.binds
 import org.koin.dsl.module
 import org.ocpsoft.prettytime.PrettyTime
 
@@ -42,11 +42,7 @@ val ApplicationModule = module {
             get(),
             get(),
         )
-    } binds arrayOf(
-        ProfilesTabEventHandler::class,
-        OutfitsTabEventHandler::class,
-        TrackerTabEventHandler::class,
-    )
+    }
 
     single<PrettyTime> {
         PrettyTime()
@@ -67,5 +63,36 @@ val ApplicationModule = module {
 
     single<LanguageProvider> {
         LanguageProvider()
+    }
+
+    single<ProfilesTabEventHandler> {
+        val applicationManager: ApplicationManager = get()
+        object : ProfilesTabEventHandler {
+            override fun onOpenSearchProfileDialogSelected() {
+                applicationManager.openSearch()
+            }
+        }
+    }
+
+    single<OutfitsTabEventHandler> {
+        val applicationManager: ApplicationManager = get()
+        object : OutfitsTabEventHandler {
+            override fun onOpenSearchOutfitDialogSelected() {
+                applicationManager.openSearch()
+            }
+        }
+    }
+
+    single<TrackerTabEventHandler> {
+        val applicationManager: ApplicationManager = get()
+        object : TrackerTabEventHandler {
+            override fun onOpenSearchProfileDialogSelected() {
+                applicationManager.openSearch()
+            }
+        }
+    }
+
+    single {
+        listOf(Namespace.PS2PC)
     }
 }

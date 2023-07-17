@@ -39,7 +39,7 @@ val FrameworkModule = module {
     }
 
     single<EventLoggerInterface> {
-        val instance = EventLoggerImpl(Severity.INFO, null, get())
+        val instance = EventLoggerImpl(Severity.DEBUG, null, get())
         EventLogger.setInstance(instance)
         instance
     }

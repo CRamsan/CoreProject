@@ -78,7 +78,8 @@ fun ProfileCompose(
             ErrorOverlay(
                 modifier = Modifier.wrapContentHeight(),
                 isError = isError,
-                error = UnknownErrorText()
+                error = UnknownErrorText(),
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
             )
 
             val mediumModifier = Modifier.fillMaxWidth().padding(Padding.medium)

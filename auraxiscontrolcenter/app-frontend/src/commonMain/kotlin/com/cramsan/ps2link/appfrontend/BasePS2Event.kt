@@ -56,9 +56,4 @@ sealed class BasePS2Event : BaseEvent() {
      *
      */
     data class OpenProfileLiveTracker(val characterId: String, val namespace: Namespace) : BasePS2Event()
-
-    /**
-     *
-     */
-    data class OpenOutfitLiveTracker(val outfitId: String, val namespace: Namespace) : BasePS2Event()
 }

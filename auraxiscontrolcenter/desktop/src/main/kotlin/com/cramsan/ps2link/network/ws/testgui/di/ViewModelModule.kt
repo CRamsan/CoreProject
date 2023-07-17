@@ -79,11 +79,13 @@ val ViewModelModule = module {
             get(),
             get(),
             get(),
+            get(),
         )
     }
 
     single<OutfitAddViewModelInterface> {
         OutfitAddViewModel(
+            get(),
             get(),
             get(),
             get(),

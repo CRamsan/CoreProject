@@ -78,6 +78,7 @@ import com.cramsan.ps2link.appcore.sqldelight.DbgDAO
 import com.cramsan.ps2link.appcore.sqldelight.SQLDelightDAO
 import com.cramsan.ps2link.appcore.twitter.TwitterClient
 import com.cramsan.ps2link.appfrontend.LanguageProvider
+import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.remoteconfig.RemoteConfigData
 import com.cramsan.ps2link.remoteconfig.defaultConfigPayload
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -97,6 +98,8 @@ import kotlinx.serialization.serializer
 import org.ocpsoft.prettytime.PrettyTime
 import javax.inject.Named
 import javax.inject.Singleton
+
+data class NamespaceList(val list: List<Namespace>)
 
 @Module
 @Suppress("UndocumentedPublicFunction", "TooManyFunctions")
@@ -455,4 +458,8 @@ object PS2ApplicationModule {
     fun provideStringProvider(
         @ApplicationContext appContext: Context
     ): StringProvider = StringProvider(appContext)
+
+    @Provides
+    @Singleton
+    fun provideTargetNamespaces(): NamespaceList = NamespaceList(Namespace.validNamespaces)
 }

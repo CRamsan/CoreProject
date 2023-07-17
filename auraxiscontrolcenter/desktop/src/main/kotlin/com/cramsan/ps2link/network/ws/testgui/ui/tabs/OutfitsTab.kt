@@ -30,6 +30,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun OutfitsTab(
+    tabUIModel: ApplicationTabUIModel.Outfit,
     applicationManager: ApplicationManager = koinInject(),
     eventHandler: OutfitsTabEventHandler = koinInject(),
     outfitViewModel: OutfitViewModelInterface = koinInject(),
@@ -38,7 +39,7 @@ fun OutfitsTab(
 ) {
     val uiModel by applicationManager.uiModel.collectAsState()
 
-    if (uiModel.windowUIModel.showFTE) {
+    if (tabUIModel.showFTE) {
         SlimButton(
             onClick = { eventHandler.onOpenSearchOutfitDialogSelected() },
             modifier = Modifier
@@ -63,7 +64,7 @@ fun OutfitsTab(
     val showDialog = uiModel.windowUIModel.dialogUIModel?.dialogType == PS2DialogType.ADD_OUTFIT
     PS2Dialog(
         isVisible = showDialog,
-        onOutsideClicked = { applicationManager.onDialogOutsideSelected() },
+        onOutsideClicked = { applicationManager.dismissDialog() },
     ) {
         AddOutfitDialog()
     }

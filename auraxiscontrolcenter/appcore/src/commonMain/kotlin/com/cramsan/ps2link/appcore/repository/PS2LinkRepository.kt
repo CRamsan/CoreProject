@@ -40,6 +40,7 @@ interface PS2LinkRepository {
     suspend fun searchForCharacter(
         searchField: String,
         currentLang: CensusLang,
+        targetNamespaces: List<Namespace> = Namespace.validNamespaces,
     ): PS2HttpResponse<List<Character>>
 
     suspend fun getFriendList(
@@ -91,6 +92,7 @@ interface PS2LinkRepository {
         tagSearchField: String,
         nameSearchField: String,
         currentLang: CensusLang,
+        targetNamespaces: List<Namespace> = Namespace.validNamespaces,
     ): PS2HttpResponse<List<Outfit>>
 
     suspend fun getMembersOnline(

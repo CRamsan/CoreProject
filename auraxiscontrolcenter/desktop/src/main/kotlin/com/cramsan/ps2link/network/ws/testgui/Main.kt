@@ -4,6 +4,7 @@ package com.cramsan.ps2link.network.ws.testgui
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.window.application
 import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.core.BaseViewModel
@@ -31,9 +32,10 @@ import com.cramsan.ps2link.network.ws.testgui.di.ViewModelModule
 import com.cramsan.ps2link.network.ws.testgui.filelogger.FileLog
 import com.cramsan.ps2link.network.ws.testgui.hoykeys.HotKeyManager
 import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationGUI
+import com.cramsan.ps2link.network.ws.testgui.ui.ApplicationScreenEventHandler
+import com.cramsan.ps2link.network.ws.testgui.ui.PS2TrayEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.settings.SettingsScreenViewModelInterface
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerViewModelInterface
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -122,14 +124,14 @@ suspend fun initializeGUI(applicationManager: ApplicationManager) {
     applicationManager.registerCallback(object : ApplicationManagerCallback {
         override fun onServerEventPayload(payload: ServerEventPayload) = Unit
         override fun onProgramModeChanged(programMode: ProgramMode) = Unit
-        override fun onCharacterSelected(characterId: String, namespace: Namespace) {
+        override fun onCharacterSelected(characterId: String?, namespace: Namespace?) {
             components.profileViewModel.setUp(characterId, namespace)
             components.friendsViewModel.setUp(characterId, namespace)
             components.statsListViewModel.setUp(characterId, namespace)
             components.killListViewModel.setUp(characterId, namespace)
             components.weaponListViewModel.setUp(characterId, namespace)
         }
-        override fun onOutfitSelected(outfitId: String, namespace: Namespace) {
+        override fun onOutfitSelected(outfitId: String?, namespace: Namespace?) {
             components.outfitViewModel.setUp(outfitId, namespace)
             components.onlineMembersViewModel.setUp(outfitId, namespace)
             components.membersViewModel.setUp(outfitId, namespace)
@@ -140,11 +142,68 @@ suspend fun initializeGUI(applicationManager: ApplicationManager) {
 
     applicationManager.startApplication()
 
+    val ps2TrayEventHandler = object : PS2TrayEventHandler {
+        override fun onOpenApplicationSelected() {
+            applicationManager.openWindow()
+        }
+
+        override fun onPrimaryActionSelected() {
+            applicationManager.onTrayAction()
+        }
+
+        override fun onCloseApplicationSelected() {
+            applicationManager.closeProgram()
+        }
+    }
+
+    val applicationScreenEventHandler = object : ApplicationScreenEventHandler {
+        override fun onProfilesSelected(characterId: String?, namespace: Namespace?) {
+            applicationManager.openProfile(characterId, namespace)
+        }
+
+        override fun onOutfitSelected(outfitId: String?, namespace: Namespace?) {
+            applicationManager.openOutfit(outfitId, namespace)
+        }
+
+        override fun onTrackerSelected(characterId: String?, namespace: Namespace?) {
+            applicationManager.openTracker(characterId, namespace)
+        }
+
+        override fun onSettingsSelected() {
+            applicationManager.openSettings()
+        }
+
+        override fun onMinimizeWindowSelected() {
+            applicationManager.minimizeWindow()
+        }
+
+        override fun onCloseProgramSelected() {
+            applicationManager.closeProgram()
+        }
+
+        override fun onDialogOutsideSelected() {
+            applicationManager.dismissDialog()
+        }
+
+        override fun onSearchSelected() {
+            applicationManager.openSearch()
+        }
+
+        override fun onWindowDisplayed(window: ComposeWindow) {
+            applicationManager.registerWindow(window)
+        }
+
+        override fun onWindowClosed() {
+            applicationManager.deregisterWindow()
+        }
+    }
+
     application {
         val uiModel by applicationManager.uiModel.collectAsState()
 
         ApplicationGUI(
-            applicationManager,
+            ps2TrayEventHandler,
+            applicationScreenEventHandler,
             uiModel,
         )
     }
@@ -157,22 +216,10 @@ private suspend fun BaseViewModel.configureEvents(
         events.collect {
             when (it) {
                 is BasePS2Event.OpenProfile -> {
-                    applicationManager.onProfilesSelected(it.characterId, it.namespace)
-                    applicationManager.onTabSelected(
-                        ApplicationTab.Profile(
-                            it.characterId,
-                            it.namespace
-                        )
-                    )
+                    applicationManager.openProfile(it.characterId, it.namespace)
                 }
                 is BasePS2Event.OpenOutfit -> {
-                    applicationManager.onOutfitSelected(it.outfitId, it.namespace)
-                    applicationManager.onTabSelected(
-                        ApplicationTab.Outfit(
-                            it.outfitId,
-                            it.namespace
-                        )
-                    )
+                    applicationManager.openOutfit(it.outfitId, it.namespace)
                 }
                 BasePS2Event.OpenOutfitList -> Unit
                 BasePS2Event.OpenProfileList -> Unit
@@ -184,26 +231,12 @@ private suspend fun BaseViewModel.configureEvents(
                     Desktop.getDesktop().browse(URI(it.url))
                 }
                 BasePS2Event.OpenSettings -> {
-                    applicationManager.onTabSelected(ApplicationTab.Settings)
+                    applicationManager.openSettings()
                 }
                 is BasePS2Event.OpenProfileLiveTracker -> {
-                    applicationManager.onTabSelected(
-                        ApplicationTab.Tracker(
-                            it.characterId,
-                            it.namespace,
-                            null,
-                            null,
-                        )
-                    )
-                }
-                is BasePS2Event.OpenOutfitLiveTracker -> {
-                    applicationManager.onTabSelected(
-                        ApplicationTab.Tracker(
-                            null,
-                            null,
-                            it.outfitId,
-                            it.namespace,
-                        )
+                    applicationManager.openTracker(
+                        it.characterId,
+                        it.namespace,
                     )
                 }
             }

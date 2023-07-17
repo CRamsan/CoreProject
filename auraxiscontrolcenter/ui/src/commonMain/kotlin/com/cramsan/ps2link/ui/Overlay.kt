@@ -47,6 +47,7 @@ fun ErrorOverlay(
     modifier: Modifier = Modifier.fillMaxSize(),
     isError: Boolean = false,
     error: String,
+    onRefreshRequested: (() -> Unit)? = null,
 ) {
     AnimatedVisibility(
         visible = isError,
@@ -58,7 +59,11 @@ fun ErrorOverlay(
             color = MaterialTheme.colors.primary.setAlpha(Color.transparent),
         ) {
             Box(modifier.fillMaxSize()) {
-                UnexpectedError(modifier = Modifier.align(Alignment.Center), error)
+                UnexpectedError(
+                    modifier = Modifier.align(Alignment.Center),
+                    error,
+                    onRefreshRequested,
+                )
             }
         }
     }

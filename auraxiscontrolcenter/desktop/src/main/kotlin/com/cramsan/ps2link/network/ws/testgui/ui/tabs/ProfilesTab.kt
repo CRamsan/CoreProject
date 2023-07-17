@@ -4,15 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.cramsan.ps2link.appfrontend.profilepager.friendlist.FriendListCompose
 import com.cramsan.ps2link.appfrontend.profilepager.friendlist.FriendListEventHandler
@@ -35,21 +32,20 @@ import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.AddProfileDialog
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2Dialog
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
-import com.cramsan.ps2link.ui.FrameBottom
 import com.cramsan.ps2link.ui.SlimButton
-import com.cramsan.ps2link.ui.theme.Padding
 import com.cramsan.ps2link.ui.theme.Size
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.compose.koinInject
 
 @Composable
 fun ProfilesTab(
+    tabUIModel: ApplicationTabUIModel.Profile,
     applicationManager: ApplicationManager = koinInject(),
     eventHandler: ProfilesTabEventHandler = koinInject(),
 ) {
     val uiModel by applicationManager.uiModel.collectAsState()
 
-    if (uiModel.windowUIModel.showFTE) {
+    if (tabUIModel.showFTE) {
         SlimButton(
             onClick = { eventHandler.onOpenSearchProfileDialogSelected() },
             modifier = Modifier
@@ -80,7 +76,7 @@ fun ProfilesTab(
     val showDialog = uiModel.windowUIModel.dialogUIModel?.dialogType == PS2DialogType.ADD_PROFILE
     PS2Dialog(
         isVisible = showDialog,
-        onOutsideClicked = { applicationManager.onDialogOutsideSelected() },
+        onOutsideClicked = { applicationManager.dismissDialog() },
     ) {
         AddProfileDialog()
     }
@@ -123,21 +119,6 @@ private fun ProfileTab(
                 }
             },
         )
-        FrameBottom(
-            modifier = Modifier
-                .fillMaxWidth(),
-        ) {
-            Column(
-                modifier = Modifier.padding(Padding.medium),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                SlimButton(
-                    onClick = { viewModel.onOpenLiveTrackerSelected() },
-                    modifier = Modifier
-                        .height(Size.xlarge)
-                ) { Text("Open In Live Tracker") }
-            }
-        }
     }
 }
 
@@ -212,7 +193,7 @@ private fun KillListTab(
             }
 
             override fun onRefreshRequested() {
-                onRefreshRequested()
+                viewModel.onRefreshRequested()
             }
         },
     )

@@ -126,3 +126,31 @@ fun AddOutfitDialog(
         },
     )
 }
+
+@Composable
+fun SearchForProfileTrackerDialog(
+    profileAddViewModel: ProfileAddViewModelInterface = koinInject(),
+    onProfileSelected: (characterId: String, namespace: Namespace) -> Unit,
+) {
+    val viewModel = remember { profileAddViewModel }
+
+    val searchQueryState = viewModel.searchQuery.collectAsState()
+    val profileList = viewModel.profileList.collectAsState()
+    val isLoading = viewModel.isLoading.collectAsState()
+    val isError = viewModel.isError.collectAsState()
+    ProfileAddCompose(
+        searchField = searchQueryState.value,
+        profileItems = profileList.value,
+        isLoading = isLoading.value,
+        isError = isError.value,
+        eventHandler = object : ProfileAddEventHandler {
+            override fun onSearchFieldUpdated(searchField: String) {
+                viewModel.onSearchFieldUpdated(searchField)
+            }
+
+            override fun onProfileSelected(profileId: String, namespace: Namespace) {
+                onProfileSelected(profileId, namespace)
+            }
+        },
+    )
+}

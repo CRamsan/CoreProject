@@ -10,6 +10,7 @@ import com.cramsan.ps2link.appfrontend.BasePS2ViewModel
 import com.cramsan.ps2link.appfrontend.BasePS2ViewModelInterface
 import com.cramsan.ps2link.appfrontend.LanguageProvider
 import com.cramsan.ps2link.appfrontend.formatSimpleDateTime
+import com.cramsan.ps2link.core.models.CensusLang
 import com.cramsan.ps2link.core.models.Faction
 import com.cramsan.ps2link.core.models.KillType
 import com.cramsan.ps2link.core.models.Namespace
@@ -17,7 +18,6 @@ import com.cramsan.ps2link.network.ws.messages.ServerEventPayload
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManagerCallback
 import com.cramsan.ps2link.network.ws.testgui.application.ProgramMode
-import com.cramsan.ps2link.network.ws.testgui.application.toActionLabel
 import com.cramsan.ps2link.network.ws.testgui.filelogger.FileLog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,7 +56,7 @@ class TrackerViewModel(
     // State
     private val _uiModel = MutableStateFlow(
         TrackerUIModel(
-            actionLabel = null,
+            mode = ProgramMode.NOT_CONFIGURED,
             profileName = null,
             events = emptyList(),
         )
@@ -75,8 +75,8 @@ class TrackerViewModel(
             override fun onProgramModeChanged(programMode: ProgramMode) {
                 updateUI(programMode)
             }
-            override fun onCharacterSelected(characterId: String, namespace: Namespace) = Unit
-            override fun onOutfitSelected(outfitId: String, namespace: Namespace) = Unit
+            override fun onCharacterSelected(characterId: String?, namespace: Namespace?) = Unit
+            override fun onOutfitSelected(outfitId: String?, namespace: Namespace?) = Unit
             override fun onTrackedCharacterSelected(characterId: String, namespace: Namespace) {
                 setUp(characterId, namespace)
             }
@@ -119,7 +119,7 @@ class TrackerViewModel(
     override fun setUp(characterId: String?, namespace: Namespace?) {
         if (this.characterId != characterId || this.namespace != namespace) {
             _uiModel.value = TrackerUIModel(
-                actionLabel = null,
+                mode = ProgramMode.NOT_CONFIGURED,
                 profileName = null,
                 events = emptyList(),
             )
@@ -141,6 +141,10 @@ class TrackerViewModel(
                 profileName = it?.name
             )
         }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            pS2LinkRepository.getCharacter(characterId, namespace, CensusLang.EN)
+        }
+        updateUI(applicationManager.uiModel.value.state.programMode)
     }
 
     private fun updateUI(programMode: ProgramMode) {
@@ -151,10 +155,8 @@ class TrackerViewModel(
             ProgramMode.PAUSED, -> loadingCompleted()
         }
 
-        val actionLabel = programMode.toActionLabel()
-
         _uiModel.value = _uiModel.value.copy(
-            actionLabel = actionLabel
+            mode = programMode,
         )
     }
     override fun onProfileSelected(profileId: String, namespace: Namespace) {

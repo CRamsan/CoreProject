@@ -13,6 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.cramsan.ps2link.core.models.Namespace
 import com.cramsan.ps2link.network.ws.testgui.application.ApplicationManager
+import com.cramsan.ps2link.network.ws.testgui.application.ProgramMode
+import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2Dialog
+import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
+import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.SearchForProfileTrackerDialog
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerCompose
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerEventHandler
 import com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker.TrackerViewModelInterface
@@ -22,16 +26,16 @@ import org.koin.compose.koinInject
 
 @Composable
 fun TrackerTab(
+    tabUIModel: ApplicationTabUIModel.Tracker,
     applicationManager: ApplicationManager = koinInject(),
     eventHandler: TrackerTabEventHandler = koinInject(),
     trackerViewModel: TrackerViewModelInterface = koinInject(),
 ) {
     val uiModel by applicationManager.uiModel.collectAsState()
-
-    if (uiModel.windowUIModel.showFTE) {
+    if (tabUIModel.showFTE) {
         Column {
             SlimButton(
-                onClick = { eventHandler.onNavigateToProfileTabSelected() },
+                onClick = { eventHandler.onOpenSearchProfileDialogSelected() },
                 modifier = Modifier
                     .height(Size.xlarge)
             ) { Text("Search For Profile") }
@@ -42,6 +46,16 @@ fun TrackerTab(
             horizontalArrangement = Arrangement.Center,
         ) {
             TrackerTab(trackerViewModel)
+        }
+    }
+
+    val showDialog = uiModel.windowUIModel.dialogUIModel?.dialogType == PS2DialogType.SEARCH_PROFILE_TRACKER
+    PS2Dialog(
+        isVisible = showDialog,
+        onOutsideClicked = { applicationManager.dismissDialog() },
+    ) {
+        SearchForProfileTrackerDialog { characterId, namespace ->
+            applicationManager.openTracker(characterId, namespace)
         }
     }
 }
@@ -56,7 +70,7 @@ private fun TrackerTab(
     val isLoading by viewModel.isLoading.collectAsState(false)
 
     TrackerCompose(
-        actionLabel = uiModel?.actionLabel,
+        programMode = uiModel?.mode ?: ProgramMode.NOT_CONFIGURED,
         isLoading = isLoading,
         profileName = uiModel?.profileName,
         events = uiModel?.events ?: emptyList(),
@@ -73,6 +87,5 @@ private fun TrackerTab(
 }
 
 interface TrackerTabEventHandler {
-    fun onNavigateToProfileTabSelected()
-    fun onOpenSearchOutfitDialogSelected()
+    fun onOpenSearchProfileDialogSelected()
 }

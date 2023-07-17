@@ -10,9 +10,9 @@ interface ApplicationManagerCallback {
 
     fun onProgramModeChanged(programMode: ProgramMode)
 
-    fun onCharacterSelected(characterId: String, namespace: Namespace)
+    fun onCharacterSelected(characterId: String?, namespace: Namespace?)
 
-    fun onOutfitSelected(outfitId: String, namespace: Namespace)
+    fun onOutfitSelected(outfitId: String?, namespace: Namespace?)
 
     fun onTrackedCharacterSelected(characterId: String, namespace: Namespace)
     fun onFileLogActive(fileLog: FileLog)

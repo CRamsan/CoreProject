@@ -65,7 +65,11 @@ fun WeaponListCompose(
                     )
                 }
             }
-            ErrorOverlay(isError = isError, error = UnknownErrorText())
+            ErrorOverlay(
+                isError = isError,
+                error = UnknownErrorText(),
+                onRefreshRequested = { eventHandler.onRefreshRequested() },
+            )
         }
     }
 }

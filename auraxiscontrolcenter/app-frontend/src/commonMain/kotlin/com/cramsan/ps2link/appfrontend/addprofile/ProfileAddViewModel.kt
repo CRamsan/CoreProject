@@ -30,6 +30,7 @@ class ProfileAddViewModel(
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
     dispatcherProvider: DispatcherProvider,
+    private val targetNamespaces: List<Namespace>,
 ) : BasePS2ViewModel(
     pS2LinkRepository,
     pS2Settings,
@@ -60,7 +61,7 @@ class ProfileAddViewModel(
             // This means that there is a 1 extra second of UPL.
             delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: languageProvider.getCurrentLang()
-            val response = pS2LinkRepository.searchForCharacter(searchField, lang)
+            val response = pS2LinkRepository.searchForCharacter(searchField, lang, targetNamespaces)
             if (response.isSuccessful) {
                 _profileList.value = response.requireBody().sortedBy {
                     it.name?.lowercase()

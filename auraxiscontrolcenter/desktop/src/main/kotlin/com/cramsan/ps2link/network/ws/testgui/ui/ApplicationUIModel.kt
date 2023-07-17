@@ -2,7 +2,7 @@ package com.cramsan.ps2link.network.ws.testgui.ui
 
 import com.cramsan.ps2link.network.ws.testgui.application.ProgramMode
 import com.cramsan.ps2link.network.ws.testgui.ui.dialogs.PS2DialogType
-import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTab
+import com.cramsan.ps2link.network.ws.testgui.ui.tabs.ApplicationTabUIModel
 
 /**
  * Data class that holds the UI state for the entire application.
@@ -17,7 +17,6 @@ data class ApplicationUIModel(
         val isVisible: Boolean,
         val iconPath: String,
         val dialogUIModel: DialogUIModel?,
-        val showFTE: Boolean,
         val title: String,
         val showAddButton: Boolean,
     )
@@ -31,10 +30,10 @@ data class ApplicationUIModel(
     data class State(
         val programMode: ProgramMode,
         val debugModeEnabled: Boolean,
-        val selectedTab: ApplicationTab,
-        val profileTab: ApplicationTab.Profile,
-        val outfitTab: ApplicationTab.Outfit,
-        val trackerTab: ApplicationTab.Tracker,
+        val selectedTab: ApplicationTabUIModel,
+        val profileTab: ApplicationTabUIModel.Profile,
+        val outfitTab: ApplicationTabUIModel.Outfit,
+        val trackerTab: ApplicationTabUIModel.Tracker,
     )
 
     data class DialogUIModel(

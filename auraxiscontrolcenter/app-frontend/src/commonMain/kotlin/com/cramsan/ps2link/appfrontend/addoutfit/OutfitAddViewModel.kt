@@ -31,6 +31,7 @@ class OutfitAddViewModel(
     pS2Settings: PS2Settings,
     languageProvider: LanguageProvider,
     dispatcherProvider: DispatcherProvider,
+    private val targetNamespaces: List<Namespace>,
 ) : BasePS2ViewModel(
     pS2LinkRepository,
     pS2Settings,
@@ -81,7 +82,7 @@ class OutfitAddViewModel(
             // This means that there is a 1 extra second of UPL.
             delay(1.seconds)
             val lang = ps2Settings.getCurrentLang() ?: languageProvider.getCurrentLang()
-            val response = pS2LinkRepository.searchForOutfits(tag, name, lang)
+            val response = pS2LinkRepository.searchForOutfits(tag, name, lang, targetNamespaces)
             if (response.isSuccessful) {
                 _outfitList.value = response.requireBody().sortedBy {
                     it.name?.lowercase()

@@ -1,7 +1,9 @@
 package com.cramsan.ps2link.network.ws.testgui.ui.screens.tracker
 
+import com.cramsan.ps2link.network.ws.testgui.application.ProgramMode
+
 data class TrackerUIModel(
-    val actionLabel: String?,
+    val mode: ProgramMode,
     val profileName: String?,
     val events: List<PlayerEventUIModel>,
 )

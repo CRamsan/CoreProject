@@ -30,8 +30,6 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:_")
     implementation("org.litote.kmongo:kmongo-coroutine:_")
 
-    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:_")
-
     implementation(Ktor.server.core)
     implementation(Ktor.server.netty)
     implementation(Ktor.server.websockets)
