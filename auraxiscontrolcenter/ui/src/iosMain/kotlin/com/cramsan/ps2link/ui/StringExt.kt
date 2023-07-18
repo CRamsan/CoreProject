@@ -6,7 +6,8 @@ import com.cramsan.ps2link.core.models.LoginStatus
 import com.cramsan.ps2link.core.models.Population
 import com.cramsan.ps2link.core.models.ServerStatus
 
-internal actual fun KillType.toText(): String {
+@Composable
+actual fun KillType.toText(): String {
     TODO("Not yet implemented")
 }
 
