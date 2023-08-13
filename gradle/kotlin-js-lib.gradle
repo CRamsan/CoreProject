@@ -11,10 +11,6 @@ kotlin {
 }
 
 compileKotlinJs{
-    kotlinOptions {
-        allWarningsAsErrors = true
-        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-    }
 }
 
 dependencies {

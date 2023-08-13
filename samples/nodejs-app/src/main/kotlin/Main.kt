@@ -1,5 +1,5 @@
-import com.cramsan.framework.sample.mpplib.MPPLib
-import com.cramsan.framework.sample.mpplib.greeting
+import com.cramsan.sample.mpplib.MPPLib
+import com.cramsan.sample.mpplib.greeting
 
 /**
  * Main function.

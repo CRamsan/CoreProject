@@ -11,7 +11,7 @@ version = "1.0-SNAPSHOT"
 apply(from = "$rootDir/gradle/kotlin-mpp-compose-lib.gradle")
 
 android {
-    namespace = "com.cramsan.framework.sample.mpp_lib.compose"
+    namespace = "com.cramsan.sample.mpp_lib.compose"
 }
 
 kotlin {

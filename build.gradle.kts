@@ -34,18 +34,6 @@ tasks.register("releaseAll") {
     dependsOn("framework:test:release")
     dependsOn("framework:utils:release")
 
-    dependsOn("auraxiscontrolcenter:app:release")
-    dependsOn("auraxiscontrolcenter:appcore:release")
-    dependsOn("auraxiscontrolcenter:app-frontend:release")
-    dependsOn("auraxiscontrolcenter:cdk:release")
-    dependsOn("auraxiscontrolcenter:core-models:release")
-    dependsOn("auraxiscontrolcenter:db-models:release")
-    dependsOn("auraxiscontrolcenter:deployable-models:release")
-    dependsOn("auraxiscontrolcenter:network-models:release")
-    dependsOn("auraxiscontrolcenter:streaming-client:release")
-    dependsOn("auraxiscontrolcenter:desktop:release")
-    dependsOn("auraxiscontrolcenter:ui:release")
-
     dependsOn("samples:android-app:release")
     dependsOn("samples:android-lib:release")
     dependsOn("samples:jbcompose-mpp-lib:release")
@@ -54,6 +42,9 @@ tasks.register("releaseAll") {
     dependsOn("samples:mpp-lib:release")
     dependsOn("samples:jvm-lib:release")
     dependsOn("samples:nodejs-app:release")
+
+    dependsOn("framework-samples:android-app:release")
+    dependsOn("framework-samples:jvm-app:release")
 
     dependsOn("cdk-repo:release")
 

@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.cramsan.framework.sample.android.app.UIEvent
 import com.cramsan.framework.sample.androidlib.Library
-import com.cramsan.framework.sample.jvmlib.JVMLib
-import com.cramsan.framework.sample.mpplib.MPPLib
-import com.cramsan.framework.sample.mpplib.greeting
+import com.cramsan.sample.jvm.lib.JVMLib
+import com.cramsan.sample.mpplib.MPPLib
+import com.cramsan.sample.mpplib.greeting
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

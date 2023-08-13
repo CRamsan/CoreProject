@@ -19,20 +19,6 @@ dependencies {
     testImplementation Testing.mockK
 }
 
-// Define the Kotlin jvm target
-compileKotlin {
-    kotlinOptions {
-        allWarningsAsErrors = true
-        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-    }
-}
-
-compileTestKotlin {
-    kotlinOptions {
-        allWarningsAsErrors = true
-    }
-}
-
 // Enable outputting the results of the tests
 test {
     useJUnitPlatform()

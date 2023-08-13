@@ -1,3 +1,0 @@
-ALTER TABLE Character ADD COLUMN prestige INTEGER;
-ALTER TABLE Character ADD COLUMN creationTime INTEGER;
-ALTER TABLE Character ADD COLUMN sessionCount INTEGER;

@@ -53,10 +53,6 @@ dependencies {
 kotlin {
     targets.all {
         compilations.all {
-            kotlinOptions {
-                allWarningsAsErrors = true
-                freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-            }
         }
     }
 

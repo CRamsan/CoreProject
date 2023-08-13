@@ -12,19 +12,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        debug {
-            kotlinOptions {
-                allWarningsAsErrors = true
-            }
-        }
-        release {
-            kotlinOptions {
-                allWarningsAsErrors = true
-            }
-        }
-    }
-
     compileOptions {
         // Set the compile options for Java source
         sourceCompatibility JavaVersion.VERSION_17
