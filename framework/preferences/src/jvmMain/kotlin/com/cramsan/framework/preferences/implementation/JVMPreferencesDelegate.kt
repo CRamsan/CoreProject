@@ -19,19 +19,18 @@ class JVMPreferencesDelegate : PreferencesDelegate {
     }
 
     override fun loadString(key: String): String? {
-        return prefs.get(key, null)
+        return verifyAndGetOrNull(key) {
+            prefs.get(key, null)
+        }
     }
 
     override fun saveInt(key: String, value: Int) {
         prefs.putInt(key, value)
     }
 
-    @Suppress("SwallowedException")
     override fun loadInt(key: String): Int? {
-        return try {
-            prefs.getInt(key, KEY_NOT_FOUND)
-        } catch (throwable: Throwable) {
-            null
+        return verifyAndGetOrNull(key) {
+            prefs.getInt(key, Int.MIN_VALUE)
         }
     }
 
@@ -39,10 +38,30 @@ class JVMPreferencesDelegate : PreferencesDelegate {
         prefs.putLong(key, value)
     }
 
-    @Suppress("SwallowedException")
     override fun loadLong(key: String): Long? {
+        return verifyAndGetOrNull(key) {
+            prefs.getLong(key, Long.MIN_VALUE)
+        }
+    }
+
+    override fun saveBoolean(key: String, value: Boolean) {
+        prefs.putBoolean(key, value)
+    }
+
+    override fun loadBoolean(key: String): Boolean? {
+        return verifyAndGetOrNull(key) {
+            prefs.getBoolean(key, false)
+        }
+    }
+
+    @Suppress("SwallowedException")
+    private fun <T> verifyAndGetOrNull(
+        nodeName: String,
+        block: (nodeName: String) -> T?
+    ): T? {
         return try {
-            prefs.getLong(key, KEY_NOT_FOUND.toLong())
+            // TODO: Verify that the key exists
+            block(nodeName)
         } catch (throwable: Throwable) {
             null
         }
@@ -50,9 +69,5 @@ class JVMPreferencesDelegate : PreferencesDelegate {
 
     override fun remove(key: String) {
         prefs.remove(key)
-    }
-
-    companion object {
-        const val KEY_NOT_FOUND = 0
     }
 }

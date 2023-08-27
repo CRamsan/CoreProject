@@ -21,8 +21,9 @@ dependencies {
 
     implementation(AndroidX.activity.compose)
 
-    implementation(AndroidX.compose.ui.tooling)
-    implementation(AndroidX.compose.foundation)
+    implementation("androidx.compose.ui:ui-tooling-preview:_")
+    debugImplementation("androidx.compose.ui:ui-tooling:_")
+    implementation("androidx.compose.foundation:foundation:_")
 
     implementation(AndroidX.appCompat)
     implementation(AndroidX.core.ktx)

@@ -1,15 +1,21 @@
-package com.cramsan.framework.sample.android.assert
+package com.cramsan.framework.sample.android.assertions
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.assertlib.assert
 import com.cramsan.framework.assertlib.assertFailure
 import com.cramsan.framework.assertlib.assertFalse
 import com.cramsan.framework.assertlib.assertNotNull
 import com.cramsan.framework.assertlib.assertNull
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @HiltViewModel
-class AssertViewModel : ViewModel(), AssertScreenEventHandler {
+class AssertViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val assertUtilInterface: AssertUtilInterface,
+) : ViewModel(), AssertScreenEventHandler {
 
     override fun tryAssert() {
         assert(false, TAG, "This is an assertion failure")

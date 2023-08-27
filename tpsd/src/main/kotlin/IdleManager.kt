@@ -1,4 +1,4 @@
-import org.slf4j.LoggerFactory
+import com.cramsan.framework.logging.logI
 import java.io.File
 import kotlin.random.Random
 
@@ -40,12 +40,12 @@ class IdleManager {
                 SdCommand.NewSeed
             }
         }
-        logger.info("Fetched idle command: $command")
+        logI(TAG, "Fetched idle command: $command")
 
         return command
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(IdleManager::class.java)
+        private const val TAG = "IdleManager"
     }
 }

@@ -7,8 +7,7 @@ Gradle plugin to create an Android app with good default values.
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt" // Kotlin Annotation Processor
-apply plugin: "androidx.navigation.safeargs.kotlin" // Enable  safe-args for Jetpack Navigation
-apply plugin: "dagger.hilt.android.plugin"
+apply plugin: "com.google.dagger.hilt.android"
 apply from: "$rootDir/gradle/detekt.gradle"
 
 def composeCompiler = versionFor(project, "version.androidx.compose.compiler")
@@ -94,14 +93,19 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
-    kapt Google.dagger.hilt.android.compiler
-    kapt Google.dagger.hilt.android.gradlePlugin
+    kapt "com.google.dagger:hilt-compiler:_"
+    kapt "androidx.hilt:hilt-compiler:_"
 
     implementation Kotlin.stdlib.jdk8
     implementation KotlinX.coroutines.core
     implementation KotlinX.coroutines.android
-    implementation Google.dagger.hilt.android
+    implementation "com.google.dagger:hilt-android:_"
+    implementation "androidx.hilt:hilt-navigation-compose:_"
 
     testImplementation AndroidX.test.core
     testImplementation AndroidX.test.ext.junit

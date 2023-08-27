@@ -1,4 +1,4 @@
-package com.cramsan.framework.sample.jvm.assert
+package com.cramsan.framework.sample.jvm.assertions
 
 import com.cramsan.framework.assertlib.assert
 import com.cramsan.framework.assertlib.assertFailure

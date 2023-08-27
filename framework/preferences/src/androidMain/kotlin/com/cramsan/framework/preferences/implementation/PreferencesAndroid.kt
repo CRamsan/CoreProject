@@ -22,7 +22,11 @@ class PreferencesAndroid(context: Context) : PreferencesDelegate {
     }
 
     override fun loadString(key: String): String? {
-        return sharedPref.getString(key, null)
+        return if (!sharedPref.contains(key)) {
+            null
+        } else {
+            sharedPref.getString(key, null)
+        }
     }
 
     override fun saveInt(key: String, value: Int) {
@@ -33,7 +37,11 @@ class PreferencesAndroid(context: Context) : PreferencesDelegate {
     }
 
     override fun loadInt(key: String): Int? {
-        return sharedPref.getInt(key, 0)
+        return if (!sharedPref.contains(key)) {
+            null
+        } else {
+            sharedPref.getInt(key, 0)
+        }
     }
 
     override fun saveLong(key: String, value: Long) {
@@ -43,8 +51,27 @@ class PreferencesAndroid(context: Context) : PreferencesDelegate {
         }
     }
 
-    override fun loadLong(key: String): Long {
-        return sharedPref.getLong(key, 0)
+    override fun loadLong(key: String): Long? {
+        return if (!sharedPref.contains(key)) {
+            null
+        } else {
+            sharedPref.getLong(key, 0)
+        }
+    }
+
+    override fun saveBoolean(key: String, value: Boolean) {
+        with(sharedPref.edit()) {
+            putBoolean(key, value)
+            commit()
+        }
+    }
+
+    override fun loadBoolean(key: String): Boolean? {
+        return if (!sharedPref.contains(key)) {
+            null
+        } else {
+            sharedPref.getBoolean(key, false)
+        }
     }
 
     override fun remove(key: String) {

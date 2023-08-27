@@ -1,11 +1,9 @@
+import com.cramsan.framework.logging.logI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
-import org.slf4j.LoggerFactory
 import kotlin.random.Random
-
-private val logger = LoggerFactory.getLogger(CommandBuffer::class.java)
 
 /**
  * This class can hold [Command] instances associated to a user.
@@ -21,7 +19,7 @@ class CommandBuffer(
      * Store a [command] and associate it with a [userName]. This function can be called from any thread.
      */
     suspend fun store(userName: String, command: SdCommand) = withContext(Dispatchers.Main) {
-        logger.info("Storing for $userName - command $command")
+        logI(TAG, "Storing for $userName - command $command")
         _commandMap[userName] = command
         _commandMapState.value = _commandMap.toMap()
     }
@@ -31,9 +29,13 @@ class CommandBuffer(
      */
     suspend fun flush(): SdCommand? = withContext(Dispatchers.Main) {
         val command = _commandMap.values.randomOrNull(random)
-        logger.info("Flushing commands, got $command")
+        logI(TAG, "Flushing commands, got $command")
         _commandMap.clear()
         _commandMapState.value = _commandMap.toMap()
         command
+    }
+
+    companion object {
+        private const val TAG = "CommandBuffer"
     }
 }

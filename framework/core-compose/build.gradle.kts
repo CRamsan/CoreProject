@@ -31,7 +31,7 @@ android {
         implementation(AndroidX.lifecycle.viewModelKtx)
         implementation(AndroidX.compose.ui)
         debugImplementation(AndroidX.compose.ui.tooling)
-        implementation(AndroidX.compose.ui.toolingPreview)
+        implementation("androidx.compose.ui:ui-tooling-preview:_")
         implementation(AndroidX.compose.foundation)
     }
 }

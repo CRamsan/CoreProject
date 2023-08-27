@@ -11,20 +11,19 @@ import org.apache.logging.log4j.core.config.Configurator
  * Logger that prints to stdout.
  */
 class LoggerJVM(
-    private val logToFile: Boolean,
-    private val initializationLogLevel: Severity = Severity.DEBUG,
+    logToFile: Boolean,
+    initializationLogLevel: Severity = Severity.INFO,
 ) : EventLoggerDelegate {
 
     private val logger: Logger
     init {
-        /**/
         val loggerConfiguration = Log4J2Helpers.buildConfiguration(
             logToFile,
             initializationLogLevel,
         )
         Configurator.initialize(loggerConfiguration)
+
         logger = LogManager.getRootLogger()
-        /**/
     }
     override fun log(severity: Severity, tag: String, message: String, throwable: Throwable?) {
         val level = severity.toLevel()
@@ -41,11 +40,7 @@ class LoggerJVM(
 
     companion object {
 
-        const val LOG_PATTERN = "Hello: %m%n"
-
         const val FILENAME = "app.log"
-
-        // private val logger by lazy { LogManager.getLogger(Companion::class.java) }
 
         fun Severity.toLevel(): Level {
             return when (this) {

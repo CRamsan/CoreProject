@@ -41,7 +41,7 @@ object Log4J2Helpers {
     private fun createConsoleAppender(builder: ConfigurationBuilder<BuiltConfiguration>): AppenderComponentBuilder {
         // set the pattern layout and pattern
         val layoutBuilder: LayoutComponentBuilder = builder.newLayout("PatternLayout")
-            .addAttribute("pattern", LoggerJVM.LOG_PATTERN)
+            .addAttribute("pattern", LOG_PATTERN)
 
         return builder.newAppender("Console", "Console")
             .addAttribute("target", ConsoleAppender.Target.SYSTEM_OUT)
@@ -51,7 +51,7 @@ object Log4J2Helpers {
     private fun createFileAppender(builder: ConfigurationBuilder<BuiltConfiguration>): AppenderComponentBuilder {
         // set the pattern layout and pattern
         val layoutBuilder: LayoutComponentBuilder = builder.newLayout("PatternLayout")
-            .addAttribute("pattern", LoggerJVM.LOG_PATTERN)
+            .addAttribute("pattern", LOG_PATTERN)
 
         // specifying the policy for rolling file
         val triggeringPolicy = builder.newComponent("Policies")
@@ -64,4 +64,6 @@ object Log4J2Helpers {
             .add(layoutBuilder)
             .addComponent(triggeringPolicy)
     }
+
+    private const val LOG_PATTERN = " %d\t%p\t[%t]\t%m%n"
 }

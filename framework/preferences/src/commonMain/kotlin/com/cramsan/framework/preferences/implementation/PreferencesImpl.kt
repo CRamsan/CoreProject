@@ -32,6 +32,14 @@ class PreferencesImpl(private val platformDelegate: PreferencesDelegate) : Prefe
         return platformDelegate.loadLong(key)
     }
 
+    override fun saveBoolean(key: String, value: Boolean) {
+        platformDelegate.saveBoolean(key, value)
+    }
+
+    override fun loadBoolean(key: String): Boolean? {
+        return platformDelegate.loadBoolean(key)
+    }
+
     override fun remove(key: String) {
         platformDelegate.remove(key)
     }

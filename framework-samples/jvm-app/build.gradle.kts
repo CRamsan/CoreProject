@@ -13,7 +13,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.cramsan.framework.sample.jvm.MainKt"
+        mainClass = "com.cramsan.framework.sample.jvm.FrameworkSampleJvmAppKt"
     }
 }
 
@@ -29,8 +29,8 @@ dependencies {
     implementation(project(":framework:thread"))
     implementation(project(":framework:interfacelib"))
 
-    implementation("io.insert-koin:koin-core:3.4.2")
-    implementation("io.insert-koin:koin-compose:1.0.3")
+    implementation(Koin.core)
+    implementation("io.insert-koin:koin-compose:1.0.4")
 
     implementation(KotlinX.coroutines.swing)
 }

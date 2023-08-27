@@ -1,7 +1,6 @@
 package com.cramsan.framework.sample.android
 
 import android.app.Application
-import com.cramsan.framework.assertlib.AssertUtil
 import com.cramsan.framework.assertlib.AssertUtilInterface
 import com.cramsan.framework.crashehandler.CrashHandler
 import com.cramsan.framework.halt.HaltUtil
@@ -43,6 +42,7 @@ class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AssertUtil.setInstance(assertUtil)
+        assertUtil
+        eventLogger
     }
 }

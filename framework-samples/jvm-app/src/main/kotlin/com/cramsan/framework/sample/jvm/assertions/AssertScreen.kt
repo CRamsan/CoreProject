@@ -1,4 +1,4 @@
-package com.cramsan.framework.sample.jvm.assert
+package com.cramsan.framework.sample.jvm.assertions
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.lazy.LazyColumn

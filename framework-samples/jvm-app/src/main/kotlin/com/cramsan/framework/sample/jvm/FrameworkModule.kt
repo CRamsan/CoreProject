@@ -36,8 +36,13 @@ val FrameworkModule = module {
         PreferencesImpl(get())
     }
 
+    single<Boolean> {
+        val preferences: Preferences = get()
+        preferences.loadBoolean(KEY_LOG_TO_FILE) ?: false
+    }
+
     single<EventLoggerDelegate> {
-        LoggerJVM(true)
+        LoggerJVM(get())
     }
 
     single<EventLoggerInterface> {

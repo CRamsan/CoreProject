@@ -5,6 +5,14 @@
     "TooGenericExceptionThrown",
 )
 
+import com.cramsan.framework.logging.EventLogger
+import com.cramsan.framework.logging.Severity
+import com.cramsan.framework.logging.implementation.EventLoggerImpl
+import com.cramsan.framework.logging.implementation.LoggerJVM
+import com.cramsan.framework.logging.logD
+import com.cramsan.framework.logging.logE
+import com.cramsan.framework.logging.logI
+import com.cramsan.framework.logging.logW
 import com.github.philippheuer.credentialmanager.domain.OAuth2Credential
 import com.github.twitch4j.TwitchClient
 import com.github.twitch4j.TwitchClientBuilder
@@ -22,16 +30,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import sd.StableDiffusionClient
 import ui.pageGUI
 import java.time.LocalDateTime
 import kotlin.random.Random
 import kotlin.system.exitProcess
 import kotlin.time.Duration.Companion.seconds
-
-private val logger: Logger by lazy { LoggerFactory.getLogger("Main") }
 
 private val serializer = Json {
     ignoreUnknownKeys = true
@@ -57,7 +61,15 @@ const val ENV_CHANNEL_NAME = "CHANNEL_NAME"
 var channelName = ""
 
 fun main() {
-    logger.info("Launching program")
+    val eventLoggerDelegate = LoggerJVM(true)
+    val eventLogger = EventLoggerImpl(
+        Severity.DEBUG,
+        errorCallback = null,
+        platformDelegate = eventLoggerDelegate,
+    )
+    EventLogger.setInstance(eventLogger)
+
+    logI(TAG, "Launching program")
 
     val client = HttpClient(Java) {
         engine {
@@ -104,7 +116,7 @@ fun main() {
 fun processCommandQueueAsync() {
     queueJob?.cancel()
     queueJob = GlobalScope.launch {
-        logger.info("Command Queue was started")
+        logI(TAG, "Command Queue was started")
         while (true) {
             try {
                 bufferCounter.value = bufferTime
@@ -112,7 +124,7 @@ fun processCommandQueueAsync() {
                     delay(1.seconds)
                     bufferCounter.value--
                 }
-                logger.debug("Fetching command")
+                logD(TAG, "Fetching command")
                 val command = commandBuffer.flush()
                 if (command != null) {
                     idleStartTime = LocalDateTime.now()
@@ -125,10 +137,10 @@ fun processCommandQueueAsync() {
                     runIdleCommand()
                 }
             } catch (cancellation: CancellationException) {
-                logger.info("Command Queue was stopped")
+                logI(TAG, "Command Queue was stopped")
                 break
             } catch (throwable: Throwable) {
-                logger.error("Exception: ${throwable.message}")
+                logE(TAG, "Exception: ${throwable.message}", throwable)
                 throwable.consoleOut()
             }
         }
@@ -142,10 +154,10 @@ fun observeConsoleInput() {
             try {
                 val line = readlnOrNull()
                 if (line == null) {
-                    logger.warn("Reading from stdin returned null. Stopping listening from stdin.")
+                    logW(TAG, "Reading from stdin returned null. Stopping listening from stdin.")
                     return@launch
                 }
-                logger.info("Console In: $line")
+                logI(TAG, "Console In: $line")
                 val command = parseCommand(line).getOrThrow()
 
                 if (command is AdminCommand) {
@@ -160,10 +172,10 @@ fun observeConsoleInput() {
                 } else if (command is SdCommand) {
                     sdClient.handleCommands(command)
                 } else {
-                    logger.warn("Could not map console command")
+                    logW(TAG, "Could not map console command")
                 }
             } catch (throwable: Throwable) {
-                logger.error("$throwable: ${throwable.message}")
+                logE(TAG, "$throwable: ${throwable.message}")
                 throwable.consoleOut()
             }
         }
@@ -188,7 +200,7 @@ fun stopCommandQueue() {
 }
 
 suspend fun runIdleCommand() {
-    logger.info("Executing idle command")
+    logI(TAG, "Executing idle command")
     val idleCommand = idleManager.getNewCommand(sdClient.uiState.value.positivePrompt.size)
 
     if (idleCommand != null) {
@@ -197,12 +209,12 @@ suspend fun runIdleCommand() {
 }
 
 fun updateListenToChat(adminCommand: AdminCommand.ListenToChat) {
-    logger.info("Setting listenToChat=${adminCommand.listenToChat}")
+    logI(TAG, "Setting listenToChat=${adminCommand.listenToChat}")
     listenToChat = adminCommand.listenToChat
 }
 
 fun updateBufferTime(adminCommand: AdminCommand.SetBufferTime) {
-    logger.info("Setting bufferTime=${adminCommand.duration}")
+    logI(TAG, "Setting bufferTime=${adminCommand.duration}")
     bufferTime = (adminCommand.duration.inWholeSeconds).toInt()
 }
 
@@ -211,7 +223,7 @@ fun observeChat(twitchClient: TwitchClient) {
         val username = event.user.name
         try {
             val message = event.message
-            logger.info("channel: ${event.channel.name}, username:$username, message:$message")
+            logI(TAG, "channel: ${event.channel.name}, username:$username, message:$message")
             if (event.message.equals("Execute Order 66.", ignoreCase = true)) {
                 exitProcess(-2)
             }
@@ -221,7 +233,7 @@ fun observeChat(twitchClient: TwitchClient) {
             val command = parseCommand(event.message).getOrThrow() ?: return@onEvent
 
             if (command is AdminCommand) {
-                logger.warn("Admin commands cannot be run from chat")
+                logW(TAG, "Admin commands cannot be run from chat")
             } else if (command is SdCommand) {
                 val eventUsername = event.user.name
                 GlobalScope.launch(Dispatchers.Main) {
@@ -231,17 +243,19 @@ fun observeChat(twitchClient: TwitchClient) {
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (throwable: Throwable) {
-            logger.error("Exception: ${throwable.message}")
+            logE(TAG, "Exception: ${throwable.message}")
             throwable.consoleOut()
             if (!twitchClient.chat.sendMessage(
                     channelName,
                     "Hi $username, your message could not be processed. The reason was: \"${throwable.message}\"",
                 )
             ) {
-                logger.error("Could not send reply back to user $username.")
+                logE(TAG, "Could not send reply back to user $username.")
             } else {
-                logger.info("Replied back to user $username.")
+                logI(TAG, "Replied back to user $username.")
             }
         }
     }
 }
+
+private const val TAG = "Main"

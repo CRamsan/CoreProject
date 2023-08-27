@@ -7,6 +7,9 @@ plugins {
 apply(from = "$rootDir/gradle/kotlin-jvm-lib.gradle")
 
 dependencies {
+    implementation(project(":framework:interfacelib"))
+    implementation(project(":framework:logging"))
+
     implementation("com.github.twitch4j:twitch4j:_")
     implementation(KotlinX.coroutines.swing)
     implementation(Ktor.client.core)
@@ -14,9 +17,6 @@ dependencies {
     implementation(KotlinX.serialization.json)
     implementation(Ktor.client.contentNegotiation)
     implementation(Ktor.plugins.serialization.kotlinx.json)
-    implementation("org.slf4j:slf4j-api:_")
-    implementation("ch.qos.logback:logback-core:_")
-    implementation("ch.qos.logback:logback-classic:_")
     implementation(KotlinX.cli)
 
     implementation(compose.desktop.currentOs)

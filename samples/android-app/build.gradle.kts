@@ -1,8 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 apply(from = "$rootDir/gradle/android-app.gradle")
@@ -29,11 +27,11 @@ dependencies {
     implementation(AndroidX.navigation.uiKtx)
     implementation(AndroidX.compose.ui)
     implementation(AndroidX.compose.ui.graphics)
-    implementation(AndroidX.compose.ui.toolingPreview)
-    implementation(AndroidX.compose.material3)
+    implementation("androidx.compose.ui:ui-tooling-preview:_")
+    implementation("androidx.compose.material3:material3:_")
 
-    androidTestImplementation(AndroidX.compose.ui.testJunit4)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:_")
 
-    debugImplementation(AndroidX.compose.ui.tooling)
-    debugImplementation(AndroidX.compose.ui.testManifest)
+    debugImplementation("androidx.compose.ui:ui-tooling:_")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:_")
 }

@@ -107,6 +107,16 @@ complexity:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+  CyclomaticComplexMethod:
+    ignoreAnnotated: [ 'Composable' ]
+    excludes:
+    - '**/build/generated/**'
+    - '**/test/**'
+    - '**/androidTest/**'
+    - '**/commonTest/**'
+    - '**/jvmTest/**'
+    - '**/jsTest/**'
+    - '**/iosTest/**'
   ComplexInterface:
     excludes:
       - '**/build/generated/**'

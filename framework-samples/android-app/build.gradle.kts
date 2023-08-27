@@ -1,7 +1,6 @@
 plugins {
-    id("org.jetbrains.kotlin.android")
     id("com.android.application")
-    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.android")
 }
 
 apply(from = "$rootDir/gradle/android-app.gradle")
@@ -44,16 +43,11 @@ dependencies {
 
     implementation(AndroidX.appCompat)
     implementation(AndroidX.core.ktx)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(AndroidX.lifecycle.runtime.ktx)
+
+    implementation(platform(AndroidX.compose.bom))
+    implementation(AndroidX.compose.ui.graphics)
+    implementation(AndroidX.compose.ui.toolingPreview)
+    implementation(AndroidX.compose.material3)
+    implementation(AndroidX.navigation.compose)
 }

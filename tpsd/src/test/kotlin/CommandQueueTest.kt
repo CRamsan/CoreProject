@@ -1,3 +1,5 @@
+import com.cramsan.framework.logging.EventLogger
+import com.cramsan.framework.logging.implementation.NoopEventLogger
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -12,6 +14,8 @@ class CommandQueueTest {
 
     @BeforeEach
     fun beforeTest() {
+        EventLogger.setInstance(NoopEventLogger())
+
         commandBuffer = CommandBuffer(random)
     }
 

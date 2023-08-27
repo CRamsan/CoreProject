@@ -36,6 +36,16 @@ interface PreferencesDelegate {
     fun loadLong(key: String): Long?
 
     /**
+     * Save [value] of type [Boolean] as the specified [key]
+     */
+    fun saveBoolean(key: String, value: Boolean)
+
+    /**
+     * Read [key] as a nullable [Boolean]
+     */
+    fun loadBoolean(key: String): Boolean?
+
+    /**
      * Remove a [key] from the preferences
      */
     fun remove(key: String)

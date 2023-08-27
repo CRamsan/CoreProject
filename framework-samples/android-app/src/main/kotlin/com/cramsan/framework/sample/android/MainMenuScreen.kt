@@ -1,10 +1,16 @@
 package com.cramsan.framework.sample.android
 
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.cramsan.framework.sample.android.theme.CoreProjectTheme
@@ -13,24 +19,40 @@ import com.cramsan.framework.sample.android.theme.CoreProjectTheme
 fun MainMenu(
     navController: NavController? = null,
 ) {
-    MainMenuContent(navController)
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter,
+    ) {
+        MainMenuContent(navController)
+    }
 }
 
 @Composable
 private fun MainMenuContent(
     navController: NavController? = null,
 ) {
-    LazyColumn {
-        items(LibraryDestinations.values()) {
-            Button(onClick = { navController?.navigate(it.destination) }) {
-                Text(text = it.name)
+    val buttonModifier = Modifier
+        .fillMaxWidth()
+
+    Column(
+        modifier = Modifier
+            .width(IntrinsicSize.Max)
+    ) {
+        LibraryDestinations.values().forEach {
+            if (it.enabled) {
+                Button(
+                    modifier = buttonModifier,
+                    onClick = { navController?.navigate(it.destination) },
+                ) {
+                    Text(text = it.name)
+                }
             }
         }
     }
 }
 
-enum class LibraryDestinations(val destination: String) {
-    ASSERT("assert"),
+enum class LibraryDestinations(val destination: String, val enabled: Boolean = false) {
+    ASSERT("assert", true),
     BUILD("build"),
     CORE("core"),
     CORE_COMPOSE("corecompose"),
@@ -38,7 +60,7 @@ enum class LibraryDestinations(val destination: String) {
     HALT("halt"),
     INTERFACELIB("interfacelib"),
     INTERFACELIB_TEST("interfacelibtest"),
-    LOGGING("logging"),
+    LOGGING("logging", true),
     METRICS("metrics"),
     PREFERENCES("preferences"),
     REMOTECONFIG("remoteconfig"),
