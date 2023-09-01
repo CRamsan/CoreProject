@@ -1,5 +1,5 @@
 /**
- * Configure a Kotlin-JVM project with safe defaults.
+ * Configure a Kotlin-JS project with safe defaults.
  */
 
 apply plugin: "org.jetbrains.kotlin.js"

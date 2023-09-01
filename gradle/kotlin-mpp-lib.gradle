@@ -3,8 +3,8 @@
  */
 apply plugin: "org.jetbrains.kotlin.multiplatform"
 
-    apply plugin: "com.android.library"
-    apply plugin: "kotlin-kapt"
+apply plugin: "com.android.library"
+apply plugin: "kotlin-kapt"
 apply from: "$rootDir/gradle/detekt.gradle"
 
 android {

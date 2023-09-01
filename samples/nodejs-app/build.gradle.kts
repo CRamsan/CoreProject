@@ -10,6 +10,7 @@ dependencies {
 
 kotlin {
     js {
-        nodejs()
+        nodejs { }
+        binaries.executable()
     }
 }
