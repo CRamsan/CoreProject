@@ -5,6 +5,6 @@ plugins {
 apply(from = "$rootDir/gradle/kotlin-jvm-lib.gradle")
 
 dependencies {
-    implementation(KotlinX.serialization.json)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
     implementation("software.amazon.awscdk:aws-cdk-lib:_")
 }

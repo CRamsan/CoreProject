@@ -32,7 +32,7 @@ kotlin {
                 implementation(compose.runtime)
 
                 implementation(project(":stranded:lib"))
-                implementation(KotlinX.serialization.json)
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
             }
         }
         val jsTest by getting {

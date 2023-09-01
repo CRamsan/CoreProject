@@ -28,7 +28,7 @@ kotlin {
             dependencies {
                 implementation(project(":stranded:server"))
 
-                implementation(KotlinX.serialization.json)
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
             }
         }
         val commonTest by getting {

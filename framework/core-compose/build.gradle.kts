@@ -19,17 +19,17 @@ android {
     }
 
     dependencies {
-        implementation(Google.dagger.hilt.android)
+        implementation("com.google.dagger:hilt-android:_")
 
         implementation(project(":framework:interfacelib"))
         implementation(project(":framework:core"))
 
-        implementation(Google.android.material)
-        implementation(AndroidX.appCompat)
-        implementation(AndroidX.activity.compose)
-        implementation(AndroidX.fragment.ktx)
-        implementation(AndroidX.lifecycle.viewModelKtx)
-        implementation(AndroidX.compose.ui)
+        implementation("com.google.android.material:material:_")
+        implementation("androidx.appcompat:appcompat:_")
+        implementation("androidx.activity:activity-compose:_")
+        implementation("androidx.fragment:fragment-ktx:_")
+        implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:_")
+        implementation("androidx.compose.ui:ui:_")
         debugImplementation(AndroidX.compose.ui.tooling)
         implementation("androidx.compose.ui:ui-tooling-preview:_")
         implementation(AndroidX.compose.foundation)

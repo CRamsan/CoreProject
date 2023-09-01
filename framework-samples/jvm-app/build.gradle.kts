@@ -32,5 +32,5 @@ dependencies {
     implementation(Koin.core)
     implementation("io.insert-koin:koin-compose:1.0.4")
 
-    implementation(KotlinX.coroutines.swing)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:_")
 }

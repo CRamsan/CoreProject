@@ -15,7 +15,7 @@ plugins {
 }
 
 tasks.register("releaseAll") {
-    group = "build"
+    group = "release"
     description = "Builds all target"
 
     dependsOn("framework:assert:release")

@@ -32,5 +32,5 @@ dependencies {
 
     implementation(project(":stranded:lib"))
     implementation(project(":stranded:server"))
-    implementation(KotlinX.serialization.json)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
 }

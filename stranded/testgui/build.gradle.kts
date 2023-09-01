@@ -13,8 +13,8 @@ dependencies {
 
     implementation(project(":stranded:lib"))
     implementation(project(":stranded:server"))
-    implementation(KotlinX.coroutines.swing)
-    implementation(KotlinX.serialization.json)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
 
     testImplementation(project(":framework:test"))
 }

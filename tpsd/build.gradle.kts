@@ -11,18 +11,18 @@ dependencies {
     implementation(project(":framework:logging"))
 
     implementation("com.github.twitch4j:twitch4j:_")
-    implementation(KotlinX.coroutines.swing)
-    implementation(Ktor.client.core)
-    implementation(Ktor.client.java)
-    implementation(KotlinX.serialization.json)
-    implementation(Ktor.client.contentNegotiation)
-    implementation(Ktor.plugins.serialization.kotlinx.json)
-    implementation(KotlinX.cli)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:_")
+    implementation("io.ktor:ktor-client-core:_")
+    implementation("io.ktor:ktor-client-java:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
+    implementation("io.ktor:ktor-client-content-negotiation:_")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:_")
 
     implementation(compose.desktop.currentOs)
 
     testImplementation(kotlin("test"))
-    testImplementation(KotlinX.coroutines.test)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:_")
 }
 
 compose.desktop {

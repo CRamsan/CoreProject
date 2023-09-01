@@ -36,17 +36,17 @@ dependencies {
     implementation(project(":framework:test"))
     implementation(project(":framework:utils"))
 
-    implementation(AndroidX.activity.compose)
+    implementation("androidx.activity:activity-compose:_")
 
     implementation(AndroidX.compose.ui.tooling)
     implementation(AndroidX.compose.foundation)
 
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.core.ktx)
+    implementation("androidx.appcompat:appcompat:_")
+    implementation("androidx.core:core-ktx:_")
     implementation(AndroidX.lifecycle.runtime.ktx)
 
     implementation(platform(AndroidX.compose.bom))
-    implementation(AndroidX.compose.ui.graphics)
+    implementation("androidx.compose.ui:ui-graphics:_")
     implementation(AndroidX.compose.ui.toolingPreview)
     implementation(AndroidX.compose.material3)
     implementation(AndroidX.navigation.compose)

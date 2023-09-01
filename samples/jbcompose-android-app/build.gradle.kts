@@ -19,12 +19,12 @@ android {
 dependencies {
     implementation(project(":samples:jbcompose-mpp-lib"))
 
-    implementation(AndroidX.activity.compose)
+    implementation("androidx.activity:activity-compose:_")
 
     implementation("androidx.compose.ui:ui-tooling-preview:_")
     debugImplementation("androidx.compose.ui:ui-tooling:_")
     implementation("androidx.compose.foundation:foundation:_")
 
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.core.ktx)
+    implementation("androidx.appcompat:appcompat:_")
+    implementation("androidx.core:core-ktx:_")
 }

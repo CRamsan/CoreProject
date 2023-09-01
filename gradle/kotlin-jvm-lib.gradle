@@ -10,13 +10,13 @@ kotlin {
 }
 
 dependencies {
-    implementation Kotlin.stdlib.jdk8
-    implementation KotlinX.coroutines.core
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:_"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:_"
 
-    testImplementation KotlinX.coroutines.test
-    testImplementation Testing.junit.jupiter.api
-    testImplementation Kotlin.test.junit5
-    testImplementation Testing.mockK
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:_"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:_"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:_"
+    testImplementation "io.mockk:mockk:_"
 }
 
 // Enable outputting the results of the tests
@@ -26,7 +26,7 @@ test {
 
 // Release task that will build and test the project.
 def releaseJvm = tasks.register("releaseJvm") {
-    group = 'build'
+    group = 'release'
     description = 'Run all the steps to build a release artifact'
 
     dependsOn 'build'
@@ -35,7 +35,7 @@ def releaseJvm = tasks.register("releaseJvm") {
 }
 
 tasks.register("release") {
-    group = 'build'
+    group = 'release'
 
     dependsOn "releaseJvm"
 }

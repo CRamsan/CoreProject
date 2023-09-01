@@ -52,37 +52,37 @@ android {
 }
 
 dependencies {
-    implementation Kotlin.stdlib.jdk8
-    implementation KotlinX.coroutines.core
-    implementation KotlinX.coroutines.android
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:_"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:_"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:_"
 
-    testImplementation AndroidX.test.core
-    testImplementation AndroidX.test.ext.junit
-    testImplementation AndroidX.test.ext.junit.ktx
-    testImplementation AndroidX.archCore.common
-    testImplementation AndroidX.archCore.runtime
-    testImplementation AndroidX.archCore.testing
-    testImplementation KotlinX.coroutines.test
-    testImplementation Testing.junit4
-    testImplementation Kotlin.test
-    testImplementation Kotlin.test.junit
-    testImplementation Testing.mockK
-    testImplementation Testing.mockK.android
+    testImplementation "androidx.test:core:_"
+    testImplementation "androidx.test.ext:junit:_"
+    testImplementation "androidx.test.ext:junit-ktx:_"
+    testImplementation "androidx.arch.core:core-common:_"
+    testImplementation "androidx.arch.core:core-runtime:_"
+    testImplementation "androidx.arch.core:core-testing:_"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:_"
+    testImplementation "junit:junit:_"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:_"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:_"
+    testImplementation "io.mockk:mockk:_"
+    testImplementation "io.mockk:mockk-android:_"
 
-    androidTestImplementation AndroidX.test.ext.junit
-    androidTestImplementation AndroidX.test.ext.junit.ktx
-    androidTestImplementation AndroidX.test.core
-    androidTestImplementation AndroidX.test.rules
-    androidTestImplementation KotlinX.coroutines.test
-    androidTestImplementation Testing.junit4
-    androidTestImplementation Kotlin.test
-    androidTestImplementation Kotlin.test.junit
-    androidTestImplementation Testing.mockK.android
-    androidTestImplementation Testing.robolectric
+    androidTestImplementation "androidx.test.ext:junit:_"
+    androidTestImplementation "androidx.test.ext:junit-ktx:_"
+    androidTestImplementation "androidx.test:core:_"
+    androidTestImplementation "androidx.test:rules:_"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:_"
+    androidTestImplementation "junit:junit:_"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test:_"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:_"
+    androidTestImplementation "io.mockk:mockk-android:_"
+    androidTestImplementation "org.robolectric:robolectric:_"
 }
 
 tasks.register("releaseAndroid") {
-    group = 'build'
+    group = 'release'
     description = 'Run all the steps to build a release artifact'
 
     dependsOn 'build' // Assembles and test this project
@@ -90,7 +90,7 @@ tasks.register("releaseAndroid") {
 }
 
 tasks.register("release") {
-    group = 'build'
+    group = 'release'
     description = 'Run releaseAndroid'
 
     dependsOn 'releaseAndroid'

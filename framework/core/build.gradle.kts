@@ -11,17 +11,14 @@ android {
 }
 
 dependencies {
-    //kapt(Google.dagger.hilt.android.compiler)
-    //kapt(Google.dagger.hilt.android.gradlePlugin)
-
-    implementation(Google.dagger.hilt.android)
+    implementation("com.google.dagger:hilt-android:_")
 
     implementation(project(":framework:interfacelib"))
 
-    implementation(Google.android.material)
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.fragment.ktx)
-    implementation(AndroidX.lifecycle.viewModelKtx)
+    implementation("com.google.android.material:material:_")
+    implementation("androidx.appcompat:appcompat:_")
+    implementation("androidx.fragment:fragment-ktx:_")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:_")
 }
 
 kotlin {

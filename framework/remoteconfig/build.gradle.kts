@@ -19,9 +19,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":framework:interfacelib"))
-                implementation(Ktor.client.core)
-                implementation(Ktor.client.contentNegotiation)
-                implementation(KotlinX.serialization.json)
+                implementation("io.ktor:ktor-client-core:_")
+                implementation("io.ktor:ktor-client-content-negotiation:_")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
             }
         }
         val commonTest by getting {
